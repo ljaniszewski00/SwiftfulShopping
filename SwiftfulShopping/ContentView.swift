@@ -2,20 +2,100 @@
 //  ContentView.swift
 //  SwiftfulShopping
 //
-//  Created by Łukasz Janiszewski on 03/06/2022.
+//  Created by Łukasz Janiszewski on 01/04/2022.
 //
 
 import SwiftUI
 
 struct ContentView: View {
+    @StateObject private var authStateManager = AuthStateManager()
+    @StateObject private var locationManager = LocationManager()
+    
+    @State private var presentLoginView: Bool = false
+    @State private var presentRegisterView: Bool = false
+    
     var body: some View {
-        Text("Hello, world!")
-            .padding()
+        if authStateManager.isLogged || authStateManager.isGuest {
+            HomeView()
+                .environmentObject(authStateManager)
+                .transition(.slide)
+        } else {
+            NavigationView {
+                VStack {
+                    Image(uiImage: UIImage(named: "AppIconImage")!)
+                        .resizable()
+                        .frame(width: 300, height: 300)
+                    
+                    Spacer()
+                    
+                    ZStack {
+                        RoundedRectangle(cornerRadius: 20)
+                            .frame(width: ScreenBoundsSupplier.shared.getScreenWidth() * 0.95, height: ScreenBoundsSupplier.shared.getScreenHeight() * 0.4)
+                            .foregroundColor(.white)
+                        
+                        VStack {
+                            NavigationLink(destination: LoginView().environmentObject(authStateManager), isActive: $presentLoginView) {
+                                Button("Login") {
+                                    withAnimation() {
+                                        UserDefaults.standard.set(false, forKey: "guest")
+                                        presentLoginView = true
+                                    }
+                                }
+                                .buttonStyle(CustomButton())
+                                .frame(width: UIScreen.main.bounds.width * 0.9)
+                                .contentShape(Rectangle())
+                                .padding(.bottom)
+                            }
+                            
+                            NavigationLink(destination: RegisterView().environmentObject(authStateManager)
+                                .environmentObject(locationManager), isActive: $presentRegisterView) {
+                                Button("Register") {
+                                    withAnimation() {
+                                        UserDefaults.standard.set(false, forKey: "guest")
+                                        presentRegisterView = true
+                                    }
+                                }
+                                .buttonStyle(CustomButton(buttonColor: .white, textColor: .accentColor, onlyStroke: true, strokeColor: .accentColor))
+                                .frame(width: UIScreen.main.bounds.width * 0.9)
+                                .contentShape(Rectangle())
+                                .padding(.bottom, 20)
+                            }
+                            
+                            LabelledDivider(label: "or")
+                            
+                            Button("Explore as Guest") {
+                                withAnimation() {
+                                    authStateManager.didEnterAsGuest()
+                                }
+                            }
+                            .buttonStyle(CustomButton(buttonColor: .gray))
+                            .frame(width: ScreenBoundsSupplier.shared.getScreenWidth() * 0.9)
+                            .contentShape(Rectangle())
+                            .padding(.top, 20)
+                        }
+                    }
+                    .position(x: ScreenBoundsSupplier.shared.getScreenWidth() * 0.5, y: ScreenBoundsSupplier.shared.getScreenHeight() * 0.3)
+                }
+                .navigationTitle("")
+                .navigationBarHidden(true)
+                .preferredColorScheme(.light)
+                .background(Color.backgroundColor.ignoresSafeArea())
+            }
+            .navigationViewStyle(.stack)
+        }
     }
 }
 
+
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
-        ContentView()
+        ForEach(ColorScheme.allCases, id: \.self) { colorScheme in
+                    ForEach(["iPhone 13 Pro Max", "iPhone 8"], id: \.self) { deviceName in
+                        ContentView()
+                            .preferredColorScheme(colorScheme)
+                            .previewDevice(PreviewDevice(rawValue: deviceName))
+                            .previewDisplayName("\(deviceName) portrait")
+                    }
+                }
     }
 }
