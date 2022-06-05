@@ -233,7 +233,7 @@ struct RegisterView: View {
                     .bold()
                 
                 Picker(selection: $registerViewModel.country, label: Text("")) {
-                    ForEach(registerViewModel.possibleCountries, id: \.self) { country in
+                    ForEach(Array(possibleCuntriesDictionary.values), id: \.self) { country in
                         Text(country)
                     }
                 }
@@ -282,7 +282,7 @@ struct RegisterView: View {
                         .bold()
                     
                     Picker(selection: $registerViewModel.country, label: Text("")) {
-                        ForEach(registerViewModel.possibleCountries, id: \.self) { country in
+                        ForEach(Array(possibleCuntriesDictionary.values), id: \.self) { country in
                             Text(country)
                         }
                     }

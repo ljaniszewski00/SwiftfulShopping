@@ -60,7 +60,9 @@ struct HomeView: View {
                         }
                     case .profile:
                         withAnimation(.linear) {
-                            EmptyView()
+                            ProfileView()
+                                .environmentObject(authStateManager)
+                                .environmentObject(tabBarStateManager)
                         }
                     }
                 }

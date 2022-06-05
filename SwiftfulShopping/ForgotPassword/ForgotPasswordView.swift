@@ -14,7 +14,7 @@ struct ForgotPasswordView: View {
     @Environment(\.dismiss) var dismiss
     
     init(email: String = "") {
-        self.forgotPasswordViewModel.email = email
+        forgotPasswordViewModel.email = email
     }
     
     var body: some View {
@@ -28,7 +28,8 @@ struct ForgotPasswordView: View {
                 .padding(.bottom, 20)
             
             CustomTextField(textFieldProperty: "e-mail", textFieldImageName: "envelope", textFieldSignsLimit: 0, text: $forgotPasswordViewModel.email, isFocusedParentView: $isEmailTextFieldFocused)
-                .padding(.bottom, 20)
+            
+            Spacer()
             
             Button("Reset password") {
                 dismiss()
@@ -41,12 +42,12 @@ struct ForgotPasswordView: View {
             Button("Cancel") {
                 dismiss()
             }
-            .buttonStyle(CustomButton(buttonColor: .red))
+            .buttonStyle(CustomButton(textColor: .accentColor, onlyStroke: true))
             .frame(width: ScreenBoundsSupplier.shared.getScreenWidth() * 0.9)
             .contentShape(Rectangle())
+            .padding(.bottom)
         }
         .padding()
-        .position(x: ScreenBoundsSupplier.shared.getScreenWidth() * 0.5, y: ScreenBoundsSupplier.shared.getScreenHeight() * 0.3)
     }
 }
 

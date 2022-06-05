@@ -158,6 +158,21 @@
 		0ACD5997284A7F0E00AA9DA0 /* Rubik-Italic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 0ACD596F284A7F0D00AA9DA0 /* Rubik-Italic.ttf */; };
 		0ACD5998284A7F0E00AA9DA0 /* Rubik-Italic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 0ACD596F284A7F0D00AA9DA0 /* Rubik-Italic.ttf */; };
 		0ACD5999284A7F0E00AA9DA0 /* Rubik-Italic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 0ACD596F284A7F0D00AA9DA0 /* Rubik-Italic.ttf */; };
+		0ACD599F284B71AF00AA9DA0 /* ProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0ACD599E284B71AF00AA9DA0 /* ProfileView.swift */; };
+		0ACD59A0284B71AF00AA9DA0 /* ProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0ACD599E284B71AF00AA9DA0 /* ProfileView.swift */; };
+		0ACD59A1284B71AF00AA9DA0 /* ProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0ACD599E284B71AF00AA9DA0 /* ProfileView.swift */; };
+		0ACD59A3284B71BC00AA9DA0 /* ProfileViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0ACD59A2284B71BC00AA9DA0 /* ProfileViewModel.swift */; };
+		0ACD59A4284B71BC00AA9DA0 /* ProfileViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0ACD59A2284B71BC00AA9DA0 /* ProfileViewModel.swift */; };
+		0ACD59A5284B71BC00AA9DA0 /* ProfileViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0ACD59A2284B71BC00AA9DA0 /* ProfileViewModel.swift */; };
+		0ACD59AD284B739C00AA9DA0 /* Profile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0ACD59AC284B739C00AA9DA0 /* Profile.swift */; };
+		0ACD59AE284B739C00AA9DA0 /* Profile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0ACD59AC284B739C00AA9DA0 /* Profile.swift */; };
+		0ACD59AF284B739C00AA9DA0 /* Profile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0ACD59AC284B739C00AA9DA0 /* Profile.swift */; };
+		0ACD59B1284B73AE00AA9DA0 /* Address.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0ACD59B0284B73AE00AA9DA0 /* Address.swift */; };
+		0ACD59B2284B73AE00AA9DA0 /* Address.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0ACD59B0284B73AE00AA9DA0 /* Address.swift */; };
+		0ACD59B3284B73AE00AA9DA0 /* Address.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0ACD59B0284B73AE00AA9DA0 /* Address.swift */; };
+		0ACD59B6284B74CD00AA9DA0 /* PossibleCountries.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0ACD59B5284B74CD00AA9DA0 /* PossibleCountries.swift */; };
+		0ACD59B7284B74CD00AA9DA0 /* PossibleCountries.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0ACD59B5284B74CD00AA9DA0 /* PossibleCountries.swift */; };
+		0ACD59B8284B74CD00AA9DA0 /* PossibleCountries.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0ACD59B5284B74CD00AA9DA0 /* PossibleCountries.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -237,6 +252,11 @@
 		0ACD596D284A7F0D00AA9DA0 /* Rubik-MediumItalic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Rubik-MediumItalic.ttf"; sourceTree = "<group>"; };
 		0ACD596E284A7F0D00AA9DA0 /* Rubik-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Rubik-Regular.ttf"; sourceTree = "<group>"; };
 		0ACD596F284A7F0D00AA9DA0 /* Rubik-Italic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Rubik-Italic.ttf"; sourceTree = "<group>"; };
+		0ACD599E284B71AF00AA9DA0 /* ProfileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileView.swift; sourceTree = "<group>"; };
+		0ACD59A2284B71BC00AA9DA0 /* ProfileViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewModel.swift; sourceTree = "<group>"; };
+		0ACD59AC284B739C00AA9DA0 /* Profile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Profile.swift; sourceTree = "<group>"; };
+		0ACD59B0284B73AE00AA9DA0 /* Address.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Address.swift; sourceTree = "<group>"; };
+		0ACD59B5284B74CD00AA9DA0 /* PossibleCountries.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PossibleCountries.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -330,6 +350,7 @@
 		0ACD58C0284A6F6500AA9DA0 /* Utils */ = {
 			isa = PBXGroup;
 			children = (
+				0ACD59B4284B74C000AA9DA0 /* Enums */,
 				0ACD58C1284A6F6500AA9DA0 /* Modifiers */,
 				0ACD58C5284A6F6500AA9DA0 /* Objects */,
 				0ACD58CA284A6F6500AA9DA0 /* Extensions */,
@@ -398,6 +419,11 @@
 		0ACD58D6284A6F6600AA9DA0 /* Home */ = {
 			isa = PBXGroup;
 			children = (
+				0ACD59A6284B72AA00AA9DA0 /* Cart */,
+				0ACD599D284B71A000AA9DA0 /* Profile */,
+				0ACD599C284B719A00AA9DA0 /* Search */,
+				0ACD599B284B719300AA9DA0 /* Favorites */,
+				0ACD599A284B718E00AA9DA0 /* Explore */,
 				0ACD58D7284A6F6600AA9DA0 /* HomeViewModel.swift */,
 				0ACD58D8284A6F6600AA9DA0 /* HomeView.swift */,
 			);
@@ -479,6 +505,61 @@
 				0ACD5965284A7F0D00AA9DA0 /* Rubik-SemiBoldItalic.ttf */,
 			);
 			path = Rubik;
+			sourceTree = "<group>";
+		};
+		0ACD599A284B718E00AA9DA0 /* Explore */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Explore;
+			sourceTree = "<group>";
+		};
+		0ACD599B284B719300AA9DA0 /* Favorites */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Favorites;
+			sourceTree = "<group>";
+		};
+		0ACD599C284B719A00AA9DA0 /* Search */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Search;
+			sourceTree = "<group>";
+		};
+		0ACD599D284B71A000AA9DA0 /* Profile */ = {
+			isa = PBXGroup;
+			children = (
+				0ACD59AB284B739100AA9DA0 /* Models */,
+				0ACD599E284B71AF00AA9DA0 /* ProfileView.swift */,
+				0ACD59A2284B71BC00AA9DA0 /* ProfileViewModel.swift */,
+			);
+			path = Profile;
+			sourceTree = "<group>";
+		};
+		0ACD59A6284B72AA00AA9DA0 /* Cart */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Cart;
+			sourceTree = "<group>";
+		};
+		0ACD59AB284B739100AA9DA0 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				0ACD59AC284B739C00AA9DA0 /* Profile.swift */,
+				0ACD59B0284B73AE00AA9DA0 /* Address.swift */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		0ACD59B4284B74C000AA9DA0 /* Enums */ = {
+			isa = PBXGroup;
+			children = (
+				0ACD59B5284B74CD00AA9DA0 /* PossibleCountries.swift */,
+			);
+			path = Enums;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -697,10 +778,13 @@
 			files = (
 				0ACD590C284A6F6600AA9DA0 /* HomeViewModel.swift in Sources */,
 				0ACD58FD284A6F6600AA9DA0 /* CustomTextField.swift in Sources */,
+				0ACD59B6284B74CD00AA9DA0 /* PossibleCountries.swift in Sources */,
 				0ACD58DF284A6F6600AA9DA0 /* CustomButtonStyle.swift in Sources */,
+				0ACD59AD284B739C00AA9DA0 /* Profile.swift in Sources */,
 				0ACD58EB284A6F6600AA9DA0 /* TabBarStateManager.swift in Sources */,
 				0ACD5909284A6F6600AA9DA0 /* RegisterViewModel.swift in Sources */,
 				0ACD58F4284A6F6600AA9DA0 /* ConditionalViewModifiers.swift in Sources */,
+				0ACD59A3284B71BC00AA9DA0 /* ProfileViewModel.swift in Sources */,
 				0ACD58E2284A6F6600AA9DA0 /* CheckmarkToggleStyle.swift in Sources */,
 				0ACD5899284A6E9200AA9DA0 /* ContentView.swift in Sources */,
 				0ACD591B284A6F6600AA9DA0 /* LoginView.swift in Sources */,
@@ -710,8 +794,10 @@
 				0ACD58FA284A6F6600AA9DA0 /* Color.swift in Sources */,
 				0ACD58EE284A6F6600AA9DA0 /* LocationManager.swift in Sources */,
 				0ACD58E8284A6F6600AA9DA0 /* AuthStateManager.swift in Sources */,
+				0ACD59B1284B73AE00AA9DA0 /* Address.swift in Sources */,
 				0ACD58F1284A6F6600AA9DA0 /* ScreenBoundsSupplier.swift in Sources */,
 				0ACD5897284A6E9200AA9DA0 /* SwiftfulShoppingApp.swift in Sources */,
+				0ACD599F284B71AF00AA9DA0 /* ProfileView.swift in Sources */,
 				0ACD58E5284A6F6600AA9DA0 /* LandscapeModifier.swift in Sources */,
 				0ACD5912284A6F6600AA9DA0 /* ForgotPasswordViewModel.swift in Sources */,
 				0ACD5915284A6F6600AA9DA0 /* ForgotPasswordView.swift in Sources */,
@@ -726,6 +812,7 @@
 			files = (
 				0ACD5901284A6F6600AA9DA0 /* LabelledDivider.swift in Sources */,
 				0ACD590A284A6F6600AA9DA0 /* RegisterViewModel.swift in Sources */,
+				0ACD59B2284B73AE00AA9DA0 /* Address.swift in Sources */,
 				0ACD58E6284A6F6600AA9DA0 /* LandscapeModifier.swift in Sources */,
 				0ACD590D284A6F6600AA9DA0 /* HomeViewModel.swift in Sources */,
 				0ACD58F8284A6F6600AA9DA0 /* Hidden.swift in Sources */,
@@ -739,11 +826,15 @@
 				0ACD58E0284A6F6600AA9DA0 /* CustomButtonStyle.swift in Sources */,
 				0ACD58EF284A6F6600AA9DA0 /* LocationManager.swift in Sources */,
 				0ACD58F2284A6F6600AA9DA0 /* ScreenBoundsSupplier.swift in Sources */,
+				0ACD59AE284B739C00AA9DA0 /* Profile.swift in Sources */,
+				0ACD59A4284B71BC00AA9DA0 /* ProfileViewModel.swift in Sources */,
 				0ACD591C284A6F6600AA9DA0 /* LoginView.swift in Sources */,
 				0ACD58EC284A6F6600AA9DA0 /* TabBarStateManager.swift in Sources */,
 				0ACD58FE284A6F6600AA9DA0 /* CustomTextField.swift in Sources */,
+				0ACD59B7284B74CD00AA9DA0 /* PossibleCountries.swift in Sources */,
 				0ACD58E9284A6F6600AA9DA0 /* AuthStateManager.swift in Sources */,
 				0ACD58A8284A6E9300AA9DA0 /* SwiftfulShoppingTests.swift in Sources */,
+				0ACD59A0284B71AF00AA9DA0 /* ProfileView.swift in Sources */,
 				0ACD58F5284A6F6600AA9DA0 /* ConditionalViewModifiers.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -754,10 +845,13 @@
 			files = (
 				0ACD590E284A6F6600AA9DA0 /* HomeViewModel.swift in Sources */,
 				0ACD58FF284A6F6600AA9DA0 /* CustomTextField.swift in Sources */,
+				0ACD59B8284B74CD00AA9DA0 /* PossibleCountries.swift in Sources */,
 				0ACD58E1284A6F6600AA9DA0 /* CustomButtonStyle.swift in Sources */,
+				0ACD59AF284B739C00AA9DA0 /* Profile.swift in Sources */,
 				0ACD58ED284A6F6600AA9DA0 /* TabBarStateManager.swift in Sources */,
 				0ACD590B284A6F6600AA9DA0 /* RegisterViewModel.swift in Sources */,
 				0ACD58F6284A6F6600AA9DA0 /* ConditionalViewModifiers.swift in Sources */,
+				0ACD59A5284B71BC00AA9DA0 /* ProfileViewModel.swift in Sources */,
 				0ACD58E4284A6F6600AA9DA0 /* CheckmarkToggleStyle.swift in Sources */,
 				0ACD58B4284A6E9300AA9DA0 /* SwiftfulShoppingUITestsLaunchTests.swift in Sources */,
 				0ACD591D284A6F6600AA9DA0 /* LoginView.swift in Sources */,
@@ -767,8 +861,10 @@
 				0ACD58FC284A6F6600AA9DA0 /* Color.swift in Sources */,
 				0ACD58F0284A6F6600AA9DA0 /* LocationManager.swift in Sources */,
 				0ACD58EA284A6F6600AA9DA0 /* AuthStateManager.swift in Sources */,
+				0ACD59B3284B73AE00AA9DA0 /* Address.swift in Sources */,
 				0ACD58F3284A6F6600AA9DA0 /* ScreenBoundsSupplier.swift in Sources */,
 				0ACD58B2284A6E9300AA9DA0 /* SwiftfulShoppingUITests.swift in Sources */,
+				0ACD59A1284B71AF00AA9DA0 /* ProfileView.swift in Sources */,
 				0ACD58E7284A6F6600AA9DA0 /* LandscapeModifier.swift in Sources */,
 				0ACD5914284A6F6600AA9DA0 /* ForgotPasswordViewModel.swift in Sources */,
 				0ACD5917284A6F6600AA9DA0 /* ForgotPasswordView.swift in Sources */,
@@ -918,6 +1014,7 @@
 				DEVELOPMENT_TEAM = T3SR62DCTW;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "Location used to fill registration address data";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -947,6 +1044,7 @@
 				DEVELOPMENT_TEAM = T3SR62DCTW;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "Location used to fill registration address data";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;

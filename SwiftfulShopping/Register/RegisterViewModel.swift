@@ -38,8 +38,6 @@ class RegisterViewModel: ObservableObject {
     @Published var cityInvoice: String = ""
     @Published var countryInvoice: String = ""
     
-    var possibleCountries = ["Poland", "United States"]
-    
     /// To be removed
     func fillPersonalData() {
         self.firstName = "Jan"
