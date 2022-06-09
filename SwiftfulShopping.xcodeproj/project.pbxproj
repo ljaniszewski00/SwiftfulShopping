@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0A453B8B2851DFDC00870EA9 /* ExploreView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A453B8A2851DFDC00870EA9 /* ExploreView.swift */; };
+		0A453B8D2851DFE600870EA9 /* ExploreViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A453B8C2851DFE600870EA9 /* ExploreViewModel.swift */; };
 		0ACD5897284A6E9200AA9DA0 /* SwiftfulShoppingApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0ACD5896284A6E9200AA9DA0 /* SwiftfulShoppingApp.swift */; };
 		0ACD5899284A6E9200AA9DA0 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0ACD5898284A6E9200AA9DA0 /* ContentView.swift */; };
 		0ACD589B284A6E9300AA9DA0 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0ACD589A284A6E9300AA9DA0 /* Assets.xcassets */; };
@@ -193,6 +195,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		0A453B8A2851DFDC00870EA9 /* ExploreView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExploreView.swift; sourceTree = "<group>"; };
+		0A453B8C2851DFE600870EA9 /* ExploreViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExploreViewModel.swift; sourceTree = "<group>"; };
 		0ACD5893284A6E9200AA9DA0 /* SwiftfulShopping.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SwiftfulShopping.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		0ACD5896284A6E9200AA9DA0 /* SwiftfulShoppingApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwiftfulShoppingApp.swift; sourceTree = "<group>"; };
 		0ACD5898284A6E9200AA9DA0 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -510,6 +514,8 @@
 		0ACD599A284B718E00AA9DA0 /* Explore */ = {
 			isa = PBXGroup;
 			children = (
+				0A453B8A2851DFDC00870EA9 /* ExploreView.swift */,
+				0A453B8C2851DFE600870EA9 /* ExploreViewModel.swift */,
 			);
 			path = Explore;
 			sourceTree = "<group>";
@@ -788,8 +794,10 @@
 				0ACD58E2284A6F6600AA9DA0 /* CheckmarkToggleStyle.swift in Sources */,
 				0ACD5899284A6E9200AA9DA0 /* ContentView.swift in Sources */,
 				0ACD591B284A6F6600AA9DA0 /* LoginView.swift in Sources */,
+				0A453B8D2851DFE600870EA9 /* ExploreViewModel.swift in Sources */,
 				0ACD5906284A6F6600AA9DA0 /* RegisterView.swift in Sources */,
 				0ACD590F284A6F6600AA9DA0 /* HomeView.swift in Sources */,
+				0A453B8B2851DFDC00870EA9 /* ExploreView.swift in Sources */,
 				0ACD5900284A6F6600AA9DA0 /* LabelledDivider.swift in Sources */,
 				0ACD58FA284A6F6600AA9DA0 /* Color.swift in Sources */,
 				0ACD58EE284A6F6600AA9DA0 /* LocationManager.swift in Sources */,
