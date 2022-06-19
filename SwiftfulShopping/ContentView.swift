@@ -34,7 +34,9 @@ struct ContentView: View {
                             .foregroundColor(.white)
                         
                         VStack {
-                            NavigationLink(destination: LoginView().environmentObject(authStateManager), isActive: $presentLoginView) {
+                            NavigationLink(isActive: $presentLoginView) {
+                                LoginView().environmentObject(authStateManager)
+                            } label: {
                                 Button("Login") {
                                     withAnimation() {
                                         UserDefaults.standard.set(false, forKey: "guest")
@@ -47,8 +49,10 @@ struct ContentView: View {
                                 .padding(.bottom)
                             }
                             
-                            NavigationLink(destination: RegisterView().environmentObject(authStateManager)
-                                .environmentObject(locationManager), isActive: $presentRegisterView) {
+                            NavigationLink(isActive: $presentRegisterView) {
+                                RegisterView().environmentObject(authStateManager)
+                                    .environmentObject(locationManager)
+                            } label: {
                                 Button("Register") {
                                     withAnimation() {
                                         UserDefaults.standard.set(false, forKey: "guest")
