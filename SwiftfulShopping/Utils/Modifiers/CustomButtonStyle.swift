@@ -2,7 +2,7 @@
 //  WelcomeButtonsStyle.swift
 //  SwiftlyShopping
 //
-//  Created by Łukasz Janiszewski on 01/04/2022.
+//  Created by Łukasz Janiszewski on 01/04/2022..
 //
 
 import SwiftUI
