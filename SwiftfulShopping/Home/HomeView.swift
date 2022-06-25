@@ -143,6 +143,10 @@ struct HomeView: View {
                 .navigationBarTitleDisplayMode(.inline)
                 
             }
+            .onAppear {
+                authStateManager.isLogged = true
+                authStateManager.isGuest = false
+            }
             .ignoresSafeArea(edges: .bottom)
         } else {
             ContentView()

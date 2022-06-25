@@ -15,9 +15,7 @@ struct ExploreView: View {
     var body: some View {
         NavigationView {
             ScrollView(.vertical) {
-                ForEach(1...50, id: \.self) { number in
-                    Text("\(number)")
-                }
+                
             }
             .navigationTitle("Explore")
             .toolbar {
@@ -43,6 +41,7 @@ struct ExploreView: View {
                 }
             }
         }
+        .navigationViewStyle(.stack)
     }
 }
 

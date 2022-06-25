@@ -18,6 +18,12 @@ struct Profile {
     var imageURL: String? = nil
 }
 
+extension Profile: CustomStringConvertible {
+    var description: String {
+        return "\(firstName) \(lastName)\n\(username)\n\(email)"
+    }
+}
+
 extension Profile {
     static let demoProfile = Profile(id: UUID().uuidString,
                                      firstName: "Jan",

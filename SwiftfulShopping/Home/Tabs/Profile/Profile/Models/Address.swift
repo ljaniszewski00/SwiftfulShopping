@@ -16,6 +16,12 @@ struct Address {
     var country: String
 }
 
+extension Address: CustomStringConvertible {
+    var description: String {
+        return "\(streetName) \(streetNumber)/\(apartmentNumber)\n\(zipCode) \(city)\n\(country)"
+    }
+}
+
 extension Address {
     static let demoAddress: Address = Address(streetName: "Wierzbowskiego",
                                               streetNumber: "13",

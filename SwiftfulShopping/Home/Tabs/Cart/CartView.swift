@@ -15,6 +15,7 @@ struct CartView: View {
             }
             .navigationTitle("Cart")
         }
+        .navigationViewStyle(.stack)
     }
 }
 
