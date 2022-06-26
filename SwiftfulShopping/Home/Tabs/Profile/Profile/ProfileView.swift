@@ -86,8 +86,7 @@ struct ProfileView: View {
                             .padding(.trailing, 20)
                         }
                         .padding()
-                        
-                        Spacer(minLength: 200)
+                        .padding(.bottom, 100)
                         
                         VStack(alignment: .center) {
                             ForEach(NavigationViewsNames.allCases, id: \.self) { navigationViewName in
@@ -105,11 +104,59 @@ struct ProfileView: View {
                             }
                         }
                         
-                        NavigationLink(destination: OrdersView(), tag: "Orders", selection: $selection) { EmptyView() }
-                        NavigationLink(destination: ReturnsView(), tag: "Returns", selection: $selection) { EmptyView() }
-                        NavigationLink(destination: PersonalInfoView(), tag: "Personal Info", selection: $selection) { EmptyView() }
-                        NavigationLink(destination: PaymentDetailsView(), tag: "Payment Details", selection: $selection) { EmptyView() }
-                        NavigationLink(destination: HelpView(), tag: "Help", selection: $selection) { EmptyView() }
+                        VStack(alignment: .center) {
+                            HStack {
+                                Spacer()
+                                Button("Logout") {
+                                    withAnimation {
+                                        authStateManager.logoutCompletely()
+                                    }
+                                }
+                                .buttonStyle(CustomButton(buttonColor: .red.opacity(0.9), imageName: "rectangle.portrait.and.arrow.right"))
+                                .frame(width: UIScreen.main.bounds.width * 0.9)
+                                .contentShape(Rectangle())
+                                .padding(.top, 50)
+                                .padding(.bottom, 20)
+                                Spacer()
+                            }
+                        }
+                        
+                        
+                        
+                        NavigationLink(destination: OrdersView()
+                                                        .environmentObject(authStateManager)
+                                                        .environmentObject(tabBarStateManager)
+                                                        .environmentObject(profileViewModel),
+                                       tag: "Orders",
+                                       selection: $selection) { EmptyView() }
+                        
+                        NavigationLink(destination: ReturnsView()
+                                                        .environmentObject(authStateManager)
+                                                        .environmentObject(tabBarStateManager)
+                                                        .environmentObject(profileViewModel),
+                                       tag: "Returns",
+                                       selection: $selection) { EmptyView() }
+                        
+                        NavigationLink(destination: PersonalInfoView()
+                                                        .environmentObject(authStateManager)
+                                                        .environmentObject(tabBarStateManager)
+                                                        .environmentObject(profileViewModel),
+                                       tag: "Personal Info",
+                                       selection: $selection) { EmptyView() }
+                        
+                        NavigationLink(destination: PaymentDetailsView()
+                                                        .environmentObject(authStateManager)
+                                                        .environmentObject(tabBarStateManager)
+                                                        .environmentObject(profileViewModel),
+                                       tag: "Payment Details",
+                                       selection: $selection) { EmptyView() }
+                        
+                        NavigationLink(destination: HelpView()
+                                                        .environmentObject(authStateManager)
+                                                        .environmentObject(tabBarStateManager)
+                                                        .environmentObject(profileViewModel),
+                                       tag: "Help",
+                                       selection: $selection) { EmptyView() }
                     }
                 }
             }

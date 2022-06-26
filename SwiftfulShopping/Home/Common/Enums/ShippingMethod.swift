@@ -12,3 +12,9 @@ enum ShippingMethod: String {
     case parcel = "Parcel Locker"
     case courier = "Courier"
 }
+
+extension ShippingMethod: CaseIterable {
+    static var allCases: [ShippingMethod] {
+        return [.pickup, .parcel, .courier]
+    }
+}

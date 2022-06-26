@@ -8,14 +8,21 @@
 import Foundation
 
 struct Return {
-    var id: String
-    var returnDate: Date
+    var id: String = UUID().uuidString
+    var returnDate: Date = Date()
     var clientID: String
     var orderID: String
     var products: [Product]
     var returnPrice: Double
     var returnMethod: ShippingMethod
-    var status: ReturnStatus
+    var status: ReturnStatus = .reported
+    
+    var bankAccountNumber: String = ""
+    var bankAccountOwnerName: String = ""
+    var bankAccountOwnerStreetAndHouseNumber: String = ""
+    var bankAccountOwnerPostalCode: String = ""
+    var bankAccountOwnerCity: String = ""
+    var bankAccountOwnerCountry: String = ""
 }
 
 enum ReturnStatus: String {
@@ -24,6 +31,22 @@ enum ReturnStatus: String {
     case delivered = "Delivered"
     case moneyReturned = "Money returned"
     case closed = "Closed"
+}
+
+extension Return: Equatable, Hashable {
+    static func == (lhs: Return, rhs: Return) -> Bool {
+        return lhs.id == rhs.id
+    }
+    
+    func hash(into hasher: inout Hasher) {
+        hasher.combine(id)
+    }
+}
+
+extension Return: CustomStringConvertible {
+    var description: String {
+        "\(id)\nReturn Date: \(Date.getDayMonthYearFrom(date: returnDate))\nClient ID: \(clientID)\nOrder ID: \(orderID)\nReturn Price: \(returnPrice)\nReturn Method: \(returnMethod.rawValue)\nStatus: \(status.rawValue)"
+    }
 }
 
 extension Return {

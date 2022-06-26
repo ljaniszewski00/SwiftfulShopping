@@ -20,17 +20,6 @@ struct ExploreView: View {
             .navigationTitle("Explore")
             .toolbar {
                 ToolbarItem(placement: .navigationBarTrailing) {
-                    /// Here will be notifications
-                    Button(action: {
-                        withAnimation {
-                            authStateManager.logoutCompletely()
-                        }
-                    }, label: {
-                        Image(systemName: "rectangle.portrait.and.arrow.right")
-                    })
-                }
-                
-                ToolbarItem(placement: .navigationBarTrailing) {
                     Button(action: {
                         withAnimation {
                             

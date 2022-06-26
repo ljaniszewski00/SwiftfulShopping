@@ -1,76 +1,55 @@
 //
-//  OrderDetailsView.swift
+//  ReturnCreationView.swift
 //  SwiftfulShopping
 //
-//  Created by Łukasz Janiszewski on 25/06/2022.
+//  Created by Łukasz Janiszewski on 26/06/2022.
 //
 
 import SwiftUI
 
-struct OrderDetailsView: View {
+struct ReturnCreationView: View {
     @EnvironmentObject private var authStateManager: AuthStateManager
     @EnvironmentObject private var tabBarStateManager: TabBarStateManager
     @EnvironmentObject private var profileViewModel: ProfileViewModel
     
-    @State private var showProductsList: Bool = true
-    @State private var shouldPresentReturnCreationView = false
+    @StateObject private var returnCreationViewModel: ReturnCreationViewModel = ReturnCreationViewModel()
+    
+    @State private var shouldProceedReturnCreationView = false
     
     var order: Order
     
     var body: some View {
         ScrollView(.vertical, showsIndicators: false) {
             VStack(alignment: .leading, spacing: 40) {
+                StepsView(stepsNumber: 3, activeStep: 1)
+                
                 VStack(alignment: .leading, spacing: 10) {
-                    Text("Order Date")
+                    Text("Order ID")
                         .font(.system(size: 20))
-                    Text(Date.getDayMonthYearFrom(date: order.orderDate))
+                    Text(order.id)
                         .font(.system(size: 22, weight: .bold))
                         .foregroundColor(.accentColor)
                 }
                 
-                HStack(alignment: .top) {
-                    VStack(alignment: .leading, spacing: 15) {
-                        Text("Customer Info")
-                            .font(.system(size: 20, weight: .medium))
-                            .foregroundColor(.accentColor)
-                        Text(order.clientInfo)
-                            
-                    }
-                    Spacer()
-                    VStack(alignment: .leading, spacing: 15) {
-                        Text("Shipping Info")
-                            .font(.system(size: 20, weight: .medium))
-                            .foregroundColor(.accentColor)
-                        Text(order.shippingAddress)
-                            
-                    }
-                }
-                .padding(.bottom, 20)
-                
-                HStack(alignment: .bottom) {
-                    VStack(alignment: .leading, spacing: 10) {
-                        Text("Status")
-                            .font(.system(size: 20))
-                            
-                        Text("Placed")
-                            .font(.system(size: 22, weight: .bold))
-                            .foregroundColor(.accentColor)
-                    }
-                    .padding(.bottom, 10)
-                    
-                    Spacer()
-                    
-                    Button(action: {
-                        showProductsList.toggle()
-                    }, label: {
-                        Image(systemName: showProductsList ? "chevron.up" : "chevron.down")
-                    })
-                    .padding(.trailing)
-                }
-                
-                if showProductsList {
+                VStack(alignment: .leading, spacing: 30) {
+                    Text("Choose products you want to return")
+                        .font(.system(size: 20))
                     ForEach(order.shoppingCart.products, id: \.self) { product in
                         HStack(alignment: .top) {
+                            Button(action: {
+                                returnCreationViewModel.manageProductToReturn(product: product)
+                            }, label: {
+                                if returnCreationViewModel.productsForReturn.contains(product) {
+                                    Circle()
+                                        .foregroundColor(.accentColor)
+                                        .frame(width: 25)
+                                } else {
+                                    Circle()
+                                        .stroke(lineWidth: 3)
+                                        .foregroundColor(.accentColor)
+                                        .frame(width: 25)
+                                }
+                            })
                             Image("product_placeholder_image")
                                 .resizable()
                                 .frame(width: 150, height: 150)
@@ -87,54 +66,53 @@ struct OrderDetailsView: View {
                                         .font(.system(size: 22, weight: .bold))
                                         .foregroundColor(.accentColor)
                                 }
-                                
-                                
                             }
                         }
+                        
                         Divider()
                     }
                 }
                 
-                VStack(alignment: .leading, spacing: 10) {
-                    Text("Total Price")
+                HStack {
+                    Text("Selected Products:")
                         .font(.system(size: 20))
-                        
-                    Text("\(order.totalCost, specifier: "%.2f")")
+                    Text("\(returnCreationViewModel.productsForReturn.count)")
                         .font(.system(size: 22, weight: .bold))
                         .foregroundColor(.accentColor)
                 }
                 
-                Button("Return") {
+                Button("Continue") {
                     withAnimation {
-                        shouldPresentReturnCreationView = true
+                        shouldProceedReturnCreationView = true
                     }
                 }
                 .buttonStyle(CustomButton())
+                .disabled(returnCreationViewModel.productsForReturn.isEmpty)
                 .frame(width: UIScreen.main.bounds.width * 0.9)
                 .contentShape(Rectangle())
                 .padding(.bottom, 20)
             }
             .padding()
         }
-        .navigationTitle("Order No. \(order.id)")
-        .navigationBarTitleDisplayMode(.inline)
+        .navigationTitle("Create Return")
         
-        NavigationLink(destination: ReturnCreationView(order: order)
+        NavigationLink(destination: SecondReturnCreationView(order: order)
                                         .environmentObject(authStateManager)
                                         .environmentObject(tabBarStateManager)
-                                        .environmentObject(profileViewModel),
-                       isActive: $shouldPresentReturnCreationView) { EmptyView() }
+                                        .environmentObject(profileViewModel)
+                                        .environmentObject(returnCreationViewModel),
+                       isActive: $shouldProceedReturnCreationView) { EmptyView() }
     }
 }
 
-struct OrderDetailsView_Previews: PreviewProvider {
+struct ReturnCreationView_Previews: PreviewProvider {
     static var previews: some View {
         let authStateManager = AuthStateManager(isGuestDefault: true)
         let tabBarStateManager = TabBarStateManager()
         let profileViewModel = ProfileViewModel()
         ForEach(ColorScheme.allCases, id: \.self) { colorScheme in
             ForEach(["iPhone 13 Pro Max", "iPhone 8"], id: \.self) { deviceName in
-                OrderDetailsView(order: profileViewModel.orders[0])
+                ReturnCreationView(order: profileViewModel.orders[0])
                     .environmentObject(authStateManager)
                     .environmentObject(tabBarStateManager)
                     .environmentObject(profileViewModel)

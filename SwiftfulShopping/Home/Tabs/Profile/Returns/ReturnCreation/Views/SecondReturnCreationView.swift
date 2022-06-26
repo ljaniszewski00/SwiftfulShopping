@@ -1,0 +1,113 @@
+//
+//  SecondReturnCreationView.swift
+//  SwiftfulShopping
+//
+//  Created by Łukasz Janiszewski on 26/06/2022.
+//
+
+import SwiftUI
+
+struct SecondReturnCreationView: View {
+    @EnvironmentObject private var authStateManager: AuthStateManager
+    @EnvironmentObject private var tabBarStateManager: TabBarStateManager
+    @EnvironmentObject private var profileViewModel: ProfileViewModel
+    @EnvironmentObject private var returnCreationViewModel: ReturnCreationViewModel
+    
+    @State private var shouldProceedReturnCreationView = false
+    @State private var isBankAccountTextFieldFocused: Bool = false
+    @State private var isBankAccountHolderFirstNameTextFieldFocused: Bool = false
+    @State private var isBankAccountHolderAddressTextFieldFocused: Bool = false
+    @State private var isBankAccountHolderZipCodeTextFieldFocused: Bool = false
+    @State private var isBankAccountHolderCityTextFieldFocused: Bool = false
+    @State private var isBankAccountHolderCountryTextFieldFocused: Bool = false
+    
+    var order: Order
+    
+    var body: some View {
+        ScrollView(.vertical) {
+            VStack(alignment: .leading, spacing: 40) {
+                StepsView(stepsNumber: 3, activeStep: 2)
+                
+                Text("Provide bank account data to get your money back")
+                    .font(.system(size: 22, weight: .bold))
+                
+                VStack(spacing: 20) {
+                    RectangleCustomTextField(
+                        textFieldProperty: "Bank account number",
+                        textFieldFooter: "Provide 26-digits number",
+                        text: $returnCreationViewModel.bankAccountNumber,
+                        isFocusedParentView: $isBankAccountTextFieldFocused)
+                    
+                    RectangleCustomTextField(
+                        textFieldProperty: "Name of bank account owner",
+                        text: $returnCreationViewModel.bankAccountNumber,
+                        isFocusedParentView: $isBankAccountHolderAddressTextFieldFocused)
+                    
+                    RectangleCustomTextField(
+                        textFieldProperty: "Street and house number",
+                        text: $returnCreationViewModel.bankAccountNumber,
+                        isFocusedParentView: $isBankAccountHolderAddressTextFieldFocused)
+                    
+                    RectangleCustomTextField(
+                        textFieldProperty: "Postal code",
+                        text: $returnCreationViewModel.bankAccountNumber,
+                        isFocusedParentView: $isBankAccountHolderZipCodeTextFieldFocused)
+                    
+                    RectangleCustomTextField(
+                        textFieldProperty: "City",
+                        text: $returnCreationViewModel.bankAccountNumber,
+                        isFocusedParentView: $isBankAccountHolderCityTextFieldFocused)
+                    
+                    RectangleCustomTextField(
+                        textFieldProperty: "Country",
+                        text: $returnCreationViewModel.bankAccountNumber,
+                        isFocusedParentView: $isBankAccountHolderCityTextFieldFocused)
+                }
+                
+                Button("Continue") {
+                    withAnimation {
+                        shouldProceedReturnCreationView = true
+                    }
+                }
+                .buttonStyle(CustomButton())
+                .frame(width: UIScreen.main.bounds.width * 0.9)
+                .contentShape(Rectangle())
+                .padding(.bottom, 20)
+            }
+            .padding()
+        }
+        .navigationTitle("Create Return")
+        
+        NavigationLink(destination: ThirdReturnCreationView(order: order)
+                                        .environmentObject(authStateManager)
+                                        .environmentObject(tabBarStateManager)
+                                        .environmentObject(profileViewModel)
+                                        .environmentObject(returnCreationViewModel),
+                       isActive: $shouldProceedReturnCreationView) { EmptyView() }
+    }
+}
+
+struct SecondReturnCreationView_Previews: PreviewProvider {
+    static var previews: some View {
+        let authStateManager = AuthStateManager(isGuestDefault: true)
+        let tabBarStateManager = TabBarStateManager()
+        let profileViewModel = ProfileViewModel()
+        let returnCreationViewModel = ReturnCreationViewModel()
+        ForEach(ColorScheme.allCases, id: \.self) { colorScheme in
+            ForEach(["iPhone 13 Pro Max", "iPhone 8"], id: \.self) { deviceName in
+                SecondReturnCreationView(order: profileViewModel.orders[0])
+                    .environmentObject(authStateManager)
+                    .environmentObject(tabBarStateManager)
+                    .environmentObject(profileViewModel)
+                    .environmentObject(returnCreationViewModel)
+                    .preferredColorScheme(colorScheme)
+                    .previewDevice(PreviewDevice(rawValue: deviceName))
+                    .previewDisplayName("\(deviceName) portrait")
+                    .onAppear {
+                        authStateManager.isGuest = false
+                        authStateManager.isLogged = true
+                    }
+            }
+        }
+    }
+}
