@@ -40,28 +40,28 @@ struct SecondReturnCreationView: View {
                     
                     RectangleCustomTextField(
                         textFieldProperty: "Name of bank account owner",
-                        text: $returnCreationViewModel.bankAccountNumber,
-                        isFocusedParentView: $isBankAccountHolderAddressTextFieldFocused)
+                        text: $returnCreationViewModel.nameOfBankAccountOwner,
+                        isFocusedParentView: $isBankAccountHolderFirstNameTextFieldFocused)
                     
                     RectangleCustomTextField(
                         textFieldProperty: "Street and house number",
-                        text: $returnCreationViewModel.bankAccountNumber,
+                        text: $returnCreationViewModel.streetAndHouseNumber,
                         isFocusedParentView: $isBankAccountHolderAddressTextFieldFocused)
                     
                     RectangleCustomTextField(
                         textFieldProperty: "Postal code",
-                        text: $returnCreationViewModel.bankAccountNumber,
+                        text: $returnCreationViewModel.postalCode,
                         isFocusedParentView: $isBankAccountHolderZipCodeTextFieldFocused)
                     
                     RectangleCustomTextField(
                         textFieldProperty: "City",
-                        text: $returnCreationViewModel.bankAccountNumber,
+                        text: $returnCreationViewModel.city,
                         isFocusedParentView: $isBankAccountHolderCityTextFieldFocused)
                     
                     RectangleCustomTextField(
                         textFieldProperty: "Country",
-                        text: $returnCreationViewModel.bankAccountNumber,
-                        isFocusedParentView: $isBankAccountHolderCityTextFieldFocused)
+                        text: $returnCreationViewModel.country,
+                        isFocusedParentView: $isBankAccountHolderCountryTextFieldFocused)
                 }
                 
                 Button("Continue") {
@@ -73,6 +73,7 @@ struct SecondReturnCreationView: View {
                 .frame(width: UIScreen.main.bounds.width * 0.9)
                 .contentShape(Rectangle())
                 .padding(.bottom, 20)
+                .disabled(returnCreationViewModel.fieldsNotValidated)
             }
             .padding()
         }

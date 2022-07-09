@@ -22,9 +22,25 @@ class ProfileViewModel: ObservableObject {
         }
     }
     
+    var datesForReturnsViewListSections: [String] {
+        var returnsShortDates: [String] = []
+        for userReturn in returns {
+            returnsShortDates.append(Date.getMonthNameAndYearFrom(date: userReturn.returnDate))
+        }
+        return returnsShortDates.uniqued().sorted { firstDate, secondDate in
+            firstDate.suffix(4) > secondDate.suffix(4)
+        }
+    }
+    
     func getOrdersFor(date: String) -> [Order] {
         return orders.filter {
             Date.getMonthNameAndYearFrom(date: $0.orderDate) == date
+        }
+    }
+    
+    func getReturnsFor(date: String) -> [Return] {
+        return returns.filter {
+            Date.getMonthNameAndYearFrom(date: $0.returnDate) == date
         }
     }
 }

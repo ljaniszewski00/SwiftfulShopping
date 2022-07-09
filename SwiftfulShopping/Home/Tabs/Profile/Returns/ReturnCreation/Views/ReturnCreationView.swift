@@ -36,20 +36,16 @@ struct ReturnCreationView: View {
                         .font(.system(size: 20))
                     ForEach(order.shoppingCart.products, id: \.self) { product in
                         HStack(alignment: .top) {
-                            Button(action: {
-                                returnCreationViewModel.manageProductToReturn(product: product)
-                            }, label: {
-                                if returnCreationViewModel.productsForReturn.contains(product) {
-                                    Circle()
-                                        .foregroundColor(.accentColor)
-                                        .frame(width: 25)
-                                } else {
-                                    Circle()
-                                        .stroke(lineWidth: 3)
-                                        .foregroundColor(.accentColor)
-                                        .frame(width: 25)
-                                }
-                            })
+                            if returnCreationViewModel.productsForReturn.contains(product) {
+                                Circle()
+                                    .foregroundColor(.accentColor)
+                                    .frame(width: 25)
+                            } else {
+                                Circle()
+                                    .stroke(lineWidth: 3)
+                                    .foregroundColor(.accentColor)
+                                    .frame(width: 25)
+                            }
                             Image("product_placeholder_image")
                                 .resizable()
                                 .frame(width: 150, height: 150)
@@ -67,6 +63,9 @@ struct ReturnCreationView: View {
                                         .foregroundColor(.accentColor)
                                 }
                             }
+                        }
+                        .onTapGesture {
+                            returnCreationViewModel.manageProductToReturn(product: product)
                         }
                         
                         Divider()

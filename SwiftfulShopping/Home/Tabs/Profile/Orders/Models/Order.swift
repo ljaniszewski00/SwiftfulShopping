@@ -29,6 +29,7 @@ enum OrderStatus: String {
     case sent = "Sent"
     case delivered = "Delivered"
     case closed = "Closed"
+    case returned = "Returned"
 }
 
 extension Order: Equatable, Hashable {

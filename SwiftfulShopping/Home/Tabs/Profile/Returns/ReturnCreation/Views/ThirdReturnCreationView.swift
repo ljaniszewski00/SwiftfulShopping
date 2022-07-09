@@ -20,7 +20,11 @@ struct ThirdReturnCreationView: View {
     var body: some View {
         if shouldProceedReturnCreationView {
             withAnimation {
-                ReturnsView()
+                ProfileView()
+                    .environmentObject(authStateManager)
+                    .environmentObject(tabBarStateManager)
+                    .environmentObject(profileViewModel)
+                    .navigationBarHidden(true)
             }
         } else {
             VStack(alignment: .leading, spacing: 40) {

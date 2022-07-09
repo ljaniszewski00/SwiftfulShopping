@@ -121,8 +121,6 @@ struct ProfileView: View {
                             }
                         }
                         
-                        
-                        
                         NavigationLink(destination: OrdersView()
                                                         .environmentObject(authStateManager)
                                                         .environmentObject(tabBarStateManager)

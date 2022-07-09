@@ -19,6 +19,10 @@ class ReturnCreationViewModel: ObservableObject {
     
     @Published var shippingMethod: ShippingMethod = .parcel
     
+    var fieldsNotValidated: Bool {
+        bankAccountNumber.isEmpty || nameOfBankAccountOwner.isEmpty || streetAndHouseNumber.isEmpty || postalCode.isEmpty || city.isEmpty || country.isEmpty
+    }
+    
     func manageProductToReturn(product: Product) {
         if productsForReturn.contains(product) {
             for (index, productForReturn) in productsForReturn.enumerated() {
