@@ -79,4 +79,20 @@ class ProfileViewModel: ObservableObject {
             profile.otherAddresses.append(address)
         }
     }
+    
+    func editCardData(cardNumber: String, validThru: String, cardholderName: String) {
+        if profile.creditCard != nil {
+            profile.creditCard!.cardNumber = cardNumber
+            profile.creditCard!.validThru = validThru
+            profile.creditCard!.cardholderName = cardholderName
+        }
+    }
+    
+    func addNewCard(card: CreditCard) {
+        profile.creditCard = card
+    }
+    
+    func changeDefaultPaymentMethod(newDefaultPaymentMethod: PaymentMethod) {
+        profile.defaultPaymentMethod = newDefaultPaymentMethod
+    }
 }

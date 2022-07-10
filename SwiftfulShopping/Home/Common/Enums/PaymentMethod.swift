@@ -12,3 +12,9 @@ enum PaymentMethod: String {
     case creditCard = "Credit Card"
     case applePay = "Apple Pay"
 }
+
+extension PaymentMethod: CaseIterable {
+    static var allCases: [PaymentMethod] {
+        return [.cash, .creditCard, .applePay]
+    }
+}

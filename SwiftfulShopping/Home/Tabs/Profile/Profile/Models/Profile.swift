@@ -16,6 +16,8 @@ struct Profile {
     var email: String
     var address: Address
     var otherAddresses: [Address] = []
+    var defaultPaymentMethod: PaymentMethod = .creditCard
+    var creditCard: CreditCard? = nil
     var imageURL: String? = nil
 }
 
