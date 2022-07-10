@@ -92,10 +92,13 @@ struct ProfileView: View {
                             ForEach(NavigationViewsNames.allCases, id: \.self) { navigationViewName in
                                 HStack {
                                     Spacer()
-                                    Button(navigationViewName.rawValue) {
+                                    Button {
                                         selection = navigationViewName.rawValue
+                                    } label: {
+                                        Text(navigationViewName.rawValue)
+                                            .font(.system(size: 18, weight: .bold, design: .rounded))
                                     }
-                                    .buttonStyle(CustomButton(buttonColor: .white, textColor: .accentColor, onlyStroke: true, strokeColor: .accentColor, rightChevronNavigationImage: true))
+                                    .buttonStyle(CustomButton(textColor: .white, rightChevronNavigationImage: true))
                                     .frame(width: UIScreen.main.bounds.width * 0.9)
                                     .contentShape(Rectangle())
                                     .padding(.bottom, 20)
@@ -107,12 +110,15 @@ struct ProfileView: View {
                         VStack(alignment: .center) {
                             HStack {
                                 Spacer()
-                                Button("Logout") {
+                                Button {
                                     withAnimation {
                                         authStateManager.logoutCompletely()
                                     }
+                                } label: {
+                                    Text("Logout")
+                                        .font(.system(size: 18, weight: .bold, design: .rounded))
                                 }
-                                .buttonStyle(CustomButton(buttonColor: .red.opacity(0.9), imageName: "rectangle.portrait.and.arrow.right"))
+                                .buttonStyle(CustomButton(textColor: .accentColor, onlyStroke: true, strokeColor: .accentColor, imageName: "rectangle.portrait.and.arrow.right", imageColor: .accentColor))
                                 .frame(width: UIScreen.main.bounds.width * 0.9)
                                 .contentShape(Rectangle())
                                 .padding(.top, 50)

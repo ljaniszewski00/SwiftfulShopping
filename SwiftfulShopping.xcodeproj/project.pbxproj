@@ -19,6 +19,7 @@
 		0A27E7C62879C22600D033D9 /* ReturnDetailsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A27E7C52879C22600D033D9 /* ReturnDetailsView.swift */; };
 		0A27E7C82879CBE200D033D9 /* PersonalInfoViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A27E7C72879CBE200D033D9 /* PersonalInfoViewModel.swift */; };
 		0A27E7CA287AEC7400D033D9 /* AddNewAddressView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A27E7C9287AEC7400D033D9 /* AddNewAddressView.swift */; };
+		0A27E7CC287B091200D033D9 /* EditPersonalInfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A27E7CB287B091200D033D9 /* EditPersonalInfoView.swift */; };
 		0A453B8B2851DFDC00870EA9 /* ExploreView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A453B8A2851DFDC00870EA9 /* ExploreView.swift */; };
 		0A453B8D2851DFE600870EA9 /* ExploreViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A453B8C2851DFE600870EA9 /* ExploreViewModel.swift */; };
 		0A56D89B285F26180009680C /* FavoritesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A56D89A285F26180009680C /* FavoritesView.swift */; };
@@ -235,6 +236,7 @@
 		0A27E7C52879C22600D033D9 /* ReturnDetailsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReturnDetailsView.swift; sourceTree = "<group>"; };
 		0A27E7C72879CBE200D033D9 /* PersonalInfoViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PersonalInfoViewModel.swift; sourceTree = "<group>"; };
 		0A27E7C9287AEC7400D033D9 /* AddNewAddressView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddNewAddressView.swift; sourceTree = "<group>"; };
+		0A27E7CB287B091200D033D9 /* EditPersonalInfoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditPersonalInfoView.swift; sourceTree = "<group>"; };
 		0A453B8A2851DFDC00870EA9 /* ExploreView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExploreView.swift; sourceTree = "<group>"; };
 		0A453B8C2851DFE600870EA9 /* ExploreViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExploreViewModel.swift; sourceTree = "<group>"; };
 		0A56D89A285F26180009680C /* FavoritesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoritesView.swift; sourceTree = "<group>"; };
@@ -409,6 +411,7 @@
 				0A56D8B2285F2C950009680C /* PersonalInfoView.swift */,
 				0A27E7C9287AEC7400D033D9 /* AddNewAddressView.swift */,
 				0A27E7C72879CBE200D033D9 /* PersonalInfoViewModel.swift */,
+				0A27E7CB287B091200D033D9 /* EditPersonalInfoView.swift */,
 			);
 			path = "Personal Info";
 			sourceTree = "<group>";
@@ -1024,6 +1027,7 @@
 				0ACD5906284A6F6600AA9DA0 /* RegisterView.swift in Sources */,
 				0AB8D9902864B583003DC2E6 /* ShippingMethod.swift in Sources */,
 				0A56D8A7285F28E60009680C /* ScrollOnContentOverflow.swift in Sources */,
+				0A27E7CC287B091200D033D9 /* EditPersonalInfoView.swift in Sources */,
 				0A268B57286884A3006CF0E2 /* RectangleCustomTextField.swift in Sources */,
 				0ACD590F284A6F6600AA9DA0 /* HomeView.swift in Sources */,
 				0A56D8A5285F27D80009680C /* CartViewModel.swift in Sources */,

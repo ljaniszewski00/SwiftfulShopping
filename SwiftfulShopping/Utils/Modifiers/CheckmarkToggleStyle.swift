@@ -14,8 +14,9 @@ struct CheckMarkToggleStyle: ToggleStyle {
             configuration.isOn.toggle()
         }, label: {
             Image(systemName: configuration.isOn ? "checkmark.square.fill" : "square")
+                .resizable()
                 .foregroundColor(.accentColor)
-                .frame(width: 20)
+                .frame(width: 22, height: 22)
         })
     }
 }

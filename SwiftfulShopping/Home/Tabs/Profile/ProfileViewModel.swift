@@ -59,6 +59,18 @@ class ProfileViewModel: ObservableObject {
         }
     }
     
+    func editPersonalData(firstName: String = "", lastName: String = "", emailAddress: String = "") {
+        if !firstName.isEmpty {
+            profile.firstName = firstName
+        }
+        if !firstName.isEmpty {
+            profile.firstName = firstName
+        }
+        if !firstName.isEmpty {
+            profile.firstName = firstName
+        }
+    }
+    
     func addNewAddress(address: Address, toBeDefault: Bool = false) {
         if toBeDefault {
             profile.otherAddresses.append(profile.address)

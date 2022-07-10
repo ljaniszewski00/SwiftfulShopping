@@ -22,26 +22,28 @@ struct OrderDetailsView: View {
             VStack(alignment: .leading, spacing: 40) {
                 VStack(alignment: .leading, spacing: 10) {
                     Text("Order Date")
-                        .font(.system(size: 20))
+                        .font(.system(size: 20, design: .rounded))
                     Text(Date.getDayMonthYearFrom(date: order.orderDate))
-                        .font(.system(size: 22, weight: .bold))
+                        .font(.system(size: 22, weight: .bold, design: .rounded))
                         .foregroundColor(.accentColor)
                 }
                 
                 HStack(alignment: .top) {
                     VStack(alignment: .leading, spacing: 15) {
                         Text("Customer Info")
-                            .font(.system(size: 20, weight: .medium))
+                            .font(.system(size: 20, weight: .medium, design: .rounded))
                             .foregroundColor(.accentColor)
                         Text(order.clientInfo)
+                            .font(.system(size: 16, design: .rounded))
                             
                     }
                     Spacer()
                     VStack(alignment: .leading, spacing: 15) {
                         Text("Shipping Info")
-                            .font(.system(size: 20, weight: .medium))
+                            .font(.system(size: 20, weight: .medium, design: .rounded))
                             .foregroundColor(.accentColor)
                         Text(order.shippingAddress)
+                            .font(.system(size: 16, design: .rounded))
                             
                     }
                 }
@@ -50,10 +52,10 @@ struct OrderDetailsView: View {
                 HStack(alignment: .bottom) {
                     VStack(alignment: .leading, spacing: 10) {
                         Text("Status")
-                            .font(.system(size: 20))
+                            .font(.system(size: 20, design: .rounded))
                             
                         Text(order.status.rawValue)
-                            .font(.system(size: 22, weight: .bold))
+                            .font(.system(size: 22, weight: .bold, design: .rounded))
                             .foregroundColor(.accentColor)
                     }
                     .padding(.bottom, 10)
@@ -76,15 +78,18 @@ struct OrderDetailsView: View {
                                 .frame(width: 150, height: 150)
                             VStack(alignment: .leading, spacing: 20) {
                                 Text(product.id)
+                                    .font(.system(size: 16, design: .rounded))
                                 HStack(alignment: .bottom) {
                                     VStack(alignment: .leading, spacing: 5) {
                                         Text(product.name)
+                                            .font(.system(size: 16, design: .rounded))
                                         Text(product.company)
+                                            .font(.system(size: 16, design: .rounded))
                                     }
-                                    .font(.system(size: 20))
+                                    .font(.system(size: 20, design: .rounded))
                                     Spacer()
                                     Text("\(product.price, specifier: "%.2f")")
-                                        .font(.system(size: 22, weight: .bold))
+                                        .font(.system(size: 22, weight: .bold, design: .rounded))
                                         .foregroundColor(.accentColor)
                                 }
                                 
@@ -100,14 +105,17 @@ struct OrderDetailsView: View {
                         .font(.system(size: 20))
                         
                     Text("\(order.totalCost, specifier: "%.2f")")
-                        .font(.system(size: 22, weight: .bold))
+                        .font(.system(size: 22, weight: .bold, design: .rounded))
                         .foregroundColor(.accentColor)
                 }
                 
-                Button("Return") {
+                Button {
                     withAnimation {
                         shouldPresentReturnCreationView = true
                     }
+                } label: {
+                    Text("Return")
+                        .font(.system(size: 18, weight: .bold, design: .rounded))
                 }
                 .buttonStyle(CustomButton())
                 .frame(width: UIScreen.main.bounds.width * 0.9)

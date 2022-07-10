@@ -21,24 +21,27 @@ struct OrdersView: View {
                             VStack(alignment: .leading, spacing: 20) {
                                 HStack(spacing: 10) {
                                     Text(order.id)
+                                        .font(.system(size: 16, design: .rounded))
                                     Spacer()
                                     Text(Date.getDayAndMonthFrom(date: order.orderDate))
-                                        .font(.system(size: 20, weight: .medium))
+                                        .font(.system(size: 20, weight: .medium, design: .rounded))
                                         .foregroundColor(.accentColor)
                                         .padding(.trailing, 20)
                                 }
                                 
                                 Text("\(order.totalCost, specifier: "%.2f")")
-                                    .font(.system(size: 20, weight: .medium))
+                                    .font(.system(size: 20, weight: .medium, design: .rounded))
                                 
                                 HStack {
                                     Text("Total Products:")
+                                        .font(.system(size: 16, design: .rounded))
                                     Text("\(order.shoppingCart.products.count)")
                                         .foregroundColor(.accentColor)
                                 }
                                     
                                 HStack {
                                     Text("Order Status:")
+                                        .font(.system(size: 16, design: .rounded))
                                     Text(order.status.rawValue)
                                         .foregroundColor(.accentColor)
                                 }
@@ -48,7 +51,7 @@ struct OrdersView: View {
                     }
                 } header: {
                     Text(stringDate)
-                        .font(.system(size: 26, weight: .bold))
+                        .font(.system(size: 26, weight: .bold, design: .rounded))
                         .foregroundColor(.accentColor)
                 }
             }

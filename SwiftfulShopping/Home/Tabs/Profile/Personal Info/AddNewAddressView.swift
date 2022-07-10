@@ -59,41 +59,30 @@ struct AddNewAddressView: View {
                     
                     HStack {
                         Text("Use as default address")
-                            .font(.system(size: 18, weight: .bold))
+                            .font(.system(size: 18, weight: .bold, design: .rounded))
                             .fixedSize(horizontal: false, vertical: true)
                             .foregroundColor(.accentColor)
                         Spacer()
-                        ZStack {
-                            RoundedRectangle(cornerRadius: 5)
-                                .if(!personalInfoViewModel.toBeDefaultAddress) {
-                                    $0
-                                        .stroke()
-                                        .foregroundColor(.gray)
-                                }
-                                .foregroundColor(.accentColor)
-                            if personalInfoViewModel.toBeDefaultAddress {
-                                Image(systemName: "checkmark")
-                                    .foregroundColor(.white)
-                            }
-                        }
-                        .frame(width: 35, height: 35)
-                        .onTapGesture {
-                            personalInfoViewModel.toBeDefaultAddress.toggle()
-                        }
+                        Toggle("", isOn: $personalInfoViewModel.toBeDefaultAddress)
+                            .toggleStyle(CheckMarkToggleStyle())
                     }
                     .padding(.top, 20)
                     
                 }
                 
-                Button("Add new address") {
+                Button {
                     withAnimation {
                         profileViewModel.addNewAddress(address: personalInfoViewModel.createNewAddress(), toBeDefault: personalInfoViewModel.toBeDefaultAddress)
                         presentationMode.wrappedValue.dismiss()
                     }
+                } label: {
+                    Text("Add new address")
+                        .font(.system(size: 18, weight: .bold, design: .rounded))
                 }
                 .buttonStyle(CustomButton())
                 .contentShape(Rectangle())
-                .disabled(personalInfoViewModel.fieldsNotValidated)
+                .disabled(personalInfoViewModel.newAddressFieldsNotValidated)
+                .padding(.bottom, 10)
             }
             .padding()
         }

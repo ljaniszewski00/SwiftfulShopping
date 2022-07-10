@@ -33,7 +33,7 @@ struct PersonalInfoView: View {
                     VStack(alignment: .leading, spacing: 40) {
                         VStack(alignment: .leading, spacing: 10) {
                             Text("First Name")
-                                .font(.system(size: 18, weight: .bold))
+                                .font(.system(size: 18, weight: .bold, design: .rounded))
                                 .foregroundColor(.accentColor)
                             
                             ZStack {
@@ -45,13 +45,20 @@ struct PersonalInfoView: View {
                                         .font(.system(size: 18))
                                         .padding()
                                     Spacer()
+                                    Image(systemName: "chevron.right")
+                                        .foregroundColor(.accentColor)
+                                        .padding()
                                 }
+                            }
+                            .contentShape(Rectangle())
+                            .onTapGesture {
+                                shouldPresentEditPersonalInfoView = true
                             }
                         }
                         
                         VStack(alignment: .leading, spacing: 10) {
                             Text("Last Name")
-                                .font(.system(size: 18, weight: .bold))
+                                .font(.system(size: 18, weight: .bold, design: .rounded))
                                 .foregroundColor(.accentColor)
                             
                             ZStack {
@@ -63,13 +70,20 @@ struct PersonalInfoView: View {
                                         .font(.system(size: 18))
                                         .padding()
                                     Spacer()
+                                    Image(systemName: "chevron.right")
+                                        .foregroundColor(.accentColor)
+                                        .padding()
                                 }
+                            }
+                            .contentShape(Rectangle())
+                            .onTapGesture {
+                                shouldPresentEditPersonalInfoView = true
                             }
                         }
                         
                         VStack(alignment: .leading, spacing: 10) {
                             Text("Email Address")
-                                .font(.system(size: 18, weight: .bold))
+                                .font(.system(size: 18, weight: .bold, design: .rounded))
                                 .foregroundColor(.accentColor)
                             
                             ZStack {
@@ -81,13 +95,20 @@ struct PersonalInfoView: View {
                                         .font(.system(size: 18))
                                         .padding()
                                     Spacer()
+                                    Image(systemName: "chevron.right")
+                                        .foregroundColor(.accentColor)
+                                        .padding()
                                 }
+                            }
+                            .contentShape(Rectangle())
+                            .onTapGesture {
+                                shouldPresentEditPersonalInfoView = true
                             }
                         }
                         
                         VStack(alignment: .leading, spacing: 10) {
                             Text("Address")
-                                .font(.system(size: 18, weight: .bold))
+                                .font(.system(size: 18, weight: .bold, design: .rounded))
                                 .foregroundColor(.accentColor)
                             
                             VStack(alignment: .leading, spacing: 0) {
@@ -105,16 +126,15 @@ struct PersonalInfoView: View {
                                             .padding()
                                         Spacer()
                                     }
-                                    Button {
-                                        addressSectionExpanded.toggle()
-                                    } label: {
-                                        Image(systemName: addressSectionExpanded ? "chevron.up" : "chevron.down")
-                                            .foregroundColor(addressSectionExpanded ? .white : .accentColor)
-                                    }
-                                    .frame(width: 50, height: 50)
-                                    .padding()
-                                    .isHidden(profileViewModel.profile.otherAddresses.isEmpty)
-
+                                    Image(systemName: addressSectionExpanded ? "chevron.up" : "chevron.down")
+                                        .foregroundColor(addressSectionExpanded ? .white : .accentColor)
+                                        .frame(width: 50, height: 50)
+                                        .padding()
+                                        .isHidden(profileViewModel.profile.otherAddresses.isEmpty)
+                                }
+                                .contentShape(Rectangle())
+                                .onTapGesture {
+                                    addressSectionExpanded.toggle()
                                 }
                                 
                                 if addressSectionExpanded {
@@ -148,12 +168,17 @@ struct PersonalInfoView: View {
                                             .padding()
                                         }
                                     }
+                                    .contentShape(Rectangle())
                                     
-                                    Button("Add New Address") {
+                                    Button {
                                         withAnimation {
                                             shouldPresentAddNewAddressView = true
                                         }
+                                    } label: {
+                                        Text("Add New Address")
+                                            .font(.system(size: 18, weight: .bold, design: .rounded))
                                     }
+                                    .contentShape(Rectangle())
                                     .buttonStyle(CustomButton(buttonColor: .accentColor, imageName: "plus.circle"))
                                     .padding(.vertical, 10)
                                 }
@@ -174,6 +199,18 @@ struct PersonalInfoView: View {
                                         .environmentObject(profileViewModel)
                                         .environmentObject(personalInfoViewModel),
                        isActive: $shouldPresentAddNewAddressView) { EmptyView() }
+        
+        NavigationLink(destination: EditPersonalInfoView()
+                                        .environmentObject(authStateManager)
+                                        .environmentObject(tabBarStateManager)
+                                        .environmentObject(profileViewModel)
+                                        .environmentObject(personalInfoViewModel)
+                                        .onAppear {
+                                            personalInfoViewModel.newFirstName = profileViewModel.profile.firstName
+                                            personalInfoViewModel.newLastName = profileViewModel.profile.lastName
+                                            personalInfoViewModel.newEmailAddress = profileViewModel.profile.email
+                                        },
+                       isActive: $shouldPresentEditPersonalInfoView) { EmptyView() }
     }
 }
 

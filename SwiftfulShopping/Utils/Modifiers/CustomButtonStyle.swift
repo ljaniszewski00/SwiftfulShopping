@@ -30,7 +30,7 @@ struct CustomButton: ButtonStyle {
             if rightChevronNavigationImage {
                 Spacer()
                 Image(systemName: "chevron.right")
-                    .foregroundColor(.accentColor)
+                    .foregroundColor(buttonColor == .accentColor ? .white : .accentColor)
             }
         }
         .padding(.horizontal)
@@ -38,7 +38,7 @@ struct CustomButton: ButtonStyle {
         .background {
             Group {
                 if roundedRectangleShape {
-                    RoundedRectangle(cornerRadius: 15)
+                    RoundedRectangle(cornerRadius: 5)
                         .if(onlyStroke) {
                             $0
                                 .stroke()
