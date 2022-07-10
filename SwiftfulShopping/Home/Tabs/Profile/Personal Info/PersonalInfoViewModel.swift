@@ -8,10 +8,19 @@
 import Foundation
 
 class PersonalInfoViewModel: ObservableObject {
-    @Published var bankAccountNumber: String = ""
-    @Published var nameOfBankAccountOwner: String = ""
-    @Published var streetAndHouseNumber: String = ""
-    @Published var postalCode: String = ""
-    @Published var city: String = ""
-    @Published var country: String = ""
+    @Published var newStreetName: String = ""
+    @Published var newStreetNumber: String = ""
+    @Published var newApartmentNumber: String = ""
+    @Published var newZipCode: String = ""
+    @Published var newCity: String = ""
+    @Published var newCountry: String = ""
+    @Published var toBeDefaultAddress: Bool = false
+    
+    var fieldsNotValidated: Bool {
+        newStreetName.isEmpty || newStreetNumber.isEmpty || newZipCode.isEmpty || newCity.isEmpty || newCountry.isEmpty
+    }
+    
+    func createNewAddress() -> Address {
+        Address(streetName: newStreetName, streetNumber: newStreetNumber, apartmentNumber: newApartmentNumber, zipCode: newZipCode, city: newCity, country: newCountry)
+    }
 }

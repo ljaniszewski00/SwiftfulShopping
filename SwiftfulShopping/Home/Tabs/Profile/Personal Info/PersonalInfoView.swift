@@ -11,6 +11,8 @@ struct PersonalInfoView: View {
     @EnvironmentObject private var authStateManager: AuthStateManager
     @EnvironmentObject private var tabBarStateManager: TabBarStateManager
     @EnvironmentObject private var profileViewModel: ProfileViewModel
+    @Environment(\.colorScheme) var colorScheme
+    
     @StateObject private var personalInfoViewModel: PersonalInfoViewModel = PersonalInfoViewModel()
     
     @State private var isBankAccountTextFieldFocused: Bool = false
@@ -19,6 +21,10 @@ struct PersonalInfoView: View {
     @State private var isBankAccountHolderZipCodeTextFieldFocused: Bool = false
     @State private var isBankAccountHolderCityTextFieldFocused: Bool = false
     @State private var isBankAccountHolderCountryTextFieldFocused: Bool = false
+    
+    @State private var addressSectionExpanded: Bool = false
+    @State private var shouldPresentEditPersonalInfoView: Bool = false
+    @State private var shouldPresentAddNewAddressView: Bool = false
     
     var body: some View {
         ScrollView(.vertical) {
@@ -84,25 +90,74 @@ struct PersonalInfoView: View {
                                 .font(.system(size: 18, weight: .bold))
                                 .foregroundColor(.accentColor)
                             
-                            ZStack {
-                                RoundedRectangle(cornerRadius: 3)
-                                    .stroke(lineWidth: 2)
-                                    .foregroundColor(.accentColor)
-                                HStack {
-                                    Text(profileViewModel.profile.address.description)
-                                        .font(.system(size: 18))
-                                        .fixedSize(horizontal: false, vertical: true)
-                                        .padding()
-                                    Spacer()
+                            VStack(alignment: .leading, spacing: 0) {
+                                ZStack(alignment: .trailing) {
+                                    RoundedRectangle(cornerRadius: 3)
+                                        .if(!addressSectionExpanded) {
+                                            $0
+                                                .stroke(lineWidth: 2)
+                                        }
+                                        .foregroundColor(.accentColor)
+                                    HStack {
+                                        Text(profileViewModel.profile.address.description)
+                                            .font(.system(size: 18))
+                                            .fixedSize(horizontal: false, vertical: true)
+                                            .padding()
+                                        Spacer()
+                                    }
+                                    Button {
+                                        addressSectionExpanded.toggle()
+                                    } label: {
+                                        Image(systemName: addressSectionExpanded ? "chevron.up" : "chevron.down")
+                                            .foregroundColor(addressSectionExpanded ? .white : .accentColor)
+                                    }
+                                    .frame(width: 50, height: 50)
+                                    .padding()
+                                    .isHidden(profileViewModel.profile.otherAddresses.isEmpty)
+
+                                }
+                                
+                                if addressSectionExpanded {
+                                    ForEach(profileViewModel.profile.otherAddresses, id: \.self) { address in
+                                        ZStack(alignment: .trailing) {
+                                            Button {
+                                                profileViewModel.changeDefaultAddress(address: address)
+                                                addressSectionExpanded = false
+                                            } label: {
+                                                ZStack(alignment: .leading) {
+                                                    RoundedRectangle(cornerRadius: 3)
+                                                        .stroke(lineWidth: 2)
+                                                        .foregroundColor(.accentColor)
+                                                    HStack {
+                                                        Text(address.description)
+                                                            .font(.system(size: 18))
+                                                            .fixedSize(horizontal: false, vertical: true)
+                                                            .foregroundColor(colorScheme == .light ? .black : .white)
+                                                            .padding()
+                                                        Spacer()
+                                                    }
+                                                }
+                                            }
+                                            
+                                            Button {
+                                                profileViewModel.removeAddress(address: address)
+                                            } label: {
+                                                Image(systemName: "trash")
+                                            }
+                                            .frame(width: 50, height: 50)
+                                            .padding()
+                                        }
+                                    }
+                                    
+                                    Button("Add New Address") {
+                                        withAnimation {
+                                            shouldPresentAddNewAddressView = true
+                                        }
+                                    }
+                                    .buttonStyle(CustomButton(buttonColor: .accentColor, imageName: "plus.circle"))
+                                    .padding(.vertical, 10)
                                 }
                             }
-                            
-                            Button("Add New") {
-                                withAnimation {
-                                    authStateManager.logoutCompletely()
-                                }
-                            }
-                            .buttonStyle(CustomButton(buttonColor: .accentColor, imageName: "plus.circle"))
                         }
                     }
                     
@@ -110,63 +165,15 @@ struct PersonalInfoView: View {
                 }
             }
             .padding()
-            
-            
-//            VStack(alignment: .leading, spacing: 40) {
-//                VStack(spacing: 20) {
-//                    RectangleCustomTextField(
-//                        textFieldProperty: "Bank account number",
-//                        textFieldFooter: "Provide 26-digits number",
-//                        text: $returnCreationViewModel.bankAccountNumber,
-//                        isFocusedParentView: $isBankAccountTextFieldFocused)
-//
-//                    RectangleCustomTextField(
-//                        textFieldProperty: "Name of bank account owner",
-//                        text: $returnCreationViewModel.nameOfBankAccountOwner,
-//                        isFocusedParentView: $isBankAccountHolderFirstNameTextFieldFocused)
-//
-//                    RectangleCustomTextField(
-//                        textFieldProperty: "Street and house number",
-//                        text: $returnCreationViewModel.streetAndHouseNumber,
-//                        isFocusedParentView: $isBankAccountHolderAddressTextFieldFocused)
-//
-//                    RectangleCustomTextField(
-//                        textFieldProperty: "Postal code",
-//                        text: $returnCreationViewModel.postalCode,
-//                        isFocusedParentView: $isBankAccountHolderZipCodeTextFieldFocused)
-//
-//                    RectangleCustomTextField(
-//                        textFieldProperty: "City",
-//                        text: $returnCreationViewModel.city,
-//                        isFocusedParentView: $isBankAccountHolderCityTextFieldFocused)
-//
-//                    RectangleCustomTextField(
-//                        textFieldProperty: "Country",
-//                        text: $returnCreationViewModel.country,
-//                        isFocusedParentView: $isBankAccountHolderCountryTextFieldFocused)
-//                }
-//
-//                Button("Continue") {
-//                    withAnimation {
-//                        shouldProceedReturnCreationView = true
-//                    }
-//                }
-//                .buttonStyle(CustomButton())
-//                .frame(width: UIScreen.main.bounds.width * 0.9)
-//                .contentShape(Rectangle())
-//                .padding(.bottom, 20)
-//                .disabled(returnCreationViewModel.fieldsNotValidated)
-//            }
-//            .padding()
         }
-        .navigationTitle("Create Return")
+        .navigationTitle("Personal Information")
         
-//        NavigationLink(destination: ThirdReturnCreationView(order: order)
-//                                        .environmentObject(authStateManager)
-//                                        .environmentObject(tabBarStateManager)
-//                                        .environmentObject(profileViewModel)
-//                                        .environmentObject(returnCreationViewModel),
-//                       isActive: $shouldProceedReturnCreationView) { EmptyView() }
+        NavigationLink(destination: AddNewAddressView()
+                                        .environmentObject(authStateManager)
+                                        .environmentObject(tabBarStateManager)
+                                        .environmentObject(profileViewModel)
+                                        .environmentObject(personalInfoViewModel),
+                       isActive: $shouldPresentAddNewAddressView) { EmptyView() }
     }
 }
 

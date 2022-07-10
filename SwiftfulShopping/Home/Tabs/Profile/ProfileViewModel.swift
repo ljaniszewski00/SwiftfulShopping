@@ -43,4 +43,28 @@ class ProfileViewModel: ObservableObject {
             Date.getMonthNameAndYearFrom(date: $0.returnDate) == date
         }
     }
+    
+    func changeDefaultAddress(address: Address) {
+        removeAddress(address: address)
+        profile.otherAddresses.append(profile.address)
+        profile.address = address
+    }
+    
+    func removeAddress(address: Address) {
+        for (index, otherAddress) in profile.otherAddresses.enumerated() {
+            if otherAddress == address {
+                profile.otherAddresses.remove(at: index)
+                break
+            }
+        }
+    }
+    
+    func addNewAddress(address: Address, toBeDefault: Bool = false) {
+        if toBeDefault {
+            profile.otherAddresses.append(profile.address)
+            profile.address = address
+        } else {
+            profile.otherAddresses.append(address)
+        }
+    }
 }

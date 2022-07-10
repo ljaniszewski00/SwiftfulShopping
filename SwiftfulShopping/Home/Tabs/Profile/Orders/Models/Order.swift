@@ -8,7 +8,7 @@
 import Foundation
 
 struct Order {
-    var id: String
+    var id: String = UUID().uuidString
     var orderDate: Date
     var estimatedDeliveryDate: Date
     var clientID: String
@@ -49,8 +49,7 @@ extension Order: CustomStringConvertible {
 }
 
 extension Order {
-    static let demoOrders: [Order] = [Order(id: UUID().uuidString,
-                                            orderDate: Date().getRandomDate(),
+    static let demoOrders: [Order] = [Order(orderDate: Date().getRandomDate(),
                                             estimatedDeliveryDate: Date(),
                                             clientID: UUID().uuidString,
                                             clientInfo: Profile.demoProfile.description,
@@ -59,8 +58,7 @@ extension Order {
                                             shippingAddress: Address.demoAddress.description,
                                             totalCost: 30.30,
                                             status: .placed),
-                                      Order(id: UUID().uuidString,
-                                            orderDate: Date().getRandomDate(),
+                                      Order(orderDate: Date().getRandomDate(),
                                             estimatedDeliveryDate: Date(),
                                             clientID: UUID().uuidString,
                                             clientInfo: Profile.demoProfile.description,
@@ -69,8 +67,7 @@ extension Order {
                                             shippingAddress: Address.demoAddress.description,
                                             totalCost: 320.50,
                                             status: .delivered),
-                                      Order(id: UUID().uuidString,
-                                            orderDate: Date().getRandomDate(),
+                                      Order(orderDate: Date().getRandomDate(),
                                             estimatedDeliveryDate: Date(),
                                             clientID: UUID().uuidString,
                                             clientInfo: Profile.demoProfile.description,
@@ -79,8 +76,7 @@ extension Order {
                                             shippingAddress: Address.demoAddress.description,
                                             totalCost: 320.50,
                                             status: .delivered),
-                                      Order(id: UUID().uuidString,
-                                            orderDate: Date().getRandomDate(),
+                                      Order(orderDate: Date().getRandomDate(),
                                             estimatedDeliveryDate: Date(),
                                             clientID: UUID().uuidString,
                                             clientInfo: Profile.demoProfile.description,

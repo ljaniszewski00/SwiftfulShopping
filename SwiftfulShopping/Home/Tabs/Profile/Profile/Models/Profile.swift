@@ -8,13 +8,14 @@
 import Foundation
 
 struct Profile {
-    var id: String
+    var id: String = UUID().uuidString
     var firstName: String
     var lastName: String
     var username: String
     var birthDate: Date
     var email: String
     var address: Address
+    var otherAddresses: [Address] = []
     var imageURL: String? = nil
 }
 
@@ -25,12 +26,12 @@ extension Profile: CustomStringConvertible {
 }
 
 extension Profile {
-    static let demoProfile = Profile(id: UUID().uuidString,
-                                     firstName: "Jan",
+    static let demoProfile = Profile(firstName: "Jan",
                                      lastName: "Kowalski",
                                      username: "jan.kowalski",
                                      birthDate: Date(),
                                      email: "jan.kowalski@email.com",
                                      address: Address.demoAddress,
-                                     imageURL: "dd")
+                                     otherAddresses: [Address.otherAddresses[0], Address.otherAddresses[1]],
+                                     imageURL: "")
 }
