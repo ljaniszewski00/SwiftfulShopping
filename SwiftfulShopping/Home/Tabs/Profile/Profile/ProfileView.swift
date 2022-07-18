@@ -12,7 +12,7 @@ struct ProfileView: View {
     @EnvironmentObject private var tabBarStateManager: TabBarStateManager
     @EnvironmentObject private var profileViewModel: ProfileViewModel
     
-    @State private var selection: String? = nil
+    @State private var selection: String?
     
     enum NavigationViewsNames: String, CaseIterable {
         case orders = "Orders"

@@ -16,6 +16,8 @@
 		0A268B5328687FA9006CF0E2 /* ReturnCreationViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A268B5228687FA9006CF0E2 /* ReturnCreationViewModel.swift */; };
 		0A268B57286884A3006CF0E2 /* RectangleCustomTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A268B56286884A3006CF0E2 /* RectangleCustomTextField.swift */; };
 		0A268B592868A21E006CF0E2 /* ThirdReturnCreationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A268B582868A21E006CF0E2 /* ThirdReturnCreationView.swift */; };
+		0A26FF25288597410001FA93 /* HelpViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A26FF24288597410001FA93 /* HelpViewModel.swift */; };
+		0A26FF2728859AF60001FA93 /* RoundedCompletionButtonStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A26FF2628859AF60001FA93 /* RoundedCompletionButtonStyle.swift */; };
 		0A27E7C62879C22600D033D9 /* ReturnDetailsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A27E7C52879C22600D033D9 /* ReturnDetailsView.swift */; };
 		0A27E7C82879CBE200D033D9 /* PersonalInfoViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A27E7C72879CBE200D033D9 /* PersonalInfoViewModel.swift */; };
 		0A27E7CA287AEC7400D033D9 /* AddNewAddressView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A27E7C9287AEC7400D033D9 /* AddNewAddressView.swift */; };
@@ -237,6 +239,8 @@
 		0A268B5228687FA9006CF0E2 /* ReturnCreationViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReturnCreationViewModel.swift; sourceTree = "<group>"; };
 		0A268B56286884A3006CF0E2 /* RectangleCustomTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RectangleCustomTextField.swift; sourceTree = "<group>"; };
 		0A268B582868A21E006CF0E2 /* ThirdReturnCreationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThirdReturnCreationView.swift; sourceTree = "<group>"; };
+		0A26FF24288597410001FA93 /* HelpViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HelpViewModel.swift; sourceTree = "<group>"; };
+		0A26FF2628859AF60001FA93 /* RoundedCompletionButtonStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoundedCompletionButtonStyle.swift; sourceTree = "<group>"; };
 		0A27E7C52879C22600D033D9 /* ReturnDetailsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReturnDetailsView.swift; sourceTree = "<group>"; };
 		0A27E7C72879CBE200D033D9 /* PersonalInfoViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PersonalInfoViewModel.swift; sourceTree = "<group>"; };
 		0A27E7C9287AEC7400D033D9 /* AddNewAddressView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddNewAddressView.swift; sourceTree = "<group>"; };
@@ -437,6 +441,7 @@
 			isa = PBXGroup;
 			children = (
 				0A56D8B6285F2CD00009680C /* HelpView.swift */,
+				0A26FF24288597410001FA93 /* HelpViewModel.swift */,
 			);
 			path = Help;
 			sourceTree = "<group>";
@@ -583,8 +588,9 @@
 		0ACD58C1284A6F6500AA9DA0 /* Modifiers */ = {
 			isa = PBXGroup;
 			children = (
-				0ACD58C2284A6F6500AA9DA0 /* CustomButtonStyle.swift */,
 				0ACD58C3284A6F6500AA9DA0 /* CheckmarkToggleStyle.swift */,
+				0A26FF2628859AF60001FA93 /* RoundedCompletionButtonStyle.swift */,
+				0ACD58C2284A6F6500AA9DA0 /* CustomButtonStyle.swift */,
 				0ACD58C4284A6F6500AA9DA0 /* LandscapeModifier.swift */,
 			);
 			path = Modifiers;
@@ -1020,6 +1026,7 @@
 				0AB8D98D2864B4DC003DC2E6 /* Product.swift in Sources */,
 				0ACD58FD284A6F6600AA9DA0 /* CustomTextField.swift in Sources */,
 				0ACD59B6284B74CD00AA9DA0 /* PossibleCountries.swift in Sources */,
+				0A26FF25288597410001FA93 /* HelpViewModel.swift in Sources */,
 				0A56D8B1285F2C8A0009680C /* ReturnsView.swift in Sources */,
 				0A268B4928685C41006CF0E2 /* ReturnCreationView.swift in Sources */,
 				0ACD58DF284A6F6600AA9DA0 /* CustomButtonStyle.swift in Sources */,
@@ -1077,6 +1084,7 @@
 				0A27E7D4287B509300D033D9 /* CardCompany.swift in Sources */,
 				0ACD58F7284A6F6600AA9DA0 /* Hidden.swift in Sources */,
 				0ACD5918284A6F6600AA9DA0 /* LoginViewModel.swift in Sources */,
+				0A26FF2728859AF60001FA93 /* RoundedCompletionButtonStyle.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
