@@ -47,7 +47,9 @@ struct ExploreView: View {
                                             }
                                     }
                                     .onTapGesture {
-                                        selection = tabName
+                                        withAnimation(.spring(response: 0.3, dampingFraction: 0.7)) {
+                                            selection = tabName
+                                        }
                                     }
                             }
                         }
