@@ -13,6 +13,10 @@ struct ProfileView: View {
     @EnvironmentObject private var profileViewModel: ProfileViewModel
     
     @State private var selection: String?
+        
+    @State private var shouldPresentAddActionSheet = false
+    @State private var shouldPresentImagePicker = false
+    @State private var shouldPresentCamera = false
     
     enum NavigationViewsNames: String, CaseIterable {
         case orders = "Orders"
@@ -41,7 +45,7 @@ struct ProfileView: View {
                             VStack(alignment: .leading, spacing: 6) {
                                 Text("Hello, customer!")
                                     .font(.system(size: 22, weight: .heavy, design: .rounded))
-                                Text("We are happy to see you again.")
+                                Text("Please register down below.")
                                     .font(.system(size: 16, weight: .regular, design: .rounded))
                                     .foregroundColor(Color(uiColor: .darkGray))
                                 Spacer()
@@ -69,7 +73,7 @@ struct ProfileView: View {
                             }
                             Spacer()
                             VStack(spacing: 20) {
-                                Image("blank_profile_image")
+                                Image(uiImage: profileViewModel.image)
                                     .resizable()
                                     .aspectRatio(contentMode: .fit)
                                     .clipShape(Circle())
@@ -77,13 +81,16 @@ struct ProfileView: View {
                                 
                                 // TODO: Add NavigationLink
                                 Button {
-                                    
+                                    shouldPresentAddActionSheet = true
                                 } label: {
-                                    Text("Edit")
+                                    Text("Change photo")
                                         .font(.system(size: 18, weight: .heavy, design: .rounded))
                                 }
                             }
                             .padding(.trailing, 20)
+                            .onTapGesture {
+                                shouldPresentAddActionSheet = true
+                            }
                         }
                         .padding()
                         .padding(.bottom, 100)
@@ -166,6 +173,25 @@ struct ProfileView: View {
             }
             .navigationTitle("Profile")
             .navigationBarHidden(true)
+            .sheet(isPresented: $shouldPresentImagePicker) {
+                ImagePicker(sourceType: self.shouldPresentCamera ? .camera : .photoLibrary, selectedImage: $profileViewModel.image)
+                    .onDisappear {
+                        profileViewModel.uploadPhoto()
+                    }
+            }
+            .actionSheet(isPresented: $shouldPresentAddActionSheet) {
+                ActionSheet(title: Text("Change Photo"), message: nil, buttons: [
+                    .default(Text("Take Photo"), action: {
+                         self.shouldPresentImagePicker = true
+                         self.shouldPresentCamera = true
+                     }),
+                    .default(Text("Choose Photo"), action: {
+                         self.shouldPresentImagePicker = true
+                         self.shouldPresentCamera = false
+                     }),
+                    .cancel()
+                ])
+            }
         }
         .navigationViewStyle(.stack)
     }

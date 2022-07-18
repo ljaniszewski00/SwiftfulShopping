@@ -6,11 +6,15 @@
 //
 
 import Foundation
+import UIKit
 
 class ProfileViewModel: ObservableObject {
     @Published var profile: Profile = Profile.demoProfile
     @Published var orders: [Order] = Order.demoOrders
     @Published var returns: [Return] = Return.demoReturns
+    
+    @Published var oldImage = UIImage(named: "blank_profile_image")!
+    @Published var image = UIImage(named: "blank_profile_image")!
     
     var datesForOrdersViewListSections: [String] {
         var ordersShortDates: [String] = []
@@ -29,6 +33,12 @@ class ProfileViewModel: ObservableObject {
         }
         return returnsShortDates.uniqued().sorted { firstDate, secondDate in
             firstDate.suffix(4) > secondDate.suffix(4)
+        }
+    }
+
+    func uploadPhoto() {
+        if !image.isEqual(oldImage) {
+            oldImage = image
         }
     }
     

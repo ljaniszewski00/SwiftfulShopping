@@ -18,6 +18,7 @@
 		0A268B592868A21E006CF0E2 /* ThirdReturnCreationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A268B582868A21E006CF0E2 /* ThirdReturnCreationView.swift */; };
 		0A26FF25288597410001FA93 /* HelpViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A26FF24288597410001FA93 /* HelpViewModel.swift */; };
 		0A26FF2728859AF60001FA93 /* RoundedCompletionButtonStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A26FF2628859AF60001FA93 /* RoundedCompletionButtonStyle.swift */; };
+		0A26FF292885A5EF0001FA93 /* ImagePicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A26FF282885A5EF0001FA93 /* ImagePicker.swift */; };
 		0A27E7C62879C22600D033D9 /* ReturnDetailsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A27E7C52879C22600D033D9 /* ReturnDetailsView.swift */; };
 		0A27E7C82879CBE200D033D9 /* PersonalInfoViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A27E7C72879CBE200D033D9 /* PersonalInfoViewModel.swift */; };
 		0A27E7CA287AEC7400D033D9 /* AddNewAddressView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A27E7C9287AEC7400D033D9 /* AddNewAddressView.swift */; };
@@ -241,6 +242,7 @@
 		0A268B582868A21E006CF0E2 /* ThirdReturnCreationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThirdReturnCreationView.swift; sourceTree = "<group>"; };
 		0A26FF24288597410001FA93 /* HelpViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HelpViewModel.swift; sourceTree = "<group>"; };
 		0A26FF2628859AF60001FA93 /* RoundedCompletionButtonStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoundedCompletionButtonStyle.swift; sourceTree = "<group>"; };
+		0A26FF282885A5EF0001FA93 /* ImagePicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImagePicker.swift; sourceTree = "<group>"; };
 		0A27E7C52879C22600D033D9 /* ReturnDetailsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReturnDetailsView.swift; sourceTree = "<group>"; };
 		0A27E7C72879CBE200D033D9 /* PersonalInfoViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PersonalInfoViewModel.swift; sourceTree = "<group>"; };
 		0A27E7C9287AEC7400D033D9 /* AddNewAddressView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddNewAddressView.swift; sourceTree = "<group>"; };
@@ -603,6 +605,7 @@
 				0ACD58C7284A6F6500AA9DA0 /* TabBarStateManager.swift */,
 				0ACD58C8284A6F6500AA9DA0 /* LocationManager.swift */,
 				0ACD58C9284A6F6500AA9DA0 /* ScreenBoundsSupplier.swift */,
+				0A26FF282885A5EF0001FA93 /* ImagePicker.swift */,
 			);
 			path = Objects;
 			sourceTree = "<group>";
@@ -1029,6 +1032,7 @@
 				0A26FF25288597410001FA93 /* HelpViewModel.swift in Sources */,
 				0A56D8B1285F2C8A0009680C /* ReturnsView.swift in Sources */,
 				0A268B4928685C41006CF0E2 /* ReturnCreationView.swift in Sources */,
+				0A26FF292885A5EF0001FA93 /* ImagePicker.swift in Sources */,
 				0ACD58DF284A6F6600AA9DA0 /* CustomButtonStyle.swift in Sources */,
 				0AB8D9822864B1B1003DC2E6 /* Order.swift in Sources */,
 				0ACD59AD284B739C00AA9DA0 /* Profile.swift in Sources */,
