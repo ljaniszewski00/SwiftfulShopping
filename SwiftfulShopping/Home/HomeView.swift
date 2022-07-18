@@ -50,6 +50,7 @@ struct HomeView: View {
                                 .environmentObject(authStateManager)
                                 .environmentObject(tabBarStateManager)
                                 .environmentObject(exploreViewModel)
+                                .environmentObject(profileViewModel)
                         }
                     case .favorites:
                         withAnimation(.linear) {

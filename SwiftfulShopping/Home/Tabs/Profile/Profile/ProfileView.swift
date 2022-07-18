@@ -203,19 +203,19 @@ struct ProfileView_Previews: PreviewProvider {
         let tabBarStateManager = TabBarStateManager()
         let profileViewModel = ProfileViewModel()
         ForEach(ColorScheme.allCases, id: \.self) { colorScheme in
-                    ForEach(["iPhone 13 Pro Max", "iPhone 8"], id: \.self) { deviceName in
-                        ProfileView()
-                            .environmentObject(authStateManager)
-                            .environmentObject(tabBarStateManager)
-                            .environmentObject(profileViewModel)
-                            .preferredColorScheme(colorScheme)
-                            .previewDevice(PreviewDevice(rawValue: deviceName))
-                            .previewDisplayName("\(deviceName) portrait")
-                            .onAppear {
-                                authStateManager.isGuest = false
-                                authStateManager.isLogged = true
-                            }
+            ForEach(["iPhone 13 Pro Max", "iPhone 8"], id: \.self) { deviceName in
+                ProfileView()
+                    .environmentObject(authStateManager)
+                    .environmentObject(tabBarStateManager)
+                    .environmentObject(profileViewModel)
+                    .preferredColorScheme(colorScheme)
+                    .previewDevice(PreviewDevice(rawValue: deviceName))
+                    .previewDisplayName("\(deviceName) portrait")
+                    .onAppear {
+                        authStateManager.isGuest = false
+                        authStateManager.isLogged = true
                     }
-                }
+            }
+        }
     }
 }
