@@ -15,6 +15,8 @@ struct ExploreView: View {
     
     @State private var selection: ExploreViewTabsNames = .trending
     
+    @State var shouldPresentProductDetailsView: Bool = false
+    
     enum ExploreViewTabsNames: String, CaseIterable {
         case trending = "Trending"
         case categories = "Categories"
@@ -57,11 +59,23 @@ struct ExploreView: View {
                     }
                     
                     if selection == .trending {
-                        TrendingTabView()
+                        TrendingTabView(shouldPresentProductDetailsView: $shouldPresentProductDetailsView)
+                            .environmentObject(authStateManager)
+                            .environmentObject(tabBarStateManager)
+                            .environmentObject(exploreViewModel)
+                            .environmentObject(profileViewModel)
                     } else if selection == .categories {
                         CategoriesTabView()
+                            .environmentObject(authStateManager)
+                            .environmentObject(tabBarStateManager)
+                            .environmentObject(exploreViewModel)
+                            .environmentObject(profileViewModel)
                     } else if selection == .weRecommend {
                         WeRecommendTabView()
+                            .environmentObject(authStateManager)
+                            .environmentObject(tabBarStateManager)
+                            .environmentObject(exploreViewModel)
+                            .environmentObject(profileViewModel)
                     }
                 }
             }

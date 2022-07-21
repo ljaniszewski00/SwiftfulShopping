@@ -12,8 +12,11 @@ struct Product {
     var name: String
     var company: String
     var productDescription: String
+    var category: Category = .other
     var price: Double
-    var imageURL: String? = nil
+    var unitsSold: Int = 0
+    var introducedForSale: Date = Date()
+    var imageURL: String = "https://res.cloudinary.com/drqqwwpen/image/upload/v1596474380/pcs/not-available_g2vsum.jpg"
 }
 
 extension Product: Equatable, Hashable {
@@ -34,13 +37,81 @@ extension Product: CustomStringConvertible {
 
 extension Product {
     static let demoProducts: [Product] = [Product(id: UUID().uuidString,
-                                                  name: "Product 1",
+                                                  name: "iPhone 12",
                                                   company: "US TOT LTD.",
                                                   productDescription: "This is the standard description of product 1",
-                                                  price: 20.15),
+                                                  category: .phones,
+                                                  price: 20.15,
+                                                  unitsSold: 100,
+                                                  imageURL: "https://img.poorvika.com/cdn-cgi/image/width=400,height=400,quality=75/1600_JPG/Mobiles/Apple/Apple-iPhone-13-New/Apple-iPhone-13-starlight-front-back.jpg"),
                                           Product(id: UUID().uuidString,
                                                   name: "Product 2",
                                                   company: "US TOT LTD.",
                                                   productDescription: "This is the standard description of product 2",
-                                                  price: 10.15)]
+                                                  category: .phones,
+                                                  price: 10.15,
+                                                  unitsSold: 100),
+                                          Product(id: UUID().uuidString,
+                                                  name: "Product 2",
+                                                  company: "US TOT LTD.",
+                                                  productDescription: "This is the standard description of product 2",
+                                                  category: .tablets,
+                                                  price: 10.15,
+                                                  unitsSold: 100),
+                                          Product(id: UUID().uuidString,
+                                                  name: "Product 2",
+                                                  company: "US TOT LTD.",
+                                                  productDescription: "This is the standard description of product 2",
+                                                  category: .tablets,
+                                                  price: 10.15,
+                                                  unitsSold: 100),
+                                          Product(id: UUID().uuidString,
+                                                  name: "Product 2",
+                                                  company: "US TOT LTD.",
+                                                  productDescription: "This is the standard description of product 2",
+                                                  category: .laptops,
+                                                  price: 10.15,
+                                                  unitsSold: 100),
+                                          Product(id: UUID().uuidString,
+                                                  name: "Product 2",
+                                                  company: "US TOT LTD.",
+                                                  productDescription: "This is the standard description of product 2",
+                                                  category: .watches,
+                                                  price: 10.15,
+                                                  unitsSold: 100),
+                                          Product(id: UUID().uuidString,
+                                                  name: "Product 2",
+                                                  company: "US TOT LTD.",
+                                                  productDescription: "This is the standard description of product 2",
+                                                  category: .accessories,
+                                                  price: 10.15,
+                                                  unitsSold: 100),
+                                          Product(id: UUID().uuidString,
+                                                  name: "Product 2",
+                                                  company: "US TOT LTD.",
+                                                  productDescription: "This is the standard description of product 2",
+                                                  category: .accessories,
+                                                  price: 10.15,
+                                                  unitsSold: 100),
+                                          Product(id: UUID().uuidString,
+                                                  name: "Product 2",
+                                                  company: "US TOT LTD.",
+                                                  productDescription: "This is the standard description of product 2",
+                                                  category: .accessories,
+                                                  price: 10.15,
+                                                  unitsSold: 100),
+                                          Product(id: UUID().uuidString,
+                                                  name: "Product 2",
+                                                  company: "US TOT LTD.",
+                                                  productDescription: "This is the standard description of product 2",
+                                                  category: .other,
+                                                  price: 10.15,
+                                                  unitsSold: 100),
+                                          Product(id: UUID().uuidString,
+                                                  name: "Product 2",
+                                                  company: "US TOT LTD.",
+                                                  productDescription: "This is the standard description of product 2",
+                                                  category: .other,
+                                                  price: 10.15,
+                                                  unitsSold: 100)]
 }
