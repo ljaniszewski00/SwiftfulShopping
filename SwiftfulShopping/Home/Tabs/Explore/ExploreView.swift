@@ -15,7 +15,9 @@ struct ExploreView: View {
     
     @State private var selection: ExploreViewTabsNames = .trending
     
-    @State var shouldPresentProductDetailsView: Bool = false
+    @State private var shouldPresentProductDetailsView: Bool = false
+    
+    @State private var displayMethod: ProductDisplayMethod = .list
     
     enum ExploreViewTabsNames: String, CaseIterable {
         case trending = "Trending"
@@ -58,8 +60,35 @@ struct ExploreView: View {
                         .padding()
                     }
                     
+                    if selection == .trending || selection == .weRecommend {
+                        HStack(spacing: 20) {
+                            Spacer()
+                            
+                            Button {
+                                withAnimation {
+                                    displayMethod = .grid
+                                }
+                            } label: {
+                                Image(systemName: "rectangle.grid.3x2")
+                                    .resizable()
+                                    .frame(width: 25, height: 20)
+                            }
+                            
+                            Button {
+                                withAnimation {
+                                    displayMethod = .list
+                                }
+                            } label: {
+                                Image(systemName: "list.bullet")
+                                    .resizable()
+                                    .frame(width: 25, height: 20)
+                            }
+                        }
+                        .padding(.horizontal)
+                    }
+                    
                     if selection == .trending {
-                        TrendingTabView(shouldPresentProductDetailsView: $shouldPresentProductDetailsView)
+                        TrendingTabView(shouldPresentProductDetailsView: $shouldPresentProductDetailsView, displayMethod: $displayMethod)
                             .environmentObject(authStateManager)
                             .environmentObject(tabBarStateManager)
                             .environmentObject(exploreViewModel)
