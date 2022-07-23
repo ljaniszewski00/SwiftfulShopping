@@ -13,11 +13,7 @@ struct ProductsListView: View {
     @EnvironmentObject private var exploreViewModel: ExploreViewModel
     @EnvironmentObject private var profileViewModel: ProfileViewModel
     
-    private var shouldPresentProductDetailsView: Binding<Bool>
-    
-    init(shouldPresentProductDetailsView: Binding<Bool>) {
-        self.shouldPresentProductDetailsView = shouldPresentProductDetailsView
-    }
+    @State private var productClicked: Bool = false
     
     var body: some View {
         VStack {
@@ -77,16 +73,15 @@ struct ProductsListView: View {
         ForEach(exploreViewModel.productsToBeDisplayed, id: \.self) { product in
             Button {
                 withAnimation(.interactiveSpring(response: 0.6, dampingFraction: 0.7, blendDuration: 0.7)) {
-                    exploreViewModel.manageFocusedProduct(product: product)
-                    shouldPresentProductDetailsView.wrappedValue = true
+                    exploreViewModel.changeFocusedProductFor(product: product)
                 }
             } label: {
                 if displayMethod == .list {
                     ListProductCardTileView(product: product)
-                        .scaleEffect(exploreViewModel.currentProduct?.id == product.id && shouldPresentProductDetailsView.wrappedValue ? 1 : 0.93)
+                        .scaleEffect((exploreViewModel.currentProduct?.id == product.id && productClicked) ? 1 : 0.93)
                 } else {
                     GridProductCardTileView(product: product)
-                        .scaleEffect(exploreViewModel.currentProduct?.id == product.id && shouldPresentProductDetailsView.wrappedValue ? 1 : 0.93)
+                        .scaleEffect((exploreViewModel.currentProduct?.id == product.id && productClicked) ? 1 : 0.93)
                 }
             }
             .buttonStyle(ScaledButtonStyle())
@@ -102,7 +97,7 @@ struct ProductsListView_Previews: PreviewProvider {
         let profileViewModel = ProfileViewModel()
         ForEach(ColorScheme.allCases, id: \.self) { colorScheme in
             ForEach(["iPhone 13 Pro Max", "iPhone 8"], id: \.self) { deviceName in
-                ProductsListView(shouldPresentProductDetailsView: .constant(false))
+                ProductsListView()
                     .environmentObject(authStateManager)
                     .environmentObject(tabBarStateManager)
                     .environmentObject(exploreViewModel)

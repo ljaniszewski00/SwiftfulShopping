@@ -8,6 +8,8 @@
 import SwiftUI
 
 struct ListProductCardTileView: View {
+    @Environment(\.colorScheme) var colorScheme
+    
     var product: Product
     
     var body: some View {
@@ -32,6 +34,7 @@ struct ListProductCardTileView: View {
                 Text(product.name)
                     .font(.system(size: 24, weight: .heavy, design: .rounded))
                     .fixedSize(horizontal: false, vertical: true)
+                    .foregroundColor(colorScheme == .light ? .black : .white)
                 
                 Text("\(product.price, specifier: "%.2f")")
                     .font(.system(size: 22, weight: .bold, design: .rounded))

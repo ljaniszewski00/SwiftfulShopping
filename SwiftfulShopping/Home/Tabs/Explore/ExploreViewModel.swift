@@ -15,6 +15,10 @@ class ExploreViewModel: ObservableObject {
     @Published var currentProduct: Product?
     @Published var displayMethod: ProductDisplayMethod = .list
     
+    @Published var shouldPresentProductDetailsView: Bool = false
+    
+    @Published var productQuantityToBasket: Int = 1
+    
     init() {
         allProducts = Product.demoProducts
     }
@@ -48,15 +52,20 @@ class ExploreViewModel: ObservableObject {
         }
     }
     
-    func manageFocusedProduct(product: Product) {
-        if currentProduct == product {
-            currentProduct = nil
-        } else {
-            currentProduct = product
-        }
+    func changeFocusedProductFor(product: Product) {
+        currentProduct = product
+        shouldPresentProductDetailsView = true
     }
     
     func changeDisplayMethodFor(displayMethod: ProductDisplayMethod) {
         self.displayMethod = displayMethod
+    }
+    
+    func addOneProduct() {
+        productQuantityToBasket += 1
+    }
+    
+    func removeOneProduct() {
+        productQuantityToBasket -= 1
     }
 }

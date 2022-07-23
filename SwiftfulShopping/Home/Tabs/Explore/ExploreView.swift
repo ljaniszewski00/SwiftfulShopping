@@ -12,8 +12,7 @@ struct ExploreView: View {
     @EnvironmentObject private var tabBarStateManager: TabBarStateManager
     @EnvironmentObject private var exploreViewModel: ExploreViewModel
     @EnvironmentObject private var profileViewModel: ProfileViewModel
-    
-    @State private var shouldPresentProductDetailsView: Bool = false
+    @EnvironmentObject private var cartViewModel: CartViewModel
     
     var body: some View {
         NavigationView {
@@ -52,19 +51,34 @@ struct ExploreView: View {
                                 .environmentObject(exploreViewModel)
                                 .environmentObject(profileViewModel)
                         } else {
-                            ProductsListView(shouldPresentProductDetailsView: $shouldPresentProductDetailsView)
+                            ProductsListView()
                                 .environmentObject(authStateManager)
                                 .environmentObject(tabBarStateManager)
                                 .environmentObject(exploreViewModel)
                                 .environmentObject(profileViewModel)
                         }
                     } else {
-                        ProductsListView(shouldPresentProductDetailsView: $shouldPresentProductDetailsView)
+                        ProductsListView()
                             .environmentObject(authStateManager)
                             .environmentObject(tabBarStateManager)
                             .environmentObject(exploreViewModel)
                             .environmentObject(profileViewModel)
                     }
+                    
+                    NavigationLink(destination: ProductDetailsView()
+                                                    .environmentObject(authStateManager)
+                                                    .environmentObject(tabBarStateManager)
+                                                    .environmentObject(exploreViewModel)
+                                                    .environmentObject(profileViewModel)
+                                                    .environmentObject(cartViewModel)
+                                                    .onAppear {
+                                                        tabBarStateManager.hideTabBar()
+                                                    }
+                                                    .onDisappear {
+                                                        tabBarStateManager.showTabBar()
+                                                    },
+                                   isActive: $exploreViewModel.shouldPresentProductDetailsView,
+                                   label: { EmptyView() })
                 }
             }
             .navigationTitle("Explore")

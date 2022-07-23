@@ -8,6 +8,8 @@
 import SwiftUI
 
 struct GridProductCardTileView: View {
+    @Environment(\.colorScheme) var colorScheme
+    
     var product: Product
     
     var body: some View {
@@ -32,6 +34,8 @@ struct GridProductCardTileView: View {
                 Text(product.name)
                     .font(.system(size: 24, weight: .heavy, design: .rounded))
                     .fixedSize(horizontal: false, vertical: true)
+                    .foregroundColor(colorScheme == .light ? .black : .white)
+                
                 ZStack(alignment: .trailing) {
                     HStack {
                         Spacer()

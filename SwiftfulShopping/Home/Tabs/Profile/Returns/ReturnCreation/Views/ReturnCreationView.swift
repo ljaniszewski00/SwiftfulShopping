@@ -34,7 +34,7 @@ struct ReturnCreationView: View {
                 VStack(alignment: .leading, spacing: 30) {
                     Text("Choose products you want to return")
                         .font(.system(size: 20, design: .rounded))
-                    ForEach(order.shoppingCart.products, id: \.self) { product in
+                    ForEach(Array(order.shoppingCart.products.keys), id: \.self) { product in
                         HStack(alignment: .top) {
                             if returnCreationViewModel.productsForReturn.contains(product) {
                                 Circle()

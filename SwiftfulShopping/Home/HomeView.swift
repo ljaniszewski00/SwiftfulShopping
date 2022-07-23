@@ -13,6 +13,7 @@ struct HomeView: View {
     @StateObject private var homeViewModel = HomeViewModel()
     @StateObject private var exploreViewModel = ExploreViewModel()
     @StateObject private var profileViewModel = ProfileViewModel()
+    @StateObject private var cartViewModel = CartViewModel()
     
     @State var selectedTab: Tab = .explore
         
@@ -51,6 +52,7 @@ struct HomeView: View {
                                 .environmentObject(tabBarStateManager)
                                 .environmentObject(exploreViewModel)
                                 .environmentObject(profileViewModel)
+                                .environmentObject(cartViewModel)
                         }
                     case .favorites:
                         withAnimation(.linear) {
@@ -63,6 +65,7 @@ struct HomeView: View {
                             CartView()
                                 .environmentObject(authStateManager)
                                 .environmentObject(tabBarStateManager)
+                                .environmentObject(cartViewModel)
                         }
                     case .search:
                         withAnimation(.linear) {
@@ -80,69 +83,69 @@ struct HomeView: View {
                     }
                 }
                 
-                HStack {
-                    Spacer()
-                    
-                    ForEach(tabItems) { tabItem in
+                if !tabBarStateManager.isHidden {
+                    HStack {
                         Spacer()
                         
-                        Button {
-                            withAnimation(.spring(response: 0.3, dampingFraction: 0.7)) {
-                                selectedTab = tabItem.tab
+                        ForEach(tabItems) { tabItem in
+                            Spacer()
+                            
+                            Button {
+                                withAnimation(.spring(response: 0.3, dampingFraction: 0.7)) {
+                                    selectedTab = tabItem.tab
+                                }
+                            } label: {
+                                VStack(spacing: 8) {
+                                    Image(systemName: tabItem.icon)
+                                        .resizable()
+                                        .symbolVariant(.fill)
+                                        .font(.body.bold())
+                                        .frame(width: 25, height: 25)
+                                    Text(tabItem.text)
+                                        .font(.caption)
+                                        .lineLimit(1)
+                                }
+                                .frame(maxWidth: .infinity)
+                                .foregroundColor(tabItem.tab == .cart ? .white : (selectedTab == tabItem.tab ? .accentColor : Color(uiColor: .systemGray)))
+                                .if(tabItem.tab == .cart) {
+                                    $0
+                                        .padding(.horizontal, 35)
+                                        .background(
+                                            Circle()
+                                                .foregroundColor(.accentColor)
+                                                .frame(width: 90, height: 90)
+                                                .shadow(radius: 10, x: 0, y: 15)
+                                                .if(cartViewModel.cartProductsCount > 0) {
+                                                    $0
+                                                        .overlay(
+                                                            ZStack {
+                                                                Circle()
+                                                                    .frame(width: 30, height: 30)
+                                                                    .foregroundColor(.red)
+                                                                Text(String(cartViewModel.cartProductsCount))
+                                                                    .foregroundColor(.white)
+                                                            }
+                                                                .offset(x: 35, y: 30)
+                                                        )
+                                                }
+                                        )
+                                        .offset(y: -15)
+                                }
                             }
-                        } label: {
-                            VStack(spacing: 8) {
-                                Image(systemName: tabItem.icon)
-                                    .resizable()
-                                    .symbolVariant(.fill)
-                                    .font(.body.bold())
-                                    .frame(width: 25, height: 25)
-                                Text(tabItem.text)
-                                    .font(.caption)
-                                    .lineLimit(1)
-                            }
-                            .frame(maxWidth: .infinity)
-                            .foregroundColor(tabItem.tab == .cart ? .white : (selectedTab == tabItem.tab ? .accentColor : Color(uiColor: .systemGray)))
-                            .if(tabItem.tab == .cart) {
-                                $0
-                                    .padding(.horizontal, 35)
-                                    .background(
-                                        Circle()
-                                            .foregroundColor(.accentColor)
-                                            .frame(width: 90, height: 90)
-                                            .shadow(radius: 10, x: 0, y: 15)
-                                            .if(homeViewModel.thingsInCart > 0) {
-                                                $0
-                                                    .overlay(
-                                                        ZStack {
-                                                            Circle()
-                                                                .frame(width: 30, height: 30)
-                                                                .foregroundColor(.red)
-                                                            Text(String(homeViewModel.thingsInCart))
-                                                                .foregroundColor(.white)
-                                                        }
-                                                            .offset(x: 35, y: 30)
-                                                    )
-                                            }
-                                    )
-                                    .offset(y: -15)
-                            }
+                            .foregroundStyle(selectedTab == tabItem.tab ? .primary : .secondary)
+                            
+                            Spacer()
                         }
-                        .foregroundStyle(selectedTab == tabItem.tab ? .primary : .secondary)
                         
                         Spacer()
                     }
-                    
-                    Spacer()
+                    .padding(.horizontal, 7)
+                    .padding(.bottom, 10)
+                    .frame(height: 100, alignment: .center)
+                    .background(.ultraThinMaterial, in: RoundedRectangle(cornerRadius: 40, style: .continuous))
+                    .navigationBarTitle("")
+                    .navigationBarTitleDisplayMode(.inline)
                 }
-                .isHidden(tabBarStateManager.isHidden)
-                .padding(.horizontal, 7)
-                .padding(.bottom, 10)
-                .frame(height: 100, alignment: .center)
-                .background(.ultraThinMaterial, in: RoundedRectangle(cornerRadius: 40, style: .continuous))
-                .navigationBarTitle("")
-                .navigationBarTitleDisplayMode(.inline)
-                
             }
             .onAppear {
                 authStateManager.isLogged = true

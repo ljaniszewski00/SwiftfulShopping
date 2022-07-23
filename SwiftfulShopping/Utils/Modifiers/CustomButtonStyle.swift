@@ -57,6 +57,6 @@ struct CustomButton: ButtonStyle {
             }
         }
         .foregroundColor(buttonColor)
-        
+        .scaleEffect(configuration.isPressed ? 1.05 : 1.0)
     }
 }

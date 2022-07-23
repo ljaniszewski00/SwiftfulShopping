@@ -71,7 +71,7 @@ struct OrderDetailsView: View {
                 }
                 
                 if showProductsList {
-                    ForEach(order.shoppingCart.products, id: \.self) { product in
+                    ForEach(Array(order.shoppingCart.products.keys), id: \.self) { product in
                         HStack(alignment: .top) {
                             Image("product_placeholder_image")
                                 .resizable()
