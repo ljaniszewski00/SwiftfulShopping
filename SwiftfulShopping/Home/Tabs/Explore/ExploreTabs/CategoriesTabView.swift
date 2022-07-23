@@ -14,7 +14,27 @@ struct CategoriesTabView: View {
     @EnvironmentObject private var profileViewModel: ProfileViewModel
     
     var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+        VStack(alignment: .center) {
+            ForEach(Category.allCases, id: \.self) { category in
+                HStack {
+                    Spacer()
+                    Button {
+                        withAnimation {
+                            exploreViewModel.displayedCategory = category
+                        }
+                    } label: {
+                        Text(category.rawValue)
+                            .font(.system(size: 18, weight: .bold, design: .rounded))
+                    }
+                    .buttonStyle(CustomButton(textColor: .white, rightChevronNavigationImage: true))
+                    .frame(width: UIScreen.main.bounds.width * 0.9)
+                    .contentShape(Rectangle())
+                    .padding(.bottom, 20)
+                    Spacer()
+                }
+            }
+        }
+        .padding()
     }
 }
 

@@ -13,25 +13,7 @@ struct ExploreView: View {
     @EnvironmentObject private var exploreViewModel: ExploreViewModel
     @EnvironmentObject private var profileViewModel: ProfileViewModel
     
-    @State private var selection: ExploreViewTabsNames = .trending
-    
     @State private var shouldPresentProductDetailsView: Bool = false
-    
-    @State private var displayMethod: ProductDisplayMethod = .list
-    
-    enum ExploreViewTabsNames: String, CaseIterable {
-        case trending = "Trending"
-        case categories = "Categories"
-        case weRecommend = "We recommend"
-        
-        static var allCases: [ExploreViewTabsNames] {
-            return [
-                .trending,
-                .categories,
-                .weRecommend
-            ]
-        }
-    }
     
     var body: some View {
         NavigationView {
@@ -39,68 +21,45 @@ struct ExploreView: View {
                 VStack(alignment: .center) {
                     ScrollView(.horizontal, showsIndicators: false) {
                         HStack {
-                            ForEach(ExploreViewTabsNames.allCases, id: \.self) { tabName in
-                                Text(tabName.rawValue)
-                                    .font(.system(size: 18, weight: .bold, design: .rounded))
-                                    .padding()
-                                    .if(tabName == selection) {
-                                        $0
-                                            .background {
-                                                RoundedRectangle(cornerRadius: 10)
-                                                    .foregroundColor(.accentColor)
-                                            }
-                                    }
-                                    .onTapGesture {
-                                        withAnimation(.spring(response: 0.3, dampingFraction: 0.7)) {
-                                            selection = tabName
+                            ForEach(ExploreViewTabs.allCases, id: \.self) { tabName in
+                                VStack {
+                                    Text(tabName.rawValue)
+                                        .font(.system(size: 18, weight: .bold, design: .rounded))
+                                        .padding()
+                                        .if(tabName == exploreViewModel.selectedTab) {
+                                            $0
+                                                .background {
+                                                    RoundedRectangle(cornerRadius: 10)
+                                                        .foregroundColor(.accentColor)
+                                                }
                                         }
-                                    }
+                                        .onTapGesture {
+                                            withAnimation(.spring(response: 0.3, dampingFraction: 0.7)) {
+                                                exploreViewModel.selectedTab = tabName
+                                            }
+                                        }
+                                }
                             }
                         }
                         .padding()
                     }
                     
-                    if selection == .trending || selection == .weRecommend {
-                        HStack(spacing: 20) {
-                            Spacer()
-                            
-                            Button {
-                                withAnimation {
-                                    displayMethod = .grid
-                                }
-                            } label: {
-                                Image(systemName: "rectangle.grid.3x2")
-                                    .resizable()
-                                    .frame(width: 25, height: 20)
-                            }
-                            
-                            Button {
-                                withAnimation {
-                                    displayMethod = .list
-                                }
-                            } label: {
-                                Image(systemName: "list.bullet")
-                                    .resizable()
-                                    .frame(width: 25, height: 20)
-                            }
+                    if exploreViewModel.selectedTab == .categories {
+                        if exploreViewModel.displayedCategory == nil {
+                            CategoriesTabView()
+                                .environmentObject(authStateManager)
+                                .environmentObject(tabBarStateManager)
+                                .environmentObject(exploreViewModel)
+                                .environmentObject(profileViewModel)
+                        } else {
+                            ProductsListView(shouldPresentProductDetailsView: $shouldPresentProductDetailsView)
+                                .environmentObject(authStateManager)
+                                .environmentObject(tabBarStateManager)
+                                .environmentObject(exploreViewModel)
+                                .environmentObject(profileViewModel)
                         }
-                        .padding(.horizontal)
-                    }
-                    
-                    if selection == .trending {
-                        TrendingTabView(shouldPresentProductDetailsView: $shouldPresentProductDetailsView, displayMethod: $displayMethod)
-                            .environmentObject(authStateManager)
-                            .environmentObject(tabBarStateManager)
-                            .environmentObject(exploreViewModel)
-                            .environmentObject(profileViewModel)
-                    } else if selection == .categories {
-                        CategoriesTabView()
-                            .environmentObject(authStateManager)
-                            .environmentObject(tabBarStateManager)
-                            .environmentObject(exploreViewModel)
-                            .environmentObject(profileViewModel)
-                    } else if selection == .weRecommend {
-                        WeRecommendTabView()
+                    } else {
+                        ProductsListView(shouldPresentProductDetailsView: $shouldPresentProductDetailsView)
                             .environmentObject(authStateManager)
                             .environmentObject(tabBarStateManager)
                             .environmentObject(exploreViewModel)

@@ -16,6 +16,7 @@ struct Product {
     var price: Double
     var unitsSold: Int = 0
     var introducedForSale: Date = Date()
+    var isRecommended = false
     var imageURL: String = "https://res.cloudinary.com/drqqwwpen/image/upload/v1596474380/pcs/not-available_g2vsum.jpg"
 }
 
@@ -43,6 +44,7 @@ extension Product {
                                                   category: .phones,
                                                   price: 20.15,
                                                   unitsSold: 100,
+                                                  isRecommended: true,
                                                   imageURL: "https://img.poorvika.com/cdn-cgi/image/width=400,height=400,quality=75/1600_JPG/Mobiles/Apple/Apple-iPhone-13-New/Apple-iPhone-13-starlight-front-back.jpg"),
                                           Product(id: UUID().uuidString,
                                                   name: "Product 2",
@@ -50,14 +52,16 @@ extension Product {
                                                   productDescription: "This is the standard description of product 2",
                                                   category: .phones,
                                                   price: 10.15,
-                                                  unitsSold: 100),
+                                                  unitsSold: 100,
+                                                  isRecommended: true),
                                           Product(id: UUID().uuidString,
                                                   name: "Product 2",
                                                   company: "US TOT LTD.",
                                                   productDescription: "This is the standard description of product 2",
                                                   category: .tablets,
                                                   price: 10.15,
-                                                  unitsSold: 100),
+                                                  unitsSold: 10,
+                                                  isRecommended: true),
                                           Product(id: UUID().uuidString,
                                                   name: "Product 2",
                                                   company: "US TOT LTD.",
