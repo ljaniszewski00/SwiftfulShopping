@@ -15,15 +15,44 @@ struct FavoritesView: View {
     @EnvironmentObject private var cartViewModel: CartViewModel
     @EnvironmentObject private var favoritesViewModel: FavoritesViewModel
     
+    @State private var productClicked: Bool = false
+    
     var body: some View {
         NavigationView {
-            List {
-                ForEach(favoritesViewModel.favoriteProducts, id: \.self) { favoriteProduct in
-                    
+            VStack {
+                ScrollView(.vertical, showsIndicators: false) {
+                    ForEach(favoritesViewModel.favoriteProducts, id: \.self) { product in
+                        Button {
+                            withAnimation(.interactiveSpring(response: 0.6, dampingFraction: 0.7, blendDuration: 0.7)) {
+                                exploreViewModel.changeFocusedProductFor(product: product, favorite: true)
+                            }
+                        } label: {
+                            ListProductCardTileView(product: product)
+                                .environmentObject(favoritesViewModel)
+                                .scaleEffect((exploreViewModel.currentProduct?.id == product.id && productClicked) ? 1 : 0.93)
+                        }
+                        .buttonStyle(ScaledButtonStyle())
+                    }
+                    .navigationTitle("Favorites")
+                    .navigationBarTitleDisplayMode(.inline)
                 }
+                
+                NavigationLink(destination: ProductDetailsView()
+                                                .environmentObject(authStateManager)
+                                                .environmentObject(tabBarStateManager)
+                                                .environmentObject(exploreViewModel)
+                                                .environmentObject(profileViewModel)
+                                                .environmentObject(cartViewModel)
+                                                .environmentObject(favoritesViewModel)
+                                                .onAppear {
+                                                    tabBarStateManager.hideTabBar()
+                                                }
+                                                .onDisappear {
+                                                    tabBarStateManager.showTabBar()
+                                                },
+                               isActive: $favoritesViewModel.shouldPresentProductDetailsView,
+                               label: { EmptyView() })
             }
-            .navigationTitle("Favorites")
-            .navigationBarTitleDisplayMode(.inline)
         }
         .navigationViewStyle(.stack)
     }

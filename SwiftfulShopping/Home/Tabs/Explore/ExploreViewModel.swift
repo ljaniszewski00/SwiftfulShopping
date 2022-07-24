@@ -52,9 +52,11 @@ class ExploreViewModel: ObservableObject {
         }
     }
     
-    func changeFocusedProductFor(product: Product) {
+    func changeFocusedProductFor(product: Product, favorite: Bool = false) {
         currentProduct = product
-        shouldPresentProductDetailsView = true
+        if !favorite {
+            shouldPresentProductDetailsView = true
+        }
     }
     
     func changeDisplayMethodFor(displayMethod: ProductDisplayMethod) {

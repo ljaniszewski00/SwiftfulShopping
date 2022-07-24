@@ -7,7 +7,7 @@
 
 import Foundation
 
-class Cart {
+struct Cart {
     var id: String = UUID().uuidString
     var cartName: String = "Default"
     var products: [Product: Int] = [:]
@@ -18,24 +18,18 @@ class Cart {
     
     private init() {}
     
-    func addProductToCart(productID: String, quantity: Int) {
-        var added: Bool = false
-        for product in Array(products.keys) where product.id == productID {
+    mutating func addProductToCart(product: Product, quantity: Int) {
+        if products[product] != nil {
             products[product]! += quantity
-            added = true
-            break
-        }
-        if !added {
-            if let product = ProductsRepository.shared.getProductFor(productID: productID) {
-                products[product] = quantity
-            }
+        } else {
+            products[product] = quantity
         }
     }
     
-    func removeProductFromCart(productID: String, quantity: Int) {
-        for product in Array(products.keys) where product.id == productID {
+    mutating func removeProductFromCart(product: Product, quantity: Int = 0) {
+        if products[product] != nil {
             if products[product]! >= 0 {
-                if products[product]! - quantity < 0 {
+                if quantity == 0 || products[product]! - quantity <= 0 {
                     products[product] = nil
                 } else {
                     products[product]! -= quantity
@@ -44,15 +38,16 @@ class Cart {
         }
     }
     
-    func removeAllProductsFromCart() {
+    mutating func removeAllProductsFromCart() {
         products.removeAll()
     }
     
-    func getCartProductCount(productID: String) -> Int {
-        for product in Array(products.keys) where product.id == productID {
-            return products[product]!
+    func getCartProductCount(product: Product) -> Int {
+        if let productCount = products[product] {
+            return productCount
+        } else {
+            return 0
         }
-        return 0
     }
     
     func getCartProductsCount() -> Int {

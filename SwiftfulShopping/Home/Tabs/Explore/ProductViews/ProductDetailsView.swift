@@ -103,7 +103,7 @@ struct ProductDetailsView: View {
                 
                 Button {
                     UIImpactFeedbackGenerator(style: .medium).impactOccurred()
-                    cartViewModel.addProductToCart(productID: exploreViewModel.currentProduct!.id, quantity: exploreViewModel.productQuantityToBasket)
+                    cartViewModel.addProductToCart(product: exploreViewModel.currentProduct!, quantity: exploreViewModel.productQuantityToBasket)
                 } label: {
                     Text("ADD TO BASKET")
                         .font(.system(size: 20, weight: .bold, design: .rounded))
@@ -128,12 +128,22 @@ struct ProductDetailsView: View {
             }
             
             ToolbarItem(placement: .navigationBarTrailing) {
-                Button {
-                    favoritesViewModel.manageFavoritesFor(product: exploreViewModel.currentProduct!)
-                } label: {
-                    Image(systemName: favoritesViewModel.favoriteProductsIDs.contains(exploreViewModel.currentProduct!.id) ? "heart.fill" : "heart")
-                        .resizable()
-                        .frame(width: 28, height: 25)
+                if favoritesViewModel.favoriteProducts.contains(exploreViewModel.currentProduct!) {
+                    Button {
+                        favoritesViewModel.removeFromFavorites(product: exploreViewModel.currentProduct!)
+                    } label: {
+                        Image(systemName: "heart.fill")
+                            .resizable()
+                            .frame(width: 28, height: 25)
+                    }
+                } else {
+                    Button {
+                        favoritesViewModel.addToFavorites(product: exploreViewModel.currentProduct!)
+                    } label: {
+                        Image(systemName: "heart")
+                            .resizable()
+                            .frame(width: 28, height: 25)
+                    }
                 }
             }
         }

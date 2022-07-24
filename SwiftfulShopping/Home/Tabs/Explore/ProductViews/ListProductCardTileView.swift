@@ -44,12 +44,22 @@ struct ListProductCardTileView: View {
                 
                 HStack {
                     Spacer()
-                    Button {
-                        favoritesViewModel.manageFavoritesFor(product: product)
-                    } label: {
-                        Image(systemName: favoritesViewModel.favoriteProductsIDs.contains(product.id) ? "heart.fill" : "heart")
-                            .resizable()
-                            .frame(width: 28, height: 25)
+                    if favoritesViewModel.favoriteProducts.contains(product) {
+                        Button {
+                            favoritesViewModel.removeFromFavorites(product: product)
+                        } label: {
+                            Image(systemName: "heart.fill")
+                                .resizable()
+                                .frame(width: 28, height: 25)
+                        }
+                    } else {
+                        Button {
+                            favoritesViewModel.addToFavorites(product: product)
+                        } label: {
+                            Image(systemName: "heart")
+                                .resizable()
+                                .frame(width: 28, height: 25)
+                        }
                     }
                 }
                 

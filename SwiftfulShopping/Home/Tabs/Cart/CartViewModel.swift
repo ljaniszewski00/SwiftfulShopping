@@ -32,48 +32,47 @@ class CartViewModel: ObservableObject {
         cart.getCartTotalCost()
     }
     
-    func getCartProductCount(productID: String) -> Int {
-        cart.getCartProductCount(productID: productID)
+    func getCartProductCount(product: Product) -> Int {
+        cart.getCartProductCount(product: product)
     }
     
-    func addProductToCart(productID: String, quantity: Int) {
-        cart.addProductToCart(productID: productID, quantity: quantity)
+    func addProductToCart(product: Product, quantity: Int) {
+        cart.addProductToCart(product: product, quantity: quantity)
         
         if let cartProductsIDsFromDefaults = UserDefaults.standard.object(forKey: UserDefaultsKeys.cart.rawValue) as? [String: Int] {
-            if cartProductsIDsFromDefaults[productID] != nil {
+            if cartProductsIDsFromDefaults[product.id] != nil {
                 var cartProductsIDsFromDefaultsTemp: [String: Int] = cartProductsIDsFromDefaults
-                cartProductsIDsFromDefaultsTemp[productID]! += quantity
+                cartProductsIDsFromDefaultsTemp[product.id]! += quantity
                 UserDefaults.standard.set(cartProductsIDsFromDefaultsTemp, forKey: UserDefaultsKeys.cart.rawValue)
             } else {
                 var cartProductsIDsFromDefaultsTemp: [String: Int] = cartProductsIDsFromDefaults
-                cartProductsIDsFromDefaultsTemp[productID] = quantity
+                cartProductsIDsFromDefaultsTemp[product.id] = quantity
                 UserDefaults.standard.set(cartProductsIDsFromDefaultsTemp, forKey: UserDefaultsKeys.cart.rawValue)
             }
         } else {
-            UserDefaults.standard.set([productID: quantity], forKey: UserDefaultsKeys.cart.rawValue)
+            UserDefaults.standard.set([product.id: quantity], forKey: UserDefaultsKeys.cart.rawValue)
         }
     }
     
-    func removeProductFromCart(productID: String, quantity: Int = 0) {
-        cart.removeProductFromCart(productID: productID, quantity: quantity)
+    func removeProductFromCart(product: Product, quantity: Int = 0) {
+        cart.removeProductFromCart(product: product, quantity: quantity)
         
         if let cartProductsIDsFromDefaults = UserDefaults.standard.object(forKey: UserDefaultsKeys.cart.rawValue) as? [String: Int] {
-            if cartProductsIDsFromDefaults[productID] != nil {
+            if cartProductsIDsFromDefaults[product.id] != nil {
                 var cartProductsIDsFromDefaultsTemp: [String: Int] = cartProductsIDsFromDefaults
-                if cartProductsIDsFromDefaultsTemp[productID]! - quantity < 0 || quantity == 0 {
-                    cartProductsIDsFromDefaultsTemp[productID] = nil
+                if cartProductsIDsFromDefaultsTemp[product.id]! - quantity <= 0 || quantity == 0 {
+                    cartProductsIDsFromDefaultsTemp[product.id] = nil
                     if cartProductsIDsFromDefaultsTemp.isEmpty {
                         UserDefaults.standard.removeObject(forKey: UserDefaultsKeys.cart.rawValue)
+                    } else {
+                        UserDefaults.standard.set(cartProductsIDsFromDefaultsTemp, forKey: UserDefaultsKeys.cart.rawValue)
                     }
                 } else {
-                    cartProductsIDsFromDefaultsTemp[productID]! -= quantity
+                    cartProductsIDsFromDefaultsTemp[product.id]! -= quantity
+                    UserDefaults.standard.set(cartProductsIDsFromDefaultsTemp, forKey: UserDefaultsKeys.cart.rawValue)
                 }
-                
-                UserDefaults.standard.set(cartProductsIDsFromDefaultsTemp, forKey: UserDefaultsKeys.cart.rawValue)
             }
         }
-        
-        print(cart.products)
     }
     
     func removeAllProductsFromCart() {

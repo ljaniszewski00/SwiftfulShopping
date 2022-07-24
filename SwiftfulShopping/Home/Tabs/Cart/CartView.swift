@@ -14,19 +14,41 @@ struct CartView: View {
     
     var body: some View {
         NavigationView {
-            VStack {
+            List {
                 ForEach(Array(cartViewModel.cart.products.keys), id: \.self) { product in
                     HStack {
                         Text(product.id)
                         
                         Spacer()
 
-                        Text("\(cartViewModel.getCartProductCount(productID: product.id))")
+                        HStack {
+                            Button {
+                                withAnimation {
+                                    cartViewModel.removeProductFromCart(product: product, quantity: 1)
+                                }
+                            } label: {
+                                Image(systemName: "minus.square.fill")
+                                    .resizable()
+                                    .frame(width: 40, height: 40)
+                            }
+                            
+                            Text("\(cartViewModel.getCartProductCount(product: product))")
+                            
+                            Button {
+                                withAnimation {
+                                    cartViewModel.addProductToCart(product: product, quantity: 1)
+                                }
+                            } label: {
+                                Image(systemName: "plus.square.fill")
+                                    .resizable()
+                                    .frame(width: 40, height: 40)
+                            }
+                        }
                         
                         Spacer()
                         
                         Button {
-                            cartViewModel.removeProductFromCart(productID: product.id)
+                            cartViewModel.removeProductFromCart(product: product)
                         } label: {
                             Image(systemName: "trash")
                         }
