@@ -18,24 +18,41 @@ class Cart {
     
     private init() {}
     
-    func addProductToCart(product: Product, quantity: Int) {
-        if products[product] != nil {
+    func addProductToCart(productID: String, quantity: Int) {
+        var added: Bool = false
+        for product in Array(products.keys) where product.id == productID {
             products[product]! += quantity
-        } else {
-            products[product] = quantity
+            added = true
+            break
+        }
+        if !added {
+            if let product = ProductsRepository.shared.getProductFor(productID: productID) {
+                products[product] = quantity
+            }
         }
     }
     
-    func removeProductFromCart(product: Product, quantity: Int) {
-        if products[product] != nil {
+    func removeProductFromCart(productID: String, quantity: Int) {
+        for product in Array(products.keys) where product.id == productID {
             if products[product]! >= 0 {
                 if products[product]! - quantity < 0 {
-                    products[product]! = 0
+                    products[product] = nil
                 } else {
                     products[product]! -= quantity
                 }
             }
         }
+    }
+    
+    func removeAllProductsFromCart() {
+        products.removeAll()
+    }
+    
+    func getCartProductCount(productID: String) -> Int {
+        for product in Array(products.keys) where product.id == productID {
+            return products[product]!
+        }
+        return 0
     }
     
     func getCartProductsCount() -> Int {

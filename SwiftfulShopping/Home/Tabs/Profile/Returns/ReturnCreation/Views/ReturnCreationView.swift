@@ -25,15 +25,15 @@ struct ReturnCreationView: View {
                 
                 VStack(alignment: .leading, spacing: 10) {
                     Text("Order ID")
-                        .font(.system(size: 20, design: .rounded))
+                        .font(.system(size: 18, design: .rounded))
                     Text(order.id)
-                        .font(.system(size: 22, weight: .bold, design: .rounded))
+                        .font(.system(size: 20, weight: .bold, design: .rounded))
                         .foregroundColor(.accentColor)
                 }
                 
                 VStack(alignment: .leading, spacing: 30) {
                     Text("Choose products you want to return")
-                        .font(.system(size: 20, design: .rounded))
+                        .font(.system(size: 18, design: .rounded))
                     ForEach(Array(order.shoppingCart.products.keys), id: \.self) { product in
                         HStack(alignment: .top) {
                             if returnCreationViewModel.productsForReturn.contains(product) {
@@ -56,10 +56,10 @@ struct ReturnCreationView: View {
                                         Text(product.name)
                                         Text(product.company)
                                     }
-                                    .font(.system(size: 20))
+                                    .font(.system(size: 18))
                                     Spacer()
                                     Text("\(product.price, specifier: "%.2f")")
-                                        .font(.system(size: 22, weight: .bold, design: .rounded))
+                                        .font(.system(size: 20, weight: .bold, design: .rounded))
                                         .foregroundColor(.accentColor)
                                 }
                             }
@@ -74,9 +74,9 @@ struct ReturnCreationView: View {
                 
                 HStack {
                     Text("Selected Products:")
-                        .font(.system(size: 20, design: .rounded))
+                        .font(.system(size: 18, design: .rounded))
                     Text("\(returnCreationViewModel.productsForReturn.count)")
-                        .font(.system(size: 22, weight: .bold, design: .rounded))
+                        .font(.system(size: 20, weight: .bold, design: .rounded))
                         .foregroundColor(.accentColor)
                 }
                 
@@ -86,7 +86,7 @@ struct ReturnCreationView: View {
                     }
                 } label: {
                     Text("Continue")
-                        .font(.system(size: 18, weight: .bold, design: .rounded))
+                        .font(.system(size: 16, weight: .bold, design: .rounded))
                 }
                 .buttonStyle(CustomButton())
                 .disabled(returnCreationViewModel.productsForReturn.isEmpty)

@@ -21,19 +21,19 @@ struct ReturnDetailsView: View {
             VStack(alignment: .leading, spacing: 40) {
                 VStack(alignment: .leading, spacing: 10) {
                     Text("Return Date")
-                        .font(.system(size: 20, design: .rounded))
+                        .font(.system(size: 18, design: .rounded))
                     Text(Date.getDayMonthYearFrom(date: userReturn.returnDate))
-                        .font(.system(size: 22, weight: .bold, design: .rounded))
+                        .font(.system(size: 20, weight: .bold, design: .rounded))
                         .foregroundColor(.accentColor)
                 }
                 
                 HStack(alignment: .bottom) {
                     VStack(alignment: .leading, spacing: 10) {
                         Text("Status")
-                            .font(.system(size: 20, design: .rounded))
+                            .font(.system(size: 18, design: .rounded))
                             
                         Text(userReturn.status.rawValue)
-                            .font(.system(size: 22, weight: .bold, design: .rounded))
+                            .font(.system(size: 20, weight: .bold, design: .rounded))
                             .foregroundColor(.accentColor)
                     }
                     .padding(.bottom, 10)
@@ -56,18 +56,18 @@ struct ReturnDetailsView: View {
                                 .frame(width: 150, height: 150)
                             VStack(alignment: .leading, spacing: 20) {
                                 Text(product.id)
-                                    .font(.system(size: 18, design: .rounded))
+                                    .font(.system(size: 16, design: .rounded))
                                 HStack(alignment: .bottom) {
                                     VStack(alignment: .leading, spacing: 5) {
                                         Text(product.name)
-                                            .font(.system(size: 18, design: .rounded))
+                                            .font(.system(size: 16, design: .rounded))
                                         Text(product.company)
-                                            .font(.system(size: 18, design: .rounded))
+                                            .font(.system(size: 16, design: .rounded))
                                     }
-                                    .font(.system(size: 20))
+                                    .font(.system(size: 18))
                                     Spacer()
                                     Text("\(product.price, specifier: "%.2f")")
-                                        .font(.system(size: 22, weight: .bold, design: .rounded))
+                                        .font(.system(size: 20, weight: .bold, design: .rounded))
                                         .foregroundColor(.accentColor)
                                 }
                                 
@@ -80,10 +80,10 @@ struct ReturnDetailsView: View {
                 
                 VStack(alignment: .leading, spacing: 10) {
                     Text("Total price to be returned")
-                        .font(.system(size: 20, design: .rounded))
+                        .font(.system(size: 18, design: .rounded))
                         
                     Text("\(userReturn.returnPrice, specifier: "%.2f")")
-                        .font(.system(size: 22, weight: .bold, design: .rounded))
+                        .font(.system(size: 20, weight: .bold, design: .rounded))
                         .foregroundColor(.accentColor)
                 }
             }

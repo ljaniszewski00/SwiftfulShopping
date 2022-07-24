@@ -31,7 +31,7 @@ struct ThirdReturnCreationView: View {
                 StepsView(stepsNumber: 3, activeStep: 3)
                 
                 Text("Choose products delivery method")
-                    .font(.system(size: 22, weight: .bold, design: .rounded))
+                    .font(.system(size: 20, weight: .bold, design: .rounded))
                 
                 VStack(alignment: .leading) {
                     ForEach(ShippingMethod.allCases, id: \.self) { shippingMethod in
@@ -52,7 +52,7 @@ struct ThirdReturnCreationView: View {
                             })
                             
                             Text(shippingMethod.rawValue)
-                                .font(.system(size: 18, weight: .bold, design: .rounded))
+                                .font(.system(size: 16, weight: .bold, design: .rounded))
                         }
                         .frame(height: 50)
                     }
@@ -68,7 +68,7 @@ struct ThirdReturnCreationView: View {
                     }
                 } label: {
                     Text("Create Return")
-                        .font(.system(size: 18, weight: .bold, design: .rounded))
+                        .font(.system(size: 16, weight: .bold, design: .rounded))
                 }
                 .buttonStyle(CustomButton())
                 .frame(width: UIScreen.main.bounds.width * 0.9)

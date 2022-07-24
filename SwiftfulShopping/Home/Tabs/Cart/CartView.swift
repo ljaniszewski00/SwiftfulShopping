@@ -8,10 +8,31 @@
 import SwiftUI
 
 struct CartView: View {
+    @EnvironmentObject private var authStateManager: AuthStateManager
+    @EnvironmentObject private var tabBarStateManager: TabBarStateManager
+    @EnvironmentObject private var cartViewModel: CartViewModel
+    
     var body: some View {
         NavigationView {
-            ScrollView(.vertical, showsIndicators: false) {
-                
+            VStack {
+                ForEach(Array(cartViewModel.cart.products.keys), id: \.self) { product in
+                    HStack {
+                        Text(product.id)
+                        
+                        Spacer()
+
+                        Text("\(cartViewModel.getCartProductCount(productID: product.id))")
+                        
+                        Spacer()
+                        
+                        Button {
+                            cartViewModel.removeProductFromCart(productID: product.id)
+                        } label: {
+                            Image(systemName: "trash")
+                        }
+                    }
+                    .padding()
+                }
             }
             .navigationTitle("Cart")
         }

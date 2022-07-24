@@ -18,7 +18,7 @@ struct HelpView: View {
         VStack(alignment: .leading, spacing: 80) {
             VStack(alignment: .center, spacing: 30) {
                 Text("Contact Us")
-                    .font(.system(size: 22, weight: .heavy, design: .rounded))
+                    .font(.system(size: 20, weight: .heavy, design: .rounded))
                 VStack(alignment: .trailing) {
                     RectangleCustomTextField(
                         textFieldProperty: "Email Address",
@@ -47,7 +47,7 @@ struct HelpView: View {
             
             VStack(alignment: .center, spacing: 30) {
                 Text("Subscribe to Newsletter")
-                    .font(.system(size: 22, weight: .heavy, design: .rounded))
+                    .font(.system(size: 20, weight: .heavy, design: .rounded))
                 VStack(alignment: .trailing) {
                     RectangleCustomTextField(
                         textFieldProperty: "Email Address",

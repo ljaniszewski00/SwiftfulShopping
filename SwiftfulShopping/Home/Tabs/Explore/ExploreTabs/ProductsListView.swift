@@ -12,6 +12,7 @@ struct ProductsListView: View {
     @EnvironmentObject private var tabBarStateManager: TabBarStateManager
     @EnvironmentObject private var exploreViewModel: ExploreViewModel
     @EnvironmentObject private var profileViewModel: ProfileViewModel
+    @EnvironmentObject private var favoritesViewModel: FavoritesViewModel
     
     @State private var productClicked: Bool = false
     
@@ -25,7 +26,7 @@ struct ProductsListView: View {
                             .frame(width: 25, height: 25)
                             .foregroundColor(.accentColor)
                         Text(exploreViewModel.displayedCategory!.rawValue)
-                            .font(.system(size: 18, weight: .bold, design: .rounded))
+                            .font(.system(size: 16, weight: .bold, design: .rounded))
                     }
                     .onTapGesture {
                         withAnimation {
@@ -78,9 +79,11 @@ struct ProductsListView: View {
             } label: {
                 if displayMethod == .list {
                     ListProductCardTileView(product: product)
+                        .environmentObject(favoritesViewModel)
                         .scaleEffect((exploreViewModel.currentProduct?.id == product.id && productClicked) ? 1 : 0.93)
                 } else {
                     GridProductCardTileView(product: product)
+                        .environmentObject(favoritesViewModel)
                         .scaleEffect((exploreViewModel.currentProduct?.id == product.id && productClicked) ? 1 : 0.93)
                 }
             }

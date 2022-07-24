@@ -13,6 +13,9 @@ struct ProductDetailsView: View {
     @EnvironmentObject private var exploreViewModel: ExploreViewModel
     @EnvironmentObject private var profileViewModel: ProfileViewModel
     @EnvironmentObject private var cartViewModel: CartViewModel
+    @EnvironmentObject private var favoritesViewModel: FavoritesViewModel
+    
+    @Environment(\.dismiss) var dismiss
     
     var body: some View {
         VStack {
@@ -22,30 +25,27 @@ struct ProductDetailsView: View {
                         AsyncImage(url: URL(string: product.imageURL)!) { loadedImage in
                             loadedImage
                                 .resizable()
-                                .aspectRatio(contentMode: .fit)
-                                .frame(width: ScreenBoundsSupplier.shared.getScreenWidth() * 0.5, height: ScreenBoundsSupplier.shared.getScreenHeight() * 0.22)
+                                .aspectRatio(contentMode: .fill)
                         } placeholder: {
                             Image("product_placeholder_image")
                                 .resizable()
-                                .aspectRatio(contentMode: .fit)
-                                .frame(width: ScreenBoundsSupplier.shared.getScreenWidth() * 0.5, height: ScreenBoundsSupplier.shared.getScreenHeight() * 0.22)
+                                .scaledToFill()
                         }
-                        .ignoresSafeArea()
 
                         VStack(alignment: .center, spacing: 15) {
                             Text(product.company)
-                                .font(.system(size: 16, weight: .regular, design: .rounded))
+                                .font(.system(size: 14, weight: .regular, design: .rounded))
                                 .foregroundColor(.gray)
                             Text(product.name)
-                                .font(.system(size: 24, weight: .heavy, design: .rounded))
+                                .font(.system(size: 22, weight: .heavy, design: .rounded))
                             Text("\(product.price, specifier: "%.2f")")
-                                .font(.system(size: 22, weight: .bold, design: .rounded))
+                                .font(.system(size: 20, weight: .bold, design: .rounded))
                                 .foregroundColor(.accentColor)
                         }
                         
                         HStack {
                             Text(product.productDescription)
-                                .font(.system(size: 20, weight: .regular, design: .rounded))
+                                .font(.system(size: 18, weight: .regular, design: .rounded))
                             Spacer()
                         }
                         .padding()
@@ -54,13 +54,13 @@ struct ProductDetailsView: View {
                     }
                 }
             }
+            .ignoresSafeArea(.container, edges: [.top])
             
             VStack(spacing: 10) {
                 HStack {
                     HStack(spacing: 10) {
                         ForEach(ProductColor.allCases, id: \.self) { color in
                             Button {
-                                
                             } label: {
                                 Circle()
                                     .foregroundColor(Color(uiColor: color.rawValue))
@@ -80,20 +80,20 @@ struct ProductDetailsView: View {
                                 }
                             }
                         } label: {
-                            Image(systemName: "minus.square")
+                            Image(systemName: "minus.square.fill")
                                 .resizable()
                                 .frame(width: 40, height: 40)
                         }
                         
                         Text("\(exploreViewModel.productQuantityToBasket)")
-                            .font(.system(size: 20, weight: .regular, design: .rounded))
+                            .font(.system(size: 18, weight: .regular, design: .rounded))
                         
                         Button {
                             withAnimation {
                                 exploreViewModel.addOneProduct()
                             }
                         } label: {
-                            Image(systemName: "plus.square")
+                            Image(systemName: "plus.square.fill")
                                 .resizable()
                                 .frame(width: 40, height: 40)
                         }
@@ -103,17 +103,40 @@ struct ProductDetailsView: View {
                 
                 Button {
                     UIImpactFeedbackGenerator(style: .medium).impactOccurred()
-                    cartViewModel.addProductToCart(product: exploreViewModel.currentProduct!, quantity: exploreViewModel.productQuantityToBasket)
+                    cartViewModel.addProductToCart(productID: exploreViewModel.currentProduct!.id, quantity: exploreViewModel.productQuantityToBasket)
                 } label: {
                     Text("ADD TO BASKET")
-                        .font(.system(size: 22, weight: .bold, design: .rounded))
+                        .font(.system(size: 20, weight: .bold, design: .rounded))
                 }
                 .buttonStyle(CustomButton())
             }
             .padding(.bottom, 20)
         }
-        .navigationTitle("\(exploreViewModel.currentProduct!.name)")
-        .navigationBarTitleDisplayMode(.inline)
+        .navigationBarTitle("")
+        .navigationBarHidden(false)
+        .navigationBarBackButtonHidden(true)
+        .toolbar {
+            ToolbarItem(placement: .navigationBarLeading) {
+                Button {
+                    dismiss()
+                } label: {
+                    Image(systemName: "arrow.backward.circle.fill")
+                        .resizable()
+                        .frame(width: 30, height: 30)
+                        .foregroundColor(.accentColor)
+                }
+            }
+            
+            ToolbarItem(placement: .navigationBarTrailing) {
+                Button {
+                    favoritesViewModel.manageFavoritesFor(product: exploreViewModel.currentProduct!)
+                } label: {
+                    Image(systemName: favoritesViewModel.favoriteProductsIDs.contains(exploreViewModel.currentProduct!.id) ? "heart.fill" : "heart")
+                        .resizable()
+                        .frame(width: 28, height: 25)
+                }
+            }
+        }
     }
 }
 
@@ -123,6 +146,8 @@ struct ProductDetailsView_Previews: PreviewProvider {
         let tabBarStateManager = TabBarStateManager()
         let exploreViewModel = ExploreViewModel()
         let profileViewModel = ProfileViewModel()
+        let cartViewModel = CartViewModel()
+        let favoritesViewModel = FavoritesViewModel()
         ForEach(ColorScheme.allCases, id: \.self) { colorScheme in
             ForEach(["iPhone 13 Pro Max", "iPhone 8"], id: \.self) { deviceName in
                 ProductDetailsView()
@@ -130,6 +155,8 @@ struct ProductDetailsView_Previews: PreviewProvider {
                     .environmentObject(tabBarStateManager)
                     .environmentObject(exploreViewModel)
                     .environmentObject(profileViewModel)
+                    .environmentObject(cartViewModel)
+                    .environmentObject(favoritesViewModel)
                     .preferredColorScheme(colorScheme)
                     .previewDevice(PreviewDevice(rawValue: deviceName))
                     .previewDisplayName("\(deviceName) portrait")

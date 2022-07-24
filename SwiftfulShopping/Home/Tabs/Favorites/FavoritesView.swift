@@ -8,10 +8,17 @@
 import SwiftUI
 
 struct FavoritesView: View {
+    @EnvironmentObject private var authStateManager: AuthStateManager
+    @EnvironmentObject private var tabBarStateManager: TabBarStateManager
+    @EnvironmentObject private var exploreViewModel: ExploreViewModel
+    @EnvironmentObject private var profileViewModel: ProfileViewModel
+    @EnvironmentObject private var cartViewModel: CartViewModel
+    @EnvironmentObject private var favoritesViewModel: FavoritesViewModel
+    
     var body: some View {
         NavigationView {
-            ScrollView(.vertical) {
-                VStack {
+            List {
+                ForEach(favoritesViewModel.favoriteProducts, id: \.self) { favoriteProduct in
                     
                 }
             }

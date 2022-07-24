@@ -44,9 +44,9 @@ struct ProfileView: View {
                         HStack {
                             VStack(alignment: .leading, spacing: 6) {
                                 Text("Hello, customer!")
-                                    .font(.system(size: 22, weight: .heavy, design: .rounded))
+                                    .font(.system(size: 20, weight: .heavy, design: .rounded))
                                 Text("Please register down below.")
-                                    .font(.system(size: 16, weight: .regular, design: .rounded))
+                                    .font(.system(size: 14, weight: .regular, design: .rounded))
                                     .foregroundColor(Color(uiColor: .darkGray))
                                 Spacer()
                             }
@@ -65,9 +65,9 @@ struct ProfileView: View {
                         HStack {
                             VStack(alignment: .leading, spacing: 6) {
                                 Text("Hello, \(profileViewModel.profile.firstName)!")
-                                    .font(.system(size: 22, weight: .heavy, design: .rounded))
+                                    .font(.system(size: 20, weight: .heavy, design: .rounded))
                                 Text("We are happy to see you again.")
-                                    .font(.system(size: 16, weight: .regular, design: .rounded))
+                                    .font(.system(size: 14, weight: .regular, design: .rounded))
                                     .foregroundColor(Color(uiColor: .darkGray))
                                 Spacer()
                             }
@@ -84,7 +84,7 @@ struct ProfileView: View {
                                     shouldPresentAddActionSheet = true
                                 } label: {
                                     Text("Change photo")
-                                        .font(.system(size: 18, weight: .heavy, design: .rounded))
+                                        .font(.system(size: 16, weight: .heavy, design: .rounded))
                                 }
                             }
                             .padding(.trailing, 20)
@@ -103,7 +103,7 @@ struct ProfileView: View {
                                         selection = navigationViewName.rawValue
                                     } label: {
                                         Text(navigationViewName.rawValue)
-                                            .font(.system(size: 18, weight: .bold, design: .rounded))
+                                            .font(.system(size: 16, weight: .bold, design: .rounded))
                                     }
                                     .buttonStyle(CustomButton(textColor: .white, rightChevronNavigationImage: true))
                                     .frame(width: UIScreen.main.bounds.width * 0.9)
@@ -123,7 +123,7 @@ struct ProfileView: View {
                                     }
                                 } label: {
                                     Text("Logout")
-                                        .font(.system(size: 18, weight: .bold, design: .rounded))
+                                        .font(.system(size: 16, weight: .bold, design: .rounded))
                                 }
                                 .buttonStyle(CustomButton(textColor: .accentColor, onlyStroke: true, strokeColor: .accentColor, imageName: "rectangle.portrait.and.arrow.right", imageColor: .accentColor))
                                 .frame(width: UIScreen.main.bounds.width * 0.9)

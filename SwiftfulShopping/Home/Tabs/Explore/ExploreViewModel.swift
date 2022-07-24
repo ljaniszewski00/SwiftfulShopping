@@ -19,8 +19,8 @@ class ExploreViewModel: ObservableObject {
     
     @Published var productQuantityToBasket: Int = 1
     
-    init() {
-        allProducts = Product.demoProducts
+    func fetchProducts() {
+        self.allProducts = ProductsRepository.shared.products
     }
     
     var recommendedProducts: [Product] {

@@ -14,6 +14,7 @@ struct HomeView: View {
     @StateObject private var exploreViewModel = ExploreViewModel()
     @StateObject private var profileViewModel = ProfileViewModel()
     @StateObject private var cartViewModel = CartViewModel()
+    @StateObject private var favoritesViewModel = FavoritesViewModel()
     
     @State var selectedTab: Tab = .explore
         
@@ -53,12 +54,17 @@ struct HomeView: View {
                                 .environmentObject(exploreViewModel)
                                 .environmentObject(profileViewModel)
                                 .environmentObject(cartViewModel)
+                                .environmentObject(favoritesViewModel)
                         }
                     case .favorites:
                         withAnimation(.linear) {
                             FavoritesView()
                                 .environmentObject(authStateManager)
                                 .environmentObject(tabBarStateManager)
+                                .environmentObject(exploreViewModel)
+                                .environmentObject(profileViewModel)
+                                .environmentObject(cartViewModel)
+                                .environmentObject(favoritesViewModel)
                         }
                     case .cart:
                         withAnimation(.linear) {
@@ -150,6 +156,9 @@ struct HomeView: View {
             .onAppear {
                 authStateManager.isLogged = true
                 authStateManager.isGuest = false
+                exploreViewModel.fetchProducts()
+                cartViewModel.restorePreviousCart()
+                favoritesViewModel.fetchFavorites()
             }
             .ignoresSafeArea(edges: .bottom)
         } else {

@@ -13,6 +13,7 @@ struct ExploreView: View {
     @EnvironmentObject private var exploreViewModel: ExploreViewModel
     @EnvironmentObject private var profileViewModel: ProfileViewModel
     @EnvironmentObject private var cartViewModel: CartViewModel
+    @EnvironmentObject private var favoritesViewModel: FavoritesViewModel
     
     var body: some View {
         NavigationView {
@@ -23,7 +24,7 @@ struct ExploreView: View {
                             ForEach(ExploreViewTabs.allCases, id: \.self) { tabName in
                                 VStack {
                                     Text(tabName.rawValue)
-                                        .font(.system(size: 18, weight: .bold, design: .rounded))
+                                        .font(.system(size: 16, weight: .bold, design: .rounded))
                                         .padding()
                                         .if(tabName == exploreViewModel.selectedTab) {
                                             $0
@@ -56,6 +57,7 @@ struct ExploreView: View {
                                 .environmentObject(tabBarStateManager)
                                 .environmentObject(exploreViewModel)
                                 .environmentObject(profileViewModel)
+                                .environmentObject(favoritesViewModel)
                         }
                     } else {
                         ProductsListView()
@@ -63,6 +65,7 @@ struct ExploreView: View {
                             .environmentObject(tabBarStateManager)
                             .environmentObject(exploreViewModel)
                             .environmentObject(profileViewModel)
+                            .environmentObject(favoritesViewModel)
                     }
                     
                     NavigationLink(destination: ProductDetailsView()
@@ -71,6 +74,7 @@ struct ExploreView: View {
                                                     .environmentObject(exploreViewModel)
                                                     .environmentObject(profileViewModel)
                                                     .environmentObject(cartViewModel)
+                                                    .environmentObject(favoritesViewModel)
                                                     .onAppear {
                                                         tabBarStateManager.hideTabBar()
                                                     }

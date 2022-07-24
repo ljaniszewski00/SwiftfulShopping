@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0A237401288D62730076A5AB /* ProductsRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A237400288D62730076A5AB /* ProductsRepository.swift */; };
+		0A237403288D68720076A5AB /* UserDefaultsKeys.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A237402288D68720076A5AB /* UserDefaultsKeys.swift */; };
 		0A268B43286712C8006CF0E2 /* Date.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A268B42286712C8006CF0E2 /* Date.swift */; };
 		0A268B4528671442006CF0E2 /* Array.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A268B4428671442006CF0E2 /* Array.swift */; };
 		0A268B4728671924006CF0E2 /* OrderDetailsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A268B4628671924006CF0E2 /* OrderDetailsView.swift */; };
@@ -242,6 +244,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		0A237400288D62730076A5AB /* ProductsRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductsRepository.swift; sourceTree = "<group>"; };
+		0A237402288D68720076A5AB /* UserDefaultsKeys.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDefaultsKeys.swift; sourceTree = "<group>"; };
 		0A268B42286712C8006CF0E2 /* Date.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Date.swift; sourceTree = "<group>"; };
 		0A268B4428671442006CF0E2 /* Array.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Array.swift; sourceTree = "<group>"; };
 		0A268B4628671924006CF0E2 /* OrderDetailsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrderDetailsView.swift; sourceTree = "<group>"; };
@@ -384,6 +388,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		0A2373FF288D62630076A5AB /* Objects */ = {
+			isa = PBXGroup;
+			children = (
+				0A237400288D62730076A5AB /* ProductsRepository.swift */,
+			);
+			path = Objects;
+			sourceTree = "<group>";
+		};
 		0A268B4C2868776E006CF0E2 /* ReturnCreation */ = {
 			isa = PBXGroup;
 			children = (
@@ -528,6 +540,7 @@
 		0AB8D98A2864B4C7003DC2E6 /* Common */ = {
 			isa = PBXGroup;
 			children = (
+				0A2373FF288D62630076A5AB /* Objects */,
 				0AB8D98E2864B577003DC2E6 /* Enums */,
 				0AB8D98B2864B4CC003DC2E6 /* Models */,
 			);
@@ -552,6 +565,7 @@
 				0A3DE45A2889AAA9008B050B /* ProductColor.swift */,
 				0A3245F0288B16670046043D /* ProductDisplayMethod.swift */,
 				0A2DECBE288C5FB200D563C9 /* ExploreViewTabs.swift */,
+				0A237402288D68720076A5AB /* UserDefaultsKeys.swift */,
 			);
 			path = Enums;
 			sourceTree = "<group>";
@@ -1094,6 +1108,7 @@
 				0ACD59A3284B71BC00AA9DA0 /* ProfileViewModel.swift in Sources */,
 				0A56D8AF285F2C830009680C /* OrdersView.swift in Sources */,
 				0ACD58E2284A6F6600AA9DA0 /* CheckmarkToggleStyle.swift in Sources */,
+				0A237401288D62730076A5AB /* ProductsRepository.swift in Sources */,
 				0ACD5899284A6E9200AA9DA0 /* ContentView.swift in Sources */,
 				0AB8D9882864B36F003DC2E6 /* Cart.swift in Sources */,
 				0A3DE45328899F65008B050B /* Category.swift in Sources */,
@@ -1122,6 +1137,7 @@
 				0ACD58FA284A6F6600AA9DA0 /* Color.swift in Sources */,
 				0AB8D9852864B26F003DC2E6 /* Return.swift in Sources */,
 				0A56D8A3285F27CF0009680C /* CartView.swift in Sources */,
+				0A237403288D68720076A5AB /* UserDefaultsKeys.swift in Sources */,
 				0ACD58EE284A6F6600AA9DA0 /* LocationManager.swift in Sources */,
 				0A56D8B5285F2C9D0009680C /* PaymentDetailsView.swift in Sources */,
 				0A26FF382885B4440001FA93 /* NotificationsView.swift in Sources */,

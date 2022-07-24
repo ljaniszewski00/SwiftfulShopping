@@ -21,7 +21,7 @@ struct PaymentDetailsView: View {
             List {
                 ForEach(PaymentMethod.allCases, id: \.self) { paymentMethod in
                     Section(header: Text(paymentMethod.rawValue)
-                        .font(.system(size: 20, weight: .bold, design: .rounded))
+                        .font(.system(size: 18, weight: .bold, design: .rounded))
                         .foregroundColor(.accentColor)) {
                             if paymentMethod == .cash {
                                 
@@ -32,7 +32,7 @@ struct PaymentDetailsView: View {
                                         VStack(alignment: .leading) {
                                             HStack {
                                                 Text(paymentDetailsViewModel.cardCompany.rawValue)
-                                                    .font(.system(size: 20, weight: .bold, design: .rounded))
+                                                    .font(.system(size: 18, weight: .bold, design: .rounded))
                                                     .foregroundColor(.white)
                                                 Spacer()
                                                 Image("card_chip")
@@ -46,14 +46,14 @@ struct PaymentDetailsView: View {
                                                     .textFieldStyle(.roundedBorder)
                                             } else {
                                                 Text(paymentDetailsViewModel.newCardNumber)
-                                                    .font(.system(size: 20, weight: .bold, design: .rounded))
+                                                    .font(.system(size: 18, weight: .bold, design: .rounded))
                                                     .foregroundColor(.white)
                                                     .padding(.bottom, 5)
                                             }
                                             
                                             HStack {
                                                 Text("Valid Thru")
-                                                    .font(.system(size: 16, design: .rounded))
+                                                    .font(.system(size: 14, design: .rounded))
                                                     .fixedSize(horizontal: false, vertical: true)
                                                     .frame(width: 50)
                                                     .foregroundColor(.white)
@@ -62,7 +62,7 @@ struct PaymentDetailsView: View {
                                                         .textFieldStyle(.roundedBorder)
                                                 } else {
                                                     Text(paymentDetailsViewModel.newValidThruDate)
-                                                        .font(.system(size: 20, weight: .bold, design: .rounded))
+                                                        .font(.system(size: 18, weight: .bold, design: .rounded))
                                                         .foregroundColor(.white)
                                                 }
                                             }
@@ -73,7 +73,7 @@ struct PaymentDetailsView: View {
                                                     .textFieldStyle(.roundedBorder)
                                             } else {
                                                 Text(paymentDetailsViewModel.newCardholderName)
-                                                    .font(.system(size: 20, weight: .bold, design: .rounded))
+                                                    .font(.system(size: 18, weight: .bold, design: .rounded))
                                                     .foregroundColor(.white)
                                             }
                                             
@@ -97,7 +97,7 @@ struct PaymentDetailsView: View {
                                                 }
                                             } label: {
                                                 Text("Finish")
-                                                    .font(.system(size: 18, weight: .bold, design: .rounded))
+                                                    .font(.system(size: 16, weight: .bold, design: .rounded))
                                             }
                                             .buttonStyle(CustomButton(buttonWidthMultiplier: 0.86))
                                             .contentShape(Rectangle())
@@ -109,7 +109,7 @@ struct PaymentDetailsView: View {
                                                 }
                                             } label: {
                                                 Text("Edit Card Data")
-                                                    .font(.system(size: 18, weight: .bold, design: .rounded))
+                                                    .font(.system(size: 16, weight: .bold, design: .rounded))
                                             }
                                             .buttonStyle(CustomButton(buttonWidthMultiplier: 0.86))
                                             .contentShape(Rectangle())
@@ -133,7 +133,7 @@ struct PaymentDetailsView: View {
                                 }
                             } label: {
                                 Text("Choose as default")
-                                    .font(.system(size: 18, weight: .bold, design: .rounded))
+                                    .font(.system(size: 16, weight: .bold, design: .rounded))
                             }
                             .buttonStyle(CustomButton(textColor: profileViewModel.profile.defaultPaymentMethod == paymentMethod ? .white : .accentColor,
                                                       onlyStroke: profileViewModel.profile.defaultPaymentMethod != paymentMethod,

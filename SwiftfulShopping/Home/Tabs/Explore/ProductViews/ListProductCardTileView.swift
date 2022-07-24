@@ -8,6 +8,8 @@
 import SwiftUI
 
 struct ListProductCardTileView: View {
+    @EnvironmentObject private var favoritesViewModel: FavoritesViewModel
+    
     @Environment(\.colorScheme) var colorScheme
     
     var product: Product
@@ -27,25 +29,25 @@ struct ListProductCardTileView: View {
 
             VStack(alignment: .leading, spacing: 15) {
                 Text(product.company)
-                    .font(.system(size: 16, weight: .regular, design: .rounded))
+                    .font(.system(size: 14, weight: .regular, design: .rounded))
                     .foregroundColor(.gray)
                     .fixedSize(horizontal: false, vertical: true)
                 
                 Text(product.name)
-                    .font(.system(size: 24, weight: .heavy, design: .rounded))
+                    .font(.system(size: 22, weight: .heavy, design: .rounded))
                     .fixedSize(horizontal: false, vertical: true)
                     .foregroundColor(colorScheme == .light ? .black : .white)
                 
                 Text("\(product.price, specifier: "%.2f")")
-                    .font(.system(size: 22, weight: .bold, design: .rounded))
+                    .font(.system(size: 20, weight: .bold, design: .rounded))
                     .foregroundColor(.accentColor)
                 
                 HStack {
                     Spacer()
                     Button {
-                        
+                        favoritesViewModel.manageFavoritesFor(product: product)
                     } label: {
-                        Image(systemName: "heart")
+                        Image(systemName: favoritesViewModel.favoriteProductsIDs.contains(product.id) ? "heart.fill" : "heart")
                             .resizable()
                             .frame(width: 28, height: 25)
                     }

@@ -23,13 +23,13 @@ struct ReturnsView: View {
                                     Text(userReturn.id)
                                     Spacer()
                                     Text(Date.getDayAndMonthFrom(date: userReturn.returnDate))
-                                        .font(.system(size: 20, weight: .medium, design: .rounded))
+                                        .font(.system(size: 18, weight: .medium, design: .rounded))
                                         .foregroundColor(.accentColor)
                                         .padding(.trailing, 20)
                                 }
                                 
                                 Text("\(userReturn.returnPrice, specifier: "%.2f")")
-                                    .font(.system(size: 20, weight: .medium, design: .rounded))
+                                    .font(.system(size: 18, weight: .medium, design: .rounded))
                                 
                                 HStack {
                                     Text("Total Products:")
@@ -48,7 +48,7 @@ struct ReturnsView: View {
                     }
                 } header: {
                     Text(stringDate)
-                        .font(.system(size: 26, weight: .bold, design: .rounded))
+                        .font(.system(size: 24, weight: .bold, design: .rounded))
                         .foregroundColor(.accentColor)
                 }
             }
