@@ -10,6 +10,8 @@ import Foundation
 class CartViewModel: ObservableObject {
     @Published var cart: Cart = Cart.shared
     
+    @Published var shouldPresentProductDetailsView: Bool = false
+    
     func restorePreviousCart() {
         if let cartProductsIDsFromDefaults = UserDefaults.standard.dictionary(forKey: UserDefaultsKeys.cart.rawValue) as? [String: Int] {
             for key in cartProductsIDsFromDefaults {
