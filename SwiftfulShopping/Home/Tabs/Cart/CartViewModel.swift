@@ -75,6 +75,13 @@ class CartViewModel: ObservableObject {
         }
     }
     
+    func removeProducts(at offsets: IndexSet) {
+        let productsToBeRemoved = cart.getProducts(at: offsets)
+        for productToBeRemove in productsToBeRemoved {
+            removeProductFromCart(product: productToBeRemove, quantity: 0)
+        }
+    }
+    
     func removeAllProductsFromCart() {
         cart.removeAllProductsFromCart()
         UserDefaults.standard.removeObject(forKey: UserDefaultsKeys.cart.rawValue)

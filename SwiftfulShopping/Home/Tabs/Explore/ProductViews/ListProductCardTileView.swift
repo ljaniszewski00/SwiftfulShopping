@@ -8,6 +8,7 @@
 import SwiftUI
 
 struct ListProductCardTileView: View {
+    @EnvironmentObject private var cartViewModel: CartViewModel
     @EnvironmentObject private var favoritesViewModel: FavoritesViewModel
     
     @Environment(\.colorScheme) var colorScheme
@@ -41,8 +42,22 @@ struct ListProductCardTileView: View {
                 Text("\(product.price, specifier: "%.2f")")
                     .font(.system(size: 20, weight: .bold, design: .rounded))
                     .foregroundColor(.accentColor)
+                    .padding(.bottom, 15)
                 
                 HStack {
+                    Button {
+                        withAnimation {
+                            cartViewModel.addProductToCart(product: product, quantity: 1)
+                        }
+                    } label: {
+                        Text("Add to Cart")
+                            .fontWeight(.bold)
+                            .foregroundColor(colorScheme == .light ? .black : .white)
+                            .padding(.all, 10)
+                            .background {
+                                RoundedRectangle(cornerRadius: 5)
+                            }
+                    }
                     Spacer()
                     if favoritesViewModel.favoriteProducts.contains(product) {
                         Button {
@@ -62,7 +77,6 @@ struct ListProductCardTileView: View {
                         }
                     }
                 }
-                
             }
             .padding()
         }
@@ -75,9 +89,13 @@ struct ListProductCardTileView: View {
 
 struct ListProductCardTileView_Previews: PreviewProvider {
     static var previews: some View {
+        let cartViewModel = CartViewModel()
+        let favoritesViewModel = FavoritesViewModel()
         ForEach(ColorScheme.allCases, id: \.self) { colorScheme in
             ForEach(["iPhone 13 Pro Max", "iPhone 8"], id: \.self) { deviceName in
                 ListProductCardTileView(product: Product.demoProducts[0])
+                    .environmentObject(cartViewModel)
+                    .environmentObject(favoritesViewModel)
                     .preferredColorScheme(colorScheme)
                     .previewDevice(PreviewDevice(rawValue: deviceName))
                     .previewDisplayName("\(deviceName) portrait")

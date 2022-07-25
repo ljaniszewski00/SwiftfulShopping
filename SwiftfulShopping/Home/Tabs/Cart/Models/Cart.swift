@@ -42,6 +42,18 @@ struct Cart {
         products.removeAll()
     }
     
+    func getProducts(at offsets: IndexSet) -> [Product] {
+        let productsArray = Array(self.products.keys)
+        
+        let productsIDsToDelete = offsets.map {
+            productsArray[$0].id
+        }
+        
+        return productsArray.filter {
+            productsIDsToDelete.contains($0.id)
+        }
+    }
+    
     func getCartProductCount(product: Product) -> Int {
         if let productCount = products[product] {
             return productCount

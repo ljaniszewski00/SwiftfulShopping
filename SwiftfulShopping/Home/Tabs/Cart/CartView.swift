@@ -14,49 +14,65 @@ struct CartView: View {
     
     var body: some View {
         NavigationView {
-            List {
-                ForEach(Array(cartViewModel.cart.products.keys), id: \.self) { product in
-                    HStack {
-                        Text(product.id)
-                        
-                        Spacer()
-
+            VStack {
+                StepsView(stepsNumber: 4, activeStep: 1)
+                    .padding(.vertical)
+                
+                List {
+                    ForEach(Array(cartViewModel.cart.products.keys).sorted { $0.id > $1.id}, id: \.self) { product in
                         HStack {
-                            Button {
-                                withAnimation {
-                                    cartViewModel.removeProductFromCart(product: product, quantity: 1)
-                                }
-                            } label: {
-                                Image(systemName: "minus.square.fill")
-                                    .resizable()
-                                    .frame(width: 40, height: 40)
-                            }
+                            Text(product.id)
                             
-                            Text("\(cartViewModel.getCartProductCount(product: product))")
-                            
-                            Button {
-                                withAnimation {
-                                    cartViewModel.addProductToCart(product: product, quantity: 1)
+                            Spacer()
+
+                            HStack(spacing: 20) {
+                                Button {
+                                    withAnimation {
+                                        cartViewModel.removeProductFromCart(product: product, quantity: 1)
+                                    }
+                                } label: {
+                                    Image(systemName: "minus.square.fill")
+                                        .resizable()
+                                        .frame(width: 30, height: 30)
                                 }
-                            } label: {
-                                Image(systemName: "plus.square.fill")
-                                    .resizable()
-                                    .frame(width: 40, height: 40)
+                                
+                                Text("\(cartViewModel.getCartProductCount(product: product))")
+                                
+                                Button {
+                                    withAnimation {
+                                        cartViewModel.addProductToCart(product: product, quantity: 1)
+                                    }
+                                } label: {
+                                    Image(systemName: "plus.square.fill")
+                                        .resizable()
+                                        .frame(width: 30, height: 30)
+                                }
                             }
                         }
-                        
-                        Spacer()
-                        
-                        Button {
-                            cartViewModel.removeProductFromCart(product: product)
-                        } label: {
-                            Image(systemName: "trash")
-                        }
+                        .padding()
                     }
-                    .padding()
+                    .onDelete(perform: cartViewModel.removeProducts)
                 }
+                
+                Button {
+                    cartViewModel.removeAllProductsFromCart()
+                } label: {
+                    Text("Checkout")
+                }
+                .buttonStyle(CustomButton())
+                .padding(.bottom, 15)
             }
             .navigationTitle("Cart")
+            .navigationBarTitleDisplayMode(.inline)
+            .toolbar {
+                ToolbarItem(placement: .navigationBarTrailing) {
+                    Button {
+                        
+                    } label: {
+                        Text("Clean cart")
+                    }
+                }
+            }
         }
         .navigationViewStyle(.stack)
     }
@@ -64,6 +80,27 @@ struct CartView: View {
 
 struct CartView_Previews: PreviewProvider {
     static var previews: some View {
-        CartView()
+        let authStateManager = AuthStateManager(isGuestDefault: true)
+        let tabBarStateManager = TabBarStateManager()
+        let cartViewModel = CartViewModel()
+        ForEach(ColorScheme.allCases, id: \.self) { colorScheme in
+            ForEach(["iPhone 13 Pro Max", "iPhone 8"], id: \.self) { deviceName in
+                CartView()
+                    .environmentObject(authStateManager)
+                    .environmentObject(tabBarStateManager)
+                    .environmentObject(cartViewModel)
+                    .preferredColorScheme(colorScheme)
+                    .previewDevice(PreviewDevice(rawValue: deviceName))
+                    .previewDisplayName("\(deviceName) portrait")
+                    .onAppear {
+                        authStateManager.isGuest = false
+                        authStateManager.isLogged = true
+                        
+                        for product in Product.demoProducts {
+                            cartViewModel.cart.products[product] = 1
+                        }
+                    }
+            }
+        }
     }
 }

@@ -60,6 +60,31 @@ struct FavoritesView: View {
 
 struct FavoritesView_Previews: PreviewProvider {
     static var previews: some View {
-        FavoritesView()
+        let authStateManager = AuthStateManager(isGuestDefault: true)
+        let tabBarStateManager = TabBarStateManager()
+        let exploreViewModel = ExploreViewModel()
+        let profileViewModel = ProfileViewModel()
+        let cartViewModel = CartViewModel()
+        let favoritesViewModel = FavoritesViewModel()
+        ForEach(ColorScheme.allCases, id: \.self) { colorScheme in
+            ForEach(["iPhone 13 Pro Max", "iPhone 8"], id: \.self) { deviceName in
+                FavoritesView()
+                    .environmentObject(authStateManager)
+                    .environmentObject(tabBarStateManager)
+                    .environmentObject(exploreViewModel)
+                    .environmentObject(profileViewModel)
+                    .environmentObject(cartViewModel)
+                    .environmentObject(favoritesViewModel)
+                    .preferredColorScheme(colorScheme)
+                    .previewDevice(PreviewDevice(rawValue: deviceName))
+                    .previewDisplayName("\(deviceName) portrait")
+                    .onAppear {
+                        authStateManager.isGuest = false
+                        authStateManager.isLogged = true
+                        
+                        favoritesViewModel.favoriteProducts = Product.demoProducts
+                    }
+            }
+        }
     }
 }
