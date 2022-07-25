@@ -112,30 +112,19 @@ struct HomeView: View {
                                         .lineLimit(1)
                                 }
                                 .frame(maxWidth: .infinity)
-                                .foregroundColor(tabItem.tab == .cart ? .white : (selectedTab == tabItem.tab ? .accentColor : Color(uiColor: .systemGray)))
-                                .if(tabItem.tab == .cart) {
+                                .foregroundColor(selectedTab == tabItem.tab ? .accentColor : Color(uiColor: .systemGray))
+                                .if(tabItem.tab == .cart && cartViewModel.cartProductsCount > 0) {
                                     $0
-                                        .padding(.horizontal, 35)
-                                        .background(
-                                            Circle()
-                                                .foregroundColor(.accentColor)
-                                                .frame(width: 90, height: 90)
-                                                .shadow(radius: 10, x: 0, y: 15)
-                                                .if(cartViewModel.cartProductsCount > 0) {
-                                                    $0
-                                                        .overlay(
-                                                            ZStack {
-                                                                Circle()
-                                                                    .frame(width: 30, height: 30)
-                                                                    .foregroundColor(.red)
-                                                                Text(String(cartViewModel.cartProductsCount))
-                                                                    .foregroundColor(.white)
-                                                            }
-                                                                .offset(x: 35, y: 30)
-                                                        )
-                                                }
+                                        .overlay(
+                                            ZStack {
+                                                Circle()
+                                                    .frame(width: 20, height: 20)
+                                                    .foregroundColor(.red)
+                                                Text(String(cartViewModel.cartProductsCount))
+                                                    .foregroundColor(.white)
+                                            }
+                                            .offset(x: 22, y: -27)
                                         )
-                                        .offset(y: -15)
                                 }
                             }
                             .foregroundStyle(selectedTab == tabItem.tab ? .primary : .secondary)
