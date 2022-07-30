@@ -10,6 +10,7 @@ import Foundation
 class FavoritesViewModel: ObservableObject {
     @Published var favoriteProducts: [Product] = []
     
+    @Published var choosenProduct: Product?
     @Published var shouldPresentProductDetailsView: Bool = false
     
     func fetchFavorites() {
@@ -46,5 +47,10 @@ class FavoritesViewModel: ObservableObject {
             break
         }
         fetchFavorites()
+    }
+    
+    func changeFocusedProductFor(product: Product) {
+        choosenProduct = product
+        shouldPresentProductDetailsView = true
     }
 }

@@ -80,11 +80,9 @@ struct ProductsListView: View {
                 if displayMethod == .list {
                     ListProductCardTileView(product: product)
                         .environmentObject(favoritesViewModel)
-                        .scaleEffect((exploreViewModel.currentProduct?.id == product.id && productClicked) ? 1 : 0.93)
                 } else {
                     GridProductCardTileView(product: product)
                         .environmentObject(favoritesViewModel)
-                        .scaleEffect((exploreViewModel.currentProduct?.id == product.id && productClicked) ? 1 : 0.93)
                 }
             }
             .buttonStyle(ScaledButtonStyle())

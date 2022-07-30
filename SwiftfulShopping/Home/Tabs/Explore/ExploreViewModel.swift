@@ -12,12 +12,10 @@ class ExploreViewModel: ObservableObject {
     @Published var selectedTab: ExploreViewTabs = .trending
     @Published var displayOnlyRecommended: Bool = false
     @Published var displayedCategory: Category?
-    @Published var currentProduct: Product?
+    @Published var choosenProduct: Product?
     @Published var displayMethod: ProductDisplayMethod = .list
     
     @Published var shouldPresentProductDetailsView: Bool = false
-    
-    @Published var productQuantityToBasket: Int = 1
     
     func fetchProducts() {
         self.allProducts = ProductsRepository.shared.products
@@ -52,22 +50,12 @@ class ExploreViewModel: ObservableObject {
         }
     }
     
-    func changeFocusedProductFor(product: Product, favorite: Bool = false) {
-        currentProduct = product
-        if !favorite {
-            shouldPresentProductDetailsView = true
-        }
+    func changeFocusedProductFor(product: Product) {
+        choosenProduct = product
+        shouldPresentProductDetailsView = true
     }
     
     func changeDisplayMethodFor(displayMethod: ProductDisplayMethod) {
         self.displayMethod = displayMethod
-    }
-    
-    func addOneProduct() {
-        productQuantityToBasket += 1
-    }
-    
-    func removeOneProduct() {
-        productQuantityToBasket -= 1
     }
 }

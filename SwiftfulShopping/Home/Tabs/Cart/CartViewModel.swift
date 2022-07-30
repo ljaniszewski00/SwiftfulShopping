@@ -10,7 +10,10 @@ import Foundation
 class CartViewModel: ObservableObject {
     @Published var cart: Cart = Cart.shared
     
+    @Published var choosenProduct: Product?
     @Published var shouldPresentProductDetailsView: Bool = false
+    
+    @Published var shouldPresentCheckoutFirstView: Bool = false
     
     func restorePreviousCart() {
         if let cartProductsIDsFromDefaults = UserDefaults.standard.dictionary(forKey: UserDefaultsKeys.cart.rawValue) as? [String: Int] {
@@ -24,6 +27,10 @@ class CartViewModel: ObservableObject {
                 }
             }
         }
+    }
+    
+    var cartIsEmpty: Bool {
+        cart.products.isEmpty
     }
     
     var cartProductsCount: Int {
@@ -87,5 +94,10 @@ class CartViewModel: ObservableObject {
     func removeAllProductsFromCart() {
         cart.removeAllProductsFromCart()
         UserDefaults.standard.removeObject(forKey: UserDefaultsKeys.cart.rawValue)
+    }
+    
+    func changeFocusedProductFor(product: Product) {
+        choosenProduct = product
+        shouldPresentProductDetailsView = true
     }
 }

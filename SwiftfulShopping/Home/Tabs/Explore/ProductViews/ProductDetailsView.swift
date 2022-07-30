@@ -12,46 +12,46 @@ struct ProductDetailsView: View {
     @EnvironmentObject private var tabBarStateManager: TabBarStateManager
     @EnvironmentObject private var exploreViewModel: ExploreViewModel
     @EnvironmentObject private var profileViewModel: ProfileViewModel
-    @EnvironmentObject private var cartViewModel: CartViewModel
     @EnvironmentObject private var favoritesViewModel: FavoritesViewModel
+    @EnvironmentObject private var cartViewModel: CartViewModel
     
     @Environment(\.dismiss) var dismiss
+    
+    @State private var productQuantityToBasket: Int = 1
+    
+    var product: Product
     
     var body: some View {
         VStack {
             ScrollView(.vertical, showsIndicators: false) {
                 VStack(alignment: .center, spacing: 30) {
-                    if let product = exploreViewModel.currentProduct {
-                        AsyncImage(url: URL(string: product.imageURL)!) { loadedImage in
-                            loadedImage
-                                .resizable()
-                                .aspectRatio(contentMode: .fill)
-                        } placeholder: {
-                            Image("product_placeholder_image")
-                                .resizable()
-                                .scaledToFill()
-                        }
-
-                        VStack(alignment: .center, spacing: 15) {
-                            Text(product.company)
-                                .font(.system(size: 14, weight: .regular, design: .rounded))
-                                .foregroundColor(.gray)
-                            Text(product.name)
-                                .font(.system(size: 22, weight: .heavy, design: .rounded))
-                            Text("\(product.price, specifier: "%.2f")")
-                                .font(.system(size: 20, weight: .bold, design: .rounded))
-                                .foregroundColor(.accentColor)
-                        }
-                        
-                        HStack {
-                            Text(product.productDescription)
-                                .font(.system(size: 18, weight: .regular, design: .rounded))
-                            Spacer()
-                        }
-                        .padding()
-                    } else {
-                        EmptyView()
+                    AsyncImage(url: URL(string: product.imageURL)!) { loadedImage in
+                        loadedImage
+                            .resizable()
+                            .aspectRatio(contentMode: .fill)
+                    } placeholder: {
+                        Image("product_placeholder_image")
+                            .resizable()
+                            .scaledToFill()
                     }
+
+                    VStack(alignment: .center, spacing: 15) {
+                        Text(product.company)
+                            .font(.system(size: 14, weight: .regular, design: .rounded))
+                            .foregroundColor(.gray)
+                        Text(product.name)
+                            .font(.system(size: 22, weight: .heavy, design: .rounded))
+                        Text("\(product.price, specifier: "%.2f")")
+                            .font(.system(size: 20, weight: .bold, design: .rounded))
+                            .foregroundColor(.accentColor)
+                    }
+                    
+                    HStack {
+                        Text(product.productDescription)
+                            .font(.system(size: 18, weight: .regular, design: .rounded))
+                        Spacer()
+                    }
+                    .padding()
                 }
             }
             .ignoresSafeArea(.container, edges: [.top])
@@ -74,9 +74,9 @@ struct ProductDetailsView: View {
                     
                     HStack(spacing: 20) {
                         Button {
-                            if exploreViewModel.productQuantityToBasket > 1 {
+                            if productQuantityToBasket > 1 {
                                 withAnimation {
-                                    exploreViewModel.removeOneProduct()
+                                    productQuantityToBasket -= 1
                                 }
                             }
                         } label: {
@@ -85,12 +85,12 @@ struct ProductDetailsView: View {
                                 .frame(width: 40, height: 40)
                         }
                         
-                        Text("\(exploreViewModel.productQuantityToBasket)")
-                            .font(.system(size: 18, weight: .regular, design: .rounded))
+                        Text("\(productQuantityToBasket)")
+                            .font(.system(size: 18, weight: .bold, design: .rounded))
                         
                         Button {
                             withAnimation {
-                                exploreViewModel.addOneProduct()
+                                productQuantityToBasket += 1
                             }
                         } label: {
                             Image(systemName: "plus.square.fill")
@@ -103,7 +103,7 @@ struct ProductDetailsView: View {
                 
                 Button {
                     UIImpactFeedbackGenerator(style: .medium).impactOccurred()
-                    cartViewModel.addProductToCart(product: exploreViewModel.currentProduct!, quantity: exploreViewModel.productQuantityToBasket)
+                    cartViewModel.addProductToCart(product: product, quantity: productQuantityToBasket)
                 } label: {
                     Text("ADD TO BASKET")
                         .font(.system(size: 20, weight: .bold, design: .rounded))
@@ -128,9 +128,9 @@ struct ProductDetailsView: View {
             }
             
             ToolbarItem(placement: .navigationBarTrailing) {
-                if favoritesViewModel.favoriteProducts.contains(exploreViewModel.currentProduct!) {
+                if favoritesViewModel.favoriteProducts.contains(product) {
                     Button {
-                        favoritesViewModel.removeFromFavorites(product: exploreViewModel.currentProduct!)
+                        favoritesViewModel.removeFromFavorites(product: product)
                     } label: {
                         Image(systemName: "heart.fill")
                             .resizable()
@@ -138,7 +138,7 @@ struct ProductDetailsView: View {
                     }
                 } else {
                     Button {
-                        favoritesViewModel.addToFavorites(product: exploreViewModel.currentProduct!)
+                        favoritesViewModel.addToFavorites(product: product)
                     } label: {
                         Image(systemName: "heart")
                             .resizable()
@@ -160,20 +160,19 @@ struct ProductDetailsView_Previews: PreviewProvider {
         let favoritesViewModel = FavoritesViewModel()
         ForEach(ColorScheme.allCases, id: \.self) { colorScheme in
             ForEach(["iPhone 13 Pro Max", "iPhone 8"], id: \.self) { deviceName in
-                ProductDetailsView()
+                ProductDetailsView(product: Product.demoProducts[0])
                     .environmentObject(authStateManager)
                     .environmentObject(tabBarStateManager)
                     .environmentObject(exploreViewModel)
                     .environmentObject(profileViewModel)
-                    .environmentObject(cartViewModel)
                     .environmentObject(favoritesViewModel)
+                    .environmentObject(cartViewModel)
                     .preferredColorScheme(colorScheme)
                     .previewDevice(PreviewDevice(rawValue: deviceName))
                     .previewDisplayName("\(deviceName) portrait")
                     .onAppear {
                         authStateManager.isGuest = false
                         authStateManager.isLogged = true
-                        exploreViewModel.currentProduct = Product.demoProducts[0]
                     }
             }
         }

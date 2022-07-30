@@ -12,8 +12,8 @@ struct FavoritesView: View {
     @EnvironmentObject private var tabBarStateManager: TabBarStateManager
     @EnvironmentObject private var exploreViewModel: ExploreViewModel
     @EnvironmentObject private var profileViewModel: ProfileViewModel
-    @EnvironmentObject private var cartViewModel: CartViewModel
     @EnvironmentObject private var favoritesViewModel: FavoritesViewModel
+    @EnvironmentObject private var cartViewModel: CartViewModel
     
     @State private var productClicked: Bool = false
     
@@ -24,12 +24,11 @@ struct FavoritesView: View {
                     ForEach(favoritesViewModel.favoriteProducts, id: \.self) { product in
                         Button {
                             withAnimation(.interactiveSpring(response: 0.6, dampingFraction: 0.7, blendDuration: 0.7)) {
-                                exploreViewModel.changeFocusedProductFor(product: product, favorite: true)
+                                favoritesViewModel.changeFocusedProductFor(product: product)
                             }
                         } label: {
                             ListProductCardTileView(product: product)
                                 .environmentObject(favoritesViewModel)
-                                .scaleEffect((exploreViewModel.currentProduct?.id == product.id && productClicked) ? 1 : 0.93)
                         }
                         .buttonStyle(ScaledButtonStyle())
                     }
@@ -37,13 +36,13 @@ struct FavoritesView: View {
                     .navigationBarTitleDisplayMode(.inline)
                 }
                 
-                NavigationLink(destination: ProductDetailsView()
+                NavigationLink(destination: ProductDetailsView(product: favoritesViewModel.choosenProduct ?? Product.demoProducts[0])
                                                 .environmentObject(authStateManager)
                                                 .environmentObject(tabBarStateManager)
                                                 .environmentObject(exploreViewModel)
                                                 .environmentObject(profileViewModel)
-                                                .environmentObject(cartViewModel)
                                                 .environmentObject(favoritesViewModel)
+                                                .environmentObject(cartViewModel)
                                                 .onAppear {
                                                     tabBarStateManager.hideTabBar()
                                                 }
@@ -73,8 +72,8 @@ struct FavoritesView_Previews: PreviewProvider {
                     .environmentObject(tabBarStateManager)
                     .environmentObject(exploreViewModel)
                     .environmentObject(profileViewModel)
-                    .environmentObject(cartViewModel)
                     .environmentObject(favoritesViewModel)
+                    .environmentObject(cartViewModel)
                     .preferredColorScheme(colorScheme)
                     .previewDevice(PreviewDevice(rawValue: deviceName))
                     .previewDisplayName("\(deviceName) portrait")

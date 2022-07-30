@@ -12,8 +12,8 @@ struct ExploreView: View {
     @EnvironmentObject private var tabBarStateManager: TabBarStateManager
     @EnvironmentObject private var exploreViewModel: ExploreViewModel
     @EnvironmentObject private var profileViewModel: ProfileViewModel
-    @EnvironmentObject private var cartViewModel: CartViewModel
     @EnvironmentObject private var favoritesViewModel: FavoritesViewModel
+    @EnvironmentObject private var cartViewModel: CartViewModel
     
     var body: some View {
         NavigationView {
@@ -68,13 +68,13 @@ struct ExploreView: View {
                             .environmentObject(favoritesViewModel)
                     }
                     
-                    NavigationLink(destination: ProductDetailsView()
+                    NavigationLink(destination: ProductDetailsView(product: exploreViewModel.choosenProduct ?? Product.demoProducts[0])
                                                     .environmentObject(authStateManager)
                                                     .environmentObject(tabBarStateManager)
                                                     .environmentObject(exploreViewModel)
                                                     .environmentObject(profileViewModel)
-                                                    .environmentObject(cartViewModel)
                                                     .environmentObject(favoritesViewModel)
+                                                    .environmentObject(cartViewModel)
                                                     .onAppear {
                                                         tabBarStateManager.hideTabBar()
                                                     }
@@ -97,8 +97,6 @@ struct ExploreView: View {
             }
         }
         .navigationViewStyle(.stack)
-        
-        
     }
 }
 
@@ -108,6 +106,8 @@ struct ExploreView_Previews: PreviewProvider {
         let tabBarStateManager = TabBarStateManager()
         let exploreViewModel = ExploreViewModel()
         let profileViewModel = ProfileViewModel()
+        let favoritesViewModel = FavoritesViewModel()
+        let cartViewModel = CartViewModel()
         ForEach(ColorScheme.allCases, id: \.self) { colorScheme in
             ForEach(["iPhone 13 Pro Max", "iPhone 8"], id: \.self) { deviceName in
                 ExploreView()
@@ -115,6 +115,8 @@ struct ExploreView_Previews: PreviewProvider {
                     .environmentObject(tabBarStateManager)
                     .environmentObject(exploreViewModel)
                     .environmentObject(profileViewModel)
+                    .environmentObject(favoritesViewModel)
+                    .environmentObject(cartViewModel)
                     .preferredColorScheme(colorScheme)
                     .previewDevice(PreviewDevice(rawValue: deviceName))
                     .previewDisplayName("\(deviceName) portrait")
