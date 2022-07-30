@@ -21,78 +21,76 @@ struct OrderCreationShipmentPaymentView: View {
     
     var body: some View {
         VStack {
+            StepsView(stepsNumber: 4, activeStep: 2)
+                .padding(.vertical)
+            
             ScrollView(.vertical) {
-                VStack(alignment: .leading) {
-                    StepsView(stepsNumber: 4, activeStep: 2)
-                        .padding(.vertical)
-                    
-                    VStack(spacing: 30) {
-                        VStack(alignment: .leading, spacing: 5) {
-                            Text("Consignee Data")
-                                .font(.system(size: 22, weight: .heavy, design: .rounded))
-                            
-                            Text("This will be the delivery addres for package")
-                                .font(.system(size: 16, weight: .regular, design: .rounded))
-                                .foregroundColor(.gray)
-                                .padding(.bottom, 10)
-                            
-                            HStack(alignment: .bottom) {
-                                VStack(alignment: .leading) {
-                                    HStack(spacing: 5) {
-                                        Text(profileViewModel.profile.firstName)
-                                        Text(profileViewModel.profile.lastName)
-                                    }
-                                    Text(profileViewModel.profile.address.description)
-                                }
-                                
-                                Spacer()
-                                
-                                Button {
-                                    
-                                } label: {
-                                    Text("Change address")
-                                        .font(.system(size: 20, weight: .bold, design: .rounded))
-                                }
-                            }
-                        }
+                VStack(alignment: .leading, spacing: 30) {
+                    VStack(alignment: .leading, spacing: 5) {
+                        Text("Consignee Data")
+                            .font(.system(size: 22, weight: .heavy, design: .rounded))
                         
-                        VStack(alignment: .leading, spacing: 15) {
-                            Text("Payment")
-                                .font(.system(size: 22, weight: .heavy, design: .rounded))
-                            
-                            ForEach(PaymentMethod.allCases, id: \.self) { paymentMethod in
-                                Button {
-                                    withAnimation {
-                                        orderCreationViewModel.choosenPaymentMethod = paymentMethod
-                                    }
-                                } label: {
-                                    ZStack {
-                                        RoundedRectangle(cornerRadius: 5)
-                                            .if(orderCreationViewModel.choosenPaymentMethod != paymentMethod) {
-                                                $0
-                                                    .stroke()
-                                            }
-                                        Text(paymentMethod.rawValue)
-                                            .foregroundColor(orderCreationViewModel.choosenPaymentMethod == paymentMethod ? .white : .accentColor)
-                                            .padding()
-                                    }
-                                }
-                            }
-                        }
+                        Text("This will be the delivery addres for package")
+                            .font(.system(size: 16, weight: .regular, design: .rounded))
+                            .foregroundColor(.gray)
+                            .padding(.bottom, 10)
                         
-                        HStack {
-                            Text("Would you like to receive invoice?")
-                                .font(.system(size: 18, weight: .heavy, design: .rounded))
+                        HStack(alignment: .bottom) {
+                            VStack(alignment: .leading) {
+                                HStack(spacing: 5) {
+                                    Text(profileViewModel.profile.firstName)
+                                    Text(profileViewModel.profile.lastName)
+                                }
+                                Text(profileViewModel.profile.address.description)
+                            }
                             
                             Spacer()
                             
-                            Toggle("", isOn: $orderCreationViewModel.toReceiveInvoice)
-                                .toggleStyle(CheckMarkToggleStyle())
-                                .padding(.trailing, 10)
+                            Button {
+                                
+                            } label: {
+                                Text("Change address")
+                                    .font(.system(size: 20, weight: .bold, design: .rounded))
+                            }
                         }
                     }
-                    .padding()
+                    
+                    VStack(alignment: .leading, spacing: 15) {
+                        Text("Payment")
+                            .font(.system(size: 22, weight: .heavy, design: .rounded))
+                        
+                        ForEach(PaymentMethod.allCases, id: \.self) { paymentMethod in
+                            Button {
+                                withAnimation {
+                                    orderCreationViewModel.choosenPaymentMethod = paymentMethod
+                                }
+                            } label: {
+                                ZStack {
+                                    RoundedRectangle(cornerRadius: 5)
+                                        .if(orderCreationViewModel.choosenPaymentMethod != paymentMethod) {
+                                            $0
+                                                .stroke()
+                                        }
+                                    Text(paymentMethod.rawValue)
+                                        .foregroundColor(orderCreationViewModel.choosenPaymentMethod == paymentMethod ? .white : .accentColor)
+                                        .padding()
+                                }
+                            }
+                        }
+                    }
+                    
+                    HStack {
+                        Text("Would you like to receive invoice?")
+                            .font(.system(size: 18, weight: .heavy, design: .rounded))
+                        
+                        Spacer()
+                        
+                        Toggle("", isOn: $orderCreationViewModel.toReceiveInvoice)
+                            .toggleStyle(CheckMarkToggleStyle())
+                            .padding(.trailing, 10)
+                    }
                 }
+                .padding()
             }
             
             Button {

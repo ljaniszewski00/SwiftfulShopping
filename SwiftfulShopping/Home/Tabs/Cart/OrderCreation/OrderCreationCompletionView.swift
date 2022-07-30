@@ -17,7 +17,10 @@ struct OrderCreationCompletionView: View {
     @EnvironmentObject private var orderCreationViewModel: OrderCreationViewModel
     
     var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+        VStack {
+            StepsView(stepsNumber: 4, activeStep: 4)
+                .padding(.vertical)
+        }
     }
 }
 

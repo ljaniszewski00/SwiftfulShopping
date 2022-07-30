@@ -32,63 +32,8 @@ struct CartView: View {
                                 cartViewModel.changeFocusedProductFor(product: product)
                             }
                         } label: {
-                            VStack {
-                                HStack(alignment: .center) {
-                                    AsyncImage(url: URL(string: product.imageURL)!) { loadedImage in
-                                        loadedImage
-                                            .resizable()
-                                            .aspectRatio(contentMode: .fit)
-                                            .clipShape(RoundedRectangle(cornerRadius: 15))
-                                    } placeholder: {
-                                        Image("product_placeholder_image")
-                                            .resizable()
-                                            .aspectRatio(contentMode: .fit)
-                                    }
-
-                                    VStack(alignment: .leading, spacing: 15) {
-                                        Text(product.company)
-                                            .font(.system(size: 14, weight: .regular, design: .rounded))
-                                            .foregroundColor(.gray)
-                                            .fixedSize(horizontal: false, vertical: true)
-                                        
-                                        Text(product.name)
-                                            .font(.system(size: 22, weight: .heavy, design: .rounded))
-                                            .fixedSize(horizontal: false, vertical: true)
-                                            .foregroundColor(colorScheme == .light ? .black : .white)
-                                        
-                                        Text("\(product.price, specifier: "%.2f")")
-                                            .font(.system(size: 20, weight: .bold, design: .rounded))
-                                            .foregroundColor(.accentColor)
-                                            .padding(.bottom, 15)
-                                        
-                                        HStack(spacing: 20) {
-                                            Button {
-                                                withAnimation {
-                                                    cartViewModel.removeProductFromCart(product: product, quantity: 1)
-                                                }
-                                            } label: {
-                                                Image(systemName: "minus.square.fill")
-                                                    .resizable()
-                                                    .frame(width: 30, height: 30)
-                                            }
-                                            
-                                            Text("\(cartViewModel.getCartProductCount(product: product))")
-                                                .font(.system(size: 22, weight: .heavy, design: .rounded))
-                                            
-                                            Button {
-                                                withAnimation {
-                                                    cartViewModel.addProductToCart(product: product, quantity: 1)
-                                                }
-                                            } label: {
-                                                Image(systemName: "plus.square.fill")
-                                                    .resizable()
-                                                    .frame(width: 30, height: 30)
-                                            }
-                                        }
-                                    }
-                                    .padding()
-                                }
-                            }
+                            ProductTileForCartView(product: product)
+                                .environmentObject(cartViewModel)
                         }
                         .buttonStyle(ScaledButtonStyle())
                         .padding()
