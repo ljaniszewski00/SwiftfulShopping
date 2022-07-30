@@ -137,9 +137,6 @@ struct CartView: View {
                                                 .environmentObject(cartViewModel)
                                                 .onAppear {
                                                     tabBarStateManager.hideTabBar()
-                                                }
-                                                .onDisappear {
-                                                    tabBarStateManager.showTabBar()
                                                 },
                                isActive: $cartViewModel.shouldPresentProductDetailsView,
                                label: { EmptyView() })
@@ -153,9 +150,6 @@ struct CartView: View {
                                                 .environmentObject(cartViewModel)
                                                 .onAppear {
                                                     tabBarStateManager.hideTabBar()
-                                                }
-                                                .onDisappear {
-                                                    tabBarStateManager.showTabBar()
                                                 },
                                isActive: $cartViewModel.shouldPresentCheckoutFirstView,
                                label: { EmptyView() })
@@ -170,6 +164,9 @@ struct CartView: View {
                         Text("Clean cart")
                     }
                 }
+            }
+            .onAppear {
+                tabBarStateManager.showTabBar()
             }
         }
         .navigationViewStyle(.stack)

@@ -17,9 +17,6 @@ class CartViewModel: ObservableObject {
     
     func restorePreviousCart() {
         if let cartProductsIDsFromDefaults = UserDefaults.standard.dictionary(forKey: UserDefaultsKeys.cart.rawValue) as? [String: Int] {
-            for key in cartProductsIDsFromDefaults {
-                print(key)
-            }
             let cartProductsIDs = Array(cartProductsIDsFromDefaults.keys)
             for productID in cartProductsIDs {
                 if let productForProductID = ProductsRepository.shared.getProductFor(productID: productID) {
