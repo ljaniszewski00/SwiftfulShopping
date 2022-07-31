@@ -13,7 +13,6 @@ struct OrderDetailsView: View {
     @EnvironmentObject private var profileViewModel: ProfileViewModel
     
     @State private var showProductsList: Bool = true
-    @State private var shouldPresentReturnCreationView = false
     
     var order: Order
     
@@ -111,7 +110,20 @@ struct OrderDetailsView: View {
                 
                 Button {
                     withAnimation {
-                        shouldPresentReturnCreationView = true
+                        profileViewModel.shouldPresentOrderRateView = true
+                    }
+                } label: {
+                    Text("Return")
+                        .font(.system(size: 16, weight: .bold, design: .rounded))
+                }
+                .buttonStyle(CustomButton())
+                .frame(width: UIScreen.main.bounds.width * 0.9)
+                .contentShape(Rectangle())
+                .padding(.bottom, 20)
+                
+                Button {
+                    withAnimation {
+                        profileViewModel.shouldPresentReturnCreationView = true
                     }
                 } label: {
                     Text("Return")
@@ -127,11 +139,17 @@ struct OrderDetailsView: View {
         .navigationTitle("Order No. \(order.id)")
         .navigationBarTitleDisplayMode(.inline)
         
+        NavigationLink(destination: OrderRateView(order: order)
+                                        .environmentObject(authStateManager)
+                                        .environmentObject(tabBarStateManager)
+                                        .environmentObject(profileViewModel),
+                       isActive: $profileViewModel.shouldPresentOrderRateView) { EmptyView() }
+        
         NavigationLink(destination: ReturnCreationView(order: order)
                                         .environmentObject(authStateManager)
                                         .environmentObject(tabBarStateManager)
                                         .environmentObject(profileViewModel),
-                       isActive: $shouldPresentReturnCreationView) { EmptyView() }
+                       isActive: $profileViewModel.shouldPresentReturnCreationView) { EmptyView() }
     }
 }
 

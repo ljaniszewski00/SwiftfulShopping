@@ -16,6 +16,9 @@ class ProfileViewModel: ObservableObject {
     @Published var oldImage = UIImage(named: "blank_profile_image")!
     @Published var image = UIImage(named: "blank_profile_image")!
     
+    @Published var shouldPresentOrderRateView: Bool = false
+    @Published var shouldPresentReturnCreationView: Bool = false
+    
     var datesForOrdersViewListSections: [String] {
         var ordersShortDates: [String] = []
         for order in orders {
