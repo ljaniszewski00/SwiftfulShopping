@@ -134,7 +134,9 @@ struct PersonalInfoView: View {
                                 }
                                 .contentShape(Rectangle())
                                 .onTapGesture {
-                                    addressSectionExpanded.toggle()
+                                    if !profileViewModel.profile.otherAddresses.isEmpty {
+                                        addressSectionExpanded.toggle()
+                                    }
                                 }
                                 
                                 if addressSectionExpanded {

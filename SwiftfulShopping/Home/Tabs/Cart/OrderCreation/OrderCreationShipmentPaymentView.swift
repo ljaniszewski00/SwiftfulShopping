@@ -41,16 +41,42 @@ struct OrderCreationShipmentPaymentView: View {
                                     Text(profileViewModel.profile.firstName)
                                     Text(profileViewModel.profile.lastName)
                                 }
-                                Text(profileViewModel.profile.address.description)
+                                Text(orderCreationViewModel.choosenAddress?.description ?? "")
                             }
                             
                             Spacer()
                             
                             Button {
-                                
+                                withAnimation {
+                                    orderCreationViewModel.shouldPresentOrderCreationAddressChangeView = true
+                                }
                             } label: {
                                 Text("Change address")
                                     .font(.system(size: 20, weight: .bold, design: .rounded))
+                            }
+                        }
+                    }
+                    
+                    VStack(alignment: .leading, spacing: 15) {
+                        Text("Payment")
+                            .font(.system(size: 22, weight: .heavy, design: .rounded))
+                        
+                        ForEach(ShippingMethod.allCases, id: \.self) { shippingMethod in
+                            Button {
+                                withAnimation {
+                                    orderCreationViewModel.choosenShippingMethod = shippingMethod
+                                }
+                            } label: {
+                                ZStack {
+                                    RoundedRectangle(cornerRadius: 5)
+                                        .if(orderCreationViewModel.choosenShippingMethod != shippingMethod) {
+                                            $0
+                                                .stroke()
+                                        }
+                                    Text(shippingMethod.rawValue)
+                                        .foregroundColor(orderCreationViewModel.choosenShippingMethod == shippingMethod ? .white : .accentColor)
+                                        .padding()
+                                }
                             }
                         }
                     }
@@ -116,12 +142,31 @@ struct OrderCreationShipmentPaymentView: View {
                                             },
                            isActive: $orderCreationViewModel.shouldPresentOrderCreationSummaryView,
                            label: { EmptyView() })
+            
+            NavigationLink(destination: OrderCreationChangeAddressView()
+                                            .environmentObject(profileViewModel)
+                                            .environmentObject(orderCreationViewModel)
+                                            .onAppear {
+                                                tabBarStateManager.hideTabBar()
+                                            },
+                           isActive: $orderCreationViewModel.shouldPresentOrderCreationAddressChangeView,
+                           label: { EmptyView() })
         }
         .navigationTitle("Shipment and Payment")
         .navigationBarTitleDisplayMode(.inline)
         .onAppear {
-            orderCreationViewModel.choosenAddress = profileViewModel.profile.address
-            orderCreationViewModel.choosenPaymentMethod = profileViewModel.profile.defaultPaymentMethod
+            if orderCreationViewModel.choosenShippingMethod == nil {
+                orderCreationViewModel.choosenShippingMethod = profileViewModel.profile.defaultShippingMethod
+            }
+            
+            if orderCreationViewModel.choosenPaymentMethod == nil {
+                orderCreationViewModel.choosenPaymentMethod = profileViewModel.profile.defaultPaymentMethod
+            }
+            
+            if orderCreationViewModel.choosenAddress == nil {
+                orderCreationViewModel.choosenAddress = profileViewModel.profile.address
+                orderCreationViewModel.otherAddresses = profileViewModel.profile.otherAddresses
+            }
         }
     }
 }

@@ -16,8 +16,6 @@ struct Cart {
         return Cart()
     }()
     
-    private init() {}
-    
     mutating func addProductToCart(product: Product, quantity: Int) {
         if products[product] != nil {
             products[product]! += quantity
@@ -76,5 +74,8 @@ struct Cart {
 }
 
 extension Cart {
-    static let demoCart = Cart()
+    static let demoCart = Cart(products: [Product.demoProducts[0]: 1,
+                                          Product.demoProducts[1]: 2,
+                                          Product.demoProducts[2]: 3,
+                                          Product.demoProducts[3]: 4])
 }

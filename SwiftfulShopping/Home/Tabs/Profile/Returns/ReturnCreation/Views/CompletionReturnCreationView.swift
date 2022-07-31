@@ -1,31 +1,25 @@
 //
-//  OrderCreationCompletionView.swift
+//  CompletionReturnCreationView.swift
 //  SwiftfulShopping
 //
-//  Created by Łukasz Janiszewski on 30/07/2022.
+//  Created by Łukasz Janiszewski on 31/07/2022.
 //
 
 import SwiftUI
 
-struct OrderCreationCompletionView: View {
+struct CompletionReturnCreationView: View {
     @EnvironmentObject private var authStateManager: AuthStateManager
     @EnvironmentObject private var tabBarStateManager: TabBarStateManager
-    @EnvironmentObject private var exploreViewModel: ExploreViewModel
     @EnvironmentObject private var profileViewModel: ProfileViewModel
-    @EnvironmentObject private var favoritesViewModel: FavoritesViewModel
-    @EnvironmentObject private var cartViewModel: CartViewModel
-    @EnvironmentObject private var orderCreationViewModel: OrderCreationViewModel
+    @EnvironmentObject private var returnCreationViewModel: ReturnCreationViewModel
     
     var body: some View {
-        if orderCreationViewModel.shouldPresentCartView {
+        if returnCreationViewModel.shouldPresentProfileView {
             withAnimation {
-                CartView()
+                ProfileView()
                     .environmentObject(authStateManager)
                     .environmentObject(tabBarStateManager)
-                    .environmentObject(exploreViewModel)
                     .environmentObject(profileViewModel)
-                    .environmentObject(favoritesViewModel)
-                    .environmentObject(cartViewModel)
                     .navigationBarHidden(true)
             }
         } else {
@@ -35,29 +29,29 @@ struct OrderCreationCompletionView: View {
                 
                 VStack(alignment: .leading, spacing: 40) {
                     VStack(alignment: .leading, spacing: 10) {
-                        Text("You have successfuly placed your order!")
+                        Text("You have successfuly created a return!")
                             .font(.system(size: 22, weight: .heavy, design: .rounded))
                         
-                        Text("Please wait patiently for it to be delivered")
+                        Text("Please wait patiently for hearing from us soon")
                             .font(.system(size: 16, weight: .regular, design: .rounded))
                             .foregroundColor(.gray)
                     }
                     
                     VStack(alignment: .leading, spacing: 20) {
                         HStack(spacing: 15) {
-                            Text("Order number:")
+                            Text("Return number:")
                                 .font(.system(size: 22, weight: .heavy, design: .rounded))
                             Spacer()
-                            Text(orderCreationViewModel.createdOrder?.id ?? "")
+                            Text(returnCreationViewModel.createdReturn?.id ?? "")
                                 .font(.system(size: 22, weight: .heavy, design: .rounded))
                                 .foregroundColor(.accentColor)
                         }
                         
                         HStack(spacing: 15) {
-                            Text("Expected delivery date:")
+                            Text("Money to be returned:")
                                 .font(.system(size: 22, weight: .heavy, design: .rounded))
                             Spacer()
-                            Text(orderCreationViewModel.createdOrder?.estimatedDeliveryDate.dateString() ?? "")
+                            Text("\(returnCreationViewModel.createdReturn?.returnPrice ?? 0)")
                                 .font(.system(size: 22, weight: .heavy, design: .rounded))
                                 .foregroundColor(.accentColor)
                         }
@@ -69,50 +63,43 @@ struct OrderCreationCompletionView: View {
                 
                 Button {
                     withAnimation {
-                        cartViewModel.cart.removeAllProductsFromCart()
-                        cartViewModel.shouldPresentCheckoutFirstView = false
-                        orderCreationViewModel.shouldPresentCartView = true
+                        returnCreationViewModel.shouldPresentProfileView = true
                     }
                 } label: {
-                    Text("Go back to cart")
+                    Text("Close")
                         .font(.system(size: 20, weight: .bold, design: .rounded))
                 }
                 .buttonStyle(CustomButton())
                 .padding(.bottom, 15)
             }
-            .navigationTitle("Order placed")
+            .navigationTitle("Return created")
             .navigationBarTitleDisplayMode(.inline)
             .navigationBarBackButtonHidden(true)
         }
     }
 }
 
-struct OrderCreationCompletionView_Previews: PreviewProvider {
+struct CompletionReturnCreationView_Previews: PreviewProvider {
     static var previews: some View {
         let authStateManager = AuthStateManager(isGuestDefault: true)
         let tabBarStateManager = TabBarStateManager()
-        let exploreViewModel = ExploreViewModel()
         let profileViewModel = ProfileViewModel()
-        let cartViewModel = CartViewModel()
-        let favoritesViewModel = FavoritesViewModel()
-        let orderCreationViewModel = OrderCreationViewModel()
+        let returnCreationViewModel = ReturnCreationViewModel()
         ForEach(ColorScheme.allCases, id: \.self) { colorScheme in
             ForEach(["iPhone 13 Pro Max", "iPhone 8"], id: \.self) { deviceName in
-                OrderCreationCompletionView()
+                CompletionReturnCreationView()
                     .environmentObject(authStateManager)
                     .environmentObject(tabBarStateManager)
-                    .environmentObject(exploreViewModel)
                     .environmentObject(profileViewModel)
-                    .environmentObject(cartViewModel)
-                    .environmentObject(favoritesViewModel)
-                    .environmentObject(orderCreationViewModel)
+                    .environmentObject(returnCreationViewModel)
                     .preferredColorScheme(colorScheme)
                     .previewDevice(PreviewDevice(rawValue: deviceName))
                     .previewDisplayName("\(deviceName) portrait")
                     .onAppear {
                         authStateManager.isGuest = false
                         authStateManager.isLogged = true
-                        orderCreationViewModel.createdOrder = Order.demoOrders[0]
+                        returnCreationViewModel.orderForReturn = Order.demoOrders[0]
+                        returnCreationViewModel.createdReturn = Return.demoReturns[0]
                     }
             }
         }

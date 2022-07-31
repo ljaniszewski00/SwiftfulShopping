@@ -14,19 +14,17 @@ struct ReturnCreationView: View {
     
     @StateObject private var returnCreationViewModel: ReturnCreationViewModel = ReturnCreationViewModel()
     
-    @State private var shouldProceedReturnCreationView = false
-    
     var order: Order
     
     var body: some View {
         ScrollView(.vertical, showsIndicators: false) {
             VStack(alignment: .leading, spacing: 40) {
-                StepsView(stepsNumber: 3, activeStep: 1)
+                StepsView(stepsNumber: 4, activeStep: 1)
                 
                 VStack(alignment: .leading, spacing: 10) {
                     Text("Order ID")
                         .font(.system(size: 18, design: .rounded))
-                    Text(order.id)
+                    Text(returnCreationViewModel.orderForReturn?.id ?? "")
                         .font(.system(size: 20, weight: .bold, design: .rounded))
                         .foregroundColor(.accentColor)
                 }
@@ -34,7 +32,7 @@ struct ReturnCreationView: View {
                 VStack(alignment: .leading, spacing: 30) {
                     Text("Choose products you want to return")
                         .font(.system(size: 18, design: .rounded))
-                    ForEach(Array(order.shoppingCart.products.keys), id: \.self) { product in
+                    ForEach(Array(returnCreationViewModel.orderForReturn?.shoppingCart.products.keys ?? Cart.demoCart.products.keys), id: \.self) { product in
                         HStack(alignment: .top) {
                             if returnCreationViewModel.productsForReturn.contains(product) {
                                 Circle()
@@ -82,7 +80,7 @@ struct ReturnCreationView: View {
                 
                 Button {
                     withAnimation {
-                        shouldProceedReturnCreationView = true
+                        returnCreationViewModel.shouldPresentSecondReturnCreationView = true
                     }
                 } label: {
                     Text("Continue")
@@ -97,13 +95,16 @@ struct ReturnCreationView: View {
             .padding()
         }
         .navigationTitle("Create Return")
+        .onAppear {
+            returnCreationViewModel.orderForReturn = order
+        }
         
-        NavigationLink(destination: SecondReturnCreationView(order: order)
+        NavigationLink(destination: SecondReturnCreationView()
                                         .environmentObject(authStateManager)
                                         .environmentObject(tabBarStateManager)
                                         .environmentObject(profileViewModel)
                                         .environmentObject(returnCreationViewModel),
-                       isActive: $shouldProceedReturnCreationView) { EmptyView() }
+                       isActive: $returnCreationViewModel.shouldPresentSecondReturnCreationView) { EmptyView() }
     }
 }
 
@@ -114,7 +115,7 @@ struct ReturnCreationView_Previews: PreviewProvider {
         let profileViewModel = ProfileViewModel()
         ForEach(ColorScheme.allCases, id: \.self) { colorScheme in
             ForEach(["iPhone 13 Pro Max", "iPhone 8"], id: \.self) { deviceName in
-                ReturnCreationView(order: profileViewModel.orders[0])
+                ReturnCreationView(order: Order.demoOrders[0])
                     .environmentObject(authStateManager)
                     .environmentObject(tabBarStateManager)
                     .environmentObject(profileViewModel)

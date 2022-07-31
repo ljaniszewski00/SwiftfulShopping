@@ -33,7 +33,7 @@ struct OrderDetailsView: View {
                         Text("Customer Info")
                             .font(.system(size: 18, weight: .medium, design: .rounded))
                             .foregroundColor(.accentColor)
-                        Text(order.clientInfo)
+                        Text(order.client.description)
                             .font(.system(size: 14, design: .rounded))
                             
                     }
@@ -42,7 +42,7 @@ struct OrderDetailsView: View {
                         Text("Shipping Info")
                             .font(.system(size: 18, weight: .medium, design: .rounded))
                             .foregroundColor(.accentColor)
-                        Text(order.shippingAddress)
+                        Text(order.shippingAddress.description)
                             .font(.system(size: 14, design: .rounded))
                             
                     }

@@ -44,6 +44,20 @@ struct OrderCreationSummaryView: View {
                     }
                     
                     VStack(alignment: .leading, spacing: 15) {
+                        Text("Shipping Method")
+                            .font(.system(size: 22, weight: .heavy, design: .rounded))
+                        
+                        ZStack {
+                            RoundedRectangle(cornerRadius: 5)
+                                .stroke()
+                                .foregroundColor(.accentColor)
+                            Text(orderCreationViewModel.choosenShippingMethod?.rawValue ?? "")
+                                .foregroundColor(.accentColor)
+                                .padding()
+                        }
+                    }
+                    
+                    VStack(alignment: .leading, spacing: 15) {
                         Text("Payment Method")
                             .font(.system(size: 22, weight: .heavy, design: .rounded))
                         
@@ -75,6 +89,8 @@ struct OrderCreationSummaryView: View {
             }
             
             Button {
+                orderCreationViewModel.createOrder(client: profileViewModel.profile, shoppingCart: cartViewModel.cart)
+                profileViewModel.orders.append(orderCreationViewModel.createdOrder!)
                 orderCreationViewModel.shouldPresentOrderCreationCompletionView = true
             } label: {
                 Text("Complete")
@@ -132,6 +148,7 @@ struct OrderCreationSummaryView_Previews: PreviewProvider {
                         authStateManager.isLogged = true
                         orderCreationViewModel.choosenAddress = Address.demoAddress
                         orderCreationViewModel.choosenPaymentMethod = PaymentMethod.creditCard
+                        orderCreationViewModel.createdOrder = Order.demoOrders[0]
                         cartViewModel.cart.products = [Product.demoProducts[0]: 2,
                                                        Product.demoProducts[1]: 1,
                                                        Product.demoProducts[2]: 3,

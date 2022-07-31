@@ -16,9 +16,10 @@ struct Profile {
     var email: String
     var address: Address
     var otherAddresses: [Address] = []
+    var defaultShippingMethod: ShippingMethod = .courier
     var defaultPaymentMethod: PaymentMethod = .creditCard
-    var creditCard: CreditCard? = nil
-    var imageURL: String? = nil
+    var creditCard: CreditCard?
+    var imageURL: String?
 }
 
 extension Profile: CustomStringConvertible {

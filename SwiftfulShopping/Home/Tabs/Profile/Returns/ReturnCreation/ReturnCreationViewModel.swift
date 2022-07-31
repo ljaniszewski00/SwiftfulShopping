@@ -19,6 +19,14 @@ class ReturnCreationViewModel: ObservableObject {
     
     @Published var shippingMethod: ShippingMethod = .parcel
     
+    @Published var shouldPresentSecondReturnCreationView: Bool = false
+    @Published var shouldPresentThirdReturnCreationView: Bool = false
+    @Published var shouldPresentCompletionReturnCreationView: Bool = false
+    @Published var shouldPresentProfileView: Bool = false
+    
+    @Published var orderForReturn: Order?
+    @Published var createdReturn: Return?
+    
     var fieldsNotValidated: Bool {
         bankAccountNumber.isEmpty || nameOfBankAccountOwner.isEmpty || streetAndHouseNumber.isEmpty || postalCode.isEmpty || city.isEmpty || country.isEmpty
     }
@@ -35,12 +43,14 @@ class ReturnCreationViewModel: ObservableObject {
         }
     }
     
-    func createReturn(clientID: String, orderID: String) -> Return {
+    func createReturn(clientID: String, orderID: String) {
         var returnPrice: Double = 0
         for productsForReturn in productsForReturn {
             returnPrice += productsForReturn.price
         }
         
-        return Return(clientID: clientID, orderID: orderID, products: productsForReturn, returnPrice: returnPrice, returnMethod: shippingMethod, bankAccountNumber: bankAccountNumber, bankAccountOwnerName: nameOfBankAccountOwner, bankAccountOwnerStreetAndHouseNumber: streetAndHouseNumber, bankAccountOwnerPostalCode: postalCode, bankAccountOwnerCity: city, bankAccountOwnerCountry: country)
+        let newlyCreatedReturn = Return(clientID: clientID, orderID: orderID, products: productsForReturn, returnPrice: returnPrice, returnMethod: shippingMethod, bankAccountNumber: bankAccountNumber, bankAccountOwnerName: nameOfBankAccountOwner, bankAccountOwnerStreetAndHouseNumber: streetAndHouseNumber, bankAccountOwnerPostalCode: postalCode, bankAccountOwnerCity: city, bankAccountOwnerCountry: country)
+        
+        createdReturn = newlyCreatedReturn
     }
 }

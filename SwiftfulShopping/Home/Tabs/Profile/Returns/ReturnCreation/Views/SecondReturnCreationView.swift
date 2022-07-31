@@ -13,7 +13,6 @@ struct SecondReturnCreationView: View {
     @EnvironmentObject private var profileViewModel: ProfileViewModel
     @EnvironmentObject private var returnCreationViewModel: ReturnCreationViewModel
     
-    @State private var shouldProceedReturnCreationView = false
     @State private var isBankAccountTextFieldFocused: Bool = false
     @State private var isBankAccountHolderFirstNameTextFieldFocused: Bool = false
     @State private var isBankAccountHolderAddressTextFieldFocused: Bool = false
@@ -21,12 +20,10 @@ struct SecondReturnCreationView: View {
     @State private var isBankAccountHolderCityTextFieldFocused: Bool = false
     @State private var isBankAccountHolderCountryTextFieldFocused: Bool = false
     
-    var order: Order
-    
     var body: some View {
         ScrollView(.vertical) {
             VStack(alignment: .leading, spacing: 40) {
-                StepsView(stepsNumber: 3, activeStep: 2)
+                StepsView(stepsNumber: 4, activeStep: 2)
                 
                 Text("Provide bank account data to get your money back")
                     .font(.system(size: 20, weight: .bold, design: .rounded))
@@ -66,7 +63,7 @@ struct SecondReturnCreationView: View {
                 
                 Button {
                     withAnimation {
-                        shouldProceedReturnCreationView = true
+                        returnCreationViewModel.shouldPresentThirdReturnCreationView = true
                     }
                 } label: {
                     Text("Continue")
@@ -82,12 +79,12 @@ struct SecondReturnCreationView: View {
         }
         .navigationTitle("Create Return")
         
-        NavigationLink(destination: ThirdReturnCreationView(order: order)
+        NavigationLink(destination: ThirdReturnCreationView()
                                         .environmentObject(authStateManager)
                                         .environmentObject(tabBarStateManager)
                                         .environmentObject(profileViewModel)
                                         .environmentObject(returnCreationViewModel),
-                       isActive: $shouldProceedReturnCreationView) { EmptyView() }
+                       isActive: $returnCreationViewModel.shouldPresentThirdReturnCreationView) { EmptyView() }
     }
 }
 
@@ -99,7 +96,7 @@ struct SecondReturnCreationView_Previews: PreviewProvider {
         let returnCreationViewModel = ReturnCreationViewModel()
         ForEach(ColorScheme.allCases, id: \.self) { colorScheme in
             ForEach(["iPhone 13 Pro Max", "iPhone 8"], id: \.self) { deviceName in
-                SecondReturnCreationView(order: profileViewModel.orders[0])
+                SecondReturnCreationView()
                     .environmentObject(authStateManager)
                     .environmentObject(tabBarStateManager)
                     .environmentObject(profileViewModel)
@@ -110,6 +107,7 @@ struct SecondReturnCreationView_Previews: PreviewProvider {
                     .onAppear {
                         authStateManager.isGuest = false
                         authStateManager.isLogged = true
+                        returnCreationViewModel.orderForReturn = Order.demoOrders[0]
                     }
             }
         }

@@ -13,72 +13,66 @@ struct ThirdReturnCreationView: View {
     @EnvironmentObject private var profileViewModel: ProfileViewModel
     @EnvironmentObject private var returnCreationViewModel: ReturnCreationViewModel
     
-    @State private var shouldProceedReturnCreationView = false
-    
-    var order: Order
-    
     var body: some View {
-        if shouldProceedReturnCreationView {
-            withAnimation {
-                ProfileView()
-                    .environmentObject(authStateManager)
-                    .environmentObject(tabBarStateManager)
-                    .environmentObject(profileViewModel)
-                    .navigationBarHidden(true)
-            }
-        } else {
-            VStack(alignment: .leading, spacing: 40) {
-                StepsView(stepsNumber: 3, activeStep: 3)
-                
-                Text("Choose products delivery method")
-                    .font(.system(size: 20, weight: .bold, design: .rounded))
-                
-                VStack(alignment: .leading) {
-                    ForEach(ShippingMethod.allCases, id: \.self) { shippingMethod in
-                        HStack {
-                            Button(action: {
-                                returnCreationViewModel.shippingMethod = shippingMethod
-                            }, label: {
-                                if returnCreationViewModel.shippingMethod == shippingMethod {
-                                    Circle()
-                                        .foregroundColor(.accentColor)
-                                        .frame(width: 25)
-                                } else {
-                                    Circle()
-                                        .stroke(lineWidth: 3)
-                                        .foregroundColor(.accentColor)
-                                        .frame(width: 25)
-                                }
-                            })
-                            
-                            Text(shippingMethod.rawValue)
-                                .font(.system(size: 16, weight: .bold, design: .rounded))
-                        }
-                        .frame(height: 50)
-                    }
-                }
-                
-                Spacer()
-                
-                Button {
-                    withAnimation {
-                        profileViewModel.returns.append(returnCreationViewModel.createReturn(clientID: profileViewModel.profile.id, orderID: order.id))
+        VStack(alignment: .leading, spacing: 40) {
+            StepsView(stepsNumber: 4, activeStep: 3)
+            
+            Text("Choose products delivery method")
+                .font(.system(size: 20, weight: .bold, design: .rounded))
+            
+            VStack(alignment: .leading) {
+                ForEach(ShippingMethod.allCases, id: \.self) { shippingMethod in
+                    HStack {
+                        Button(action: {
+                            returnCreationViewModel.shippingMethod = shippingMethod
+                        }, label: {
+                            if returnCreationViewModel.shippingMethod == shippingMethod {
+                                Circle()
+                                    .foregroundColor(.accentColor)
+                                    .frame(width: 25)
+                            } else {
+                                Circle()
+                                    .stroke(lineWidth: 3)
+                                    .foregroundColor(.accentColor)
+                                    .frame(width: 25)
+                            }
+                        })
                         
-                        shouldProceedReturnCreationView = true
+                        Text(shippingMethod.rawValue)
+                            .font(.system(size: 16, weight: .bold, design: .rounded))
                     }
-                } label: {
-                    Text("Create Return")
-                        .font(.system(size: 16, weight: .bold, design: .rounded))
+                    .frame(height: 50)
                 }
-                .buttonStyle(CustomButton())
-                .frame(width: UIScreen.main.bounds.width * 0.9)
-                .contentShape(Rectangle())
-                .padding(.bottom, 20)
             }
-            .padding()
-            .scrollOnOverflow()
-            .navigationTitle("Create Return")
+            
+            Spacer()
+            
+            Button {
+                withAnimation {
+                    returnCreationViewModel.createReturn(clientID: profileViewModel.profile.id, orderID: returnCreationViewModel.orderForReturn!.id)
+                    profileViewModel.returns.append(returnCreationViewModel.createdReturn!)
+                    
+                    returnCreationViewModel.shouldPresentCompletionReturnCreationView = true
+                }
+            } label: {
+                Text("Create Return")
+                    .font(.system(size: 16, weight: .bold, design: .rounded))
+            }
+            .buttonStyle(CustomButton())
+            .frame(width: UIScreen.main.bounds.width * 0.9)
+            .contentShape(Rectangle())
+            .padding(.bottom, 20)
+            
+            NavigationLink(destination: CompletionReturnCreationView()
+                                            .environmentObject(authStateManager)
+                                            .environmentObject(tabBarStateManager)
+                                            .environmentObject(profileViewModel)
+                                            .environmentObject(returnCreationViewModel),
+                           isActive: $returnCreationViewModel.shouldPresentCompletionReturnCreationView) { EmptyView() }
         }
+        .padding()
+        .scrollOnOverflow()
+        .navigationTitle("Create Return")
     }
 }
 
@@ -90,7 +84,7 @@ struct ThirdReturnCreationView_Previews: PreviewProvider {
         let returnCreationViewModel = ReturnCreationViewModel()
         ForEach(ColorScheme.allCases, id: \.self) { colorScheme in
             ForEach(["iPhone 13 Pro Max", "iPhone 8"], id: \.self) { deviceName in
-                ThirdReturnCreationView(order: profileViewModel.orders[0])
+                ThirdReturnCreationView()
                     .environmentObject(authStateManager)
                     .environmentObject(tabBarStateManager)
                     .environmentObject(profileViewModel)
@@ -101,6 +95,7 @@ struct ThirdReturnCreationView_Previews: PreviewProvider {
                     .onAppear {
                         authStateManager.isGuest = false
                         authStateManager.isLogged = true
+                        returnCreationViewModel.orderForReturn = Order.demoOrders[0]
                     }
             }
         }
