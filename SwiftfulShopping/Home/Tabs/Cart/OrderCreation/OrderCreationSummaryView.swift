@@ -146,6 +146,7 @@ struct OrderCreationSummaryView_Previews: PreviewProvider {
                     .onAppear {
                         authStateManager.isGuest = false
                         authStateManager.isLogged = true
+                        orderCreationViewModel.choosenShippingMethod = .parcel
                         orderCreationViewModel.choosenAddress = Address.demoAddress
                         orderCreationViewModel.choosenPaymentMethod = PaymentMethod.creditCard
                         orderCreationViewModel.createdOrder = Order.demoOrders[0]

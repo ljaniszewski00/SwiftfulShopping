@@ -21,28 +21,31 @@ struct OrdersView: View {
                             VStack(alignment: .leading, spacing: 20) {
                                 HStack(spacing: 10) {
                                     Text(order.id)
-                                        .font(.system(size: 14, design: .rounded))
+                                        .font(.system(size: 16, weight: .heavy, design: .rounded))
                                     Spacer()
                                     Text(Date.getDayAndMonthFrom(date: order.orderDate))
-                                        .font(.system(size: 18, weight: .medium, design: .rounded))
+                                        .font(.system(size: 20, weight: .semibold, design: .rounded))
                                         .foregroundColor(.accentColor)
                                         .padding(.trailing, 20)
                                 }
                                 
                                 Text("\(order.totalCost, specifier: "%.2f")")
-                                    .font(.system(size: 18, weight: .medium, design: .rounded))
+                                    .font(.system(size: 20, weight: .semibold, design: .rounded))
+                                    .foregroundColor(.accentColor)
                                 
                                 HStack {
-                                    Text("Total Products:")
-                                        .font(.system(size: 14, design: .rounded))
+                                    Text("Products:")
+                                        .font(.system(size: 18, weight: .bold, design: .rounded))
                                     Text("\(order.shoppingCart.products.count)")
+                                        .font(.system(size: 20, weight: .semibold, design: .rounded))
                                         .foregroundColor(.accentColor)
                                 }
                                     
                                 HStack {
                                     Text("Order Status:")
-                                        .font(.system(size: 14, design: .rounded))
+                                        .font(.system(size: 18, weight: .bold, design: .rounded))
                                     Text(order.status.rawValue)
+                                        .font(.system(size: 20, weight: .semibold, design: .rounded))
                                         .foregroundColor(.accentColor)
                                 }
                             }

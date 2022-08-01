@@ -52,7 +52,7 @@ struct ListProductCardTileView: View {
                     } label: {
                         Text("Add to Cart")
                             .fontWeight(.bold)
-                            .foregroundColor(colorScheme == .light ? .black : .white)
+                            .foregroundColor(.white)
                             .padding(.all, 10)
                             .background {
                                 RoundedRectangle(cornerRadius: 5)

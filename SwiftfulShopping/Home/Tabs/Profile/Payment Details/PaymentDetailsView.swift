@@ -21,8 +21,7 @@ struct PaymentDetailsView: View {
             List {
                 ForEach(PaymentMethod.allCases, id: \.self) { paymentMethod in
                     Section(header: Text(paymentMethod.rawValue)
-                        .font(.system(size: 18, weight: .bold, design: .rounded))
-                        .foregroundColor(.accentColor)) {
+                        .font(.system(size: 22, weight: .bold, design: .rounded))) {
                             if paymentMethod == .cash {
                                 
                             } else if paymentMethod == .creditCard {
@@ -109,7 +108,7 @@ struct PaymentDetailsView: View {
                                                 }
                                             } label: {
                                                 Text("Edit Card Data")
-                                                    .font(.system(size: 16, weight: .bold, design: .rounded))
+                                                    .font(.system(size: 20, weight: .bold, design: .rounded))
                                             }
                                             .buttonStyle(CustomButton(buttonWidthMultiplier: 0.86))
                                             .contentShape(Rectangle())
@@ -133,7 +132,7 @@ struct PaymentDetailsView: View {
                                 }
                             } label: {
                                 Text("Choose as default")
-                                    .font(.system(size: 16, weight: .bold, design: .rounded))
+                                    .font(.system(size: 20, weight: .bold, design: .rounded))
                             }
                             .buttonStyle(CustomButton(textColor: profileViewModel.profile.defaultPaymentMethod == paymentMethod ? .white : .accentColor,
                                                       onlyStroke: profileViewModel.profile.defaultPaymentMethod != paymentMethod,

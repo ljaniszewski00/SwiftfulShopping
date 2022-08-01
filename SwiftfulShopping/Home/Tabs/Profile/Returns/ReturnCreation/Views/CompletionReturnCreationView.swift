@@ -37,24 +37,20 @@ struct CompletionReturnCreationView: View {
                             .foregroundColor(.gray)
                     }
                     
-                    VStack(alignment: .leading, spacing: 20) {
-                        HStack(spacing: 15) {
-                            Text("Return number:")
-                                .font(.system(size: 22, weight: .heavy, design: .rounded))
-                            Spacer()
-                            Text(returnCreationViewModel.createdReturn?.id ?? "")
-                                .font(.system(size: 22, weight: .heavy, design: .rounded))
-                                .foregroundColor(.accentColor)
-                        }
-                        
-                        HStack(spacing: 15) {
-                            Text("Money to be returned:")
-                                .font(.system(size: 22, weight: .heavy, design: .rounded))
-                            Spacer()
-                            Text("\(returnCreationViewModel.createdReturn?.returnPrice ?? 0)")
-                                .font(.system(size: 22, weight: .heavy, design: .rounded))
-                                .foregroundColor(.accentColor)
-                        }
+                    VStack(alignment: .leading, spacing: 10) {
+                        Text("Return number")
+                            .font(.system(size: 22, weight: .bold, design: .rounded))
+                        Text(returnCreationViewModel.createdReturn?.id ?? "")
+                            .font(.system(size: 20, weight: .semibold, design: .rounded))
+                            .foregroundColor(.accentColor)
+                    }
+                    
+                    VStack(alignment: .leading, spacing: 10) {
+                        Text("Money to be returned:")
+                            .font(.system(size: 22, weight: .bold, design: .rounded))
+                        Text("\(returnCreationViewModel.createdReturn?.returnPrice ?? 0, specifier: "%.2f")")
+                            .font(.system(size: 20, weight: .semibold, design: .rounded))
+                            .foregroundColor(.accentColor)
                     }
                 }
                 .padding()

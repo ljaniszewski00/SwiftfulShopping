@@ -36,7 +36,6 @@ struct CartView: View {
                                 .environmentObject(cartViewModel)
                         }
                         .buttonStyle(ScaledButtonStyle())
-                        .padding()
                     }
                     .onDelete(perform: cartViewModel.removeProducts)
                 }

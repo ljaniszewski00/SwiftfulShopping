@@ -22,45 +22,45 @@ struct OrderDetailsView: View {
                 VStack(alignment: .leading, spacing: 40) {
                     VStack(alignment: .leading, spacing: 10) {
                         Text("Order Date")
-                            .font(.system(size: 18, design: .rounded))
+                            .font(.system(size: 22, weight: .bold, design: .rounded))
                         Text(Date.getDayMonthYearFrom(date: order.orderDate))
-                            .font(.system(size: 20, weight: .bold, design: .rounded))
+                            .font(.system(size: 20, weight: .semibold, design: .rounded))
                             .foregroundColor(.accentColor)
                     }
                     
                     HStack(alignment: .top) {
                         VStack(alignment: .leading, spacing: 15) {
                             Text("Customer Info")
-                                .font(.system(size: 18, weight: .medium, design: .rounded))
-                                .foregroundColor(.accentColor)
+                                .font(.system(size: 22, weight: .bold, design: .rounded))
                             Text(order.client.description)
-                                .font(.system(size: 14, design: .rounded))
+                                .font(.system(size: 16, weight: .semibold, design: .rounded))
+                                .foregroundColor(.accentColor)
                                 
                         }
                         Spacer()
                         VStack(alignment: .leading, spacing: 15) {
-                            Text("Shipping Info")
-                                .font(.system(size: 18, weight: .medium, design: .rounded))
-                                .foregroundColor(.accentColor)
+                            Text("Address Info")
+                                .font(.system(size: 22, weight: .bold, design: .rounded))
                             Text(order.shippingAddress.description)
-                                .font(.system(size: 14, design: .rounded))
+                                .font(.system(size: 16, weight: .semibold, design: .rounded))
+                                .foregroundColor(.accentColor)
                                 
                         }
                     }
-                    .padding(.bottom, 20)
                     
-                    HStack(alignment: .bottom) {
-                        VStack(alignment: .leading, spacing: 10) {
-                            Text("Status")
-                                .font(.system(size: 18, design: .rounded))
-                                
-                            Text(order.status.rawValue)
-                                .font(.system(size: 20, weight: .bold, design: .rounded))
-                                .foregroundColor(.accentColor)
-                        }
-                        .padding(.bottom, 10)
-                        
-                        Spacer()
+                    VStack(alignment: .leading, spacing: 10) {
+                        Text("Status")
+                            .font(.system(size: 22, weight: .bold, design: .rounded))
+                            
+                        Text(order.status.rawValue)
+                            .font(.system(size: 20, weight: .semibold, design: .rounded))
+                            .foregroundColor(.accentColor)
+                    }
+                    .padding(.bottom, 10)
+                    
+                    HStack(spacing: 20) {
+                        Text("Products")
+                            .font(.system(size: 22, weight: .bold, design: .rounded))
                         
                         Button(action: {
                             showProductsList.toggle()
@@ -72,40 +72,17 @@ struct OrderDetailsView: View {
                     
                     if showProductsList {
                         ForEach(Array(order.shoppingCart.products.keys), id: \.self) { product in
-                            HStack(alignment: .top) {
-                                Image("product_placeholder_image")
-                                    .resizable()
-                                    .frame(width: 150, height: 150)
-                                VStack(alignment: .leading, spacing: 20) {
-                                    Text(product.id)
-                                        .font(.system(size: 14, design: .rounded))
-                                    HStack(alignment: .bottom) {
-                                        VStack(alignment: .leading, spacing: 5) {
-                                            Text(product.name)
-                                                .font(.system(size: 14, design: .rounded))
-                                            Text(product.company)
-                                                .font(.system(size: 14, design: .rounded))
-                                        }
-                                        .font(.system(size: 18, design: .rounded))
-                                        Spacer()
-                                        Text("\(product.price, specifier: "%.2f")")
-                                            .font(.system(size: 20, weight: .bold, design: .rounded))
-                                            .foregroundColor(.accentColor)
-                                    }
-                                    
-                                    
-                                }
-                            }
+                            BasicProductTile(product: product)
                             Divider()
                         }
                     }
                     
                     VStack(alignment: .leading, spacing: 10) {
                         Text("Total Price")
-                            .font(.system(size: 18))
+                            .font(.system(size: 22, weight: .bold, design: .rounded))
                             
                         Text("\(order.totalCost, specifier: "%.2f")")
-                            .font(.system(size: 20, weight: .bold, design: .rounded))
+                            .font(.system(size: 20, weight: .semibold, design: .rounded))
                             .foregroundColor(.accentColor)
                     }
                 }
@@ -117,25 +94,25 @@ struct OrderDetailsView: View {
             VStack(spacing: 20) {
                 Button {
                     withAnimation {
-                        profileViewModel.shouldPresentOrderRateView = true
+                        profileViewModel.shouldPresentReturnCreationView = true
                     }
                 } label: {
-                    Text("Rate the order")
-                        .font(.system(size: 16, weight: .bold, design: .rounded))
+                    Text("Return product")
+                        .font(.system(size: 20, weight: .bold, design: .rounded))
                 }
-                .buttonStyle(CustomButton(textColor: .accentColor, onlyStroke: true))
+                .buttonStyle(CustomButton())
                 .frame(width: UIScreen.main.bounds.width * 0.9)
                 .contentShape(Rectangle())
                 
                 Button {
                     withAnimation {
-                        profileViewModel.shouldPresentReturnCreationView = true
+                        profileViewModel.shouldPresentOrderRateView = true
                     }
                 } label: {
-                    Text("Return")
-                        .font(.system(size: 16, weight: .bold, design: .rounded))
+                    Text("Rate the order")
+                        .font(.system(size: 20, weight: .bold, design: .rounded))
                 }
-                .buttonStyle(CustomButton())
+                .buttonStyle(CustomButton(textColor: .accentColor, onlyStroke: true))
                 .frame(width: UIScreen.main.bounds.width * 0.9)
                 .contentShape(Rectangle())
             }

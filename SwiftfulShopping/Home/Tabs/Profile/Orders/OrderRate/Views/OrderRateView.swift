@@ -12,10 +12,28 @@ struct OrderRateView: View {
     @EnvironmentObject private var tabBarStateManager: TabBarStateManager
     @EnvironmentObject private var profileViewModel: ProfileViewModel
     
+    @StateObject private var ratingViewModel: RatingViewModel = RatingViewModel()
+    
     var order: Order
     
     var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+        VStack {
+            List {
+                ForEach(Array(order.shoppingCart.products.keys), id: \.self) { product in
+                    ProductTileForRateView(product: product)
+                        .environmentObject(ratingViewModel)
+                }
+            }
+            
+            NavigationLink(destination: SingleProductRatingView()
+                                            .environmentObject(authStateManager)
+                                            .environmentObject(tabBarStateManager)
+                                            .environmentObject(profileViewModel)
+                                            .environmentObject(ratingViewModel),
+                           isActive: $ratingViewModel.shouldPresentSingleProductRatingPage) { EmptyView() }
+        }
+        .navigationTitle("Rate the order")
+        .navigationBarTitleDisplayMode(.inline)
     }
 }
 

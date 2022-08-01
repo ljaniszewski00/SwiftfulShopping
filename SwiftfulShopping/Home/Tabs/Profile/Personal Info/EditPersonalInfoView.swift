@@ -45,7 +45,7 @@ struct EditPersonalInfoView: View {
                     }
                 } label: {
                     Text("Edit personal data")
-                        .font(.system(size: 16, weight: .bold, design: .rounded))
+                        .font(.system(size: 20, weight: .bold, design: .rounded))
                 }
                 .buttonStyle(CustomButton())
                 .contentShape(Rectangle())

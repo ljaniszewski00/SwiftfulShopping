@@ -33,8 +33,7 @@ struct PersonalInfoView: View {
                     VStack(alignment: .leading, spacing: 40) {
                         VStack(alignment: .leading, spacing: 10) {
                             Text("First Name")
-                                .font(.system(size: 16, weight: .bold, design: .rounded))
-                                .foregroundColor(.accentColor)
+                                .font(.system(size: 22, weight: .bold, design: .rounded))
                             
                             ZStack {
                                 RoundedRectangle(cornerRadius: 3)
@@ -42,7 +41,8 @@ struct PersonalInfoView: View {
                                     .foregroundColor(.accentColor)
                                 HStack {
                                     Text(profileViewModel.profile.firstName)
-                                        .font(.system(size: 16))
+                                        .font(.system(size: 20, weight: .semibold, design: .rounded))
+                                        .foregroundColor(.accentColor)
                                         .padding()
                                     Spacer()
                                     Image(systemName: "chevron.right")
@@ -58,8 +58,7 @@ struct PersonalInfoView: View {
                         
                         VStack(alignment: .leading, spacing: 10) {
                             Text("Last Name")
-                                .font(.system(size: 16, weight: .bold, design: .rounded))
-                                .foregroundColor(.accentColor)
+                                .font(.system(size: 22, weight: .bold, design: .rounded))
                             
                             ZStack {
                                 RoundedRectangle(cornerRadius: 3)
@@ -67,7 +66,8 @@ struct PersonalInfoView: View {
                                     .foregroundColor(.accentColor)
                                 HStack {
                                     Text(profileViewModel.profile.lastName)
-                                        .font(.system(size: 16))
+                                        .font(.system(size: 20, weight: .semibold, design: .rounded))
+                                        .foregroundColor(.accentColor)
                                         .padding()
                                     Spacer()
                                     Image(systemName: "chevron.right")
@@ -83,8 +83,7 @@ struct PersonalInfoView: View {
                         
                         VStack(alignment: .leading, spacing: 10) {
                             Text("Email Address")
-                                .font(.system(size: 16, weight: .bold, design: .rounded))
-                                .foregroundColor(.accentColor)
+                                .font(.system(size: 22, weight: .bold, design: .rounded))
                             
                             ZStack {
                                 RoundedRectangle(cornerRadius: 3)
@@ -92,7 +91,8 @@ struct PersonalInfoView: View {
                                     .foregroundColor(.accentColor)
                                 HStack {
                                     Text(profileViewModel.profile.email)
-                                        .font(.system(size: 16))
+                                        .font(.system(size: 20, weight: .semibold, design: .rounded))
+                                        .foregroundColor(.accentColor)
                                         .padding()
                                     Spacer()
                                     Image(systemName: "chevron.right")
@@ -108,8 +108,7 @@ struct PersonalInfoView: View {
                         
                         VStack(alignment: .leading, spacing: 10) {
                             Text("Address")
-                                .font(.system(size: 16, weight: .bold, design: .rounded))
-                                .foregroundColor(.accentColor)
+                                .font(.system(size: 22, weight: .bold, design: .rounded))
                             
                             VStack(alignment: .leading, spacing: 0) {
                                 ZStack(alignment: .trailing) {
@@ -121,7 +120,8 @@ struct PersonalInfoView: View {
                                         .foregroundColor(.accentColor)
                                     HStack {
                                         Text(profileViewModel.profile.address.description)
-                                            .font(.system(size: 16))
+                                            .font(.system(size: 20, weight: .semibold, design: .rounded))
+                                            .foregroundColor(addressSectionExpanded ? (colorScheme == .light ? .black : .white) : .accentColor)
                                             .fixedSize(horizontal: false, vertical: true)
                                             .padding()
                                         Spacer()
@@ -152,7 +152,7 @@ struct PersonalInfoView: View {
                                                         .foregroundColor(.accentColor)
                                                     HStack {
                                                         Text(address.description)
-                                                            .font(.system(size: 16))
+                                                            .font(.system(size: 20, weight: .semibold, design: .rounded))
                                                             .fixedSize(horizontal: false, vertical: true)
                                                             .foregroundColor(colorScheme == .light ? .black : .white)
                                                             .padding()
@@ -178,10 +178,10 @@ struct PersonalInfoView: View {
                                         }
                                     } label: {
                                         Text("Add New Address")
-                                            .font(.system(size: 16, weight: .bold, design: .rounded))
+                                            .font(.system(size: 20, weight: .bold, design: .rounded))
                                     }
                                     .contentShape(Rectangle())
-                                    .buttonStyle(CustomButton(buttonColor: .accentColor, imageName: "plus.circle"))
+                                    .buttonStyle(CustomButton())
                                     .padding(.vertical, 10)
                                 }
                             }

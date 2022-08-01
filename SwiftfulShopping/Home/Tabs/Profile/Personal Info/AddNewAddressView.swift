@@ -59,7 +59,7 @@ struct AddNewAddressView: View {
                     
                     HStack {
                         Text("Use as default address")
-                            .font(.system(size: 16, weight: .bold, design: .rounded))
+                            .font(.system(size: 20, weight: .bold, design: .rounded))
                             .fixedSize(horizontal: false, vertical: true)
                             .foregroundColor(.accentColor)
                         Spacer()
@@ -77,7 +77,7 @@ struct AddNewAddressView: View {
                     }
                 } label: {
                     Text("Add new address")
-                        .font(.system(size: 16, weight: .bold, design: .rounded))
+                        .font(.system(size: 20, weight: .bold, design: .rounded))
                 }
                 .buttonStyle(CustomButton())
                 .contentShape(Rectangle())

@@ -21,25 +21,31 @@ struct ReturnsView: View {
                             VStack(alignment: .leading, spacing: 20) {
                                 HStack(spacing: 10) {
                                     Text(userReturn.id)
+                                        .font(.system(size: 16, weight: .heavy, design: .rounded))
                                     Spacer()
                                     Text(Date.getDayAndMonthFrom(date: userReturn.returnDate))
-                                        .font(.system(size: 18, weight: .medium, design: .rounded))
+                                        .font(.system(size: 20, weight: .semibold, design: .rounded))
                                         .foregroundColor(.accentColor)
                                         .padding(.trailing, 20)
                                 }
                                 
                                 Text("\(userReturn.returnPrice, specifier: "%.2f")")
-                                    .font(.system(size: 18, weight: .medium, design: .rounded))
+                                    .font(.system(size: 20, weight: .semibold, design: .rounded))
+                                    .foregroundColor(.accentColor)
                                 
                                 HStack {
-                                    Text("Total Products:")
+                                    Text("Products:")
+                                        .font(.system(size: 18, weight: .bold, design: .rounded))
                                     Text("\(userReturn.products.count)")
+                                        .font(.system(size: 20, weight: .semibold, design: .rounded))
                                         .foregroundColor(.accentColor)
                                 }
                                     
                                 HStack {
-                                    Text("Order Status:")
+                                    Text("Return Status:")
+                                        .font(.system(size: 18, weight: .bold, design: .rounded))
                                     Text(userReturn.status.rawValue)
+                                        .font(.system(size: 20, weight: .semibold, design: .rounded))
                                         .foregroundColor(.accentColor)
                                 }
                             }

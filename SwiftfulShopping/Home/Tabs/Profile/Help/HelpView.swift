@@ -16,10 +16,10 @@ struct HelpView: View {
     
     var body: some View {
         VStack(alignment: .leading, spacing: 80) {
-            VStack(alignment: .center, spacing: 30) {
+            VStack(alignment: .leading, spacing: 30) {
                 Text("Contact Us")
-                    .font(.system(size: 20, weight: .heavy, design: .rounded))
-                VStack(alignment: .trailing) {
+                    .font(.system(size: 22, weight: .heavy, design: .rounded))
+                VStack(alignment: .trailing, spacing: 20) {
                     RectangleCustomTextField(
                         textFieldProperty: "Email Address",
                         text: $helpViewModel.contactUsEmail,
@@ -45,10 +45,10 @@ struct HelpView: View {
                 }
             }
             
-            VStack(alignment: .center, spacing: 30) {
+            VStack(alignment: .leading, spacing: 30) {
                 Text("Subscribe to Newsletter")
-                    .font(.system(size: 20, weight: .heavy, design: .rounded))
-                VStack(alignment: .trailing) {
+                    .font(.system(size: 22, weight: .heavy, design: .rounded))
+                VStack(alignment: .trailing, spacing: 20) {
                     RectangleCustomTextField(
                         textFieldProperty: "Email Address",
                         text: $helpViewModel.newsletterEmail,
@@ -78,6 +78,13 @@ struct HelpView: View {
 
 struct HelpView_Previews: PreviewProvider {
     static var previews: some View {
-        HelpView()
+        ForEach(ColorScheme.allCases, id: \.self) { colorScheme in
+            ForEach(["iPhone 13 Pro Max", "iPhone 8"], id: \.self) { deviceName in
+                HelpView()
+                    .preferredColorScheme(colorScheme)
+                    .previewDevice(PreviewDevice(rawValue: deviceName))
+                    .previewDisplayName("\(deviceName) portrait")
+            }
+        }
     }
 }

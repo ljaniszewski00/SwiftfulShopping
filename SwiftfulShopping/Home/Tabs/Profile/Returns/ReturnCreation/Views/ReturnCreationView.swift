@@ -23,58 +23,47 @@ struct ReturnCreationView: View {
                 
                 VStack(alignment: .leading, spacing: 10) {
                     Text("Order ID")
-                        .font(.system(size: 18, design: .rounded))
+                        .font(.system(size: 22, weight: .bold, design: .rounded))
                     Text(returnCreationViewModel.orderForReturn?.id ?? "")
-                        .font(.system(size: 20, weight: .bold, design: .rounded))
+                        .font(.system(size: 20, weight: .semibold, design: .rounded))
                         .foregroundColor(.accentColor)
                 }
                 
                 VStack(alignment: .leading, spacing: 30) {
                     Text("Choose products you want to return")
-                        .font(.system(size: 18, design: .rounded))
+                        .font(.system(size: 22, weight: .bold, design: .rounded))
                     ForEach(Array(returnCreationViewModel.orderForReturn?.shoppingCart.products.keys ?? Cart.demoCart.products.keys), id: \.self) { product in
-                        HStack(alignment: .top) {
-                            if returnCreationViewModel.productsForReturn.contains(product) {
-                                Circle()
-                                    .foregroundColor(.accentColor)
-                                    .frame(width: 25)
-                            } else {
-                                Circle()
-                                    .stroke(lineWidth: 3)
-                                    .foregroundColor(.accentColor)
-                                    .frame(width: 25)
+                        Button {
+                            withAnimation {
+                                returnCreationViewModel.manageProductToReturn(product: product)
                             }
-                            Image("product_placeholder_image")
-                                .resizable()
-                                .frame(width: 150, height: 150)
-                            VStack(alignment: .leading, spacing: 20) {
-                                Text(product.id)
-                                HStack(alignment: .bottom) {
-                                    VStack(alignment: .leading, spacing: 5) {
-                                        Text(product.name)
-                                        Text(product.company)
+                        } label: {
+                            VStack {
+                                HStack(alignment: .top) {
+                                    if returnCreationViewModel.productsForReturn.contains(product) {
+                                        Circle()
+                                            .foregroundColor(.accentColor)
+                                            .frame(width: 25)
+                                    } else {
+                                        Circle()
+                                            .stroke(lineWidth: 3)
+                                            .foregroundColor(.accentColor)
+                                            .frame(width: 25)
                                     }
-                                    .font(.system(size: 18))
-                                    Spacer()
-                                    Text("\(product.price, specifier: "%.2f")")
-                                        .font(.system(size: 20, weight: .bold, design: .rounded))
-                                        .foregroundColor(.accentColor)
+                                    BasicProductTile(product: product)
                                 }
+                                
+                                Divider()
                             }
                         }
-                        .onTapGesture {
-                            returnCreationViewModel.manageProductToReturn(product: product)
-                        }
-                        
-                        Divider()
                     }
                 }
                 
                 HStack {
                     Text("Selected Products:")
-                        .font(.system(size: 18, design: .rounded))
+                        .font(.system(size: 22, weight: .bold, design: .rounded))
                     Text("\(returnCreationViewModel.productsForReturn.count)")
-                        .font(.system(size: 20, weight: .bold, design: .rounded))
+                        .font(.system(size: 20, weight: .semibold, design: .rounded))
                         .foregroundColor(.accentColor)
                 }
                 
@@ -84,7 +73,7 @@ struct ReturnCreationView: View {
                     }
                 } label: {
                     Text("Continue")
-                        .font(.system(size: 16, weight: .bold, design: .rounded))
+                        .font(.system(size: 20, weight: .bold, design: .rounded))
                 }
                 .buttonStyle(CustomButton())
                 .disabled(returnCreationViewModel.productsForReturn.isEmpty)
