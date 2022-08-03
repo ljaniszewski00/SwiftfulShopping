@@ -42,38 +42,42 @@ struct ListProductCardTileView: View {
                     .fixedSize(horizontal: false, vertical: true)
                     .foregroundColor(colorScheme == .light ? .black : .white)
                 
-                Text("$\(product.price, specifier: "%.2f")")
-                    .font(.system(size: 20, weight: .bold, design: .rounded))
-                    .foregroundColor(.accentColor)
-                    .padding(.bottom, 5)
+                
                 
                 VStack(alignment: .leading, spacing: 10) {
-                    HStack {
-                        ForEach(1..<Int(round(productAverageRating)), id: \.self) { _ in
-                            Image(systemName: "star.fill")
-                                .resizable()
-                                .frame(width: 20, height: 20)
-                                .foregroundColor(.accentColor)
+                    HStack(alignment: .center) {
+                        HStack {
+                            ForEach(1...Int(round(productAverageRating)), id: \.self) { _ in
+                                Image(systemName: "star.fill")
+                                    .resizable()
+                                    .frame(width: 20, height: 20)
+                                    .foregroundColor(.accentColor)
+                            }
+                            
+                            ForEach(Int(round(productAverageRating))..<5, id: \.self) { _ in
+                                Image(systemName: "star")
+                                    .resizable()
+                                    .frame(width: 20, height: 20)
+                                    .foregroundColor(.accentColor)
+                            }
                         }
                         
-                        ForEach(Int(round(productAverageRating))...5, id: \.self) { _ in
-                            Image(systemName: "star")
-                                .resizable()
-                                .frame(width: 20, height: 20)
-                                .foregroundColor(.accentColor)
-                        }
+                        Spacer()
+                        
+                        Text("\(productAverageRating, specifier: "%.2f")")
+                            .font(.system(size: 18, weight: .bold, design: .rounded))
                     }
                     
-                    HStack(alignment: .center, spacing: 30) {
-                        Text("\(productAverageRating, specifier: "%.2f")")
-                            .font(.system(size: 20, weight: .bold, design: .rounded))
-                        
-                        Text("\(productRatingsCount) ratings")
-                            .font(.system(size: 14, weight: .regular, design: .rounded))
-                            .foregroundColor(.gray)
-                    }
+                    Text("\(productRatingsCount) ratings")
+                        .font(.system(size: 14, weight: .regular, design: .rounded))
+                        .foregroundColor(.gray)
                 }
                 .padding(.bottom, 15)
+                
+                Text("$\(product.price, specifier: "%.2f")")
+                    .font(.system(size: 22, weight: .bold, design: .rounded))
+                    .foregroundColor(.accentColor)
+                    .padding(.bottom, 5)
                 
                 HStack {
                     Button {
