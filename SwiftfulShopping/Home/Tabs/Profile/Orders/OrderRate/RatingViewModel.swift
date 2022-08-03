@@ -35,7 +35,7 @@ class RatingViewModel: ObservableObject {
         productRating = rating
     }
     
-    func applyProductRating() {
-        
+    func applyProductRating(userID: String) {
+        ProductsRepository.shared.addRatingFor(product: &(activeProduct)!, userID: userID, rating: productRating, review: textForRating.isEmpty ? nil : textForRating)
     }
 }

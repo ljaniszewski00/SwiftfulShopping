@@ -78,10 +78,14 @@ struct ProductsListView: View {
                 }
             } label: {
                 if displayMethod == .list {
-                    ListProductCardTileView(product: product)
+                    ListProductCardTileView(product: product,
+                                            productAverageRating: exploreViewModel.calculateProductAverageRating(product: product),
+                                            productRatingsCount: exploreViewModel.getProductRatingsCount(product: product))
                         .environmentObject(favoritesViewModel)
                 } else {
-                    GridProductCardTileView(product: product)
+                    GridProductCardTileView(product: product,
+                                            productAverageRating: exploreViewModel.calculateProductAverageRating(product: product),
+                                            productRatingsCount: exploreViewModel.getProductRatingsCount(product: product))
                         .environmentObject(favoritesViewModel)
                 }
             }

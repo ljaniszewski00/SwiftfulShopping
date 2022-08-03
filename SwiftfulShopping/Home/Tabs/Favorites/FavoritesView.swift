@@ -21,20 +21,25 @@ struct FavoritesView: View {
         NavigationView {
             VStack {
                 ScrollView(.vertical, showsIndicators: false) {
-                    ForEach(favoritesViewModel.favoriteProducts, id: \.self) { product in
-                        Button {
-                            withAnimation(.interactiveSpring(response: 0.6, dampingFraction: 0.7, blendDuration: 0.7)) {
-                                favoritesViewModel.changeFocusedProductFor(product: product)
+                    VStack {
+                        ForEach(favoritesViewModel.favoriteProducts, id: \.self) { product in
+                            Button {
+                                withAnimation(.interactiveSpring(response: 0.6, dampingFraction: 0.7, blendDuration: 0.7)) {
+                                    favoritesViewModel.changeFocusedProductFor(product: product)
+                                }
+                            } label: {
+                                ListProductCardTileView(product: product,
+                                                        productAverageRating: exploreViewModel.calculateProductAverageRating(product: product),
+                                                        productRatingsCount: exploreViewModel.getProductRatingsCount(product: product))
+                                    .environmentObject(favoritesViewModel)
                             }
-                        } label: {
-                            ListProductCardTileView(product: product)
-                                .environmentObject(favoritesViewModel)
+                            .buttonStyle(ScaledButtonStyle())
                         }
-                        .buttonStyle(ScaledButtonStyle())
                     }
-                    .navigationTitle("Favorites")
-                    .navigationBarTitleDisplayMode(.inline)
+                    .padding(.bottom, 70)
                 }
+                .navigationTitle("Favorites")
+                .navigationBarTitleDisplayMode(.inline)
                 
                 NavigationLink(destination: ProductDetailsView(product: favoritesViewModel.choosenProduct ?? Product.demoProducts[0])
                                                 .environmentObject(authStateManager)

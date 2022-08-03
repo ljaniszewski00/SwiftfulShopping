@@ -41,7 +41,7 @@ struct ProductDetailsView: View {
                             .foregroundColor(.gray)
                         Text(product.name)
                             .font(.system(size: 22, weight: .heavy, design: .rounded))
-                        Text("\(product.price, specifier: "%.2f")")
+                        Text("$\(product.price, specifier: "%.2f")")
                             .font(.system(size: 20, weight: .bold, design: .rounded))
                             .foregroundColor(.accentColor)
                     }
@@ -58,13 +58,13 @@ struct ProductDetailsView: View {
             
             VStack(spacing: 10) {
                 HStack {
-                    HStack(spacing: 10) {
+                    HStack(spacing: 15) {
                         ForEach(ProductColor.allCases, id: \.self) { color in
                             Button {
                             } label: {
                                 Circle()
                                     .foregroundColor(Color(uiColor: color.rawValue))
-                                    .frame(width: ScreenBoundsSupplier.shared.getScreenWidth() * 0.08, height: ScreenBoundsSupplier.shared.getScreenHeight() * 0.035)
+                                    .frame(width: 25, height: 25)
                                     .opacity(0.9)
                             }
                         }
@@ -105,12 +105,18 @@ struct ProductDetailsView: View {
                     UIImpactFeedbackGenerator(style: .medium).impactOccurred()
                     cartViewModel.addProductToCart(product: product, quantity: productQuantityToBasket)
                 } label: {
-                    Text("ADD TO BASKET")
+                    Text("Add to basket")
                         .font(.system(size: 20, weight: .bold, design: .rounded))
                 }
                 .buttonStyle(CustomButton())
             }
             .padding(.bottom, 20)
+            .background {
+                RoundedRectangle(cornerRadius: 15)
+                    .foregroundColor(Color(uiColor: .secondarySystemBackground)
+                        )
+                    .ignoresSafeArea()
+            }
         }
         .navigationBarTitle("")
         .navigationBarHidden(false)

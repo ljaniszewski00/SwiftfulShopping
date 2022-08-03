@@ -58,4 +58,24 @@ class ExploreViewModel: ObservableObject {
     func changeDisplayMethodFor(displayMethod: ProductDisplayMethod) {
         self.displayMethod = displayMethod
     }
+    
+    func calculateProductAverageRating(product: Product) -> Double {
+        var overallRating: Double = 0
+        var ratingsNumber: Int = 0
+        for ratingNumber in Array(product.ratings.keys) {
+            if product.ratings[ratingNumber]!.count > 0 {
+                overallRating += Double(ratingNumber * product.ratings[ratingNumber]!.count)
+                ratingsNumber += product.ratings[ratingNumber]!.count
+            }
+        }
+        return overallRating / Double(ratingsNumber)
+    }
+    
+    func getProductRatingsCount(product: Product) -> Int {
+        var ratingsNumber: Int = 0
+        for rating in Array(product.ratings.keys) {
+            ratingsNumber += product.ratings[rating]!.count
+        }
+        return ratingsNumber
+    }
 }

@@ -84,6 +84,7 @@ struct ExploreView: View {
                                    isActive: $exploreViewModel.shouldPresentProductDetailsView,
                                    label: { EmptyView() })
                 }
+                .padding(.bottom, 70)
             }
             .navigationTitle("Explore")
             .toolbar {

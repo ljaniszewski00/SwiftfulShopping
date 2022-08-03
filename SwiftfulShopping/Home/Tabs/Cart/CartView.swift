@@ -71,6 +71,7 @@ struct CartView: View {
                     .padding(.bottom, 15)
                     .disabled(cartViewModel.cartIsEmpty)
                 }
+                .padding(.bottom, 70)
                 
                 NavigationLink(destination: ProductDetailsView(product: cartViewModel.choosenProduct ?? Product.demoProducts[0])
                                                 .environmentObject(authStateManager)

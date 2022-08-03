@@ -24,6 +24,10 @@ class ProductsRepository: ObservableObject {
         }
         return nil
     }
+    
+    func addRatingFor(product: inout Product, userID: String, rating: Int, review: String?) {
+        product.addRating(userID: userID, rating: rating, review: review)
+    }
 }
 
 extension ProductsRepository: NSCopying {

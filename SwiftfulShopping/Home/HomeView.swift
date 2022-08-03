@@ -43,7 +43,7 @@ struct HomeView: View {
     
     var body: some View {
         if authStateManager.isLogged || authStateManager.isGuest {
-            VStack(spacing: 0) {
+            ZStack(alignment: .bottom) {
                 Group {
                     switch selectedTab {
                     case .explore:
@@ -144,6 +144,8 @@ struct HomeView: View {
                     .background(.ultraThinMaterial, in: RoundedRectangle(cornerRadius: 40, style: .continuous))
                     .navigationBarTitle("")
                     .navigationBarTitleDisplayMode(.inline)
+                    .transition(.move(edge: .bottom))
+                    .animation(.default)
                 }
             }
             .onAppear {
@@ -165,12 +167,12 @@ struct HomeView_Previews: PreviewProvider {
     static var previews: some View {
         let authStateManager = AuthStateManager(isGuestDefault: true)
         ForEach(ColorScheme.allCases, id: \.self) { colorScheme in
-                    ForEach(["iPhone 13 Pro Max", "iPhone 8"], id: \.self) { deviceName in
-                        HomeView().environmentObject(authStateManager)
-                            .preferredColorScheme(colorScheme)
-                            .previewDevice(PreviewDevice(rawValue: deviceName))
-                            .previewDisplayName("\(deviceName) portrait")
-                    }
-                }
+            ForEach(["iPhone 13 Pro Max", "iPhone 8"], id: \.self) { deviceName in
+                HomeView().environmentObject(authStateManager)
+                    .preferredColorScheme(colorScheme)
+                    .previewDevice(PreviewDevice(rawValue: deviceName))
+                    .previewDisplayName("\(deviceName) portrait")
+            }
+        }
     }
 }

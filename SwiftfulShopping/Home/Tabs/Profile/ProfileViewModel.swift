@@ -108,4 +108,8 @@ class ProfileViewModel: ObservableObject {
     func changeDefaultPaymentMethod(newDefaultPaymentMethod: PaymentMethod) {
         profile.defaultPaymentMethod = newDefaultPaymentMethod
     }
+    
+    func addUserRating(productID: String, rating: Int, review: String?) {
+        profile.addRatingFor(productID: productID, rating: rating, review: review)
+    }
 }
