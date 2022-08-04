@@ -31,47 +31,41 @@ struct GridProductCardTileView: View {
             }
 
             VStack(alignment: .center, spacing: 15) {
-                HStack(alignment: .top) {
-                    VStack(spacing: 10) {
-                        Text(product.company)
-                            .font(.system(size: 14, weight: .regular, design: .rounded))
-                            .foregroundColor(.gray)
-                            .fixedSize(horizontal: false, vertical: true)
+                Text(product.company)
+                    .font(.system(size: 14, weight: .regular, design: .rounded))
+                    .foregroundColor(.gray)
+                    .fixedSize(horizontal: false, vertical: true)
+                
+                Text(product.name)
+                    .font(.system(size: 22, weight: .heavy, design: .rounded))
+                    .fixedSize(horizontal: false, vertical: true)
+                    .foregroundColor(colorScheme == .light ? .black : .white)
+                
+                Text("$\(product.price, specifier: "%.2f")")
+                    .font(.system(size: 20, weight: .bold, design: .rounded))
+                    .foregroundColor(.accentColor)
+                    .padding(.bottom, 15)
+                
+                VStack(alignment: .leading, spacing: 10) {
+                    HStack {
+                        ForEach(1..<Int(round(productAverageRating)), id: \.self) { _ in
+                            Image(systemName: "star.fill")
+                                .resizable()
+                                .frame(width: 20, height: 20)
+                                .foregroundColor(.accentColor)
+                        }
                         
-                        Text(product.name)
-                            .font(.system(size: 22, weight: .heavy, design: .rounded))
-                            .fixedSize(horizontal: false, vertical: true)
-                            .foregroundColor(colorScheme == .light ? .black : .white)
-                        
-                        Text("$\(product.price, specifier: "%.2f")")
-                            .font(.system(size: 20, weight: .bold, design: .rounded))
-                            .foregroundColor(.accentColor)
+                        ForEach(Int(round(productAverageRating))...5, id: \.self) { _ in
+                            Image(systemName: "star")
+                                .resizable()
+                                .frame(width: 20, height: 20)
+                                .foregroundColor(.accentColor)
+                        }
                     }
                     
-                    Spacer()
-                    
-                    VStack(alignment: .leading, spacing: 10) {
-                        HStack(spacing: 15) {
-                            HStack {
-                                ForEach(1...Int(round(productAverageRating)), id: \.self) { _ in
-                                    Image(systemName: "star.fill")
-                                        .resizable()
-                                        .frame(width: 20, height: 20)
-                                        .foregroundColor(.accentColor)
-                                }
-                                
-                                ForEach(Int(round(productAverageRating))..<5, id: \.self) { _ in
-                                    Image(systemName: "star")
-                                        .resizable()
-                                        .frame(width: 20, height: 20)
-                                        .foregroundColor(.accentColor)
-                                }
-                            }
-                            
-                            Text("\(productAverageRating, specifier: "%.2f")")
-                                .font(.system(size: 18, weight: .bold, design: .rounded))
-                                .fixedSize(horizontal: true, vertical: false)
-                        }
+                    HStack(alignment: .center, spacing: 30) {
+                        Text("\(productAverageRating, specifier: "%.2f")")
+                            .font(.system(size: 20, weight: .bold, design: .rounded))
                         
                         Text("\(productRatingsCount) ratings")
                             .font(.system(size: 14, weight: .regular, design: .rounded))

@@ -19,14 +19,6 @@ struct ProductDetailsView: View {
     
     @State private var productQuantityToBasket: Int = 1
     
-    var averageRating: Double {
-        exploreViewModel.calculateProductAverageRating(product: product)
-    }
-    
-    var productRatingsCount: Int {
-        exploreViewModel.getProductRatingsCount(product: product)
-    }
-    
     var product: Product
     
     var body: some View {
@@ -50,20 +42,14 @@ struct ProductDetailsView: View {
                         Text(product.name)
                             .font(.system(size: 22, weight: .heavy, design: .rounded))
                         Text("$\(product.price, specifier: "%.2f")")
-                            .font(.system(size: 22, weight: .bold, design: .rounded))
+                            .font(.system(size: 20, weight: .bold, design: .rounded))
                             .foregroundColor(.accentColor)
                     }
                     
-                    VStack(alignment: .leading, spacing: 30) {
-                        HStack {
-                            Text(product.productDescription)
-                                .font(.system(size: 18, weight: .regular, design: .rounded))
-                            Spacer()
-                        }
-                        
-                        ProductDetailsRatingsSection(product: product,
-                                                     averageRating: averageRating,
-                                                     productRatingsCount: productRatingsCount)
+                    HStack {
+                        Text(product.productDescription)
+                            .font(.system(size: 18, weight: .regular, design: .rounded))
+                        Spacer()
                     }
                     .padding()
                 }
@@ -127,7 +113,8 @@ struct ProductDetailsView: View {
             .padding(.bottom, 20)
             .background {
                 RoundedRectangle(cornerRadius: 15)
-                    .foregroundColor(Color(uiColor: .secondarySystemBackground))
+                    .foregroundColor(Color(uiColor: .secondarySystemBackground)
+                        )
                     .ignoresSafeArea()
             }
         }
