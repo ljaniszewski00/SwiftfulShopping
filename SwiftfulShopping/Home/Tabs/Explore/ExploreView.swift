@@ -92,8 +92,8 @@ struct ExploreView: View {
                     NavigationLink(destination: NotificationsView()
                                                     .environmentObject(authStateManager)
                                                     .environmentObject(tabBarStateManager)
-                                                    .environmentObject(profileViewModel)) { Image(systemName: "bell")
-                                                    }
+                                                    .environmentObject(profileViewModel)
+                    ) { Image(systemName: "bell") }
                 }
             }
         }

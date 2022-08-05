@@ -5,8 +5,7 @@
 //  Created by Łukasz Janiszewski on 04/06/2022.
 //
 
-import Foundation
-import UIKit
+import SwiftUI
 
 class ProfileViewModel: ObservableObject {
     @Published var profile: Profile = Profile.demoProfile
@@ -76,11 +75,11 @@ class ProfileViewModel: ObservableObject {
         if !firstName.isEmpty {
             profile.firstName = firstName
         }
-        if !firstName.isEmpty {
-            profile.firstName = firstName
+        if !lastName.isEmpty {
+            profile.lastName = lastName
         }
-        if !firstName.isEmpty {
-            profile.firstName = firstName
+        if !emailAddress.isEmpty {
+            profile.email = emailAddress
         }
     }
     
