@@ -47,48 +47,38 @@ struct HomeView: View {
                 Group {
                     switch selectedTab {
                     case .explore:
-                        withAnimation(.linear) {
-                            ExploreView()
-                                .environmentObject(authStateManager)
-                                .environmentObject(tabBarStateManager)
-                                .environmentObject(exploreViewModel)
-                                .environmentObject(profileViewModel)
-                                .environmentObject(cartViewModel)
-                                .environmentObject(favoritesViewModel)
-                        }
+                        ExploreView()
+                            .environmentObject(authStateManager)
+                            .environmentObject(tabBarStateManager)
+                            .environmentObject(exploreViewModel)
+                            .environmentObject(profileViewModel)
+                            .environmentObject(cartViewModel)
+                            .environmentObject(favoritesViewModel)
                     case .favorites:
-                        withAnimation(.linear) {
-                            FavoritesView()
-                                .environmentObject(authStateManager)
-                                .environmentObject(tabBarStateManager)
-                                .environmentObject(exploreViewModel)
-                                .environmentObject(profileViewModel)
-                                .environmentObject(cartViewModel)
-                                .environmentObject(favoritesViewModel)
-                        }
+                        FavoritesView()
+                            .environmentObject(authStateManager)
+                            .environmentObject(tabBarStateManager)
+                            .environmentObject(exploreViewModel)
+                            .environmentObject(profileViewModel)
+                            .environmentObject(cartViewModel)
+                            .environmentObject(favoritesViewModel)
                     case .cart:
-                        withAnimation(.linear) {
-                            CartView()
-                                .environmentObject(authStateManager)
-                                .environmentObject(tabBarStateManager)
-                                .environmentObject(exploreViewModel)
-                                .environmentObject(profileViewModel)
-                                .environmentObject(favoritesViewModel)
-                                .environmentObject(cartViewModel)
-                        }
+                        CartView()
+                            .environmentObject(authStateManager)
+                            .environmentObject(tabBarStateManager)
+                            .environmentObject(exploreViewModel)
+                            .environmentObject(profileViewModel)
+                            .environmentObject(favoritesViewModel)
+                            .environmentObject(cartViewModel)
                     case .search:
-                        withAnimation(.linear) {
-                            SearchView()
-                                .environmentObject(authStateManager)
-                                .environmentObject(tabBarStateManager)
-                        }
+                        SearchView()
+                            .environmentObject(authStateManager)
+                            .environmentObject(tabBarStateManager)
                     case .profile:
-                        withAnimation(.linear) {
-                            ProfileView()
-                                .environmentObject(authStateManager)
-                                .environmentObject(tabBarStateManager)
-                                .environmentObject(profileViewModel)
-                        }
+                        ProfileView()
+                            .environmentObject(authStateManager)
+                            .environmentObject(tabBarStateManager)
+                            .environmentObject(profileViewModel)
                     }
                 }
                 
