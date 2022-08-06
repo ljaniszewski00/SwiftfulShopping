@@ -14,7 +14,7 @@ struct BasicProductTile: View {
     
     var body: some View {
         HStack(alignment: .top) {
-            AsyncImage(url: URL(string: product.imageURL)!) { loadedImage in
+            AsyncImage(url: URL(string: product.imagesURLs[0])!) { loadedImage in
                 loadedImage
                     .resizable()
                     .aspectRatio(contentMode: .fit)

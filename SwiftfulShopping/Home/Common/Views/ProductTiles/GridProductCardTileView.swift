@@ -14,12 +14,10 @@ struct GridProductCardTileView: View {
     @Environment(\.colorScheme) var colorScheme
     
     var product: Product
-    var productAverageRating: Double
-    var productRatingsCount: Int
     
     var body: some View {
         VStack(alignment: .center, spacing: 0) {
-            AsyncImage(url: URL(string: product.imageURL)!) { loadedImage in
+            AsyncImage(url: URL(string: product.imagesURLs[0])!) { loadedImage in
                 loadedImage
                     .resizable()
                     .aspectRatio(contentMode: .fit)
@@ -48,14 +46,14 @@ struct GridProductCardTileView: View {
                 
                 VStack(alignment: .leading, spacing: 10) {
                     HStack {
-                        ForEach(1..<Int(round(productAverageRating)), id: \.self) { _ in
+                        ForEach(1..<Int(round(product.rating.averageRating)), id: \.self) { _ in
                             Image(systemName: "star.fill")
                                 .resizable()
                                 .frame(width: 20, height: 20)
                                 .foregroundColor(.accentColor)
                         }
                         
-                        ForEach(Int(round(productAverageRating))...5, id: \.self) { _ in
+                        ForEach(Int(round(product.rating.averageRating))...5, id: \.self) { _ in
                             Image(systemName: "star")
                                 .resizable()
                                 .frame(width: 20, height: 20)
@@ -63,11 +61,32 @@ struct GridProductCardTileView: View {
                         }
                     }
                     
-                    HStack(alignment: .center, spacing: 30) {
-                        Text("\(productAverageRating, specifier: "%.2f")")
-                            .font(.system(size: 20, weight: .bold, design: .rounded))
+                    Spacer()
+                    
+                    VStack(alignment: .leading, spacing: 10) {
+                        HStack(spacing: 15) {
+                            HStack {
+                                ForEach(1...Int(round(product.rating.averageRating)), id: \.self) { _ in
+                                    Image(systemName: "star.fill")
+                                        .resizable()
+                                        .frame(width: 20, height: 20)
+                                        .foregroundColor(.accentColor)
+                                }
+                                
+                                ForEach(Int(round(product.rating.averageRating))..<5, id: \.self) { _ in
+                                    Image(systemName: "star")
+                                        .resizable()
+                                        .frame(width: 20, height: 20)
+                                        .foregroundColor(.accentColor)
+                                }
+                            }
+                            
+                            Text("\(product.rating.averageRating, specifier: "%.2f")")
+                                .font(.system(size: 18, weight: .bold, design: .rounded))
+                                .fixedSize(horizontal: true, vertical: false)
+                        }
                         
-                        Text("\(productRatingsCount) ratings")
+                        Text("\(product.rating.ratingsNumber) ratings")
                             .font(.system(size: 14, weight: .regular, design: .rounded))
                             .foregroundColor(.gray)
                     }
@@ -127,9 +146,7 @@ struct GridProductCardTileView_Previews: PreviewProvider {
         let favoritesViewModel = FavoritesViewModel()
         ForEach(ColorScheme.allCases, id: \.self) { colorScheme in
             ForEach(["iPhone 13 Pro Max", "iPhone 8"], id: \.self) { deviceName in
-                GridProductCardTileView(product: Product.demoProducts[0],
-                                        productAverageRating: 3.55,
-                                        productRatingsCount: 5)
+                GridProductCardTileView(product: Product.demoProducts[0])
                     .environmentObject(cartViewModel)
                     .environmentObject(favoritesViewModel)
                     .preferredColorScheme(colorScheme)

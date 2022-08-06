@@ -25,8 +25,8 @@ class ProductsRepository: ObservableObject {
         return nil
     }
     
-    func addRatingFor(product: inout Product, userID: String, rating: Int, review: String?) {
-        product.addRating(userID: userID, rating: rating, review: review)
+    func addRatingFor(product: inout Product, authorID: String, authorFirstName: String, rating: Int, review: String?) {
+        product.addRate(authorID: authorID, authorFirstName: authorFirstName, rating: rating, review: review)
     }
 }
 

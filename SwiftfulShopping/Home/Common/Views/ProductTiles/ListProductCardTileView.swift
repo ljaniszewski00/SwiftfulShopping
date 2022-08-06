@@ -14,12 +14,10 @@ struct ListProductCardTileView: View {
     @Environment(\.colorScheme) var colorScheme
     
     var product: Product
-    var productAverageRating: Double
-    var productRatingsCount: Int
     
     var body: some View {
         HStack(alignment: .center) {
-            AsyncImage(url: URL(string: product.imageURL)!) { loadedImage in
+            AsyncImage(url: URL(string: product.imagesURLs[0])!) { loadedImage in
                 loadedImage
                     .resizable()
                     .aspectRatio(contentMode: .fit)
@@ -48,30 +46,32 @@ struct ListProductCardTileView: View {
                     .padding(.bottom, 5)
                 
                 VStack(alignment: .leading, spacing: 10) {
-                    HStack {
-                        ForEach(1..<Int(round(productAverageRating)), id: \.self) { _ in
-                            Image(systemName: "star.fill")
-                                .resizable()
-                                .frame(width: 20, height: 20)
-                                .foregroundColor(.accentColor)
+                    HStack(alignment: .center) {
+                        HStack {
+                            ForEach(1...Int(round(product.rating.averageRating)), id: \.self) { _ in
+                                Image(systemName: "star.fill")
+                                    .resizable()
+                                    .frame(width: 20, height: 20)
+                                    .foregroundColor(.accentColor)
+                            }
+                            
+                            ForEach(Int(round(product.rating.averageRating))..<5, id: \.self) { _ in
+                                Image(systemName: "star")
+                                    .resizable()
+                                    .frame(width: 20, height: 20)
+                                    .foregroundColor(.accentColor)
+                            }
                         }
                         
-                        ForEach(Int(round(productAverageRating))...5, id: \.self) { _ in
-                            Image(systemName: "star")
-                                .resizable()
-                                .frame(width: 20, height: 20)
-                                .foregroundColor(.accentColor)
-                        }
+                        Spacer()
+                        
+                        Text("\(product.rating.averageRating, specifier: "%.2f")")
+                            .font(.system(size: 18, weight: .bold, design: .rounded))
                     }
                     
-                    HStack(alignment: .center, spacing: 30) {
-                        Text("\(productAverageRating, specifier: "%.2f")")
-                            .font(.system(size: 20, weight: .bold, design: .rounded))
-                        
-                        Text("\(productRatingsCount) ratings")
-                            .font(.system(size: 14, weight: .regular, design: .rounded))
-                            .foregroundColor(.gray)
-                    }
+                    Text("\(product.rating.ratingsNumber) ratings")
+                        .font(.system(size: 14, weight: .regular, design: .rounded))
+                        .foregroundColor(.gray)
                 }
                 .padding(.bottom, 15)
                 
@@ -124,9 +124,7 @@ struct ListProductCardTileView_Previews: PreviewProvider {
         let favoritesViewModel = FavoritesViewModel()
         ForEach(ColorScheme.allCases, id: \.self) { colorScheme in
             ForEach(["iPhone 13 Pro Max", "iPhone 8"], id: \.self) { deviceName in
-                ListProductCardTileView(product: Product.demoProducts[0],
-                                        productAverageRating: 3.55,
-                                        productRatingsCount: 5)
+                ListProductCardTileView(product: Product.demoProducts[0])
                     .environmentObject(cartViewModel)
                     .environmentObject(favoritesViewModel)
                     .preferredColorScheme(colorScheme)

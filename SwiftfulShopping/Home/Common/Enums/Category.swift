@@ -8,6 +8,7 @@
 import Foundation
 
 enum Category: String, CaseIterable {
+    case computers = "Computers"
     case phones = "Phones"
     case tablets = "Tablets"
     case laptops = "Laptops"
@@ -16,6 +17,6 @@ enum Category: String, CaseIterable {
     case other = "Other"
     
     static var allCases: [Category] {
-        [.phones, .tablets, .laptops, .watches, .accessories, .other]
+        [.computers, .phones, .tablets, .laptops, .watches, .accessories, .other]
     }
 }

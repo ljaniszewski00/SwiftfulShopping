@@ -63,7 +63,7 @@ struct SingleProductRatingView: View {
                     
                     Button {
                         withAnimation {
-                            ratingViewModel.applyProductRating(userID: profileViewModel.profile.id)
+                            ratingViewModel.applyProductRating(authorID: profileViewModel.profile.id, authorFirstName: profileViewModel.profile.firstName)
                             profileViewModel.addUserRating(productID: ratingViewModel.activeProduct!.id, rating: ratingViewModel.productRating, review: ratingViewModel.textForRating)
                             dismiss()
                         }

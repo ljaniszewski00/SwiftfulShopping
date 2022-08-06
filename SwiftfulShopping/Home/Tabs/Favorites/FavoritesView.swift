@@ -28,9 +28,7 @@ struct FavoritesView: View {
                                     favoritesViewModel.changeFocusedProductFor(product: product)
                                 }
                             } label: {
-                                ListProductCardTileView(product: product,
-                                                        productAverageRating: exploreViewModel.calculateProductAverageRating(product: product),
-                                                        productRatingsCount: exploreViewModel.getProductRatingsCount(product: product))
+                                ListProductCardTileView(product: product)
                                     .environmentObject(favoritesViewModel)
                             }
                             .buttonStyle(ScaledButtonStyle())

@@ -49,19 +49,19 @@ class ProfileViewModel: ObservableObject {
             Date.getMonthNameAndYearFrom(date: $0.orderDate) == date
         }
     }
-    
+
     func getReturnsFor(date: String) -> [Return] {
         return returns.filter {
             Date.getMonthNameAndYearFrom(date: $0.returnDate) == date
         }
     }
-    
+
     func changeDefaultAddress(address: Address) {
         removeAddress(address: address)
         profile.otherAddresses.append(profile.address)
         profile.address = address
     }
-    
+
     func removeAddress(address: Address) {
         for (index, otherAddress) in profile.otherAddresses.enumerated() {
             if otherAddress == address {
@@ -70,7 +70,7 @@ class ProfileViewModel: ObservableObject {
             }
         }
     }
-    
+
     func editPersonalData(firstName: String = "", lastName: String = "", emailAddress: String = "") {
         if !firstName.isEmpty {
             profile.firstName = firstName
@@ -82,7 +82,7 @@ class ProfileViewModel: ObservableObject {
             profile.email = emailAddress
         }
     }
-    
+
     func addNewAddress(address: Address, toBeDefault: Bool = false) {
         if toBeDefault {
             profile.otherAddresses.append(profile.address)
@@ -91,7 +91,7 @@ class ProfileViewModel: ObservableObject {
             profile.otherAddresses.append(address)
         }
     }
-    
+
     func editCardData(cardNumber: String, validThru: String, cardholderName: String) {
         if profile.creditCard != nil {
             profile.creditCard!.cardNumber = cardNumber
@@ -99,15 +99,15 @@ class ProfileViewModel: ObservableObject {
             profile.creditCard!.cardholderName = cardholderName
         }
     }
-    
+
     func addNewCard(card: CreditCard) {
         profile.creditCard = card
     }
-    
+
     func changeDefaultPaymentMethod(newDefaultPaymentMethod: PaymentMethod) {
         profile.defaultPaymentMethod = newDefaultPaymentMethod
     }
-    
+
     func addUserRating(productID: String, rating: Int, review: String?) {
         profile.addRatingFor(productID: productID, rating: rating, review: review)
     }

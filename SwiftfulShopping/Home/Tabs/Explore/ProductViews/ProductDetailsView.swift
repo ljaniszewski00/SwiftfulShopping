@@ -25,7 +25,7 @@ struct ProductDetailsView: View {
         VStack {
             ScrollView(.vertical, showsIndicators: false) {
                 VStack(alignment: .center, spacing: 30) {
-                    AsyncImage(url: URL(string: product.imageURL)!) { loadedImage in
+                    AsyncImage(url: URL(string: product.imagesURLs[0])!) { loadedImage in
                         loadedImage
                             .resizable()
                             .aspectRatio(contentMode: .fill)
@@ -46,10 +46,14 @@ struct ProductDetailsView: View {
                             .foregroundColor(.accentColor)
                     }
                     
-                    HStack {
-                        Text(product.productDescription)
-                            .font(.system(size: 18, weight: .regular, design: .rounded))
-                        Spacer()
+                    VStack(alignment: .leading, spacing: 30) {
+                        HStack {
+                            Text(product.productDescription)
+                                .font(.system(size: 18, weight: .regular, design: .rounded))
+                            Spacer()
+                        }
+                        
+                        ProductDetailsRatingsSection(product: product)
                     }
                     .padding()
                 }
