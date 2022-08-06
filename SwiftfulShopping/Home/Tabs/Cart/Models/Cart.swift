@@ -40,15 +40,13 @@ struct Cart {
         products.removeAll()
     }
     
-    func getProducts(at offsets: IndexSet) -> [Product] {
-        let productsArray = Array(self.products.keys)
+    func getProduct(at offsets: IndexSet) -> Product? {
+        let productsArray = Array(self.products.keys).sorted { $0.id > $1.id }
         
-        let productsIDsToDelete = offsets.map {
-            productsArray[$0].id
-        }
-        
-        return productsArray.filter {
-            productsIDsToDelete.contains($0.id)
+        if let indexToDelete = offsets.first {
+            return productsArray[indexToDelete]
+        } else {
+            return nil
         }
     }
     

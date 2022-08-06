@@ -45,6 +45,9 @@
 		0A3DE4592889A1BD008B050B /* ProductDetailsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A3DE4582889A1BD008B050B /* ProductDetailsView.swift */; };
 		0A3DE45B2889AAA9008B050B /* ProductColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A3DE45A2889AAA9008B050B /* ProductColor.swift */; };
 		0A3E59C5289C611000067AD1 /* ProductRating.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A3E59C4289C611000067AD1 /* ProductRating.swift */; };
+		0A420AC8289F101300AA4C52 /* ProductDetailsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A420AC7289F101300AA4C52 /* ProductDetailsViewModel.swift */; };
+		0A420ACB289F109500AA4C52 /* Kingfisher in Frameworks */ = {isa = PBXBuildFile; productRef = 0A420ACA289F109500AA4C52 /* Kingfisher */; };
+		0A420ACD289F1A7A00AA4C52 /* ImagesCarouselView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A420ACC289F1A7A00AA4C52 /* ImagesCarouselView.swift */; };
 		0A453B8B2851DFDC00870EA9 /* ExploreView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A453B8A2851DFDC00870EA9 /* ExploreView.swift */; };
 		0A453B8D2851DFE600870EA9 /* ExploreViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A453B8C2851DFE600870EA9 /* ExploreViewModel.swift */; };
 		0A56D89B285F26180009680C /* FavoritesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A56D89A285F26180009680C /* FavoritesView.swift */; };
@@ -300,6 +303,8 @@
 		0A3DE4582889A1BD008B050B /* ProductDetailsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductDetailsView.swift; sourceTree = "<group>"; };
 		0A3DE45A2889AAA9008B050B /* ProductColor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductColor.swift; sourceTree = "<group>"; };
 		0A3E59C4289C611000067AD1 /* ProductRating.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductRating.swift; sourceTree = "<group>"; };
+		0A420AC7289F101300AA4C52 /* ProductDetailsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductDetailsViewModel.swift; sourceTree = "<group>"; };
+		0A420ACC289F1A7A00AA4C52 /* ImagesCarouselView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImagesCarouselView.swift; sourceTree = "<group>"; };
 		0A453B8A2851DFDC00870EA9 /* ExploreView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExploreView.swift; sourceTree = "<group>"; };
 		0A453B8C2851DFE600870EA9 /* ExploreViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExploreViewModel.swift; sourceTree = "<group>"; };
 		0A56D89A285F26180009680C /* FavoritesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoritesView.swift; sourceTree = "<group>"; };
@@ -402,6 +407,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				0A420ACB289F109500AA4C52 /* Kingfisher in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -502,6 +508,7 @@
 			children = (
 				0A3DE4582889A1BD008B050B /* ProductDetailsView.swift */,
 				0AD8976A289D392F00BFDAA1 /* ProductDetailsRatingsSection.swift */,
+				0A420AC7289F101300AA4C52 /* ProductDetailsViewModel.swift */,
 			);
 			path = ProductViews;
 			sourceTree = "<group>";
@@ -779,6 +786,7 @@
 				0ACD58D1284A6F6500AA9DA0 /* LabelledDivider.swift */,
 				0A268B4A286873A6006CF0E2 /* StepsView.swift */,
 				0A268B56286884A3006CF0E2 /* RectangleCustomTextField.swift */,
+				0A420ACC289F1A7A00AA4C52 /* ImagesCarouselView.swift */,
 			);
 			path = HelperViews;
 			sourceTree = "<group>";
@@ -970,6 +978,7 @@
 			);
 			name = SwiftfulShopping;
 			packageProductDependencies = (
+				0A420ACA289F109500AA4C52 /* Kingfisher */,
 			);
 			productName = SwiftfulShopping;
 			productReference = 0ACD5893284A6E9200AA9DA0 /* SwiftfulShopping.app */;
@@ -1044,6 +1053,7 @@
 			);
 			mainGroup = 0ACD588A284A6E9200AA9DA0;
 			packageReferences = (
+				0A420AC9289F109500AA4C52 /* XCRemoteSwiftPackageReference "Kingfisher" */,
 			);
 			productRefGroup = 0ACD5894284A6E9200AA9DA0 /* Products */;
 			projectDirPath = "";
@@ -1225,6 +1235,7 @@
 				0A268B4B286873A6006CF0E2 /* StepsView.swift in Sources */,
 				0A3E59C5289C611000067AD1 /* ProductRating.swift in Sources */,
 				0A56D89D285F279B0009680C /* FavoritesViewModel.swift in Sources */,
+				0A420ACD289F1A7A00AA4C52 /* ImagesCarouselView.swift in Sources */,
 				0A5A7CFA2896A47C00736B07 /* CompletionReturnCreationView.swift in Sources */,
 				0A3245F1288B16670046043D /* ProductDisplayMethod.swift in Sources */,
 				0ACD5900284A6F6600AA9DA0 /* LabelledDivider.swift in Sources */,
@@ -1239,6 +1250,7 @@
 				0A26FF382885B4440001FA93 /* NotificationsView.swift in Sources */,
 				0A56D8B7285F2CD00009680C /* HelpView.swift in Sources */,
 				0ACD58E8284A6F6600AA9DA0 /* AuthStateManager.swift in Sources */,
+				0A420AC8289F101300AA4C52 /* ProductDetailsViewModel.swift in Sources */,
 				0A27E7CA287AEC7400D033D9 /* AddNewAddressView.swift in Sources */,
 				0A5A7CF828968DCB00736B07 /* OrderCreationChangeAddressView.swift in Sources */,
 				0A56D89B285F26180009680C /* FavoritesView.swift in Sources */,
@@ -1643,6 +1655,25 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		0A420AC9289F109500AA4C52 /* XCRemoteSwiftPackageReference "Kingfisher" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/onevcat/Kingfisher.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 7.0.0;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		0A420ACA289F109500AA4C52 /* Kingfisher */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 0A420AC9289F109500AA4C52 /* XCRemoteSwiftPackageReference "Kingfisher" */;
+			productName = Kingfisher;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 0ACD588B284A6E9200AA9DA0 /* Project object */;
 }

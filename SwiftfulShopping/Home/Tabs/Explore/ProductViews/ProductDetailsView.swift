@@ -15,9 +15,9 @@ struct ProductDetailsView: View {
     @EnvironmentObject private var favoritesViewModel: FavoritesViewModel
     @EnvironmentObject private var cartViewModel: CartViewModel
     
-    @Environment(\.dismiss) var dismiss
+    @StateObject private var productDetailsViewModel: ProductDetailsViewModel = ProductDetailsViewModel()
     
-    @State private var productQuantityToBasket: Int = 1
+    @Environment(\.dismiss) var dismiss
     
     var product: Product
     
@@ -25,14 +25,23 @@ struct ProductDetailsView: View {
         VStack {
             ScrollView(.vertical, showsIndicators: false) {
                 VStack(alignment: .center, spacing: 30) {
-                    AsyncImage(url: URL(string: product.imagesURLs[0])!) { loadedImage in
-                        loadedImage
-                            .resizable()
-                            .aspectRatio(contentMode: .fill)
-                    } placeholder: {
+                    if productDetailsViewModel.fetchingProductImages {
                         Image("product_placeholder_image")
                             .resizable()
-                            .scaledToFill()
+                            .frame(width: 200, height: 200)
+                    } else {
+                        GeometryReader { geometry in
+                            ImagesCarouselView(numberOfImages: productDetailsViewModel.productImages.count) {
+                                ForEach(productDetailsViewModel.productImages, id: \.self) { image in
+                                    Image(uiImage: image)
+                                        .resizable()
+                                        .scaledToFit()
+                                        .frame(width: geometry.size.width, height: geometry.size.height)
+                                        .clipped()
+                                }
+                            }
+                        }
+                        .frame(height: 400, alignment: .center)
                     }
 
                     VStack(alignment: .center, spacing: 15) {
@@ -78,9 +87,9 @@ struct ProductDetailsView: View {
                     
                     HStack(spacing: 20) {
                         Button {
-                            if productQuantityToBasket > 1 {
+                            if productDetailsViewModel.productQuantityToBasket > 1 {
                                 withAnimation {
-                                    productQuantityToBasket -= 1
+                                    productDetailsViewModel.productQuantityToBasket -= 1
                                 }
                             }
                         } label: {
@@ -89,12 +98,12 @@ struct ProductDetailsView: View {
                                 .frame(width: 40, height: 40)
                         }
                         
-                        Text("\(productQuantityToBasket)")
+                        Text("\(productDetailsViewModel.productQuantityToBasket)")
                             .font(.system(size: 18, weight: .bold, design: .rounded))
                         
                         Button {
                             withAnimation {
-                                productQuantityToBasket += 1
+                                productDetailsViewModel.productQuantityToBasket += 1
                             }
                         } label: {
                             Image(systemName: "plus.square.fill")
@@ -107,7 +116,7 @@ struct ProductDetailsView: View {
                 
                 Button {
                     UIImpactFeedbackGenerator(style: .medium).impactOccurred()
-                    cartViewModel.addProductToCart(product: product, quantity: productQuantityToBasket)
+                    cartViewModel.addProductToCart(product: product, quantity: productDetailsViewModel.productQuantityToBasket)
                 } label: {
                     Text("Add to basket")
                         .font(.system(size: 20, weight: .bold, design: .rounded))
@@ -156,6 +165,9 @@ struct ProductDetailsView: View {
                     }
                 }
             }
+        }
+        .onAppear {
+            productDetailsViewModel.fetchProductImages(productImagesURLs: product.imagesURLs)
         }
     }
 }
