@@ -8,8 +8,11 @@
 import SwiftUI
 
 struct ContentView: View {
+    @EnvironmentObject private var accentColorManager: AccentColorManager
+    
     @StateObject private var authStateManager = AuthStateManager()
     @StateObject private var locationManager = LocationManager()
+    
     
     @State private var presentLoginView: Bool = false
     @State private var presentRegisterView: Bool = false
@@ -18,6 +21,7 @@ struct ContentView: View {
         if authStateManager.isLogged || authStateManager.isGuest {
             HomeView()
                 .environmentObject(authStateManager)
+                .environmentObject(accentColorManager)
                 .transition(.slide)
         } else {
             NavigationView {
@@ -95,9 +99,11 @@ struct ContentView: View {
 
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
+        let accentColorManager = AccentColorManager()
         ForEach(ColorScheme.allCases, id: \.self) { colorScheme in
                     ForEach(["iPhone 13 Pro Max", "iPhone 8"], id: \.self) { deviceName in
                         ContentView()
+                            .environmentObject(accentColorManager)
                             .preferredColorScheme(colorScheme)
                             .previewDevice(PreviewDevice(rawValue: deviceName))
                             .previewDisplayName("\(deviceName) portrait")

@@ -9,6 +9,7 @@ import SwiftUI
 
 struct HomeView: View {
     @EnvironmentObject private var authStateManager: AuthStateManager
+    @EnvironmentObject private var accentColorManager: AccentColorManager
     @StateObject private var tabBarStateManager = TabBarStateManager()
     @StateObject private var homeViewModel = HomeViewModel()
     @StateObject private var exploreViewModel = ExploreViewModel()
@@ -77,6 +78,7 @@ struct HomeView: View {
                     case .profile:
                         ProfileView()
                             .environmentObject(authStateManager)
+                            .environmentObject(accentColorManager)
                             .environmentObject(tabBarStateManager)
                             .environmentObject(profileViewModel)
                     }
@@ -156,10 +158,12 @@ struct HomeView: View {
 struct HomeView_Previews: PreviewProvider {
     static var previews: some View {
         let authStateManager = AuthStateManager(isGuestDefault: true)
+        let accentColorManager = AccentColorManager()
         ForEach(ColorScheme.allCases, id: \.self) { colorScheme in
             ForEach(["iPhone 13 Pro Max", "iPhone 8"], id: \.self) { deviceName in
                 HomeView()
                     .environmentObject(authStateManager)
+                    .environmentObject(accentColorManager)
                     .preferredColorScheme(colorScheme)
                     .previewDevice(PreviewDevice(rawValue: deviceName))
                     .previewDisplayName("\(deviceName) portrait")

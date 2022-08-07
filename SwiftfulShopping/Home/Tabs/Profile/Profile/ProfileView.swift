@@ -9,6 +9,7 @@ import SwiftUI
 
 struct ProfileView: View {
     @EnvironmentObject private var authStateManager: AuthStateManager
+    @EnvironmentObject private var accentColorManager: AccentColorManager
     @EnvironmentObject private var tabBarStateManager: TabBarStateManager
     @EnvironmentObject private var profileViewModel: ProfileViewModel
     
@@ -35,6 +36,12 @@ struct ProfileView: View {
             ]
         }
     }
+    
+    private var navigationIconsForNames: [NavigationViewsNames: String] = [.orders: "cart.fill",
+                                                                   .returns: "return",
+                                                                   .personalInfo: "person.fill",
+                                                                   .paymentDetails: "creditcard.fill",
+                                                                   .help: "questionmark.circle.fill"]
     
     var body: some View {
         NavigationView {
@@ -93,28 +100,50 @@ struct ProfileView: View {
                             }
                         }
                         .padding()
-                        .padding(.bottom, 100)
+                        .padding(.bottom)
                         
-                        VStack(alignment: .center) {
+                        VStack(alignment: .center, spacing: 20) {
                             ForEach(NavigationViewsNames.allCases, id: \.self) { navigationViewName in
                                 HStack {
                                     Spacer()
                                     Button {
                                         selection = navigationViewName.rawValue
                                     } label: {
-                                        Text(navigationViewName.rawValue)
-                                            .font(.system(size: 16, weight: .bold, design: .rounded))
+                                        HStack(spacing: 20) {
+                                            Image(systemName: navigationIconsForNames[navigationViewName]!)
+                                            Text(navigationViewName.rawValue)
+                                                .font(.system(size: 16, weight: .bold, design: .rounded))
+                                        }
+                                        
                                     }
                                     .buttonStyle(CustomButton(textColor: .white, rightChevronNavigationImage: true))
                                     .frame(width: UIScreen.main.bounds.width * 0.9)
                                     .contentShape(Rectangle())
-                                    .padding(.bottom, 20)
                                     Spacer()
                                 }
                             }
                         }
                         
-                        VStack(alignment: .center) {
+                        VStack(alignment: .center, spacing: 20) {
+                            HStack {
+                                Spacer()
+                                Button {
+                                    withAnimation {
+                                        profileViewModel.shouldPresentSettingsView = true
+                                    }
+                                } label: {
+                                    HStack(spacing: 20) {
+                                        Image(systemName: "gearshape.fill")
+                                        Text("Settings")
+                                            .font(.system(size: 16, weight: .bold, design: .rounded))
+                                    }
+                                }
+                                .buttonStyle(CustomButton(textColor: .white, rightChevronNavigationImage: true))
+                                .frame(width: UIScreen.main.bounds.width * 0.9)
+                                .contentShape(Rectangle())
+                                Spacer()
+                            }
+                            
                             HStack {
                                 Spacer()
                                 Button {
@@ -128,11 +157,11 @@ struct ProfileView: View {
                                 .buttonStyle(CustomButton(textColor: .accentColor, onlyStroke: true, strokeColor: .accentColor, imageName: "rectangle.portrait.and.arrow.right", imageColor: .accentColor))
                                 .frame(width: UIScreen.main.bounds.width * 0.9)
                                 .contentShape(Rectangle())
-                                .padding(.top, 50)
-                                .padding(.bottom, 20)
                                 Spacer()
                             }
                         }
+                        .padding(.bottom, 20)
+                        .padding(.top, 90)
                         
                         NavigationLink(destination: OrdersView()
                                                         .environmentObject(authStateManager)
@@ -168,6 +197,14 @@ struct ProfileView: View {
                                                         .environmentObject(profileViewModel),
                                        tag: "Help",
                                        selection: $selection) { EmptyView() }
+                        
+                        NavigationLink(destination: SettingsView()
+                                                        .environmentObject(authStateManager)
+                                                        .environmentObject(accentColorManager)
+                                                        .environmentObject(tabBarStateManager)
+                                                        .environmentObject(profileViewModel),
+                                       isActive: $profileViewModel.shouldPresentSettingsView,
+                                       label: { EmptyView() })
                     }
                 }
             }
@@ -200,12 +237,14 @@ struct ProfileView: View {
 struct ProfileView_Previews: PreviewProvider {
     static var previews: some View {
         let authStateManager = AuthStateManager(isGuestDefault: true)
+        let accentColorManager = AccentColorManager()
         let tabBarStateManager = TabBarStateManager()
         let profileViewModel = ProfileViewModel()
         ForEach(ColorScheme.allCases, id: \.self) { colorScheme in
             ForEach(["iPhone 13 Pro Max", "iPhone 8"], id: \.self) { deviceName in
                 ProfileView()
                     .environmentObject(authStateManager)
+                    .environmentObject(accentColorManager)
                     .environmentObject(tabBarStateManager)
                     .environmentObject(profileViewModel)
                     .preferredColorScheme(colorScheme)

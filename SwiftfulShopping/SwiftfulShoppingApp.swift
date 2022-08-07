@@ -12,10 +12,14 @@ struct SwiftlyShoppingApp: App {
     @UIApplicationDelegateAdaptor(AppDelegate.self) var appDelegate
     @AppStorage("appThemeSetting") var appThemeSetting = Appearance.system
     
+    @StateObject private var accentColorManager = AccentColorManager()
+    
     var body: some Scene {
         WindowGroup {
             ContentView()
+                .accentColor(Color(uiColor: accentColorManager.accentColor.rawValue))
                 .modifier(DarkModeViewModifier())
+                .environmentObject(accentColorManager)
         }
     }
 }

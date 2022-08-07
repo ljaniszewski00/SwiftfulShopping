@@ -43,6 +43,15 @@
 		0A355566289FD3D7005993E5 /* LoadingIndicatorModal.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A355565289FD3D7005993E5 /* LoadingIndicatorModal.swift */; };
 		0A355568289FD3ED005993E5 /* ErrorModal.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A355567289FD3ED005993E5 /* ErrorModal.swift */; };
 		0A35556C289FDD7C005993E5 /* AppTheme.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A35556B289FDD7C005993E5 /* AppTheme.swift */; };
+		0A35556E28A04EF6005993E5 /* AccentColorManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A35556D28A04EF6005993E5 /* AccentColorManager.swift */; };
+		0A35557128A052F3005993E5 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A35557028A052F3005993E5 /* SettingsView.swift */; };
+		0A35557328A052FD005993E5 /* SettingsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A35557228A052FD005993E5 /* SettingsViewModel.swift */; };
+		0A35557828A05842005993E5 /* ChangeEmailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A35557728A05842005993E5 /* ChangeEmailView.swift */; };
+		0A35557A28A0584A005993E5 /* ChangePasswordView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A35557928A0584A005993E5 /* ChangePasswordView.swift */; };
+		0A35557C28A05859005993E5 /* DeleteAccountView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A35557B28A05859005993E5 /* DeleteAccountView.swift */; };
+		0A35557E28A05A43005993E5 /* AccentColorChangeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A35557D28A05A43005993E5 /* AccentColorChangeView.swift */; };
+		0A35558028A05DD9005993E5 /* ColorSchemeChangeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A35557F28A05DD9005993E5 /* ColorSchemeChangeView.swift */; };
+		0A35558228A063AF005993E5 /* TermsAndConditionsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A35558128A063AF005993E5 /* TermsAndConditionsView.swift */; };
 		0A3DE45328899F65008B050B /* Category.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A3DE45228899F65008B050B /* Category.swift */; };
 		0A3DE4552889A1A2008B050B /* GridProductCardTileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A3DE4542889A1A2008B050B /* GridProductCardTileView.swift */; };
 		0A3DE4592889A1BD008B050B /* ProductDetailsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A3DE4582889A1BD008B050B /* ProductDetailsView.swift */; };
@@ -304,6 +313,15 @@
 		0A355565289FD3D7005993E5 /* LoadingIndicatorModal.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadingIndicatorModal.swift; sourceTree = "<group>"; };
 		0A355567289FD3ED005993E5 /* ErrorModal.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ErrorModal.swift; sourceTree = "<group>"; };
 		0A35556B289FDD7C005993E5 /* AppTheme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppTheme.swift; sourceTree = "<group>"; };
+		0A35556D28A04EF6005993E5 /* AccentColorManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccentColorManager.swift; sourceTree = "<group>"; };
+		0A35557028A052F3005993E5 /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
+		0A35557228A052FD005993E5 /* SettingsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsViewModel.swift; sourceTree = "<group>"; };
+		0A35557728A05842005993E5 /* ChangeEmailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChangeEmailView.swift; sourceTree = "<group>"; };
+		0A35557928A0584A005993E5 /* ChangePasswordView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChangePasswordView.swift; sourceTree = "<group>"; };
+		0A35557B28A05859005993E5 /* DeleteAccountView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeleteAccountView.swift; sourceTree = "<group>"; };
+		0A35557D28A05A43005993E5 /* AccentColorChangeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccentColorChangeView.swift; sourceTree = "<group>"; };
+		0A35557F28A05DD9005993E5 /* ColorSchemeChangeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorSchemeChangeView.swift; sourceTree = "<group>"; };
+		0A35558128A063AF005993E5 /* TermsAndConditionsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TermsAndConditionsView.swift; sourceTree = "<group>"; };
 		0A3DE45228899F65008B050B /* Category.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Category.swift; sourceTree = "<group>"; };
 		0A3DE4542889A1A2008B050B /* GridProductCardTileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GridProductCardTileView.swift; sourceTree = "<group>"; };
 		0A3DE4582889A1BD008B050B /* ProductDetailsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductDetailsView.swift; sourceTree = "<group>"; };
@@ -507,6 +525,29 @@
 				0A3149E428982DFC001920D2 /* SingleProductRatingView.swift */,
 			);
 			path = Views;
+			sourceTree = "<group>";
+		};
+		0A35556F28A052D5005993E5 /* Settings */ = {
+			isa = PBXGroup;
+			children = (
+				0A35557628A0582B005993E5 /* Subviews */,
+				0A35557028A052F3005993E5 /* SettingsView.swift */,
+				0A35557228A052FD005993E5 /* SettingsViewModel.swift */,
+			);
+			path = Settings;
+			sourceTree = "<group>";
+		};
+		0A35557628A0582B005993E5 /* Subviews */ = {
+			isa = PBXGroup;
+			children = (
+				0A35557728A05842005993E5 /* ChangeEmailView.swift */,
+				0A35557928A0584A005993E5 /* ChangePasswordView.swift */,
+				0A35557B28A05859005993E5 /* DeleteAccountView.swift */,
+				0A35557D28A05A43005993E5 /* AccentColorChangeView.swift */,
+				0A35557F28A05DD9005993E5 /* ColorSchemeChangeView.swift */,
+				0A35558128A063AF005993E5 /* TermsAndConditionsView.swift */,
+			);
+			path = Subviews;
 			sourceTree = "<group>";
 		};
 		0A3DE4572889A1AD008B050B /* ProductViews */ = {
@@ -760,6 +801,7 @@
 				0ACD58C9284A6F6500AA9DA0 /* ScreenBoundsSupplier.swift */,
 				0A26FF282885A5EF0001FA93 /* ImagePicker.swift */,
 				0A35556B289FDD7C005993E5 /* AppTheme.swift */,
+				0A35556D28A04EF6005993E5 /* AccentColorManager.swift */,
 			);
 			path = Objects;
 			sourceTree = "<group>";
@@ -937,6 +979,7 @@
 				0A56D8AB285F2C280009680C /* Personal Info */,
 				0A56D8AC285F2C350009680C /* Payment Details */,
 				0A56D8AD285F2C4A0009680C /* Help */,
+				0A35556F28A052D5005993E5 /* Settings */,
 			);
 			path = Profile;
 			sourceTree = "<group>";
@@ -1195,6 +1238,7 @@
 				0A3245F3288B18FE0046043D /* ListProductCardTileView.swift in Sources */,
 				0A5A7CF62896878800736B07 /* OrderStatus.swift in Sources */,
 				0A27E7CE287B4BC800D033D9 /* PaymentDetailsViewModel.swift in Sources */,
+				0A35557828A05842005993E5 /* ChangeEmailView.swift in Sources */,
 				0ACD590C284A6F6600AA9DA0 /* HomeViewModel.swift in Sources */,
 				0A5A7CEE289546DF00736B07 /* OrderCreationSummaryView.swift in Sources */,
 				0A27E7C82879CBE200D033D9 /* PersonalInfoViewModel.swift in Sources */,
@@ -1210,13 +1254,16 @@
 				0ACD58DF284A6F6600AA9DA0 /* CustomButtonStyle.swift in Sources */,
 				0A355566289FD3D7005993E5 /* LoadingIndicatorModal.swift in Sources */,
 				0AB8D9822864B1B1003DC2E6 /* Order.swift in Sources */,
+				0A35557A28A0584A005993E5 /* ChangePasswordView.swift in Sources */,
 				0A5A7CF22895808B00736B07 /* ProductTileForCartView.swift in Sources */,
 				0ACD59AD284B739C00AA9DA0 /* Profile.swift in Sources */,
+				0A35558228A063AF005993E5 /* TermsAndConditionsView.swift in Sources */,
 				0A35556C289FDD7C005993E5 /* AppTheme.swift in Sources */,
 				0A355568289FD3ED005993E5 /* ErrorModal.swift in Sources */,
 				0AD8976B289D392F00BFDAA1 /* ProductDetailsRatingsSection.swift in Sources */,
 				0ACD58EB284A6F6600AA9DA0 /* TabBarStateManager.swift in Sources */,
 				0AD89746289D0C4A00BFDAA1 /* ProfileViewModel.swift in Sources */,
+				0A35557C28A05859005993E5 /* DeleteAccountView.swift in Sources */,
 				0ACD5909284A6F6600AA9DA0 /* RegisterViewModel.swift in Sources */,
 				0ACD58F4284A6F6600AA9DA0 /* ConditionalViewModifiers.swift in Sources */,
 				0A56D8AF285F2C830009680C /* OrdersView.swift in Sources */,
@@ -1229,6 +1276,7 @@
 				0A268B5328687FA9006CF0E2 /* ReturnCreationViewModel.swift in Sources */,
 				0ACD591B284A6F6600AA9DA0 /* LoginView.swift in Sources */,
 				0A453B8D2851DFE600870EA9 /* ExploreViewModel.swift in Sources */,
+				0A35556E28A04EF6005993E5 /* AccentColorManager.swift in Sources */,
 				0A26FF362885B4100001FA93 /* CategoriesTabView.swift in Sources */,
 				0A3DE45B2889AAA9008B050B /* ProductColor.swift in Sources */,
 				0A268B43286712C8006CF0E2 /* Date.swift in Sources */,
@@ -1236,12 +1284,14 @@
 				0AB8D9902864B583003DC2E6 /* ShippingMethod.swift in Sources */,
 				0A27E7D0287B4EE800D033D9 /* CreditCard.swift in Sources */,
 				0A56D8A7285F28E60009680C /* ScrollOnContentOverflow.swift in Sources */,
+				0A35557328A052FD005993E5 /* SettingsViewModel.swift in Sources */,
 				0A3DE4552889A1A2008B050B /* GridProductCardTileView.swift in Sources */,
 				0A27E7CC287B091200D033D9 /* EditPersonalInfoView.swift in Sources */,
 				0A268B57286884A3006CF0E2 /* RectangleCustomTextField.swift in Sources */,
 				0ACD590F284A6F6600AA9DA0 /* HomeView.swift in Sources */,
 				0A56D8A5285F27D80009680C /* CartViewModel.swift in Sources */,
 				0AB8D9922864DFE3003DC2E6 /* PaymentMethod.swift in Sources */,
+				0A35558028A05DD9005993E5 /* ColorSchemeChangeView.swift in Sources */,
 				0A3DE4592889A1BD008B050B /* ProductDetailsView.swift in Sources */,
 				0A453B8B2851DFDC00870EA9 /* ExploreView.swift in Sources */,
 				0A268B4B286873A6006CF0E2 /* StepsView.swift in Sources */,
@@ -1281,11 +1331,13 @@
 				0ACD5915284A6F6600AA9DA0 /* ForgotPasswordView.swift in Sources */,
 				0A27E7C62879C22600D033D9 /* ReturnDetailsView.swift in Sources */,
 				0A27E7D2287B502A00D033D9 /* DetectCardCompany.swift in Sources */,
+				0A35557E28A05A43005993E5 /* AccentColorChangeView.swift in Sources */,
 				0A5A7CF42896849D00736B07 /* CalculateEstimatedDeliveryDate.swift in Sources */,
 				0A268B592868A21E006CF0E2 /* ThirdReturnCreationView.swift in Sources */,
 				0A3149DE28982B80001920D2 /* ProductTileForRateView.swift in Sources */,
 				0A268B4E2868777F006CF0E2 /* SecondReturnCreationView.swift in Sources */,
 				0A56D8B3285F2C950009680C /* PersonalInfoView.swift in Sources */,
+				0A35557128A052F3005993E5 /* SettingsView.swift in Sources */,
 				0A27E7D4287B509300D033D9 /* CardCompany.swift in Sources */,
 				0ACD58F7284A6F6600AA9DA0 /* Hidden.swift in Sources */,
 				0ACD5918284A6F6600AA9DA0 /* LoginViewModel.swift in Sources */,

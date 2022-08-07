@@ -18,6 +18,8 @@ class ProfileViewModel: ObservableObject {
     @Published var shouldPresentOrderRateView: Bool = false
     @Published var shouldPresentReturnCreationView: Bool = false
     
+    @Published var shouldPresentSettingsView: Bool = false
+    
     var datesForOrdersViewListSections: [String] {
         var ordersShortDates: [String] = []
         for order in orders {
