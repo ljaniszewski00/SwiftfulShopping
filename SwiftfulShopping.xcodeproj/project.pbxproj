@@ -40,6 +40,9 @@
 		0A3245ED288AD4F90046043D /* ScaledButtonStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A3245EC288AD4F90046043D /* ScaledButtonStyle.swift */; };
 		0A3245F1288B16670046043D /* ProductDisplayMethod.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A3245F0288B16670046043D /* ProductDisplayMethod.swift */; };
 		0A3245F3288B18FE0046043D /* ListProductCardTileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A3245F2288B18FE0046043D /* ListProductCardTileView.swift */; };
+		0A355566289FD3D7005993E5 /* LoadingIndicatorModal.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A355565289FD3D7005993E5 /* LoadingIndicatorModal.swift */; };
+		0A355568289FD3ED005993E5 /* ErrorModal.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A355567289FD3ED005993E5 /* ErrorModal.swift */; };
+		0A35556C289FDD7C005993E5 /* AppTheme.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A35556B289FDD7C005993E5 /* AppTheme.swift */; };
 		0A3DE45328899F65008B050B /* Category.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A3DE45228899F65008B050B /* Category.swift */; };
 		0A3DE4552889A1A2008B050B /* GridProductCardTileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A3DE4542889A1A2008B050B /* GridProductCardTileView.swift */; };
 		0A3DE4592889A1BD008B050B /* ProductDetailsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A3DE4582889A1BD008B050B /* ProductDetailsView.swift */; };
@@ -298,6 +301,9 @@
 		0A3245EC288AD4F90046043D /* ScaledButtonStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScaledButtonStyle.swift; sourceTree = "<group>"; };
 		0A3245F0288B16670046043D /* ProductDisplayMethod.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductDisplayMethod.swift; sourceTree = "<group>"; };
 		0A3245F2288B18FE0046043D /* ListProductCardTileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListProductCardTileView.swift; sourceTree = "<group>"; };
+		0A355565289FD3D7005993E5 /* LoadingIndicatorModal.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadingIndicatorModal.swift; sourceTree = "<group>"; };
+		0A355567289FD3ED005993E5 /* ErrorModal.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ErrorModal.swift; sourceTree = "<group>"; };
+		0A35556B289FDD7C005993E5 /* AppTheme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppTheme.swift; sourceTree = "<group>"; };
 		0A3DE45228899F65008B050B /* Category.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Category.swift; sourceTree = "<group>"; };
 		0A3DE4542889A1A2008B050B /* GridProductCardTileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GridProductCardTileView.swift; sourceTree = "<group>"; };
 		0A3DE4582889A1BD008B050B /* ProductDetailsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductDetailsView.swift; sourceTree = "<group>"; };
@@ -753,6 +759,7 @@
 				0ACD58C8284A6F6500AA9DA0 /* LocationManager.swift */,
 				0ACD58C9284A6F6500AA9DA0 /* ScreenBoundsSupplier.swift */,
 				0A26FF282885A5EF0001FA93 /* ImagePicker.swift */,
+				0A35556B289FDD7C005993E5 /* AppTheme.swift */,
 			);
 			path = Objects;
 			sourceTree = "<group>";
@@ -787,6 +794,8 @@
 				0A268B4A286873A6006CF0E2 /* StepsView.swift */,
 				0A268B56286884A3006CF0E2 /* RectangleCustomTextField.swift */,
 				0A420ACC289F1A7A00AA4C52 /* ImagesCarouselView.swift */,
+				0A355565289FD3D7005993E5 /* LoadingIndicatorModal.swift */,
+				0A355567289FD3ED005993E5 /* ErrorModal.swift */,
 			);
 			path = HelperViews;
 			sourceTree = "<group>";
@@ -1199,9 +1208,12 @@
 				0A268B4928685C41006CF0E2 /* ReturnCreationView.swift in Sources */,
 				0A26FF292885A5EF0001FA93 /* ImagePicker.swift in Sources */,
 				0ACD58DF284A6F6600AA9DA0 /* CustomButtonStyle.swift in Sources */,
+				0A355566289FD3D7005993E5 /* LoadingIndicatorModal.swift in Sources */,
 				0AB8D9822864B1B1003DC2E6 /* Order.swift in Sources */,
 				0A5A7CF22895808B00736B07 /* ProductTileForCartView.swift in Sources */,
 				0ACD59AD284B739C00AA9DA0 /* Profile.swift in Sources */,
+				0A35556C289FDD7C005993E5 /* AppTheme.swift in Sources */,
+				0A355568289FD3ED005993E5 /* ErrorModal.swift in Sources */,
 				0AD8976B289D392F00BFDAA1 /* ProductDetailsRatingsSection.swift in Sources */,
 				0ACD58EB284A6F6600AA9DA0 /* TabBarStateManager.swift in Sources */,
 				0AD89746289D0C4A00BFDAA1 /* ProfileViewModel.swift in Sources */,

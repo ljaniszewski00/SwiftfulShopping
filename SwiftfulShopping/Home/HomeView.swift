@@ -158,7 +158,8 @@ struct HomeView_Previews: PreviewProvider {
         let authStateManager = AuthStateManager(isGuestDefault: true)
         ForEach(ColorScheme.allCases, id: \.self) { colorScheme in
             ForEach(["iPhone 13 Pro Max", "iPhone 8"], id: \.self) { deviceName in
-                HomeView().environmentObject(authStateManager)
+                HomeView()
+                    .environmentObject(authStateManager)
                     .preferredColorScheme(colorScheme)
                     .previewDevice(PreviewDevice(rawValue: deviceName))
                     .previewDisplayName("\(deviceName) portrait")

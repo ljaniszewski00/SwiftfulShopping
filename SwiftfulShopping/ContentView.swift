@@ -35,7 +35,8 @@ struct ContentView: View {
                         
                         VStack {
                             NavigationLink(isActive: $presentLoginView) {
-                                LoginView().environmentObject(authStateManager)
+                                LoginView()
+                                    .environmentObject(authStateManager)
                             } label: {
                                 Button("Login") {
                                     withAnimation() {
@@ -50,7 +51,8 @@ struct ContentView: View {
                             }
                             
                             NavigationLink(isActive: $presentRegisterView) {
-                                RegisterView().environmentObject(authStateManager)
+                                RegisterView()
+                                    .environmentObject(authStateManager)
                                     .environmentObject(locationManager)
                             } label: {
                                 Button("Register") {

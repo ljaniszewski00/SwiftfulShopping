@@ -10,10 +10,12 @@ import SwiftUI
 @main
 struct SwiftlyShoppingApp: App {
     @UIApplicationDelegateAdaptor(AppDelegate.self) var appDelegate
+    @AppStorage("appThemeSetting") var appThemeSetting = Appearance.system
     
     var body: some Scene {
         WindowGroup {
             ContentView()
+                .modifier(DarkModeViewModifier())
         }
     }
 }

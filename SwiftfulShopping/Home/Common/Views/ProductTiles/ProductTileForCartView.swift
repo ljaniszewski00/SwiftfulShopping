@@ -73,10 +73,6 @@ struct ProductTileForCartView: View {
                 }
             }
         }
-        .background {
-            RoundedRectangle(cornerRadius: 15)
-                .foregroundColor(Color(uiColor: .secondarySystemBackground))
-        }
     }
 }
 

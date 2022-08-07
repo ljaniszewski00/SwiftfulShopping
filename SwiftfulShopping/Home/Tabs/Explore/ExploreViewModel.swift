@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import Combine
 
 class ExploreViewModel: ObservableObject {
     @Published var allProducts: [Product] = []
@@ -17,8 +18,15 @@ class ExploreViewModel: ObservableObject {
     
     @Published var shouldPresentProductDetailsView: Bool = false
     
+    @Published var showLoadingModal: Bool = false
+    @Published var showErrorModal: Bool = false
+    
     func fetchProducts() {
-        self.allProducts = ProductsRepository.shared.products
+        showLoadingModal = true
+        DispatchQueue.main.asyncAfter(deadline: .now() + 1) { [weak self] in
+            self?.allProducts = ProductsRepository.shared.products
+            self?.showLoadingModal = false
+        }
     }
     
     var recommendedProducts: [Product] {

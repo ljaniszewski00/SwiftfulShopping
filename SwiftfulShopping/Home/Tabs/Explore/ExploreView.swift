@@ -96,6 +96,11 @@ struct ExploreView: View {
                     ) { Image(systemName: "bell") }
                 }
             }
+            .modifier(LoadingIndicatorModal(isPresented:
+                                                                $exploreViewModel.showLoadingModal))
+            .modifier(ErrorModal(isPresented: $exploreViewModel.showErrorModal, content: {
+                                Text("")
+                            }))
         }
         .navigationViewStyle(.stack)
     }

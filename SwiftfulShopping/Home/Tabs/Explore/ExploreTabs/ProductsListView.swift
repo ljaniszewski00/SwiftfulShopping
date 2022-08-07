@@ -17,7 +17,7 @@ struct ProductsListView: View {
     @State private var productClicked: Bool = false
     
     var body: some View {
-        VStack {
+        LazyVStack {
             HStack(spacing: 20) {
                 if (exploreViewModel.selectedTab == .categories && exploreViewModel.displayedCategory != nil) {
                     HStack {
@@ -59,12 +59,10 @@ struct ProductsListView: View {
             }
             .padding(.horizontal)
             
-            ScrollView(.vertical, showsIndicators: false) {
-                if exploreViewModel.displayMethod == .list {
-                    buildProductsListFor(displayMethod: .list)
-                } else {
-                    buildProductsListFor(displayMethod: .grid)
-                }
+            if exploreViewModel.displayMethod == .list {
+                buildProductsListFor(displayMethod: .list)
+            } else {
+                buildProductsListFor(displayMethod: .grid)
             }
         }
     }
