@@ -58,7 +58,7 @@ struct SettingsView: View {
                             .font(.title)
                             .foregroundColor(.accentColor)
                             .frame(width: 30)
-                        Text("FaceID")
+                        Text("Biometric Lock")
                             .font(.system(size: 16, weight: .bold, design: .rounded))
                     }
                 })
