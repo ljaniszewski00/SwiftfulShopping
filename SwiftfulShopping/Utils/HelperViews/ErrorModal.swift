@@ -8,10 +8,10 @@
 import SwiftUI
 
 fileprivate enum Constants {
-    static let delay: DispatchTime = DispatchTime.now() + 5
+    static let delay: DispatchTime = DispatchTime.now() + 3
     static let titleFontSize: CGFloat = 20
     static let descriptionFontSize: CGFloat = 16
-    static let errorViewHeight: CGFloat = 65
+    static let errorViewHeight: CGFloat = 80
     static let xAxisTransition: CGFloat = 0
 }
 
@@ -31,30 +31,31 @@ struct ErrorModal: ViewModifier {
             .overlay(popupContent())
     }
 
-    func hideBarWithDelay() {
-        DispatchQueue.main.asyncAfter(deadline: Constants.delay) {
-            $isPresented.wrappedValue = false
-        }
-    }
-
     @ViewBuilder private func popupContent() -> some View {
         GeometryReader { geometry in
             if isPresented {
-                Color.accentColor
-                    .overlay(
-                        VStack {
-                            Text("\(customError.errorCode): \(customError.errorType.rawValue)")
-                                .font(Font.system(size: Constants.titleFontSize, weight: .bold, design: .rounded))
-                                .foregroundColor(.white)
-                            Text(customError.errorDescription)
-                                .font(Font.system(size: Constants.descriptionFontSize, weight: .regular, design: .rounded))
-                                .foregroundColor(.white)
-                        }
-                    )
-                    .animation(.easeInOut(duration: 0.5))
-                    .transition(.offset(x: Constants.xAxisTransition, y: geometry.aboveScreenEdge))
-                    .frame(width: geometry.size.width, height: Constants.errorViewHeight)
-                    .onAppear(perform: hideBarWithDelay)
+                ZStack {
+                    RoundedRectangle(cornerRadius: 5)
+                        .foregroundColor(.accentColor)
+                    VStack {
+                        Text("\(customError.errorCode): \(customError.errorType.rawValue)")
+                            .font(Font.system(size: Constants.titleFontSize, weight: .bold, design: .rounded))
+                            .foregroundColor(.white)
+                        Text(customError.errorDescription)
+                            .font(Font.system(size: Constants.descriptionFontSize, weight: .regular, design: .rounded))
+                            .fixedSize(horizontal: false, vertical: true)
+                            .foregroundColor(.white)
+                    }
+                    .padding()
+                }
+                .animation(.easeInOut(duration: 0.5))
+                .transition(.offset(x: Constants.xAxisTransition, y: geometry.aboveScreenEdge))
+                .frame(width: geometry.size.width, height: Constants.errorViewHeight)
+                .onAppear {
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 4) {
+                        $isPresented.wrappedValue = false
+                    }
+                }
             }
         }
     }

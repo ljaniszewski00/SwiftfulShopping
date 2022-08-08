@@ -19,6 +19,7 @@ struct HomeView: View {
     @StateObject private var favoritesViewModel = FavoritesViewModel()
     
     @StateObject var networkManager = NetworkManager.shared
+    @StateObject var errorManager = ErrorManager.shared
     
     @State var selectedTab: Tab = .explore
         
@@ -133,12 +134,6 @@ struct HomeView: View {
                         
                         Spacer()
                     }
-                    
-                    VStack {
-                        Text(networkManager.isConnected ? "Connected" : "Not connected")
-                        Text(homeViewModel.errorManager.showErrorModal ? "Show error" : "Do not show error")
-                    }
-                    
                     .padding(.horizontal, 7)
                     .padding(.bottom, 10)
                     .frame(height: 100, alignment: .center)
@@ -160,9 +155,9 @@ struct HomeView: View {
                 favoritesViewModel.fetchFavorites()
             }
             .ignoresSafeArea(edges: .bottom)
-            .onChange(of: networkManager.isConnected) { networkIsConnected in
-                if !networkIsConnected {
-                    homeViewModel.generateNetworkError()
+            .onChange(of: networkManager.isConnected) { newValue in
+                if !newValue {
+                    errorManager.generateCustomError(errorType: .networkError)
                 }
             }
         } else {
