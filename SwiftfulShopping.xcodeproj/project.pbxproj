@@ -37,6 +37,11 @@
 		0A2FE0A728A16C3E00E8D30E /* ErrorManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A2FE0A628A16C3E00E8D30E /* ErrorManager.swift */; };
 		0A2FE0AB28A16D5B00E8D30E /* CustomError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A2FE0AA28A16D5B00E8D30E /* CustomError.swift */; };
 		0A2FE0AD28A16D8200E8D30E /* ErrorType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A2FE0AC28A16D8200E8D30E /* ErrorType.swift */; };
+		0A2FE0B028A1B9E700E8D30E /* Lottie in Frameworks */ = {isa = PBXBuildFile; productRef = 0A2FE0AF28A1B9E700E8D30E /* Lottie */; };
+		0A2FE0B228A1BA3100E8D30E /* LottieView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A2FE0B128A1BA3100E8D30E /* LottieView.swift */; };
+		0A2FE0B728A1BB2000E8D30E /* SplashScreenView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A2FE0B628A1BB2000E8D30E /* SplashScreenView.swift */; };
+		0A2FE0B928A1BB2A00E8D30E /* SplashScreenViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A2FE0B828A1BB2A00E8D30E /* SplashScreenViewModel.swift */; };
+		0A2FE0BC28A1C02200E8D30E /* ContentViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A2FE0BB28A1C02200E8D30E /* ContentViewModel.swift */; };
 		0A3149DA28982843001920D2 /* BasicProductTile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A3149D928982843001920D2 /* BasicProductTile.swift */; };
 		0A3149DE28982B80001920D2 /* ProductTileForRateView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A3149DD28982B80001920D2 /* ProductTileForRateView.swift */; };
 		0A3149E028982BE6001920D2 /* RatingViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A3149DF28982BE6001920D2 /* RatingViewModel.swift */; };
@@ -311,6 +316,10 @@
 		0A2FE0A628A16C3E00E8D30E /* ErrorManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ErrorManager.swift; sourceTree = "<group>"; };
 		0A2FE0AA28A16D5B00E8D30E /* CustomError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomError.swift; sourceTree = "<group>"; };
 		0A2FE0AC28A16D8200E8D30E /* ErrorType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ErrorType.swift; sourceTree = "<group>"; };
+		0A2FE0B128A1BA3100E8D30E /* LottieView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LottieView.swift; sourceTree = "<group>"; };
+		0A2FE0B628A1BB2000E8D30E /* SplashScreenView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplashScreenView.swift; sourceTree = "<group>"; };
+		0A2FE0B828A1BB2A00E8D30E /* SplashScreenViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplashScreenViewModel.swift; sourceTree = "<group>"; };
+		0A2FE0BB28A1C02200E8D30E /* ContentViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentViewModel.swift; sourceTree = "<group>"; };
 		0A3149D928982843001920D2 /* BasicProductTile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BasicProductTile.swift; sourceTree = "<group>"; };
 		0A3149DD28982B80001920D2 /* ProductTileForRateView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductTileForRateView.swift; sourceTree = "<group>"; };
 		0A3149DF28982BE6001920D2 /* RatingViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RatingViewModel.swift; sourceTree = "<group>"; };
@@ -440,6 +449,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				0A420ACB289F109500AA4C52 /* Kingfisher in Frameworks */,
+				0A2FE0B028A1B9E700E8D30E /* Lottie in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -504,6 +514,25 @@
 				0A27E7C52879C22600D033D9 /* ReturnDetailsView.swift */,
 			);
 			path = Views;
+			sourceTree = "<group>";
+		};
+		0A2FE0B328A1BAF700E8D30E /* SplashScreen */ = {
+			isa = PBXGroup;
+			children = (
+				0A2FE0B628A1BB2000E8D30E /* SplashScreenView.swift */,
+				0A2FE0B828A1BB2A00E8D30E /* SplashScreenViewModel.swift */,
+			);
+			path = SplashScreen;
+			sourceTree = "<group>";
+		};
+		0A2FE0BA28A1C00F00E8D30E /* Start */ = {
+			isa = PBXGroup;
+			children = (
+				0ACD5896284A6E9200AA9DA0 /* SwiftfulShoppingApp.swift */,
+				0ACD5898284A6E9200AA9DA0 /* ContentView.swift */,
+				0A2FE0BB28A1C02200E8D30E /* ContentViewModel.swift */,
+			);
+			path = Start;
 			sourceTree = "<group>";
 		};
 		0A3149DB28982B46001920D2 /* Views */ = {
@@ -736,13 +765,13 @@
 		0ACD5895284A6E9200AA9DA0 /* SwiftfulShopping */ = {
 			isa = PBXGroup;
 			children = (
+				0A2FE0BA28A1C00F00E8D30E /* Start */,
+				0A2FE0B328A1BAF700E8D30E /* SplashScreen */,
 				0ACD58D9284A6F6600AA9DA0 /* ForgotPassword */,
 				0ACD58D6284A6F6600AA9DA0 /* Home */,
 				0ACD58DC284A6F6600AA9DA0 /* Login */,
 				0ACD58D3284A6F6600AA9DA0 /* Register */,
 				0ACD58C0284A6F6500AA9DA0 /* Utils */,
-				0ACD5896284A6E9200AA9DA0 /* SwiftfulShoppingApp.swift */,
-				0ACD5898284A6E9200AA9DA0 /* ContentView.swift */,
 				0ACD58D2284A6F6500AA9DA0 /* Info.plist */,
 				0ACD589A284A6E9300AA9DA0 /* Assets.xcassets */,
 				0ACD591E284A7E6F00AA9DA0 /* Resources */,
@@ -850,6 +879,7 @@
 				0A420ACC289F1A7A00AA4C52 /* ImagesCarouselView.swift */,
 				0A355565289FD3D7005993E5 /* LoadingIndicatorModal.swift */,
 				0A355567289FD3ED005993E5 /* ErrorModal.swift */,
+				0A2FE0B128A1BA3100E8D30E /* LottieView.swift */,
 			);
 			path = HelperViews;
 			sourceTree = "<group>";
@@ -1043,6 +1073,7 @@
 			name = SwiftfulShopping;
 			packageProductDependencies = (
 				0A420ACA289F109500AA4C52 /* Kingfisher */,
+				0A2FE0AF28A1B9E700E8D30E /* Lottie */,
 			);
 			productName = SwiftfulShopping;
 			productReference = 0ACD5893284A6E9200AA9DA0 /* SwiftfulShopping.app */;
@@ -1118,6 +1149,7 @@
 			mainGroup = 0ACD588A284A6E9200AA9DA0;
 			packageReferences = (
 				0A420AC9289F109500AA4C52 /* XCRemoteSwiftPackageReference "Kingfisher" */,
+				0A2FE0AE28A1B9E700E8D30E /* XCRemoteSwiftPackageReference "lottie-ios" */,
 			);
 			productRefGroup = 0ACD5894284A6E9200AA9DA0 /* Products */;
 			projectDirPath = "";
@@ -1262,6 +1294,7 @@
 				0A26FF25288597410001FA93 /* HelpViewModel.swift in Sources */,
 				0A56D8B1285F2C8A0009680C /* ReturnsView.swift in Sources */,
 				0A268B4928685C41006CF0E2 /* ReturnCreationView.swift in Sources */,
+				0A2FE0B928A1BB2A00E8D30E /* SplashScreenViewModel.swift in Sources */,
 				0A26FF292885A5EF0001FA93 /* ImagePicker.swift in Sources */,
 				0ACD58DF284A6F6600AA9DA0 /* CustomButtonStyle.swift in Sources */,
 				0A355566289FD3D7005993E5 /* LoadingIndicatorModal.swift in Sources */,
@@ -1276,6 +1309,7 @@
 				0ACD58EB284A6F6600AA9DA0 /* TabBarStateManager.swift in Sources */,
 				0AD89746289D0C4A00BFDAA1 /* ProfileViewModel.swift in Sources */,
 				0A35557C28A05859005993E5 /* DeleteAccountView.swift in Sources */,
+				0A2FE0B728A1BB2000E8D30E /* SplashScreenView.swift in Sources */,
 				0ACD5909284A6F6600AA9DA0 /* RegisterViewModel.swift in Sources */,
 				0ACD58F4284A6F6600AA9DA0 /* ConditionalViewModifiers.swift in Sources */,
 				0A56D8AF285F2C830009680C /* OrdersView.swift in Sources */,
@@ -1355,8 +1389,10 @@
 				0A56D8B3285F2C950009680C /* PersonalInfoView.swift in Sources */,
 				0A35557128A052F3005993E5 /* SettingsView.swift in Sources */,
 				0A27E7D4287B509300D033D9 /* CardCompany.swift in Sources */,
+				0A2FE0BC28A1C02200E8D30E /* ContentViewModel.swift in Sources */,
 				0ACD58F7284A6F6600AA9DA0 /* Hidden.swift in Sources */,
 				0ACD5918284A6F6600AA9DA0 /* LoginViewModel.swift in Sources */,
+				0A2FE0B228A1BA3100E8D30E /* LottieView.swift in Sources */,
 				0A5A7CF02895476500736B07 /* OrderCreationCompletionView.swift in Sources */,
 				0A26FF2728859AF60001FA93 /* RoundedCompletionButtonStyle.swift in Sources */,
 			);
@@ -1570,6 +1606,7 @@
 				DEVELOPMENT_TEAM = T3SR62DCTW;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_NSFaceIDUsageDescription = "Used to unlock app";
 				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "Location used to fill registration address data";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
@@ -1600,6 +1637,7 @@
 				DEVELOPMENT_TEAM = T3SR62DCTW;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_NSFaceIDUsageDescription = "Used to unlock app";
 				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "Location used to fill registration address data";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
@@ -1737,6 +1775,14 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
+		0A2FE0AE28A1B9E700E8D30E /* XCRemoteSwiftPackageReference "lottie-ios" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/airbnb/lottie-ios.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 3.0.0;
+			};
+		};
 		0A420AC9289F109500AA4C52 /* XCRemoteSwiftPackageReference "Kingfisher" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/onevcat/Kingfisher.git";
@@ -1748,6 +1794,11 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		0A2FE0AF28A1B9E700E8D30E /* Lottie */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 0A2FE0AE28A1B9E700E8D30E /* XCRemoteSwiftPackageReference "lottie-ios" */;
+			productName = Lottie;
+		};
 		0A420ACA289F109500AA4C52 /* Kingfisher */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = 0A420AC9289F109500AA4C52 /* XCRemoteSwiftPackageReference "Kingfisher" */;

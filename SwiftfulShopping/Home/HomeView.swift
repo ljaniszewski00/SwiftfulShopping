@@ -146,7 +146,7 @@ struct HomeView: View {
             }
             .modifier(LoadingIndicatorModal(isPresented:
                                                                 $homeViewModel.showLoadingModal))
-            .modifier(ErrorModal(isPresented: $homeViewModel.errorManager.showErrorModal, customError: homeViewModel.errorManager.customError ?? ErrorManager.unknownError))
+            .modifier(ErrorModal(isPresented: $errorManager.showErrorModal, customError: errorManager.customError ?? ErrorManager.unknownError))
             .onAppear {
                 authStateManager.isLogged = true
                 authStateManager.isGuest = false

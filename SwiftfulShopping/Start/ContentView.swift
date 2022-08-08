@@ -12,16 +12,38 @@ struct ContentView: View {
     
     @StateObject private var authStateManager = AuthStateManager()
     @StateObject private var locationManager = LocationManager()
+    @StateObject private var contentViewModel = ContentViewModel()
     
     @State private var presentLoginView: Bool = false
     @State private var presentRegisterView: Bool = false
     
     var body: some View {
         if authStateManager.isLogged || authStateManager.isGuest {
-            HomeView()
-                .environmentObject(authStateManager)
-                .environmentObject(accentColorManager)
-                .transition(.slide)
+            if contentViewModel.unlocked || !contentViewModel.biometricLock {
+                HomeView()
+                    .environmentObject(authStateManager)
+                    .environmentObject(accentColorManager)
+                    .transition(.slide)
+            } else {
+                VStack(spacing: 10) {
+                    Spacer()
+                    Text("Swiftful")
+                        .font(.system(size: 45, weight: .heavy, design: .rounded))
+                    Button(action: {
+                        contentViewModel.authenticate()
+                    }, label: {
+                        Image(systemName: "faceid")
+                            .resizable()
+                            .scaledToFit()
+                            .frame(width: ScreenBoundsSupplier.shared.getScreenWidth() * 0.3,
+                                   height: ScreenBoundsSupplier.shared.getScreenHeight() * 0.25)
+                    })
+                    Text("Shopping")
+                        .font(.system(size: 45, weight: .heavy, design: .rounded))
+                    Spacer()
+                }
+                .padding()
+            }
         } else {
             NavigationView {
                 VStack {
@@ -84,6 +106,11 @@ struct ContentView: View {
                         }
                     }
                     .position(x: ScreenBoundsSupplier.shared.getScreenWidth() * 0.5, y: ScreenBoundsSupplier.shared.getScreenHeight() * 0.3)
+                }
+                .onAppear {
+                    if contentViewModel.biometricLock && !contentViewModel.shouldShowOnboarding {
+                        contentViewModel.authenticate()
+                    }
                 }
                 .navigationTitle("")
                 .navigationBarHidden(true)
