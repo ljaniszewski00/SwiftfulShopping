@@ -13,7 +13,6 @@ struct ContentView: View {
     @StateObject private var authStateManager = AuthStateManager()
     @StateObject private var locationManager = LocationManager()
     
-    
     @State private var presentLoginView: Bool = false
     @State private var presentRegisterView: Bool = false
     
@@ -101,13 +100,13 @@ struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
         let accentColorManager = AccentColorManager()
         ForEach(ColorScheme.allCases, id: \.self) { colorScheme in
-                    ForEach(["iPhone 13 Pro Max", "iPhone 8"], id: \.self) { deviceName in
-                        ContentView()
-                            .environmentObject(accentColorManager)
-                            .preferredColorScheme(colorScheme)
-                            .previewDevice(PreviewDevice(rawValue: deviceName))
-                            .previewDisplayName("\(deviceName) portrait")
-                    }
-                }
+            ForEach(["iPhone 13 Pro Max", "iPhone 8"], id: \.self) { deviceName in
+                ContentView()
+                    .environmentObject(accentColorManager)
+                    .preferredColorScheme(colorScheme)
+                    .previewDevice(PreviewDevice(rawValue: deviceName))
+                    .previewDisplayName("\(deviceName) portrait")
+            }
+        }
     }
 }

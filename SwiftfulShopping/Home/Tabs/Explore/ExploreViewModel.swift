@@ -9,6 +9,8 @@ import Foundation
 import Combine
 
 class ExploreViewModel: ObservableObject {
+    @Published var errorManager = ErrorManager.shared
+    
     @Published var allProducts: [Product] = []
     @Published var selectedTab: ExploreViewTabs = .trending
     @Published var displayOnlyRecommended: Bool = false
@@ -19,7 +21,6 @@ class ExploreViewModel: ObservableObject {
     @Published var shouldPresentProductDetailsView: Bool = false
     
     @Published var showLoadingModal: Bool = false
-    @Published var showErrorModal: Bool = false
     
     func fetchProducts() {
         showLoadingModal = true

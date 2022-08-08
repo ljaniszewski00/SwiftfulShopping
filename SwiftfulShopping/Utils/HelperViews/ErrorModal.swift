@@ -9,20 +9,21 @@ import SwiftUI
 
 fileprivate enum Constants {
     static let delay: DispatchTime = DispatchTime.now() + 5
-    static let textFontSize: CGFloat = 20
+    static let titleFontSize: CGFloat = 20
+    static let descriptionFontSize: CGFloat = 16
     static let errorViewHeight: CGFloat = 65
     static let xAxisTransition: CGFloat = 0
 }
 
-struct ErrorModal<T: View>: ViewModifier {
+struct ErrorModal: ViewModifier {
 
-    let textError: String
+    var customError: CustomError
     @Binding var isPresented: Bool
 
     // TODO: add error code, and change text accordingly
-    init(isPresented: Binding<Bool>, @ViewBuilder content: () -> T) {
+    init(isPresented: Binding<Bool>, customError: CustomError) {
         _isPresented = isPresented
-        textError = "Unknown Error"
+        self.customError = customError
     }
 
     func body(content: Content) -> some View {
@@ -41,9 +42,14 @@ struct ErrorModal<T: View>: ViewModifier {
             if isPresented {
                 Color.accentColor
                     .overlay(
-                        Text(textError)
-                            .font(Font.system(size: Constants.textFontSize, weight: .bold, design: .rounded))
-                            .foregroundColor(.white)
+                        VStack {
+                            Text("\(customError.errorCode): \(customError.errorType.rawValue)")
+                                .font(Font.system(size: Constants.titleFontSize, weight: .bold, design: .rounded))
+                                .foregroundColor(.white)
+                            Text(customError.errorDescription)
+                                .font(Font.system(size: Constants.descriptionFontSize, weight: .regular, design: .rounded))
+                                .foregroundColor(.white)
+                        }
                     )
                     .animation(.easeInOut(duration: 0.5))
                     .transition(.offset(x: Constants.xAxisTransition, y: geometry.aboveScreenEdge))

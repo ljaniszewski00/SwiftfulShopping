@@ -10,12 +10,15 @@ import SwiftUI
 struct HomeView: View {
     @EnvironmentObject private var authStateManager: AuthStateManager
     @EnvironmentObject private var accentColorManager: AccentColorManager
+    
     @StateObject private var tabBarStateManager = TabBarStateManager()
     @StateObject private var homeViewModel = HomeViewModel()
     @StateObject private var exploreViewModel = ExploreViewModel()
     @StateObject private var profileViewModel = ProfileViewModel()
     @StateObject private var cartViewModel = CartViewModel()
     @StateObject private var favoritesViewModel = FavoritesViewModel()
+    
+    @StateObject var networkManager = NetworkManager.shared
     
     @State var selectedTab: Tab = .explore
         
@@ -130,6 +133,12 @@ struct HomeView: View {
                         
                         Spacer()
                     }
+                    
+                    VStack {
+                        Text(networkManager.isConnected ? "Connected" : "Not connected")
+                        Text(homeViewModel.errorManager.showErrorModal ? "Show error" : "Do not show error")
+                    }
+                    
                     .padding(.horizontal, 7)
                     .padding(.bottom, 10)
                     .frame(height: 100, alignment: .center)
@@ -140,6 +149,9 @@ struct HomeView: View {
                     .animation(.default)
                 }
             }
+            .modifier(LoadingIndicatorModal(isPresented:
+                                                                $homeViewModel.showLoadingModal))
+            .modifier(ErrorModal(isPresented: $homeViewModel.errorManager.showErrorModal, customError: homeViewModel.errorManager.customError ?? ErrorManager.unknownError))
             .onAppear {
                 authStateManager.isLogged = true
                 authStateManager.isGuest = false
@@ -148,6 +160,11 @@ struct HomeView: View {
                 favoritesViewModel.fetchFavorites()
             }
             .ignoresSafeArea(edges: .bottom)
+            .onChange(of: networkManager.isConnected) { networkIsConnected in
+                if !networkIsConnected {
+                    homeViewModel.generateNetworkError()
+                }
+            }
         } else {
             ContentView()
                 .transition(.slide)

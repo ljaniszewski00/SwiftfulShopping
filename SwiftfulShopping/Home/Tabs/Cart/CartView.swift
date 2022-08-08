@@ -17,6 +17,8 @@ struct CartView: View {
     
     @Environment(\.colorScheme) var colorScheme
     
+    @StateObject private var networkNanager = NetworkManager.shared
+    
     @State private var productClicked: Bool = false
     
     var body: some View {

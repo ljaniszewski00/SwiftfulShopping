@@ -14,6 +14,7 @@ struct SettingsView: View {
     @EnvironmentObject private var profileViewModel: ProfileViewModel
     
     @StateObject private var settingsViewModel: SettingsViewModel = SettingsViewModel()
+    @StateObject private var networkNanager = NetworkManager.shared
     
     @State private var selection: String?
     
@@ -48,7 +49,7 @@ struct SettingsView: View {
                             .foregroundColor(.accentColor)
                             .frame(width: 30)
                         Text("Notifications")
-                            .font(.system(size: 16, weight: .bold, design: .rounded))
+                            .font(.system(size: 16, weight: .regular, design: .rounded))
                     }
                 })
                 
@@ -59,7 +60,7 @@ struct SettingsView: View {
                             .foregroundColor(.accentColor)
                             .frame(width: 30)
                         Text("Biometric Lock")
-                            .font(.system(size: 16, weight: .bold, design: .rounded))
+                            .font(.system(size: 16, weight: .regular, design: .rounded))
                     }
                 })
                 
@@ -73,7 +74,7 @@ struct SettingsView: View {
                             .foregroundColor(.accentColor)
                             .frame(width: 30)
                         Text("Change Accent Color")
-                            .font(.system(size: 16, weight: .bold, design: .rounded))
+                            .font(.system(size: 16, weight: .regular, design: .rounded))
                     }
                 })
                 
@@ -87,7 +88,7 @@ struct SettingsView: View {
                             .foregroundColor(.accentColor)
                             .frame(width: 30)
                         Text("Manage Dark Mode")
-                            .font(.system(size: 16, weight: .bold, design: .rounded))
+                            .font(.system(size: 16, weight: .regular, design: .rounded))
                     }
                 })
             } header: {
@@ -107,9 +108,10 @@ struct SettingsView: View {
                             .foregroundColor(.accentColor)
                             .frame(width: 30)
                         Text("Change Email")
-                            .font(.system(size: 16, weight: .bold, design: .rounded))
+                            .font(.system(size: 16, weight: .regular, design: .rounded))
                     }
                 })
+                .disabled(!networkNanager.isConnected)
                 
                 NavigationLink(destination: ChangePasswordView()
                                                 .environmentObject(settingsViewModel),
@@ -121,9 +123,10 @@ struct SettingsView: View {
                             .foregroundColor(.accentColor)
                             .frame(width: 30)
                         Text("Change Password")
-                            .font(.system(size: 16, weight: .bold, design: .rounded))
+                            .font(.system(size: 16, weight: .regular, design: .rounded))
                     }
                 })
+                .disabled(!networkNanager.isConnected)
                 
                 NavigationLink(destination: DeleteAccountView()
                                                 .environmentObject(settingsViewModel),
@@ -135,9 +138,10 @@ struct SettingsView: View {
                             .foregroundColor(.accentColor)
                             .frame(width: 30)
                         Text("Delete Account")
-                            .font(.system(size: 16, weight: .bold, design: .rounded))
+                            .font(.system(size: 16, weight: .regular, design: .rounded))
                     }
                 })
+                .disabled(!networkNanager.isConnected)
             } header: {
                 Text("Account actions")
             } footer: {
@@ -154,7 +158,7 @@ struct SettingsView: View {
                             .foregroundColor(.accentColor)
                             .frame(width: 30)
                         Text("Show Onboarding")
-                            .font(.system(size: 16, weight: .bold, design: .rounded))
+                            .font(.system(size: 16, weight: .regular, design: .rounded))
                     }
                 })
                 
@@ -167,7 +171,7 @@ struct SettingsView: View {
                             .foregroundColor(.accentColor)
                             .frame(width: 30)
                         Text("Terms and Conditions")
-                            .font(.system(size: 16, weight: .bold, design: .rounded))
+                            .font(.system(size: 16, weight: .regular, design: .rounded))
                     }
                 })
                 
@@ -177,7 +181,7 @@ struct SettingsView: View {
                         .foregroundColor(.accentColor)
                         .frame(width: 30)
                     Text("Follow me on GitHub:")
-                        .font(.system(size: 16, weight: .bold, design: .rounded))
+                        .font(.system(size: 16, weight: .regular, design: .rounded))
                         .fixedSize(horizontal: true, vertical: false)
                     Link("ljaniszewski00", destination: URL(string: "https://github.com/ljaniszewski00")!)
                         .foregroundColor(.accentColor)

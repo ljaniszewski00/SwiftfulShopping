@@ -16,6 +16,7 @@ struct ProductDetailsView: View {
     @EnvironmentObject private var cartViewModel: CartViewModel
     
     @StateObject private var productDetailsViewModel: ProductDetailsViewModel = ProductDetailsViewModel()
+    @StateObject private var networkNanager = NetworkManager.shared
     
     @Environment(\.dismiss) var dismiss
     

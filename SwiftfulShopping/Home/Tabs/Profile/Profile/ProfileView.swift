@@ -13,6 +13,8 @@ struct ProfileView: View {
     @EnvironmentObject private var tabBarStateManager: TabBarStateManager
     @EnvironmentObject private var profileViewModel: ProfileViewModel
     
+    @StateObject private var networkNanager = NetworkManager.shared
+    
     @State private var selection: String?
         
     @State private var shouldPresentAddActionSheet = false
@@ -119,6 +121,10 @@ struct ProfileView: View {
                                     .buttonStyle(CustomButton(textColor: .white, rightChevronNavigationImage: true))
                                     .frame(width: UIScreen.main.bounds.width * 0.9)
                                     .contentShape(Rectangle())
+                                    .if(navigationViewName == .help) {
+                                        $0
+                                            .disabled(!networkNanager.isConnected)
+                                    }
                                     Spacer()
                                 }
                             }

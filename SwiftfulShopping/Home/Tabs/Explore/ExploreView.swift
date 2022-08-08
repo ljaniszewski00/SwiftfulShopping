@@ -98,9 +98,7 @@ struct ExploreView: View {
             }
             .modifier(LoadingIndicatorModal(isPresented:
                                                                 $exploreViewModel.showLoadingModal))
-            .modifier(ErrorModal(isPresented: $exploreViewModel.showErrorModal, content: {
-                                Text("")
-                            }))
+            .modifier(ErrorModal(isPresented: $exploreViewModel.errorManager.showErrorModal, customError: exploreViewModel.errorManager.customError ?? ErrorManager.unknownError))
         }
         .navigationViewStyle(.stack)
     }
