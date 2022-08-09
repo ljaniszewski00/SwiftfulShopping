@@ -19,61 +19,62 @@ struct ChangeEmailView: View {
     @State private var isNewEmailTextFieldFocused: Bool = false
     
     var body: some View {
-        VStack(spacing: 20) {
-            VStack(spacing: 0) {
-                CustomTextField(textFieldProperty: "Old Email Address",
-                                textFieldImageName: "envelope.fill",
-                                textFieldKeyboardType: .emailAddress,
-                                text: $changeEmailViewModel.oldEmail,
-                                isFocusedParentView: $isOldEmailTextFieldFocused)
-                .disabled(changeEmailViewModel.showNewEmailTextField)
-                
-                CustomTextField(isSecureField: true,
-                                textFieldProperty: "Password",
-                                textFieldImageName: "key.fill",
-                                text: $changeEmailViewModel.password,
-                                isFocusedParentView: $isPasswordTextFieldFocused)
-                .disabled(changeEmailViewModel.showNewEmailTextField)
-                .padding(.bottom)
-                
-                Button {
-                    withAnimation {
-                        changeEmailViewModel.verifyCredentials()
-                    }
-                } label: {
-                    Text("Verify Credentials")
-                        .font(.system(size: 20, weight: .bold, design: .rounded))
-                }
-                .buttonStyle(CustomButton())
-                .padding(.bottom, 30)
-                .disabled(changeEmailViewModel.showNewEmailTextField)
-            }
-            
-            if changeEmailViewModel.showNewEmailTextField {
+        ScrollView(.vertical, showsIndicators: false) {
+            VStack(spacing: 20) {
                 VStack(spacing: 0) {
-                    CustomTextField(textFieldProperty: "New Email Address",
+                    CustomTextField(textFieldProperty: "Old Email Address",
                                     textFieldImageName: "envelope.fill",
                                     textFieldKeyboardType: .emailAddress,
-                                    text: $changeEmailViewModel.newEmail,
-                                    isFocusedParentView: $isNewEmailTextFieldFocused)
+                                    text: $changeEmailViewModel.oldEmail,
+                                    isFocusedParentView: $isOldEmailTextFieldFocused)
+                    .disabled(changeEmailViewModel.showNewEmailTextField)
+                    
+                    CustomTextField(isSecureField: true,
+                                    textFieldProperty: "Password",
+                                    textFieldImageName: "key.fill",
+                                    text: $changeEmailViewModel.password,
+                                    isFocusedParentView: $isPasswordTextFieldFocused)
+                    .disabled(changeEmailViewModel.showNewEmailTextField)
                     .padding(.bottom)
                     
                     Button {
                         withAnimation {
-                            changeEmailViewModel.changeEmail()
+                            changeEmailViewModel.verifyCredentials()
                         }
                     } label: {
-                        Text("Change Email Address")
+                        Text("Verify Credentials")
                             .font(.system(size: 20, weight: .bold, design: .rounded))
                     }
                     .buttonStyle(CustomButton())
+                    .padding(.bottom, 30)
+                    .disabled(changeEmailViewModel.showNewEmailTextField)
                 }
+                
+                if changeEmailViewModel.showNewEmailTextField {
+                    VStack(spacing: 0) {
+                        CustomTextField(textFieldProperty: "New Email Address",
+                                        textFieldImageName: "envelope.fill",
+                                        textFieldKeyboardType: .emailAddress,
+                                        text: $changeEmailViewModel.newEmail,
+                                        isFocusedParentView: $isNewEmailTextFieldFocused)
+                        .padding(.bottom)
+                        
+                        Button {
+                            withAnimation {
+                                changeEmailViewModel.changeEmail()
+                            }
+                        } label: {
+                            Text("Change Email Address")
+                                .font(.system(size: 20, weight: .bold, design: .rounded))
+                        }
+                        .buttonStyle(CustomButton())
+                    }
+                }
+                
+                Spacer()
             }
-            
-            Spacer()
+            .padding()
         }
-        .padding()
-        .scrollOnOverflow()
         .modifier(LoadingIndicatorModal(isPresented:
                                                             $changeEmailViewModel.showLoadingModal))
         .modifier(ErrorModal(isPresented: $errorManager.showErrorModal, customError: errorManager.customError ?? ErrorManager.unknownError))

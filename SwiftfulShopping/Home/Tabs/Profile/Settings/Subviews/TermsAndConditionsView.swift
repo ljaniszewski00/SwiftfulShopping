@@ -9,12 +9,21 @@ import SwiftUI
 
 struct TermsAndConditionsView: View {
     var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+        VStack {
+            
+        }
     }
 }
 
 struct TermsAndConditionsView_Previews: PreviewProvider {
     static var previews: some View {
-        TermsAndConditionsView()
+        ForEach(ColorScheme.allCases, id: \.self) { colorScheme in
+            ForEach(["iPhone 13 Pro Max", "iPhone 8"], id: \.self) { deviceName in
+                TermsAndConditionsView()
+                    .preferredColorScheme(colorScheme)
+                    .previewDevice(PreviewDevice(rawValue: deviceName))
+                    .previewDisplayName("\(deviceName) portrait")
+            }
+        }
     }
 }

@@ -18,36 +18,36 @@ struct DeleteAccountView: View {
     @State private var isPasswordTextFieldFocused: Bool = false
     
     var body: some View {
-        VStack(spacing: 20) {
-            VStack(spacing: 0) {
-                CustomTextField(textFieldProperty: "Old Email Address",
-                                textFieldImageName: "envelope.fill",
-                                textFieldKeyboardType: .emailAddress,
-                                text: $deleteAccountViewModel.email,
-                                isFocusedParentView: $isEmailTextFieldFocused)
-                
-                CustomTextField(isSecureField: true,
-                                textFieldProperty: "Password",
-                                textFieldImageName: "key.fill",
-                                text: $deleteAccountViewModel.password,
-                                isFocusedParentView: $isPasswordTextFieldFocused)
-                
-                Spacer()
-                
-                Button {
-                    withAnimation {
-                        deleteAccountViewModel.shouldPresentActionSheet = true
+        ScrollView(.vertical, showsIndicators: false) {
+            VStack(spacing: 20) {
+                VStack(spacing: 0) {
+                    CustomTextField(textFieldProperty: "Old Email Address",
+                                    textFieldImageName: "envelope.fill",
+                                    textFieldKeyboardType: .emailAddress,
+                                    text: $deleteAccountViewModel.email,
+                                    isFocusedParentView: $isEmailTextFieldFocused)
+                    
+                    CustomTextField(isSecureField: true,
+                                    textFieldProperty: "Password",
+                                    textFieldImageName: "key.fill",
+                                    text: $deleteAccountViewModel.password,
+                                    isFocusedParentView: $isPasswordTextFieldFocused)
+                    .padding(.bottom)
+                    
+                    Button {
+                        withAnimation {
+                            deleteAccountViewModel.shouldPresentActionSheet = true
+                        }
+                    } label: {
+                        Text("Delete Account")
+                            .font(.system(size: 20, weight: .bold, design: .rounded))
                     }
-                } label: {
-                    Text("Delete Account")
-                        .font(.system(size: 20, weight: .bold, design: .rounded))
+                    .buttonStyle(CustomButton())
+                    .padding(.bottom, 30)
                 }
-                .buttonStyle(CustomButton())
-                .padding(.bottom, 30)
             }
+            .padding()
         }
-        .padding()
-        .scrollOnOverflow()
         .modifier(LoadingIndicatorModal(isPresented:
                                                             $deleteAccountViewModel.showLoadingModal))
         .modifier(ErrorModal(isPresented: $errorManager.showErrorModal, customError: errorManager.customError ?? ErrorManager.unknownError))
