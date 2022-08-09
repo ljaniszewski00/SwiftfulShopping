@@ -99,7 +99,11 @@ struct SettingsView: View {
             
             Section {
                 NavigationLink(destination: ChangeEmailView()
-                                                .environmentObject(settingsViewModel),
+                                                .environmentObject(authStateManager)
+                                                .environmentObject(settingsViewModel)
+                                                .onAppear {
+                                                    tabBarStateManager.hideTabBar()
+                                                },
                                isActive: $settingsViewModel.shouldPresentChangeEmailView,
                                label: {
                     HStack(spacing: 20) {
@@ -114,7 +118,11 @@ struct SettingsView: View {
                 .disabled(!networkNanager.isConnected)
                 
                 NavigationLink(destination: ChangePasswordView()
-                                                .environmentObject(settingsViewModel),
+                                                .environmentObject(authStateManager)
+                                                .environmentObject(settingsViewModel)
+                                                .onAppear {
+                                                    tabBarStateManager.hideTabBar()
+                                                },
                                isActive: $settingsViewModel.shouldPresentChangePasswordView,
                                label: {
                     HStack(spacing: 20) {
@@ -129,7 +137,14 @@ struct SettingsView: View {
                 .disabled(!networkNanager.isConnected)
                 
                 NavigationLink(destination: DeleteAccountView()
-                                                .environmentObject(settingsViewModel),
+                                                .environmentObject(authStateManager)
+                                                .environmentObject(settingsViewModel)
+                                                .onAppear {
+                                                    withAnimation() {
+                                                        tabBarStateManager.hideTabBar()
+                                                    }
+                                                    
+                                                },
                                isActive: $settingsViewModel.shouldPresentDeleteAccountView,
                                label: {
                     HStack(spacing: 20) {
@@ -195,6 +210,9 @@ struct SettingsView: View {
         }
         .navigationTitle("Settings")
         .navigationBarTitleDisplayMode(.inline)
+        .onAppear {
+            tabBarStateManager.showTabBar()
+        }
     }
 }
 

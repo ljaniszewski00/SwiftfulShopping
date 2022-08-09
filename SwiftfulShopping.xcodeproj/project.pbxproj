@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0A2165AE28A2C1E0006842F0 /* ChangeEmailViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A2165AD28A2C1E0006842F0 /* ChangeEmailViewModel.swift */; };
+		0A2165B128A2C200006842F0 /* ChangePasswordViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A2165B028A2C200006842F0 /* ChangePasswordViewModel.swift */; };
+		0A2165B428A2C217006842F0 /* DeleteAccountViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A2165B328A2C217006842F0 /* DeleteAccountViewModel.swift */; };
 		0A237401288D62730076A5AB /* ProductsRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A237400288D62730076A5AB /* ProductsRepository.swift */; };
 		0A237403288D68720076A5AB /* UserDefaultsKeys.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A237402288D68720076A5AB /* UserDefaultsKeys.swift */; };
 		0A268B43286712C8006CF0E2 /* Date.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A268B42286712C8006CF0E2 /* Date.swift */; };
@@ -286,6 +289,9 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		0A2165AD28A2C1E0006842F0 /* ChangeEmailViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChangeEmailViewModel.swift; sourceTree = "<group>"; };
+		0A2165B028A2C200006842F0 /* ChangePasswordViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChangePasswordViewModel.swift; sourceTree = "<group>"; };
+		0A2165B328A2C217006842F0 /* DeleteAccountViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeleteAccountViewModel.swift; sourceTree = "<group>"; };
 		0A237400288D62730076A5AB /* ProductsRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductsRepository.swift; sourceTree = "<group>"; };
 		0A237402288D68720076A5AB /* UserDefaultsKeys.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDefaultsKeys.swift; sourceTree = "<group>"; };
 		0A268B42286712C8006CF0E2 /* Date.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Date.swift; sourceTree = "<group>"; };
@@ -470,6 +476,33 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		0A2165AC28A2C1D4006842F0 /* ChangeEmail */ = {
+			isa = PBXGroup;
+			children = (
+				0A35557728A05842005993E5 /* ChangeEmailView.swift */,
+				0A2165AD28A2C1E0006842F0 /* ChangeEmailViewModel.swift */,
+			);
+			path = ChangeEmail;
+			sourceTree = "<group>";
+		};
+		0A2165AF28A2C1EA006842F0 /* ChangePassword */ = {
+			isa = PBXGroup;
+			children = (
+				0A35557928A0584A005993E5 /* ChangePasswordView.swift */,
+				0A2165B028A2C200006842F0 /* ChangePasswordViewModel.swift */,
+			);
+			path = ChangePassword;
+			sourceTree = "<group>";
+		};
+		0A2165B228A2C209006842F0 /* DeleteAccount */ = {
+			isa = PBXGroup;
+			children = (
+				0A35557B28A05859005993E5 /* DeleteAccountView.swift */,
+				0A2165B328A2C217006842F0 /* DeleteAccountViewModel.swift */,
+			);
+			path = DeleteAccount;
+			sourceTree = "<group>";
+		};
 		0A2373FF288D62630076A5AB /* Objects */ = {
 			isa = PBXGroup;
 			children = (
@@ -577,9 +610,9 @@
 		0A35557628A0582B005993E5 /* Subviews */ = {
 			isa = PBXGroup;
 			children = (
-				0A35557728A05842005993E5 /* ChangeEmailView.swift */,
-				0A35557928A0584A005993E5 /* ChangePasswordView.swift */,
-				0A35557B28A05859005993E5 /* DeleteAccountView.swift */,
+				0A2165AC28A2C1D4006842F0 /* ChangeEmail */,
+				0A2165AF28A2C1EA006842F0 /* ChangePassword */,
+				0A2165B228A2C209006842F0 /* DeleteAccount */,
 				0A35557D28A05A43005993E5 /* AccentColorChangeView.swift */,
 				0A35557F28A05DD9005993E5 /* ColorSchemeChangeView.swift */,
 				0A35558128A063AF005993E5 /* TermsAndConditionsView.swift */,
@@ -1362,6 +1395,7 @@
 				0ACD58E8284A6F6600AA9DA0 /* AuthStateManager.swift in Sources */,
 				0A420AC8289F101300AA4C52 /* ProductDetailsViewModel.swift in Sources */,
 				0A27E7CA287AEC7400D033D9 /* AddNewAddressView.swift in Sources */,
+				0A2165B128A2C200006842F0 /* ChangePasswordViewModel.swift in Sources */,
 				0A5A7CF828968DCB00736B07 /* OrderCreationChangeAddressView.swift in Sources */,
 				0A2FE0AB28A16D5B00E8D30E /* CustomError.swift in Sources */,
 				0A56D89B285F26180009680C /* FavoritesView.swift in Sources */,
@@ -1378,8 +1412,10 @@
 				0A2FE0A528A15B7C00E8D30E /* NetworkManager.swift in Sources */,
 				0A268B4728671924006CF0E2 /* OrderDetailsView.swift in Sources */,
 				0A268B4528671442006CF0E2 /* Array.swift in Sources */,
+				0A2165AE28A2C1E0006842F0 /* ChangeEmailViewModel.swift in Sources */,
 				0ACD5915284A6F6600AA9DA0 /* ForgotPasswordView.swift in Sources */,
 				0A27E7C62879C22600D033D9 /* ReturnDetailsView.swift in Sources */,
+				0A2165B428A2C217006842F0 /* DeleteAccountViewModel.swift in Sources */,
 				0A27E7D2287B502A00D033D9 /* DetectCardCompany.swift in Sources */,
 				0A35557E28A05A43005993E5 /* AccentColorChangeView.swift in Sources */,
 				0A5A7CF42896849D00736B07 /* CalculateEstimatedDeliveryDate.swift in Sources */,
