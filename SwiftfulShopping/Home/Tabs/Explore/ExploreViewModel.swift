@@ -22,6 +22,10 @@ class ExploreViewModel: ObservableObject {
     
     @Published var showLoadingModal: Bool = false
     
+    @Published var searchProductsText: String = ""
+    
+    @Published var presentSortingAndFilteringSheet: Bool = false
+    
     func fetchProducts() {
         showLoadingModal = true
         DispatchQueue.main.asyncAfter(deadline: .now() + 1) { [weak self] in
@@ -48,14 +52,20 @@ class ExploreViewModel: ObservableObject {
     }
     
     var productsToBeDisplayed: [Product] {
-        if selectedTab == .weRecommend {
+        switch selectedTab {
+        case .trending:
+            return allProducts
+        case .categories:
+            return productsByCategory
+        case .weRecommend:
             return recommendedProducts
-        } else {
-            if selectedTab == .categories {
-                return productsByCategory
-            } else {
-                return allProducts
-            }
+        }
+    }
+        
+    var productsToBeDisplayedBySearch: [Product] {
+        allProducts.filter {
+            $0.name.lowercased().contains(searchProductsText.lowercased()) ||
+            $0.company.lowercased().contains(searchProductsText.lowercased())
         }
     }
     

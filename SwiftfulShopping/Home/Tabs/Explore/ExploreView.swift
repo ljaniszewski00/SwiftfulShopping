@@ -58,6 +58,7 @@ struct ExploreView: View {
                                 .environmentObject(exploreViewModel)
                                 .environmentObject(profileViewModel)
                                 .environmentObject(favoritesViewModel)
+                                .environmentObject(cartViewModel)
                         }
                     } else {
                         ProductsListView()
@@ -66,6 +67,7 @@ struct ExploreView: View {
                             .environmentObject(exploreViewModel)
                             .environmentObject(profileViewModel)
                             .environmentObject(favoritesViewModel)
+                            .environmentObject(cartViewModel)
                     }
                     
                     NavigationLink(destination: ProductDetailsView(product: exploreViewModel.choosenProduct ?? Product.demoProducts[0])

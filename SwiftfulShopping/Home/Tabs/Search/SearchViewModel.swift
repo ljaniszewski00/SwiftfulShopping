@@ -6,3 +6,13 @@
 //
 
 import Foundation
+
+class SearchViewModel: ObservableObject {
+    @Published var choosenProduct: Product?
+    @Published var shouldPresentProductDetailsView: Bool = false
+    
+    func changeFocusedProductFor(product: Product) {
+        choosenProduct = product
+        shouldPresentProductDetailsView = true
+    }
+}

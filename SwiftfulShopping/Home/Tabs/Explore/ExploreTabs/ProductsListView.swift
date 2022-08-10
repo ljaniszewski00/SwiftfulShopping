@@ -13,12 +13,23 @@ struct ProductsListView: View {
     @EnvironmentObject private var exploreViewModel: ExploreViewModel
     @EnvironmentObject private var profileViewModel: ProfileViewModel
     @EnvironmentObject private var favoritesViewModel: FavoritesViewModel
+    @EnvironmentObject private var cartViewModel: CartViewModel
     
-    @State private var productClicked: Bool = false
+    var listProductsAfterSearch: Bool = false
     
     var body: some View {
-        LazyVStack {
+        VStack(spacing: 10) {
             HStack(spacing: 20) {
+                Button {
+                    withAnimation {
+                        exploreViewModel.presentSortingAndFilteringSheet = true
+                    }
+                } label: {
+                    Image(systemName: "slider.horizontal.3")
+                        .resizable()
+                        .frame(width: 25, height: 20)
+                }
+                
                 if (exploreViewModel.selectedTab == .categories && exploreViewModel.displayedCategory != nil) {
                     HStack {
                         Image(systemName: "multiply.circle.fill")
@@ -65,6 +76,11 @@ struct ProductsListView: View {
                 buildProductsListFor(displayMethod: .grid)
             }
         }
+        .padding()
+        .sheet(isPresented: $exploreViewModel.presentSortingAndFilteringSheet) {
+            SortingAndFilteringSheetView()
+                .environmentObject(exploreViewModel)
+        }
     }
     
     @ViewBuilder
@@ -78,9 +94,11 @@ struct ProductsListView: View {
                 if displayMethod == .list {
                     ListProductCardTileView(product: product)
                         .environmentObject(favoritesViewModel)
+                        .environmentObject(cartViewModel)
                 } else {
                     GridProductCardTileView(product: product)
                         .environmentObject(favoritesViewModel)
+                        .environmentObject(cartViewModel)
                 }
             }
             .buttonStyle(ScaledButtonStyle())
@@ -94,6 +112,8 @@ struct ProductsListView_Previews: PreviewProvider {
         let tabBarStateManager = TabBarStateManager()
         let exploreViewModel = ExploreViewModel()
         let profileViewModel = ProfileViewModel()
+        let favoritesViewModel = FavoritesViewModel()
+        let cartViewModel = CartViewModel()
         ForEach(ColorScheme.allCases, id: \.self) { colorScheme in
             ForEach(["iPhone 13 Pro Max", "iPhone 8"], id: \.self) { deviceName in
                 ProductsListView()
@@ -101,6 +121,8 @@ struct ProductsListView_Previews: PreviewProvider {
                     .environmentObject(tabBarStateManager)
                     .environmentObject(exploreViewModel)
                     .environmentObject(profileViewModel)
+                    .environmentObject(favoritesViewModel)
+                    .environmentObject(cartViewModel)
                     .preferredColorScheme(colorScheme)
                     .previewDevice(PreviewDevice(rawValue: deviceName))
                     .previewDisplayName("\(deviceName) portrait")

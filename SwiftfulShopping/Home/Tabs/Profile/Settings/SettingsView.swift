@@ -177,9 +177,9 @@ struct SettingsView: View {
                     }
                 })
                 
-                NavigationLink(destination: TermsAndConditionsView(),
-                               isActive: $settingsViewModel.shouldPresentTermsAndConditionsView,
-                               label: {
+                Button(action: {
+                    settingsViewModel.openAuthorGitHubPrivacyPolicyURL()
+                }, label: {
                     HStack(spacing: 20) {
                         Image(systemName: "newspaper.fill")
                             .font(.title)
@@ -187,6 +187,7 @@ struct SettingsView: View {
                             .frame(width: 30)
                         Text("Terms and Conditions")
                             .font(.system(size: 16, weight: .regular, design: .rounded))
+                            .foregroundColor(colorScheme == .light ? .black : .white)
                     }
                 })
                 
@@ -198,7 +199,7 @@ struct SettingsView: View {
                     Text("Follow me on GitHub:")
                         .font(.system(size: 16, weight: .regular, design: .rounded))
                         .fixedSize(horizontal: true, vertical: false)
-                    Link("ljaniszewski00", destination: URL(string: "https://github.com/ljaniszewski00")!)
+                    Link("ljaniszewski00", destination: settingsViewModel.authorGitHubURL)
                         .foregroundColor(.accentColor)
                         .font(.system(size: 16, weight: .bold, design: .rounded))
                 }

@@ -79,6 +79,10 @@ struct HomeView: View {
                         SearchView()
                             .environmentObject(authStateManager)
                             .environmentObject(tabBarStateManager)
+                            .environmentObject(exploreViewModel)
+                            .environmentObject(profileViewModel)
+                            .environmentObject(favoritesViewModel)
+                            .environmentObject(cartViewModel)
                     case .profile:
                         ProfileView()
                             .environmentObject(authStateManager)
