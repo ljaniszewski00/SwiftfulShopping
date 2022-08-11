@@ -11,6 +11,35 @@ class SearchViewModel: ObservableObject {
     @Published var choosenProduct: Product?
     @Published var shouldPresentProductDetailsView: Bool = false
     
+    @Published var trendingSearchesFullList: [String] = []
+    var trendingSearches: [String] {
+        Array(trendingSearchesFullList.prefix(4))
+    }
+    @Published var shouldPresentAllTrendingSearches: Bool = false
+    
+    @Published var recentSearchesFullList: [String] = []
+    var recentSearches: [String] {
+        Array(recentSearchesFullList.prefix(4))
+    }
+    @Published var shouldPresentAllRecentSearches: Bool = false
+    
+    func onAppear() {
+        fetchTrendingSearches()
+        fetchRecentSearches()
+    }
+    
+    func fetchTrendingSearches() {
+        self.trendingSearchesFullList = ["iPhone", "iPad", "MacBook"]
+    }
+    
+    func fetchRecentSearches() {
+        self.recentSearchesFullList = ["iPhone", "iPad", "MacBook", "Apple Watch"]
+    }
+    
+    func removeRecentSearches() {
+        recentSearchesFullList.removeAll()
+    }
+    
     func changeFocusedProductFor(product: Product) {
         choosenProduct = product
         shouldPresentProductDetailsView = true

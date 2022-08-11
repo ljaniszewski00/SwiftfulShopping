@@ -118,10 +118,7 @@ struct GridProductCardTileView: View {
             }
             .padding()
         }
-        .background {
-            RoundedRectangle(cornerRadius: 15)
-                .foregroundColor(Color(uiColor: .secondarySystemBackground))
-        }
+        .background(.ultraThinMaterial, in: RoundedRectangle(cornerRadius: 15, style: .continuous))
     }
 }
 

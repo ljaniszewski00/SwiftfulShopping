@@ -13,15 +13,15 @@ struct ProductDetailsRatingsSection: View {
     var product: Product
     
     var body: some View {
-        Text("")
         VStack(alignment: .leading, spacing: 40) {
             VStack(alignment: .leading) {
                 Text("Product Rating")
                     .font(.system(size: 20, weight: .bold, design: .rounded))
+                    .padding(.horizontal)
 
                 HStack(spacing: 30) {
                     VStack(alignment: .center, spacing: 10) {
-                        Text("\(product.rating.averageRating, specifier: "%.2f")")
+                        Text("\(product.rating.averageRating, specifier: "%.2f") / 5")
                             .font(.system(size: 26, weight: .bold))
                         HStack {
                             ForEach(1...Int(round(product.rating.averageRating)), id: \.self) { _ in
@@ -58,10 +58,10 @@ struct ProductDetailsRatingsSection: View {
                         VStack(spacing: 18) {
                             ForEach(Array(1...5).reversed(), id: \.self) { number in
                                 ZStack(alignment: .leading) {
-                                    Rectangle()
+                                    RoundedRectangle(cornerRadius: 10)
                                         .foregroundColor(.gray)
                                         .frame(width: 130, height: 7)
-                                    Rectangle()
+                                    RoundedRectangle(cornerRadius: 10)
                                         .foregroundColor(.accentColor)
                                         .frame(width: (130 / CGFloat(product.rating.ratingsNumber)),
                                                height: 7)
@@ -78,8 +78,9 @@ struct ProductDetailsRatingsSection: View {
                         }
                     }
                 }
+                .padding()
+                .background(.ultraThinMaterial, in: RoundedRectangle(cornerRadius: 15, style: .continuous))
             }
-            .padding(.horizontal)
 
             VStack(alignment: .leading) {
                 HStack {
@@ -99,43 +100,47 @@ struct ProductDetailsRatingsSection: View {
                         if productRate.review != nil {
                             HStack {
                                 HStack(spacing: 0) {
-                                    Image("blank_profile_image")
-                                        .resizable()
-                                        .aspectRatio(contentMode: .fill)
-                                        .clipShape(RoundedRectangle(cornerRadius: 50))
-                                        .frame(width: 100, height: 100)
+                                    
 
-                                    VStack(alignment: .leading, spacing: 10) {
-                                        Text(productRate.authorFirstName)
-                                            .font(.system(size: 18, weight: .bold, design: .rounded))
-                                            .fixedSize(horizontal: false, vertical: true)
+                                    VStack(alignment: .leading, spacing: 20) {
+                                        HStack(spacing: 20) {
+                                            Image("blank_profile_image")
+                                                .resizable()
+                                                .aspectRatio(contentMode: .fill)
+                                                .clipShape(Circle())
+                                                .frame(width: 60, height: 60)
+                                            
+                                            VStack(alignment: .leading, spacing: 10) {
+                                                Text(productRate.authorFirstName)
+                                                    .font(.system(size: 18, weight: .bold, design: .rounded))
+                                                    .fixedSize(horizontal: false, vertical: true)
+                                                
+                                                HStack {
+                                                    HStack(spacing: 5) {
+                                                        Image(systemName: "star.fill")
+                                                            .resizable()
+                                                            .frame(width: 20, height: 20)
+                                                            .foregroundColor(.accentColor)
+                                                        Text("\(productRate.rating)")
+                                                            .font(.system(size: 20, weight: .bold, design: .rounded))
+                                                    }
 
-                                        HStack {
-                                            HStack(spacing: 5) {
-                                                Image(systemName: "star.fill")
-                                                    .resizable()
-                                                    .frame(width: 20, height: 20)
-                                                    .foregroundColor(.accentColor)
-                                                Text("\(productRate.rating)")
-                                                    .font(.system(size: 20, weight: .bold, design: .rounded))
+                                                    Text("•")
+                                                        .padding(.horizontal, 5)
+
+                                                    Text(productRate.date.dateString())
+                                                        .font(.system(size: 16, weight: .semibold, design: .rounded))
+                                                        .fixedSize(horizontal: true, vertical: false)
+                                                }
                                             }
-
-                                            Text("•")
-                                                .padding(.horizontal, 5)
-
-                                            Text(productRate.date.dateString())
-                                                .font(.system(size: 16, weight: .semibold, design: .rounded))
-                                                .fixedSize(horizontal: true, vertical: false)
                                         }
-                                        .padding(.bottom, 10)
 
                                         Text(productRate.review!)
                                             .font(.system(size: 16, weight: .regular, design: .rounded))
                                             .fixedSize(horizontal: false, vertical: true)
                                     }
                                     .padding()
-                                    .background(.ultraThinMaterial, in: RoundedRectangle(cornerRadius: 30, style: .continuous))
-                                    .offset(x: -10)
+                                    .background(.ultraThinMaterial, in: RoundedRectangle(cornerRadius: 15, style: .continuous))
                                 }
                             }
                         }
@@ -148,6 +153,13 @@ struct ProductDetailsRatingsSection: View {
 
 struct ProductDetailsRatingsSection_Previews: PreviewProvider {
     static var previews: some View {
-        ProductDetailsRatingsSection(product: Product.demoProducts[0])
+        ForEach(ColorScheme.allCases, id: \.self) { colorScheme in
+            ForEach(["iPhone 13 Pro Max", "iPhone 8"], id: \.self) { deviceName in
+                ProductDetailsRatingsSection(product: Product.demoProducts[0])
+                    .preferredColorScheme(colorScheme)
+                    .previewDevice(PreviewDevice(rawValue: deviceName))
+                    .previewDisplayName("\(deviceName) portrait")
+            }
+        }
     }
 }

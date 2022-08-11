@@ -33,3 +33,19 @@ extension Array: RawRepresentable where Element: Codable {
         return result
     }
 }
+
+extension Array {
+    func split() -> (leftHalf: [Element], rightHalf: [Element]) {
+        let arrayElementsCount = self.count
+        let halfIndex = (arrayElementsCount / 2)
+        if arrayElementsCount % 2 == 0 {
+            let leftSplit = self[0 ..< halfIndex]
+            let rightSplit = self[halfIndex ..< arrayElementsCount]
+            return (leftHalf: Array(leftSplit), rightHalf: Array(rightSplit))
+        } else {
+            let leftSplit = self[0 ... halfIndex]
+            let rightSplit = self[(halfIndex + 1) ..< arrayElementsCount]
+            return (leftHalf: Array(leftSplit), rightHalf: Array(rightSplit))
+        }
+    }
+}
