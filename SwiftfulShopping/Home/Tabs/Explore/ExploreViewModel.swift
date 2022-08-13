@@ -5,8 +5,7 @@
 //  Created by Łukasz Janiszewski on 09/06/2022.
 //
 
-import Foundation
-import Combine
+import SwiftUI
 
 class ExploreViewModel: ObservableObject {
     @Published var errorManager = ErrorManager.shared
@@ -16,7 +15,6 @@ class ExploreViewModel: ObservableObject {
     @Published var displayOnlyRecommended: Bool = false
     @Published var displayedCategory: Category?
     @Published var choosenProduct: Product?
-    @Published var displayMethod: ProductDisplayMethod = .list
     
     @Published var shouldPresentProductDetailsView: Bool = false
     
@@ -72,9 +70,5 @@ class ExploreViewModel: ObservableObject {
     func changeFocusedProductFor(product: Product) {
         choosenProduct = product
         shouldPresentProductDetailsView = true
-    }
-    
-    func changeDisplayMethodFor(displayMethod: ProductDisplayMethod) {
-        self.displayMethod = displayMethod
     }
 }

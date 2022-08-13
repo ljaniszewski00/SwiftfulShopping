@@ -16,6 +16,8 @@ struct SearchedProductsListView: View {
     @EnvironmentObject private var cartViewModel: CartViewModel
     @EnvironmentObject private var searchViewModel: SearchViewModel
     
+    @AppStorage("productsListDisplayMethod") var displayMethod: ProductDisplayMethod = .list
+    
     var body: some View {
         VStack(spacing: 10) {
             HStack(spacing: 20) {
@@ -34,7 +36,7 @@ struct SearchedProductsListView: View {
                 
                 Button {
                     withAnimation {
-                        exploreViewModel.changeDisplayMethodFor(displayMethod: .grid)
+                        displayMethod = .grid
                     }
                 } label: {
                     Image(systemName: "rectangle.grid.3x2")
@@ -45,7 +47,7 @@ struct SearchedProductsListView: View {
                 
                 Button {
                     withAnimation {
-                        exploreViewModel.changeDisplayMethodFor(displayMethod: .list)
+                        displayMethod = .list
                     }
                 } label: {
                     Image(systemName: "list.bullet")
@@ -56,11 +58,7 @@ struct SearchedProductsListView: View {
             }
             .padding(.horizontal)
             
-            if exploreViewModel.displayMethod == .list {
-                buildProductsListFor(displayMethod: .list)
-            } else {
-                buildProductsListFor(displayMethod: .grid)
-            }
+            buildProductsListFor()
         }
         .padding()
         .sheet(isPresented: $exploreViewModel.presentSortingAndFilteringSheet) {
@@ -70,7 +68,7 @@ struct SearchedProductsListView: View {
     }
     
     @ViewBuilder
-    func buildProductsListFor(displayMethod: ProductDisplayMethod) -> some View {
+    func buildProductsListFor() -> some View {
         ForEach(exploreViewModel.productsToBeDisplayedBySearch, id: \.self) { product in
             Button {
                 withAnimation(.interactiveSpring(response: 0.6, dampingFraction: 0.7, blendDuration: 0.7)) {

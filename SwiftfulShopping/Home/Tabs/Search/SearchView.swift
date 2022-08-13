@@ -19,125 +19,18 @@ struct SearchView: View {
     
     @Environment(\.colorScheme) var colorScheme: ColorScheme
     
+    private let gridColumns = [GridItem(.flexible(), spacing: 0),
+                               GridItem(.flexible(), spacing: 0),
+                               GridItem(.flexible(), spacing: 0)]
+    
     var body: some View {
         NavigationView {
             ScrollView(.vertical) {
                 ZStack(alignment: .center) {
                     if exploreViewModel.searchProductsText.isEmpty {
                         VStack(alignment: .leading, spacing: 20) {
-                            VStack(alignment: .leading) {
-                                HStack {
-                                    Text("Trending Searches")
-                                        .font(.system(size: 20, weight: .semibold, design: .rounded))
-                                    Text("New")
-                                        .font(.system(size: 14, weight: .semibold, design: .rounded))
-                                        .padding(7)
-                                        .padding(.horizontal, 7)
-                                        .background {
-                                            RoundedRectangle(cornerRadius: 15)
-                                                .foregroundColor(.accentColor)
-                                        }
-                                    
-                                    Spacer()
-                                }
-                                
-                                VStack(alignment: .leading, spacing: 10) {
-                                    HStack {
-                                        ForEach(searchViewModel.trendingSearches.split().leftHalf, id: \.self) { trendingSearch in
-                                            Button {
-                                                withAnimation {
-                                                    exploreViewModel.searchProductsText = trendingSearch
-                                                }
-                                            } label: {
-                                                Text(trendingSearch)
-                                                    .padding(12)
-                                                    .background(.ultraThinMaterial, in: RoundedRectangle(cornerRadius: 15, style: .continuous))
-                                                    .foregroundColor(colorScheme == .light ? Color(uiColor: .darkGray) : .white)
-                                            }
-                                        }
-                                    }
-                                    
-                                    HStack {
-                                        HStack {
-                                            ForEach(searchViewModel.trendingSearches.split().rightHalf, id: \.self) { trendingSearch in
-                                                Button {
-                                                    withAnimation {
-                                                        exploreViewModel.searchProductsText = trendingSearch
-                                                    }
-                                                } label: {
-                                                    Text(trendingSearch)
-                                                        .padding(12)
-                                                        .background(.ultraThinMaterial, in: RoundedRectangle(cornerRadius: 15, style: .continuous))
-                                                        .foregroundColor(colorScheme == .light ? Color(uiColor: .darkGray) : .white)
-                                                }
-                                            }
-                                        }
-                                        
-                                        Text("See all")
-                                            .padding(12)
-                                    }
-                                }
-                                .font(.system(size: 18, weight: .semibold, design: .rounded))
-                            }
-                            .padding()
-                            
-                            VStack(alignment: .leading) {
-                                HStack {
-                                    Text("Recent Searches")
-                                        .font(.system(size: 20, weight: .semibold, design: .rounded))
-                                    Spacer()
-                                    
-                                    Button {
-                                        withAnimation {
-                                            searchViewModel.removeRecentSearches()
-                                        }
-                                    } label: {
-                                        Text("Clear all")
-                                            .font(.system(size: 18, weight: .semibold, design: .rounded))
-                                            .foregroundColor(.gray)
-                                            .padding(12)
-                                    }
-                                }
-                                
-                                VStack(alignment: .leading, spacing: 10) {
-                                    HStack {
-                                        ForEach(searchViewModel.recentSearches.split().leftHalf, id: \.self) { recentSearch in
-                                            Button {
-                                                withAnimation {
-                                                    exploreViewModel.searchProductsText = recentSearch
-                                                }
-                                            } label: {
-                                                Text(recentSearch)
-                                                    .padding(12)
-                                                    .background(.ultraThinMaterial, in: RoundedRectangle(cornerRadius: 15, style: .continuous))
-                                                    .foregroundColor(colorScheme == .light ? Color(uiColor: .darkGray) : .white)
-                                            }
-                                        }
-                                    }
-                                    
-                                    HStack {
-                                        HStack {
-                                            ForEach(searchViewModel.recentSearches.split().rightHalf, id: \.self) { recentSearch in
-                                                Button {
-                                                    withAnimation {
-                                                        exploreViewModel.searchProductsText = recentSearch
-                                                    }
-                                                } label: {
-                                                    Text(recentSearch)
-                                                        .padding(12)
-                                                        .background(.ultraThinMaterial, in: RoundedRectangle(cornerRadius: 15, style: .continuous))
-                                                        .foregroundColor(colorScheme == .light ? Color(uiColor: .darkGray) : .white)
-                                                }
-                                            }
-                                        }
-                                        
-                                        Text("See all")
-                                            .padding(12)
-                                    }
-                                }
-                                .font(.system(size: 18, weight: .semibold, design: .rounded))
-                            }
-                            .padding()
+                            buildTrendingSearchesList()
+                            buildRecentSearchesList()
                         }
                     }
                     
@@ -186,6 +79,9 @@ struct SearchView: View {
                     }
                     .searchable(text: $exploreViewModel.searchProductsText,
                                 prompt: "Search For Products")
+                    .onSubmit(of: .search) {
+                        searchViewModel.addToRecentSearches(searchText: exploreViewModel.searchProductsText)
+                    }
                 }
             }
             .navigationTitle("Search")
@@ -198,6 +94,107 @@ struct SearchView: View {
         .onAppear {
             searchViewModel.onAppear()
         }
+    }
+    
+    @ViewBuilder
+    func buildTrendingSearchesList() -> some View {
+        LazyVStack(alignment: .leading) {
+            HStack {
+                Text("Trending Searches")
+                    .font(.system(size: 20, weight: .semibold, design: .rounded))
+                Text("New")
+                    .font(.system(size: 14, weight: .semibold, design: .rounded))
+                    .padding(7)
+                    .padding(.horizontal, 7)
+                    .background {
+                        RoundedRectangle(cornerRadius: 15)
+                            .foregroundColor(.accentColor)
+                    }
+                
+                Spacer()
+            }
+            
+            LazyVGrid(columns: gridColumns, alignment: .leading, spacing: 10) {
+                ForEach(searchViewModel.shouldPresentAllTrendingSearches ? searchViewModel.trendingSearchesFullList : searchViewModel.trendingSearches, id: \.self) { recentSearch in
+                    Button {
+                        withAnimation {
+                            exploreViewModel.searchProductsText = recentSearch
+                        }
+                    } label: {
+                        Text(recentSearch)
+                            .padding(12)
+                            .background(.ultraThinMaterial, in: RoundedRectangle(cornerRadius: 15, style: .continuous))
+                            .foregroundColor(colorScheme == .light ? Color(uiColor: .darkGray) : .white)
+                    }
+                }
+            }
+            .font(.system(size: 18, weight: .semibold, design: .rounded))
+            
+            Button {
+                withAnimation {
+                    searchViewModel.shouldPresentAllTrendingSearches.toggle()
+                }
+            } label: {
+                Text(searchViewModel.shouldPresentAllTrendingSearches ? "Hide all" : "See all")
+                    .padding()
+                    .font(.system(size: 18, weight: .semibold, design: .rounded))
+                    .foregroundColor(.accentColor)
+            }
+        }
+        .padding()
+    }
+    
+    @ViewBuilder
+    func buildRecentSearchesList() -> some View {
+        VStack(alignment: .leading) {
+            HStack {
+                Text("Recent Searches")
+                    .font(.system(size: 20, weight: .semibold, design: .rounded))
+                Spacer()
+                
+                Button {
+                    withAnimation {
+                        searchViewModel.removeRecentSearches()
+                        searchViewModel.shouldPresentAllRecentSearches = false
+                    }
+                } label: {
+                    Text("Clear all")
+                        .font(.system(size: 18, weight: .semibold, design: .rounded))
+                        .foregroundColor(.gray)
+                        .padding(12)
+                }
+            }
+            
+            LazyVGrid(columns: gridColumns, alignment: .leading, spacing: 10) {
+                ForEach(searchViewModel.shouldPresentAllRecentSearches ? searchViewModel.recentSearchesFullList : searchViewModel.recentSearches, id: \.self) { recentSearch in
+                    Button {
+                        withAnimation {
+                            exploreViewModel.searchProductsText = recentSearch
+                        }
+                    } label: {
+                        Text(recentSearch)
+                            .padding(12)
+                            .background(.ultraThinMaterial, in: RoundedRectangle(cornerRadius: 15, style: .continuous))
+                            .foregroundColor(colorScheme == .light ? Color(uiColor: .darkGray) : .white)
+                    }
+                }
+            }
+            .font(.system(size: 18, weight: .semibold, design: .rounded))
+            
+            if !searchViewModel.recentSearchesFullList.isEmpty {
+                Button {
+                    withAnimation {
+                        searchViewModel.shouldPresentAllRecentSearches.toggle()
+                    }
+                } label: {
+                    Text(searchViewModel.shouldPresentAllRecentSearches ? "Hide all" : "See all")
+                        .padding()
+                        .font(.system(size: 18, weight: .semibold, design: .rounded))
+                        .foregroundColor(.accentColor)
+                }
+            }
+        }
+        .padding()
     }
 }
 

@@ -48,27 +48,21 @@ struct GridProductCardTileView: View {
                     
                     Spacer()
                     
-                    VStack(alignment: .leading, spacing: 10) {
-                        HStack(spacing: 15) {
-                            HStack {
-                                ForEach(1...Int(round(product.rating.averageRating)), id: \.self) { _ in
-                                    Image(systemName: "star.fill")
-                                        .resizable()
-                                        .frame(width: 20, height: 20)
-                                        .foregroundColor(.accentColor)
-                                }
-                                
-                                ForEach(Int(round(product.rating.averageRating))..<5, id: \.self) { _ in
-                                    Image(systemName: "star")
-                                        .resizable()
-                                        .frame(width: 20, height: 20)
-                                        .foregroundColor(.accentColor)
-                                }
+                    VStack(alignment: .trailing, spacing: 10) {
+                        HStack {
+                            ForEach(1...Int(round(product.rating.averageRating)), id: \.self) { _ in
+                                Image(systemName: "star.fill")
+                                    .resizable()
+                                    .frame(width: 20, height: 20)
+                                    .foregroundColor(.accentColor)
                             }
                             
-                            Text("\(product.rating.averageRating, specifier: "%.2f")")
-                                .font(.system(size: 18, weight: .bold, design: .rounded))
-                                .fixedSize(horizontal: true, vertical: false)
+                            ForEach(Int(round(product.rating.averageRating))..<5, id: \.self) { _ in
+                                Image(systemName: "star")
+                                    .resizable()
+                                    .frame(width: 20, height: 20)
+                                    .foregroundColor(.accentColor)
+                            }
                         }
                         
                         Text("\(product.rating.ratingsNumber) ratings")

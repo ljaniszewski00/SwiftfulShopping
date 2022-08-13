@@ -29,11 +29,11 @@ class SearchViewModel: ObservableObject {
     }
     
     func fetchTrendingSearches() {
-        self.trendingSearchesFullList = ["iPhone", "iPad", "MacBook"]
+        self.trendingSearchesFullList = ["iPhone", "iPad", "MacBook", "Apple Watch", "Home Pod", "Apple VR", "Apple Car"]
     }
     
     func fetchRecentSearches() {
-        self.recentSearchesFullList = ["iPhone", "iPad", "MacBook", "Apple Watch"]
+        self.recentSearchesFullList = ["iPhone", "iPad", "MacBook", "Apple Watch", "Home Pod", "Apple VR", "Apple Car"]
     }
     
     func removeRecentSearches() {
@@ -43,5 +43,11 @@ class SearchViewModel: ObservableObject {
     func changeFocusedProductFor(product: Product) {
         choosenProduct = product
         shouldPresentProductDetailsView = true
+    }
+    
+    func addToRecentSearches(searchText: String) {
+        if !recentSearchesFullList.contains(searchText) {
+            recentSearchesFullList.append(searchText)
+        }
     }
 }

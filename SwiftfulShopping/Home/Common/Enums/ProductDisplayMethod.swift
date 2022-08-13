@@ -7,7 +7,7 @@
 
 import Foundation
 
-enum ProductDisplayMethod {
+enum ProductDisplayMethod: String, Codable, CaseIterable {
     case grid
     case list
 }

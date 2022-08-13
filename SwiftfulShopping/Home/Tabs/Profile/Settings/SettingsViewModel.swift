@@ -20,8 +20,11 @@ class SettingsViewModel: ObservableObject {
     @Published var shouldPresentChangePasswordView: Bool = false
     @Published var shouldPresentDeleteAccountView: Bool = false
     
-    var authorGitHubURL: URL = URL(string: "https://github.com/ljaniszewski00")!
-    var authorGitHubPrivacyPolicyURL: URL = URL(string: "https://github.com/ljaniszewski00/SwiftfulShopping/blob/main/LICENSE")!
+    let appVersion = Bundle.main.infoDictionary!["CFBundleVersion"] as? String
+    let appBuild = Bundle.main.infoDictionary!["CFBundleShortVersionString"] as? String
+    
+    let authorGitHubURL: URL = URL(string: "https://github.com/ljaniszewski00")!
+    let authorGitHubPrivacyPolicyURL: URL = URL(string: "https://github.com/ljaniszewski00/SwiftfulShopping/blob/main/LICENSE")!
     
     func openAuthorGitHubPrivacyPolicyURL() {
         UIApplication.shared.open(authorGitHubPrivacyPolicyURL)

@@ -15,6 +15,8 @@ struct ProductsListView: View {
     @EnvironmentObject private var favoritesViewModel: FavoritesViewModel
     @EnvironmentObject private var cartViewModel: CartViewModel
     
+    @AppStorage("productsListDisplayMethod") var displayMethod: ProductDisplayMethod = .list
+    
     var listProductsAfterSearch: Bool = false
     
     var body: some View {
@@ -50,7 +52,7 @@ struct ProductsListView: View {
                 
                 Button {
                     withAnimation {
-                        exploreViewModel.changeDisplayMethodFor(displayMethod: .grid)
+                        displayMethod = .grid
                     }
                 } label: {
                     Image(systemName: "rectangle.grid.3x2")
@@ -60,7 +62,7 @@ struct ProductsListView: View {
                 
                 Button {
                     withAnimation {
-                        exploreViewModel.changeDisplayMethodFor(displayMethod: .list)
+                        displayMethod = .list
                     }
                 } label: {
                     Image(systemName: "list.bullet")
@@ -70,11 +72,7 @@ struct ProductsListView: View {
             }
             .padding(.horizontal)
             
-            if exploreViewModel.displayMethod == .list {
-                buildProductsListFor(displayMethod: .list)
-            } else {
-                buildProductsListFor(displayMethod: .grid)
-            }
+            buildProductsListFor()
         }
         .padding()
         .sheet(isPresented: $exploreViewModel.presentSortingAndFilteringSheet) {
@@ -84,7 +82,7 @@ struct ProductsListView: View {
     }
     
     @ViewBuilder
-    func buildProductsListFor(displayMethod: ProductDisplayMethod) -> some View {
+    func buildProductsListFor() -> some View {
         ForEach(exploreViewModel.productsToBeDisplayed, id: \.self) { product in
             Button {
                 withAnimation(.interactiveSpring(response: 0.6, dampingFraction: 0.7, blendDuration: 0.7)) {

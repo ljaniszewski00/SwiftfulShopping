@@ -205,9 +205,19 @@ struct SettingsView: View {
                 }
             } header: {
                 Text("Additional")
-            } footer: {
-                Text("")
             }
+            
+            VStack(alignment: .center, spacing: 10) {
+                Text("APP VERSION: \(settingsViewModel.appVersion ?? "Unknown")")
+                    .font(.system(size: 14, weight: .regular, design: .rounded))
+                    .foregroundColor(.gray)
+                Text("APP BUILD: \(settingsViewModel.appBuild ?? "Unknown")")
+                    .font(.system(size: 14, weight: .regular, design: .rounded))
+                    .foregroundColor(.gray)
+            }
+            .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .center)
+            .listRowInsets(EdgeInsets())
+            .background(Color(UIColor.systemGroupedBackground))
         }
         .navigationTitle("Settings")
         .navigationBarTitleDisplayMode(.inline)

@@ -46,27 +46,20 @@ struct ListProductCardTileView: View {
                     .padding(.bottom, 5)
                 
                 VStack(alignment: .leading, spacing: 10) {
-                    HStack(alignment: .center) {
-                        HStack {
-                            ForEach(1...Int(round(product.rating.averageRating)), id: \.self) { _ in
-                                Image(systemName: "star.fill")
-                                    .resizable()
-                                    .frame(width: 20, height: 20)
-                                    .foregroundColor(.accentColor)
-                            }
-                            
-                            ForEach(Int(round(product.rating.averageRating))..<5, id: \.self) { _ in
-                                Image(systemName: "star")
-                                    .resizable()
-                                    .frame(width: 20, height: 20)
-                                    .foregroundColor(.accentColor)
-                            }
+                    HStack {
+                        ForEach(1...Int(round(product.rating.averageRating)), id: \.self) { _ in
+                            Image(systemName: "star.fill")
+                                .resizable()
+                                .frame(width: 20, height: 20)
+                                .foregroundColor(.accentColor)
                         }
                         
-                        Spacer()
-                        
-                        Text("\(product.rating.averageRating, specifier: "%.2f")")
-                            .font(.system(size: 18, weight: .bold, design: .rounded))
+                        ForEach(Int(round(product.rating.averageRating))..<5, id: \.self) { _ in
+                            Image(systemName: "star")
+                                .resizable()
+                                .frame(width: 20, height: 20)
+                                .foregroundColor(.accentColor)
+                        }
                     }
                     
                     Text("\(product.rating.ratingsNumber) ratings")
