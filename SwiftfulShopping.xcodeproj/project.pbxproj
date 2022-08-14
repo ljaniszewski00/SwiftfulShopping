@@ -45,6 +45,9 @@
 		0A2FE0B728A1BB2000E8D30E /* SplashScreenView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A2FE0B628A1BB2000E8D30E /* SplashScreenView.swift */; };
 		0A2FE0B928A1BB2A00E8D30E /* SplashScreenViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A2FE0B828A1BB2A00E8D30E /* SplashScreenViewModel.swift */; };
 		0A2FE0BC28A1C02200E8D30E /* ContentViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A2FE0BB28A1C02200E8D30E /* ContentViewModel.swift */; };
+		0A30460128A9608300F218B3 /* AccentColors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A30460028A9608300F218B3 /* AccentColors.swift */; };
+		0A30460328A96B9A00F218B3 /* UIApplication.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A30460228A96B9A00F218B3 /* UIApplication.swift */; };
+		0A30460528A96CE500F218B3 /* UIColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A30460428A96CE500F218B3 /* UIColor.swift */; };
 		0A3149DA28982843001920D2 /* BasicProductTile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A3149D928982843001920D2 /* BasicProductTile.swift */; };
 		0A3149DE28982B80001920D2 /* ProductTileForRateView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A3149DD28982B80001920D2 /* ProductTileForRateView.swift */; };
 		0A3149E028982BE6001920D2 /* RatingViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A3149DF28982BE6001920D2 /* RatingViewModel.swift */; };
@@ -327,6 +330,9 @@
 		0A2FE0B628A1BB2000E8D30E /* SplashScreenView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplashScreenView.swift; sourceTree = "<group>"; };
 		0A2FE0B828A1BB2A00E8D30E /* SplashScreenViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplashScreenViewModel.swift; sourceTree = "<group>"; };
 		0A2FE0BB28A1C02200E8D30E /* ContentViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentViewModel.swift; sourceTree = "<group>"; };
+		0A30460028A9608300F218B3 /* AccentColors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccentColors.swift; sourceTree = "<group>"; };
+		0A30460228A96B9A00F218B3 /* UIApplication.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIApplication.swift; sourceTree = "<group>"; };
+		0A30460428A96CE500F218B3 /* UIColor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIColor.swift; sourceTree = "<group>"; };
 		0A3149D928982843001920D2 /* BasicProductTile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BasicProductTile.swift; sourceTree = "<group>"; };
 		0A3149DD28982B80001920D2 /* ProductTileForRateView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductTileForRateView.swift; sourceTree = "<group>"; };
 		0A3149DF28982BE6001920D2 /* RatingViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RatingViewModel.swift; sourceTree = "<group>"; };
@@ -773,6 +779,7 @@
 				0A237402288D68720076A5AB /* UserDefaultsKeys.swift */,
 				0A5A7CF52896878800736B07 /* OrderStatus.swift */,
 				0A2FE0AC28A16D8200E8D30E /* ErrorType.swift */,
+				0A30460028A9608300F218B3 /* AccentColors.swift */,
 			);
 			path = Enums;
 			sourceTree = "<group>";
@@ -891,6 +898,8 @@
 				0A56D8A6285F28E60009680C /* ScrollOnContentOverflow.swift */,
 				0A268B42286712C8006CF0E2 /* Date.swift */,
 				0A268B4428671442006CF0E2 /* Array.swift */,
+				0A30460228A96B9A00F218B3 /* UIApplication.swift */,
+				0A30460428A96CE500F218B3 /* UIColor.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -1353,6 +1362,7 @@
 				0AB8D9882864B36F003DC2E6 /* Cart.swift in Sources */,
 				0A2FE0A728A16C3E00E8D30E /* ErrorManager.swift in Sources */,
 				0A3DE45328899F65008B050B /* Category.swift in Sources */,
+				0A30460328A96B9A00F218B3 /* UIApplication.swift in Sources */,
 				0A3149E528982DFC001920D2 /* SingleProductRatingView.swift in Sources */,
 				0A268B5328687FA9006CF0E2 /* ReturnCreationViewModel.swift in Sources */,
 				0ACD591B284A6F6600AA9DA0 /* LoginView.swift in Sources */,
@@ -1381,6 +1391,7 @@
 				0A3E59C5289C611000067AD1 /* ProductRating.swift in Sources */,
 				0A2FE0AD28A16D8200E8D30E /* ErrorType.swift in Sources */,
 				0A3441BE28A42184005FFFD5 /* SearchViewModel.swift in Sources */,
+				0A30460528A96CE500F218B3 /* UIColor.swift in Sources */,
 				0A56D89D285F279B0009680C /* FavoritesViewModel.swift in Sources */,
 				0A420ACD289F1A7A00AA4C52 /* ImagesCarouselView.swift in Sources */,
 				0A5A7CFA2896A47C00736B07 /* CompletionReturnCreationView.swift in Sources */,
@@ -1413,6 +1424,7 @@
 				0ACD58E5284A6F6600AA9DA0 /* LandscapeModifier.swift in Sources */,
 				0ACD5912284A6F6600AA9DA0 /* ForgotPasswordViewModel.swift in Sources */,
 				0A56D89F285F27A60009680C /* SearchView.swift in Sources */,
+				0A30460128A9608300F218B3 /* AccentColors.swift in Sources */,
 				0A2FE0A528A15B7C00E8D30E /* NetworkManager.swift in Sources */,
 				0A268B4728671924006CF0E2 /* OrderDetailsView.swift in Sources */,
 				0A268B4528671442006CF0E2 /* Array.swift in Sources */,

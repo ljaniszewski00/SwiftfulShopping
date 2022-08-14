@@ -146,14 +146,13 @@ struct HomeView: View {
                     .navigationBarTitleDisplayMode(.inline)
                     .transition(.move(edge: .bottom))
                     .animation(.default)
+                    .zIndex(1)
                 }
             }
             .modifier(LoadingIndicatorModal(isPresented:
                                                                 $homeViewModel.showLoadingModal))
             .modifier(ErrorModal(isPresented: $errorManager.showErrorModal, customError: errorManager.customError ?? ErrorManager.unknownError))
             .onAppear {
-                authStateManager.isLogged = true
-                authStateManager.isGuest = false
                 exploreViewModel.fetchProducts()
                 cartViewModel.restorePreviousCart()
                 favoritesViewModel.fetchFavorites()

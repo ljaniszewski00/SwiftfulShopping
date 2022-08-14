@@ -18,7 +18,7 @@ struct ContentView: View {
     @State private var presentRegisterView: Bool = false
     
     var body: some View {
-        if authStateManager.isLogged || authStateManager.isGuest {
+        if authStateManager.isLogged && !authStateManager.isGuest {
             if contentViewModel.unlocked || !contentViewModel.biometricLock {
                 HomeView()
                     .environmentObject(authStateManager)
@@ -111,6 +111,8 @@ struct ContentView: View {
                     if contentViewModel.biometricLock && !contentViewModel.shouldShowOnboarding {
                         contentViewModel.authenticate()
                     }
+                    authStateManager.isLogged = true
+                    authStateManager.isGuest = false
                 }
                 .navigationTitle("")
                 .navigationBarHidden(true)

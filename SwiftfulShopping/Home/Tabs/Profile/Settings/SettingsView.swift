@@ -65,7 +65,11 @@ struct SettingsView: View {
                 })
                 
                 NavigationLink(destination: AccentColorChangeView()
-                                                .environmentObject(accentColorManager),
+                                                .environmentObject(accentColorManager)
+                                                .environmentObject(settingsViewModel)
+                                                .onAppear {
+                                                    tabBarStateManager.hideTabBar()
+                                                },
                                isActive: $settingsViewModel.shouldPresentAccentColorChangeView,
                                label: {
                     HStack(spacing: 20) {
@@ -79,7 +83,10 @@ struct SettingsView: View {
                 })
                 
                 NavigationLink(destination: ColorSchemeChangeView()
-                                                .environmentObject(settingsViewModel),
+                                                .environmentObject(settingsViewModel)
+                                                .onAppear {
+                                                    tabBarStateManager.hideTabBar()
+                                                },
                                isActive: $settingsViewModel.shouldPresentColorSchemeChangeView,
                                label: {
                     HStack(spacing: 20) {
@@ -208,11 +215,8 @@ struct SettingsView: View {
             }
             
             VStack(alignment: .center, spacing: 10) {
-                Text("APP VERSION: \(settingsViewModel.appVersion ?? "Unknown")")
-                    .font(.system(size: 14, weight: .regular, design: .rounded))
-                    .foregroundColor(.gray)
-                Text("APP BUILD: \(settingsViewModel.appBuild ?? "Unknown")")
-                    .font(.system(size: 14, weight: .regular, design: .rounded))
+                Text(UIApplication.versionBuild())
+                    .font(.system(size: 16, weight: .regular, design: .rounded))
                     .foregroundColor(.gray)
             }
             .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .center)
