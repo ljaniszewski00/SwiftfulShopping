@@ -33,11 +33,12 @@ class SearchViewModel: ObservableObject {
     }
     
     func fetchRecentSearches() {
-        self.recentSearchesFullList = ["iPhone", "iPad", "MacBook", "Apple Watch", "Home Pod", "Apple VR", "Apple Car"]
+        self.recentSearchesFullList = UserDefaults.standard.array(forKey: "recentSearches") as? [String] ?? []
     }
     
     func removeRecentSearches() {
         recentSearchesFullList.removeAll()
+        UserDefaults.standard.set(recentSearchesFullList, forKey: "recentSearches")
     }
     
     func changeFocusedProductFor(product: Product) {
@@ -48,6 +49,7 @@ class SearchViewModel: ObservableObject {
     func addToRecentSearches(searchText: String) {
         if !recentSearchesFullList.contains(searchText) {
             recentSearchesFullList.append(searchText)
+            UserDefaults.standard.set(recentSearchesFullList, forKey: "recentSearches")
         }
     }
 }
