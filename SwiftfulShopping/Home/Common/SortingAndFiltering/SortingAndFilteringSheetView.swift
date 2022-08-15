@@ -131,7 +131,7 @@ struct SortingAndFilteringSheetView: View {
         .navigationBarTitleDisplayMode(.inline)
         .onDisappear {
             if !sortingAndFilteringViewModel.sortingOrFilteringApplied {
-                sortingAndFilteringViewModel.restoreDefaults(productsArray: &exploreViewModel.allProducts)
+                sortingAndFilteringViewModel.restoreDefaults(originalProductsArray: exploreViewModel.productsFromRepository, currentProductsArray: &exploreViewModel.allProducts)
             }
         }
     }
