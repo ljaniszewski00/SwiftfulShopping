@@ -21,7 +21,7 @@ struct RectangleCustomTextField: View {
     var body: some View {
         VStack(alignment: .leading) {
             Text(textFieldProperty)
-                .font(.system(size: 16, weight: .bold))
+                .font(.system(size: 16, weight: .bold, design: .rounded))
                 .foregroundColor(.accentColor)
             TextField("", text: $text)
                 .keyboardType(textFieldKeyboardType)

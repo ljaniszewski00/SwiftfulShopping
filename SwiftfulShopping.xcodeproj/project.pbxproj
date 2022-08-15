@@ -48,6 +48,9 @@
 		0A30460128A9608300F218B3 /* AccentColors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A30460028A9608300F218B3 /* AccentColors.swift */; };
 		0A30460328A96B9A00F218B3 /* UIApplication.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A30460228A96B9A00F218B3 /* UIApplication.swift */; };
 		0A30460528A96CE500F218B3 /* UIColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A30460428A96CE500F218B3 /* UIColor.swift */; };
+		0A30460728AA4F3500F218B3 /* SortingMethods.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A30460628AA4F3500F218B3 /* SortingMethods.swift */; };
+		0A30460B28AAA20C00F218B3 /* SortingAndFilteringViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A30460A28AAA20C00F218B3 /* SortingAndFilteringViewModel.swift */; };
+		0A30460D28AAB02600F218B3 /* FilteringMethods.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A30460C28AAB02500F218B3 /* FilteringMethods.swift */; };
 		0A3149DA28982843001920D2 /* BasicProductTile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A3149D928982843001920D2 /* BasicProductTile.swift */; };
 		0A3149DE28982B80001920D2 /* ProductTileForRateView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A3149DD28982B80001920D2 /* ProductTileForRateView.swift */; };
 		0A3149E028982BE6001920D2 /* RatingViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A3149DF28982BE6001920D2 /* RatingViewModel.swift */; };
@@ -333,6 +336,9 @@
 		0A30460028A9608300F218B3 /* AccentColors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccentColors.swift; sourceTree = "<group>"; };
 		0A30460228A96B9A00F218B3 /* UIApplication.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIApplication.swift; sourceTree = "<group>"; };
 		0A30460428A96CE500F218B3 /* UIColor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIColor.swift; sourceTree = "<group>"; };
+		0A30460628AA4F3500F218B3 /* SortingMethods.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SortingMethods.swift; sourceTree = "<group>"; };
+		0A30460A28AAA20C00F218B3 /* SortingAndFilteringViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SortingAndFilteringViewModel.swift; sourceTree = "<group>"; };
+		0A30460C28AAB02500F218B3 /* FilteringMethods.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilteringMethods.swift; sourceTree = "<group>"; };
 		0A3149D928982843001920D2 /* BasicProductTile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BasicProductTile.swift; sourceTree = "<group>"; };
 		0A3149DD28982B80001920D2 /* ProductTileForRateView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductTileForRateView.swift; sourceTree = "<group>"; };
 		0A3149DF28982BE6001920D2 /* RatingViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RatingViewModel.swift; sourceTree = "<group>"; };
@@ -576,11 +582,28 @@
 			path = Start;
 			sourceTree = "<group>";
 		};
+		0A30460828AA4FA400F218B3 /* Product */ = {
+			isa = PBXGroup;
+			children = (
+				0AB8D98C2864B4DC003DC2E6 /* Product.swift */,
+				0A3E59C4289C611000067AD1 /* ProductRating.swift */,
+			);
+			path = Product;
+			sourceTree = "<group>";
+		};
+		0A30460928AAA1DE00F218B3 /* SortingAndFiltering */ = {
+			isa = PBXGroup;
+			children = (
+				0A3441BB28A41E44005FFFD5 /* SortingAndFilteringSheetView.swift */,
+				0A30460A28AAA20C00F218B3 /* SortingAndFilteringViewModel.swift */,
+			);
+			path = SortingAndFiltering;
+			sourceTree = "<group>";
+		};
 		0A3149DB28982B46001920D2 /* Views */ = {
 			isa = PBXGroup;
 			children = (
 				0A3149DC28982B52001920D2 /* ProductTiles */,
-				0A3441BB28A41E44005FFFD5 /* SortingAndFilteringSheetView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -748,6 +771,7 @@
 		0AB8D98A2864B4C7003DC2E6 /* Common */ = {
 			isa = PBXGroup;
 			children = (
+				0A30460928AAA1DE00F218B3 /* SortingAndFiltering */,
 				0A3149DB28982B46001920D2 /* Views */,
 				0A2373FF288D62630076A5AB /* Objects */,
 				0AB8D98E2864B577003DC2E6 /* Enums */,
@@ -759,9 +783,8 @@
 		0AB8D98B2864B4CC003DC2E6 /* Models */ = {
 			isa = PBXGroup;
 			children = (
-				0AB8D98C2864B4DC003DC2E6 /* Product.swift */,
+				0A30460828AA4FA400F218B3 /* Product */,
 				0AB8D9812864B1B1003DC2E6 /* Order.swift */,
-				0A3E59C4289C611000067AD1 /* ProductRating.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -780,6 +803,8 @@
 				0A5A7CF52896878800736B07 /* OrderStatus.swift */,
 				0A2FE0AC28A16D8200E8D30E /* ErrorType.swift */,
 				0A30460028A9608300F218B3 /* AccentColors.swift */,
+				0A30460628AA4F3500F218B3 /* SortingMethods.swift */,
+				0A30460C28AAB02500F218B3 /* FilteringMethods.swift */,
 			);
 			path = Enums;
 			sourceTree = "<group>";
@@ -1391,6 +1416,7 @@
 				0A3E59C5289C611000067AD1 /* ProductRating.swift in Sources */,
 				0A2FE0AD28A16D8200E8D30E /* ErrorType.swift in Sources */,
 				0A3441BE28A42184005FFFD5 /* SearchViewModel.swift in Sources */,
+				0A30460B28AAA20C00F218B3 /* SortingAndFilteringViewModel.swift in Sources */,
 				0A30460528A96CE500F218B3 /* UIColor.swift in Sources */,
 				0A56D89D285F279B0009680C /* FavoritesViewModel.swift in Sources */,
 				0A420ACD289F1A7A00AA4C52 /* ImagesCarouselView.swift in Sources */,
@@ -1426,9 +1452,11 @@
 				0A56D89F285F27A60009680C /* SearchView.swift in Sources */,
 				0A30460128A9608300F218B3 /* AccentColors.swift in Sources */,
 				0A2FE0A528A15B7C00E8D30E /* NetworkManager.swift in Sources */,
+				0A30460D28AAB02600F218B3 /* FilteringMethods.swift in Sources */,
 				0A268B4728671924006CF0E2 /* OrderDetailsView.swift in Sources */,
 				0A268B4528671442006CF0E2 /* Array.swift in Sources */,
 				0A2165AE28A2C1E0006842F0 /* ChangeEmailViewModel.swift in Sources */,
+				0A30460728AA4F3500F218B3 /* SortingMethods.swift in Sources */,
 				0ACD5915284A6F6600AA9DA0 /* ForgotPasswordView.swift in Sources */,
 				0A27E7C62879C22600D033D9 /* ReturnDetailsView.swift in Sources */,
 				0A2165B428A2C217006842F0 /* DeleteAccountViewModel.swift in Sources */,

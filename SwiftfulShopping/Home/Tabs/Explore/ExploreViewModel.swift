@@ -24,9 +24,28 @@ class ExploreViewModel: ObservableObject {
     
     @Published var presentSortingAndFilteringSheet: Bool = false
     
+    var productsFromRepository: [Product] = []
+    
+    var productsCompanies: [String] {
+        var companies: Set<String> = []
+        for product in allProducts {
+            companies.insert(product.company)
+        }
+        return Array(companies).sorted(by: { $0 > $1 })
+    }
+    
+    var productsCategories: [Category] {
+        var categories: Set<Category> = []
+        for product in allProducts {
+            categories.insert(product.category)
+        }
+        return Array(categories).sorted(by: { $0.rawValue > $1.rawValue })
+    }
+    
     func fetchProducts() {
         showLoadingModal = true
         DispatchQueue.main.asyncAfter(deadline: .now() + 1) { [weak self] in
+            self?.productsFromRepository = ProductsRepository.shared.products
             self?.allProducts = ProductsRepository.shared.products
             self?.showLoadingModal = false
         }
@@ -46,7 +65,6 @@ class ExploreViewModel: ObservableObject {
         } else {
             return allProducts
         }
-        
     }
     
     var productsToBeDisplayed: [Product] {

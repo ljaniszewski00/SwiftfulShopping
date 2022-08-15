@@ -17,6 +17,7 @@ struct HomeView: View {
     @StateObject private var profileViewModel = ProfileViewModel()
     @StateObject private var cartViewModel = CartViewModel()
     @StateObject private var favoritesViewModel = FavoritesViewModel()
+    @StateObject private var sortingAndFilteringViewModel = SortingAndFilteringViewModel()
     
     @StateObject var networkManager = NetworkManager.shared
     @StateObject var errorManager = ErrorManager.shared
@@ -59,6 +60,7 @@ struct HomeView: View {
                             .environmentObject(profileViewModel)
                             .environmentObject(cartViewModel)
                             .environmentObject(favoritesViewModel)
+                            .environmentObject(sortingAndFilteringViewModel)
                     case .favorites:
                         FavoritesView()
                             .environmentObject(authStateManager)
@@ -83,6 +85,7 @@ struct HomeView: View {
                             .environmentObject(profileViewModel)
                             .environmentObject(favoritesViewModel)
                             .environmentObject(cartViewModel)
+                            .environmentObject(sortingAndFilteringViewModel)
                     case .profile:
                         ProfileView()
                             .environmentObject(authStateManager)

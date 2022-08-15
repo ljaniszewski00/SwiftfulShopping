@@ -14,6 +14,7 @@ struct ProductsListView: View {
     @EnvironmentObject private var profileViewModel: ProfileViewModel
     @EnvironmentObject private var favoritesViewModel: FavoritesViewModel
     @EnvironmentObject private var cartViewModel: CartViewModel
+    @EnvironmentObject private var sortingAndFilteringViewModel: SortingAndFilteringViewModel
     
     @AppStorage("productsListDisplayMethod") var displayMethod: ProductDisplayMethod = .list
     
@@ -78,6 +79,7 @@ struct ProductsListView: View {
         .sheet(isPresented: $exploreViewModel.presentSortingAndFilteringSheet) {
             SortingAndFilteringSheetView()
                 .environmentObject(exploreViewModel)
+                .environmentObject(sortingAndFilteringViewModel)
         }
     }
     

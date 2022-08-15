@@ -14,6 +14,7 @@ struct ExploreView: View {
     @EnvironmentObject private var profileViewModel: ProfileViewModel
     @EnvironmentObject private var favoritesViewModel: FavoritesViewModel
     @EnvironmentObject private var cartViewModel: CartViewModel
+    @EnvironmentObject private var sortingAndFilteringViewModel: SortingAndFilteringViewModel
     
     var body: some View {
         NavigationView {
@@ -59,6 +60,7 @@ struct ExploreView: View {
                                 .environmentObject(profileViewModel)
                                 .environmentObject(favoritesViewModel)
                                 .environmentObject(cartViewModel)
+                                .environmentObject(sortingAndFilteringViewModel)
                         }
                     } else {
                         ProductsListView()
@@ -68,6 +70,7 @@ struct ExploreView: View {
                             .environmentObject(profileViewModel)
                             .environmentObject(favoritesViewModel)
                             .environmentObject(cartViewModel)
+                            .environmentObject(sortingAndFilteringViewModel)
                     }
                     
                     NavigationLink(destination: ProductDetailsView(product: exploreViewModel.choosenProduct ?? Product.demoProducts[0])
@@ -114,6 +117,7 @@ struct ExploreView_Previews: PreviewProvider {
         let profileViewModel = ProfileViewModel()
         let favoritesViewModel = FavoritesViewModel()
         let cartViewModel = CartViewModel()
+        let sortingAndFilteringViewModel = SortingAndFilteringViewModel()
         ForEach(ColorScheme.allCases, id: \.self) { colorScheme in
             ForEach(["iPhone 13 Pro Max", "iPhone 8"], id: \.self) { deviceName in
                 ExploreView()
@@ -123,6 +127,7 @@ struct ExploreView_Previews: PreviewProvider {
                     .environmentObject(profileViewModel)
                     .environmentObject(favoritesViewModel)
                     .environmentObject(cartViewModel)
+                    .environmentObject(sortingAndFilteringViewModel)
                     .preferredColorScheme(colorScheme)
                     .previewDevice(PreviewDevice(rawValue: deviceName))
                     .previewDisplayName("\(deviceName) portrait")

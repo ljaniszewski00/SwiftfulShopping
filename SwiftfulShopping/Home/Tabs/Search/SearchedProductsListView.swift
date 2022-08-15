@@ -15,6 +15,7 @@ struct SearchedProductsListView: View {
     @EnvironmentObject private var favoritesViewModel: FavoritesViewModel
     @EnvironmentObject private var cartViewModel: CartViewModel
     @EnvironmentObject private var searchViewModel: SearchViewModel
+    @EnvironmentObject private var sortingAndFilteringViewModel: SortingAndFilteringViewModel
     
     @AppStorage("productsListDisplayMethod") var displayMethod: ProductDisplayMethod = .list
     
@@ -64,6 +65,7 @@ struct SearchedProductsListView: View {
         .sheet(isPresented: $exploreViewModel.presentSortingAndFilteringSheet) {
             SortingAndFilteringSheetView()
                 .environmentObject(exploreViewModel)
+                .environmentObject(sortingAndFilteringViewModel)
         }
     }
     
@@ -99,6 +101,7 @@ struct SearchedProductsListView_Previews: PreviewProvider {
         let favoritesViewModel = FavoritesViewModel()
         let cartViewModel = CartViewModel()
         let searchViewModel = SearchViewModel()
+        let sortingAndFilteringViewModel = SortingAndFilteringViewModel()
         ForEach(ColorScheme.allCases, id: \.self) { colorScheme in
             ForEach(["iPhone 13 Pro Max", "iPhone 8"], id: \.self) { deviceName in
                 SearchedProductsListView()
@@ -109,6 +112,7 @@ struct SearchedProductsListView_Previews: PreviewProvider {
                     .environmentObject(favoritesViewModel)
                     .environmentObject(cartViewModel)
                     .environmentObject(searchViewModel)
+                    .environmentObject(sortingAndFilteringViewModel)
                     .preferredColorScheme(colorScheme)
                     .previewDevice(PreviewDevice(rawValue: deviceName))
                     .previewDisplayName("\(deviceName) portrait")

@@ -14,6 +14,7 @@ struct SearchView: View {
     @EnvironmentObject private var profileViewModel: ProfileViewModel
     @EnvironmentObject private var favoritesViewModel: FavoritesViewModel
     @EnvironmentObject private var cartViewModel: CartViewModel
+    @EnvironmentObject private var sortingAndFilteringViewModel: SortingAndFilteringViewModel
     
     @StateObject private var searchViewModel: SearchViewModel = SearchViewModel()
     
@@ -63,6 +64,7 @@ struct SearchView: View {
                             .environmentObject(favoritesViewModel)
                             .environmentObject(cartViewModel)
                             .environmentObject(searchViewModel)
+                            .environmentObject(sortingAndFilteringViewModel)
                         
                         NavigationLink(destination: ProductDetailsView(product: searchViewModel.choosenProduct ?? Product.demoProducts[0])
                                                         .environmentObject(authStateManager)
@@ -206,6 +208,7 @@ struct SearchView_Previews: PreviewProvider {
         let profileViewModel = ProfileViewModel()
         let favoritesViewModel = FavoritesViewModel()
         let cartViewModel = CartViewModel()
+        let sortingAndFilteringViewModel = SortingAndFilteringViewModel()
         ForEach(ColorScheme.allCases, id: \.self) { colorScheme in
             ForEach(["iPhone 13 Pro Max", "iPhone 8"], id: \.self) { deviceName in
                 SearchView()
@@ -215,6 +218,7 @@ struct SearchView_Previews: PreviewProvider {
                     .environmentObject(profileViewModel)
                     .environmentObject(favoritesViewModel)
                     .environmentObject(cartViewModel)
+                    .environmentObject(sortingAndFilteringViewModel)
                     .preferredColorScheme(colorScheme)
                     .previewDevice(PreviewDevice(rawValue: deviceName))
                     .previewDisplayName("\(deviceName) portrait")
