@@ -14,8 +14,9 @@ class SortingAndFilteringViewModel: ObservableObject {
     @Published var sortingSectionHidden: Bool = false
     
     //Filtering
+    @Published var filteringSectionHidden: Bool = false
     @Published var filteringApplied: Bool = false
-    @Published var filteringMethodsToApply: [FilteringMethods] = []
+    @Published var filteringMethodsToApply: Set<FilteringMethods> = []
     
     @Published var companyFilterSectionHidden: Bool = false
     @Published var companyFilters: [String] = []
@@ -31,11 +32,37 @@ class SortingAndFilteringViewModel: ObservableObject {
     @Published var lowestRatingFilter: Int = 0
     @Published var highestRatingFilter: Int = 0
     
-    @Published var filteringSectionHidden: Bool = false
-    
     //General
     var sortingOrFilteringApplied: Bool {
         sortingApplied || filteringApplied
+    }
+    
+    var applyFiltersButtonVisible: Bool {
+        !companyFilters.isEmpty ||
+        !categoryFilters.isEmpty ||
+        !lowestPriceFilter.isEmpty || !highestPriceFilter.isEmpty ||
+        lowestRatingFilter > 0 || highestRatingFilter > 0
+    }
+    
+    var numberOfFiltersApplied: Int {
+        var count: Int = 0
+        
+        count += companyFilters.count
+        count += categoryFilters.count
+        if !lowestPriceFilter.isEmpty {
+            count += 1
+        }
+        if !highestPriceFilter.isEmpty {
+            count += 1
+        }
+        if lowestRatingFilter > 0 {
+            count += 1
+        }
+        if highestRatingFilter > 0 {
+            count += 1
+        }
+        
+        return count
     }
     
     private func sortProducts(productsArray: inout [Product]) {
@@ -58,17 +85,19 @@ class SortingAndFilteringViewModel: ObservableObject {
     }
     
     private func filterProducts(productsArray: inout [Product]) {
+//        filteringMethodsToApply.removeAll()
+        
         if !companyFilters.isEmpty {
-            filteringMethodsToApply.append(.company)
+            filteringMethodsToApply.insert(.company)
         }
         if !categoryFilters.isEmpty {
-            filteringMethodsToApply.append(.category)
+            filteringMethodsToApply.insert(.category)
         }
         if !lowestPriceFilter.isEmpty || !highestPriceFilter.isEmpty {
-            filteringMethodsToApply.append(.price)
+            filteringMethodsToApply.insert(.price)
         }
         if lowestRatingFilter > 0 || highestRatingFilter > 0 {
-            filteringMethodsToApply.append(.rating)
+            filteringMethodsToApply.insert(.rating)
         }
         
         for filteringMethod in filteringMethodsToApply {
@@ -93,6 +122,7 @@ class SortingAndFilteringViewModel: ObservableObject {
                     }
                 }
             case .rating:
+                print("here")
                 if lowestRatingFilter > 0 {
                     productsArray = productsArray.filter {
                         $0.rating.averageRating >= Double(lowestRatingFilter)
@@ -144,10 +174,14 @@ class SortingAndFilteringViewModel: ObservableObject {
     }
     
     private func restoreDefaultSortingValues() {
+        sortingApplied = false
         sortingMethod = .popularity
     }
     
-    private func restoreDefaultFileringValues() {
+    private func restoreDefaultFilteringValues() {
+        filteringApplied = false
+        filteringMethodsToApply.removeAll()
+        
         companyFilters.removeAll()
         categoryFilters.removeAll()
         lowestPriceFilter = ""
@@ -158,7 +192,7 @@ class SortingAndFilteringViewModel: ObservableObject {
     
     func restoreDefaults(originalProductsArray: [Product], currentProductsArray: inout [Product]) {
         restoreDefaultSortingValues()
-        restoreDefaultFileringValues()
+        restoreDefaultFilteringValues()
         currentProductsArray = originalProductsArray
     }
 }

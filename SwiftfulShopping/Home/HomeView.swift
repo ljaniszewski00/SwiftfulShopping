@@ -61,6 +61,12 @@ struct HomeView: View {
                             .environmentObject(cartViewModel)
                             .environmentObject(favoritesViewModel)
                             .environmentObject(sortingAndFilteringViewModel)
+                            .onAppear {
+                                exploreViewModel.productsForTab = .exploreView
+                            }
+                            .onDisappear {
+                                sortingAndFilteringViewModel.restoreDefaults(originalProductsArray: exploreViewModel.productsFromRepository, currentProductsArray: &exploreViewModel.changingProductsToBeDisplayed)
+                            }
                     case .favorites:
                         FavoritesView()
                             .environmentObject(authStateManager)
@@ -86,6 +92,12 @@ struct HomeView: View {
                             .environmentObject(favoritesViewModel)
                             .environmentObject(cartViewModel)
                             .environmentObject(sortingAndFilteringViewModel)
+                            .onAppear {
+                                exploreViewModel.productsForTab = .searchView
+                            }
+                            .onDisappear {
+                                sortingAndFilteringViewModel.restoreDefaults(originalProductsArray: exploreViewModel.productsFromRepository, currentProductsArray: &exploreViewModel.changingProductsToBeDisplayed)
+                            }
                     case .profile:
                         ProfileView()
                             .environmentObject(authStateManager)

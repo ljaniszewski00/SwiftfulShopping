@@ -31,6 +31,20 @@ struct ProductsListView: View {
                     Image(systemName: "slider.horizontal.3")
                         .resizable()
                         .frame(width: 25, height: 20)
+                        .if(sortingAndFilteringViewModel.numberOfFiltersApplied > 0) {
+                            $0
+                                .overlay(
+                                    ZStack {
+                                        Circle()
+                                            .frame(width: 17, height: 17)
+                                            .foregroundColor(.red)
+                                        Text(String(sortingAndFilteringViewModel.numberOfFiltersApplied))
+                                            .font(.system(size: 14, weight: .regular, design: .rounded))
+                                            .foregroundColor(.white)
+                                    }
+                                    .offset(x: 17, y: -17)
+                                )
+                        }
                 }
                 
                 if (exploreViewModel.selectedTab == .categories && exploreViewModel.displayedCategory != nil) {
@@ -39,7 +53,7 @@ struct ProductsListView: View {
                             .resizable()
                             .frame(width: 25, height: 25)
                             .foregroundColor(.accentColor)
-                        Text(exploreViewModel.displayedCategory!.rawValue)
+                        Text(exploreViewModel.displayedCategory?.rawValue ?? "")
                             .font(.system(size: 16, weight: .bold, design: .rounded))
                     }
                     .onTapGesture {
@@ -85,7 +99,7 @@ struct ProductsListView: View {
     
     @ViewBuilder
     func buildProductsListFor() -> some View {
-        ForEach(exploreViewModel.productsToBeDisplayed, id: \.self) { product in
+        ForEach(exploreViewModel.changingProductsToBeDisplayed, id: \.self) { product in
             Button {
                 withAnimation(.interactiveSpring(response: 0.6, dampingFraction: 0.7, blendDuration: 0.7)) {
                     exploreViewModel.changeFocusedProductFor(product: product)
@@ -114,6 +128,7 @@ struct ProductsListView_Previews: PreviewProvider {
         let profileViewModel = ProfileViewModel()
         let favoritesViewModel = FavoritesViewModel()
         let cartViewModel = CartViewModel()
+        let sortingAndFilteringViewModel = SortingAndFilteringViewModel()
         ForEach(ColorScheme.allCases, id: \.self) { colorScheme in
             ForEach(["iPhone 13 Pro Max", "iPhone 8"], id: \.self) { deviceName in
                 ProductsListView()
@@ -123,6 +138,7 @@ struct ProductsListView_Previews: PreviewProvider {
                     .environmentObject(profileViewModel)
                     .environmentObject(favoritesViewModel)
                     .environmentObject(cartViewModel)
+                    .environmentObject(sortingAndFilteringViewModel)
                     .preferredColorScheme(colorScheme)
                     .previewDevice(PreviewDevice(rawValue: deviceName))
                     .previewDisplayName("\(deviceName) portrait")

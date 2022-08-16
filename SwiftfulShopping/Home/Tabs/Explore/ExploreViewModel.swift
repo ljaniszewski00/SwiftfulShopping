@@ -10,8 +10,11 @@ import SwiftUI
 class ExploreViewModel: ObservableObject {
     @Published var errorManager = ErrorManager.shared
     
-    @Published var allProducts: [Product] = []
+    @Published var productsFromRepository: [Product] = []
+    @Published var productsToBeDisplayed: [Product] = []
+    
     @Published var selectedTab: ExploreViewTabs = .trending
+    @Published var productsForTab: TabsWithProducts = .exploreView
     @Published var displayOnlyRecommended: Bool = false
     @Published var displayedCategory: Category?
     @Published var choosenProduct: Product?
@@ -24,11 +27,9 @@ class ExploreViewModel: ObservableObject {
     
     @Published var presentSortingAndFilteringSheet: Bool = false
     
-    var productsFromRepository: [Product] = []
-    
     var productsCompanies: [String] {
         var companies: Set<String> = []
-        for product in allProducts {
+        for product in productsFromRepository {
             companies.insert(product.company)
         }
         return Array(companies).sorted(by: { $0 > $1 })
@@ -36,7 +37,7 @@ class ExploreViewModel: ObservableObject {
     
     var productsCategories: [Category] {
         var categories: Set<Category> = []
-        for product in allProducts {
+        for product in productsFromRepository {
             categories.insert(product.category)
         }
         return Array(categories).sorted(by: { $0.rawValue > $1.rawValue })
@@ -46,40 +47,51 @@ class ExploreViewModel: ObservableObject {
         showLoadingModal = true
         DispatchQueue.main.asyncAfter(deadline: .now() + 1) { [weak self] in
             self?.productsFromRepository = ProductsRepository.shared.products
-            self?.allProducts = ProductsRepository.shared.products
+            self?.productsToBeDisplayed = ProductsRepository.shared.products
             self?.showLoadingModal = false
         }
     }
     
-    var recommendedProducts: [Product] {
-        return allProducts.filter {
+    var changingProductsToBeDisplayed: [Product] {
+        get {
+            switch productsForTab {
+            case .exploreView:
+                switch selectedTab {
+                case .trending:
+                    return productsToBeDisplayed
+                case .categories:
+                    return productsByCategory
+                case .weRecommend:
+                    return recommendedProducts
+                }
+            case .searchView:
+                return productsToBeDisplayedBySearch
+            }
+        }
+        
+        set {
+            productsToBeDisplayed = newValue
+        }
+    }
+    
+    private var recommendedProducts: [Product] {
+        return productsToBeDisplayed.filter {
             $0.isRecommended
         }
     }
     
-    var productsByCategory: [Product] {
+    private var productsByCategory: [Product] {
         if let displayedCategory = displayedCategory {
-            return allProducts.filter {
+            return productsToBeDisplayed.filter {
                 $0.category == displayedCategory
             }
         } else {
-            return allProducts
+            return productsToBeDisplayed
         }
     }
     
-    var productsToBeDisplayed: [Product] {
-        switch selectedTab {
-        case .trending:
-            return allProducts
-        case .categories:
-            return productsByCategory
-        case .weRecommend:
-            return recommendedProducts
-        }
-    }
-        
-    var productsToBeDisplayedBySearch: [Product] {
-        allProducts.filter {
+    private var productsToBeDisplayedBySearch: [Product] {
+        productsToBeDisplayed.filter {
             $0.name.lowercased().contains(searchProductsText.lowercased()) ||
             $0.company.lowercased().contains(searchProductsText.lowercased())
         }
@@ -88,5 +100,9 @@ class ExploreViewModel: ObservableObject {
     func changeFocusedProductFor(product: Product) {
         choosenProduct = product
         shouldPresentProductDetailsView = true
+    }
+    
+    func restoreOriginalProductsArray() {
+        changingProductsToBeDisplayed = productsFromRepository
     }
 }

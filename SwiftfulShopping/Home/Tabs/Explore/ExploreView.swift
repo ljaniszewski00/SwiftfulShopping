@@ -16,6 +16,8 @@ struct ExploreView: View {
     @EnvironmentObject private var cartViewModel: CartViewModel
     @EnvironmentObject private var sortingAndFilteringViewModel: SortingAndFilteringViewModel
     
+    @Environment(\.colorScheme) private var colorScheme: ColorScheme
+    
     var body: some View {
         NavigationView {
             ScrollView(.vertical, showsIndicators: true) {
@@ -24,21 +26,23 @@ struct ExploreView: View {
                         HStack {
                             ForEach(ExploreViewTabs.allCases, id: \.self) { tabName in
                                 VStack {
-                                    Text(tabName.rawValue)
-                                        .font(.system(size: 16, weight: .bold, design: .rounded))
-                                        .padding()
-                                        .if(tabName == exploreViewModel.selectedTab) {
-                                            $0
-                                                .background {
-                                                    RoundedRectangle(cornerRadius: 10)
-                                                        .foregroundColor(.accentColor)
-                                                }
+                                    Button {
+                                        withAnimation {
+                                            exploreViewModel.selectedTab = tabName
                                         }
-                                        .onTapGesture {
-                                            withAnimation(.spring(response: 0.3, dampingFraction: 0.7)) {
-                                                exploreViewModel.selectedTab = tabName
+                                    } label: {
+                                        Text(tabName.rawValue)
+                                            .font(.system(size: 16, weight: .bold, design: .rounded))
+                                            .foregroundColor(colorScheme == .light ? .black : .white)
+                                            .padding()
+                                            .if(tabName == exploreViewModel.selectedTab) {
+                                                $0
+                                                    .background {
+                                                        RoundedRectangle(cornerRadius: 10)
+                                                            .foregroundColor(.accentColor)
+                                                    }
                                             }
-                                        }
+                                    }
                                 }
                             }
                         }

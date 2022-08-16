@@ -21,43 +21,7 @@ struct SearchedProductsListView: View {
     
     var body: some View {
         VStack(spacing: 10) {
-            HStack(spacing: 20) {
-                Button {
-                    withAnimation {
-                        exploreViewModel.presentSortingAndFilteringSheet = true
-                    }
-                } label: {
-                    Image(systemName: "slider.horizontal.3")
-                        .resizable()
-                        .frame(width: 25, height: 20)
-                }
-                .isHidden(exploreViewModel.productsToBeDisplayedBySearch.isEmpty)
-                
-                Spacer()
-                
-                Button {
-                    withAnimation {
-                        displayMethod = .grid
-                    }
-                } label: {
-                    Image(systemName: "rectangle.grid.3x2")
-                        .resizable()
-                        .frame(width: 25, height: 20)
-                }
-                .isHidden(exploreViewModel.productsToBeDisplayedBySearch.isEmpty)
-                
-                Button {
-                    withAnimation {
-                        displayMethod = .list
-                    }
-                } label: {
-                    Image(systemName: "list.bullet")
-                        .resizable()
-                        .frame(width: 25, height: 20)
-                }
-                .isHidden(exploreViewModel.productsToBeDisplayedBySearch.isEmpty)
-            }
-            .padding(.horizontal)
+            
             
             buildProductsListFor()
         }
@@ -71,7 +35,7 @@ struct SearchedProductsListView: View {
     
     @ViewBuilder
     func buildProductsListFor() -> some View {
-        ForEach(exploreViewModel.productsToBeDisplayedBySearch, id: \.self) { product in
+        ForEach(exploreViewModel.changingProductsToBeDisplayed, id: \.self) { product in
             Button {
                 withAnimation(.interactiveSpring(response: 0.6, dampingFraction: 0.7, blendDuration: 0.7)) {
                     searchViewModel.changeFocusedProductFor(product: product)

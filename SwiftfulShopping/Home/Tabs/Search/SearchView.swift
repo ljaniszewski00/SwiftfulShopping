@@ -18,6 +18,8 @@ struct SearchView: View {
     
     @StateObject private var searchViewModel: SearchViewModel = SearchViewModel()
     
+    @AppStorage("productsListDisplayMethod") var displayMethod: ProductDisplayMethod = .list
+    
     @Environment(\.colorScheme) var colorScheme: ColorScheme
     
     private let gridColumns = [GridItem(.flexible(), spacing: 0),
@@ -33,61 +35,126 @@ struct SearchView: View {
                             buildTrendingSearchesList()
                             buildRecentSearchesList()
                         }
-                    }
-                    
-                    if !exploreViewModel.searchProductsText.isEmpty && exploreViewModel.productsToBeDisplayedBySearch.isEmpty {
-                        VStack {
-                            LottieView(name: "searchNoResults",
-                                       loopMode: .loop,
-                                       contentMode: .scaleAspectFill)
-                            .frame(width: ScreenBoundsSupplier.shared.getScreenWidth(),
-                                   height: ScreenBoundsSupplier.shared.getScreenHeight() * 0.5)
-                            VStack(spacing: 10) {
-                                Text("No products found!")
-                                    .font(.system(size: 24, weight: .bold, design: .rounded))
-                                    .fixedSize(horizontal: false, vertical: true)
-                                Text("Please try another search key.")
-                                    .font(.system(size: 18, weight: .regular, design: .rounded))
-                                    .foregroundColor(.gray)
-                                    .fixedSize(horizontal: false, vertical: true)
-                            }
+                        .onAppear {
+                            sortingAndFilteringViewModel.restoreDefaults(originalProductsArray: exploreViewModel.productsFromRepository, currentProductsArray: &exploreViewModel.changingProductsToBeDisplayed)
                         }
-                        .offset(y: 100)
                     }
                     
                     VStack {
-                        SearchedProductsListView()
-                            .environmentObject(authStateManager)
-                            .environmentObject(tabBarStateManager)
-                            .environmentObject(exploreViewModel)
-                            .environmentObject(profileViewModel)
-                            .environmentObject(favoritesViewModel)
-                            .environmentObject(cartViewModel)
-                            .environmentObject(searchViewModel)
-                            .environmentObject(sortingAndFilteringViewModel)
+                        if !exploreViewModel.searchProductsText.isEmpty {
+                            HStack(spacing: 20) {
+                                Button {
+                                    withAnimation {
+                                        exploreViewModel.presentSortingAndFilteringSheet = true
+                                    }
+                                } label: {
+                                    Image(systemName: "slider.horizontal.3")
+                                        .resizable()
+                                        .frame(width: 25, height: 20)
+                                        .if(sortingAndFilteringViewModel.numberOfFiltersApplied > 0) {
+                                            $0
+                                                .overlay(
+                                                    ZStack {
+                                                        Circle()
+                                                            .frame(width: 17, height: 17)
+                                                            .foregroundColor(.red)
+                                                        Text(String(sortingAndFilteringViewModel.numberOfFiltersApplied))
+                                                            .font(.system(size: 14, weight: .regular, design: .rounded))
+                                                            .foregroundColor(.white)
+                                                    }
+                                                    .offset(x: 17, y: -17)
+                                                )
+                                        }
+                                }
+                                
+                                Spacer()
+                                
+                                Button {
+                                    withAnimation {
+                                        displayMethod = .grid
+                                    }
+                                } label: {
+                                    Image(systemName: "rectangle.grid.3x2")
+                                        .resizable()
+                                        .frame(width: 25, height: 20)
+                                }
+                                
+                                Button {
+                                    withAnimation {
+                                        displayMethod = .list
+                                    }
+                                } label: {
+                                    Image(systemName: "list.bullet")
+                                        .resizable()
+                                        .frame(width: 25, height: 20)
+                                }
+                            }
+                            .padding([.horizontal, .top])
+                        }
                         
-                        NavigationLink(destination: ProductDetailsView(product: searchViewModel.choosenProduct ?? Product.demoProducts[0])
-                                                        .environmentObject(authStateManager)
-                                                        .environmentObject(tabBarStateManager)
-                                                        .environmentObject(exploreViewModel)
-                                                        .environmentObject(profileViewModel)
-                                                        .environmentObject(favoritesViewModel)
-                                                        .environmentObject(cartViewModel)
-                                                        .onAppear {
-                                                            tabBarStateManager.hideTabBar()
-                                                        },
-                                       isActive: $searchViewModel.shouldPresentProductDetailsView,
-                                       label: { EmptyView() })
-                    }
-                    .searchable(text: $exploreViewModel.searchProductsText,
-                                prompt: "Search For Products")
-                    .onSubmit(of: .search) {
-                        searchViewModel.addToRecentSearches(searchText: exploreViewModel.searchProductsText)
+                        if !exploreViewModel.searchProductsText.isEmpty && exploreViewModel.changingProductsToBeDisplayed.isEmpty {
+                            VStack {
+                                LottieView(name: "searchNoResults",
+                                           loopMode: .loop,
+                                           contentMode: .scaleAspectFill)
+                                .frame(width: ScreenBoundsSupplier.shared.getScreenWidth(),
+                                       height: ScreenBoundsSupplier.shared.getScreenHeight() * 0.5)
+                                VStack(spacing: 10) {
+                                    Text("No products found!")
+                                        .font(.system(size: 24, weight: .bold, design: .rounded))
+                                        .fixedSize(horizontal: false, vertical: true)
+                                    Text("Please try another search key or change filtering method.")
+                                        .font(.system(size: 18, weight: .regular, design: .rounded))
+                                        .foregroundColor(.gray)
+                                        .fixedSize(horizontal: false, vertical: true)
+                                }
+                            }
+                            .offset(y: 100)
+                        }
+                        
+                        VStack {
+                            SearchedProductsListView()
+                                .environmentObject(authStateManager)
+                                .environmentObject(tabBarStateManager)
+                                .environmentObject(exploreViewModel)
+                                .environmentObject(profileViewModel)
+                                .environmentObject(favoritesViewModel)
+                                .environmentObject(cartViewModel)
+                                .environmentObject(searchViewModel)
+                                .environmentObject(sortingAndFilteringViewModel)
+                            
+                            NavigationLink(destination: ProductDetailsView(product: searchViewModel.choosenProduct ?? Product.demoProducts[0])
+                                                            .environmentObject(authStateManager)
+                                                            .environmentObject(tabBarStateManager)
+                                                            .environmentObject(exploreViewModel)
+                                                            .environmentObject(profileViewModel)
+                                                            .environmentObject(favoritesViewModel)
+                                                            .environmentObject(cartViewModel)
+                                                            .onAppear {
+                                                                tabBarStateManager.hideTabBar()
+                                                            },
+                                           isActive: $searchViewModel.shouldPresentProductDetailsView,
+                                           label: { EmptyView() })
+                        }
+                        .searchable(text: $exploreViewModel.searchProductsText,
+                                    prompt: "Search For Products")
+                        .onSubmit(of: .search) {
+                            searchViewModel.addToRecentSearches(searchText: exploreViewModel.searchProductsText)
+                        }
                     }
                 }
             }
             .navigationTitle("Search")
             .navigationBarTitleDisplayMode(.inline)
+            .toolbar {
+                ToolbarItem {
+                    Button {
+                        
+                    } label: {
+                        Image(systemName: "camera")
+                    }
+                }
+            }
             .onAppear {
                 tabBarStateManager.showTabBar()
             }
