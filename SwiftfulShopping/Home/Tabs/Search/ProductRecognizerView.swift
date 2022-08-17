@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import AVKit
 
 struct ProductRecognizerView: View {
     @EnvironmentObject private var exploreViewModel: ExploreViewModel
@@ -13,18 +14,24 @@ struct ProductRecognizerView: View {
     
     @Environment(\.dismiss) private var dismiss
     
-    @StateObject var errorManager = ErrorManager.shared
+    @StateObject private var cameraViewModel = CameraViewModel()
+    @StateObject private var errorManager = ErrorManager.shared
     
     var body: some View {
         ScrollView(.vertical, showsIndicators: false) {
             VStack(alignment: .center, spacing: 40) {
-                if let imageForRecognition = searchViewModel.imageForRecognition {
-                    Image(uiImage: imageForRecognition)
-                        .resizable()
-                        .scaledToFill()
-                        .clipShape(RoundedRectangle(cornerRadius: 10))
-                } else {
-                    
+                switch searchViewModel.sourceForImageRecognition {
+                case .camera:
+                    GeometryReader { proxy in
+                        
+                    }
+                case .photoLibrary:
+                    if let imageForRecognition = searchViewModel.imageForRecognition {
+                        Image(uiImage: imageForRecognition)
+                            .resizable()
+                            .scaledToFill()
+                            .clipShape(RoundedRectangle(cornerRadius: 10))
+                    }
                 }
                 
                 Spacer()
@@ -71,6 +78,9 @@ struct ProductRecognizerView: View {
         .modifier(LoadingIndicatorModal(isPresented:
                                             $searchViewModel.showLoadingModal))
         .modifier(ErrorModal(isPresented: $errorManager.showErrorModal, customError: errorManager.customError ?? ErrorManager.unknownError))
+        .onAppear {
+            cameraViewModel.onAppear()
+        }
     }
 }
 

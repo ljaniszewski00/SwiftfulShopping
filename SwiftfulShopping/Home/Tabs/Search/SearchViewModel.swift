@@ -9,12 +9,15 @@ import SwiftUI
 import CoreML
 import Vision
 import CoreImage
+import AVKit
 
 class SearchViewModel: ObservableObject {
     @Published var choosenProduct: Product?
     @Published var shouldPresentProductDetailsView: Bool = false
     
     @Published var shouldPresentProductRecognizerView: Bool = false
+    
+    @Published var sourceForImageRecognition: SourceForImageRecognition = .camera
     @Published var shouldPresentImagePicker: Bool = false
     @Published var oldImageForRecognition: UIImage?
     @Published var imageForRecognition = UIImage()
@@ -33,6 +36,15 @@ class SearchViewModel: ObservableObject {
     @Published var shouldPresentAllRecentSearches: Bool = false
     
     @Published var showLoadingModal: Bool = false
+    
+    @Published var captureSession = AVCaptureSession()
+    @Published var captureOutput = AVCapturePhotoOutput()
+    @Published var capturePreview: AVCaptureVideoPreviewLayer!
+    
+    enum SourceForImageRecognition {
+        case camera
+        case photoLibrary
+    }
     
     func onAppear() {
         fetchTrendingSearches()
@@ -65,6 +77,7 @@ class SearchViewModel: ObservableObject {
     }
     
     func uploadNewImageForRecognition() {
+        captureSession.stopRunning()
         if let oldImageForRecognition = oldImageForRecognition {
             if !imageForRecognition.isEqual(oldImageForRecognition) {
                 self.oldImageForRecognition = imageForRecognition
@@ -81,7 +94,12 @@ class SearchViewModel: ObservableObject {
 
                 let handler = VNImageRequestHandler(ciImage: ciImage, options: [:])
 
-                try? handler.perform([request])
+                do {
+                    try? handler.perform([request])
+                } catch(let error) {
+                    generateError(errorManager: errorManager,
+                                  additionalErrorDescription: error.localizedDescription)
+                }
 
                 if let firstResult = request.results?.first as? VNClassificationObservation {
                     self.recognitionResult = firstResult.identifier
