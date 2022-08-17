@@ -18,6 +18,8 @@ struct ExploreView: View {
     
     @Environment(\.colorScheme) private var colorScheme: ColorScheme
     
+    @StateObject var errorManager = ErrorManager.shared
+    
     var body: some View {
         NavigationView {
             ScrollView(.vertical, showsIndicators: true) {
@@ -107,7 +109,7 @@ struct ExploreView: View {
             }
             .modifier(LoadingIndicatorModal(isPresented:
                                                                 $exploreViewModel.showLoadingModal))
-            .modifier(ErrorModal(isPresented: $exploreViewModel.errorManager.showErrorModal, customError: exploreViewModel.errorManager.customError ?? ErrorManager.unknownError))
+            .modifier(ErrorModal(isPresented: $errorManager.showErrorModal, customError: errorManager.customError ?? ErrorManager.unknownError))
         }
         .navigationViewStyle(.stack)
     }

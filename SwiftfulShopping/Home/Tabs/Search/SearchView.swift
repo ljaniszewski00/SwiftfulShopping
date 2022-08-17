@@ -109,7 +109,6 @@ struct SearchView: View {
                                         .fixedSize(horizontal: false, vertical: true)
                                 }
                             }
-                            .offset(y: 100)
                         }
                         
                         VStack {
@@ -135,6 +134,18 @@ struct SearchView: View {
                                                             },
                                            isActive: $searchViewModel.shouldPresentProductDetailsView,
                                            label: { EmptyView() })
+                            
+                            NavigationLink(destination: ProductRecognizerView()
+                                                            .environmentObject(exploreViewModel)
+                                                            .environmentObject(searchViewModel)
+                                                            .onAppear {
+                                                                tabBarStateManager.hideTabBar()
+                                                            }
+                                                            .onDisappear {
+                                                                tabBarStateManager.showTabBar()
+                                                            },
+                                           isActive: $searchViewModel.shouldPresentProductRecognizerView,
+                                           label: { EmptyView() })
                         }
                         .searchable(text: $exploreViewModel.searchProductsText,
                                     prompt: "Search For Products")
@@ -149,7 +160,9 @@ struct SearchView: View {
             .toolbar {
                 ToolbarItem {
                     Button {
-                        
+                        withAnimation {
+                            searchViewModel.shouldPresentProductRecognizerView = true
+                        }
                     } label: {
                         Image(systemName: "camera")
                     }

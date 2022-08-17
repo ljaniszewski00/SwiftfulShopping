@@ -10,11 +10,13 @@ import Foundation
 final class ErrorManager: ObservableObject {
     private let errorsCodes: [ErrorType: Int] = [
         .networkError: 1,
+        .productRecognizerError: 2,
         .unknown: 0
     ]
 
     private let errorsDescriptions: [ErrorType: String] = [
-        .networkError: "No internet connection. Some functions will be unavailable",
+        .networkError: "No internet connection. Some functions will be unavailable.",
+        .productRecognizerError: "Error occured while recognizing your product. Please try again later.",
         .unknown: ""
     ]
     
