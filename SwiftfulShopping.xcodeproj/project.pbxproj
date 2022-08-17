@@ -76,6 +76,9 @@
 		0A3B08DD28AD22BE00A54385 /* ProductRecognizerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A3B08DC28AD22BE00A54385 /* ProductRecognizerView.swift */; };
 		0A3B08E228AD292C00A54385 /* Resnet50.mlmodel in Sources */ = {isa = PBXBuildFile; fileRef = 0A3B08E128AD292C00A54385 /* Resnet50.mlmodel */; };
 		0A3B08E428AD4D1C00A54385 /* CameraViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A3B08E328AD4D1C00A54385 /* CameraViewModel.swift */; };
+		0A3B08E828AD921C00A54385 /* CameraView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A3B08E728AD921C00A54385 /* CameraView.swift */; };
+		0A3B08EB28AD95F300A54385 /* ProductRecognizer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A3B08EA28AD95F300A54385 /* ProductRecognizer.swift */; };
+		0A3B08ED28AD972C00A54385 /* SourceForImageRecognition.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A3B08EC28AD972C00A54385 /* SourceForImageRecognition.swift */; };
 		0A3DE45328899F65008B050B /* Category.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A3DE45228899F65008B050B /* Category.swift */; };
 		0A3DE4552889A1A2008B050B /* GridProductCardTileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A3DE4542889A1A2008B050B /* GridProductCardTileView.swift */; };
 		0A3DE4592889A1BD008B050B /* ProductDetailsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A3DE4582889A1BD008B050B /* ProductDetailsView.swift */; };
@@ -368,6 +371,9 @@
 		0A3B08DC28AD22BE00A54385 /* ProductRecognizerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductRecognizerView.swift; sourceTree = "<group>"; };
 		0A3B08E128AD292C00A54385 /* Resnet50.mlmodel */ = {isa = PBXFileReference; lastKnownFileType = file.mlmodel; path = Resnet50.mlmodel; sourceTree = "<group>"; };
 		0A3B08E328AD4D1C00A54385 /* CameraViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CameraViewModel.swift; sourceTree = "<group>"; };
+		0A3B08E728AD921C00A54385 /* CameraView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CameraView.swift; sourceTree = "<group>"; };
+		0A3B08EA28AD95F300A54385 /* ProductRecognizer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductRecognizer.swift; sourceTree = "<group>"; };
+		0A3B08EC28AD972C00A54385 /* SourceForImageRecognition.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SourceForImageRecognition.swift; sourceTree = "<group>"; };
 		0A3DE45228899F65008B050B /* Category.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Category.swift; sourceTree = "<group>"; };
 		0A3DE4542889A1A2008B050B /* GridProductCardTileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GridProductCardTileView.swift; sourceTree = "<group>"; };
 		0A3DE4582889A1BD008B050B /* ProductDetailsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductDetailsView.swift; sourceTree = "<group>"; };
@@ -663,7 +669,6 @@
 			isa = PBXGroup;
 			children = (
 				0A3B08E528AD4D2200A54385 /* MLModel */,
-				0A3B08E328AD4D1C00A54385 /* CameraViewModel.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -674,6 +679,23 @@
 				0A3B08E128AD292C00A54385 /* Resnet50.mlmodel */,
 			);
 			path = MLModel;
+			sourceTree = "<group>";
+		};
+		0A3B08E628AD91DE00A54385 /* Camera */ = {
+			isa = PBXGroup;
+			children = (
+				0A3B08E728AD921C00A54385 /* CameraView.swift */,
+				0A3B08E328AD4D1C00A54385 /* CameraViewModel.swift */,
+			);
+			path = Camera;
+			sourceTree = "<group>";
+		};
+		0A3B08E928AD95E000A54385 /* Recognizer */ = {
+			isa = PBXGroup;
+			children = (
+				0A3B08EA28AD95F300A54385 /* ProductRecognizer.swift */,
+			);
+			path = Recognizer;
 			sourceTree = "<group>";
 		};
 		0A3DE4572889A1AD008B050B /* ProductViews */ = {
@@ -831,6 +853,7 @@
 				0A30460628AA4F3500F218B3 /* SortingMethods.swift */,
 				0A30460C28AAB02500F218B3 /* FilteringMethods.swift */,
 				0A33A07128ABCAAC0013AE92 /* TabsWithProducts.swift */,
+				0A3B08EC28AD972C00A54385 /* SourceForImageRecognition.swift */,
 			);
 			path = Enums;
 			sourceTree = "<group>";
@@ -1100,6 +1123,8 @@
 		0ACD599C284B719A00AA9DA0 /* Search */ = {
 			isa = PBXGroup;
 			children = (
+				0A3B08E928AD95E000A54385 /* Recognizer */,
+				0A3B08E628AD91DE00A54385 /* Camera */,
 				0A3B08DE28AD28AE00A54385 /* Model */,
 				0A56D89E285F27A60009680C /* SearchView.swift */,
 				0A3441BF28A423BA005FFFD5 /* SearchedProductsListView.swift */,
@@ -1401,6 +1426,7 @@
 				0A5A7CF22895808B00736B07 /* ProductTileForCartView.swift in Sources */,
 				0ACD59AD284B739C00AA9DA0 /* Profile.swift in Sources */,
 				0A35556C289FDD7C005993E5 /* AppTheme.swift in Sources */,
+				0A3B08ED28AD972C00A54385 /* SourceForImageRecognition.swift in Sources */,
 				0A355568289FD3ED005993E5 /* ErrorModal.swift in Sources */,
 				0AD8976B289D392F00BFDAA1 /* ProductDetailsRatingsSection.swift in Sources */,
 				0ACD58EB284A6F6600AA9DA0 /* TabBarStateManager.swift in Sources */,
@@ -1452,6 +1478,7 @@
 				0A30460528A96CE500F218B3 /* UIColor.swift in Sources */,
 				0A56D89D285F279B0009680C /* FavoritesViewModel.swift in Sources */,
 				0A420ACD289F1A7A00AA4C52 /* ImagesCarouselView.swift in Sources */,
+				0A3B08EB28AD95F300A54385 /* ProductRecognizer.swift in Sources */,
 				0A5A7CFA2896A47C00736B07 /* CompletionReturnCreationView.swift in Sources */,
 				0A3245F1288B16670046043D /* ProductDisplayMethod.swift in Sources */,
 				0ACD5900284A6F6600AA9DA0 /* LabelledDivider.swift in Sources */,
@@ -1502,6 +1529,7 @@
 				0A35557128A052F3005993E5 /* SettingsView.swift in Sources */,
 				0A27E7D4287B509300D033D9 /* CardCompany.swift in Sources */,
 				0A2FE0BC28A1C02200E8D30E /* ContentViewModel.swift in Sources */,
+				0A3B08E828AD921C00A54385 /* CameraView.swift in Sources */,
 				0ACD58F7284A6F6600AA9DA0 /* Hidden.swift in Sources */,
 				0ACD5918284A6F6600AA9DA0 /* LoginViewModel.swift in Sources */,
 				0A2FE0B228A1BA3100E8D30E /* LottieView.swift in Sources */,
@@ -1718,13 +1746,14 @@
 				DEVELOPMENT_TEAM = T3SR62DCTW;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_NSCameraUsageDescription = "Used to take profile picture and regocnize products";
 				INFOPLIST_KEY_NSFaceIDUsageDescription = "Used to unlock app";
 				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "Location used to fill registration address data";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = UIInterfaceOrientationPortrait;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -1749,13 +1778,14 @@
 				DEVELOPMENT_TEAM = T3SR62DCTW;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_NSCameraUsageDescription = "Used to take profile picture and regocnize products";
 				INFOPLIST_KEY_NSFaceIDUsageDescription = "Used to unlock app";
 				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "Location used to fill registration address data";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = UIInterfaceOrientationPortrait;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",

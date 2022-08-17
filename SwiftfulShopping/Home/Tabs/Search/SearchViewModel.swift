@@ -6,10 +6,6 @@
 //
 
 import SwiftUI
-import CoreML
-import Vision
-import CoreImage
-import AVKit
 
 class SearchViewModel: ObservableObject {
     @Published var choosenProduct: Product?
@@ -17,11 +13,7 @@ class SearchViewModel: ObservableObject {
     
     @Published var shouldPresentProductRecognizerView: Bool = false
     
-    @Published var sourceForImageRecognition: SourceForImageRecognition = .camera
     @Published var shouldPresentImagePicker: Bool = false
-    @Published var oldImageForRecognition: UIImage?
-    @Published var imageForRecognition = UIImage()
-    @Published var recognitionResult: String?
     
     @Published var trendingSearchesFullList: [String] = []
     var trendingSearches: [String] {
@@ -36,15 +28,6 @@ class SearchViewModel: ObservableObject {
     @Published var shouldPresentAllRecentSearches: Bool = false
     
     @Published var showLoadingModal: Bool = false
-    
-    @Published var captureSession = AVCaptureSession()
-    @Published var captureOutput = AVCapturePhotoOutput()
-    @Published var capturePreview: AVCaptureVideoPreviewLayer!
-    
-    enum SourceForImageRecognition {
-        case camera
-        case photoLibrary
-    }
     
     func onAppear() {
         fetchTrendingSearches()
@@ -74,51 +57,5 @@ class SearchViewModel: ObservableObject {
             recentSearchesFullList.append(searchText)
             UserDefaults.standard.set(recentSearchesFullList, forKey: "recentSearches")
         }
-    }
-    
-    func uploadNewImageForRecognition() {
-        captureSession.stopRunning()
-        if let oldImageForRecognition = oldImageForRecognition {
-            if !imageForRecognition.isEqual(oldImageForRecognition) {
-                self.oldImageForRecognition = imageForRecognition
-            }
-        } else {
-            oldImageForRecognition = imageForRecognition
-        }
-    }
-    
-    func recognizeImage(errorManager: ErrorManager) {
-        if let ciImage = CIImage(image: imageForRecognition) {
-            if let model = try? VNCoreMLModel(for: Resnet50(configuration: MLModelConfiguration()).model) {
-                let request = VNCoreMLRequest(model: model)
-
-                let handler = VNImageRequestHandler(ciImage: ciImage, options: [:])
-
-                do {
-                    try? handler.perform([request])
-                } catch(let error) {
-                    generateError(errorManager: errorManager,
-                                  additionalErrorDescription: error.localizedDescription)
-                }
-
-                if let firstResult = request.results?.first as? VNClassificationObservation {
-                    self.recognitionResult = firstResult.identifier
-                } else {
-                    generateError(errorManager: errorManager,
-                                  additionalErrorDescription: "Error getting first result from results")
-                }
-            } else {
-                generateError(errorManager: errorManager,
-                              additionalErrorDescription: "Error getting recognition model")
-            }
-        } else {
-            generateError(errorManager: errorManager,
-                          additionalErrorDescription: "Error processing CIImage")
-        }
-    }
-    
-    func generateError(errorManager: ErrorManager, additionalErrorDescription: String?) {
-        errorManager.generateCustomError(errorType: .productRecognizerError,
-                                         additionalErrorDescription: additionalErrorDescription)
     }
 }

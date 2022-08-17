@@ -15,69 +15,72 @@ struct ProductRecognizerView: View {
     @Environment(\.dismiss) private var dismiss
     
     @StateObject private var cameraViewModel = CameraViewModel()
+    @StateObject private var productRecognizer = ProductRecognizer()
     @StateObject private var errorManager = ErrorManager.shared
     
     var body: some View {
-        ScrollView(.vertical, showsIndicators: false) {
-            VStack(alignment: .center, spacing: 40) {
-                switch searchViewModel.sourceForImageRecognition {
-                case .camera:
-                    GeometryReader { proxy in
-                        
-                    }
-                case .photoLibrary:
-                    if let imageForRecognition = searchViewModel.imageForRecognition {
-                        Image(uiImage: imageForRecognition)
-                            .resizable()
-                            .scaledToFill()
-                            .clipShape(RoundedRectangle(cornerRadius: 10))
-                    }
+        VStack(alignment: .center) {
+            switch productRecognizer.sourceForImageRecognition {
+            case .camera:
+                GeometryReader { geometry in
+                    CameraView(size: geometry.size)
+                        .environmentObject(cameraViewModel)
                 }
-                
-                Spacer()
-                
-                VStack(alignment: .center, spacing: 15) {
-                    Button {
-                        withAnimation {
-                            searchViewModel.recognizeImage(errorManager: errorManager)
-                        }
-                    } label: {
-                        Text("Recognize")
-                            .font(.system(size: 20, weight: .bold, design: .rounded))
-                    }
-                    .buttonStyle(CustomButton())
-                    
-                    Button {
-                        withAnimation {
-                            searchViewModel.shouldPresentImagePicker = true
-                        }
-                    } label: {
-                        Text("Use Photo Library")
-                            .font(.system(size: 20, weight: .bold, design: .rounded))
-                    }
-                    .buttonStyle(CustomButton(textColor: .accentColor, onlyStroke: true))
-                }
-                .padding()
+            case .photoLibrary:
+                Image(uiImage: productRecognizer.imageForRecognition)
+                    .resizable()
+                    .aspectRatio(contentMode: .fit)
+                    .clipShape(RoundedRectangle(cornerRadius: 10))
             }
+            
+            Spacer()
+            
+            VStack(alignment: .center, spacing: 15) {
+                Button {
+                    withAnimation {
+                        productRecognizer.recognizeProduct(pixelBuffer: cameraViewModel.pixelBuffer,
+                                                           errorManager: errorManager)
+                    }
+                } label: {
+                    Text("Recognize")
+                        .font(.system(size: 20, weight: .bold, design: .rounded))
+                }
+                .buttonStyle(CustomButton())
+                
+                Button {
+                    withAnimation {
+                        if productRecognizer.sourceForImageRecognition == .camera {
+                            productRecognizer.sourceForImageRecognition = .photoLibrary
+                            cameraViewModel.stopCapturing()
+                            searchViewModel.shouldPresentImagePicker = true
+                        } else {
+                            productRecognizer.sourceForImageRecognition = .camera
+                            searchViewModel.shouldPresentImagePicker = false
+                            cameraViewModel.startCapturing()
+                        }
+                    }
+                } label: {
+                    Text(productRecognizer.sourceForImageRecognition == .camera ? "Use Photo Library" : "Use Camera")
+                        .font(.system(size: 20, weight: .bold, design: .rounded))
+                }
+                .buttonStyle(CustomButton(textColor: .accentColor, onlyStroke: true))
+            }
+            .padding()
         }
         .navigationTitle("Recognize Product")
         .navigationBarTitleDisplayMode(.inline)
         .sheet(isPresented: $searchViewModel.shouldPresentImagePicker) {
             ImagePicker(sourceType: .photoLibrary,
-                        selectedImage: $searchViewModel.imageForRecognition)
-                .onDisappear {
-                    searchViewModel.uploadNewImageForRecognition()
-                }
+                        selectedImage: $productRecognizer.imageForRecognition)
         }
-        .onReceive(searchViewModel.$recognitionResult) { _ in
-            if let recognitionResult = searchViewModel.recognitionResult {
+        .onReceive(productRecognizer.$recognitionResult) { _ in
+            if let recognitionResult = productRecognizer.recognitionResult {
                 exploreViewModel.searchProductsText = recognitionResult
                 dismiss()
             }
         }
         .modifier(LoadingIndicatorModal(isPresented:
                                             $searchViewModel.showLoadingModal))
-        .modifier(ErrorModal(isPresented: $errorManager.showErrorModal, customError: errorManager.customError ?? ErrorManager.unknownError))
         .onAppear {
             cameraViewModel.onAppear()
         }
