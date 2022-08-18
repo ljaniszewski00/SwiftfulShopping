@@ -24,20 +24,29 @@ struct ProductRecognizerView: View {
                                GridItem(.flexible(), spacing: 0)]
     
     var body: some View {
-        VStack {
-            ZStack {
+        ZStack {
+            GeometryReader { geometry in
                 VStack(alignment: .center) {
                     switch productRecognizer.sourceForImageRecognition {
                     case .camera:
-                        GeometryReader { geometry in
-                            CameraView(size: geometry.size)
-                                .environmentObject(cameraViewModel)
-                        }
+                        CameraView(size: geometry.size)
+                            .environmentObject(cameraViewModel)
+                            .ignoresSafeArea()
                     case .photoLibrary:
-                        Image(uiImage: productRecognizer.imageForRecognition)
-                            .resizable()
-                            .aspectRatio(contentMode: .fit)
-                            .clipShape(RoundedRectangle(cornerRadius: 10))
+                        VStack(alignment: .center, spacing: 30) {
+                            Image(uiImage: productRecognizer.imageForRecognition)
+                                .resizable()
+                                .aspectRatio(contentMode: .fit)
+                                .clipShape(RoundedRectangle(cornerRadius: 10))
+                            
+                            Button {
+                                searchViewModel.shouldPresentImagePicker = true
+                            } label: {
+                                Text("Choose other image")
+                                    .font(.system(size: 18, weight: .semibold, design: .rounded))
+                            }
+                        }
+                        .padding()
                     }
                     
                     Spacer()
@@ -50,7 +59,8 @@ struct ProductRecognizerView: View {
                                 }
                                 productRecognizer.shouldPresentRecognizingAnimation = true
                                 productRecognizer.recognizeProduct(pixelBuffer: cameraViewModel.pixelBuffer,
-                                                                   errorManager: errorManager)
+                                                                   errorManager: errorManager) {
+                                }
                             }
                         } label: {
                             Text("Recognize")
@@ -61,7 +71,6 @@ struct ProductRecognizerView: View {
                         Button {
                             withAnimation {
                                 if productRecognizer.sourceForImageRecognition == .camera {
-                                    productRecognizer.sourceForImageRecognition = .photoLibrary
                                     cameraViewModel.stopCapturing()
                                     searchViewModel.shouldPresentImagePicker = true
                                 } else {
@@ -77,6 +86,7 @@ struct ProductRecognizerView: View {
                         .buttonStyle(CustomButton(textColor: .accentColor, onlyStroke: true))
                     }
                     .padding()
+                    .background(.ultraThinMaterial, in: RoundedRectangle(cornerRadius: 15, style: .continuous))
                 }
                 
                 if productRecognizer.shouldPresentRecognizingAnimation {
@@ -92,8 +102,15 @@ struct ProductRecognizerView: View {
             }
         }) {
             VStack(alignment: .center, spacing: 40) {
-                Text("Recognition Results")
-                    .font(.system(size: 22, weight: .bold, design: .rounded))
+                VStack(alignment: .center, spacing: 20) {
+                    Text("Recognition Results")
+                        .font(.system(size: 24, weight: .bold, design: .rounded))
+                    
+                    Text("Choose one of them to search for such product or try to recognize the product again")
+                        .font(.system(size: 18, weight: .semibold, design: .rounded))
+                        .foregroundColor(.gray)
+                        .fixedSize(horizontal: false, vertical: true)
+                }
                 LazyVGrid(columns: gridColumns, alignment: .leading, spacing: 10) {
                     ForEach(productRecognizer.getFormattedResults(), id: \.self) { recognitionResult in
                         Button {
@@ -113,18 +130,32 @@ struct ProductRecognizerView: View {
                 .font(.system(size: 18, weight: .semibold, design: .rounded))
                 
                 Spacer()
+                
+                Button {
+                    withAnimation {
+                        productRecognizer.shouldPresentSheetWithResults = false
+                    }
+                } label: {
+                    Text("Try again")
+                        .font(.system(size: 20, weight: .bold, design: .rounded))
+                }
+                .buttonStyle(CustomButton(textColor: .accentColor, onlyStroke: true))
             }
             .padding()
+            .padding(.top)
         }
         .sheet(isPresented: $searchViewModel.shouldPresentImagePicker) {
             ImagePicker(sourceType: .photoLibrary,
                         selectedImage: $productRecognizer.imageForRecognition)
+            .onDisappear {
+                productRecognizer.sourceForImageRecognition = .photoLibrary
+            }
         }
         .onReceive(productRecognizer.$recognitionResult) { _ in
-            if productRecognizer.recognitionResult != nil {
-                DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
+            DispatchQueue.main.asyncAfter(deadline: .now() + 3) {
+                productRecognizer.shouldPresentRecognizingAnimation = false
+                if productRecognizer.recognitionResult != nil {
                     productRecognizer.shouldPresentSheetWithResults = true
-                    productRecognizer.shouldPresentRecognizingAnimation = false
                 }
             }
         }

@@ -693,6 +693,7 @@
 		0A3B08E928AD95E000A54385 /* Recognizer */ = {
 			isa = PBXGroup;
 			children = (
+				0A3B08DC28AD22BE00A54385 /* ProductRecognizerView.swift */,
 				0A3B08EA28AD95F300A54385 /* ProductRecognizer.swift */,
 			);
 			path = Recognizer;
@@ -1129,7 +1130,6 @@
 				0A56D89E285F27A60009680C /* SearchView.swift */,
 				0A3441BF28A423BA005FFFD5 /* SearchedProductsListView.swift */,
 				0A3441BD28A42184005FFFD5 /* SearchViewModel.swift */,
-				0A3B08DC28AD22BE00A54385 /* ProductRecognizerView.swift */,
 			);
 			path = Search;
 			sourceTree = "<group>";

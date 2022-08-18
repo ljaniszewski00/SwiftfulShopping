@@ -20,7 +20,7 @@ class ProductRecognizer: ObservableObject {
     @Published var shouldPresentSheetWithResults: Bool = false
     @Published var shouldPresentRecognizingAnimation: Bool = false
     
-    func recognizeProduct(pixelBuffer: CVPixelBuffer?, errorManager: ErrorManager) {
+    func recognizeProduct(pixelBuffer: CVPixelBuffer?, errorManager: ErrorManager, completion: @escaping (() -> ())) {
         self.pixelBuffer = pixelBuffer
         if let request = buildRecognitionRequest(errorManager: errorManager) {
             switch sourceForImageRecognition {
@@ -31,6 +31,7 @@ class ProductRecognizer: ObservableObject {
             }
             let result = prepareRecognitionResults(request: request, errorManager: errorManager)
             self.recognitionResult = result
+            completion()
         }
     }
     
