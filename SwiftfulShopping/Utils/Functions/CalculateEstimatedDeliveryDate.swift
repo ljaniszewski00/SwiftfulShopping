@@ -14,7 +14,7 @@ func calculateEstimatedDeliveryDate(orderDate: Date) -> Date {
     
     dayComponent.day = 1
     while Calendar.current.isDateInWeekend(estimatedDeliveryDate!) {
-        estimatedDeliveryDate = Calendar.current.date(byAdding: dayComponent, to: Date())
+        estimatedDeliveryDate = Calendar.current.date(byAdding: dayComponent, to: estimatedDeliveryDate!)
     }
     
     return estimatedDeliveryDate!
