@@ -27,25 +27,22 @@ struct ExploreView: View {
                     ScrollView(.horizontal, showsIndicators: false) {
                         HStack {
                             ForEach(ExploreViewTabs.allCases, id: \.self) { tabName in
-                                VStack {
-                                    Button {
+                                Text(tabName.rawValue)
+                                    .font(.system(size: 16, weight: .bold, design: .rounded))
+                                    .foregroundColor(colorScheme == .light ? .black : .white)
+                                    .padding()
+                                    .if(tabName == exploreViewModel.selectedTab) {
+                                        $0
+                                            .background {
+                                                RoundedRectangle(cornerRadius: 10)
+                                                    .foregroundColor(.accentColor)
+                                            }
+                                    }
+                                    .onTapGesture {
                                         withAnimation {
                                             exploreViewModel.selectedTab = tabName
                                         }
-                                    } label: {
-                                        Text(tabName.rawValue)
-                                            .font(.system(size: 16, weight: .bold, design: .rounded))
-                                            .foregroundColor(colorScheme == .light ? .black : .white)
-                                            .padding()
-                                            .if(tabName == exploreViewModel.selectedTab) {
-                                                $0
-                                                    .background {
-                                                        RoundedRectangle(cornerRadius: 10)
-                                                            .foregroundColor(.accentColor)
-                                                    }
-                                            }
                                     }
-                                }
                             }
                         }
                         .padding()

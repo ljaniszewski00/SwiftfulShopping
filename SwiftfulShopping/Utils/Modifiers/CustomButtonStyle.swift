@@ -57,6 +57,9 @@ struct CustomButton: ButtonStyle {
             }
         }
         .foregroundColor(buttonColor)
-        .scaleEffect(configuration.isPressed ? 1.05 : 1.0)
+        .scaleEffect(configuration.isPressed ? 1.03 : 1.0)
+        .onChange(of: configuration.isPressed) { _ in
+            UIImpactFeedbackGenerator(style: .medium).impactOccurred()
+        }
     }
 }
