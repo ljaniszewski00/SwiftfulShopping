@@ -17,6 +17,9 @@ class ProductRecognizer: ObservableObject {
     @Published var imageForRecognition = UIImage()
     @Published var recognitionResult: String?
     
+    @Published var shouldPresentSheetWithResults: Bool = false
+    @Published var shouldPresentRecognizingAnimation: Bool = false
+    
     func recognizeProduct(pixelBuffer: CVPixelBuffer?, errorManager: ErrorManager) {
         self.pixelBuffer = pixelBuffer
         if let request = buildRecognitionRequest(errorManager: errorManager) {
@@ -29,6 +32,18 @@ class ProductRecognizer: ObservableObject {
             let result = prepareRecognitionResults(request: request, errorManager: errorManager)
             self.recognitionResult = result
         }
+    }
+    
+    func getFormattedResults() -> [String] {
+        var resultsSplitted: Set<String> = []
+        if let recognitionResult = recognitionResult {
+            let replaced = recognitionResult.replacingOccurrences(of: ",", with: "")
+            let splitted = replaced.split(separator: " ")
+            for split in splitted {
+                resultsSplitted.insert(String(split))
+            }
+        }
+        return Array(resultsSplitted)
     }
     
     private func buildRecognitionRequest(errorManager: ErrorManager) -> VNCoreMLRequest? {
@@ -75,8 +90,9 @@ class ProductRecognizer: ObservableObject {
     }
     
     private func prepareRecognitionResults(request: VNCoreMLRequest, errorManager: ErrorManager) -> String? {
-        if let firstResult = request.results?.first as? VNClassificationObservation {
-            return firstResult.identifier
+        if let firstResult = request.results?[0] as? VNClassificationObservation,
+           let secondResult = request.results?[1] as? VNClassificationObservation {
+            return firstResult.identifier + ", " + secondResult.identifier
         } else {
             generateError(errorManager: errorManager,
                           additionalErrorDescription: "Error getting first result from results")
