@@ -28,7 +28,7 @@ struct OrderCreationShipmentPaymentView: View {
                 VStack(alignment: .leading, spacing: 30) {
                     VStack(alignment: .leading, spacing: 5) {
                         Text("Consignee Data")
-                            .font(.system(size: 22, weight: .heavy, design: .rounded))
+                            .font(.system(size: 22, weight: .bold, design: .rounded))
                         
                         Text("This will be the delivery addres for package")
                             .font(.system(size: 16, weight: .regular, design: .rounded))
@@ -58,62 +58,118 @@ struct OrderCreationShipmentPaymentView: View {
                     }
                     
                     VStack(alignment: .leading, spacing: 15) {
-                        Text("Payment")
-                            .font(.system(size: 22, weight: .heavy, design: .rounded))
+                        Text("Choose delivery method")
+                            .font(.system(size: 22, weight: .bold, design: .rounded))
                         
-                        ForEach(ShippingMethod.allCases, id: \.self) { shippingMethod in
-                            Button {
-                                withAnimation {
-                                    orderCreationViewModel.choosenShippingMethod = shippingMethod
-                                }
-                            } label: {
-                                ZStack {
-                                    RoundedRectangle(cornerRadius: 5)
-                                        .if(orderCreationViewModel.choosenShippingMethod != shippingMethod) {
-                                            $0
-                                                .stroke()
+                        VStack(alignment: .leading) {
+                            ForEach(ShippingMethod.allCases, id: \.self) { shippingMethod in
+                                HStack {
+                                    Button(action: {
+                                        withAnimation {
+                                            orderCreationViewModel.choosenShippingMethod = shippingMethod
                                         }
+                                    }, label: {
+                                        if orderCreationViewModel.choosenShippingMethod == shippingMethod {
+                                            Circle()
+                                                .foregroundColor(.accentColor)
+                                                .frame(width: 25)
+                                        } else {
+                                            Circle()
+                                                .stroke(lineWidth: 3)
+                                                .foregroundColor(.accentColor)
+                                                .frame(width: 25)
+                                        }
+                                    })
+                                    
                                     Text(shippingMethod.rawValue)
-                                        .foregroundColor(orderCreationViewModel.choosenShippingMethod == shippingMethod ? .white : .accentColor)
-                                        .padding()
+                                        .font(.system(size: 20, weight: .regular, design: .rounded))
                                 }
+                                .frame(height: 50)
                             }
                         }
                     }
                     
                     VStack(alignment: .leading, spacing: 15) {
-                        Text("Payment")
-                            .font(.system(size: 22, weight: .heavy, design: .rounded))
+                        Text("Choose payment method:")
+                            .font(.system(size: 22, weight: .bold, design: .rounded))
                         
-                        ForEach(PaymentMethod.allCases, id: \.self) { paymentMethod in
-                            Button {
-                                withAnimation {
-                                    orderCreationViewModel.choosenPaymentMethod = paymentMethod
-                                }
-                            } label: {
-                                ZStack {
-                                    RoundedRectangle(cornerRadius: 5)
-                                        .if(orderCreationViewModel.choosenPaymentMethod != paymentMethod) {
-                                            $0
-                                                .stroke()
+                        VStack(alignment: .leading) {
+                            ForEach(PaymentMethod.allCases, id: \.self) { paymentMethod in
+                                HStack {
+                                    Button(action: {
+                                        withAnimation {
+                                            orderCreationViewModel.choosenPaymentMethod = paymentMethod
                                         }
+                                    }, label: {
+                                        if orderCreationViewModel.choosenPaymentMethod == paymentMethod {
+                                            Circle()
+                                                .foregroundColor(.accentColor)
+                                                .frame(width: 25)
+                                        } else {
+                                            Circle()
+                                                .stroke(lineWidth: 3)
+                                                .foregroundColor(.accentColor)
+                                                .frame(width: 25)
+                                        }
+                                    })
+                                    
                                     Text(paymentMethod.rawValue)
-                                        .foregroundColor(orderCreationViewModel.choosenPaymentMethod == paymentMethod ? .white : .accentColor)
-                                        .padding()
+                                        .font(.system(size: 20, weight: .regular, design: .rounded))
                                 }
+                                .frame(height: 50)
                             }
                         }
                     }
                     
-                    HStack {
+                    VStack(alignment: .leading) {
                         Text("Would you like to receive invoice?")
-                            .font(.system(size: 18, weight: .heavy, design: .rounded))
+                            .font(.system(size: 22, weight: .bold, design: .rounded))
                         
-                        Spacer()
+                        HStack {
+                            Button(action: {
+                                withAnimation {
+                                    orderCreationViewModel.toReceiveInvoice = true
+                                }
+                            }, label: {
+                                if orderCreationViewModel.toReceiveInvoice {
+                                    Circle()
+                                        .foregroundColor(.accentColor)
+                                        .frame(width: 25)
+                                } else {
+                                    Circle()
+                                        .stroke(lineWidth: 3)
+                                        .foregroundColor(.accentColor)
+                                        .frame(width: 25)
+                                }
+                            })
+                            
+                            Text("Yes")
+                                .font(.system(size: 20, weight: .regular, design: .rounded))
+                        }
+                        .frame(height: 50)
                         
-                        Toggle("", isOn: $orderCreationViewModel.toReceiveInvoice)
-                            .toggleStyle(CheckMarkToggleStyle())
-                            .padding(.trailing, 10)
+                        HStack {
+                            Button(action: {
+                                withAnimation {
+                                    orderCreationViewModel.toReceiveInvoice = false
+                                }
+                            }, label: {
+                                if !orderCreationViewModel.toReceiveInvoice {
+                                    Circle()
+                                        .foregroundColor(.accentColor)
+                                        .frame(width: 25)
+                                } else {
+                                    Circle()
+                                        .stroke(lineWidth: 3)
+                                        .foregroundColor(.accentColor)
+                                        .frame(width: 25)
+                                }
+                            })
+                            
+                            Text("No")
+                                .font(.system(size: 20, weight: .regular, design: .rounded))
+                        }
+                        .frame(height: 50)
                     }
                 }
                 .padding()

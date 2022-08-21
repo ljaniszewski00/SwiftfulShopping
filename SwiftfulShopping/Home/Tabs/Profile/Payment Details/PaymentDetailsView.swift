@@ -14,145 +14,165 @@ struct PaymentDetailsView: View {
     
     @StateObject private var paymentDetailsViewModel: PaymentDetailsViewModel = PaymentDetailsViewModel()
     
-    @State private var editCardData: Bool = false
+    @State private var isCardNumberTextFieldFocused: Bool = false
+    @State private var isCardHolderNameTextFieldFocused: Bool = false
     
     var body: some View {
-        VStack(alignment: .center) {
-            List {
-                ForEach(PaymentMethod.allCases, id: \.self) { paymentMethod in
-                    Section(header: Text(paymentMethod.rawValue)
-                        .font(.system(size: 22, weight: .bold, design: .rounded))) {
-                            if paymentMethod == .cash {
-                                
-                            } else if paymentMethod == .creditCard {
-                                HStack {
-                                    Spacer()
-                                    VStack(alignment: .center) {
-                                        VStack(alignment: .leading) {
-                                            HStack {
-                                                Text(paymentDetailsViewModel.cardCompany.rawValue)
-                                                    .font(.system(size: 18, weight: .bold, design: .rounded))
-                                                    .foregroundColor(.white)
-                                                Spacer()
-                                                Image("card_chip")
-                                                    .resizable()
-                                                    .frame(width: 40, height: 30)
-                                            }
-                                            .padding(.bottom, 30)
-                                            
-                                            if editCardData {
-                                                TextField(paymentDetailsViewModel.newCardNumber, text: $paymentDetailsViewModel.newCardNumber)
-                                                    .textFieldStyle(.roundedBorder)
-                                            } else {
-                                                Text(paymentDetailsViewModel.newCardNumber)
-                                                    .font(.system(size: 18, weight: .bold, design: .rounded))
-                                                    .foregroundColor(.white)
-                                                    .padding(.bottom, 5)
-                                            }
-                                            
-                                            HStack {
-                                                Text("Valid Thru")
-                                                    .font(.system(size: 14, design: .rounded))
-                                                    .fixedSize(horizontal: false, vertical: true)
-                                                    .frame(width: 50)
-                                                    .foregroundColor(.white)
-                                                if editCardData {
-                                                    TextField(paymentDetailsViewModel.newValidThruDate, text: $paymentDetailsViewModel.newValidThruDate)
-                                                        .textFieldStyle(.roundedBorder)
-                                                } else {
-                                                    Text(paymentDetailsViewModel.newValidThruDate)
-                                                        .font(.system(size: 18, weight: .bold, design: .rounded))
-                                                        .foregroundColor(.white)
-                                                }
-                                            }
-                                            .padding(.bottom, 10)
-                                            
-                                            if editCardData {
-                                                TextField(paymentDetailsViewModel.newCardholderName, text: $paymentDetailsViewModel.newCardholderName)
-                                                    .textFieldStyle(.roundedBorder)
-                                            } else {
-                                                Text(paymentDetailsViewModel.newCardholderName)
-                                                    .font(.system(size: 18, weight: .bold, design: .rounded))
-                                                    .foregroundColor(.white)
-                                            }
-                                            
-                                            Spacer()
-                                        }
-                                        .padding(.all, 20)
-                                        .frame(width: ScreenBoundsSupplier.shared.getScreenWidth() * 0.86, height: ScreenBoundsSupplier.shared.getScreenHeight() * 0.24)
-                                        .background(LinearGradient(gradient: Gradient(colors: [Color.accentColor, Color(uiColor: UIColor(rgb: 0x7CEA9C))]), startPoint: .topLeading, endPoint: .bottomTrailing))
-                                        .cornerRadius(15)
-                                        .padding(.bottom, 20)
-                                        
-                                        if editCardData {
-                                            Button {
-                                                withAnimation {
-                                                    if profileViewModel.profile.creditCard == nil {
-                                                        profileViewModel.addNewCard(card: paymentDetailsViewModel.createNewCard())
-                                                    } else {
-                                                        profileViewModel.editCardData(cardNumber: paymentDetailsViewModel.newCardNumber, validThru: paymentDetailsViewModel.newValidThruDate, cardholderName: paymentDetailsViewModel.newCardholderName)
-                                                    }
-                                                    editCardData.toggle()
-                                                }
-                                            } label: {
-                                                Text("Finish")
-                                                    .font(.system(size: 16, weight: .bold, design: .rounded))
-                                            }
-                                            .buttonStyle(CustomButton(buttonWidthMultiplier: 0.86))
-                                            .contentShape(Rectangle())
-                                            .disabled(paymentDetailsViewModel.newCardInfoNotValidated)
-                                        } else {
-                                            Button {
-                                                withAnimation {
-                                                    editCardData.toggle()
-                                                }
-                                            } label: {
-                                                Text("Edit Card Data")
-                                                    .font(.system(size: 20, weight: .bold, design: .rounded))
-                                            }
-                                            .buttonStyle(CustomButton(buttonWidthMultiplier: 0.86))
-                                            .contentShape(Rectangle())
-                                        }
-                                    }
-                                    
-                                    Spacer()
+        ScrollView(.vertical, showsIndicators: false) {
+            VStack(alignment: .leading, spacing: 15) {
+                Text("Choose default payment method:")
+                    .font(.system(size: 22, weight: .bold, design: .rounded))
+                
+                VStack(alignment: .leading, spacing: 10) {
+                    ForEach(PaymentMethod.allCases, id: \.self) { paymentMethod in
+                        HStack {
+                            Button(action: {
+                                profileViewModel.changeDefaultPaymentMethod(newDefaultPaymentMethod: paymentMethod)
+                            }, label: {
+                                if profileViewModel.profile.defaultPaymentMethod == paymentMethod {
+                                    Circle()
+                                        .foregroundColor(.accentColor)
+                                        .frame(width: 25)
+                                } else {
+                                    Circle()
+                                        .stroke(lineWidth: 3)
+                                        .foregroundColor(.accentColor)
+                                        .frame(width: 25)
                                 }
-                            } else if paymentMethod == .applePay {
-                                HStack {
+                            })
+                            
+                            HStack {
+                                Text(paymentMethod.rawValue)
+                                    .font(.system(size: 20, weight: .regular, design: .rounded))
+                                if paymentMethod == .applePay {
                                     Image("apple_pay_logo")
                                         .resizable()
-                                        .frame(width: 280, height: 150)
-                                    Spacer()
+                                        .scaledToFit()
                                 }
                             }
-                            
-                            Button {
-                                withAnimation {
-                                    profileViewModel.changeDefaultPaymentMethod(newDefaultPaymentMethod: paymentMethod)
-                                }
-                            } label: {
-                                Text("Choose as default")
-                                    .font(.system(size: 20, weight: .bold, design: .rounded))
-                            }
-                            .buttonStyle(CustomButton(textColor: profileViewModel.profile.defaultPaymentMethod == paymentMethod ? .white : .accentColor,
-                                                      onlyStroke: profileViewModel.profile.defaultPaymentMethod != paymentMethod,
-                                                      buttonWidthMultiplier: 0.86))
-                            .contentShape(Rectangle())
-                            .padding(.leading, 8)
+                        }
+                        .frame(height: 50)
+                        
+                        if paymentMethod == .creditCard && profileViewModel.profile.defaultPaymentMethod == .creditCard {
+                            buildCreditCardSection()
+                                .padding(.bottom)
+                        }
+                    }
+                }
+                
+                Spacer()
+            }
+            .padding()
+            .padding(.bottom, 40)
+        }
+        .navigationTitle("Payment Details")
+        .onAppear {
+            if let userCard = profileViewModel.profile.creditCard {
+                paymentDetailsViewModel.cardNumber = userCard.cardNumber
+                paymentDetailsViewModel.newDate = Date().getDateFrom(userCard.validThru) ?? Date()
+                paymentDetailsViewModel.cardHolderName = userCard.cardholderName
+            } else {
+                paymentDetailsViewModel.initializeDataForNoCard()
+                profileViewModel.profile.creditCard = paymentDetailsViewModel.createNewCard()
+            }
+        }
+    }
+    
+    @ViewBuilder
+    func buildCreditCardSection() -> some View {
+        VStack(alignment: .center, spacing: 20) {
+            VStack(alignment: .leading) {
+                HStack {
+                    Text(paymentDetailsViewModel.cardCompany.rawValue)
+                        .font(.system(size: 20, weight: .bold, design: .rounded))
+                        .foregroundColor(.white)
+                    Spacer()
+                    Image("card_chip")
+                        .resizable()
+                        .frame(width: 40, height: 30)
+                }
+                .padding(.bottom, 30)
+                
+                Spacer()
+                
+                Text(paymentDetailsViewModel.cardNumber)
+                    .font(.system(size: 26, weight: .bold, design: .rounded))
+                    .foregroundColor(Color.white)
+                
+                Spacer()
+                
+                HStack {
+                    
+                    VStack(alignment: .leading) {
+                        Text("CARD HOLDER")
+                            .font(.system(size: 14, weight: .bold, design: .rounded))
+                            .foregroundColor(Color.gray)
+                        
+                        Text(paymentDetailsViewModel.cardHolderName)
+                            .font(.system(size: 16, weight: .bold, design: .rounded))
+                            .foregroundColor(Color.white)
+                        
+                    }
+                    
+                    Spacer()
+                    
+                    VStack(alignment: .leading) {
+                        Text("EXPIRES")
+                            .font(.system(size: 14, weight: .bold, design: .rounded))
+                            .foregroundColor(Color.gray)
+                        Text(paymentDetailsViewModel.validThruDate)
+                            .font(.system(size: 16, weight: .bold, design: .rounded))
+                            .foregroundColor(Color.white)
                     }
                 }
             }
-            .listStyle(.sidebar)
-        }
-        .navigationTitle("Payment Details")
-        .scrollOnOverflow(showScrollIndicators: false)
-        .onAppear {
-            if let userCard = profileViewModel.profile.creditCard {
-                paymentDetailsViewModel.newCardNumber = userCard.cardNumber
-                paymentDetailsViewModel.newValidThruDate = userCard.validThru
-                paymentDetailsViewModel.newCardholderName = userCard.cardholderName
-            } else {
-                paymentDetailsViewModel.initializeDataForNoCard()
+            .frame(width: ScreenBoundsSupplier.shared.getScreenWidth() * 0.85, height: 210)
+            .padding()
+            .background(LinearGradient(gradient: Gradient(colors: [Color(#colorLiteral(red: 0.5481430292, green: 0, blue: 0.4720868468, alpha: 1)), Color.blue]), startPoint: .topLeading, endPoint: .bottomTrailing))
+            .cornerRadius(15)
+            
+            Button {
+                withAnimation {
+                    paymentDetailsViewModel.editingCardData.toggle()
+                }
+            } label: {
+                Text(paymentDetailsViewModel.editingCardData ? "Save" : "Edit Card Data")
+                    .font(.system(size: 20, weight: .bold, design: .rounded))
+            }
+            .buttonStyle(CustomButton())
+            .contentShape(Rectangle())
+            .if(paymentDetailsViewModel.editingCardData) {
+                $0
+                    .disabled(paymentDetailsViewModel.newCardInfoNotValidated)
+            }
+            
+            if paymentDetailsViewModel.editingCardData {
+                VStack(alignment: .leading, spacing: 15) {
+                    RectangleCustomTextField(
+                        textFieldProperty: "Card Number",
+                        textFieldKeyboardType: .numberPad,
+                        text: $paymentDetailsViewModel.cardNumber,
+                        isFocusedParentView: $isCardNumberTextFieldFocused)
+                    
+                    RectangleCustomTextField(
+                        textFieldProperty: "Card Holder Name",
+                        text: $paymentDetailsViewModel.cardHolderName,
+                        isFocusedParentView: $isCardHolderNameTextFieldFocused)
+                    .padding(.bottom, 10)
+                    
+                    VStack(alignment: .leading) {
+                        Text("Valid Thru")
+                            .font(.system(size: 16, weight: .bold, design: .rounded))
+                            .foregroundColor(.accentColor)
+                        
+                        DatePicker(
+                            "",
+                            selection: $paymentDetailsViewModel.newDate,
+                            in: paymentDetailsViewModel.pickerDateRange,
+                            displayedComponents: [.date])
+                            .datePickerStyle(.graphical)
+                    }
+                }
             }
         }
     }

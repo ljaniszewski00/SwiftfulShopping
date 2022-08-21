@@ -8,31 +8,43 @@
 import Foundation
 
 class PaymentDetailsViewModel: ObservableObject {
-    @Published var newCardNumber: String = ""
-    @Published var newValidThruDate: String = ""
-    @Published var newCardholderName: String = ""
+    @Published var cardNumber: String = ""
+    @Published var cardHolderName: String = ""
+    @Published var newDate: Date = Date()
+    
+    var validThruDate: String {
+        newDate.dateString()
+    }
+    
+    @Published var editingCardData: Bool = false
+    
+    let pickerDateRange: ClosedRange<Date> = {
+        let calendar = Calendar.current
+        let startDate = calendar.date(from: DateComponents(year: 1900, month: 1, day: 1))!
+        let endDate = Date()
+        return startDate...endDate
+    }()
     
     var cardCompany: CardCompany {
-        detectCardCompany(cardNumber: newCardNumber)
+        detectCardCompany(cardNumber: cardNumber)
     }
     
     var newCardInfoNotValidated: Bool {
-        newCardNumber.isEmpty ||
-        newValidThruDate.isEmpty ||
-        newCardholderName.isEmpty ||
-        ![15, 16, 18, 19].contains(newCardNumber.count) ||
-        newValidThruDate.count != 5
+        cardNumber.isEmpty ||
+        validThruDate.isEmpty ||
+        cardHolderName.isEmpty ||
+        ![15, 16, 18, 19].contains(cardNumber.count) ||
+        validThruDate.count != 5
     }
     
     func initializeDataForNoCard() {
-        newCardNumber = "XXXX XXXX XXXX XXXX"
-        newValidThruDate = "mm/YY"
-        newCardholderName = "John Smith"
+        cardNumber = "XXXX XXXX XXXX XXXX"
+        cardHolderName = "John Smith"
     }
     
     func createNewCard() -> CreditCard {
-        CreditCard(cardNumber: newCardNumber,
-                   validThru: newValidThruDate,
-                   cardholderName: newCardholderName)
+        CreditCard(cardNumber: cardNumber,
+                   validThru: validThruDate,
+                   cardholderName: cardHolderName)
     }
 }

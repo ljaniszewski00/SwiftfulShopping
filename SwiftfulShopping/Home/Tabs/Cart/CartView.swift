@@ -29,15 +29,13 @@ struct CartView: View {
                 
                 List {
                     ForEach(Array(cartViewModel.cart.products.keys).sorted { $0.id > $1.id}, id: \.self) { product in
-                        Button {
-                            withAnimation(.interactiveSpring(response: 0.6, dampingFraction: 0.7, blendDuration: 0.7)) {
-                                cartViewModel.changeFocusedProductFor(product: product)
+                        ProductTileForCartView(product: product)
+                            .environmentObject(cartViewModel)
+                            .onTapGesture {
+                                withAnimation(.interactiveSpring(response: 0.6, dampingFraction: 0.7, blendDuration: 0.7)) {
+                                    cartViewModel.changeFocusedProductFor(product: product)
+                                }
                             }
-                        } label: {
-                            ProductTileForCartView(product: product)
-                                .environmentObject(cartViewModel)
-                        }
-                        .buttonStyle(ScaledButtonStyle())
                     }
                     .onDelete(perform: cartViewModel.removeProducts)
                 }

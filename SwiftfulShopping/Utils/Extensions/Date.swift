@@ -45,6 +45,10 @@ extension Date {
         dateFormatter.dateFormat = format
         return dateFormatter.string(from: self)
     }
+    
+    func getDateFrom(_ string: String) -> Date? {
+        DateFormatter().date(from: string)
+    }
 
     static func parse(_ string: String, format: String = "yyyy-MM-dd") -> Date {
         let dateFormatter = DateFormatter()
