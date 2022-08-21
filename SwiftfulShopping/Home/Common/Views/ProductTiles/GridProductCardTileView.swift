@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import Kingfisher
 
 struct GridProductCardTileView: View {
     @EnvironmentObject private var cartViewModel: CartViewModel
@@ -17,16 +18,19 @@ struct GridProductCardTileView: View {
     
     var body: some View {
         VStack(alignment: .center, spacing: 0) {
-            AsyncImage(url: URL(string: product.imagesURLs[0])!) { loadedImage in
-                loadedImage
-                    .resizable()
-                    .aspectRatio(contentMode: .fit)
-                    .clipShape(RoundedRectangle(cornerRadius: 15))
-            } placeholder: {
-                Image("product_placeholder_image")
-                    .resizable()
-                    .aspectRatio(contentMode: .fit)
-            }
+            KFImage(URL(string: product.imagesURLs.first!)!)
+                .placeholder {
+                    Image("product_placeholder_image")
+                        .resizable()
+                        .aspectRatio(contentMode: .fit)
+                        .clipShape(RoundedRectangle(cornerRadius: 15))
+                }
+                .retry(maxCount: 3, interval: .seconds(3))
+                .cancelOnDisappear(true)
+                .resizable()
+                .aspectRatio(contentMode: .fit)
+                .clipShape(RoundedRectangle(cornerRadius: 15))
+                .padding(.trailing)
 
             VStack {
                 HStack(alignment: .top) {

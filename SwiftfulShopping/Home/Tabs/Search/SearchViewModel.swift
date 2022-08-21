@@ -17,17 +17,29 @@ class SearchViewModel: ObservableObject {
     
     @Published var trendingSearchesFullList: [String] = []
     var trendingSearches: [String] {
-        Array(trendingSearchesFullList.prefix(4))
+        Array(trendingSearchesFullList.prefix(lengthOfShortTrendingAndRecentSearchesList))
     }
     @Published var shouldPresentAllTrendingSearches: Bool = false
     
     @Published var recentSearchesFullList: [String] = []
     var recentSearches: [String] {
-        Array(recentSearchesFullList.prefix(4))
+        Array(recentSearchesFullList.prefix(lengthOfShortTrendingAndRecentSearchesList))
     }
     @Published var shouldPresentAllRecentSearches: Bool = false
     
     @Published var showLoadingModal: Bool = false
+    
+    var lengthOfShortTrendingAndRecentSearchesList: Int = 6
+    
+    var trendingSearchesSeeHideAllButtonVisible: Bool {
+        !trendingSearchesFullList.isEmpty &&
+        trendingSearchesFullList.count > lengthOfShortTrendingAndRecentSearchesList
+    }
+    
+    var recentSearchesSeeHideAllButtonVisible: Bool {
+        !recentSearchesFullList.isEmpty &&
+        recentSearchesFullList.count > lengthOfShortTrendingAndRecentSearchesList
+    }
     
     func onAppear() {
         fetchTrendingSearches()

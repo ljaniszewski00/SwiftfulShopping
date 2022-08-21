@@ -20,38 +20,36 @@ struct SearchedProductsListView: View {
     @AppStorage("productsListDisplayMethod") var displayMethod: ProductDisplayMethod = .list
     
     var body: some View {
-        VStack(spacing: 10) {
-            
-            
-            buildProductsListFor()
-        }
-        .padding()
-        .sheet(isPresented: $exploreViewModel.presentSortingAndFilteringSheet) {
-            SortingAndFilteringSheetView()
-                .environmentObject(exploreViewModel)
-                .environmentObject(sortingAndFilteringViewModel)
-        }
+        buildProductsListFor()
+            .padding()
+            .sheet(isPresented: $exploreViewModel.presentSortingAndFilteringSheet) {
+                SortingAndFilteringSheetView()
+                    .environmentObject(exploreViewModel)
+                    .environmentObject(sortingAndFilteringViewModel)
+            }
     }
     
     @ViewBuilder
     func buildProductsListFor() -> some View {
-        ForEach(exploreViewModel.changingProductsToBeDisplayed, id: \.self) { product in
-            Button {
-                withAnimation(.interactiveSpring(response: 0.6, dampingFraction: 0.7, blendDuration: 0.7)) {
-                    searchViewModel.changeFocusedProductFor(product: product)
+        VStack {
+            ForEach(exploreViewModel.changingProductsToBeDisplayed, id: \.self) { product in
+                Button {
+                    withAnimation(.interactiveSpring(response: 0.6, dampingFraction: 0.7, blendDuration: 0.7)) {
+                        searchViewModel.changeFocusedProductFor(product: product)
+                    }
+                } label: {
+                    if displayMethod == .list {
+                        ListProductCardTileView(product: product)
+                            .environmentObject(favoritesViewModel)
+                            .environmentObject(cartViewModel)
+                    } else {
+                        GridProductCardTileView(product: product)
+                            .environmentObject(favoritesViewModel)
+                            .environmentObject(cartViewModel)
+                    }
                 }
-            } label: {
-                if displayMethod == .list {
-                    ListProductCardTileView(product: product)
-                        .environmentObject(favoritesViewModel)
-                        .environmentObject(cartViewModel)
-                } else {
-                    GridProductCardTileView(product: product)
-                        .environmentObject(favoritesViewModel)
-                        .environmentObject(cartViewModel)
-                }
+                .buttonStyle(ScaledButtonStyle())
             }
-            .buttonStyle(ScaledButtonStyle())
         }
     }
 }

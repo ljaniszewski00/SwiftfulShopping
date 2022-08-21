@@ -20,6 +20,8 @@ struct ExploreView: View {
     
     @StateObject var errorManager = ErrorManager.shared
     
+    @AppStorage("productsListDisplayMethod") var displayMethod: ProductDisplayMethod = .list
+    
     var body: some View {
         NavigationView {
             ScrollView(.vertical, showsIndicators: true) {
@@ -46,6 +48,73 @@ struct ExploreView: View {
                             }
                         }
                         .padding()
+                    }
+                    
+                    if exploreViewModel.selectedTab != .categories {
+                        HStack(spacing: 20) {
+                            Button {
+                                withAnimation {
+                                    exploreViewModel.presentSortingAndFilteringSheet = true
+                                }
+                            } label: {
+                                Image(systemName: "slider.horizontal.3")
+                                    .resizable()
+                                    .frame(width: 25, height: 20)
+                                    .if(sortingAndFilteringViewModel.numberOfFiltersApplied > 0) {
+                                        $0
+                                            .overlay(
+                                                ZStack {
+                                                    Circle()
+                                                        .frame(width: 17, height: 17)
+                                                        .foregroundColor(.red)
+                                                    Text(String(sortingAndFilteringViewModel.numberOfFiltersApplied))
+                                                        .font(.system(size: 14, weight: .regular, design: .rounded))
+                                                        .foregroundColor(.white)
+                                                }
+                                                .offset(x: 17, y: -17)
+                                            )
+                                    }
+                            }
+                            
+                            if (exploreViewModel.selectedTab == .categories && exploreViewModel.displayedCategory != nil) {
+                                HStack {
+                                    Image(systemName: "multiply.circle.fill")
+                                        .resizable()
+                                        .frame(width: 25, height: 25)
+                                        .foregroundColor(.accentColor)
+                                    Text(exploreViewModel.displayedCategory?.rawValue ?? "")
+                                        .font(.system(size: 16, weight: .bold, design: .rounded))
+                                }
+                                .onTapGesture {
+                                    withAnimation {
+                                        exploreViewModel.displayedCategory = nil
+                                    }
+                                }
+                            }
+                            
+                            Spacer()
+                            
+                            Button {
+                                withAnimation {
+                                    displayMethod = .grid
+                                }
+                            } label: {
+                                Image(systemName: "rectangle.grid.3x2")
+                                    .resizable()
+                                    .frame(width: 25, height: 20)
+                            }
+                            
+                            Button {
+                                withAnimation {
+                                    displayMethod = .list
+                                }
+                            } label: {
+                                Image(systemName: "list.bullet")
+                                    .resizable()
+                                    .frame(width: 25, height: 20)
+                            }
+                        }
+                        .padding(.horizontal)
                     }
                     
                     if exploreViewModel.selectedTab == .categories {

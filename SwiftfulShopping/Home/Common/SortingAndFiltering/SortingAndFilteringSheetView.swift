@@ -25,65 +25,79 @@ struct SortingAndFilteringSheetView: View {
         ZStack(alignment: .bottom) {
             ScrollView(.vertical, showsIndicators: false) {
                 VStack(alignment: .center, spacing: 30) {
-                    VStack(alignment: .leading) {
-                        HStack {
-                            Text("Sorting")
-                                .font(.system(size: 24, weight: .bold, design: .rounded))
-                            Spacer()
-                            Button {
-                                withAnimation {
-                                    sortingAndFilteringViewModel.sortingSectionHidden.toggle()
+                    VStack(alignment: .leading, spacing: 0) {
+                        VStack {
+                            HStack {
+                                Text("Sorting")
+                                    .font(.system(size: 24, weight: .bold, design: .rounded))
+                                Spacer()
+                                Button {
+                                    withAnimation {
+                                        sortingAndFilteringViewModel.sortingSectionHidden.toggle()
+                                    }
+                                } label: {
+                                    Image(systemName: sortingAndFilteringViewModel.sortingSectionHidden ? "chevron.down" : "chevron.up")
                                 }
-                            } label: {
-                                Image(systemName: sortingAndFilteringViewModel.sortingSectionHidden ? "chevron.down" : "chevron.up")
                             }
+                            
+                            Divider()
                         }
+                        .padding()
                         
                         if !sortingAndFilteringViewModel.sortingSectionHidden {
-                            Divider()
-                            
                             VStack(alignment: .leading, spacing: 15) {
                                 ForEach(SortingMethods.allCases, id: \.self) { sortingMethod in
-                                    Button {
-                                        withAnimation {
-                                            sortingAndFilteringViewModel.sortingMethod = sortingMethod
-                                        }
-                                    } label: {
-                                        HStack {
-                                            if sortingAndFilteringViewModel.sortingMethod == sortingMethod {
-                                                Image(systemName: "checkmark")
+                                    VStack(alignment: .leading, spacing: 5) {
+                                        Button {
+                                            withAnimation {
+                                                sortingAndFilteringViewModel.sortingMethod = sortingMethod
+                                                sortingAndFilteringViewModel.applySorting(productsArray: &exploreViewModel.changingProductsToBeDisplayed)
                                             }
-                                            Text(sortingMethod.rawValue)
-                                                .foregroundColor(colorScheme == .light ? .black : .white)
-                                                .font(.system(size: 18, weight: .regular, design: .rounded))
-                                            Spacer()
+                                        } label: {
+                                            HStack {
+                                                if sortingAndFilteringViewModel.sortingMethod == sortingMethod {
+                                                    Image(systemName: "checkmark")
+                                                }
+                                                Text(sortingMethod.rawValue)
+                                                    .foregroundColor(colorScheme == .light ? .black : .white)
+                                                    .font(.system(size: 18, weight: .regular, design: .rounded))
+                                                Spacer()
+                                            }
                                         }
+                                        
+                                        Divider()
+                                            .if(sortingAndFilteringViewModel.sortingMethod == sortingMethod) {
+                                                $0
+                                                    .overlay(Color.accentColor)
+                                            }
                                     }
                                 }
                             }
-                            .padding(.vertical, 10)
+                            .padding()
+                            .background(.ultraThinMaterial, in: RoundedRectangle(cornerRadius: 15, style: .continuous))
                         }
                     }
-                    .padding()
-                    .background(.ultraThinMaterial, in: RoundedRectangle(cornerRadius: 15, style: .continuous))
                     
-                    VStack(alignment: .leading) {
-                        HStack {
-                            Text("Filter By")
-                                .font(.system(size: 24, weight: .bold, design: .rounded))
-                            Spacer()
-                            Button {
-                                withAnimation {
-                                    sortingAndFilteringViewModel.filteringSectionHidden.toggle()
+                    VStack(alignment: .leading, spacing: 0) {
+                        VStack {
+                            HStack {
+                                Text("Filter By")
+                                    .font(.system(size: 24, weight: .bold, design: .rounded))
+                                Spacer()
+                                Button {
+                                    withAnimation {
+                                        sortingAndFilteringViewModel.filteringSectionHidden.toggle()
+                                    }
+                                } label: {
+                                    Image(systemName: sortingAndFilteringViewModel.filteringSectionHidden ? "chevron.down" : "chevron.up")
                                 }
-                            } label: {
-                                Image(systemName: sortingAndFilteringViewModel.filteringSectionHidden ? "chevron.down" : "chevron.up")
                             }
+                            
+                            Divider()
                         }
+                        .padding()
                         
                         if !sortingAndFilteringViewModel.filteringSectionHidden {
-                            Divider()
-                            
                             VStack(alignment: .leading, spacing: 30) {
                                 ForEach(FilteringMethods.allCases, id: \.self) { filteringMethod in
                                     switch filteringMethod {
@@ -98,12 +112,11 @@ struct SortingAndFilteringSheetView: View {
                                     }
                                 }
                             }
-                            .padding(.vertical, 10)
-                            .padding(.bottom)
+                            .padding()
+                            .background(.ultraThinMaterial, in: RoundedRectangle(cornerRadius: 15, style: .continuous))
                         }
                     }
-                    .padding()
-                    .background(.ultraThinMaterial, in: RoundedRectangle(cornerRadius: 15, style: .continuous))
+                    .padding(.bottom)
                     
                     Button {
                         sortingAndFilteringViewModel.restoreDefaults(originalProductsArray: exploreViewModel.productsFromRepository, currentProductsArray: &exploreViewModel.changingProductsToBeDisplayed)
@@ -122,7 +135,7 @@ struct SortingAndFilteringSheetView: View {
                     withAnimation {
                         exploreViewModel.restoreOriginalProductsArray()
                         
-                        sortingAndFilteringViewModel.applySortingAndFiltering(productsArray: &exploreViewModel.changingProductsToBeDisplayed)
+                        sortingAndFilteringViewModel.applyFiltering(productsArray: &exploreViewModel.changingProductsToBeDisplayed)
                         dismiss()
                     }
                 } label: {
@@ -138,8 +151,8 @@ struct SortingAndFilteringSheetView: View {
         .navigationTitle("Sorting and Filtering")
         .navigationBarTitleDisplayMode(.inline)
         .onDisappear {
-            if !sortingAndFilteringViewModel.sortingOrFilteringApplied {
-                sortingAndFilteringViewModel.restoreDefaults(originalProductsArray: exploreViewModel.productsFromRepository, currentProductsArray: &exploreViewModel.changingProductsToBeDisplayed)
+            if !sortingAndFilteringViewModel.filteringApplied {
+                sortingAndFilteringViewModel.sheetDismissedWithNoFilteringApplied(originalProductsArray: exploreViewModel.productsFromRepository, currentProductsArray: &exploreViewModel.changingProductsToBeDisplayed)
             }
         }
     }
@@ -176,7 +189,7 @@ struct SortingAndFilteringSheetView: View {
                                 .padding(12)
                                 .background(
                                     RoundedRectangle(cornerRadius: 15, style: .continuous)
-                                        .foregroundColor(sortingAndFilteringViewModel.companyFilters.contains(company) ?
+                                        .foregroundColor(sortingAndFilteringViewModel.companyFiltersToApply.contains(company) ?
                                             .accentColor : Color(uiColor: .systemGray4))
                                 )
                                 .foregroundColor(colorScheme == .light ? Color(uiColor: .darkGray) : .white)
@@ -220,7 +233,7 @@ struct SortingAndFilteringSheetView: View {
                                 .padding(12)
                                 .background(
                                     RoundedRectangle(cornerRadius: 15, style: .continuous)
-                                        .foregroundColor(sortingAndFilteringViewModel.categoryFilters.contains(category) ?
+                                        .foregroundColor(sortingAndFilteringViewModel.categoryFiltersToApply.contains(category) ?
                                             .accentColor : Color(uiColor: .systemGray4))
                                 )
                                 .foregroundColor(colorScheme == .light ? Color(uiColor: .darkGray) : .white)

@@ -21,101 +21,36 @@ struct ProductsListView: View {
     var listProductsAfterSearch: Bool = false
     
     var body: some View {
-        VStack(spacing: 10) {
-            HStack(spacing: 20) {
-                Button {
-                    withAnimation {
-                        exploreViewModel.presentSortingAndFilteringSheet = true
-                    }
-                } label: {
-                    Image(systemName: "slider.horizontal.3")
-                        .resizable()
-                        .frame(width: 25, height: 20)
-                        .if(sortingAndFilteringViewModel.numberOfFiltersApplied > 0) {
-                            $0
-                                .overlay(
-                                    ZStack {
-                                        Circle()
-                                            .frame(width: 17, height: 17)
-                                            .foregroundColor(.red)
-                                        Text(String(sortingAndFilteringViewModel.numberOfFiltersApplied))
-                                            .font(.system(size: 14, weight: .regular, design: .rounded))
-                                            .foregroundColor(.white)
-                                    }
-                                    .offset(x: 17, y: -17)
-                                )
-                        }
-                }
-                
-                if (exploreViewModel.selectedTab == .categories && exploreViewModel.displayedCategory != nil) {
-                    HStack {
-                        Image(systemName: "multiply.circle.fill")
-                            .resizable()
-                            .frame(width: 25, height: 25)
-                            .foregroundColor(.accentColor)
-                        Text(exploreViewModel.displayedCategory?.rawValue ?? "")
-                            .font(.system(size: 16, weight: .bold, design: .rounded))
-                    }
-                    .onTapGesture {
-                        withAnimation {
-                            exploreViewModel.displayedCategory = nil
-                        }
-                    }
-                }
-                
-                Spacer()
-                
-                Button {
-                    withAnimation {
-                        displayMethod = .grid
-                    }
-                } label: {
-                    Image(systemName: "rectangle.grid.3x2")
-                        .resizable()
-                        .frame(width: 25, height: 20)
-                }
-                
-                Button {
-                    withAnimation {
-                        displayMethod = .list
-                    }
-                } label: {
-                    Image(systemName: "list.bullet")
-                        .resizable()
-                        .frame(width: 25, height: 20)
-                }
+        buildProductsListFor()
+            .padding()
+            .sheet(isPresented: $exploreViewModel.presentSortingAndFilteringSheet) {
+                SortingAndFilteringSheetView()
+                    .environmentObject(exploreViewModel)
+                    .environmentObject(sortingAndFilteringViewModel)
             }
-            .padding(.horizontal)
-            
-            buildProductsListFor()
-        }
-        .padding()
-        .sheet(isPresented: $exploreViewModel.presentSortingAndFilteringSheet) {
-            SortingAndFilteringSheetView()
-                .environmentObject(exploreViewModel)
-                .environmentObject(sortingAndFilteringViewModel)
-        }
     }
     
     @ViewBuilder
     func buildProductsListFor() -> some View {
-        ForEach(exploreViewModel.changingProductsToBeDisplayed, id: \.self) { product in
-            Button {
-                withAnimation(.interactiveSpring(response: 0.6, dampingFraction: 0.7, blendDuration: 0.7)) {
-                    exploreViewModel.changeFocusedProductFor(product: product)
+        VStack {
+            ForEach(exploreViewModel.changingProductsToBeDisplayed, id: \.self) { product in
+                Button {
+                    withAnimation(.interactiveSpring(response: 0.6, dampingFraction: 0.7, blendDuration: 0.7)) {
+                        exploreViewModel.changeFocusedProductFor(product: product)
+                    }
+                } label: {
+                    if displayMethod == .list {
+                        ListProductCardTileView(product: product)
+                            .environmentObject(favoritesViewModel)
+                            .environmentObject(cartViewModel)
+                    } else {
+                        GridProductCardTileView(product: product)
+                            .environmentObject(favoritesViewModel)
+                            .environmentObject(cartViewModel)
+                    }
                 }
-            } label: {
-                if displayMethod == .list {
-                    ListProductCardTileView(product: product)
-                        .environmentObject(favoritesViewModel)
-                        .environmentObject(cartViewModel)
-                } else {
-                    GridProductCardTileView(product: product)
-                        .environmentObject(favoritesViewModel)
-                        .environmentObject(cartViewModel)
-                }
+                .buttonStyle(ScaledButtonStyle())
             }
-            .buttonStyle(ScaledButtonStyle())
         }
     }
 }

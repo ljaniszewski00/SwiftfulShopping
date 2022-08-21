@@ -90,6 +90,43 @@ struct SearchView: View {
                                 }
                             }
                             .padding([.horizontal, .top])
+                            
+                            VStack {
+                                SearchedProductsListView()
+                                    .environmentObject(authStateManager)
+                                    .environmentObject(tabBarStateManager)
+                                    .environmentObject(exploreViewModel)
+                                    .environmentObject(profileViewModel)
+                                    .environmentObject(favoritesViewModel)
+                                    .environmentObject(cartViewModel)
+                                    .environmentObject(searchViewModel)
+                                    .environmentObject(sortingAndFilteringViewModel)
+                                
+                                NavigationLink(destination: ProductDetailsView(product: searchViewModel.choosenProduct ?? Product.demoProducts[0])
+                                                                .environmentObject(authStateManager)
+                                                                .environmentObject(tabBarStateManager)
+                                                                .environmentObject(exploreViewModel)
+                                                                .environmentObject(profileViewModel)
+                                                                .environmentObject(favoritesViewModel)
+                                                                .environmentObject(cartViewModel)
+                                                                .onAppear {
+                                                                    tabBarStateManager.hideTabBar()
+                                                                },
+                                               isActive: $searchViewModel.shouldPresentProductDetailsView,
+                                               label: { EmptyView() })
+                                
+                                NavigationLink(destination: ProductRecognizerView()
+                                                                .environmentObject(exploreViewModel)
+                                                                .environmentObject(searchViewModel)
+                                                                .onAppear {
+                                                                    tabBarStateManager.hideTabBar()
+                                                                }
+                                                                .onDisappear {
+                                                                    tabBarStateManager.showTabBar()
+                                                                },
+                                               isActive: $searchViewModel.shouldPresentProductRecognizerView,
+                                               label: { EmptyView() })
+                            }
                         }
                         
                         if !exploreViewModel.searchProductsText.isEmpty && exploreViewModel.changingProductsToBeDisplayed.isEmpty {
@@ -110,49 +147,12 @@ struct SearchView: View {
                                 }
                             }
                         }
-                        
-                        VStack {
-                            SearchedProductsListView()
-                                .environmentObject(authStateManager)
-                                .environmentObject(tabBarStateManager)
-                                .environmentObject(exploreViewModel)
-                                .environmentObject(profileViewModel)
-                                .environmentObject(favoritesViewModel)
-                                .environmentObject(cartViewModel)
-                                .environmentObject(searchViewModel)
-                                .environmentObject(sortingAndFilteringViewModel)
-                            
-                            NavigationLink(destination: ProductDetailsView(product: searchViewModel.choosenProduct ?? Product.demoProducts[0])
-                                                            .environmentObject(authStateManager)
-                                                            .environmentObject(tabBarStateManager)
-                                                            .environmentObject(exploreViewModel)
-                                                            .environmentObject(profileViewModel)
-                                                            .environmentObject(favoritesViewModel)
-                                                            .environmentObject(cartViewModel)
-                                                            .onAppear {
-                                                                tabBarStateManager.hideTabBar()
-                                                            },
-                                           isActive: $searchViewModel.shouldPresentProductDetailsView,
-                                           label: { EmptyView() })
-                            
-                            NavigationLink(destination: ProductRecognizerView()
-                                                            .environmentObject(exploreViewModel)
-                                                            .environmentObject(searchViewModel)
-                                                            .onAppear {
-                                                                tabBarStateManager.hideTabBar()
-                                                            }
-                                                            .onDisappear {
-                                                                tabBarStateManager.showTabBar()
-                                                            },
-                                           isActive: $searchViewModel.shouldPresentProductRecognizerView,
-                                           label: { EmptyView() })
-                        }
-                        .searchable(text: $exploreViewModel.searchProductsText,
-                                    prompt: "Search For Products")
-                        .onSubmit(of: .search) {
-                            searchViewModel.addToRecentSearches(searchText: exploreViewModel.searchProductsText)
-                        }
                     }
+                }
+                .searchable(text: $exploreViewModel.searchProductsText,
+                            prompt: "Search For Products")
+                .onSubmit(of: .search) {
+                    searchViewModel.addToRecentSearches(searchText: exploreViewModel.searchProductsText)
                 }
             }
             .navigationTitle("Search")
@@ -212,15 +212,17 @@ struct SearchView: View {
             }
             .font(.system(size: 18, weight: .semibold, design: .rounded))
             
-            Button {
-                withAnimation {
-                    searchViewModel.shouldPresentAllTrendingSearches.toggle()
+            if searchViewModel.trendingSearchesSeeHideAllButtonVisible {
+                Button {
+                    withAnimation {
+                        searchViewModel.shouldPresentAllTrendingSearches.toggle()
+                    }
+                } label: {
+                    Text(searchViewModel.shouldPresentAllTrendingSearches ? "Hide all" : "See all")
+                        .padding()
+                        .font(.system(size: 18, weight: .semibold, design: .rounded))
+                        .foregroundColor(.accentColor)
                 }
-            } label: {
-                Text(searchViewModel.shouldPresentAllTrendingSearches ? "Hide all" : "See all")
-                    .padding()
-                    .font(.system(size: 18, weight: .semibold, design: .rounded))
-                    .foregroundColor(.accentColor)
             }
         }
         .padding()
@@ -263,7 +265,7 @@ struct SearchView: View {
             }
             .font(.system(size: 18, weight: .semibold, design: .rounded))
             
-            if !searchViewModel.recentSearchesFullList.isEmpty {
+            if searchViewModel.recentSearchesSeeHideAllButtonVisible  {
                 Button {
                     withAnimation {
                         searchViewModel.shouldPresentAllRecentSearches.toggle()
