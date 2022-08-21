@@ -23,9 +23,9 @@ struct PaymentDetailsView: View {
                 Text("Choose default payment method:")
                     .font(.system(size: 22, weight: .bold, design: .rounded))
                 
-                VStack(alignment: .leading, spacing: 10) {
+                VStack(alignment: .leading, spacing: 20) {
                     ForEach(PaymentMethod.allCases, id: \.self) { paymentMethod in
-                        HStack {
+                        HStack(spacing: 10) {
                             Button(action: {
                                 profileViewModel.changeDefaultPaymentMethod(newDefaultPaymentMethod: paymentMethod)
                             }, label: {
@@ -47,11 +47,9 @@ struct PaymentDetailsView: View {
                                 if paymentMethod == .applePay {
                                     Image("apple_pay_logo")
                                         .resizable()
-                                        .scaledToFit()
                                 }
                             }
                         }
-                        .frame(height: 50)
                         
                         if paymentMethod == .creditCard && profileViewModel.profile.defaultPaymentMethod == .creditCard {
                             buildCreditCardSection()
