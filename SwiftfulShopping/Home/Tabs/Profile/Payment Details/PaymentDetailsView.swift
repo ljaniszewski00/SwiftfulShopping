@@ -17,6 +17,9 @@ struct PaymentDetailsView: View {
     @State private var isCardNumberTextFieldFocused: Bool = false
     @State private var isCardHolderNameTextFieldFocused: Bool = false
     
+    @State var validThruDateMonth: Int = 1
+    @State var validThruDateYear: Int = Date().get(.year)
+    
     var body: some View {
         ScrollView(.vertical, showsIndicators: false) {
             VStack(alignment: .leading, spacing: 15) {
@@ -68,6 +71,8 @@ struct PaymentDetailsView: View {
             if let userCard = profileViewModel.profile.creditCard {
                 paymentDetailsViewModel.cardNumber = userCard.cardNumber
                 paymentDetailsViewModel.newDate = Date().getDateFrom(userCard.validThru) ?? Date()
+                validThruDateMonth = paymentDetailsViewModel.newDate.get(.month)
+                validThruDateYear = paymentDetailsViewModel.newDate.get(.year)
                 paymentDetailsViewModel.cardHolderName = userCard.cardholderName
             } else {
                 paymentDetailsViewModel.initializeDataForNoCard()
@@ -163,12 +168,9 @@ struct PaymentDetailsView: View {
                             .font(.system(size: 16, weight: .bold, design: .rounded))
                             .foregroundColor(.accentColor)
                         
-                        DatePicker(
-                            "",
-                            selection: $paymentDetailsViewModel.newDate,
-                            in: paymentDetailsViewModel.pickerDateRange,
-                            displayedComponents: [.date])
-                            .datePickerStyle(.graphical)
+                        CustomDatePicker(includeDayChoosing: false,
+                                         includeMonthChoosing: true, monthPickedNumber: $validThruDateMonth,
+                                         includeYearChoosing: true, yearPickedNumber: $validThruDateYear)
                     }
                 }
             }

@@ -36,6 +36,7 @@
 		0A27E7D2287B502A00D033D9 /* DetectCardCompany.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A27E7D1287B502A00D033D9 /* DetectCardCompany.swift */; };
 		0A27E7D4287B509300D033D9 /* CardCompany.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A27E7D3287B509300D033D9 /* CardCompany.swift */; };
 		0A2DECBF288C5FB200D563C9 /* ExploreViewTabs.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A2DECBE288C5FB200D563C9 /* ExploreViewTabs.swift */; };
+		0A2EB51928B38AA5009E6E8F /* CustomDatePicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A2EB51828B38AA5009E6E8F /* CustomDatePicker.swift */; };
 		0A2FE0A528A15B7C00E8D30E /* NetworkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A2FE0A428A15B7C00E8D30E /* NetworkManager.swift */; };
 		0A2FE0A728A16C3E00E8D30E /* ErrorManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A2FE0A628A16C3E00E8D30E /* ErrorManager.swift */; };
 		0A2FE0AB28A16D5B00E8D30E /* CustomError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A2FE0AA28A16D5B00E8D30E /* CustomError.swift */; };
@@ -332,6 +333,7 @@
 		0A27E7D1287B502A00D033D9 /* DetectCardCompany.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetectCardCompany.swift; sourceTree = "<group>"; };
 		0A27E7D3287B509300D033D9 /* CardCompany.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardCompany.swift; sourceTree = "<group>"; };
 		0A2DECBE288C5FB200D563C9 /* ExploreViewTabs.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExploreViewTabs.swift; sourceTree = "<group>"; };
+		0A2EB51828B38AA5009E6E8F /* CustomDatePicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomDatePicker.swift; sourceTree = "<group>"; };
 		0A2FE0A428A15B7C00E8D30E /* NetworkManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkManager.swift; sourceTree = "<group>"; };
 		0A2FE0A628A16C3E00E8D30E /* ErrorManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ErrorManager.swift; sourceTree = "<group>"; };
 		0A2FE0AA28A16D5B00E8D30E /* CustomError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomError.swift; sourceTree = "<group>"; };
@@ -999,6 +1001,7 @@
 				0A355565289FD3D7005993E5 /* LoadingIndicatorModal.swift */,
 				0A355567289FD3ED005993E5 /* ErrorModal.swift */,
 				0A2FE0B128A1BA3100E8D30E /* LottieView.swift */,
+				0A2EB51828B38AA5009E6E8F /* CustomDatePicker.swift */,
 			);
 			path = HelperViews;
 			sourceTree = "<group>";
@@ -1528,6 +1531,7 @@
 				0A56D8B3285F2C950009680C /* PersonalInfoView.swift in Sources */,
 				0A35557128A052F3005993E5 /* SettingsView.swift in Sources */,
 				0A27E7D4287B509300D033D9 /* CardCompany.swift in Sources */,
+				0A2EB51928B38AA5009E6E8F /* CustomDatePicker.swift in Sources */,
 				0A2FE0BC28A1C02200E8D30E /* ContentViewModel.swift in Sources */,
 				0A3B08E828AD921C00A54385 /* CameraView.swift in Sources */,
 				0ACD58F7284A6F6600AA9DA0 /* Hidden.swift in Sources */,
