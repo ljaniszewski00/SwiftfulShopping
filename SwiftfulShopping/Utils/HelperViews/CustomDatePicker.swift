@@ -33,8 +33,122 @@ struct CustomDatePicker: View {
         self._yearPickedNumber = yearPickedNumber
     }
     
+    private let dayNameFormatter: DateFormatter = {
+        let dateFormatter = DateFormatter()
+        dateFormatter.locale = .current
+        dateFormatter.calendar = .current
+        dateFormatter.dateFormat = "ccc"
+        return dateFormatter
+    }()
+    
     private var monthSymbols = Calendar.current.monthSymbols
     private var shortWeekdaySymbols = Calendar.current.shortWeekdaySymbols
+    
+    private var firstDayOfMonthName: String {
+        let dateComponents = DateComponents(year: yearPickedNumber, month: monthPickedNumber, day: 1)
+        let calendar = Calendar.current
+        let date = calendar.date(from: dateComponents)!
+        
+        return dayNameFormatter.string(from: date)
+    }
+    
+    private var firstDayOfMonthNumber: Int {
+        let calendar = Calendar.current
+        let dateComponents = DateComponents(calendar: calendar,
+                                            year: yearPickedNumber,
+                                            month: monthPickedNumber,
+                                            day: 1)
+        let date = calendar.date(from: dateComponents)!
+        
+        return calendar.component(.weekday, from: date)
+    }
+    
+    private func monthDaysNumberFor(yearNumber: Int, monthNumber: Int) -> Int {
+        let dateComponents = DateComponents(year: yearNumber, month: monthNumber)
+        let calendar = Calendar.current
+        let date = calendar.date(from: dateComponents)!
+
+        let range = calendar.range(of: .day, in: .month, for: date)!
+        let numDays = range.count
+        return numDays
+    }
+    
+    private var calendarSection: [String: [Int]] {
+        var calendarSection: [String: [Int]] = [:]
+        for (index, shortWeekdaySymbol) in shortWeekdaySymbols.enumerated() {
+            if !rowsForCalendarSection.isEmpty {
+                calendarSection[shortWeekdaySymbol] = []
+                for row in rowsForCalendarSection {
+                    calendarSection[shortWeekdaySymbol]!.append(row[index])
+                }
+            }
+        }
+        return calendarSection
+    }
+    
+    private var rowsForCalendarSection: [[Int]] {
+        var rows: [[Int]] = []
+        
+        let previousMonthDaysNumber = monthDaysNumberFor(yearNumber: monthPickedNumber == 1 ?
+                                                     yearPickedNumber - 1 : yearPickedNumber,
+                                                         monthNumber: monthPickedNumber - 1)
+        
+        let currentMonthDaysNumber = monthDaysNumberFor(yearNumber:
+                                                    yearPickedNumber,
+                                                  monthNumber:
+                                                    monthPickedNumber)
+        
+        var lastDayNumberFromPreviousRow: Int = 0
+        var newMonthAlreadyCreated: Bool = false
+        for rowNumber in 1...7 {
+            if rowNumber == 1 {
+                let placesForDaysFromPreviousMonth = (previousMonthDaysNumber - (previousMonthDaysNumber - firstDayOfMonthNumber) - 1)
+                let daysFromPreviousMonth = Array(1...previousMonthDaysNumber)
+                let daysFromPreviousMonthForARow = Array(daysFromPreviousMonth.suffix(placesForDaysFromPreviousMonth))
+                let numberOfDaysFromPreviousMonthForARow = daysFromPreviousMonthForARow.count
+                rows.append(daysFromPreviousMonthForARow)
+                let numberOfRemainingDaysInARow = 7 - numberOfDaysFromPreviousMonthForARow
+                rows[0] += Array(1...numberOfRemainingDaysInARow)
+                lastDayNumberFromPreviousRow = rows[0].last!
+            }
+            
+            if [2, 3, 4, 5].contains(rowNumber) {
+                let startingDayNumberFromRow = lastDayNumberFromPreviousRow + 1
+                var endingDayNumberFromRow = startingDayNumberFromRow + 7 - 1
+                if endingDayNumberFromRow > currentMonthDaysNumber {
+                    endingDayNumberFromRow = currentMonthDaysNumber
+                    
+                    //Starting creating new month
+                    newMonthAlreadyCreated = true
+                    let rowDaysNumbers = Array(startingDayNumberFromRow...endingDayNumberFromRow)
+                    let placesForNextMonthDaysNumbers = (7 - (currentMonthDaysNumber - startingDayNumberFromRow))
+                    let daysFromNextMonthForARow = Array(1...(placesForNextMonthDaysNumbers - 1))
+                    endingDayNumberFromRow = daysFromNextMonthForARow.last!
+                    let daysNumberForARow = rowDaysNumbers + daysFromNextMonthForARow
+                    rows.append(daysNumberForARow)
+                } else {
+                    let rowDaysNumbers = Array(startingDayNumberFromRow...endingDayNumberFromRow)
+                    rows.append(rowDaysNumbers)
+                }
+                lastDayNumberFromPreviousRow = endingDayNumberFromRow
+            }
+            
+            if rowNumber == 6 {
+                var startingDayNumberFromRow = lastDayNumberFromPreviousRow + 1
+                if newMonthAlreadyCreated || (startingDayNumberFromRow > currentMonthDaysNumber) {
+                    continue
+                }
+                var lastRowDays: [Int] = []
+                let currentMonthLastRowDaysNumbers = Array(startingDayNumberFromRow...currentMonthDaysNumber)
+                let placesForNextMonthDaysNumbers = (7 - (currentMonthDaysNumber - startingDayNumberFromRow))
+                let daysFromNextMonthForARow = Array(1...(placesForNextMonthDaysNumbers - 1))
+                lastRowDays = currentMonthLastRowDaysNumbers + daysFromNextMonthForARow
+                rows.append(lastRowDays)
+            }
+        }
+        
+        return rows
+    }
     
     private var monthPickedName: String {
         DateFormatter().monthSymbols[monthPickedNumber - 1]
@@ -102,7 +216,7 @@ struct CustomDatePicker: View {
                 choosingDate.toggle()
             }
             
-            if choosingDate {
+            if !choosingDate {
                 VStack(alignment: .leading, spacing: 30) {
                     HStack {
                         if includeYearChoosing {
@@ -202,34 +316,17 @@ struct CustomDatePicker: View {
                         }
                     }
                     
-                    if includeDayChoosing {
-                        VStack(alignment: .leading, spacing: 10) {
-                            HStack {
-                                ForEach(shortWeekdaySymbols, id: \.self) { weekdaySymbol in
+                    if !includeDayChoosing {
+                        HStack {
+                            ForEach(shortWeekdaySymbols, id: \.self) { weekdaySymbol in
+                                VStack(alignment: .leading) {
                                     Text(weekdaySymbol)
                                         .font(.system(size: 20, weight: .semibold, design: .rounded))
-                                    Spacer()
+                                    ForEach(calendarSection[weekdaySymbol]!, id: \.self) { dayNumber in
+                                        Text(String(dayNumber))
+                                            .font(.system(size: 18, weight: .regular, design: .rounded))
+                                    }
                                 }
-                            }
-                            
-                            HStack {
-                                
-                            }
-                            
-                            HStack {
-                                
-                            }
-                            
-                            HStack {
-                                
-                            }
-                            
-                            HStack {
-                                
-                            }
-                            
-                            HStack {
-                                
                             }
                         }
                     }
@@ -241,6 +338,9 @@ struct CustomDatePicker: View {
                         .foregroundColor(.gray)
                 }
             }
+        }
+        .onAppear {
+            print(rowsForCalendarSection)
         }
     }
     
