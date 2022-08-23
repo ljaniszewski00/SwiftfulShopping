@@ -134,7 +134,7 @@ struct CustomDatePicker: View {
             }
             
             if rowNumber == 6 {
-                var startingDayNumberFromRow = lastDayNumberFromPreviousRow + 1
+                let startingDayNumberFromRow = lastDayNumberFromPreviousRow + 1
                 if newMonthAlreadyCreated || (startingDayNumberFromRow > currentMonthDaysNumber) {
                     continue
                 }
@@ -316,17 +316,22 @@ struct CustomDatePicker: View {
                         }
                     }
                     
-                    if !includeDayChoosing {
+                    if includeDayChoosing {
                         HStack {
                             ForEach(shortWeekdaySymbols, id: \.self) { weekdaySymbol in
-                                VStack(alignment: .leading) {
+                                VStack(alignment: .center) {
                                     Text(weekdaySymbol)
                                         .font(.system(size: 20, weight: .semibold, design: .rounded))
-                                    ForEach(calendarSection[weekdaySymbol]!, id: \.self) { dayNumber in
-                                        Text(String(dayNumber))
-                                            .font(.system(size: 18, weight: .regular, design: .rounded))
+                                        .padding(.bottom, 15)
+                                    VStack(alignment: .center, spacing: 12) {
+                                        ForEach(calendarSection[weekdaySymbol]!, id: \.self) { dayNumber in
+                                            Text(String(dayNumber))
+                                                .font(.system(size: 18, weight: .regular, design: .rounded))
+                                        }
                                     }
                                 }
+                                
+                                Spacer()
                             }
                         }
                     }
