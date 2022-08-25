@@ -42,13 +42,12 @@ struct CustomDatePicker: View {
     }
     
     // Init for CustomDatePicker with two dates choosing and optional range
-    init(includeDayPicking: Bool,
-         includeMonthPicking: Bool,
-         includeYearPicking: Bool,
+    init(includeMonthPicking: Bool = true,
+         includeYearPicking: Bool = true,
          pickingDatesRange: Bool,
          firstDatePicked: Binding<Date>,
          secondDatePicked: Binding<Date>) {
-        self.includeDayPicking = includeDayPicking
+        self.includeDayPicking = true
         self.includeMonthPicking = includeMonthPicking
         self.includeYearPicking = includeYearPicking
         self.pickingDatesRange = pickingDatesRange
