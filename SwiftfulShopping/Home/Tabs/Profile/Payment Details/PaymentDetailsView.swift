@@ -17,9 +17,6 @@ struct PaymentDetailsView: View {
     @State private var isCardNumberTextFieldFocused: Bool = false
     @State private var isCardHolderNameTextFieldFocused: Bool = false
     
-    @State var validThruDateMonth: Int = 1
-    @State var validThruDateYear: Int = Date().get(.year)
-    
     var body: some View {
         ScrollView(.vertical, showsIndicators: false) {
             VStack(alignment: .leading, spacing: 15) {
@@ -71,8 +68,6 @@ struct PaymentDetailsView: View {
             if let userCard = profileViewModel.profile.creditCard {
                 paymentDetailsViewModel.cardNumber = userCard.cardNumber
                 paymentDetailsViewModel.newDate = Date().getDateFrom(userCard.validThru) ?? Date()
-                validThruDateMonth = paymentDetailsViewModel.newDate.get(.month)
-                validThruDateYear = paymentDetailsViewModel.newDate.get(.year)
                 paymentDetailsViewModel.cardHolderName = userCard.cardholderName
             } else {
                 paymentDetailsViewModel.initializeDataForNoCard()
@@ -110,7 +105,6 @@ struct PaymentDetailsView: View {
                         Text("CARD HOLDER")
                             .font(.system(size: 14, weight: .bold, design: .rounded))
                             .foregroundColor(Color.gray)
-                        
                         Text(paymentDetailsViewModel.cardHolderName)
                             .font(.system(size: 16, weight: .bold, design: .rounded))
                             .foregroundColor(Color.white)
@@ -168,9 +162,10 @@ struct PaymentDetailsView: View {
                             .font(.system(size: 16, weight: .bold, design: .rounded))
                             .foregroundColor(.accentColor)
                         
-                        CustomDatePicker(includeDayChoosing: false,
-                                         includeMonthChoosing: true, monthPickedNumber: $validThruDateMonth,
-                                         includeYearChoosing: true, yearPickedNumber: $validThruDateYear)
+                        CustomDatePicker(includeDayPicking: false,
+                                         includeMonthPicking: true,
+                                         includeYearPicking: true,
+                                         datePicked: $paymentDetailsViewModel.newDate)
                     }
                 }
             }
