@@ -15,6 +15,7 @@ struct CustomDatePicker: View {
     private var includeMonthPicking: Bool
     private var includeYearPicking: Bool
     private var pickingDatesRange: Bool
+    private var pickingTwoDates: Bool
     @Binding var firstDatePicked: Date
     @Binding var secondDatePicked: Date
     
@@ -23,10 +24,23 @@ struct CustomDatePicker: View {
     @State private var pickedMonthNumber: Int = Date().get(.month)
     @State private var pickedYearNumber: Int = Date().get(.year)
     
+    @State private var firstDatePickedDayNumber: Int = Date().get(.day)
+    @State private var firstDatePickedMonthNumber: Int = Date().get(.month)
+    @State private var firstDatePickedYearNumber: Int = Date().get(.year)
+    
+    @State private var secondDatePickedDayNumber: Int = Date().get(.day)
+    @State private var secondDatePickedMonthNumber: Int = Date().get(.month)
+    @State private var secondDatePickedYearNumber: Int = Date().get(.year)
+    
+    @State private var anyDateComponentChanged: Bool = false
+    
     // State variables for detecting what type of data user is picking at the moment
     @State private var pickingDate: Bool = false
     @State private var pickingYear: Bool = false
     @State private var pickingMonth: Bool = false
+    
+    @State private var isFirstDatePicked: Bool = false
+    @State private var isSecondDatePicked: Bool = false
     
     // Init for CustomDatePicker with one date choosing
     init(includeDayPicking: Bool,
@@ -37,6 +51,7 @@ struct CustomDatePicker: View {
         self.includeMonthPicking = includeMonthPicking
         self.includeYearPicking = includeYearPicking
         self.pickingDatesRange = false
+        self.pickingTwoDates = false
         self._firstDatePicked = datePicked
         self._secondDatePicked = .constant(Date())
     }
@@ -51,6 +66,7 @@ struct CustomDatePicker: View {
         self.includeMonthPicking = includeMonthPicking
         self.includeYearPicking = includeYearPicking
         self.pickingDatesRange = pickingDatesRange
+        self.pickingTwoDates = true
         self._firstDatePicked = firstDatePicked
         self._secondDatePicked = secondDatePicked
     }
@@ -257,30 +273,68 @@ struct CustomDatePicker: View {
         return rows
     }
     
-    private var dateToDisplay: String {
+    private var wholeDateToDisplay: String {
+        if pickingTwoDates {
+            return firstDateToDisplay + " - " + secondDateToDisplay
+        } else {
+            return firstDateToDisplay
+        }
+    }
+    
+    private var firstDateToDisplay: String {
         var dateString: String = ""
         
         if includeYearPicking {
-            dateString += String(pickedYearNumber)
+            dateString += String(firstDatePickedYearNumber)
         }
         if includeMonthPicking {
             if includeYearPicking {
                 dateString += "-"
             }
-            if pickedMonthNumber < 10 {
-                dateString += "0\(String(pickedMonthNumber))"
+            if firstDatePickedMonthNumber < 10 {
+                dateString += "0\(String(firstDatePickedMonthNumber))"
             } else {
-                dateString += String(pickedMonthNumber)
+                dateString += String(firstDatePickedMonthNumber)
             }
         }
         if includeDayPicking {
             if includeMonthPicking {
                 dateString += "-"
             }
-            if pickedDayNumber < 10 {
-                dateString += "0\(String(pickedDayNumber))"
+            if firstDatePickedDayNumber < 10 {
+                dateString += "0\(String(firstDatePickedDayNumber))"
             } else {
-                dateString += String(pickedDayNumber)
+                dateString += String(firstDatePickedDayNumber)
+            }
+        }
+        
+        return dateString
+    }
+    
+    private var secondDateToDisplay: String {
+        var dateString: String = ""
+        
+        if includeYearPicking {
+            dateString += String(secondDatePickedYearNumber)
+        }
+        if includeMonthPicking {
+            if includeYearPicking {
+                dateString += "-"
+            }
+            if secondDatePickedMonthNumber < 10 {
+                dateString += "0\(String(secondDatePickedMonthNumber))"
+            } else {
+                dateString += String(secondDatePickedMonthNumber)
+            }
+        }
+        if includeDayPicking {
+            if includeMonthPicking {
+                dateString += "-"
+            }
+            if secondDatePickedDayNumber < 10 {
+                dateString += "0\(String(secondDatePickedDayNumber))"
+            } else {
+                dateString += String(secondDatePickedDayNumber)
             }
         }
         
@@ -294,7 +348,7 @@ struct CustomDatePicker: View {
                     .resizable()
                     .frame(width: 25, height: 25)
                     .foregroundColor(pickingDate ? .accentColor : .gray)
-                Text(dateToDisplay)
+                Text(wholeDateToDisplay)
                     .font(.system(size: 18, weight: .semibold, design: .rounded))
                     .foregroundColor(colorScheme == .light ? .black : .white)
                 
@@ -317,165 +371,18 @@ struct CustomDatePicker: View {
                 pickingDate.toggle()
             }
             
-            if pickingDate {
+            if !pickingDate {
                 VStack(alignment: .leading, spacing: 30) {
-                    HStack {
-                        if includeYearPicking {
-                            Menu {
-                                ForEach(yearsRange, id: \.self) { yearNumber in
-                                    Button(String(yearNumber), action: {
-                                        pickedYearNumber = yearNumber
-                                    })
-                                }
-                                .onAppear {
-                                    pickingYear = true
-                                }
-                                .onDisappear {
-                                    pickingYear = false
-                                }
-                            } label: {
-                                HStack(spacing: 15) {
-                                    Text(String(pickedYearNumber))
-                                        .font(.system(size: 16, weight: .semibold, design: .rounded))
-                                        .foregroundColor(colorScheme == .light ? .black : .white)
-                                    Image(systemName: pickingYear ? "chevron.up" : "chevron.down")
-                                        .foregroundColor(.gray)
-                                }
-                                .padding(.all, 10)
-                                .background {
-                                    RoundedRectangle(cornerRadius: 5)
-                                        .foregroundColor(.accentColor.opacity(0.5))
-                                }
-                            }
-                        }
-                        
-                        if includeMonthPicking {
-                            Menu {
-                                ForEach(monthSymbols, id: \.self) { monthSymbol in
-                                    Button(monthSymbol, action: {
-                                        for (index, symbol) in monthSymbols.enumerated() where symbol == monthSymbol {
-                                            pickedMonthNumber = index + 1
-                                        }
-                                    })
-                                }
-                                .onAppear {
-                                    pickingMonth = true
-                                }
-                                .onDisappear {
-                                    pickingMonth = false
-                                }
-                            } label: {
-                                HStack(spacing: 15) {
-                                    Text(pickedMonthName)
-                                        .font(.system(size: 16, weight: .semibold, design: .rounded))
-                                        .foregroundColor(colorScheme == .light ? .black : .white)
-                                    Image(systemName: pickingMonth ? "chevron.up" : "chevron.down")
-                                        .foregroundColor(.gray)
-                                }
-                                .padding(.all, 10)
-                                .background {
-                                    RoundedRectangle(cornerRadius: 5)
-                                        .foregroundColor(.accentColor.opacity(0.5))
-                                }
-                            }
-                        }
-                        
-                        Spacer()
-                        
-                        if includeMonthPicking || includeYearPicking {
-                            HStack(spacing: 15) {
-                                Button {
-                                    if includeDayPicking {
-                                        decrementDayNumber()
-                                    } else {
-                                        if includeMonthPicking {
-                                            decrementMonthNumber()
-                                        } else {
-                                            if includeYearPicking {
-                                                decrementYearNumber()
-                                            }
-                                        }
-                                    }
-                                } label: {
-                                    Image(systemName: "chevron.left")
-                                        .foregroundColor(.gray)
-                                        .padding(.all, 10)
-                                        .background {
-                                            Circle().foregroundColor(.accentColor.opacity(0.5))
-                                        }
-                                }
-                                
-                                Button {
-                                    if includeDayPicking {
-                                        incrementDayNumber()
-                                    } else {
-                                        if includeMonthPicking {
-                                            incrementMonthNumber()
-                                        } else {
-                                            if includeYearPicking {
-                                                incrementYearNumber()
-                                            }
-                                        }
-                                    }
-                                } label: {
-                                    Image(systemName: "chevron.right")
-                                        .foregroundColor(.gray)
-                                        .padding(.all, 10)
-                                        .background {
-                                            Circle().foregroundColor(.accentColor.opacity(0.5))
-                                        }
-                                }
-                            }
-                        }
-                    }
+                    buildMonthChanger()
                     
                     if includeDayPicking {
-                        HStack {
-                            ForEach(shortWeekdaySymbols, id: \.self) { weekdaySymbol in
-                                VStack(alignment: .center) {
-                                    Text(weekdaySymbol)
-                                        .font(.system(size: 20, weight: .semibold, design: .rounded))
-                                        .padding(.bottom, 15)
-                                    VStack(alignment: .center, spacing: 12) {
-                                        ForEach(calendarDaysByWeekdays[weekdaySymbol]!, id: \.id) { calendarDay in
-                                            Button {
-                                                switch calendarDay.monthType {
-                                                case .previous:
-                                                    decrementMonthNumber()
-                                                case .current:
-                                                    break
-                                                case .next:
-                                                    incrementMonthNumber()
-                                                }
-                                                pickedDayNumber = calendarDay.value
-                                            } label: {
-                                                ZStack {
-                                                    if calendarDay.value == pickedDayNumber && calendarDay.isCurrentMonth {
-                                                        Circle()
-                                                            .foregroundColor(.accentColor)
-                                                            .opacity(0.7)
-                                                            .frame(width: 40, height: 40)
-                                                    }
-                                                    
-                                                    Text(String(calendarDay.value))
-                                                        .font(.system(size: 18, weight: .regular, design: .rounded))
-                                                        .foregroundColor(calendarDay.isCurrentMonth ? (colorScheme == .light ? .black : .white) : .gray)
-                                                }
-                                            }
-                                            .frame(width: 40, height: 30)
-                                        }
-                                    }
-                                }
-                                
-                                Spacer()
-                            }
-                        }
+                        buildCalendar()
                     }
                     
-                    
-                    if !isPickedDayToday {
+                    if !isPickedDayToday && includeDayPicking {
                         Button {
                             pickToday()
+                            anyDateComponentChanged = true
                         } label: {
                             ZStack {
                                 RoundedRectangle(cornerRadius: 5)
@@ -493,6 +400,182 @@ struct CustomDatePicker: View {
                         .stroke(lineWidth: 1)
                         .foregroundColor(.gray)
                 }
+            }
+        }
+        .onChange(of: anyDateComponentChanged) { _ in
+            if anyDateComponentChanged {
+                print(pickedDayNumber)
+                print(pickedMonthNumber)
+                print(pickedYearNumber)
+                print()
+                
+                print(isFirstDatePicked)
+                print(isSecondDatePicked)
+                print()
+                
+                if pickingTwoDates {
+                    if !isFirstDatePicked {
+                        firstDatePickedDayNumber = pickedDayNumber
+                        firstDatePickedMonthNumber = pickedMonthNumber
+                        firstDatePickedYearNumber = pickedYearNumber
+                    } else {
+                        secondDatePickedDayNumber = pickedDayNumber
+                        secondDatePickedMonthNumber = pickedMonthNumber
+                        secondDatePickedYearNumber = pickedYearNumber
+                    }
+                } else {
+                    firstDatePickedDayNumber = pickedDayNumber
+                    firstDatePickedMonthNumber = pickedMonthNumber
+                    firstDatePickedYearNumber = pickedYearNumber
+                }
+                
+                print(firstDatePickedDayNumber)
+                print(firstDatePickedMonthNumber)
+                print(firstDatePickedYearNumber)
+                print()
+                
+                print(secondDatePickedDayNumber)
+                print(secondDatePickedMonthNumber)
+                print(secondDatePickedYearNumber)
+                print()
+                
+                let calendar = Calendar.current
+                
+                if !isFirstDatePicked {
+                    let dateComponents = DateComponents(calendar: calendar,
+                                                        year: firstDatePickedYearNumber,
+                                                        month: firstDatePickedMonthNumber,
+                                                        day: firstDatePickedDayNumber)
+                    
+                    if let date = dateComponents.date {
+                        firstDatePicked = date
+                    }
+                    
+                    isFirstDatePicked = true
+                } else {
+                    let dateComponents = DateComponents(calendar: calendar,
+                                                        year: secondDatePickedYearNumber,
+                                                        month: secondDatePickedMonthNumber,
+                                                        day: secondDatePickedDayNumber)
+                    if let date = dateComponents.date {
+                        secondDatePicked = date
+                    }
+                    
+                    isSecondDatePicked = true
+                }
+                
+                anyDateComponentChanged = false
+            }
+        }
+    }
+    
+    @ViewBuilder
+    func buildMonthChanger() -> some View {
+        HStack {
+            Button {
+                anyDateComponentChanged = true
+                decrementMonthNumber()
+            } label: {
+                Image(systemName: "chevron.left")
+                    .foregroundColor(colorScheme == .light ? .black : .white)
+                    .padding(.all, 10)
+                    .background {
+                        Circle().foregroundColor(.accentColor)
+                    }
+            }
+            
+            Spacer()
+            
+            HStack(spacing: 5) {
+                Menu {
+                    ForEach(monthSymbols, id: \.self) { monthSymbol in
+                        Button(monthSymbol, action: {
+                            for (index, symbol) in monthSymbols.enumerated() where symbol == monthSymbol {
+                                anyDateComponentChanged = true
+                                pickedMonthNumber = index + 1
+                            }
+                        })
+                    }
+                } label: {
+                    Text("\(pickedMonthName),")
+                        .font(.system(size: 24, weight: .semibold, design: .rounded))
+                        .fixedSize(horizontal: true, vertical: false)
+                        .foregroundColor(colorScheme == .light ? .black : .white)
+                }
+                
+                Menu {
+                    ForEach(yearsRange, id: \.self) { yearNumber in
+                        Button(String(yearNumber), action: {
+                            anyDateComponentChanged = true
+                            pickedYearNumber = yearNumber
+                        })
+                    }
+                } label: {
+                    Text(String(pickedYearNumber))
+                        .font(.system(size: 24, weight: .semibold, design: .rounded))
+                        .fixedSize(horizontal: true, vertical: false)
+                        .foregroundColor(colorScheme == .light ? .black : .white)
+                }
+            }
+            
+            Spacer()
+            
+            Button {
+                anyDateComponentChanged = true
+                incrementMonthNumber()
+            } label: {
+                Image(systemName: "chevron.right")
+                    .foregroundColor(colorScheme == .light ? .black : .white)
+                    .padding(.all, 10)
+                    .background {
+                        Circle().foregroundColor(.accentColor)
+                    }
+            }
+        }
+    }
+    
+    @ViewBuilder
+    func buildCalendar() -> some View {
+        HStack {
+            ForEach(shortWeekdaySymbols, id: \.self) { weekdaySymbol in
+                VStack(alignment: .center) {
+                    Text(weekdaySymbol)
+                        .font(.system(size: 20, weight: .semibold, design: .rounded))
+                        .padding(.bottom, 15)
+                    VStack(alignment: .center, spacing: 12) {
+                        ForEach(calendarDaysByWeekdays[weekdaySymbol]!, id: \.id) { calendarDay in
+                            Button {
+                                switch calendarDay.monthType {
+                                case .previous:
+                                    decrementMonthNumber()
+                                case .current:
+                                    break
+                                case .next:
+                                    incrementMonthNumber()
+                                }
+                                
+                                anyDateComponentChanged = true
+                                pickedDayNumber = calendarDay.value
+                            } label: {
+                                ZStack {
+                                    if calendarDay.value == pickedDayNumber && calendarDay.isCurrentMonth {
+                                        Circle()
+                                            .foregroundColor(.accentColor)
+                                            .opacity(0.7)
+                                            .frame(width: 40, height: 40)
+                                    }
+                                    
+                                    Text(String(calendarDay.value))
+                                        .font(.system(size: 18, weight: .regular, design: .rounded))
+                                        .foregroundColor(calendarDay.isCurrentMonth ? (colorScheme == .light ? .black : .white) : .gray)
+                                }
+                            }
+                            .frame(width: 40, height: 30)
+                        }
+                    }
+                }
+                
+                Spacer()
             }
         }
     }
@@ -546,7 +629,8 @@ struct CustomDatePicker: View {
 }
 
 struct CustomDatePicker_Previews: PreviewProvider {
-    @State static var datePicked: Date = Date()
+    @State static var firstDatePicked: Date = Date()
+    @State static var secondDatePicked: Date = Date()
     
     static var previews: some View {
         ForEach(ColorScheme.allCases, id: \.self) { colorScheme in
@@ -554,7 +638,21 @@ struct CustomDatePicker_Previews: PreviewProvider {
                 CustomDatePicker(includeDayPicking: true,
                                  includeMonthPicking: true,
                                  includeYearPicking: true,
-                                 datePicked: $datePicked)
+                                 datePicked: $firstDatePicked)
+                    .preferredColorScheme(colorScheme)
+                    .previewDevice(PreviewDevice(rawValue: deviceName))
+                    .previewDisplayName("\(deviceName) portrait")
+                
+                CustomDatePicker(pickingDatesRange: false,
+                                 firstDatePicked: $firstDatePicked,
+                                 secondDatePicked: $secondDatePicked)
+                    .preferredColorScheme(colorScheme)
+                    .previewDevice(PreviewDevice(rawValue: deviceName))
+                    .previewDisplayName("\(deviceName) portrait")
+                
+                CustomDatePicker(pickingDatesRange: true,
+                                 firstDatePicked: $firstDatePicked,
+                                 secondDatePicked: $secondDatePicked)
                     .preferredColorScheme(colorScheme)
                     .previewDevice(PreviewDevice(rawValue: deviceName))
                     .previewDisplayName("\(deviceName) portrait")
