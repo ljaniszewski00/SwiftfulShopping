@@ -36,23 +36,9 @@ struct RegisterView: View {
     
     @State private var showPasswordHint: Bool = false
     
-    private let dateRange: ClosedRange<Date> = {
-        let calendar = Calendar.current
-        let startComponents = DateComponents(year: 1900, month: 1, day: 1)
-        let endComponents = DateComponents(year: calendar.dateComponents([.year], from: calendar.date(byAdding: .year, value: -18, to: Date()) ?? Date()).year, month: calendar.dateComponents([.month], from: calendar.date(byAdding: .year, value: -18, to: Date()) ?? Date()).month, day: calendar.dateComponents([.day], from: calendar.date(byAdding: .year, value: -18, to: Date()) ?? Date()).day)
-        return calendar.date(from:startComponents)!
-            ...
-            calendar.date(from:endComponents)!
-    }()
-    
     var body: some View {
-        ScrollView(.vertical, showsIndicators: false) {
-            ZStack {
-                Circle()
-                    .foregroundColor(.accentColor)
-                    .frame(width: ScreenBoundsSupplier.shared.getScreenWidth() * 1.3)
-                    .position(x: ScreenBoundsSupplier.shared.getScreenWidth() * 0.515, y: ScreenBoundsSupplier.shared.getScreenHeight() * 0.1)
-                
+        GeometryReader { geometry in
+            ScrollView(.vertical, showsIndicators: false) {
                 VStack {
                     VStack {
                         if !presentSecondRegisterView {
@@ -74,6 +60,8 @@ struct RegisterView: View {
                             }
                             .padding(.horizontal)
                         }
+                        
+                        Spacer()
                         
                         Button(presentSecondRegisterView ? "Register" : "Next") {
                             withAnimation {
@@ -100,19 +88,16 @@ struct RegisterView: View {
                         }
                         .disabled(registerViewModel.checkPersonalDataFieldsEmpty())
                         .buttonStyle(CustomButton())
-                        .frame(width: ScreenBoundsSupplier.shared.getScreenWidth() * 0.9)
                         .contentShape(Rectangle())
                         .padding(.bottom, 20)
                     }
-                    .background {
-                        RoundedRectangle(cornerRadius: 20)
-                            .frame(width: ScreenBoundsSupplier.shared.getScreenWidth() * 0.95)
-                            .foregroundColor(.white)
-                    }
-                    .padding(.top, presentSecondRegisterView ? 20 : 100)
+                    .padding()
                 }
-                .padding()
+                .frame(minHeight: geometry.size.height)
             }
+        }
+        .background {
+            Color(uiColor: .secondarySystemBackground).ignoresSafeArea()
         }
         .navigationTitle("Create Account")
         .navigationBarHidden(false)
@@ -143,53 +128,54 @@ struct RegisterView: View {
     @ViewBuilder
     func firstPane() -> some View {
         VStack {
-            Text("Please provide personal data:")
-                .font(.callout)
-                .foregroundColor(.gray)
-                .bold()
-                .padding(.vertical)
-            
-            CustomTextField(textFieldProperty: "First Name", textFieldImageName: "person", textFieldSignsLimit: 0, text: $registerViewModel.firstName, isFocusedParentView: $isFirstNameTextFieldFocused)
-            
-            CustomTextField(textFieldProperty: "Last Name", textFieldImageName: "person", textFieldSignsLimit: 0, text: $registerViewModel.lastName, isFocusedParentView: $isLastNameTextFieldFocused)
-            
-            CustomTextField(textFieldProperty: "Username", textFieldImageName: "person", textFieldSignsLimit: 20, text: $registerViewModel.username, isFocusedParentView: $isUsernameTextFieldFocused)
-            
-            HStack {
-                DatePicker(selection: $registerViewModel.birthDate, in: dateRange, displayedComponents: .date, label: {
-                    Text("Birth Date:")
-                        .font(.callout)
-                        .foregroundColor(.gray)
-                        .bold()
-                })
-                .frame(width: ScreenBoundsSupplier.shared.getScreenWidth() * 0.5)
-                Spacer()
-            }
-            .padding(.horizontal)
-            
-            CustomTextField(textFieldProperty: "E-mail", textFieldImageName: "envelope", textFieldSignsLimit: 0, text: $registerViewModel.email, isFocusedParentView: $isEmailTextFieldFocused)
-            
-            HStack {
-                CustomTextField(isSecureField: true, textFieldProperty: "Password", textFieldImageName: "lock", text: $registerViewModel.password, isFocusedParentView: $isPasswordTextFieldFocused)
+            VStack(spacing: 20) {
+                VStack(alignment: .leading, spacing: 10) {
+                    Text("Personal Information:")
+                        .font(.system(size: 22, weight: .semibold, design: .rounded))
+                        .padding(.bottom)
+                    
+                    CustomTextField(textFieldProperty: "First Name", textFieldImageName: "person", textFieldSignsLimit: 0, text: $registerViewModel.firstName, isFocusedParentView: $isFirstNameTextFieldFocused)
+                    
+                    CustomTextField(textFieldProperty: "Last Name", textFieldImageName: "person", textFieldSignsLimit: 0, text: $registerViewModel.lastName, isFocusedParentView: $isLastNameTextFieldFocused)
+                    
+                    CustomTextField(textFieldProperty: "Username", textFieldImageName: "person", textFieldSignsLimit: 20, text: $registerViewModel.username, isFocusedParentView: $isUsernameTextFieldFocused)
+                }
                 
-                Image(systemName: "questionmark.circle")
-                    .foregroundColor(dataError ? .red : showPasswordHint ? .accentColor : .gray)
-                    .onTapGesture {
-                        withAnimation {
-                            showPasswordHint.toggle()
-                        }
-                    }
-                    .padding(.trailing)
+                VStack(alignment: .leading, spacing: 10) {
+                    Text("Birth Date:")
+                        .font(.system(size: 18, weight: .semibold, design: .rounded))
+                    CustomDatePicker(includeDayPicking: true, datePicked: $registerViewModel.birthDate)
+                }
             }
+            .padding(.bottom, 30)
             
-            if showPasswordHint {
-                Text("Password should be at least 8 characters long and should contain a number.")
-                    .font(.callout)
-                    .foregroundColor(dataError ? .red : .gray)
-                    .bold()
-                    .fixedSize(horizontal: false, vertical: true)
-                    .padding(.horizontal)
-                    .padding(.bottom, 10)
+            VStack(alignment: .leading, spacing: 10) {
+                Text("Credentials:")
+                    .font(.system(size: 22, weight: .semibold, design: .rounded))
+                    .padding(.bottom)
+                
+                CustomTextField(textFieldProperty: "E-mail", textFieldImageName: "envelope", textFieldSignsLimit: 0, text: $registerViewModel.email, isFocusedParentView: $isEmailTextFieldFocused)
+                
+                VStack(alignment: .trailing, spacing: 10) {
+                    CustomTextField(isSecureField: true, textFieldProperty: "Password", textFieldImageName: "lock", text: $registerViewModel.password, isFocusedParentView: $isPasswordTextFieldFocused)
+                    
+                    HStack {
+                        if showPasswordHint {
+                            Text("Password should be at least 8 characters long and should contain a number.")
+                                .font(.system(size: 16, weight: .bold, design: .rounded))
+                                .foregroundColor(dataError ? .red : .gray)
+                                .fixedSize(horizontal: false, vertical: true)
+                        }
+                        
+                        Image(systemName: "questionmark.circle")
+                            .foregroundColor(dataError ? .red : showPasswordHint ? .accentColor : .gray)
+                            .onTapGesture {
+                                withAnimation {
+                                    showPasswordHint.toggle()
+                                }
+                            }
+                    }
+                }
             }
         }
     }
@@ -211,7 +197,7 @@ struct RegisterView: View {
                     }
                 }
             }
-            .buttonStyle(CustomButton(buttonWidthMultiplier: 0.8, imageName: "paperplane"))
+            .buttonStyle(CustomButton(imageName: "paperplane"))
             .frame(width: UIScreen.main.bounds.width * 0.9)
             .contentShape(Rectangle())
             .padding(.vertical)
@@ -311,9 +297,16 @@ struct RegisterView: View {
 
 struct RegisterView_Previews: PreviewProvider {
     static var previews: some View {
+        let authStateManager: AuthStateManager = AuthStateManager()
+        let locationManager: LocationManager = LocationManager()
+        let contentViewModel: ContentViewModel = ContentViewModel()
+        
         ForEach(ColorScheme.allCases, id: \.self) { colorScheme in
             ForEach(["iPhone 13 Pro Max", "iPhone 8"], id: \.self) { deviceName in
                 RegisterView()
+                    .environmentObject(authStateManager)
+                    .environmentObject(locationManager)
+                    .environmentObject(contentViewModel)
                     .preferredColorScheme(colorScheme)
                     .previewDevice(PreviewDevice(rawValue: deviceName))
                     .previewDisplayName("\(deviceName) portrait")

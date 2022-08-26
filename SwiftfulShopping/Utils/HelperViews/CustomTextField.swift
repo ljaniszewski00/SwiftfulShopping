@@ -101,7 +101,7 @@ struct CustomTextField: View {
                         .offset(x: text.isEmpty ? (isFocused ? -30 : (textFieldImageName.isEmpty ? -30 : 0)) : -30, y: text.isEmpty ? (isFocused ? -20 : 0) : -20)
                         .foregroundColor(isFocused ? .accentColor : .gray)
                     
-                    ,alignment: .leading
+                    , alignment: .leading
                 )
                 .padding(.horizontal)
                 
@@ -114,6 +114,5 @@ struct CustomTextField: View {
             .background(Color.gray.opacity(0.09))
             .cornerRadius(5)
         }
-        .padding()
     }
 }

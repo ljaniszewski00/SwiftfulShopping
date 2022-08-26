@@ -375,7 +375,7 @@ struct CustomDatePicker: View {
                 pickingDate.toggle()
             }
             
-            if !pickingDate {
+            if pickingDate {
                 VStack(alignment: .leading, spacing: 30) {
                     buildMonthChanger()
                     
@@ -494,7 +494,7 @@ struct CustomDatePicker: View {
                         .font(.system(size: 24, weight: .semibold, design: .rounded))
                         .foregroundColor(colorScheme == .light ? .black : .white)
                         .frame(minWidth: 130,
-                               maxWidth:.infinity,
+                               maxWidth: .infinity,
                                alignment: .trailing)
                 }
                 
@@ -510,10 +510,11 @@ struct CustomDatePicker: View {
                         .font(.system(size: 24, weight: .semibold, design: .rounded))
                         .foregroundColor(colorScheme == .light ? .black : .white)
                         .frame(minWidth: 70,
-                               maxWidth:.infinity,
+                               maxWidth: .infinity,
                                alignment: .leading)
                 }
             }
+            .fixedSize()
             
             Spacer()
             

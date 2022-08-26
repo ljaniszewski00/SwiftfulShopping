@@ -13,6 +13,8 @@ class ContentViewModel: ObservableObject {
     @AppStorage("shouldShowOnboarding") var shouldShowOnboarding: Bool = true
     @Published var unlocked: Bool = false
     
+    @Published var presentRegisterView: Bool = false
+    
     func authenticate() {
         let context = LAContext()
         var error: NSError?

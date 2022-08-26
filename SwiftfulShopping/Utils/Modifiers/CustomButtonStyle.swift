@@ -12,7 +12,6 @@ struct CustomButton: ButtonStyle {
     var textColor: Color = .white
     var onlyStroke: Bool = false
     var strokeColor: Color = .accentColor
-    var buttonWidthMultiplier: CGFloat = 0.9
     var imageName: String = ""
     var imageColor: Color = .white
     var roundedRectangleShape: Bool = true
@@ -25,6 +24,7 @@ struct CustomButton: ButtonStyle {
                     .foregroundColor(imageColor)
             }
             configuration.label
+                .font(.system(size: 20, weight: .semibold, design: .rounded))
                 .foregroundColor(textColor)
                 .padding()
             if rightChevronNavigationImage {
@@ -33,27 +33,24 @@ struct CustomButton: ButtonStyle {
                     .foregroundColor(buttonColor == .accentColor ? .white : .accentColor)
             }
         }
-        .padding(.horizontal)
-        .frame(width: ScreenBoundsSupplier.shared.getScreenWidth() * buttonWidthMultiplier)
+        .frame(minWidth: 0, maxWidth: .infinity)
+        .fixedSize(horizontal: false, vertical: true)
+        .frame(height: 54)
         .background {
-            Group {
-                if roundedRectangleShape {
-                    RoundedRectangle(cornerRadius: 5)
-                        .if(onlyStroke) {
-                            $0
-                                .stroke()
-                                .foregroundColor(strokeColor)
-                        }
-                        .frame(width: ScreenBoundsSupplier.shared.getScreenWidth() * buttonWidthMultiplier)
-                } else {
-                    Rectangle()
-                        .if(onlyStroke) {
-                            $0
-                                .stroke()
-                                .foregroundColor(strokeColor)
-                        }
-                        .frame(width: ScreenBoundsSupplier.shared.getScreenWidth() * buttonWidthMultiplier)
-                }
+            if roundedRectangleShape {
+                RoundedRectangle(cornerRadius: 5)
+                    .if(onlyStroke) {
+                        $0
+                            .stroke()
+                            .foregroundColor(strokeColor)
+                    }
+            } else {
+                Rectangle()
+                    .if(onlyStroke) {
+                        $0
+                            .stroke()
+                            .foregroundColor(strokeColor)
+                    }
             }
         }
         .foregroundColor(buttonColor)

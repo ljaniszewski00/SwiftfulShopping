@@ -8,7 +8,6 @@
 import SwiftUI
 
 struct LabelledDivider: View {
-
     let label: String
     let horizontalPadding: CGFloat
     let color: Color
@@ -23,6 +22,7 @@ struct LabelledDivider: View {
         HStack {
             line
             Text(label)
+                .font(.system(size: 17, weight: .semibold, design: .rounded))
                 .foregroundColor(color)
             line
         }
@@ -31,8 +31,6 @@ struct LabelledDivider: View {
     var line: some View {
         VStack {
             Divider().background(color)
-            
         }
-        .padding(horizontalPadding)
     }
 }
