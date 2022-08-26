@@ -14,8 +14,7 @@ struct CustomDatePicker: View {
     private var includeDayPicking: Bool
     private var includeMonthPicking: Bool
     private var includeYearPicking: Bool
-    private var pickingDatesRange: Bool
-    private var pickingTwoDates: Bool
+    private var pickingDatesMethod: PickingDatesMethod
     @Binding var firstDatePicked: Date
     @Binding var secondDatePicked: Date
     
@@ -36,9 +35,6 @@ struct CustomDatePicker: View {
     
     // State variables for detecting what type of data user is picking at the moment
     @State private var pickingDate: Bool = false
-    @State private var pickingYear: Bool = false
-    @State private var pickingMonth: Bool = false
-    
     @State private var isFirstDatePicked: Bool = false
     @State private var isSecondDatePicked: Bool = false
     
@@ -50,8 +46,7 @@ struct CustomDatePicker: View {
         self.includeDayPicking = includeDayPicking
         self.includeMonthPicking = includeMonthPicking
         self.includeYearPicking = includeYearPicking
-        self.pickingDatesRange = false
-        self.pickingTwoDates = false
+        self.pickingDatesMethod = .pickingOneDate
         self._firstDatePicked = datePicked
         self._secondDatePicked = .constant(Date())
     }
@@ -65,8 +60,11 @@ struct CustomDatePicker: View {
         self.includeDayPicking = true
         self.includeMonthPicking = includeMonthPicking
         self.includeYearPicking = includeYearPicking
-        self.pickingDatesRange = pickingDatesRange
-        self.pickingTwoDates = true
+        if pickingDatesRange {
+            self.pickingDatesMethod = .pickingDatesRange
+        } else {
+            self.pickingDatesMethod = .pickingTwoDates
+        }
         self._firstDatePicked = firstDatePicked
         self._secondDatePicked = secondDatePicked
     }
@@ -307,7 +305,7 @@ struct CustomDatePicker: View {
     }
     
     private var wholeDateToDisplay: String {
-        if pickingTwoDates {
+        if pickingDatesMethod == .pickingTwoDates || pickingDatesMethod == .pickingDatesRange {
             return firstDateToDisplay + " - " + secondDateToDisplay
         } else {
             return firstDateToDisplay
@@ -446,7 +444,7 @@ struct CustomDatePicker: View {
                 print(isSecondDatePicked)
                 print()
                 
-                if pickingTwoDates {
+                if pickingDatesMethod == .pickingTwoDates || pickingDatesMethod == .pickingDatesRange {
                     if !isFirstDatePicked {
                         firstDatePickedDayNumber = pickedDayNumber
                         firstDatePickedMonthNumber = pickedMonthNumber
@@ -485,6 +483,7 @@ struct CustomDatePicker: View {
                     }
                     
                     isFirstDatePicked = true
+                    isSecondDatePicked = false
                 } else {
                     let dateComponents = DateComponents(calendar: calendar,
                                                         year: secondDatePickedYearNumber,
@@ -495,6 +494,7 @@ struct CustomDatePicker: View {
                     }
                     
                     isSecondDatePicked = true
+                    isFirstDatePicked = false
                 }
                 
                 anyDateComponentChanged = false
@@ -506,6 +506,12 @@ struct CustomDatePicker: View {
     func buildMonthChanger() -> some View {
         HStack {
             Button {
+                // To be uncommented if we want month two buttons not to change actual selection but only displayed month if day picking is displayed
+                
+//                if !includeDayPicking {
+//                    anyDateComponentChanged = true
+//                }
+                
                 anyDateComponentChanged = true
                 decrementMonthNumber()
             } label: {
@@ -554,6 +560,12 @@ struct CustomDatePicker: View {
             Spacer()
             
             Button {
+                // To be uncommented if we want month two buttons not to change actual selection but only displayed month if day picking is displayed
+                
+//                if !includeDayPicking {
+//                    anyDateComponentChanged = true
+//                }
+                
                 anyDateComponentChanged = true
                 incrementMonthNumber()
             } label: {
@@ -591,11 +603,28 @@ struct CustomDatePicker: View {
                                 pickedDayNumber = calendarDay.value
                             } label: {
                                 ZStack {
-                                    if calendarDay.value == pickedDayNumber && calendarDay.isCurrentMonth {
-                                        Circle()
-                                            .foregroundColor(.accentColor)
-                                            .opacity(0.7)
-                                            .frame(width: 40, height: 40)
+                                    switch pickingDatesMethod {
+                                    case .pickingOneDate:
+                                        if calendarDay.value == pickedDayNumber && calendarDay.isCurrentMonth {
+                                            Circle()
+                                                .foregroundColor(.accentColor)
+                                                .opacity(0.7)
+                                                .frame(width: 40, height: 40)
+                                        }
+                                    case .pickingTwoDates:
+                                        if ([firstDatePickedDayNumber, secondDatePickedDayNumber].contains(calendarDay.value)) && calendarDay.isCurrentMonth {
+                                            Circle()
+                                                .foregroundColor(.accentColor)
+                                                .opacity(0.7)
+                                                .frame(width: 40, height: 40)
+                                        }
+                                    case .pickingDatesRange:
+                                        if calendarDay.value >= firstDatePickedDayNumber && calendarDay.value <= secondDatePickedDayNumber {
+                                            Circle()
+                                                .foregroundColor(.accentColor)
+                                                .opacity(0.7)
+                                                .frame(width: 40, height: 40)
+                                        }
                                     }
                                     
                                     Text(String(calendarDay.value))
@@ -709,4 +738,10 @@ fileprivate struct CalendarDay {
         case current
         case next
     }
+}
+
+fileprivate enum PickingDatesMethod {
+    case pickingOneDate
+    case pickingTwoDates
+    case pickingDatesRange
 }
