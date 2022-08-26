@@ -142,35 +142,46 @@ struct CustomDatePicker: View {
     private var rowsForCalendarSection: [CalendarDay] {
         var rows: [CalendarDay] = []
         
+        // previousMonthDaysNumber used to calculate dates from previous month displayed in calendar
         let previousMonthDaysNumber = monthDaysNumberFor(yearNumber: pickedMonthNumber == 1 ?
                                                      pickedYearNumber - 1 : pickedYearNumber,
                                                          monthNumber: pickedMonthNumber - 1)
         
+        // lastDayNumberFromPreviousRow used to determine starting day number for next rows
         var lastDayNumberFromPreviousRow: Int = 0
+        // newMonthAlreadyCreated used to check if days from next month in current calendar has already been created
         var newMonthAlreadyCreated: Bool = false
+        // dayIndex used to tag different calendar days
         var dayIndex: Int = 0
+        // We have max 6 rows as there will max 7 * 6 = 42 days displayed
         for rowNumber in 1...7 {
+            // Checking if row number is first because only there will be days from previous month displayed
             if rowNumber == 1 {
+                // Calculating places that should be reserved for days from previous month to be displayed in current calendar
                 let placesForDaysFromPreviousMonth = (previousMonthDaysNumber - (previousMonthDaysNumber - firstDayOfMonthNumber) - 1)
+                // Creating whole previous month numbers
                 let daysFromPreviousMonth = Array(1...previousMonthDaysNumber)
+                // Getting only n last numbers from previous month where n is places reserved for previous month days
                 let daysFromPreviousMonthForARow = Array(daysFromPreviousMonth.suffix(placesForDaysFromPreviousMonth))
-                let numberOfDaysFromPreviousMonthForARow = daysFromPreviousMonthForARow.count
-                
+                // Setting lastIndex as 0 because no days have been created yet and lastIndex is used to determine weekDaySymbol for a day in a current row
                 var lastIndex: Int = 0
-                //Creating days from previous month and assigning it to current calendar days
+                
+                // Creating days from previous month and assigning it to current calendar days
                 for dayFromPreviousMonth in daysFromPreviousMonthForARow {
                     let calendarDay = CalendarDay(id: dayIndex,
                                                   value: dayFromPreviousMonth,
                                                   weekdaySymbol: shortWeekdaySymbols[lastIndex],
                                                   monthType: .previous)
+                    // Incrementing dayIndex and lastIndex as new day has been created
                     dayIndex += 1
                     lastIndex += 1
                     rows.append(calendarDay)
                 }
                 
-                let numberOfRemainingDaysInARow = 7 - numberOfDaysFromPreviousMonthForARow
+                // Calculating remaining places number that will be filled with current month days
+                let numberOfRemainingDaysInARow = 7 - placesForDaysFromPreviousMonth
                 
-                //Creating days from current month and assigning it to current calendar days
+                // Creating days from current month and assigning it to current calendar days
                 for dayFromCurrentMonth in Array(1...numberOfRemainingDaysInARow) {
                     let calendarDay = CalendarDay(id: dayIndex,
                                                   value: dayFromCurrentMonth,
@@ -181,21 +192,31 @@ struct CustomDatePicker: View {
                     rows.append(calendarDay)
                 }
                 
+                // Setting lastDayNumberFromPreviousRow as the last day number we have created in current row
                 lastDayNumberFromPreviousRow = rows.last!.value
             }
             
+            // Next row will be in the middle beetwen first and last and will not contain either previous month days and next month days. Only the 5th row may contain nexd month days
             if [2, 3, 4, 5].contains(rowNumber) {
+                // Setting startingDayNumberFromRow as the next day after lastDayNumberFromPreviousRow
                 let startingDayNumberFromRow = lastDayNumberFromPreviousRow + 1
+                // Setting endingDayNumberFromRow as six days after startingDayNumberFromRow
                 var endingDayNumberFromRow = startingDayNumberFromRow + 7 - 1
+                // If endingDayNumberFromRow is bigger than max current month days number, next month days creation should be started in last row
                 if endingDayNumberFromRow > currentMonthDaysNumber {
+                    // Setting endingDayNumberFromRow as current month days number because we should first fill current row with current month remaining days
                     endingDayNumberFromRow = currentMonthDaysNumber
                     
-                    //Starting creating new month
+                    // Starting creating new month
                     newMonthAlreadyCreated = true
+                    
+                    // Calculating rowDaysNumbers as pure days from startingDayNumberFromRow to endingDayNumberFromRow
                     let rowDaysNumbers = Array(startingDayNumberFromRow...endingDayNumberFromRow)
                     
+                    // Again, lastIndex is set to 0 as new row is being created and weekdays are being set from the beginning
                     var lastIndex: Int = 0
-                    //Creating days from current month and assigning it to current calendar days
+                    
+                    // Creating days from current month and assigning it to current calendar days
                     for dayFromCurrentMonth in rowDaysNumbers {
                         let calendarDay = CalendarDay(id: dayIndex,
                                                       value: dayFromCurrentMonth,
@@ -206,11 +227,14 @@ struct CustomDatePicker: View {
                         rows.append(calendarDay)
                     }
                     
+                    // Calculating places for next month days as remaining places in a row after putting there current month days
                     let placesForNextMonthDaysNumbers = (7 - (currentMonthDaysNumber - startingDayNumberFromRow))
+                    // Creating daysFromNextMonthForARow starting from day 1 up to remaining places reserved for next month
                     let daysFromNextMonthForARow = Array(1...(placesForNextMonthDaysNumbers - 1))
+                    
                     endingDayNumberFromRow = daysFromNextMonthForARow.last!
                     
-                    //Creating days from next month and assigning it to current calendar days
+                    // Creating days from next month and assigning it to current calendar days
                     for dayFromNextMonth in daysFromNextMonthForARow {
                         let calendarDay = CalendarDay(id: dayIndex,
                                                       value: dayFromNextMonth,
@@ -220,9 +244,11 @@ struct CustomDatePicker: View {
                         lastIndex += 1
                         rows.append(calendarDay)
                     }
+                // If new month doesn't need to be created in any of middle rows
                 } else {
+                    // We just create an array as 7 days forward after lastDayNumberFromPreviousRow
                     let rowDaysNumbers = Array(startingDayNumberFromRow...endingDayNumberFromRow)
-                    //Creating days from current month and assigning it to current calendar days
+                    // Creating days from current month and assigning it to current calendar days
                     for (index, dayFromCurrentMonth) in rowDaysNumbers.enumerated() {
                         let calendarDay = CalendarDay(id: dayIndex,
                                                       value: dayFromCurrentMonth,
@@ -232,18 +258,24 @@ struct CustomDatePicker: View {
                         rows.append(calendarDay)
                     }
                 }
+                
                 lastDayNumberFromPreviousRow = endingDayNumberFromRow
             }
             
+            // Last row that most probably will contain next month days
             if rowNumber == 6 {
                 let startingDayNumberFromRow = lastDayNumberFromPreviousRow + 1
+                
+                // If new month has already been created in the last row or lastDayNumberFromPreviousRow was the last day in the current month
                 if newMonthAlreadyCreated || (startingDayNumberFromRow > currentMonthDaysNumber) {
+                    // we just skip 6th row as it would only contain days from next month and it is not needed
                     continue
                 }
+                // We fill current row with remaining days from current month
                 let currentMonthLastRowDaysNumbers = Array(startingDayNumberFromRow...currentMonthDaysNumber)
                 
                 var lastIndex: Int = 0
-                //Creating days from current month and assigning it to current calendar days
+                // Creating days from current month and assigning it to current calendar days
                 for dayFromCurrentMonth in currentMonthLastRowDaysNumbers {
                     let calendarDay = CalendarDay(id: dayIndex,
                                                   value: dayFromCurrentMonth,
@@ -254,10 +286,11 @@ struct CustomDatePicker: View {
                     rows.append(calendarDay)
                 }
                 
+                // Calculating places that should be reserved for the next month days
                 let placesForNextMonthDaysNumbers = (7 - (currentMonthDaysNumber - startingDayNumberFromRow))
                 let daysFromNextMonthForARow = Array(1...(placesForNextMonthDaysNumbers - 1))
                 
-                //Creating days from next month and assigning it to current calendar days
+                // Creating days from next month and assigning it to current calendar days
                 for dayFromNextMonth in daysFromNextMonthForARow {
                     let calendarDay = CalendarDay(id: dayIndex,
                                                   value: dayFromNextMonth,
