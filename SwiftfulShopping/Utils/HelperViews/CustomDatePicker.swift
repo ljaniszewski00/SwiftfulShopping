@@ -54,17 +54,12 @@ struct CustomDatePicker: View {
     // Init for CustomDatePicker with two dates choosing and optional range
     init(includeMonthPicking: Bool = true,
          includeYearPicking: Bool = true,
-         pickingDatesRange: Bool,
          firstDatePicked: Binding<Date>,
          secondDatePicked: Binding<Date>) {
         self.includeDayPicking = true
         self.includeMonthPicking = includeMonthPicking
         self.includeYearPicking = includeYearPicking
-        if pickingDatesRange {
-            self.pickingDatesMethod = .pickingDatesRange
-        } else {
-            self.pickingDatesMethod = .pickingTwoDates
-        }
+        self.pickingDatesMethod = .pickingTwoDates
         self._firstDatePicked = firstDatePicked
         self._secondDatePicked = secondDatePicked
     }
@@ -305,7 +300,7 @@ struct CustomDatePicker: View {
     }
     
     private var wholeDateToDisplay: String {
-        if pickingDatesMethod == .pickingTwoDates || pickingDatesMethod == .pickingDatesRange {
+        if pickingDatesMethod == .pickingTwoDates {
             return firstDateToDisplay + " - " + secondDateToDisplay
         } else {
             return firstDateToDisplay
@@ -444,7 +439,7 @@ struct CustomDatePicker: View {
                 print(isSecondDatePicked)
                 print()
                 
-                if pickingDatesMethod == .pickingTwoDates || pickingDatesMethod == .pickingDatesRange {
+                if pickingDatesMethod == .pickingTwoDates {
                     if !isFirstDatePicked {
                         firstDatePickedDayNumber = pickedDayNumber
                         firstDatePickedMonthNumber = pickedMonthNumber
@@ -618,13 +613,6 @@ struct CustomDatePicker: View {
                                                 .opacity(0.7)
                                                 .frame(width: 40, height: 40)
                                         }
-                                    case .pickingDatesRange:
-                                        if calendarDay.value >= firstDatePickedDayNumber && calendarDay.value <= secondDatePickedDayNumber {
-                                            Circle()
-                                                .foregroundColor(.accentColor)
-                                                .opacity(0.7)
-                                                .frame(width: 40, height: 40)
-                                        }
                                     }
                                     
                                     Text(String(calendarDay.value))
@@ -705,15 +693,7 @@ struct CustomDatePicker_Previews: PreviewProvider {
                     .previewDevice(PreviewDevice(rawValue: deviceName))
                     .previewDisplayName("\(deviceName) portrait")
                 
-                CustomDatePicker(pickingDatesRange: false,
-                                 firstDatePicked: $firstDatePicked,
-                                 secondDatePicked: $secondDatePicked)
-                    .preferredColorScheme(colorScheme)
-                    .previewDevice(PreviewDevice(rawValue: deviceName))
-                    .previewDisplayName("\(deviceName) portrait")
-                
-                CustomDatePicker(pickingDatesRange: true,
-                                 firstDatePicked: $firstDatePicked,
+                CustomDatePicker(firstDatePicked: $firstDatePicked,
                                  secondDatePicked: $secondDatePicked)
                     .preferredColorScheme(colorScheme)
                     .previewDevice(PreviewDevice(rawValue: deviceName))
@@ -743,5 +723,4 @@ fileprivate struct CalendarDay {
 fileprivate enum PickingDatesMethod {
     case pickingOneDate
     case pickingTwoDates
-    case pickingDatesRange
 }
