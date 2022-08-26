@@ -12,8 +12,6 @@ struct CustomDatePicker: View {
     
     // Init values
     private var includeDayPicking: Bool
-    private var includeMonthPicking: Bool
-    private var includeYearPicking: Bool
     private var pickingDatesMethod: PickingDatesMethod
     @Binding var firstDatePicked: Date
     @Binding var secondDatePicked: Date
@@ -40,25 +38,17 @@ struct CustomDatePicker: View {
     
     // Init for CustomDatePicker with one date choosing
     init(includeDayPicking: Bool,
-         includeMonthPicking: Bool,
-         includeYearPicking: Bool,
          datePicked: Binding<Date>) {
         self.includeDayPicking = includeDayPicking
-        self.includeMonthPicking = includeMonthPicking
-        self.includeYearPicking = includeYearPicking
         self.pickingDatesMethod = .pickingOneDate
         self._firstDatePicked = datePicked
         self._secondDatePicked = .constant(Date())
     }
     
     // Init for CustomDatePicker with two dates choosing and optional range
-    init(includeMonthPicking: Bool = true,
-         includeYearPicking: Bool = true,
-         firstDatePicked: Binding<Date>,
+    init(firstDatePicked: Binding<Date>,
          secondDatePicked: Binding<Date>) {
         self.includeDayPicking = true
-        self.includeMonthPicking = includeMonthPicking
-        self.includeYearPicking = includeYearPicking
         self.pickingDatesMethod = .pickingTwoDates
         self._firstDatePicked = firstDatePicked
         self._secondDatePicked = secondDatePicked
@@ -310,28 +300,22 @@ struct CustomDatePicker: View {
     private var firstDateToDisplay: String {
         var dateString: String = ""
         
-        if includeYearPicking {
-            dateString += String(firstDatePickedYearNumber)
+        dateString += String(firstDatePickedYearNumber)
+        
+        dateString += "-"
+        
+        if firstDatePickedMonthNumber < 10 {
+            dateString += "0\(String(firstDatePickedMonthNumber))"
+        } else {
+            dateString += String(firstDatePickedMonthNumber)
         }
-        if includeMonthPicking {
-            if includeYearPicking {
-                dateString += "-"
-            }
-            if firstDatePickedMonthNumber < 10 {
-                dateString += "0\(String(firstDatePickedMonthNumber))"
-            } else {
-                dateString += String(firstDatePickedMonthNumber)
-            }
-        }
-        if includeDayPicking {
-            if includeMonthPicking {
-                dateString += "-"
-            }
-            if firstDatePickedDayNumber < 10 {
-                dateString += "0\(String(firstDatePickedDayNumber))"
-            } else {
-                dateString += String(firstDatePickedDayNumber)
-            }
+        
+        dateString += "-"
+        
+        if firstDatePickedDayNumber < 10 {
+            dateString += "0\(String(firstDatePickedDayNumber))"
+        } else {
+            dateString += String(firstDatePickedDayNumber)
         }
         
         return dateString
@@ -340,28 +324,22 @@ struct CustomDatePicker: View {
     private var secondDateToDisplay: String {
         var dateString: String = ""
         
-        if includeYearPicking {
-            dateString += String(secondDatePickedYearNumber)
+        dateString += String(secondDatePickedYearNumber)
+        
+        dateString += "-"
+        
+        if secondDatePickedMonthNumber < 10 {
+            dateString += "0\(String(secondDatePickedMonthNumber))"
+        } else {
+            dateString += String(secondDatePickedMonthNumber)
         }
-        if includeMonthPicking {
-            if includeYearPicking {
-                dateString += "-"
-            }
-            if secondDatePickedMonthNumber < 10 {
-                dateString += "0\(String(secondDatePickedMonthNumber))"
-            } else {
-                dateString += String(secondDatePickedMonthNumber)
-            }
-        }
-        if includeDayPicking {
-            if includeMonthPicking {
-                dateString += "-"
-            }
-            if secondDatePickedDayNumber < 10 {
-                dateString += "0\(String(secondDatePickedDayNumber))"
-            } else {
-                dateString += String(secondDatePickedDayNumber)
-            }
+        
+        dateString += "-"
+        
+        if secondDatePickedDayNumber < 10 {
+            dateString += "0\(String(secondDatePickedDayNumber))"
+        } else {
+            dateString += String(secondDatePickedDayNumber)
         }
         
         return dateString
@@ -430,15 +408,6 @@ struct CustomDatePicker: View {
         }
         .onChange(of: anyDateComponentChanged) { _ in
             if anyDateComponentChanged {
-                print(pickedDayNumber)
-                print(pickedMonthNumber)
-                print(pickedYearNumber)
-                print()
-                
-                print(isFirstDatePicked)
-                print(isSecondDatePicked)
-                print()
-                
                 if pickingDatesMethod == .pickingTwoDates {
                     if !isFirstDatePicked {
                         firstDatePickedDayNumber = pickedDayNumber
@@ -454,16 +423,6 @@ struct CustomDatePicker: View {
                     firstDatePickedMonthNumber = pickedMonthNumber
                     firstDatePickedYearNumber = pickedYearNumber
                 }
-                
-                print(firstDatePickedDayNumber)
-                print(firstDatePickedMonthNumber)
-                print(firstDatePickedYearNumber)
-                print()
-                
-                print(secondDatePickedDayNumber)
-                print(secondDatePickedMonthNumber)
-                print(secondDatePickedYearNumber)
-                print()
                 
                 let calendar = Calendar.current
                 
@@ -533,8 +492,10 @@ struct CustomDatePicker: View {
                 } label: {
                     Text("\(pickedMonthName),")
                         .font(.system(size: 24, weight: .semibold, design: .rounded))
-                        .fixedSize(horizontal: true, vertical: false)
                         .foregroundColor(colorScheme == .light ? .black : .white)
+                        .frame(minWidth: 130,
+                               maxWidth:.infinity,
+                               alignment: .trailing)
                 }
                 
                 Menu {
@@ -547,8 +508,10 @@ struct CustomDatePicker: View {
                 } label: {
                     Text(String(pickedYearNumber))
                         .font(.system(size: 24, weight: .semibold, design: .rounded))
-                        .fixedSize(horizontal: true, vertical: false)
                         .foregroundColor(colorScheme == .light ? .black : .white)
+                        .frame(minWidth: 70,
+                               maxWidth:.infinity,
+                               alignment: .leading)
                 }
             }
             
@@ -686,8 +649,6 @@ struct CustomDatePicker_Previews: PreviewProvider {
         ForEach(ColorScheme.allCases, id: \.self) { colorScheme in
             ForEach(["iPhone 13 Pro Max", "iPhone 8"], id: \.self) { deviceName in
                 CustomDatePicker(includeDayPicking: true,
-                                 includeMonthPicking: true,
-                                 includeYearPicking: true,
                                  datePicked: $firstDatePicked)
                     .preferredColorScheme(colorScheme)
                     .previewDevice(PreviewDevice(rawValue: deviceName))

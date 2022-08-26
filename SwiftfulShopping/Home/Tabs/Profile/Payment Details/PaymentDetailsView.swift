@@ -163,8 +163,6 @@ struct PaymentDetailsView: View {
                             .foregroundColor(.accentColor)
                         
                         CustomDatePicker(includeDayPicking: false,
-                                         includeMonthPicking: true,
-                                         includeYearPicking: true,
                                          datePicked: $paymentDetailsViewModel.newDate)
                     }
                 }
