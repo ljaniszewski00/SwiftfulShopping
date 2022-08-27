@@ -51,10 +51,6 @@ class LocationManager: NSObject, ObservableObject, CLLocationManagerDelegate {
                         let placemark = placemarks[0]
                         
                         DispatchQueue.main.async {
-                            if let country = placemark.country {
-                                addressData["country"] = country
-                            }
-                            
                             if let city = placemark.locality {
                                 addressData["city"] = city
                             }

@@ -17,6 +17,8 @@ struct LoginView: View {
     
     @StateObject private var loginViewModel = LoginViewModel()
     @StateObject private var forgotPasswordViewModel = ForgotPasswordViewModel()
+    
+    @StateObject var errorManager = ErrorManager.shared
 
     @State private var isEmailTextFieldFocused: Bool = false
     @State private var isPasswordTextFieldFocused: Bool = false
@@ -27,17 +29,23 @@ struct LoginView: View {
         NavigationView {
             GeometryReader { geometry in
                 ScrollView(.vertical, showsIndicators: false) {
-                    VStack {
+                    VStack(spacing: 0) {
                         Image("AppIconImage")
                             .resizable()
-                            .clipShape(RoundedRectangle(cornerRadius: 20))
-                            .scaledToFit()
-                            .padding(40)
+                            .frame(width: 250, height: 250)
+                            .scaleEffect(1.4)
+                            .offset(y: -30)
+                            .frame(minWidth: 300, maxWidth: .infinity,
+                                   minHeight: 300)
                             .background {
-                                Rectangle()
-                                    .foregroundColor(.accentColor)
+                                if colorScheme == .light {
+                                    Color.white
+                                } else if colorScheme == .dark {
+                                    Color.black
+                                }
                             }
-                            .padding(.bottom)
+                        
+                        Spacer()
                         
                         VStack(spacing: 40) {
                             VStack(spacing: 15) {
@@ -57,6 +65,8 @@ struct LoginView: View {
                                         }
                                 }
                             }
+                            
+                            Spacer()
                             
                             VStack(spacing: 20) {
                                 Button("Login") {
@@ -119,35 +129,32 @@ struct LoginView: View {
                                 .frame(width: ScreenBoundsSupplier.shared.getScreenWidth() * 0.6)
                             }
                         }
+                        .frame(maxHeight: .infinity)
                         .padding()
                         .sheet(isPresented: $showForgotPasswordSheet) {
                             ForgotPasswordView()
+                                .environmentObject(loginViewModel)
                                 .environmentObject(forgotPasswordViewModel)
                                 .onAppear {
                                     forgotPasswordViewModel.email = loginViewModel.email
                                 }
                         }
                     }
-                    .frame(minHeight: geometry.size.height)
+                    .frame(minWidth: geometry.size.width,
+                           minHeight: geometry.size.height)
                 }
+                .background {
+                    Color(uiColor: .secondarySystemBackground)
+                        .ignoresSafeArea(.container, edges: [.bottom, .horizontal])
+                }
+                .modifier(LoadingIndicatorModal(isPresented:
+                                                    $loginViewModel.showLoadingModal))
+                .modifier(ErrorModal(isPresented: $errorManager.showErrorModal,
+                                     customError: errorManager.customError ?? ErrorManager.unknownError))
             }
             .navigationTitle("Login")
             .navigationBarHidden(true)
             .navigationBarBackButtonHidden(true)
-            .navigationBarTitleDisplayMode(.inline)
-            .toolbar {
-                ToolbarItem(placement: .navigationBarLeading) {
-                    Button(action: {
-                        dismiss()
-                    }, label: {
-                        Image(systemName: "arrow.left")
-                            .foregroundColor(.black)
-                    })
-                }
-            }
-            .background {
-                Color(uiColor: .secondarySystemBackground).ignoresSafeArea()
-            }
         }
         .navigationViewStyle(.stack)
     }

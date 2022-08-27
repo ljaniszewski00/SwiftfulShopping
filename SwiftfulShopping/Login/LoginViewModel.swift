@@ -11,6 +11,8 @@ class LoginViewModel: ObservableObject {
     @Published var email: String = ""
     @Published var password: String = ""
     
+    @Published var showLoadingModal: Bool = false
+    
     func completeLogin() {
         
     }

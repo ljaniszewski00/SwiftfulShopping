@@ -8,7 +8,9 @@
 import SwiftUI
 
 struct ForgotPasswordView: View {
+    @EnvironmentObject private var loginViewModel: LoginViewModel
     @EnvironmentObject private var forgotPasswordViewModel: ForgotPasswordViewModel
+    
     @State private var isEmailTextFieldFocused: Bool = false
     
     @Environment(\.dismiss) var dismiss
@@ -50,11 +52,13 @@ struct ForgotPasswordView: View {
 
 struct ForgotPasswordView_Previews: PreviewProvider {
     static var previews: some View {
+        let loginViewModel: LoginViewModel = LoginViewModel()
         let forgotPasswordViewModel: ForgotPasswordViewModel = ForgotPasswordViewModel()
         
         ForEach(ColorScheme.allCases, id: \.self) { colorScheme in
             ForEach(["iPhone 13 Pro Max", "iPhone 8"], id: \.self) { deviceName in
                 ForgotPasswordView()
+                    .environmentObject(loginViewModel)
                     .environmentObject(forgotPasswordViewModel)
                     .preferredColorScheme(colorScheme)
                     .previewDevice(PreviewDevice(rawValue: deviceName))

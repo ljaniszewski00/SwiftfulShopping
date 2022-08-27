@@ -353,7 +353,7 @@ struct CustomDatePicker: View {
                     .frame(width: 25, height: 25)
                     .foregroundColor(pickingDate ? .accentColor : .gray)
                 Text(wholeDateToDisplay)
-                    .font(.system(size: 18, weight: .semibold, design: .rounded))
+                    .font(.system(size: 20, weight: .semibold, design: .rounded))
                     .foregroundColor(colorScheme == .light ? .black : .white)
                 
                 Spacer()

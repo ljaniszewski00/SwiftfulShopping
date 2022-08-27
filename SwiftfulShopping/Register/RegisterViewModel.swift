@@ -21,7 +21,7 @@ class RegisterViewModel: ObservableObject {
     @Published var apartmentNumber: String = ""
     @Published var zipCode: String = ""
     @Published var city: String = ""
-    @Published var country: String = ""
+    @Published var country: String = Countries.poland.rawValue
     
     var addressDataGiven: Bool {
         !streetName.isEmpty && !streetNumber.isEmpty && !apartmentNumber.isEmpty && !zipCode.isEmpty && !city.isEmpty && !country.isEmpty
@@ -36,7 +36,14 @@ class RegisterViewModel: ObservableObject {
     @Published var apartmentNumberInvoice: String = ""
     @Published var zipCodeInvoice: String = ""
     @Published var cityInvoice: String = ""
-    @Published var countryInvoice: String = ""
+    @Published var countryInvoice: String = Countries.poland.rawValue
+    
+    @Published var presentSecondRegisterView: Bool = false
+    
+    @Published var dataError: Bool = false
+    @Published var errorMessage: String = ""
+    
+    @Published var showLoadingModal: Bool = false
     
     /// To be removed
     func fillPersonalData() {
@@ -63,10 +70,6 @@ class RegisterViewModel: ObservableObject {
             
             if let city = addressData["city"] {
                 self.city = city
-            }
-            
-            if let country = addressData["country"] {
-                self.country = country
             }
         }
     }
