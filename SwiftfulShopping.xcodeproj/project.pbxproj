@@ -38,7 +38,7 @@
 		0A2D5FB228BA275F00E76D71 /* SecondRegisterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A2D5FB128BA275F00E76D71 /* SecondRegisterView.swift */; };
 		0A2D5FB428BA2BAB00E76D71 /* RectangleCustomTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A268B56286884A3006CF0E2 /* RectangleCustomTextField.swift */; };
 		0A2D5FB528BA2BAB00E76D71 /* RectangleCustomTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A268B56286884A3006CF0E2 /* RectangleCustomTextField.swift */; };
-		0A2D5FB728BA2BC300E76D71 /* SelectionDropdown.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A2D5FB628BA2BC300E76D71 /* SelectionDropdown.swift */; };
+		0A2D5FB728BA2BC300E76D71 /* SelectionDropdownMenu.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A2D5FB628BA2BC300E76D71 /* SelectionDropdownMenu.swift */; };
 		0A2D5FB828BA40F000E76D71 /* OrderStatus.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A5A7CF52896878800736B07 /* OrderStatus.swift */; };
 		0A2D5FB928BA40F000E76D71 /* OrderStatus.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A5A7CF52896878800736B07 /* OrderStatus.swift */; };
 		0A2D5FBA28BA40F000E76D71 /* TabsWithProducts.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A33A07128ABCAAC0013AE92 /* TabsWithProducts.swift */; };
@@ -368,7 +368,7 @@
 		0A27E7D1287B502A00D033D9 /* DetectCardCompany.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetectCardCompany.swift; sourceTree = "<group>"; };
 		0A27E7D3287B509300D033D9 /* CardCompany.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardCompany.swift; sourceTree = "<group>"; };
 		0A2D5FB128BA275F00E76D71 /* SecondRegisterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SecondRegisterView.swift; sourceTree = "<group>"; };
-		0A2D5FB628BA2BC300E76D71 /* SelectionDropdown.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectionDropdown.swift; sourceTree = "<group>"; };
+		0A2D5FB628BA2BC300E76D71 /* SelectionDropdownMenu.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectionDropdownMenu.swift; sourceTree = "<group>"; };
 		0A2D5FD628BA42EB00E76D71 /* SingleSelectionToggle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SingleSelectionToggle.swift; sourceTree = "<group>"; };
 		0A2DECBE288C5FB200D563C9 /* ExploreViewTabs.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExploreViewTabs.swift; sourceTree = "<group>"; };
 		0A2EB51828B38AA5009E6E8F /* CustomDatePicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomDatePicker.swift; sourceTree = "<group>"; };
@@ -623,7 +623,7 @@
 				0ACD58D0284A6F6500AA9DA0 /* CustomTextField.swift */,
 				0A268B56286884A3006CF0E2 /* RectangleCustomTextField.swift */,
 				0A2EB51828B38AA5009E6E8F /* CustomDatePicker.swift */,
-				0A2D5FB628BA2BC300E76D71 /* SelectionDropdown.swift */,
+				0A2D5FB628BA2BC300E76D71 /* SelectionDropdownMenu.swift */,
 				0A2D5FD628BA42EB00E76D71 /* SingleSelectionToggle.swift */,
 			);
 			path = Fields;
@@ -1576,7 +1576,7 @@
 				0A27E7D4287B509300D033D9 /* CardCompany.swift in Sources */,
 				0A2EB51928B38AA5009E6E8F /* CustomDatePicker.swift in Sources */,
 				0A2FE0BC28A1C02200E8D30E /* ContentViewModel.swift in Sources */,
-				0A2D5FB728BA2BC300E76D71 /* SelectionDropdown.swift in Sources */,
+				0A2D5FB728BA2BC300E76D71 /* SelectionDropdownMenu.swift in Sources */,
 				0A3B08E828AD921C00A54385 /* CameraView.swift in Sources */,
 				0ACD58F7284A6F6600AA9DA0 /* Hidden.swift in Sources */,
 				0ACD5918284A6F6600AA9DA0 /* LoginViewModel.swift in Sources */,

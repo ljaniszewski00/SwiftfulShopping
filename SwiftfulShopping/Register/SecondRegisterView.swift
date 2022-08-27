@@ -154,8 +154,9 @@ struct SecondRegisterView: View {
                         .font(.system(size: 18, weight: .semibold, design: .rounded))
                         .foregroundColor(.accentColor)
                     
-                    SelectionDropdown(selection: $registerViewModel.country,
+                    SelectionDropdownMenu(selection: $registerViewModel.country,
                                       dataWithImagesToChoose: countries)
+                        .frame(maxHeight: 350)
                 }
                 
                 VStack(alignment: .leading, spacing: 10) {
@@ -214,7 +215,7 @@ struct SecondRegisterView: View {
                         .font(.system(size: 18, weight: .semibold, design: .rounded))
                         .foregroundColor(.accentColor)
                     
-                    SelectionDropdown(selection: $registerViewModel.countryInvoice,
+                    SelectionDropdownMenu(selection: $registerViewModel.countryInvoice,
                                       dataWithImagesToChoose: countries)
                 }
             }
