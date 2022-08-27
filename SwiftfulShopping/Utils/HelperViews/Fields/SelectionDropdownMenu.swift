@@ -1,5 +1,5 @@
 //
-//  SelectionDropdown.swift
+//  SelectionDropdownMenu.swift
 //  SwiftfulShopping
 //
 //  Created by Łukasz Janiszewski on 27/08/2022.
