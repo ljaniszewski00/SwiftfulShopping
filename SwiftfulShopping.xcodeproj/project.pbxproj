@@ -13,6 +13,7 @@
 		0A2165B428A2C217006842F0 /* DeleteAccountViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A2165B328A2C217006842F0 /* DeleteAccountViewModel.swift */; };
 		0A237401288D62730076A5AB /* ProductsRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A237400288D62730076A5AB /* ProductsRepository.swift */; };
 		0A237403288D68720076A5AB /* UserDefaultsKeys.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A237402288D68720076A5AB /* UserDefaultsKeys.swift */; };
+		0A25D69328BC000600FF6ED5 /* ScrollView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A25D69228BC000600FF6ED5 /* ScrollView.swift */; };
 		0A268B43286712C8006CF0E2 /* Date.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A268B42286712C8006CF0E2 /* Date.swift */; };
 		0A268B4528671442006CF0E2 /* Array.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A268B4428671442006CF0E2 /* Array.swift */; };
 		0A268B4728671924006CF0E2 /* OrderDetailsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A268B4628671924006CF0E2 /* OrderDetailsView.swift */; };
@@ -346,6 +347,7 @@
 		0A2165B328A2C217006842F0 /* DeleteAccountViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeleteAccountViewModel.swift; sourceTree = "<group>"; };
 		0A237400288D62730076A5AB /* ProductsRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductsRepository.swift; sourceTree = "<group>"; };
 		0A237402288D68720076A5AB /* UserDefaultsKeys.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDefaultsKeys.swift; sourceTree = "<group>"; };
+		0A25D69228BC000600FF6ED5 /* ScrollView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScrollView.swift; sourceTree = "<group>"; };
 		0A268B42286712C8006CF0E2 /* Date.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Date.swift; sourceTree = "<group>"; };
 		0A268B4428671442006CF0E2 /* Array.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Array.swift; sourceTree = "<group>"; };
 		0A268B4628671924006CF0E2 /* OrderDetailsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrderDetailsView.swift; sourceTree = "<group>"; };
@@ -1007,6 +1009,7 @@
 				0A30460228A96B9A00F218B3 /* UIApplication.swift */,
 				0A30460428A96CE500F218B3 /* UIColor.swift */,
 				0A13460128BBA02A002D596E /* Font.swift */,
+				0A25D69228BC000600FF6ED5 /* ScrollView.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -1479,6 +1482,7 @@
 				0ACD58EB284A6F6600AA9DA0 /* TabBarStateManager.swift in Sources */,
 				0AD89746289D0C4A00BFDAA1 /* ProfileViewModel.swift in Sources */,
 				0A35557C28A05859005993E5 /* DeleteAccountView.swift in Sources */,
+				0A25D69328BC000600FF6ED5 /* ScrollView.swift in Sources */,
 				0A2D5FD728BA42EB00E76D71 /* SingleSelectionToggle.swift in Sources */,
 				0A2FE0B728A1BB2000E8D30E /* SplashScreenView.swift in Sources */,
 				0ACD5909284A6F6600AA9DA0 /* RegisterViewModel.swift in Sources */,

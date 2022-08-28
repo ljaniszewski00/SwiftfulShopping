@@ -50,7 +50,6 @@ struct ProductsListView: View {
                     }
                 }
                 .buttonStyle(ScaledButtonStyle())
-                .id(product.id)
             }
         }
     }

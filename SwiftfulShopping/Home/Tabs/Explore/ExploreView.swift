@@ -25,7 +25,12 @@ struct ExploreView: View {
     @State var offset: CGPoint = .zero
     
     var buttonUpVisible: Bool {
-        true
+        if exploreViewModel.changingProductsToBeDisplayed.isEmpty {
+            return !((Int(-UIScreen.main.bounds.height)...70).contains(Int(offset.y)))
+        } else {
+            return !((Int(-UIScreen.main.bounds.height)...(exploreViewModel.changingProductsToBeDisplayed.count * 70))
+                .contains(Int(offset.y)))
+        }
     }
     
     var body: some View {
@@ -169,12 +174,17 @@ struct ExploreView: View {
                                            isActive: $exploreViewModel.shouldPresentProductDetailsView,
                                            label: { EmptyView() })
                         }
+                        .id(0)
+                        .readingScrollView(from: "scroll", into: $offset)
                         .padding(.bottom, 70)
                     }
+                    .coordinateSpace(name: "scroll")
                     .onChange(of: exploreViewModel.scrollProductsListToBeginning) { newValue in
                         if newValue {
-                            scrollViewReader.scrollTo(exploreViewModel.changingProductsToBeDisplayed.first?.id, anchor: .top)
-                            exploreViewModel.scrollProductsListToBeginning = false
+                            withAnimation {
+                                scrollViewReader.scrollTo(0, anchor: .top)
+                                exploreViewModel.scrollProductsListToBeginning = false
+                            }
                         }
                     }
                     
