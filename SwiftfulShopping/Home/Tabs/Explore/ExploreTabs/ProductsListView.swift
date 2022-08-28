@@ -18,8 +18,6 @@ struct ProductsListView: View {
     
     @AppStorage("productsListDisplayMethod") var displayMethod: ProductDisplayMethod = .list
     
-    var listProductsAfterSearch: Bool = false
-    
     var body: some View {
         buildProductsListFor()
             .padding()
@@ -43,10 +41,12 @@ struct ProductsListView: View {
                         ListProductCardTileView(product: product)
                             .environmentObject(favoritesViewModel)
                             .environmentObject(cartViewModel)
+                            .measureSize(size: $exploreViewModel.productTileSize)
                     } else {
                         GridProductCardTileView(product: product)
                             .environmentObject(favoritesViewModel)
                             .environmentObject(cartViewModel)
+                            .measureSize(size: $exploreViewModel.productTileSize)
                     }
                 }
                 .buttonStyle(ScaledButtonStyle())

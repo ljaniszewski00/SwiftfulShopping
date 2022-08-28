@@ -28,6 +28,8 @@ class ExploreViewModel: ObservableObject {
     @Published var presentSortingAndFilteringSheet: Bool = false
     
     @Published var scrollProductsListToBeginning: Bool = false
+    @Published var tabsSize: CGSize = .zero
+    @Published var productTileSize: CGSize = .zero
     
     var productsCompanies: [String] {
         var companies: Set<String> = []

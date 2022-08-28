@@ -26,10 +26,10 @@ struct ExploreView: View {
     
     var buttonUpVisible: Bool {
         if exploreViewModel.changingProductsToBeDisplayed.isEmpty {
-            return !((Int(-UIScreen.main.bounds.height)...70).contains(Int(offset.y)))
+            return false
         } else {
-            return !((Int(-UIScreen.main.bounds.height)...(exploreViewModel.changingProductsToBeDisplayed.count * 70))
-                .contains(Int(offset.y)))
+            let heightToShow = exploreViewModel.productTileSize.height + exploreViewModel.tabsSize.height
+            return offset.y >= heightToShow
         }
     }
     
@@ -61,6 +61,7 @@ struct ExploreView: View {
                                     }
                                 }
                                 .padding()
+                                .measureSize(size: $exploreViewModel.tabsSize)
                             }
                             
                             if exploreViewModel.selectedTab != .categories {
@@ -188,7 +189,7 @@ struct ExploreView: View {
                         }
                     }
                     
-                    if buttonUpVisible {
+                    if buttonUpVisible && exploreViewModel.selectedTab != .categories {
                         Button {
                             exploreViewModel.scrollProductsListToBeginning = true
                         } label: {
