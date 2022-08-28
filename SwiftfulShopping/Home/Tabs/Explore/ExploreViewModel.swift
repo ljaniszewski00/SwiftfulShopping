@@ -27,6 +27,8 @@ class ExploreViewModel: ObservableObject {
     
     @Published var presentSortingAndFilteringSheet: Bool = false
     
+    @Published var scrollProductsListToBeginning: Bool = false
+    
     var productsCompanies: [String] {
         var companies: Set<String> = []
         for product in productsFromRepository {

@@ -22,146 +22,181 @@ struct ExploreView: View {
     
     @AppStorage("productsListDisplayMethod") var displayMethod: ProductDisplayMethod = .list
     
+    @State var offset: CGPoint = .zero
+    
+    var buttonUpVisible: Bool {
+        true
+    }
+    
     var body: some View {
         NavigationView {
-            ScrollView(.vertical, showsIndicators: true) {
-                VStack(alignment: .center) {
-                    ScrollView(.horizontal, showsIndicators: false) {
-                        HStack {
-                            ForEach(ExploreViewTabs.allCases, id: \.self) { tabName in
-                                Text(tabName.rawValue)
-                                    .font(.system(size: 16, weight: .bold, design: .rounded))
-                                    .foregroundColor(colorScheme == .light ? .ssBlack : .ssWhite)
-                                    .padding()
-                                    .if(tabName == exploreViewModel.selectedTab) {
-                                        $0
-                                            .background {
-                                                RoundedRectangle(cornerRadius: 10)
-                                                    .foregroundColor(.accentColor)
+            ScrollViewReader { scrollViewReader in
+                ZStack(alignment: .bottomTrailing) {
+                    ScrollView(.vertical, showsIndicators: true) {
+                        VStack(alignment: .center) {
+                            ScrollView(.horizontal, showsIndicators: false) {
+                                HStack {
+                                    ForEach(ExploreViewTabs.allCases, id: \.self) { tabName in
+                                        Text(tabName.rawValue)
+                                            .font(.system(size: 16, weight: .bold, design: .rounded))
+                                            .foregroundColor(colorScheme == .light ? .ssBlack : .ssWhite)
+                                            .padding()
+                                            .if(tabName == exploreViewModel.selectedTab) {
+                                                $0
+                                                    .background {
+                                                        RoundedRectangle(cornerRadius: 10)
+                                                            .foregroundColor(.accentColor)
+                                                    }
+                                            }
+                                            .onTapGesture {
+                                                withAnimation {
+                                                    exploreViewModel.selectedTab = tabName
+                                                }
                                             }
                                     }
-                                    .onTapGesture {
+                                }
+                                .padding()
+                            }
+                            
+                            if exploreViewModel.selectedTab != .categories {
+                                HStack(spacing: 20) {
+                                    Button {
                                         withAnimation {
-                                            exploreViewModel.selectedTab = tabName
+                                            exploreViewModel.presentSortingAndFilteringSheet = true
+                                        }
+                                    } label: {
+                                        Image(systemName: "slider.horizontal.3")
+                                            .resizable()
+                                            .frame(width: 25, height: 20)
+                                            .if(sortingAndFilteringViewModel.numberOfFiltersApplied > 0) {
+                                                $0
+                                                    .overlay(
+                                                        ZStack {
+                                                            Circle()
+                                                                .frame(width: 17, height: 17)
+                                                                .foregroundColor(.red)
+                                                            Text(String(sortingAndFilteringViewModel.numberOfFiltersApplied))
+                                                                .font(.system(size: 14, weight: .regular, design: .rounded))
+                                                                .foregroundColor(.ssWhite)
+                                                        }
+                                                        .offset(x: 17, y: -17)
+                                                    )
+                                            }
+                                    }
+                                    
+                                    if (exploreViewModel.selectedTab == .categories && exploreViewModel.displayedCategory != nil) {
+                                        HStack {
+                                            Image(systemName: "multiply.circle.fill")
+                                                .resizable()
+                                                .frame(width: 25, height: 25)
+                                                .foregroundColor(.accentColor)
+                                            Text(exploreViewModel.displayedCategory?.rawValue ?? "")
+                                                .font(.system(size: 16, weight: .bold, design: .rounded))
+                                        }
+                                        .onTapGesture {
+                                            withAnimation {
+                                                exploreViewModel.displayedCategory = nil
+                                            }
                                         }
                                     }
+                                    
+                                    Spacer()
+                                    
+                                    Button {
+                                        withAnimation {
+                                            displayMethod = .grid
+                                        }
+                                    } label: {
+                                        Image(systemName: "rectangle.grid.3x2")
+                                            .resizable()
+                                            .frame(width: 25, height: 20)
+                                    }
+                                    
+                                    Button {
+                                        withAnimation {
+                                            displayMethod = .list
+                                        }
+                                    } label: {
+                                        Image(systemName: "list.bullet")
+                                            .resizable()
+                                            .frame(width: 25, height: 20)
+                                    }
+                                }
+                                .padding(.horizontal)
                             }
+                            
+                            if exploreViewModel.selectedTab == .categories {
+                                if exploreViewModel.displayedCategory == nil {
+                                    CategoriesTabView()
+                                        .environmentObject(authStateManager)
+                                        .environmentObject(tabBarStateManager)
+                                        .environmentObject(exploreViewModel)
+                                        .environmentObject(profileViewModel)
+                                } else {
+                                    ProductsListView()
+                                        .environmentObject(authStateManager)
+                                        .environmentObject(tabBarStateManager)
+                                        .environmentObject(exploreViewModel)
+                                        .environmentObject(profileViewModel)
+                                        .environmentObject(favoritesViewModel)
+                                        .environmentObject(cartViewModel)
+                                        .environmentObject(sortingAndFilteringViewModel)
+                                }
+                            } else {
+                                ProductsListView()
+                                    .environmentObject(authStateManager)
+                                    .environmentObject(tabBarStateManager)
+                                    .environmentObject(exploreViewModel)
+                                    .environmentObject(profileViewModel)
+                                    .environmentObject(favoritesViewModel)
+                                    .environmentObject(cartViewModel)
+                                    .environmentObject(sortingAndFilteringViewModel)
+                            }
+                            
+                            NavigationLink(destination: ProductDetailsView(product: exploreViewModel.choosenProduct ?? Product.demoProducts[0])
+                                                            .environmentObject(authStateManager)
+                                                            .environmentObject(tabBarStateManager)
+                                                            .environmentObject(exploreViewModel)
+                                                            .environmentObject(profileViewModel)
+                                                            .environmentObject(favoritesViewModel)
+                                                            .environmentObject(cartViewModel)
+                                                            .onAppear {
+                                                                tabBarStateManager.hideTabBar()
+                                                            }
+                                                            .onDisappear {
+                                                                tabBarStateManager.showTabBar()
+                                                            },
+                                           isActive: $exploreViewModel.shouldPresentProductDetailsView,
+                                           label: { EmptyView() })
+                        }
+                        .padding(.bottom, 70)
+                    }
+                    .onChange(of: exploreViewModel.scrollProductsListToBeginning) { newValue in
+                        if newValue {
+                            scrollViewReader.scrollTo(exploreViewModel.changingProductsToBeDisplayed.first?.id, anchor: .top)
+                            exploreViewModel.scrollProductsListToBeginning = false
+                        }
+                    }
+                    
+                    if buttonUpVisible {
+                        Button {
+                            exploreViewModel.scrollProductsListToBeginning = true
+                        } label: {
+                            Image(systemName: "arrow.up")
+                                .foregroundColor(colorScheme == .light ? .ssBlack : .ssWhite)
+                                .padding()
+                                .background {
+                                    Circle()
+                                        .foregroundColor(.accentColor)
+                                }
+                                .transition(.move(edge: .trailing))
+                                .animation(.default.speed(0.5))
+                                .zIndex(1)
                         }
                         .padding()
+                        .padding(.bottom, 60)
                     }
-                    
-                    if exploreViewModel.selectedTab != .categories {
-                        HStack(spacing: 20) {
-                            Button {
-                                withAnimation {
-                                    exploreViewModel.presentSortingAndFilteringSheet = true
-                                }
-                            } label: {
-                                Image(systemName: "slider.horizontal.3")
-                                    .resizable()
-                                    .frame(width: 25, height: 20)
-                                    .if(sortingAndFilteringViewModel.numberOfFiltersApplied > 0) {
-                                        $0
-                                            .overlay(
-                                                ZStack {
-                                                    Circle()
-                                                        .frame(width: 17, height: 17)
-                                                        .foregroundColor(.red)
-                                                    Text(String(sortingAndFilteringViewModel.numberOfFiltersApplied))
-                                                        .font(.system(size: 14, weight: .regular, design: .rounded))
-                                                        .foregroundColor(.ssWhite)
-                                                }
-                                                .offset(x: 17, y: -17)
-                                            )
-                                    }
-                            }
-                            
-                            if (exploreViewModel.selectedTab == .categories && exploreViewModel.displayedCategory != nil) {
-                                HStack {
-                                    Image(systemName: "multiply.circle.fill")
-                                        .resizable()
-                                        .frame(width: 25, height: 25)
-                                        .foregroundColor(.accentColor)
-                                    Text(exploreViewModel.displayedCategory?.rawValue ?? "")
-                                        .font(.system(size: 16, weight: .bold, design: .rounded))
-                                }
-                                .onTapGesture {
-                                    withAnimation {
-                                        exploreViewModel.displayedCategory = nil
-                                    }
-                                }
-                            }
-                            
-                            Spacer()
-                            
-                            Button {
-                                withAnimation {
-                                    displayMethod = .grid
-                                }
-                            } label: {
-                                Image(systemName: "rectangle.grid.3x2")
-                                    .resizable()
-                                    .frame(width: 25, height: 20)
-                            }
-                            
-                            Button {
-                                withAnimation {
-                                    displayMethod = .list
-                                }
-                            } label: {
-                                Image(systemName: "list.bullet")
-                                    .resizable()
-                                    .frame(width: 25, height: 20)
-                            }
-                        }
-                        .padding(.horizontal)
-                    }
-                    
-                    if exploreViewModel.selectedTab == .categories {
-                        if exploreViewModel.displayedCategory == nil {
-                            CategoriesTabView()
-                                .environmentObject(authStateManager)
-                                .environmentObject(tabBarStateManager)
-                                .environmentObject(exploreViewModel)
-                                .environmentObject(profileViewModel)
-                        } else {
-                            ProductsListView()
-                                .environmentObject(authStateManager)
-                                .environmentObject(tabBarStateManager)
-                                .environmentObject(exploreViewModel)
-                                .environmentObject(profileViewModel)
-                                .environmentObject(favoritesViewModel)
-                                .environmentObject(cartViewModel)
-                                .environmentObject(sortingAndFilteringViewModel)
-                        }
-                    } else {
-                        ProductsListView()
-                            .environmentObject(authStateManager)
-                            .environmentObject(tabBarStateManager)
-                            .environmentObject(exploreViewModel)
-                            .environmentObject(profileViewModel)
-                            .environmentObject(favoritesViewModel)
-                            .environmentObject(cartViewModel)
-                            .environmentObject(sortingAndFilteringViewModel)
-                    }
-                    
-                    NavigationLink(destination: ProductDetailsView(product: exploreViewModel.choosenProduct ?? Product.demoProducts[0])
-                                                    .environmentObject(authStateManager)
-                                                    .environmentObject(tabBarStateManager)
-                                                    .environmentObject(exploreViewModel)
-                                                    .environmentObject(profileViewModel)
-                                                    .environmentObject(favoritesViewModel)
-                                                    .environmentObject(cartViewModel)
-                                                    .onAppear {
-                                                        tabBarStateManager.hideTabBar()
-                                                    }
-                                                    .onDisappear {
-                                                        tabBarStateManager.showTabBar()
-                                                    },
-                                   isActive: $exploreViewModel.shouldPresentProductDetailsView,
-                                   label: { EmptyView() })
                 }
-                .padding(.bottom, 70)
             }
             .navigationTitle("Explore")
             .toolbar {

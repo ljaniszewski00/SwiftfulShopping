@@ -33,7 +33,7 @@ struct ProductsListView: View {
     @ViewBuilder
     func buildProductsListFor() -> some View {
         VStack {
-            ForEach(exploreViewModel.changingProductsToBeDisplayed, id: \.self) { product in
+            ForEach(exploreViewModel.changingProductsToBeDisplayed, id: \.id) { product in
                 Button {
                     withAnimation(.interactiveSpring(response: 0.6, dampingFraction: 0.7, blendDuration: 0.7)) {
                         exploreViewModel.changeFocusedProductFor(product: product)
@@ -50,6 +50,7 @@ struct ProductsListView: View {
                     }
                 }
                 .buttonStyle(ScaledButtonStyle())
+                .id(product.id)
             }
         }
     }
