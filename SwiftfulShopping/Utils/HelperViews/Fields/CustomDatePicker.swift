@@ -351,21 +351,21 @@ struct CustomDatePicker: View {
                 Image(systemName: "calendar")
                     .resizable()
                     .frame(width: 25, height: 25)
-                    .foregroundColor(pickingDate ? .accentColor : .gray)
+                    .foregroundColor(pickingDate ? .accentColor : .ssGray)
                 Text(wholeDateToDisplay)
                     .font(.system(size: 20, weight: .semibold, design: .rounded))
-                    .foregroundColor(colorScheme == .light ? .black : .white)
+                    .foregroundColor(colorScheme == .light ? .ssBlack : .ssWhite)
                 
                 Spacer()
                 
                 Image(systemName: pickingDate ? "chevron.up" : "chevron.down")
-                    .foregroundColor(.gray)
+                    .foregroundColor(.ssGray)
             }
             .padding(.all, 15)
             .background {
                 RoundedRectangle(cornerRadius: 5)
                     .stroke(lineWidth: pickingDate ? 2 : 1)
-                    .foregroundColor(pickingDate ? .accentColor : .gray)
+                    .foregroundColor(pickingDate ? .accentColor : .ssGray)
                     .if(pickingDate) {
                         $0
                             .shadow(radius: 10)
@@ -392,7 +392,7 @@ struct CustomDatePicker: View {
                                 RoundedRectangle(cornerRadius: 5)
                                 Text("Pick Today")
                                     .font(.system(size: 20, weight: .semibold, design: .rounded))
-                                    .foregroundColor(colorScheme == .light ? .black : .white)
+                                    .foregroundColor(colorScheme == .light ? .ssBlack : .ssWhite)
                             }
                         }
                         .frame(height: 50)
@@ -402,7 +402,7 @@ struct CustomDatePicker: View {
                 .background {
                     RoundedRectangle(cornerRadius: 5)
                         .stroke(lineWidth: 1)
-                        .foregroundColor(.gray)
+                        .foregroundColor(.ssGray)
                 }
             }
         }
@@ -470,7 +470,7 @@ struct CustomDatePicker: View {
                 decrementMonthNumber()
             } label: {
                 Image(systemName: "chevron.left")
-                    .foregroundColor(colorScheme == .light ? .black : .white)
+                    .foregroundColor(colorScheme == .light ? .ssBlack : .ssWhite)
                     .padding(.all, 10)
                     .background {
                         Circle().foregroundColor(.accentColor)
@@ -492,7 +492,7 @@ struct CustomDatePicker: View {
                 } label: {
                     Text("\(pickedMonthName),")
                         .font(.system(size: 24, weight: .semibold, design: .rounded))
-                        .foregroundColor(colorScheme == .light ? .black : .white)
+                        .foregroundColor(colorScheme == .light ? .ssBlack : .ssWhite)
                         .frame(minWidth: 130,
                                maxWidth: .infinity,
                                alignment: .trailing)
@@ -508,7 +508,7 @@ struct CustomDatePicker: View {
                 } label: {
                     Text(String(pickedYearNumber))
                         .font(.system(size: 24, weight: .semibold, design: .rounded))
-                        .foregroundColor(colorScheme == .light ? .black : .white)
+                        .foregroundColor(colorScheme == .light ? .ssBlack : .ssWhite)
                         .frame(minWidth: 70,
                                maxWidth: .infinity,
                                alignment: .leading)
@@ -529,7 +529,7 @@ struct CustomDatePicker: View {
                 incrementMonthNumber()
             } label: {
                 Image(systemName: "chevron.right")
-                    .foregroundColor(colorScheme == .light ? .black : .white)
+                    .foregroundColor(colorScheme == .light ? .ssBlack : .ssWhite)
                     .padding(.all, 10)
                     .background {
                         Circle().foregroundColor(.accentColor)
@@ -581,7 +581,7 @@ struct CustomDatePicker: View {
                                     
                                     Text(String(calendarDay.value))
                                         .font(.system(size: 18, weight: .regular, design: .rounded))
-                                        .foregroundColor(calendarDay.isCurrentMonth ? (colorScheme == .light ? .black : .white) : .gray)
+                                        .foregroundColor(calendarDay.isCurrentMonth ? (colorScheme == .light ? .ssBlack : .ssWhite) : .ssGray)
                                 }
                             }
                             .frame(width: 40, height: 30)

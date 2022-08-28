@@ -108,7 +108,7 @@ struct ProductRecognizerView: View {
                     
                     Text("Choose one of them to search for such product or try to recognize the product again")
                         .font(.system(size: 18, weight: .semibold, design: .rounded))
-                        .foregroundColor(.gray)
+                        .foregroundColor(.ssGray)
                         .fixedSize(horizontal: false, vertical: true)
                 }
                 LazyVGrid(columns: gridColumns, alignment: .leading, spacing: 10) {
@@ -123,7 +123,7 @@ struct ProductRecognizerView: View {
                             Text(recognitionResult)
                                 .padding(12)
                                 .background(.ultraThinMaterial, in: RoundedRectangle(cornerRadius: 15, style: .continuous))
-                                .foregroundColor(colorScheme == .light ? Color(uiColor: .darkGray) : .white)
+                                .foregroundColor(colorScheme == .light ? Color(uiColor: .darkGray) : .ssWhite)
                         }
                     }
                 }
@@ -168,7 +168,7 @@ struct ProductRecognizerView: View {
     
     @ViewBuilder func buildRecognitionModal() -> some View {
         ZStack {
-            Color.black
+            Color.ssBlack
                 .opacity(0.5)
                 .ignoresSafeArea()
             

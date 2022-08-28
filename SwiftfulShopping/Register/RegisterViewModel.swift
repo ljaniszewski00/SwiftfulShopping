@@ -24,7 +24,7 @@ class RegisterViewModel: ObservableObject {
     @Published var country: String = Countries.poland.rawValue
     
     var addressDataGiven: Bool {
-        !streetName.isEmpty && !streetNumber.isEmpty && !apartmentNumber.isEmpty && !zipCode.isEmpty && !city.isEmpty && !country.isEmpty
+        !streetName.isEmpty && !streetNumber.isEmpty && !zipCode.isEmpty && !city.isEmpty && !country.isEmpty
     }
     
     @Published var sameDataOnInvoice: Bool = true
@@ -92,6 +92,16 @@ class RegisterViewModel: ObservableObject {
         CharacterSet(charactersIn: apartmentNumber).isSubset(of: CharacterSet.decimalDigits)
     }
     
+    func checkZipCode(_ zipCode: String) -> Bool {
+        if let dashIndex = zipCode.firstIndex(of: "-") {
+            var tempZipCode = zipCode
+            tempZipCode.remove(at: dashIndex)
+            return CharacterSet(charactersIn: tempZipCode).isSubset(of: CharacterSet.decimalDigits)
+        } else {
+            return CharacterSet(charactersIn: zipCode).isSubset(of: CharacterSet.decimalDigits)
+        }
+    }
+    
     func checkPersonalDataFieldsEmpty() -> Bool {
         return firstName.isEmpty || lastName.isEmpty || username.isEmpty || email.isEmpty || password.isEmpty
     }
@@ -102,22 +112,6 @@ class RegisterViewModel: ObservableObject {
     
     func checkInvoiceDataFieldsEmpty() -> Bool {
         return streetNameInvoice.isEmpty || streetNumberInvoice.isEmpty || apartmentNumberInvoice.isEmpty || zipCodeInvoice.isEmpty || cityInvoice.isEmpty || countryInvoice.isEmpty
-    }
-    
-    func checkZipCode(_ zipCode: String) -> Bool {
-        var zipCodeWithoutDash = ""
-        for character in zipCode {
-            if character == "-" {
-                continue
-            } else {
-                zipCodeWithoutDash.append(character)
-            }
-        }
-        if country != "United States" {
-            return CharacterSet(charactersIn: zipCodeWithoutDash).isSubset(of: CharacterSet.decimalDigits) && zipCode.contains("-")
-        } else {
-            return CharacterSet(charactersIn: zipCodeWithoutDash).isSubset(of: CharacterSet.decimalDigits)
-        }
     }
     
     func completeFirstRegistrationStep() -> (Bool, String) {

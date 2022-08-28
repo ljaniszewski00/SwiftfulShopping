@@ -46,7 +46,7 @@ struct ImagesCarouselView<Content: View>: View {
                         Circle()
                             .frame(width: index == self.currentIndex ? 10 : 8,
                                  height: index == self.currentIndex ? 10 : 8)
-                            .foregroundColor(index == self.currentIndex ? Color.accentColor : .white)
+                            .foregroundColor(index == self.currentIndex ? Color.accentColor : .ssWhite)
                             .overlay(Circle().stroke(Color.accentColor, lineWidth: 1))
                             .animation(.spring())
                     }

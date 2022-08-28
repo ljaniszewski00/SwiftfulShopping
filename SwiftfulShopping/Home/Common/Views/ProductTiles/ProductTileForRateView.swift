@@ -26,7 +26,7 @@ struct ProductTileForRateView: View {
             } label: {
                 Text("Rate product")
                     .fontWeight(.bold)
-                    .foregroundColor(.white)
+                    .foregroundColor(.ssWhite)
                     .padding(.all, 12)
                     .background {
                         RoundedRectangle(cornerRadius: 5)

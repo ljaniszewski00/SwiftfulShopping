@@ -12,7 +12,7 @@ struct EditPersonalInfoView: View {
     @EnvironmentObject private var tabBarStateManager: TabBarStateManager
     @EnvironmentObject private var profileViewModel: ProfileViewModel
     @EnvironmentObject private var personalInfoViewModel: PersonalInfoViewModel
-    @Environment(\.presentationMode) var presentationMode
+    @Environment(\.dismiss) var dismiss
     
     @State private var isFirstNameTextFieldFocused: Bool = false
     @State private var isLastNameTextFieldFocused: Bool = false
@@ -41,10 +41,10 @@ struct EditPersonalInfoView: View {
                 Button {
                     withAnimation {
                         profileViewModel.addNewAddress(address: personalInfoViewModel.createNewAddress(), toBeDefault: personalInfoViewModel.toBeDefaultAddress)
-                        presentationMode.wrappedValue.dismiss()
+                        dismiss()
                     }
                 } label: {
-                    Text("Edit personal data")
+                    Text("Save")
                         .font(.system(size: 20, weight: .bold, design: .rounded))
                 }
                 .buttonStyle(CustomButton())

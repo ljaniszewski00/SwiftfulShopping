@@ -36,21 +36,28 @@ struct ErrorModal: ViewModifier {
             if isPresented {
                 ZStack {
                     RoundedRectangle(cornerRadius: 5)
-                        .foregroundColor(.accentColor)
+                        .foregroundColor(.errorModalInside)
+                        .background {
+                            RoundedRectangle(cornerRadius: 5)
+                                .stroke(lineWidth: 3)
+                                .foregroundColor(.errorModalStroke)
+                        }
                     VStack {
                         Text("\(customError.errorCode): \(customError.errorType.rawValue)")
                             .font(Font.system(size: Constants.titleFontSize, weight: .bold, design: .rounded))
-                            .foregroundColor(.white)
+                            .foregroundColor(.ssBlack)
                         Text(customError.errorDescription)
                             .font(Font.system(size: Constants.descriptionFontSize, weight: .regular, design: .rounded))
                             .fixedSize(horizontal: false, vertical: true)
-                            .foregroundColor(.white)
+                            .foregroundColor(.ssBlack)
                     }
                     .padding()
                 }
                 .animation(.easeInOut(duration: 0.5))
-                .transition(.offset(x: Constants.xAxisTransition, y: geometry.aboveScreenEdge))
-                .frame(width: geometry.size.width, height: Constants.errorViewHeight)
+                .transition(.offset(x: Constants.xAxisTransition,
+                                    y: geometry.aboveScreenEdge))
+                .frame(height: Constants.errorViewHeight)
+                .padding(.horizontal)
                 .onAppear {
                     DispatchQueue.main.asyncAfter(deadline: .now() + 4) {
                         $isPresented.wrappedValue = false

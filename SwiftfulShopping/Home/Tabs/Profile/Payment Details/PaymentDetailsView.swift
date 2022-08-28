@@ -83,7 +83,7 @@ struct PaymentDetailsView: View {
                 HStack {
                     Text(paymentDetailsViewModel.cardCompany.rawValue)
                         .font(.system(size: 20, weight: .bold, design: .rounded))
-                        .foregroundColor(.white)
+                        .foregroundColor(.ssWhite)
                     Spacer()
                     Image("card_chip")
                         .resizable()
@@ -95,7 +95,7 @@ struct PaymentDetailsView: View {
                 
                 Text(paymentDetailsViewModel.cardNumber)
                     .font(.system(size: 26, weight: .bold, design: .rounded))
-                    .foregroundColor(Color.white)
+                    .foregroundColor(Color.ssWhite)
                 
                 Spacer()
                 
@@ -104,10 +104,10 @@ struct PaymentDetailsView: View {
                     VStack(alignment: .leading) {
                         Text("CARD HOLDER")
                             .font(.system(size: 14, weight: .bold, design: .rounded))
-                            .foregroundColor(Color.gray)
+                            .foregroundColor(Color.ssGray)
                         Text(paymentDetailsViewModel.cardHolderName)
                             .font(.system(size: 16, weight: .bold, design: .rounded))
-                            .foregroundColor(Color.white)
+                            .foregroundColor(Color.ssWhite)
                         
                     }
                     
@@ -116,10 +116,10 @@ struct PaymentDetailsView: View {
                     VStack(alignment: .leading) {
                         Text("EXPIRES")
                             .font(.system(size: 14, weight: .bold, design: .rounded))
-                            .foregroundColor(Color.gray)
+                            .foregroundColor(Color.ssGray)
                         Text(paymentDetailsViewModel.validThruDate)
                             .font(.system(size: 16, weight: .bold, design: .rounded))
-                            .foregroundColor(Color.white)
+                            .foregroundColor(Color.ssWhite)
                     }
                 }
             }

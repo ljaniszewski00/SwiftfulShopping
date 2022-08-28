@@ -26,7 +26,7 @@ struct CategoriesTabView: View {
                         Text(category.rawValue)
                             .font(.system(size: 16, weight: .bold, design: .rounded))
                     }
-                    .buttonStyle(CustomButton(textColor: .white, rightChevronNavigationImage: true))
+                    .buttonStyle(CustomButton(textColor: .ssWhite, rightChevronNavigationImage: true))
                     .frame(width: UIScreen.main.bounds.width * 0.9)
                     .contentShape(Rectangle())
                     .padding(.bottom, 20)

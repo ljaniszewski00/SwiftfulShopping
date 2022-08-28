@@ -11,12 +11,16 @@ final class ErrorManager: ObservableObject {
     private let errorsCodes: [ErrorType: Int] = [
         .networkError: 1,
         .productRecognizerError: 2,
+        .loginError: 3,
+        .registerError: 4,
         .unknown: 0
     ]
 
     private let errorsDescriptions: [ErrorType: String] = [
         .networkError: "No internet connection. Some functions will be unavailable.",
         .productRecognizerError: "Error occured while recognizing your product. Please try again later.",
+        .loginError: "Error occured while trying to log in. Please try again later.",
+        .registerError: "Error occured while trying to register. Please try again later.",
         .unknown: ""
     ]
     
@@ -28,16 +32,23 @@ final class ErrorManager: ObservableObject {
     }()
     
     func generateCustomError(errorType: ErrorType, additionalErrorDescription: String? = nil) {
-        if let additionalErrorDescription = additionalErrorDescription {
-            customError = CustomError(errorType: errorType, errorCode: errorsCodes[errorType]!, errorDescription: errorsDescriptions[errorType]! + additionalErrorDescription)
-            
-        } else {
-            customError = CustomError(errorType: errorType, errorCode: errorsCodes[errorType]!, errorDescription: errorsDescriptions[errorType]!)
+        if let errorCode = errorsCodes[errorType], let errorDescription = errorsDescriptions[errorType] {
+            if let additionalErrorDescription = additionalErrorDescription {
+                customError = CustomError(errorType: errorType,
+                                          errorCode: errorCode,
+                                          errorDescription: errorDescription + "\n" + additionalErrorDescription)
+                
+            } else {
+                customError = CustomError(errorType: errorType,
+                                          errorCode: errorCode,
+                                          errorDescription: errorDescription)
+            }
+            showErrorModal = true
         }
-        showErrorModal = true
     }
 }
 
 extension ErrorManager {
-    static let unknownError: CustomError = CustomError(errorType: .unknown, errorCode: 0)
+    static let unknownError: CustomError = CustomError(errorType: .unknown,
+                                                       errorCode: 0)
 }

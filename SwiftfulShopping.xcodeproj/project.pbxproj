@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0A13460228BBA02A002D596E /* Font.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A13460128BBA02A002D596E /* Font.swift */; };
 		0A2165AE28A2C1E0006842F0 /* ChangeEmailViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A2165AD28A2C1E0006842F0 /* ChangeEmailViewModel.swift */; };
 		0A2165B128A2C200006842F0 /* ChangePasswordViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A2165B028A2C200006842F0 /* ChangePasswordViewModel.swift */; };
 		0A2165B428A2C217006842F0 /* DeleteAccountViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A2165B328A2C217006842F0 /* DeleteAccountViewModel.swift */; };
@@ -339,6 +340,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		0A13460128BBA02A002D596E /* Font.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Font.swift; sourceTree = "<group>"; };
 		0A2165AD28A2C1E0006842F0 /* ChangeEmailViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChangeEmailViewModel.swift; sourceTree = "<group>"; };
 		0A2165B028A2C200006842F0 /* ChangePasswordViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChangePasswordViewModel.swift; sourceTree = "<group>"; };
 		0A2165B328A2C217006842F0 /* DeleteAccountViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeleteAccountViewModel.swift; sourceTree = "<group>"; };
@@ -1004,6 +1006,7 @@
 				0A268B4428671442006CF0E2 /* Array.swift */,
 				0A30460228A96B9A00F218B3 /* UIApplication.swift */,
 				0A30460428A96CE500F218B3 /* UIColor.swift */,
+				0A13460128BBA02A002D596E /* Font.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -1516,6 +1519,7 @@
 				0A3DE4592889A1BD008B050B /* ProductDetailsView.swift in Sources */,
 				0A453B8B2851DFDC00870EA9 /* ExploreView.swift in Sources */,
 				0A268B4B286873A6006CF0E2 /* StepsView.swift in Sources */,
+				0A13460228BBA02A002D596E /* Font.swift in Sources */,
 				0A3E59C5289C611000067AD1 /* ProductRating.swift in Sources */,
 				0A2FE0AD28A16D8200E8D30E /* ErrorType.swift in Sources */,
 				0A3441BE28A42184005FFFD5 /* SearchViewModel.swift in Sources */,

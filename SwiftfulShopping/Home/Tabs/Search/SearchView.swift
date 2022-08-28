@@ -60,7 +60,7 @@ struct SearchView: View {
                                                             .foregroundColor(.red)
                                                         Text(String(sortingAndFilteringViewModel.numberOfFiltersApplied))
                                                             .font(.system(size: 14, weight: .regular, design: .rounded))
-                                                            .foregroundColor(.white)
+                                                            .foregroundColor(.ssWhite)
                                                     }
                                                     .offset(x: 17, y: -17)
                                                 )
@@ -142,7 +142,7 @@ struct SearchView: View {
                                         .fixedSize(horizontal: false, vertical: true)
                                     Text("Please try another search key or change filtering method.")
                                         .font(.system(size: 18, weight: .regular, design: .rounded))
-                                        .foregroundColor(.gray)
+                                        .foregroundColor(.ssGray)
                                         .fixedSize(horizontal: false, vertical: true)
                                 }
                             }
@@ -206,7 +206,7 @@ struct SearchView: View {
                         Text(recentSearch)
                             .padding(12)
                             .background(.ultraThinMaterial, in: RoundedRectangle(cornerRadius: 15, style: .continuous))
-                            .foregroundColor(colorScheme == .light ? Color(uiColor: .darkGray) : .white)
+                            .foregroundColor(colorScheme == .light ? Color(uiColor: .darkGray) : .ssWhite)
                     }
                 }
             }
@@ -244,7 +244,7 @@ struct SearchView: View {
                 } label: {
                     Text("Clear all")
                         .font(.system(size: 18, weight: .semibold, design: .rounded))
-                        .foregroundColor(.gray)
+                        .foregroundColor(.ssGray)
                         .padding(12)
                 }
             }
@@ -259,7 +259,7 @@ struct SearchView: View {
                         Text(recentSearch)
                             .padding(12)
                             .background(.ultraThinMaterial, in: RoundedRectangle(cornerRadius: 15, style: .continuous))
-                            .foregroundColor(colorScheme == .light ? Color(uiColor: .darkGray) : .white)
+                            .foregroundColor(colorScheme == .light ? Color(uiColor: .darkGray) : .ssWhite)
                     }
                 }
             }

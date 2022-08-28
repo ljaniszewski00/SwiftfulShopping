@@ -32,13 +32,13 @@ struct BasicProductTile: View {
             VStack(alignment: .leading, spacing: 10) {
                 Text(product.company)
                     .font(.system(size: 14, weight: .regular, design: .rounded))
-                    .foregroundColor(.gray)
+                    .foregroundColor(.ssGray)
                     .fixedSize(horizontal: false, vertical: true)
                 
                 Text(product.name)
                     .font(.system(size: 22, weight: .heavy, design: .rounded))
                     .fixedSize(horizontal: false, vertical: true)
-                    .foregroundColor(colorScheme == .light ? .black : .white)
+                    .foregroundColor(colorScheme == .light ? .ssBlack : .ssWhite)
                 
                 Text("$\(product.price, specifier: "%.2f")")
                     .font(.system(size: 20, weight: .bold, design: .rounded))

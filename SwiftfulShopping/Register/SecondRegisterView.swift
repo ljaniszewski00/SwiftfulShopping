@@ -40,22 +40,8 @@ struct SecondRegisterView: View {
                     StepsView(stepsNumber: 2, activeStep: 2)
                         .padding(.vertical)
                     
-                    VStack {
-                        buildRegisterSecondPane()
-                        
-                        if registerViewModel.dataError {
-                            HStack {
-                                Text(registerViewModel.errorMessage)
-                                    .font(.callout)
-                                    .foregroundColor(.red)
-                                    .bold()
-                                    .fixedSize(horizontal: false, vertical: true)
-                                Spacer()
-                            }
-                            .padding(.horizontal)
-                        }
-                    }
-                    .padding(.bottom, 20)
+                    buildRegisterSecondPane()
+                        .padding(.bottom, 20)
                     
                     Spacer()
                     
@@ -63,11 +49,10 @@ struct SecondRegisterView: View {
                         withAnimation {
                             let (success, message) = registerViewModel.completeSecondRegistrationStep()
                             if success {
-                                registerViewModel.dataError = false
                                 authStateManager.didLogged()
                             } else {
-                                registerViewModel.dataError = true
-                                registerViewModel.errorMessage = message
+                                errorManager.generateCustomError(errorType: .registerError,
+                                                                 additionalErrorDescription: message)
                             }
                         }
                     }

@@ -42,14 +42,14 @@ struct RectangleCustomTextField: View {
                 .autocapitalization(.none)
                 .padding()
                 .background {
-                    RoundedRectangle(cornerRadius: 3)
+                    RoundedRectangle(cornerRadius: 5)
                         .stroke(lineWidth: isFocused ? 2 : 1)
-                        .foregroundColor(isFocused ? .accentColor : .gray)
+                        .foregroundColor(isFocused ? .accentColor : .ssDarkGray)
                 }
             if !textFieldFooter.isEmpty {
                 Text(textFieldFooter)
                     .font(.system(size: 15))
-                    .foregroundColor(.gray)
+                    .foregroundColor(.ssGray)
                     .fixedSize(horizontal: false, vertical: true)
             }
         }

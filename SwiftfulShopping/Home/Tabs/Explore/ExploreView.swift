@@ -31,7 +31,7 @@ struct ExploreView: View {
                             ForEach(ExploreViewTabs.allCases, id: \.self) { tabName in
                                 Text(tabName.rawValue)
                                     .font(.system(size: 16, weight: .bold, design: .rounded))
-                                    .foregroundColor(colorScheme == .light ? .black : .white)
+                                    .foregroundColor(colorScheme == .light ? .ssBlack : .ssWhite)
                                     .padding()
                                     .if(tabName == exploreViewModel.selectedTab) {
                                         $0
@@ -69,7 +69,7 @@ struct ExploreView: View {
                                                         .foregroundColor(.red)
                                                     Text(String(sortingAndFilteringViewModel.numberOfFiltersApplied))
                                                         .font(.system(size: 14, weight: .regular, design: .rounded))
-                                                        .foregroundColor(.white)
+                                                        .foregroundColor(.ssWhite)
                                                 }
                                                 .offset(x: 17, y: -17)
                                             )

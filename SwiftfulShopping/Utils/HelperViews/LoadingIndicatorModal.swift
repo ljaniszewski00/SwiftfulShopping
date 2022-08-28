@@ -24,7 +24,7 @@ struct LoadingIndicatorModal: ViewModifier {
     @ViewBuilder private func popupContent() -> some View {
         if isPresented {
             ZStack {
-                Color.black
+                Color.ssBlack
                     .opacity(0.5)
                     .ignoresSafeArea()
                 

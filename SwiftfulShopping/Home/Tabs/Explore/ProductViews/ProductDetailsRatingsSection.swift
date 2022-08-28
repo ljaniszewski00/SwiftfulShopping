@@ -59,7 +59,7 @@ struct ProductDetailsRatingsSection: View {
                             ForEach(Array(1...5).reversed(), id: \.self) { number in
                                 ZStack(alignment: .leading) {
                                     RoundedRectangle(cornerRadius: 10)
-                                        .foregroundColor(.gray)
+                                        .foregroundColor(.ssGray)
                                         .frame(width: 130, height: 7)
                                     RoundedRectangle(cornerRadius: 10)
                                         .foregroundColor(.accentColor)
@@ -73,7 +73,7 @@ struct ProductDetailsRatingsSection: View {
                             ForEach(Array(1...5).reversed(), id: \.self) { number in
                                 Text("\(product.rating.productRates.filter { $0.rating == number }.count)")
                                     .font(.system(size: 16, weight: .bold, design: .rounded))
-                                    .foregroundColor(.gray)
+                                    .foregroundColor(.ssGray)
                             }
                         }
                     }

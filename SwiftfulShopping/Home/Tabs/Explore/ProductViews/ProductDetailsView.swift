@@ -48,7 +48,7 @@ struct ProductDetailsView: View {
                     VStack(alignment: .center, spacing: 15) {
                         Text(product.company)
                             .font(.system(size: 14, weight: .regular, design: .rounded))
-                            .foregroundColor(.gray)
+                            .foregroundColor(.ssGray)
                         Text(product.name)
                             .font(.system(size: 22, weight: .heavy, design: .rounded))
                         Text("$\(product.price, specifier: "%.2f")")

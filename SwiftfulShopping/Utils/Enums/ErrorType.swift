@@ -10,6 +10,8 @@ import Foundation
 enum ErrorType: String {
     case networkError = "Network Error"
     case productRecognizerError = "Product Recognizer Error"
+    case loginError = "Login Error"
+    case registerError = "Register Error"
     case unknown = "Unknown Error"
 }
 

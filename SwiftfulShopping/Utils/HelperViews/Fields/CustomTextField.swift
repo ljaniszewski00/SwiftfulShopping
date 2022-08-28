@@ -26,7 +26,7 @@ struct CustomTextField: View {
                     Group {
                         if !textFieldImageName.isEmpty {
                             Image(systemName: textFieldImageName)
-                                .foregroundColor(isFocused ? .accentColor : .gray)
+                                .foregroundColor(isFocused ? .accentColor : .ssDarkGray)
                         }
                         
                         if !isSecureField {
@@ -56,7 +56,7 @@ struct CustomTextField: View {
                                     isSecureField.toggle()
                                 }, label: {
                                     Image(systemName: "eye.slash")
-                                        .foregroundColor(.gray)
+                                        .foregroundColor(.ssDarkGray)
                                 })
                             }
                         } else {
@@ -79,14 +79,14 @@ struct CustomTextField: View {
                                 isSecureField.toggle()
                             }, label: {
                                 Image(systemName: "eye")
-                                    .foregroundColor(.gray)
+                                    .foregroundColor(.ssGray)
                             })
                         }
                         
                         if textFieldSignsLimit != 0 {
                             Text("\(text.count)/\(textFieldSignsLimit)")
                                 .font(.caption)
-                                .foregroundColor(isFocused ? .accentColor : .gray)
+                                .foregroundColor(isFocused ? .accentColor : .ssGray)
                         }
                     }
                     .focused($isFocused)
@@ -99,19 +99,19 @@ struct CustomTextField: View {
                         .padding(.leading, 30)
                         .scaleEffect(text.isEmpty ? (isFocused ? 0.8 : 1) : (isFocused ? 0.8 : 0.8))
                         .offset(x: text.isEmpty ? (isFocused ? -30 : (textFieldImageName.isEmpty ? -30 : 0)) : -30, y: text.isEmpty ? (isFocused ? -20 : 0) : -20)
-                        .foregroundColor(isFocused ? .accentColor : .gray)
+                        .foregroundColor(isFocused ? .accentColor : .ssDarkGray)
                     
                     , alignment: .leading
                 )
                 .padding(.horizontal)
                 
-                Rectangle()
-                    .fill(isFocused ? Color.accentColor : Color.gray)
+                RoundedRectangle(cornerRadius: 5)
+                    .fill(isFocused ? Color.accentColor : Color.ssGray)
                     .opacity(isFocused ? 1 : 0.5)
                     .frame(height: 1)
             }
             .padding(.vertical, isFocused ? 18 : (text.isEmpty ? 12 : 20))
-            .background(Color.gray.opacity(0.09))
+            .background(Color.ssGray.opacity(0.25))
             .cornerRadius(5)
         }
     }

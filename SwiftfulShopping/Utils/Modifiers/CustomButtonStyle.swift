@@ -9,16 +9,16 @@ import SwiftUI
 
 struct CustomButton: ButtonStyle {
     var buttonColor: Color = .accentColor
-    var textColor: Color = .white
+    var textColor: Color = .ssWhite
     var onlyStroke: Bool = false
     var strokeColor: Color = .accentColor
     var imageName: String = ""
-    var imageColor: Color = .white
+    var imageColor: Color = .ssWhite
     var roundedRectangleShape: Bool = true
     var rightChevronNavigationImage: Bool = false
     
     func makeBody(configuration: Configuration) -> some View {
-        HStack(spacing: 0) {
+        HStack(spacing: 20) {
             if !imageName.isEmpty {
                 Image(systemName: imageName)
                     .foregroundColor(imageColor)
@@ -26,13 +26,13 @@ struct CustomButton: ButtonStyle {
             configuration.label
                 .font(.system(size: 20, weight: .semibold, design: .rounded))
                 .foregroundColor(textColor)
-                .padding()
             if rightChevronNavigationImage {
                 Spacer()
                 Image(systemName: "chevron.right")
-                    .foregroundColor(buttonColor == .accentColor ? .white : .accentColor)
+                    .foregroundColor(buttonColor == .accentColor ? .ssWhite : .accentColor)
             }
         }
+        .padding(.horizontal)
         .frame(minWidth: 0, maxWidth: .infinity)
         .fixedSize(horizontal: false, vertical: true)
         .frame(height: 54)

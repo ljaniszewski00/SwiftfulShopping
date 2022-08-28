@@ -36,22 +36,8 @@ struct RegisterView: View {
                         .padding(.vertical)
                     
                     VStack {
-                        VStack {
-                            buildRegisterFirstPane()
-                            
-                            if registerViewModel.dataError {
-                                HStack {
-                                    Text(registerViewModel.errorMessage)
-                                        .font(.callout)
-                                        .foregroundColor(.red)
-                                        .bold()
-                                        .fixedSize(horizontal: false, vertical: true)
-                                    Spacer()
-                                }
-                                .padding(.horizontal)
-                            }
-                        }
-                        .padding(.bottom)
+                        buildRegisterFirstPane()
+                            .padding(.bottom)
                         
                         Spacer()
                         
@@ -69,8 +55,8 @@ struct RegisterView: View {
                                         registerViewModel.dataError = false
                                         registerViewModel.presentSecondRegisterView = true
                                     } else {
-                                        registerViewModel.dataError = true
-                                        registerViewModel.errorMessage = message
+                                        errorManager.generateCustomError(errorType: .registerError,
+                                                                         additionalErrorDescription: message)
                                     }
                                 }
                             }
@@ -158,14 +144,14 @@ struct RegisterView: View {
                         if showPasswordHint {
                             Text("Password should be at least 8 characters long and should contain a number.")
                                 .font(.system(size: 16, weight: .bold, design: .rounded))
-                                .foregroundColor(registerViewModel.dataError ? .red : .gray)
+                                .foregroundColor(registerViewModel.dataError ? .red : .ssGray)
                         }
                         
                         Button {
                             showPasswordHint.toggle()
                         } label: {
                             Image(systemName: "questionmark.circle")
-                                .foregroundColor(registerViewModel.dataError ? .red : showPasswordHint ? .accentColor : .gray)
+                                .foregroundColor(registerViewModel.dataError ? .red : showPasswordHint ? .accentColor : .ssGray)
                         }
                     }
                 }

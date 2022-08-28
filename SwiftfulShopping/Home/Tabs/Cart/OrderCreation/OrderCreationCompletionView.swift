@@ -40,7 +40,7 @@ struct OrderCreationCompletionView: View {
                         
                         Text("Please wait patiently for it to be delivered")
                             .font(.system(size: 16, weight: .regular, design: .rounded))
-                            .foregroundColor(.gray)
+                            .foregroundColor(.ssGray)
                     }
                     
                     VStack(alignment: .leading, spacing: 20) {

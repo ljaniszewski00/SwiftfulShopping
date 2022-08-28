@@ -51,7 +51,7 @@ struct OrderCreationChangeAddressView: View {
                                     Spacer()
                                 }
                                 Image(systemName: addressSectionExpanded ? "chevron.up" : "chevron.down")
-                                    .foregroundColor(addressSectionExpanded ? .white : .accentColor)
+                                    .foregroundColor(addressSectionExpanded ? .ssWhite : .accentColor)
                                     .frame(width: 50, height: 50)
                                     .padding()
                                     .isHidden(profileViewModel.profile.otherAddresses.isEmpty)
@@ -78,7 +78,7 @@ struct OrderCreationChangeAddressView: View {
                                                     Text(address.description)
                                                         .font(.system(size: 16))
                                                         .fixedSize(horizontal: false, vertical: true)
-                                                        .foregroundColor(colorScheme == .light ? .black : .white)
+                                                        .foregroundColor(colorScheme == .light ? .ssBlack : .ssWhite)
                                                         .padding()
                                                     Spacer()
                                                 }

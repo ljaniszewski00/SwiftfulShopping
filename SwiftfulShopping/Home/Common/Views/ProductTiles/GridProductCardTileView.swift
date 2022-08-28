@@ -37,13 +37,13 @@ struct GridProductCardTileView: View {
                     VStack(alignment: .leading, spacing: 15) {
                         Text(product.company)
                             .font(.system(size: 14, weight: .regular, design: .rounded))
-                            .foregroundColor(.gray)
+                            .foregroundColor(.ssGray)
                             .fixedSize(horizontal: false, vertical: true)
                         
                         Text(product.name)
                             .font(.system(size: 22, weight: .heavy, design: .rounded))
                             .fixedSize(horizontal: false, vertical: true)
-                            .foregroundColor(colorScheme == .light ? .black : .white)
+                            .foregroundColor(colorScheme == .light ? .ssBlack : .ssWhite)
                         
                         Text("$\(product.price, specifier: "%.2f")")
                             .font(.system(size: 20, weight: .bold, design: .rounded))
@@ -71,7 +71,7 @@ struct GridProductCardTileView: View {
                         
                         Text("\(product.rating.ratingsNumber) ratings")
                             .font(.system(size: 14, weight: .regular, design: .rounded))
-                            .foregroundColor(.gray)
+                            .foregroundColor(.ssGray)
                     }
                 }
                 .padding(.bottom, 30)
@@ -86,7 +86,7 @@ struct GridProductCardTileView: View {
                         } label: {
                             Text("Add to Cart")
                                 .fontWeight(.bold)
-                                .foregroundColor(colorScheme == .light ? .black : .white)
+                                .foregroundColor(colorScheme == .light ? .ssBlack : .ssWhite)
                                 .padding(.all, 10)
                                 .background {
                                     RoundedRectangle(cornerRadius: 5)

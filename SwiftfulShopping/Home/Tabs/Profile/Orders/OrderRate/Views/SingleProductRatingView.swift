@@ -57,7 +57,7 @@ struct SingleProductRatingView: View {
                             
                             Text("\(ratingViewModel.textForRating.count) / 300")
                                 .font(.system(size: 16, design: .rounded))
-                                .foregroundColor(ratingViewModel.ratingTextTooLong ? .red : .gray)
+                                .foregroundColor(ratingViewModel.ratingTextTooLong ? .red : .ssGray)
                         }
                     }
                     
@@ -71,7 +71,7 @@ struct SingleProductRatingView: View {
                         Text("Add opinion")
                             .font(.system(size: 20, weight: .bold, design: .rounded))
                     }
-                    .buttonStyle(CustomButton(textColor: .white))
+                    .buttonStyle(CustomButton(textColor: .ssWhite))
                     .disabled(ratingViewModel.cannotAddOpinion)
                 }
                 .padding()

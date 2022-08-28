@@ -140,7 +140,7 @@ struct HomeView: View {
                                                     .foregroundColor(.red)
                                                 Text(String(cartViewModel.cartProductsCount))
                                                     .font(.system(size: 16, weight: .regular, design: .rounded))
-                                                    .foregroundColor(.white)
+                                                    .foregroundColor(.ssWhite)
                                             }
                                             .offset(x: 22, y: -27)
                                         )

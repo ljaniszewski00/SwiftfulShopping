@@ -34,7 +34,7 @@ struct CompletionReturnCreationView: View {
                         
                         Text("Please wait patiently for hearing from us soon")
                             .font(.system(size: 16, weight: .regular, design: .rounded))
-                            .foregroundColor(.gray)
+                            .foregroundColor(.ssGray)
                     }
                     
                     VStack(alignment: .leading, spacing: 10) {

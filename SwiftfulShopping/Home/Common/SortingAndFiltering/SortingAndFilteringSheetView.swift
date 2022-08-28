@@ -59,7 +59,7 @@ struct SortingAndFilteringSheetView: View {
                                                     Image(systemName: "checkmark")
                                                 }
                                                 Text(sortingMethod.rawValue)
-                                                    .foregroundColor(colorScheme == .light ? .black : .white)
+                                                    .foregroundColor(colorScheme == .light ? .ssBlack : .ssWhite)
                                                     .font(.system(size: 18, weight: .regular, design: .rounded))
                                                 Spacer()
                                             }
@@ -192,7 +192,7 @@ struct SortingAndFilteringSheetView: View {
                                         .foregroundColor(sortingAndFilteringViewModel.companyFiltersToApply.contains(company) ?
                                             .accentColor : Color(uiColor: .systemGray4))
                                 )
-                                .foregroundColor(colorScheme == .light ? Color(uiColor: .darkGray) : .white)
+                                .foregroundColor(colorScheme == .light ? Color(uiColor: .darkGray) : .ssWhite)
                         }
                     }
                 }
@@ -236,7 +236,7 @@ struct SortingAndFilteringSheetView: View {
                                         .foregroundColor(sortingAndFilteringViewModel.categoryFiltersToApply.contains(category) ?
                                             .accentColor : Color(uiColor: .systemGray4))
                                 )
-                                .foregroundColor(colorScheme == .light ? Color(uiColor: .darkGray) : .white)
+                                .foregroundColor(colorScheme == .light ? Color(uiColor: .darkGray) : .ssWhite)
                         }
                     }
                 }

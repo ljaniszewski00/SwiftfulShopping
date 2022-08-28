@@ -37,13 +37,6 @@ struct LoginView: View {
                             .offset(y: -30)
                             .frame(minWidth: 300, maxWidth: .infinity,
                                    minHeight: 300)
-                            .background {
-                                if colorScheme == .light {
-                                    Color.white
-                                } else if colorScheme == .dark {
-                                    Color.black
-                                }
-                            }
                         
                         Spacer()
                         
@@ -95,7 +88,7 @@ struct LoginView: View {
                                 }
                                 
                                 LabelledDivider(label: "Or join using",
-                                                color: colorScheme == .light ? .black : .white)
+                                                color: colorScheme == .light ? .ssBlack : .ssWhite)
                                     .padding(.vertical)
                                 
                                 HStack(spacing: 40) {
@@ -145,7 +138,7 @@ struct LoginView: View {
                 }
                 .background {
                     Color(uiColor: .secondarySystemBackground)
-                        .ignoresSafeArea(.container, edges: [.bottom, .horizontal])
+                        .ignoresSafeArea()
                 }
                 .modifier(LoadingIndicatorModal(isPresented:
                                                     $loginViewModel.showLoadingModal))

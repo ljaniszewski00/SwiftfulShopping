@@ -14,7 +14,7 @@ struct RoundedCompletionButtonStyle: ButtonStyle {
     var onlyStroke: Bool = true
     var strokeColor: Color = .accentColor
     var imageName: String = ""
-    var imageColor: Color = .white
+    var imageColor: Color = .ssWhite
     var actionCompleted: Bool = false
     var actionCompletedText: String = ""
     
@@ -33,12 +33,12 @@ struct RoundedCompletionButtonStyle: ButtonStyle {
             } else {
                 configuration.label
                     .font(.system(size: 16, weight: .bold, design: .rounded))
-                    .foregroundColor(colorScheme == .light ? .black : .white)
+                    .foregroundColor(colorScheme == .light ? .ssBlack : .ssWhite)
                     .padding()
             }
             
             Image(systemName: actionCompleted ? "checkmark" : "chevron.right")
-                .foregroundColor(actionCompleted ? .accentColor : (colorScheme == .light ? .black : .white))
+                .foregroundColor(actionCompleted ? .accentColor : (colorScheme == .light ? .ssBlack : .ssWhite))
         }
         .padding(.horizontal)
         .background {

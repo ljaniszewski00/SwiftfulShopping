@@ -121,13 +121,13 @@ struct PersonalInfoView: View {
                                     HStack {
                                         Text(profileViewModel.profile.address.description)
                                             .font(.system(size: 20, weight: .semibold, design: .rounded))
-                                            .foregroundColor(addressSectionExpanded ? (colorScheme == .light ? .black : .white) : .accentColor)
+                                            .foregroundColor(addressSectionExpanded ? (colorScheme == .light ? .ssBlack : .ssWhite) : .accentColor)
                                             .fixedSize(horizontal: false, vertical: true)
                                             .padding()
                                         Spacer()
                                     }
                                     Image(systemName: addressSectionExpanded ? "chevron.up" : "chevron.down")
-                                        .foregroundColor(addressSectionExpanded ? .white : .accentColor)
+                                        .foregroundColor(addressSectionExpanded ? .ssWhite : .accentColor)
                                         .frame(width: 50, height: 50)
                                         .padding()
                                         .isHidden(profileViewModel.profile.otherAddresses.isEmpty)
@@ -154,7 +154,7 @@ struct PersonalInfoView: View {
                                                         Text(address.description)
                                                             .font(.system(size: 20, weight: .semibold, design: .rounded))
                                                             .fixedSize(horizontal: false, vertical: true)
-                                                            .foregroundColor(colorScheme == .light ? .black : .white)
+                                                            .foregroundColor(colorScheme == .light ? .ssBlack : .ssWhite)
                                                             .padding()
                                                         Spacer()
                                                     }

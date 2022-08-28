@@ -194,7 +194,7 @@ struct SettingsView: View {
                             .frame(width: 30)
                         Text("Terms and Conditions")
                             .font(.system(size: 16, weight: .regular, design: .rounded))
-                            .foregroundColor(colorScheme == .light ? .black : .white)
+                            .foregroundColor(colorScheme == .light ? .ssBlack : .ssWhite)
                     }
                 })
                 
@@ -217,7 +217,7 @@ struct SettingsView: View {
             VStack(alignment: .center, spacing: 10) {
                 Text(UIApplication.versionBuild())
                     .font(.system(size: 16, weight: .regular, design: .rounded))
-                    .foregroundColor(.gray)
+                    .foregroundColor(.ssGray)
             }
             .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .center)
             .listRowInsets(EdgeInsets())

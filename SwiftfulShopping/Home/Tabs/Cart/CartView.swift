@@ -44,7 +44,7 @@ struct CartView: View {
                     HStack {
                         Text("Products in cart:")
                             .font(.system(size: 16, weight: .regular, design: .rounded))
-                            .foregroundColor(.gray)
+                            .foregroundColor(.ssGray)
                         
                         Text("\(cartViewModel.cartProductsCount)")
                             .font(.system(size: 18, weight: .bold, design: .rounded))
@@ -54,7 +54,7 @@ struct CartView: View {
                     HStack {
                         Text("Total cost:")
                             .font(.system(size: 16, weight: .regular, design: .rounded))
-                            .foregroundColor(.gray)
+                            .foregroundColor(.ssGray)
                         
                         Text("\(cartViewModel.cartTotalCost, specifier: "%.2f")")
                             .font(.system(size: 18, weight: .bold, design: .rounded))

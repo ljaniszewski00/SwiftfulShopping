@@ -31,7 +31,7 @@ struct OrderCreationSummaryView: View {
                         
                         Text("This will be the delivery addres for package")
                             .font(.system(size: 16, weight: .regular, design: .rounded))
-                            .foregroundColor(.gray)
+                            .foregroundColor(.ssGray)
                             .padding(.bottom, 10)
                         
                         VStack(alignment: .leading) {

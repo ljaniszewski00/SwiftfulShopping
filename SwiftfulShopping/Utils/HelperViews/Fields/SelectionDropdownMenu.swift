@@ -50,7 +50,7 @@ struct SelectionDropdownMenu: View {
         .background {
             RoundedRectangle(cornerRadius: 5)
                 .stroke(lineWidth: 1)
-                .foregroundColor(.gray)
+                .foregroundColor(.ssGray)
         }
     }
     
@@ -64,14 +64,14 @@ struct SelectionDropdownMenu: View {
                 }
                 Text(selection)
                     .font(.system(size: 18, weight: .semibold, design: .rounded))
-                    .foregroundColor(colorScheme == .light ? .black : .white)
+                    .foregroundColor(colorScheme == .light ? .ssBlack : .ssWhite)
             }
             
             Spacer()
             
             if dataWithImagesToChoose.count > 1 {
                 Image(systemName: isExpanded ? "chevron.up" : "chevron.down")
-                    .foregroundColor(.gray)
+                    .foregroundColor(.ssGray)
                     .onTapGesture {
                         isExpanded.toggle()
                     }
@@ -102,14 +102,14 @@ struct SelectionDropdownMenu: View {
                                 }
                                 Text(elementName)
                                     .font(.system(size: 18, weight: .semibold, design: .rounded))
-                                    .foregroundColor(colorScheme == .light ? .black : .white)
+                                    .foregroundColor(colorScheme == .light ? .ssBlack : .ssWhite)
                             }
                             
                             Spacer()
                             
                             if elementName == selection {
                                 Image(systemName: "checkmark")
-                                    .foregroundColor(colorScheme == .light ? .black : .white)
+                                    .foregroundColor(colorScheme == .light ? .ssBlack : .ssWhite)
                             }
                         }
                         .padding()
