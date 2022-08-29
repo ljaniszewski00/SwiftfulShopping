@@ -29,6 +29,10 @@ class SearchViewModel: ObservableObject {
     
     @Published var showLoadingModal: Bool = false
     
+    @Published var scrollProductsListToBeginning: Bool = false
+    @Published var filterAndDisplayPaneSize: CGSize = .zero
+    @Published var productTileSize: CGSize = .zero
+    
     var lengthOfShortTrendingAndRecentSearchesList: Int = 6
     
     var trendingSearchesSeeHideAllButtonVisible: Bool {

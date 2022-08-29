@@ -42,10 +42,12 @@ struct SearchedProductsListView: View {
                         ListProductCardTileView(product: product)
                             .environmentObject(favoritesViewModel)
                             .environmentObject(cartViewModel)
+                            .measureSize(size: $searchViewModel.productTileSize)
                     } else {
                         GridProductCardTileView(product: product)
                             .environmentObject(favoritesViewModel)
                             .environmentObject(cartViewModel)
+                            .measureSize(size: $searchViewModel.productTileSize)
                     }
                 }
                 .buttonStyle(ScaledButtonStyle())
