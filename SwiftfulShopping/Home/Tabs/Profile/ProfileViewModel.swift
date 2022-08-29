@@ -58,22 +58,27 @@ class ProfileViewModel: ObservableObject {
         }
     }
 
-    func changeDefaultAddress(address: Address) {
-        removeAddress(address: address)
-        profile.otherAddresses.append(profile.address)
-        profile.address = address
-    }
-
-    func removeAddress(address: Address) {
-        for (index, otherAddress) in profile.otherAddresses.enumerated() {
-            if otherAddress == address {
-                profile.otherAddresses.remove(at: index)
+    func changeDefaultAddress(addressDescription: String) {
+        for address in profile.addresses {
+            if address.description == addressDescription {
+                profile.defaultAddress = address
                 break
             }
         }
     }
+    
+    func getAddressFor(addressDescription: String) -> Address? {
+        for address in profile.addresses {
+            if address.description == addressDescription {
+                return address
+            }
+        }
+        return nil
+    }
 
-    func editPersonalData(firstName: String = "", lastName: String = "", emailAddress: String = "") {
+    func editPersonalData(firstName: String = "",
+                          lastName: String = "",
+                          emailAddress: String = "") {
         if !firstName.isEmpty {
             profile.firstName = firstName
         }
@@ -86,11 +91,9 @@ class ProfileViewModel: ObservableObject {
     }
 
     func addNewAddress(address: Address, toBeDefault: Bool = false) {
+        profile.addresses.append(address)
         if toBeDefault {
-            profile.otherAddresses.append(profile.address)
-            profile.address = address
-        } else {
-            profile.otherAddresses.append(address)
+            profile.defaultAddress = address
         }
     }
 

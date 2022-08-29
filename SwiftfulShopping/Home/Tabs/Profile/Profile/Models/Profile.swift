@@ -14,8 +14,8 @@ struct Profile {
     var username: String
     var birthDate: Date
     var email: String
-    var address: Address
-    var otherAddresses: [Address] = []
+    var defaultAddress: Address
+    var addresses: [Address] = []
     var defaultShippingMethod: ShippingMethod = .courier
     var defaultPaymentMethod: PaymentMethod = .creditCard
     var creditCard: CreditCard?
@@ -36,9 +36,10 @@ extension Profile {
                                      username: "jan.kowalski",
                                      birthDate: Date(),
                                      email: "jan.kowalski@email.com",
-                                     address: Address.demoAddress,
-                                     otherAddresses: [Address.otherAddresses[0],
-                                                      Address.otherAddresses[1]],
+                                     defaultAddress: Address.demoAddress,
+                                     addresses: [Address.demoAddress,
+                                                 Address.otherAddresses[0],
+                                                 Address.otherAddresses[1]],
                                      userProductsRatings: [Product.demoProducts[0].id: 3,
                                                            Product.demoProducts[1].id: 1,
                                                            Product.demoProducts[2].id: 5,

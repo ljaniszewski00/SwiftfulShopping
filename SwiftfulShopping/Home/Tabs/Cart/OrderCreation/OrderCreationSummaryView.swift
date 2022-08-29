@@ -39,7 +39,7 @@ struct OrderCreationSummaryView: View {
                                 Text(profileViewModel.profile.firstName)
                                 Text(profileViewModel.profile.lastName)
                             }
-                            Text(orderCreationViewModel.choosenAddress?.description ?? "")
+                            Text(orderCreationViewModel.defaultAddress)
                         }
                     }
                     
@@ -89,9 +89,13 @@ struct OrderCreationSummaryView: View {
             }
             
             Button {
-                orderCreationViewModel.createOrder(client: profileViewModel.profile, shoppingCart: cartViewModel.cart)
-                profileViewModel.orders.append(orderCreationViewModel.createdOrder!)
-                orderCreationViewModel.shouldPresentOrderCreationCompletionView = true
+                if let desiredAddress = profileViewModel.getAddressFor(addressDescription: orderCreationViewModel.defaultAddress) {
+                    orderCreationViewModel.createOrder(client: profileViewModel.profile,
+                                                       shoppingCart: cartViewModel.cart,
+                                                       shippingAddress: desiredAddress)
+                    profileViewModel.orders.append(orderCreationViewModel.createdOrder!)
+                    orderCreationViewModel.shouldPresentOrderCreationCompletionView = true
+                }
             } label: {
                 Text("Complete")
                     .font(.system(size: 20, weight: .bold, design: .rounded))
@@ -147,7 +151,7 @@ struct OrderCreationSummaryView_Previews: PreviewProvider {
                         authStateManager.isGuest = false
                         authStateManager.isLogged = true
                         orderCreationViewModel.choosenShippingMethod = .parcel
-                        orderCreationViewModel.choosenAddress = Address.demoAddress
+                        orderCreationViewModel.defaultAddress = Address.demoAddress.description
                         orderCreationViewModel.choosenPaymentMethod = PaymentMethod.creditCard
                         orderCreationViewModel.createdOrder = Order.demoOrders[0]
                         cartViewModel.cart.products = [Product.demoProducts[0]: 2,

@@ -35,60 +35,9 @@ struct OrderCreationChangeAddressView: View {
                             .font(.system(size: 16, weight: .bold, design: .rounded))
                             .foregroundColor(.accentColor)
                         
-                        VStack(alignment: .leading, spacing: 0) {
-                            ZStack(alignment: .trailing) {
-                                RoundedRectangle(cornerRadius: 3)
-                                    .if(!addressSectionExpanded) {
-                                        $0
-                                            .stroke(lineWidth: 2)
-                                    }
-                                    .foregroundColor(.accentColor)
-                                HStack {
-                                    Text(orderCreationViewModel.choosenAddress?.description ?? "")
-                                        .font(.system(size: 16))
-                                        .fixedSize(horizontal: false, vertical: true)
-                                        .padding()
-                                    Spacer()
-                                }
-                                Image(systemName: addressSectionExpanded ? "chevron.up" : "chevron.down")
-                                    .foregroundColor(addressSectionExpanded ? .ssWhite : .accentColor)
-                                    .frame(width: 50, height: 50)
-                                    .padding()
-                                    .isHidden(profileViewModel.profile.otherAddresses.isEmpty)
-                            }
-                            .contentShape(Rectangle())
-                            .onTapGesture {
-                                if !orderCreationViewModel.otherAddresses.isEmpty {
-                                    addressSectionExpanded.toggle()
-                                }
-                            }
-                            
-                            if addressSectionExpanded {
-                                ForEach(orderCreationViewModel.otherAddresses, id: \.self) { address in
-                                    ZStack(alignment: .trailing) {
-                                        Button {
-                                            orderCreationViewModel.changeDeliveryAddress(address: address)
-                                            addressSectionExpanded = false
-                                        } label: {
-                                            ZStack(alignment: .leading) {
-                                                RoundedRectangle(cornerRadius: 3)
-                                                    .stroke(lineWidth: 2)
-                                                    .foregroundColor(.accentColor)
-                                                HStack {
-                                                    Text(address.description)
-                                                        .font(.system(size: 16))
-                                                        .fixedSize(horizontal: false, vertical: true)
-                                                        .foregroundColor(colorScheme == .light ? .ssBlack : .ssWhite)
-                                                        .padding()
-                                                    Spacer()
-                                                }
-                                            }
-                                        }
-                                    }
-                                }
-                                .contentShape(Rectangle())
-                            }
-                        }
+                        SelectionDropdownMenu(selection: $orderCreationViewModel.defaultAddress,
+                                              dataWithImagesToChoose: orderCreationViewModel.addresses,
+                                              includeSearchField: false)
                     }
                 }
                 
@@ -203,17 +152,17 @@ struct OrderCreationChangeAddressView_Previews: PreviewProvider {
                     .previewDevice(PreviewDevice(rawValue: deviceName))
                     .previewDisplayName("\(deviceName) portrait")
                     .onAppear {
+                        orderCreationViewModel.setupAddresses(defaultProfileAddress:
+                                                                profileViewModel.profile.defaultAddress,
+                                                              profileAddresses:
+                                                                profileViewModel.profile.addresses)
+                        
                         if orderCreationViewModel.choosenShippingMethod == nil {
                             orderCreationViewModel.choosenShippingMethod = profileViewModel.profile.defaultShippingMethod
                         }
                         
                         if orderCreationViewModel.choosenPaymentMethod == nil {
                             orderCreationViewModel.choosenPaymentMethod = profileViewModel.profile.defaultPaymentMethod
-                        }
-                        
-                        if orderCreationViewModel.choosenAddress == nil {
-                            orderCreationViewModel.choosenAddress = profileViewModel.profile.address
-                            orderCreationViewModel.otherAddresses = profileViewModel.profile.otherAddresses
                         }
                     }
             }

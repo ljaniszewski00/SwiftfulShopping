@@ -22,7 +22,6 @@ struct PersonalInfoView: View {
     @State private var isBankAccountHolderCityTextFieldFocused: Bool = false
     @State private var isBankAccountHolderCountryTextFieldFocused: Bool = false
     
-    @State private var addressSectionExpanded: Bool = false
     @State private var shouldPresentEditPersonalInfoView: Bool = false
     @State private var shouldPresentAddNewAddressView: Bool = false
     
@@ -35,24 +34,24 @@ struct PersonalInfoView: View {
                             Text("First Name")
                                 .font(.system(size: 22, weight: .bold, design: .rounded))
                             
-                            ZStack {
-                                RoundedRectangle(cornerRadius: 3)
-                                    .stroke(lineWidth: 2)
-                                    .foregroundColor(.accentColor)
-                                HStack {
-                                    Text(profileViewModel.profile.firstName)
-                                        .font(.system(size: 20, weight: .semibold, design: .rounded))
-                                        .foregroundColor(.accentColor)
-                                        .padding()
-                                    Spacer()
-                                    Image(systemName: "chevron.right")
-                                        .foregroundColor(.accentColor)
-                                        .padding()
-                                }
-                            }
-                            .contentShape(Rectangle())
-                            .onTapGesture {
+                            Button {
                                 shouldPresentEditPersonalInfoView = true
+                            } label: {
+                                ZStack {
+                                    RoundedRectangle(cornerRadius: 3)
+                                        .stroke(lineWidth: 2)
+                                        .foregroundColor(.accentColor)
+                                    HStack {
+                                        Text(profileViewModel.profile.firstName)
+                                            .font(.system(size: 20, weight: .semibold, design: .rounded))
+                                            .foregroundColor(.accentColor)
+                                            .padding()
+                                        Spacer()
+                                        Image(systemName: "chevron.right")
+                                            .foregroundColor(.accentColor)
+                                            .padding()
+                                    }
+                                }
                             }
                         }
                         
@@ -60,24 +59,24 @@ struct PersonalInfoView: View {
                             Text("Last Name")
                                 .font(.system(size: 22, weight: .bold, design: .rounded))
                             
-                            ZStack {
-                                RoundedRectangle(cornerRadius: 3)
-                                    .stroke(lineWidth: 2)
-                                    .foregroundColor(.accentColor)
-                                HStack {
-                                    Text(profileViewModel.profile.lastName)
-                                        .font(.system(size: 20, weight: .semibold, design: .rounded))
-                                        .foregroundColor(.accentColor)
-                                        .padding()
-                                    Spacer()
-                                    Image(systemName: "chevron.right")
-                                        .foregroundColor(.accentColor)
-                                        .padding()
-                                }
-                            }
-                            .contentShape(Rectangle())
-                            .onTapGesture {
+                            Button {
                                 shouldPresentEditPersonalInfoView = true
+                            } label: {
+                                ZStack {
+                                    RoundedRectangle(cornerRadius: 3)
+                                        .stroke(lineWidth: 2)
+                                        .foregroundColor(.accentColor)
+                                    HStack {
+                                        Text(profileViewModel.profile.lastName)
+                                            .font(.system(size: 20, weight: .semibold, design: .rounded))
+                                            .foregroundColor(.accentColor)
+                                            .padding()
+                                        Spacer()
+                                        Image(systemName: "chevron.right")
+                                            .foregroundColor(.accentColor)
+                                            .padding()
+                                    }
+                                }
                             }
                         }
                         
@@ -85,24 +84,24 @@ struct PersonalInfoView: View {
                             Text("Email Address")
                                 .font(.system(size: 22, weight: .bold, design: .rounded))
                             
-                            ZStack {
-                                RoundedRectangle(cornerRadius: 3)
-                                    .stroke(lineWidth: 2)
-                                    .foregroundColor(.accentColor)
-                                HStack {
-                                    Text(profileViewModel.profile.email)
-                                        .font(.system(size: 20, weight: .semibold, design: .rounded))
-                                        .foregroundColor(.accentColor)
-                                        .padding()
-                                    Spacer()
-                                    Image(systemName: "chevron.right")
-                                        .foregroundColor(.accentColor)
-                                        .padding()
-                                }
-                            }
-                            .contentShape(Rectangle())
-                            .onTapGesture {
+                            Button {
                                 shouldPresentEditPersonalInfoView = true
+                            } label: {
+                                ZStack {
+                                    RoundedRectangle(cornerRadius: 3)
+                                        .stroke(lineWidth: 2)
+                                        .foregroundColor(.accentColor)
+                                    HStack {
+                                        Text(profileViewModel.profile.email)
+                                            .font(.system(size: 20, weight: .semibold, design: .rounded))
+                                            .foregroundColor(.accentColor)
+                                            .padding()
+                                        Spacer()
+                                        Image(systemName: "chevron.right")
+                                            .foregroundColor(.accentColor)
+                                            .padding()
+                                    }
+                                }
                             }
                         }
                         
@@ -110,90 +109,37 @@ struct PersonalInfoView: View {
                             Text("Address")
                                 .font(.system(size: 22, weight: .bold, design: .rounded))
                             
-                            VStack(alignment: .leading, spacing: 0) {
-                                ZStack(alignment: .trailing) {
-                                    RoundedRectangle(cornerRadius: 3)
-                                        .if(!addressSectionExpanded) {
-                                            $0
-                                                .stroke(lineWidth: 2)
-                                        }
-                                        .foregroundColor(.accentColor)
-                                    HStack {
-                                        Text(profileViewModel.profile.address.description)
-                                            .font(.system(size: 20, weight: .semibold, design: .rounded))
-                                            .foregroundColor(addressSectionExpanded ? (colorScheme == .light ? .ssBlack : .ssWhite) : .accentColor)
-                                            .fixedSize(horizontal: false, vertical: true)
-                                            .padding()
-                                        Spacer()
-                                    }
-                                    Image(systemName: addressSectionExpanded ? "chevron.up" : "chevron.down")
-                                        .foregroundColor(addressSectionExpanded ? .ssWhite : .accentColor)
-                                        .frame(width: 50, height: 50)
-                                        .padding()
-                                        .isHidden(profileViewModel.profile.otherAddresses.isEmpty)
-                                }
-                                .contentShape(Rectangle())
-                                .onTapGesture {
-                                    if !profileViewModel.profile.otherAddresses.isEmpty {
-                                        addressSectionExpanded.toggle()
-                                    }
-                                }
-                                
-                                if addressSectionExpanded {
-                                    ForEach(profileViewModel.profile.otherAddresses, id: \.self) { address in
-                                        ZStack(alignment: .trailing) {
-                                            Button {
-                                                profileViewModel.changeDefaultAddress(address: address)
-                                                addressSectionExpanded = false
-                                            } label: {
-                                                ZStack(alignment: .leading) {
-                                                    RoundedRectangle(cornerRadius: 3)
-                                                        .stroke(lineWidth: 2)
-                                                        .foregroundColor(.accentColor)
-                                                    HStack {
-                                                        Text(address.description)
-                                                            .font(.system(size: 20, weight: .semibold, design: .rounded))
-                                                            .fixedSize(horizontal: false, vertical: true)
-                                                            .foregroundColor(colorScheme == .light ? .ssBlack : .ssWhite)
-                                                            .padding()
-                                                        Spacer()
-                                                    }
-                                                }
-                                            }
-                                            
-                                            Button {
-                                                profileViewModel.removeAddress(address: address)
-                                            } label: {
-                                                Image(systemName: "trash")
-                                            }
-                                            .frame(width: 50, height: 50)
-                                            .padding()
-                                        }
-                                    }
-                                    .contentShape(Rectangle())
-                                    
-                                    Button {
-                                        withAnimation {
-                                            shouldPresentAddNewAddressView = true
-                                        }
-                                    } label: {
-                                        Text("Add New Address")
-                                            .font(.system(size: 20, weight: .bold, design: .rounded))
-                                    }
-                                    .contentShape(Rectangle())
-                                    .buttonStyle(CustomButton())
-                                    .padding(.vertical, 10)
-                                }
+                            SelectionDropdownMenu(selection: $personalInfoViewModel.defaultAddress,
+                                                  dataWithImagesToChoose: personalInfoViewModel.addresses,
+                                                  includeSearchField: false)
+                            .onChange(of: personalInfoViewModel.defaultAddress) { newDefaultAddress in
+                                profileViewModel.changeDefaultAddress(addressDescription: newDefaultAddress)
                             }
+                            
+                            Button {
+                                withAnimation {
+                                    shouldPresentAddNewAddressView = true
+                                }
+                            } label: {
+                                Text("Add New Address")
+                                    .font(.system(size: 20, weight: .bold, design: .rounded))
+                            }
+                            .contentShape(Rectangle())
+                            .buttonStyle(CustomButton())
+                            .padding(.vertical, 10)
                         }
                     }
-                    
-                    Spacer()
                 }
             }
             .padding()
         }
         .navigationTitle("Personal Information")
+        .onAppear {
+            personalInfoViewModel.setupAddresses(defaultProfileAddress:
+                                                    profileViewModel.profile.defaultAddress,
+                                                 profileAddresses:
+                                                    profileViewModel.profile.addresses)
+        }
         
         NavigationLink(destination: AddNewAddressView()
                                         .environmentObject(authStateManager)

@@ -9,11 +9,11 @@ import Foundation
 
 class OrderCreationViewModel: ObservableObject {
     @Published var choosenShippingMethod: ShippingMethod?
-    @Published var choosenAddress: Address?
     @Published var choosenPaymentMethod: PaymentMethod?
     @Published var toReceiveInvoice: Bool = false
     
-    @Published var otherAddresses: [Address] = []
+    @Published var defaultAddress: String = ""
+    @Published var addresses: [String: String?] = [:]
     
     @Published var shouldPresentOrderCreationAddressChangeView: Bool = false
     @Published var shouldPresentOrderCreationSummaryView: Bool = false
@@ -36,23 +36,20 @@ class OrderCreationViewModel: ObservableObject {
     }
     
     var cannotProceedToSummaryView: Bool {
-        choosenShippingMethod == nil || choosenAddress == nil || choosenPaymentMethod == nil
+        choosenShippingMethod == nil || defaultAddress.isEmpty || choosenPaymentMethod == nil
     }
     
-    func changeDeliveryAddress(address: Address) {
-        otherAddresses.append(choosenAddress!)
-        choosenAddress = address
-        for (index, addressToBeDeleted) in otherAddresses.enumerated() {
-            if addressToBeDeleted == address {
-                otherAddresses.remove(at: index)
-            }
+    func setupAddresses(defaultProfileAddress: Address,
+                        profileAddresses: [Address]) {
+        defaultAddress = defaultProfileAddress.description
+        for profileAddress in profileAddresses {
+            addresses.updateValue(nil,
+                                  forKey: profileAddress.description)
         }
     }
     
     func createNewAddress() -> Address {
         let newAddress = Address(streetName: newStreetName, streetNumber: newStreetNumber, apartmentNumber: newApartmentNumber, zipCode: newZipCode, city: newCity, country: newCountry)
-        otherAddresses.append(choosenAddress!)
-        choosenAddress = newAddress
         eraseNewAddressData()
         return newAddress
     }
@@ -68,7 +65,14 @@ class OrderCreationViewModel: ObservableObject {
         addressToBeDefault = false
     }
     
-    func createOrder(client: Profile, shoppingCart: Cart) {
-        createdOrder = Order(client: client, shoppingCart: shoppingCart, shippingMethod: choosenShippingMethod!, shippingAddress: choosenAddress!, paymentMethod: choosenPaymentMethod!, invoice: toReceiveInvoice)
+    func createOrder(client: Profile,
+                     shoppingCart: Cart,
+                     shippingAddress: Address) {
+        createdOrder = Order(client: client,
+                             shoppingCart: shoppingCart,
+                             shippingMethod: choosenShippingMethod!,
+                             shippingAddress: shippingAddress,
+                             paymentMethod: choosenPaymentMethod!,
+                             invoice: toReceiveInvoice)
     }
 }

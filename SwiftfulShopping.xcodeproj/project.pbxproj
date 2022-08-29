@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		0A13460228BBA02A002D596E /* Font.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A13460128BBA02A002D596E /* Font.swift */; };
+		0A154B4A28BD66A2001E4BE3 /* String.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A154B4928BD66A2001E4BE3 /* String.swift */; };
 		0A2165AE28A2C1E0006842F0 /* ChangeEmailViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A2165AD28A2C1E0006842F0 /* ChangeEmailViewModel.swift */; };
 		0A2165B128A2C200006842F0 /* ChangePasswordViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A2165B028A2C200006842F0 /* ChangePasswordViewModel.swift */; };
 		0A2165B428A2C217006842F0 /* DeleteAccountViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A2165B328A2C217006842F0 /* DeleteAccountViewModel.swift */; };
@@ -343,6 +344,7 @@
 
 /* Begin PBXFileReference section */
 		0A13460128BBA02A002D596E /* Font.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Font.swift; sourceTree = "<group>"; };
+		0A154B4928BD66A2001E4BE3 /* String.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = String.swift; sourceTree = "<group>"; };
 		0A2165AD28A2C1E0006842F0 /* ChangeEmailViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChangeEmailViewModel.swift; sourceTree = "<group>"; };
 		0A2165B028A2C200006842F0 /* ChangePasswordViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChangePasswordViewModel.swift; sourceTree = "<group>"; };
 		0A2165B328A2C217006842F0 /* DeleteAccountViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeleteAccountViewModel.swift; sourceTree = "<group>"; };
@@ -1013,6 +1015,7 @@
 				0A30460428A96CE500F218B3 /* UIColor.swift */,
 				0A13460128BBA02A002D596E /* Font.swift */,
 				0A25D69228BC000600FF6ED5 /* ScrollView.swift */,
+				0A154B4928BD66A2001E4BE3 /* String.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -1454,6 +1457,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				0A26FF302885B3BE0001FA93 /* ProductsListView.swift in Sources */,
+				0A154B4A28BD66A2001E4BE3 /* String.swift in Sources */,
 				0A3245F3288B18FE0046043D /* ListProductCardTileView.swift in Sources */,
 				0A3B08E428AD4D1C00A54385 /* CameraViewModel.swift in Sources */,
 				0A5A7CF62896878800736B07 /* OrderStatus.swift in Sources */,

@@ -41,7 +41,7 @@ struct OrderCreationShipmentPaymentView: View {
                                     Text(profileViewModel.profile.firstName)
                                     Text(profileViewModel.profile.lastName)
                                 }
-                                Text(orderCreationViewModel.choosenAddress?.description ?? "")
+                                Text(orderCreationViewModel.defaultAddress)
                             }
                             
                             Spacer()
@@ -211,17 +211,19 @@ struct OrderCreationShipmentPaymentView: View {
         .navigationTitle("Shipment and Payment")
         .navigationBarTitleDisplayMode(.inline)
         .onAppear {
+            if orderCreationViewModel.defaultAddress.isEmpty {
+                orderCreationViewModel.setupAddresses(defaultProfileAddress:
+                                                        profileViewModel.profile.defaultAddress,
+                                                      profileAddresses:
+                                                        profileViewModel.profile.addresses)
+            }
+            
             if orderCreationViewModel.choosenShippingMethod == nil {
                 orderCreationViewModel.choosenShippingMethod = profileViewModel.profile.defaultShippingMethod
             }
             
             if orderCreationViewModel.choosenPaymentMethod == nil {
                 orderCreationViewModel.choosenPaymentMethod = profileViewModel.profile.defaultPaymentMethod
-            }
-            
-            if orderCreationViewModel.choosenAddress == nil {
-                orderCreationViewModel.choosenAddress = profileViewModel.profile.address
-                orderCreationViewModel.otherAddresses = profileViewModel.profile.otherAddresses
             }
         }
     }

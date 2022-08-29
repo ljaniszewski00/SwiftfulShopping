@@ -55,39 +55,45 @@ struct SelectionDropdownMenu: View {
     }
     
     @ViewBuilder func buildSelectedElementRow() -> some View {
-        HStack {
-            HStack(spacing: 20) {
-                if !elementsNames.isEmpty {
-                    if let dataImage = dataWithImagesToChoose[selection], let imageName = dataImage {
-                        Image(imageName)
+        Button {
+            isExpanded.toggle()
+        } label: {
+            HStack {
+                HStack(spacing: 20) {
+                    if !elementsNames.isEmpty {
+                        if let dataImage = dataWithImagesToChoose[selection], let imageName = dataImage {
+                            Image(imageName)
+                        }
                     }
+                    Text(selection)
+                        .font(.system(size: 18, weight: .semibold, design: .rounded))
+                        .foregroundColor(colorScheme == .light ? .ssBlack : .ssWhite)
+                        .fixedSize(horizontal: false, vertical: true)
+                        .multilineTextAlignment(.leading)
                 }
-                Text(selection)
-                    .font(.system(size: 18, weight: .semibold, design: .rounded))
-                    .foregroundColor(colorScheme == .light ? .ssBlack : .ssWhite)
+                
+                Spacer()
+                
+                if dataWithImagesToChoose.count > 1 {
+                    Image(systemName: isExpanded ? "chevron.up" : "chevron.down")
+                        .foregroundColor(.ssGray)
+                }
             }
-            
-            Spacer()
-            
-            if dataWithImagesToChoose.count > 1 {
-                Image(systemName: isExpanded ? "chevron.up" : "chevron.down")
-                    .foregroundColor(.ssGray)
-                    .onTapGesture {
-                        isExpanded.toggle()
-                    }
-            }
+            .padding()
         }
-        .padding()
         .frame(minWidth: 200, maxWidth: .infinity)
     }
     
     @ViewBuilder func buildElementsList() -> some View {
         ScrollView(.vertical) {
             VStack(spacing: 0) {
-                RectangleCustomTextField(textFieldProperty: "Search",
-                                         text: $searchText,
-                                         isFocusedParentView: $isSearchTextFieldFocused)
-                    .padding()
+                if includeSearchField {
+                    RectangleCustomTextField(textFieldProperty: "Search",
+                                             text: $searchText,
+                                             isFocusedParentView: $isSearchTextFieldFocused)
+                        .padding()
+                }
+                
                 ForEach(elementsNames, id: \.self) { elementName in
                     Button {
                         selection = elementName

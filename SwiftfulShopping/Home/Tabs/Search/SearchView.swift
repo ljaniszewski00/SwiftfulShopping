@@ -253,6 +253,7 @@ struct SearchView: View {
                             .background(.ultraThinMaterial, in: RoundedRectangle(cornerRadius: 15, style: .continuous))
                             .foregroundColor(colorScheme == .light ? Color(uiColor: .darkGray) : .ssWhite)
                     }
+                    .padding(.horizontal, 5)
                 }
             }
             .font(.system(size: 18, weight: .semibold, design: .rounded))
@@ -306,6 +307,7 @@ struct SearchView: View {
                             .background(.ultraThinMaterial, in: RoundedRectangle(cornerRadius: 15, style: .continuous))
                             .foregroundColor(colorScheme == .light ? Color(uiColor: .darkGray) : .ssWhite)
                     }
+                    .padding(.horizontal, 5)
                 }
             }
             .font(.system(size: 18, weight: .semibold, design: .rounded))
