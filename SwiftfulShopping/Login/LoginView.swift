@@ -51,7 +51,7 @@ struct LoginView: View {
                                 HStack {
                                     Spacer()
                                     Text("Forgot password?")
-                                        .font(.system(size: 16, weight: .semibold, design: .rounded))
+                                        .font(.ssBody)
                                         .foregroundColor(.accentColor)
                                         .onTapGesture {
                                             showForgotPasswordSheet = true
@@ -73,7 +73,7 @@ struct LoginView: View {
                                 
                                 HStack(spacing: 10) {
                                     Text("Don't have an account?")
-                                        .font(.system(size: 16, weight: .regular, design: .rounded))
+                                        .font(.ssBody)
                                     
                                     NavigationLink(isActive: $contentViewModel.presentRegisterView) {
                                         RegisterView()
@@ -82,8 +82,8 @@ struct LoginView: View {
                                             .environmentObject(contentViewModel)
                                     } label: {
                                         Text("Register here")
+                                            .font(.ssBody)
                                             .foregroundColor(.accentColor)
-                                            .font(.system(size: 16, weight: .semibold, design: .rounded))
                                     }
                                 }
                                 

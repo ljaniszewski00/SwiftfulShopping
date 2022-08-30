@@ -109,7 +109,7 @@ struct RegisterView: View {
             VStack(spacing: 20) {
                 VStack(alignment: .leading, spacing: 10) {
                     Text("Personal Information:")
-                        .font(.system(size: 22, weight: .semibold, design: .rounded))
+                        .font(.ssTitle1)
                         .foregroundColor(.accentColor)
                         .padding(.bottom)
                     
@@ -122,7 +122,7 @@ struct RegisterView: View {
                 
                 VStack(alignment: .leading, spacing: 10) {
                     Text("Birth Date:")
-                        .font(.system(size: 18, weight: .semibold, design: .rounded))
+                        .font(.ssTitle2)
                         .foregroundColor(.accentColor)
                     CustomDatePicker(includeDayPicking: true, datePicked: $registerViewModel.birthDate)
                 }
@@ -131,7 +131,7 @@ struct RegisterView: View {
             
             VStack(alignment: .leading, spacing: 10) {
                 Text("Credentials:")
-                    .font(.system(size: 22, weight: .semibold, design: .rounded))
+                    .font(.ssTitle2)
                     .foregroundColor(.accentColor)
                     .padding(.bottom)
                 
@@ -143,9 +143,11 @@ struct RegisterView: View {
                     HStack(alignment: .center) {
                         if showPasswordHint {
                             Text("Password should be at least 8 characters long and should contain a number.")
-                                .font(.system(size: 16, weight: .bold, design: .rounded))
+                                .font(.ssCallout)
                                 .foregroundColor(registerViewModel.dataError ? .red : .ssGray)
                         }
+                        
+                        Spacer()
                         
                         Button {
                             showPasswordHint.toggle()

@@ -106,7 +106,7 @@ struct SecondRegisterView: View {
         VStack(alignment: .leading, spacing: 20) {
             VStack(alignment: .leading, spacing: 10) {
                 Text("Shipment Address:")
-                    .font(.system(size: 22, weight: .semibold, design: .rounded))
+                    .font(.ssTitle1)
                     .foregroundColor(.accentColor)
                     .padding(.bottom)
                 
@@ -136,17 +136,19 @@ struct SecondRegisterView: View {
             VStack(alignment: .leading, spacing: 20) {
                 VStack(alignment: .leading, spacing: 10) {
                     Text("Country:")
-                        .font(.system(size: 18, weight: .semibold, design: .rounded))
+                        .font(.ssTitle3)
                         .foregroundColor(.accentColor)
                     
                     SelectionDropdownMenu(selection: $registerViewModel.country,
                                       dataWithImagesToChoose: countries)
                         .frame(maxHeight: 350)
+                    
+                    Spacer()
                 }
                 
                 VStack(alignment: .leading, spacing: 10) {
                     Text("Same address on invoice?")
-                        .font(.system(size: 18, weight: .semibold, design: .rounded))
+                        .font(.ssTitle2)
                         .foregroundColor(.accentColor)
                     
                     SingleSelectionToggle(selection: $registerViewModel.sameDataOnInvoice)
@@ -157,7 +159,7 @@ struct SecondRegisterView: View {
             if !registerViewModel.sameDataOnInvoice {
                 VStack(alignment: .leading, spacing: 10) {
                     Text("Invoice Data")
-                        .font(.system(size: 22, weight: .semibold, design: .rounded))
+                        .font(.ssTitle1)
                         .foregroundColor(.accentColor)
                         .padding(.bottom)
                     
@@ -197,7 +199,7 @@ struct SecondRegisterView: View {
                 
                 VStack(alignment: .leading, spacing: 10) {
                     Text("Country:")
-                        .font(.system(size: 18, weight: .semibold, design: .rounded))
+                        .font(.ssTitle3)
                         .foregroundColor(.accentColor)
                     
                     SelectionDropdownMenu(selection: $registerViewModel.countryInvoice,
