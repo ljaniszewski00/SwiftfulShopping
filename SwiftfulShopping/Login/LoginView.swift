@@ -87,39 +87,13 @@ struct LoginView: View {
                                     }
                                 }
                                 
-                                LabelledDivider(label: "Or join using",
+                                LabelledDivider(label: "Or",
                                                 color: colorScheme == .light ? .ssBlack : .ssWhite)
                                     .padding(.vertical)
                                 
-                                HStack(spacing: 40) {
-                                    Button {
-                                        
-                                    } label: {
-                                        Image(uiImage: UIImage(named: "google_logo")!)
-                                            .resizable()
-                                            .scaledToFit()
-                                            .clipShape(Circle())
-                                    }
-                                    
-                                    Button {
-                                        
-                                    } label: {
-                                        Image(uiImage: UIImage(named: "facebook_logo")!)
-                                            .resizable()
-                                            .aspectRatio(contentMode: .fit)
-                                            .clipShape(Circle())
-                                    }
-                                    
-                                    Button {
-                                        
-                                    } label: {
-                                        Image(uiImage: UIImage(named: "github_logo")!)
-                                            .resizable()
-                                            .aspectRatio(contentMode: .fit)
-                                            .clipShape(Circle())
-                                    }
-                                }
-                                .frame(width: ScreenBoundsSupplier.shared.getScreenWidth() * 0.6)
+                                buildGoogleLogInButton()
+                                buildFacebookLogInButton()
+                                buildGitHubLogInButton()
                             }
                         }
                         .frame(maxHeight: .infinity)
@@ -150,6 +124,79 @@ struct LoginView: View {
             .navigationBarBackButtonHidden(true)
         }
         .navigationViewStyle(.stack)
+    }
+    
+    @ViewBuilder
+    func buildGoogleLogInButton() -> some View {
+        Button {
+            
+        } label: {
+            ZStack {
+                RoundedRectangle(cornerRadius: 5)
+                    .stroke()
+                    .foregroundColor(.ssDarkGray)
+                HStack {
+                    Image(uiImage: UIImage(named: "google_logo")!)
+                        .resizable()
+                        .frame(width: 25, height: 25)
+                        .clipShape(Circle())
+                    Spacer()
+                    Text("Sign in with Google")
+                        .font(.ssButton)
+                        .foregroundColor(colorScheme == .light ? .ssBlack : .ssWhite)
+                    Spacer()
+                }
+                .padding()
+            }
+        }
+    }
+    
+    @ViewBuilder
+    func buildFacebookLogInButton() -> some View {
+        Button {
+            
+        } label: {
+            ZStack {
+                RoundedRectangle(cornerRadius: 5)
+                    .foregroundColor(.ssDarkBlue)
+                HStack {
+                    Image(uiImage: UIImage(named: "facebook_logo")!)
+                        .resizable()
+                        .frame(width: 25, height: 25)
+                        .clipShape(Circle())
+                    Spacer()
+                    Text("Sign in with Facebook")
+                        .font(.ssButton)
+                        .foregroundColor(.ssWhite)
+                    Spacer()
+                }
+                .padding()
+            }
+        }
+    }
+    
+    @ViewBuilder
+    func buildGitHubLogInButton() -> some View {
+        Button {
+            
+        } label: {
+            ZStack {
+                RoundedRectangle(cornerRadius: 5)
+                    .foregroundColor(.black)
+                HStack {
+                    Image(uiImage: UIImage(named: "github_logo")!)
+                        .resizable()
+                        .frame(width: 25, height: 25)
+                        .clipShape(Circle())
+                    Spacer()
+                    Text("Sign in with GitHub")
+                        .font(.ssButton)
+                        .foregroundColor(.ssWhite)
+                    Spacer()
+                }
+                .padding()
+            }
+        }
     }
 }
 

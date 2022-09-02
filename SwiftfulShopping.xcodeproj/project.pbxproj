@@ -1047,8 +1047,8 @@
 			isa = PBXGroup;
 			children = (
 				0ACD58D4284A6F6600AA9DA0 /* RegisterView.swift */,
-				0ACD58D5284A6F6600AA9DA0 /* RegisterViewModel.swift */,
 				0A2D5FB128BA275F00E76D71 /* SecondRegisterView.swift */,
+				0ACD58D5284A6F6600AA9DA0 /* RegisterViewModel.swift */,
 			);
 			path = Register;
 			sourceTree = "<group>";

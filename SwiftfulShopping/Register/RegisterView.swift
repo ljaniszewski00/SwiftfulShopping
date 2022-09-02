@@ -144,7 +144,7 @@ struct RegisterView: View {
                         if showPasswordHint {
                             Text("Password should be at least 8 characters long and should contain a number.")
                                 .font(.ssCallout)
-                                .foregroundColor(registerViewModel.dataError ? .red : .ssGray)
+                                .foregroundColor(registerViewModel.dataError ? .red : .ssDarkGray)
                         }
                         
                         Spacer()
