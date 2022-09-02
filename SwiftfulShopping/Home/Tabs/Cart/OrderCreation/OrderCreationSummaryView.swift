@@ -25,58 +25,56 @@ struct OrderCreationSummaryView: View {
             
             ScrollView(.vertical, showsIndicators: false) {
                 VStack(alignment: .leading, spacing: 30) {
-                    VStack(alignment: .leading, spacing: 15) {
+                    VStack(alignment: .leading, spacing: 5) {
                         Text("Consignee Data")
-                            .font(.system(size: 22, weight: .heavy, design: .rounded))
+                            .font(.ssTitle2)
                         
                         Text("This will be the delivery addres for package")
-                            .font(.system(size: 16, weight: .regular, design: .rounded))
-                            .foregroundColor(.ssGray)
-                            .padding(.bottom, 10)
+                            .font(.ssCallout)
+                            .foregroundColor(.ssDarkGray)
+                            .padding(.bottom, 15)
                         
-                        VStack(alignment: .leading) {
+                        VStack(alignment: .leading, spacing: 5) {
                             HStack(spacing: 5) {
                                 Text(profileViewModel.profile.firstName)
+                                    .font(.ssTitle3)
                                 Text(profileViewModel.profile.lastName)
+                                    .font(.ssTitle3)
                             }
                             Text(orderCreationViewModel.defaultAddress)
+                                .font(.ssCallout).fontWeight(.regular)
                         }
                     }
                     
                     VStack(alignment: .leading, spacing: 15) {
                         Text("Shipping Method")
-                            .font(.system(size: 22, weight: .heavy, design: .rounded))
+                            .font(.ssTitle2)
                         
-                        ZStack {
-                            RoundedRectangle(cornerRadius: 5)
-                                .stroke()
-                                .foregroundColor(.accentColor)
-                            Text(orderCreationViewModel.choosenShippingMethod?.rawValue ?? "")
-                                .foregroundColor(.accentColor)
-                                .padding()
-                        }
+                        Text(orderCreationViewModel.choosenShippingMethod?.rawValue ?? "")
+                            .font(.ssTitle3)
+                            .foregroundColor(colorScheme == .light ? .ssBlack : .ssWhite)
                     }
                     
                     VStack(alignment: .leading, spacing: 15) {
                         Text("Payment Method")
-                            .font(.system(size: 22, weight: .heavy, design: .rounded))
+                            .font(.ssTitle2)
                         
-                        ZStack {
-                            RoundedRectangle(cornerRadius: 5)
-                                .stroke()
-                                .foregroundColor(.accentColor)
-                            Text(orderCreationViewModel.choosenPaymentMethod?.rawValue ?? "")
-                                .foregroundColor(.accentColor)
-                                .padding()
-                        }
+                        Text(orderCreationViewModel.choosenPaymentMethod?.rawValue ?? "")
+                            .font(.ssTitle3)
+                            .foregroundColor(colorScheme == .light ? .ssBlack : .ssWhite)
                     }
                     
-                    Text(orderCreationViewModel.toReceiveInvoice ? "I would like to receive invoice" : "I don't want to receive invoice")
-                        .font(.system(size: 18, weight: .heavy, design: .rounded))
+                    VStack(alignment: .leading) {
+                        Text("Would you like to receive invoice?")
+                            .font(.ssTitle2)
+                        
+                        SingleSelectionToggle(selection: $orderCreationViewModel.toReceiveInvoice)
+                            .disabled(true)
+                    }
                     
-                    VStack(alignment: .leading, spacing: 15) {
+                    VStack(alignment: .leading, spacing: 10) {
                         Text("Products")
-                            .font(.system(size: 22, weight: .heavy, design: .rounded))
+                            .font(.ssTitle2)
                         
                         ForEach(Array(cartViewModel.cart.products.keys).sorted { $0.id > $1.id}, id: \.self) { product in
                             ProductTileForCartView(product: product, includeButtonsForAmountChange: false)
@@ -98,10 +96,10 @@ struct OrderCreationSummaryView: View {
                 }
             } label: {
                 Text("Complete")
-                    .font(.system(size: 20, weight: .bold, design: .rounded))
+                    .font(.ssButton)
             }
             .buttonStyle(CustomButton())
-            .padding(.bottom, 15)
+            .padding()
             
             NavigationLink(destination: OrderCreationCompletionView()
                                             .environmentObject(authStateManager)

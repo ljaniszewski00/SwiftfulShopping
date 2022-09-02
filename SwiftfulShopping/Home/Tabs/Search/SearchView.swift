@@ -71,7 +71,7 @@ struct SearchView: View {
                                                                     .frame(width: 17, height: 17)
                                                                     .foregroundColor(.red)
                                                                 Text(String(sortingAndFilteringViewModel.numberOfFiltersApplied))
-                                                                    .font(.system(size: 14, weight: .regular, design: .rounded))
+                                                                    .font(.ssBody)
                                                                     .foregroundColor(.ssWhite)
                                                             }
                                                             .offset(x: 17, y: -17)
@@ -151,11 +151,11 @@ struct SearchView: View {
                                                height: ScreenBoundsSupplier.shared.getScreenHeight() * 0.5)
                                         VStack(spacing: 10) {
                                             Text("No products found!")
-                                                .font(.system(size: 24, weight: .bold, design: .rounded))
+                                                .font(.ssTitle1)
                                                 .fixedSize(horizontal: false, vertical: true)
                                             Text("Please try another search key or change filtering method.")
-                                                .font(.system(size: 18, weight: .regular, design: .rounded))
-                                                .foregroundColor(.ssGray)
+                                                .font(.ssTitle3)
+                                                .foregroundColor(.ssDarkGray)
                                                 .fixedSize(horizontal: false, vertical: true)
                                         }
                                     }
@@ -228,9 +228,9 @@ struct SearchView: View {
         LazyVStack(alignment: .leading) {
             HStack {
                 Text("Trending Searches")
-                    .font(.system(size: 20, weight: .semibold, design: .rounded))
+                    .font(.ssTitle3)
                 Text("New")
-                    .font(.system(size: 14, weight: .semibold, design: .rounded))
+                    .font(.ssBody)
                     .padding(7)
                     .padding(.horizontal, 7)
                     .background {
@@ -242,13 +242,13 @@ struct SearchView: View {
             }
             
             LazyVGrid(columns: gridColumns, alignment: .leading, spacing: 10) {
-                ForEach(searchViewModel.shouldPresentAllTrendingSearches ? searchViewModel.trendingSearchesFullList : searchViewModel.trendingSearches, id: \.self) { recentSearch in
+                ForEach(searchViewModel.shouldPresentAllTrendingSearches ? searchViewModel.trendingSearchesFullList : searchViewModel.trendingSearches, id: \.self) { trendingSearch in
                     Button {
                         withAnimation {
-                            exploreViewModel.searchProductsText = recentSearch
+                            exploreViewModel.searchProductsText = trendingSearch
                         }
                     } label: {
-                        Text(recentSearch)
+                        Text(trendingSearch)
                             .padding(12)
                             .background(.ultraThinMaterial, in: RoundedRectangle(cornerRadius: 15, style: .continuous))
                             .foregroundColor(colorScheme == .light ? Color(uiColor: .darkGray) : .ssWhite)
@@ -256,7 +256,7 @@ struct SearchView: View {
                     .padding(.horizontal, 5)
                 }
             }
-            .font(.system(size: 18, weight: .semibold, design: .rounded))
+            .font(.ssCallout)
             
             if searchViewModel.trendingSearchesSeeHideAllButtonVisible {
                 Button {
@@ -265,9 +265,9 @@ struct SearchView: View {
                     }
                 } label: {
                     Text(searchViewModel.shouldPresentAllTrendingSearches ? "Hide all" : "See all")
-                        .padding()
-                        .font(.system(size: 18, weight: .semibold, design: .rounded))
+                        .font(.ssButton)
                         .foregroundColor(.accentColor)
+                        .padding()
                 }
             }
         }
@@ -279,7 +279,7 @@ struct SearchView: View {
         VStack(alignment: .leading) {
             HStack {
                 Text("Recent Searches")
-                    .font(.system(size: 20, weight: .semibold, design: .rounded))
+                    .font(.ssTitle3)
                 Spacer()
                 
                 Button {
@@ -289,8 +289,8 @@ struct SearchView: View {
                     }
                 } label: {
                     Text("Clear all")
-                        .font(.system(size: 18, weight: .semibold, design: .rounded))
-                        .foregroundColor(.ssGray)
+                        .font(.ssButton)
+                        .foregroundColor(.accentColor)
                         .padding(12)
                 }
             }
@@ -310,7 +310,7 @@ struct SearchView: View {
                     .padding(.horizontal, 5)
                 }
             }
-            .font(.system(size: 18, weight: .semibold, design: .rounded))
+            .font(.ssCallout)
             
             if searchViewModel.recentSearchesSeeHideAllButtonVisible  {
                 Button {
@@ -320,7 +320,7 @@ struct SearchView: View {
                 } label: {
                     Text(searchViewModel.shouldPresentAllRecentSearches ? "Hide all" : "See all")
                         .padding()
-                        .font(.system(size: 18, weight: .semibold, design: .rounded))
+                        .font(.ssButton)
                         .foregroundColor(.accentColor)
                 }
             }

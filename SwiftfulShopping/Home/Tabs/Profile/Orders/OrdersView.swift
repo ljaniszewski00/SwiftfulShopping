@@ -21,32 +21,33 @@ struct OrdersView: View {
                             VStack(alignment: .leading, spacing: 20) {
                                 HStack(spacing: 10) {
                                     Text(order.id)
-                                        .font(.system(size: 16, weight: .heavy, design: .rounded))
+                                        .font(.ssCallout)
                                     Spacer()
                                     Text(Date.getDayAndMonthFrom(date: order.orderDate))
-                                        .font(.system(size: 20, weight: .semibold, design: .rounded))
+                                        .font(.ssTitle3)
                                         .foregroundColor(.accentColor)
-                                        .padding(.trailing, 20)
                                 }
                                 
-                                Text("\(order.totalCost, specifier: "%.2f")")
-                                    .font(.system(size: 20, weight: .semibold, design: .rounded))
+                                Text("$\(order.totalCost, specifier: "%.2f")")
+                                    .font(.ssTitle3)
                                     .foregroundColor(.accentColor)
                                 
-                                HStack {
-                                    Text("Products:")
-                                        .font(.system(size: 18, weight: .bold, design: .rounded))
-                                    Text("\(order.shoppingCart.products.count)")
-                                        .font(.system(size: 20, weight: .semibold, design: .rounded))
-                                        .foregroundColor(.accentColor)
-                                }
-                                    
-                                HStack {
-                                    Text("Order Status:")
-                                        .font(.system(size: 18, weight: .bold, design: .rounded))
-                                    Text(order.status.rawValue)
-                                        .font(.system(size: 20, weight: .semibold, design: .rounded))
-                                        .foregroundColor(.accentColor)
+                                VStack(alignment: .leading) {
+                                    HStack {
+                                        Text("Products:")
+                                            .font(.ssCallout)
+                                        Text("\(order.shoppingCart.products.count)")
+                                            .font(.ssTitle3)
+                                            .foregroundColor(.accentColor)
+                                    }
+                                        
+                                    HStack {
+                                        Text("Order Status:")
+                                            .font(.ssCallout)
+                                        Text(order.status.rawValue)
+                                            .font(.ssTitle3)
+                                            .foregroundColor(.accentColor)
+                                    }
                                 }
                             }
                             .padding(.vertical)
@@ -54,7 +55,7 @@ struct OrdersView: View {
                     }
                 } header: {
                     Text(stringDate)
-                        .font(.system(size: 24, weight: .bold, design: .rounded))
+                        .font(.ssTitle1)
                         .foregroundColor(.accentColor)
                 }
             }

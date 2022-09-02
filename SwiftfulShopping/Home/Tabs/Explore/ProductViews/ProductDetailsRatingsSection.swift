@@ -13,134 +13,137 @@ struct ProductDetailsRatingsSection: View {
     var product: Product
     
     var body: some View {
-        VStack(alignment: .leading, spacing: 40) {
-            VStack(alignment: .leading) {
-                Text("Product Rating")
-                    .font(.system(size: 20, weight: .bold, design: .rounded))
-                    .padding(.horizontal)
+        ScrollView {
+            VStack(alignment: .leading, spacing: 40) {
+                VStack(alignment: .leading) {
+                    Text("Product Rating")
+                        .font(.ssTitle2)
+                        .padding(.horizontal)
 
-                HStack(spacing: 30) {
-                    VStack(alignment: .center, spacing: 10) {
-                        Text("\(product.rating.averageRating, specifier: "%.2f") / 5")
-                            .font(.system(size: 26, weight: .bold))
-                        HStack {
-                            ForEach(1...Int(round(product.rating.averageRating)), id: \.self) { _ in
-                                Image(systemName: "star.fill")
-                                    .resizable()
-                                    .frame(width: 20, height: 20)
-                                    .foregroundColor(.accentColor)
-                            }
-
-                            ForEach(Int(round(product.rating.averageRating))..<5, id: \.self) { _ in
-                                Image(systemName: "star")
-                                    .resizable()
-                                    .frame(width: 20, height: 20)
-                                    .foregroundColor(.accentColor)
-                            }
-                        }
-                    }
-
-                    HStack {
-                        VStack(spacing: 5) {
-                            ForEach(Array(1...5).reversed(), id: \.self) { number in
-                                Text("\(number)")
-                                    .font(.system(size: 16, weight: .semibold, design: .rounded))
-                            }
-                        }
-
-                        VStack(spacing: 5) {
-                            ForEach(1...5, id: \.self) { _ in
-                                Image(systemName: "star.fill")
-                                    .foregroundColor(.accentColor)
-                            }
-                        }
-
-                        VStack(spacing: 18) {
-                            ForEach(Array(1...5).reversed(), id: \.self) { number in
-                                ZStack(alignment: .leading) {
-                                    RoundedRectangle(cornerRadius: 10)
-                                        .foregroundColor(.ssGray)
-                                        .frame(width: 130, height: 7)
-                                    RoundedRectangle(cornerRadius: 10)
+                    HStack(spacing: 30) {
+                        VStack(alignment: .center, spacing: 10) {
+                            Text("\(product.rating.averageRating, specifier: "%.2f") / 5")
+                                .font(.system(size: 26, weight: .bold))
+                            HStack {
+                                ForEach(1...Int(round(product.rating.averageRating)), id: \.self) { _ in
+                                    Image(systemName: "star.fill")
+                                        .resizable()
+                                        .frame(width: 20, height: 20)
                                         .foregroundColor(.accentColor)
-                                        .frame(width: (130 / CGFloat(product.rating.ratingsNumber)),
-                                               height: 7)
+                                }
+
+                                ForEach(Int(round(product.rating.averageRating))..<5, id: \.self) { _ in
+                                    Image(systemName: "star")
+                                        .resizable()
+                                        .frame(width: 20, height: 20)
+                                        .foregroundColor(.accentColor)
                                 }
                             }
                         }
 
-                        VStack(spacing: 5) {
-                            ForEach(Array(1...5).reversed(), id: \.self) { number in
-                                Text("\(product.rating.productRates.filter { $0.rating == number }.count)")
-                                    .font(.system(size: 16, weight: .bold, design: .rounded))
-                                    .foregroundColor(.ssGray)
+                        HStack {
+                            VStack(spacing: 5) {
+                                ForEach(Array(1...5).reversed(), id: \.self) { number in
+                                    Text("\(number)")
+                                        .font(.ssCallout)
+                                }
+                            }
+
+                            VStack(spacing: 5) {
+                                ForEach(1...5, id: \.self) { _ in
+                                    Image(systemName: "star.fill")
+                                        .foregroundColor(.accentColor)
+                                }
+                            }
+
+                            VStack(spacing: 18) {
+                                ForEach(Array(1...5).reversed(), id: \.self) { number in
+                                    ZStack(alignment: .leading) {
+                                        RoundedRectangle(cornerRadius: 10)
+                                            .foregroundColor(.ssGray)
+                                            .frame(width: 130, height: 7)
+                                        RoundedRectangle(cornerRadius: 10)
+                                            .foregroundColor(.accentColor)
+                                            .frame(width: (130 / CGFloat(product.rating.ratingsNumber)),
+                                                   height: 7)
+                                    }
+                                }
+                            }
+
+                            VStack(spacing: 5) {
+                                ForEach(Array(1...5).reversed(), id: \.self) { number in
+                                    Text("\(product.rating.productRates.filter { $0.rating == number }.count)")
+                                        .font(.ssCallout)
+                                        .foregroundColor(.ssDarkGray)
+                                }
                             }
                         }
                     }
+                    .padding()
+                    .background(.ultraThinMaterial, in: RoundedRectangle(cornerRadius: 15, style: .continuous))
                 }
-                .padding()
-                .background(.ultraThinMaterial, in: RoundedRectangle(cornerRadius: 15, style: .continuous))
-            }
 
-            VStack(alignment: .leading) {
-                HStack {
-                    Text("Comments (\(product.rating.reviewsNumber))")
-                        .font(.system(size: 20, weight: .bold, design: .rounded))
-                        .padding(.leading)
-
+                VStack(alignment: .leading) {
                     Button(action: {
                         ratingsSectionExpanded.toggle()
                     }, label: {
+                        HStack {
+                            Text("Comments (\(product.rating.reviewsNumber))")
+                                .font(.ssTitle3)
+                                .padding(.leading)
+                        }
                         Image(systemName: ratingsSectionExpanded ? "chevron.up" : "chevron.down")
                     })
-                }
 
-                if ratingsSectionExpanded {
-                    ForEach(Array(product.rating.productRates), id: \.self) { productRate in
-                        if productRate.review != nil {
-                            HStack {
-                                HStack(spacing: 0) {
-                                    
-
-                                    VStack(alignment: .leading, spacing: 20) {
-                                        HStack(spacing: 20) {
-                                            Image("blank_profile_image")
-                                                .resizable()
-                                                .aspectRatio(contentMode: .fill)
-                                                .clipShape(Circle())
-                                                .frame(width: 60, height: 60)
+                    if ratingsSectionExpanded {
+                        VStack {
+                            ForEach(Array(product.rating.productRates), id: \.self) { productRate in
+                                if productRate.review != nil {
+                                    HStack {
+                                        HStack(spacing: 0) {
                                             
-                                            VStack(alignment: .leading, spacing: 10) {
-                                                Text(productRate.authorFirstName)
-                                                    .font(.system(size: 18, weight: .bold, design: .rounded))
-                                                    .fixedSize(horizontal: false, vertical: true)
-                                                
-                                                HStack {
-                                                    HStack(spacing: 5) {
-                                                        Image(systemName: "star.fill")
-                                                            .resizable()
-                                                            .frame(width: 20, height: 20)
-                                                            .foregroundColor(.accentColor)
-                                                        Text("\(productRate.rating)")
-                                                            .font(.system(size: 20, weight: .bold, design: .rounded))
+
+                                            VStack(alignment: .leading, spacing: 20) {
+                                                HStack(spacing: 20) {
+                                                    Image("blank_profile_image")
+                                                        .resizable()
+                                                        .aspectRatio(contentMode: .fill)
+                                                        .clipShape(Circle())
+                                                        .frame(width: 60, height: 60)
+                                                    
+                                                    VStack(alignment: .leading, spacing: 10) {
+                                                        Text(productRate.authorFirstName)
+                                                            .font(.ssTitle3)
+                                                            .fixedSize(horizontal: false, vertical: true)
+                                                        
+                                                        HStack {
+                                                            HStack(spacing: 5) {
+                                                                Image(systemName: "star.fill")
+                                                                    .resizable()
+                                                                    .frame(width: 20, height: 20)
+                                                                    .foregroundColor(.accentColor)
+                                                                Text("\(productRate.rating)")
+                                                                    .font(.ssCallout)
+                                                            }
+
+                                                            Text("•")
+                                                                .padding(.horizontal, 5)
+
+                                                            Text(productRate.date.dateString())
+                                                                .font(.ssCallout)
+                                                                .fixedSize(horizontal: true, vertical: false)
+                                                        }
                                                     }
-
-                                                    Text("•")
-                                                        .padding(.horizontal, 5)
-
-                                                    Text(productRate.date.dateString())
-                                                        .font(.system(size: 16, weight: .semibold, design: .rounded))
-                                                        .fixedSize(horizontal: true, vertical: false)
                                                 }
-                                            }
-                                        }
 
-                                        Text(productRate.review!)
-                                            .font(.system(size: 16, weight: .regular, design: .rounded))
-                                            .fixedSize(horizontal: false, vertical: true)
+                                                Text(productRate.review!)
+                                                    .font(.ssBody).fontWeight(.regular)
+                                                    .fixedSize(horizontal: false, vertical: true)
+                                            }
+                                            .padding()
+                                            .background(.ultraThinMaterial, in: RoundedRectangle(cornerRadius: 15, style: .continuous))
+                                        }
                                     }
-                                    .padding()
-                                    .background(.ultraThinMaterial, in: RoundedRectangle(cornerRadius: 15, style: .continuous))
                                 }
                             }
                         }
@@ -148,6 +151,7 @@ struct ProductDetailsRatingsSection: View {
                 }
             }
         }
+        
     }
 }
 

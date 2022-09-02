@@ -49,170 +49,144 @@ struct ProfileView: View {
         NavigationView {
             ScrollView(.vertical, showsIndicators: false) {
                 VStack(alignment: .leading) {
-                    if authStateManager.isGuest {
-                        HStack {
-                            VStack(alignment: .leading, spacing: 6) {
-                                Text("Hello, customer!")
-                                    .font(.system(size: 20, weight: .heavy, design: .rounded))
-                                Text("Please register down below.")
-                                    .font(.system(size: 14, weight: .regular, design: .rounded))
-                                    .foregroundColor(Color(uiColor: .darkGray))
-                                Spacer()
-                            }
+                    HStack {
+                        VStack(alignment: .leading, spacing: 6) {
+                            Text("Hello, \(profileViewModel.profile.firstName)!")
+                                .font(.ssTitle2)
+                            Text("We are happy to see you again.")
+                                .font(.ssCallout)
+                                .foregroundColor(.ssDarkGray)
                             Spacer()
-                            VStack(spacing: 20) {
-                                Image("blank_profile_image")
-                                    .resizable()
-                                    .aspectRatio(contentMode: .fit)
-                                    .clipShape(Circle())
-                                    .frame(width: ScreenBoundsSupplier.shared.getScreenWidth() * 0.2)
-                            }
-                            .padding(.trailing, 20)
                         }
-                        .padding()
-                    } else {
-                        HStack {
-                            VStack(alignment: .leading, spacing: 6) {
-                                Text("Hello, \(profileViewModel.profile.firstName)!")
-                                    .font(.system(size: 20, weight: .heavy, design: .rounded))
-                                Text("We are happy to see you again.")
-                                    .font(.system(size: 14, weight: .regular, design: .rounded))
-                                    .foregroundColor(Color(uiColor: .darkGray))
-                                Spacer()
-                            }
-                            Spacer()
-                            VStack(spacing: 20) {
-                                Image(uiImage: profileViewModel.image)
-                                    .resizable()
-                                    .aspectRatio(contentMode: .fit)
-                                    .clipShape(Circle())
-                                    .frame(width: ScreenBoundsSupplier.shared.getScreenWidth() * 0.2)
-                                
-                                // TODO: Add NavigationLink
-                                Button {
-                                    shouldPresentAddActionSheet = true
-                                } label: {
-                                    Text("Change photo")
-                                        .font(.system(size: 16, weight: .heavy, design: .rounded))
-                                }
-                            }
-                            .padding(.trailing, 20)
-                            .onTapGesture {
+                        Spacer()
+                        VStack(spacing: 20) {
+                            Image(uiImage: profileViewModel.image)
+                                .resizable()
+                                .aspectRatio(contentMode: .fit)
+                                .clipShape(Circle())
+                                .frame(width: ScreenBoundsSupplier.shared.getScreenWidth() * 0.2)
+                            
+                            // TODO: Add NavigationLink
+                            Button {
                                 shouldPresentAddActionSheet = true
+                            } label: {
+                                Text("Change photo")
+                                    .font(.ssButton)
                             }
                         }
-                        .padding()
-                        .padding(.bottom)
-                        
-                        VStack(alignment: .center, spacing: 20) {
-                            ForEach(NavigationViewsNames.allCases, id: \.self) { navigationViewName in
-                                HStack {
-                                    Spacer()
-                                    Button {
-                                        selection = navigationViewName.rawValue
-                                    } label: {
-                                        HStack(spacing: 20) {
-                                            Image(systemName: navigationIconsForNames[navigationViewName]!)
-                                            Text(navigationViewName.rawValue)
-                                                .font(.system(size: 16, weight: .bold, design: .rounded))
-                                        }
-                                        
-                                    }
-                                    .buttonStyle(CustomButton(textColor: .ssWhite, rightChevronNavigationImage: true))
-                                    .frame(width: UIScreen.main.bounds.width * 0.9)
-                                    .contentShape(Rectangle())
-                                    .if(navigationViewName == .help) {
-                                        $0
-                                            .disabled(!networkNanager.isConnected)
-                                    }
-                                    Spacer()
-                                }
-                            }
+                        .padding(.trailing, 20)
+                        .onTapGesture {
+                            shouldPresentAddActionSheet = true
                         }
-                        
-                        VStack(alignment: .center, spacing: 20) {
+                    }
+                    .padding(.bottom)
+                    
+                    VStack(alignment: .center, spacing: 20) {
+                        ForEach(NavigationViewsNames.allCases, id: \.self) { navigationViewName in
                             HStack {
                                 Spacer()
                                 Button {
-                                    withAnimation {
-                                        profileViewModel.shouldPresentSettingsView = true
-                                    }
+                                    selection = navigationViewName.rawValue
                                 } label: {
                                     HStack(spacing: 20) {
-                                        Image(systemName: "gearshape.fill")
-                                        Text("Settings")
-                                            .font(.system(size: 16, weight: .bold, design: .rounded))
+                                        Image(systemName: navigationIconsForNames[navigationViewName]!)
+                                        Text(navigationViewName.rawValue)
+                                            .font(.ssButton)
                                     }
+                                    
                                 }
                                 .buttonStyle(CustomButton(textColor: .ssWhite, rightChevronNavigationImage: true))
-                                .frame(width: UIScreen.main.bounds.width * 0.9)
                                 .contentShape(Rectangle())
-                                Spacer()
-                            }
-                            
-                            HStack {
-                                Spacer()
-                                Button {
-                                    withAnimation {
-                                        authStateManager.logoutCompletely()
-                                    }
-                                } label: {
-                                    Text("Logout")
-                                        .font(.system(size: 16, weight: .bold, design: .rounded))
+                                .if(navigationViewName == .help) {
+                                    $0
+                                        .disabled(!networkNanager.isConnected)
                                 }
-                                .buttonStyle(CustomButton(textColor: .accentColor, onlyStroke: true, strokeColor: .accentColor, imageName: "rectangle.portrait.and.arrow.right", imageColor: .accentColor))
-                                .frame(width: UIScreen.main.bounds.width * 0.9)
-                                .contentShape(Rectangle())
                                 Spacer()
                             }
                         }
-                        .padding(.bottom, 20)
-                        .padding(.top, 90)
-                        
-                        NavigationLink(destination: OrdersView()
-                                                        .environmentObject(authStateManager)
-                                                        .environmentObject(tabBarStateManager)
-                                                        .environmentObject(profileViewModel),
-                                       tag: "Orders",
-                                       selection: $selection) { EmptyView() }
-                        
-                        NavigationLink(destination: ReturnsView()
-                                                        .environmentObject(authStateManager)
-                                                        .environmentObject(tabBarStateManager)
-                                                        .environmentObject(profileViewModel),
-                                       tag: "Returns",
-                                       selection: $selection) { EmptyView() }
-                        
-                        NavigationLink(destination: PersonalInfoView()
-                                                        .environmentObject(authStateManager)
-                                                        .environmentObject(tabBarStateManager)
-                                                        .environmentObject(profileViewModel),
-                                       tag: "Personal Info",
-                                       selection: $selection) { EmptyView() }
-                        
-                        NavigationLink(destination: PaymentDetailsView()
-                                                        .environmentObject(authStateManager)
-                                                        .environmentObject(tabBarStateManager)
-                                                        .environmentObject(profileViewModel),
-                                       tag: "Payment Details",
-                                       selection: $selection) { EmptyView() }
-                        
-                        NavigationLink(destination: HelpView()
-                                                        .environmentObject(authStateManager)
-                                                        .environmentObject(tabBarStateManager)
-                                                        .environmentObject(profileViewModel),
-                                       tag: "Help",
-                                       selection: $selection) { EmptyView() }
-                        
-                        NavigationLink(destination: SettingsView()
-                                                        .environmentObject(authStateManager)
-                                                        .environmentObject(accentColorManager)
-                                                        .environmentObject(tabBarStateManager)
-                                                        .environmentObject(profileViewModel),
-                                       isActive: $profileViewModel.shouldPresentSettingsView,
-                                       label: { EmptyView() })
                     }
+                    
+                    VStack(alignment: .center, spacing: 20) {
+                        HStack {
+                            Spacer()
+                            Button {
+                                withAnimation {
+                                    profileViewModel.shouldPresentSettingsView = true
+                                }
+                            } label: {
+                                HStack(spacing: 20) {
+                                    Image(systemName: "gearshape.fill")
+                                    Text("Settings")
+                                        .font(.ssButton)
+                                }
+                            }
+                            .buttonStyle(CustomButton(textColor: .ssWhite, rightChevronNavigationImage: true))
+                            .contentShape(Rectangle())
+                            Spacer()
+                        }
+                        
+                        HStack {
+                            Spacer()
+                            Button {
+                                withAnimation {
+                                    authStateManager.logoutCompletely()
+                                }
+                            } label: {
+                                Text("Logout")
+                                    .font(.ssButton)
+                            }
+                            .buttonStyle(CustomButton(textColor: .accentColor, onlyStroke: true, strokeColor: .accentColor, imageName: "rectangle.portrait.and.arrow.right", imageColor: .accentColor))
+                            .contentShape(Rectangle())
+                            Spacer()
+                        }
+                    }
+                    .padding(.bottom, 20)
+                    .padding(.top, 90)
+                    
+                    NavigationLink(destination: OrdersView()
+                                                    .environmentObject(authStateManager)
+                                                    .environmentObject(tabBarStateManager)
+                                                    .environmentObject(profileViewModel),
+                                   tag: "Orders",
+                                   selection: $selection) { EmptyView() }
+                    
+                    NavigationLink(destination: ReturnsView()
+                                                    .environmentObject(authStateManager)
+                                                    .environmentObject(tabBarStateManager)
+                                                    .environmentObject(profileViewModel),
+                                   tag: "Returns",
+                                   selection: $selection) { EmptyView() }
+                    
+                    NavigationLink(destination: PersonalInfoView()
+                                                    .environmentObject(authStateManager)
+                                                    .environmentObject(tabBarStateManager)
+                                                    .environmentObject(profileViewModel),
+                                   tag: "Personal Info",
+                                   selection: $selection) { EmptyView() }
+                    
+                    NavigationLink(destination: PaymentDetailsView()
+                                                    .environmentObject(authStateManager)
+                                                    .environmentObject(tabBarStateManager)
+                                                    .environmentObject(profileViewModel),
+                                   tag: "Payment Details",
+                                   selection: $selection) { EmptyView() }
+                    
+                    NavigationLink(destination: HelpView()
+                                                    .environmentObject(authStateManager)
+                                                    .environmentObject(tabBarStateManager)
+                                                    .environmentObject(profileViewModel),
+                                   tag: "Help",
+                                   selection: $selection) { EmptyView() }
+                    
+                    NavigationLink(destination: SettingsView()
+                                                    .environmentObject(authStateManager)
+                                                    .environmentObject(accentColorManager)
+                                                    .environmentObject(tabBarStateManager)
+                                                    .environmentObject(profileViewModel),
+                                   isActive: $profileViewModel.shouldPresentSettingsView,
+                                   label: { EmptyView() })
                 }
+                .padding()
             }
             .navigationTitle("Profile")
             .navigationBarHidden(true)

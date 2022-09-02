@@ -18,20 +18,22 @@ struct ReturnCreationView: View {
     
     var body: some View {
         ScrollView(.vertical, showsIndicators: false) {
-            VStack(alignment: .leading, spacing: 40) {
+            VStack(alignment: .leading, spacing: 30) {
                 StepsView(stepsNumber: 4, activeStep: 1)
                 
                 VStack(alignment: .leading, spacing: 10) {
                     Text("Order ID")
-                        .font(.system(size: 22, weight: .bold, design: .rounded))
+                        .font(.ssTitle2)
                     Text(returnCreationViewModel.orderForReturn?.id ?? "")
-                        .font(.system(size: 20, weight: .semibold, design: .rounded))
+                        .font(.ssTitle3)
                         .foregroundColor(.accentColor)
                 }
                 
-                VStack(alignment: .leading, spacing: 30) {
-                    Text("Choose products you want to return")
-                        .font(.system(size: 22, weight: .bold, design: .rounded))
+                VStack(alignment: .leading, spacing: 20) {
+                    Text("Choose products you want to return:")
+                        .font(.ssTitle2)
+                        .fixedSize(horizontal: false, vertical: true)
+                        .multilineTextAlignment(.leading)
                     ForEach(Array(returnCreationViewModel.orderForReturn?.shoppingCart.products.keys ?? Cart.demoCart.products.keys), id: \.self) { product in
                         Button {
                             withAnimation {
@@ -61,9 +63,9 @@ struct ReturnCreationView: View {
                 
                 HStack {
                     Text("Selected Products:")
-                        .font(.system(size: 22, weight: .bold, design: .rounded))
+                        .font(.ssTitle2)
                     Text("\(returnCreationViewModel.productsForReturn.count)")
-                        .font(.system(size: 20, weight: .semibold, design: .rounded))
+                        .font(.ssTitle2)
                         .foregroundColor(.accentColor)
                 }
                 
@@ -73,13 +75,11 @@ struct ReturnCreationView: View {
                     }
                 } label: {
                     Text("Continue")
-                        .font(.system(size: 20, weight: .bold, design: .rounded))
+                        .font(.ssButton)
                 }
                 .buttonStyle(CustomButton())
                 .disabled(returnCreationViewModel.productsForReturn.isEmpty)
-                .frame(width: UIScreen.main.bounds.width * 0.9)
                 .contentShape(Rectangle())
-                .padding(.bottom, 20)
             }
             .padding()
         }

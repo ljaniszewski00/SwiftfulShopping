@@ -25,112 +25,108 @@ struct OrderCreationChangeAddressView: View {
     
     var body: some View {
         ScrollView(.vertical, showsIndicators: false) {
-            VStack(alignment: .center, spacing: 40) {
-                VStack(alignment: .leading, spacing: 20) {
-                    Text("Choose from existing")
-                        .font(.system(size: 22, weight: .heavy, design: .rounded))
-                    
-                    VStack(alignment: .leading, spacing: 10) {
-                        Text("Address")
-                            .font(.system(size: 16, weight: .bold, design: .rounded))
-                            .foregroundColor(.accentColor)
-                        
-                        SelectionDropdownMenu(selection: $orderCreationViewModel.defaultAddress,
-                                              dataWithImagesToChoose: orderCreationViewModel.addresses,
-                                              includeSearchField: false)
-                    }
-                }
-                
-                Button {
-                    withAnimation {
-                        presentationMode.wrappedValue.dismiss()
-                    }
-                } label: {
-                    Text("Save")
-                        .font(.system(size: 16, weight: .bold, design: .rounded))
-                }
-                .buttonStyle(CustomButton())
-                .contentShape(Rectangle())
-                
-                VStack(alignment: .leading, spacing: 20) {
-                    Text("Create new one")
-                        .font(.system(size: 22, weight: .heavy, design: .rounded))
-                    
+            VStack(alignment: .leading, spacing: 40) {
+                VStack(alignment: .center, spacing: 20) {
                     VStack(alignment: .leading, spacing: 20) {
-                        RectangleCustomTextField(
-                            textFieldProperty: "Street Name",
-                            text: $orderCreationViewModel.newStreetName,
-                            isFocusedParentView: $isStreetNameTextFieldFocused)
+                        Text("Choose from existing")
+                            .font(.ssTitle2)
                         
-                        RectangleCustomTextField(
-                            textFieldProperty: "Street Number",
-                            text: $orderCreationViewModel.newStreetNumber,
-                            isFocusedParentView: $isStreetNumberTextFieldFocused)
-                        
-                        RectangleCustomTextField(
-                            textFieldProperty: "Apartment Number",
-                            textFieldFooter: "This field is optional",
-                            text: $orderCreationViewModel.newApartmentNumber,
-                            isFocusedParentView: $isApartmentNumberTextFieldFocused)
-                        
-                        RectangleCustomTextField(
-                            textFieldProperty: "Postal code",
-                            text: $orderCreationViewModel.newZipCode,
-                            isFocusedParentView: $isZipCodeTextFieldFocused)
-                        
-                        RectangleCustomTextField(
-                            textFieldProperty: "City",
-                            text: $orderCreationViewModel.newCity,
-                            isFocusedParentView: $isCityTextFieldFocused)
-                        
-                        RectangleCustomTextField(
-                            textFieldProperty: "Country",
-                            text: $orderCreationViewModel.newCountry,
-                            isFocusedParentView: $isCountryTextFieldFocused)
-                    }
-                    .padding(.bottom, 15)
-                    
-                    HStack {
-                        Text("Would you like to save this address?")
-                            .font(.system(size: 18, weight: .heavy, design: .rounded))
-                        
-                        Spacer()
-                        
-                        Toggle("", isOn: $orderCreationViewModel.addressToBeSaved)
-                            .toggleStyle(CheckMarkToggleStyle())
-                            .padding(.trailing, 10)
-                    }
-                    
-                    if orderCreationViewModel.addressToBeSaved {
-                        HStack {
-                            Text("Would you like this address to be default?")
-                                .font(.system(size: 18, weight: .heavy, design: .rounded))
+                        VStack(alignment: .leading, spacing: 10) {
+                            Text("Address")
+                                .font(.ssCallout)
+                                .foregroundColor(.accentColor)
                             
-                            Spacer()
-                            
-                            Toggle("", isOn: $orderCreationViewModel.addressToBeDefault)
-                                .toggleStyle(CheckMarkToggleStyle())
-                                .padding(.trailing, 10)
+                            SelectionDropdownMenu(selection: $orderCreationViewModel.defaultAddress,
+                                                  dataWithImagesToChoose: orderCreationViewModel.addresses,
+                                                  includeSearchField: false)
                         }
                     }
+                    
+                    Button {
+                        withAnimation {
+                            presentationMode.wrappedValue.dismiss()
+                        }
+                    } label: {
+                        Text("Save")
+                            .font(.ssButton)
+                    }
+                    .buttonStyle(CustomButton())
+                    .contentShape(Rectangle())
                 }
                 
-                Button {
-                    withAnimation {
-                        let createdAddress = orderCreationViewModel.createNewAddress()
-                        if orderCreationViewModel.addressToBeSaved {
-                            profileViewModel.addNewAddress(address: createdAddress, toBeDefault: orderCreationViewModel.addressToBeDefault)
+                VStack(alignment: .center, spacing: 20) {
+                    VStack(alignment: .leading, spacing: 20) {
+                        Text("Create new one")
+                            .font(.ssTitle2)
+                        
+                        VStack(alignment: .leading, spacing: 20) {
+                            RectangleCustomTextField(
+                                textFieldProperty: "Street Name",
+                                text: $orderCreationViewModel.newStreetName,
+                                isFocusedParentView: $isStreetNameTextFieldFocused)
+                            
+                            RectangleCustomTextField(
+                                textFieldProperty: "Street Number",
+                                text: $orderCreationViewModel.newStreetNumber,
+                                isFocusedParentView: $isStreetNumberTextFieldFocused)
+                            
+                            RectangleCustomTextField(
+                                textFieldProperty: "Apartment Number",
+                                textFieldFooter: "This field is optional",
+                                text: $orderCreationViewModel.newApartmentNumber,
+                                isFocusedParentView: $isApartmentNumberTextFieldFocused)
+                            
+                            RectangleCustomTextField(
+                                textFieldProperty: "Postal code",
+                                text: $orderCreationViewModel.newZipCode,
+                                isFocusedParentView: $isZipCodeTextFieldFocused)
+                            
+                            RectangleCustomTextField(
+                                textFieldProperty: "City",
+                                text: $orderCreationViewModel.newCity,
+                                isFocusedParentView: $isCityTextFieldFocused)
+                            
+                            RectangleCustomTextField(
+                                textFieldProperty: "Country",
+                                text: $orderCreationViewModel.newCountry,
+                                isFocusedParentView: $isCountryTextFieldFocused)
+                        }
+                        .padding(.bottom, 15)
+                        
+                        VStack(alignment: .leading, spacing: 15) {
+                            Text("Would you like to save this address?")
+                                .font(.ssTitle3)
+                            
+                            SingleSelectionToggle(selection: $orderCreationViewModel.addressToBeSaved)
                         }
                         
-                        presentationMode.wrappedValue.dismiss()
+                        if orderCreationViewModel.addressToBeSaved {
+                            VStack(alignment: .leading, spacing: 15) {
+                                Text("Would you like this address to be default?")
+                                    .font(.ssTitle3)
+                                
+                                SingleSelectionToggle(selection: $orderCreationViewModel.addressToBeDefault)
+                            }
+                        }
                     }
-                } label: {
-                    Text("Add new address")
-                        .font(.system(size: 16, weight: .bold, design: .rounded))
+                    
+                    Button {
+                        withAnimation {
+                            let createdAddress = orderCreationViewModel.createNewAddress()
+                            if orderCreationViewModel.addressToBeSaved {
+                                profileViewModel.addNewAddress(address: createdAddress, toBeDefault: orderCreationViewModel.addressToBeDefault)
+                            }
+                            
+                            presentationMode.wrappedValue.dismiss()
+                        }
+                    } label: {
+                        Text("Add new address")
+                            .font(.ssButton)
+                    }
+                    .buttonStyle(CustomButton())
+                    .contentShape(Rectangle())
+                    .disabled(orderCreationViewModel.newAddressFieldsNotValidated)
                 }
-                .buttonStyle(CustomButton())
-                .contentShape(Rectangle())
-                .disabled(orderCreationViewModel.newAddressFieldsNotValidated)
             }
             .padding()
         }

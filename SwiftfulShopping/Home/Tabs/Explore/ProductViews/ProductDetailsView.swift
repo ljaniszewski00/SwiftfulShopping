@@ -47,19 +47,19 @@ struct ProductDetailsView: View {
 
                     VStack(alignment: .center, spacing: 15) {
                         Text(product.company)
-                            .font(.system(size: 14, weight: .regular, design: .rounded))
-                            .foregroundColor(.ssGray)
+                            .font(.ssTitle3)
+                            .foregroundColor(.ssDarkGray)
                         Text(product.name)
-                            .font(.system(size: 22, weight: .heavy, design: .rounded))
+                            .font(.ssTitle1)
                         Text("$\(product.price, specifier: "%.2f")")
-                            .font(.system(size: 20, weight: .bold, design: .rounded))
+                            .font(.ssTitle2)
                             .foregroundColor(.accentColor)
                     }
                     
                     VStack(alignment: .leading, spacing: 30) {
                         HStack {
                             Text(product.productDescription)
-                                .font(.system(size: 18, weight: .regular, design: .rounded))
+                                .font(.ssBody).fontWeight(.semibold)
                             Spacer()
                         }
                         
@@ -100,7 +100,7 @@ struct ProductDetailsView: View {
                         }
                         
                         Text("\(productDetailsViewModel.productQuantityToBasket)")
-                            .font(.system(size: 18, weight: .bold, design: .rounded))
+                            .font(.ssTitle3)
                         
                         Button {
                             withAnimation {
@@ -120,9 +120,10 @@ struct ProductDetailsView: View {
                     cartViewModel.addProductToCart(product: product, quantity: productDetailsViewModel.productQuantityToBasket)
                 } label: {
                     Text("Add to basket")
-                        .font(.system(size: 20, weight: .bold, design: .rounded))
+                        .font(.ssButton)
                 }
                 .buttonStyle(CustomButton())
+                .padding(.horizontal)
             }
             .padding(.bottom, 20)
             .background {

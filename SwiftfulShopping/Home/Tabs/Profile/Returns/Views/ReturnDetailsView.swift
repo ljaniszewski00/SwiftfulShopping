@@ -11,6 +11,7 @@ struct ReturnDetailsView: View {
     @EnvironmentObject private var authStateManager: AuthStateManager
     @EnvironmentObject private var tabBarStateManager: TabBarStateManager
     @EnvironmentObject private var profileViewModel: ProfileViewModel
+    @Environment(\.colorScheme) private var colorScheme: ColorScheme
     
     @State private var showProductsList: Bool = true
     
@@ -18,49 +19,57 @@ struct ReturnDetailsView: View {
     
     var body: some View {
         ScrollView(.vertical, showsIndicators: false) {
-            VStack(alignment: .leading, spacing: 40) {
+            VStack(alignment: .leading, spacing: 30) {
                 VStack(alignment: .leading, spacing: 10) {
                     Text("Return Date")
-                        .font(.system(size: 22, weight: .bold, design: .rounded))
+                        .font(.ssTitle2)
+                        .foregroundColor(colorScheme == .light ? .ssBlack : .ssWhite)
+                    
                     Text(Date.getDayMonthYearFrom(date: userReturn.returnDate))
-                        .font(.system(size: 20, weight: .semibold, design: .rounded))
+                        .font(.ssTitle3)
                         .foregroundColor(.accentColor)
                 }
                 
                 VStack(alignment: .leading, spacing: 10) {
                     Text("Status")
-                        .font(.system(size: 22, weight: .bold, design: .rounded))
+                        .font(.ssTitle2)
+                        .foregroundColor(colorScheme == .light ? .ssBlack : .ssWhite)
                         
                     Text(userReturn.status.rawValue)
-                        .font(.system(size: 20, weight: .semibold, design: .rounded))
+                        .font(.ssTitle3)
                         .foregroundColor(.accentColor)
                 }
                 
-                HStack(spacing: 20) {
-                    Text("Products")
-                        .font(.system(size: 22, weight: .bold, design: .rounded))
-                    
+                VStack(alignment: .leading, spacing: 0) {
                     Button(action: {
                         showProductsList.toggle()
                     }, label: {
-                        Image(systemName: showProductsList ? "chevron.up" : "chevron.down")
+                        HStack(spacing: 20) {
+                            Text("Products (\(userReturn.products.count))")
+                                .font(.ssTitle2)
+                                .foregroundColor(colorScheme == .light ? .ssBlack : .ssWhite)
+                            
+                            Image(systemName: showProductsList ? "chevron.up" : "chevron.down")
+                        }
                     })
-                    .padding(.trailing)
-                }
-                
-                if showProductsList {
-                    ForEach(userReturn.products, id: \.self) { product in
-                        BasicProductTile(product: product)
-                        Divider()
+                    
+                    if showProductsList {
+                        VStack(alignment: .center, spacing: 20) {
+                            ForEach(userReturn.products, id: \.self) { product in
+                                BasicProductTile(product: product)
+                                Divider()
+                            }
+                        }
                     }
                 }
                 
                 VStack(alignment: .leading, spacing: 10) {
                     Text("Total price to be returned")
-                        .font(.system(size: 22, weight: .bold, design: .rounded))
+                        .font(.ssTitle2)
+                        .foregroundColor(colorScheme == .light ? .ssBlack : .ssWhite)
                         
-                    Text("\(userReturn.returnPrice, specifier: "%.2f")")
-                        .font(.system(size: 20, weight: .semibold, design: .rounded))
+                    Text("$\(userReturn.returnPrice, specifier: "%.2f")")
+                        .font(.ssTitle3)
                         .foregroundColor(.accentColor)
                 }
             }

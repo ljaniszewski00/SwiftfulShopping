@@ -43,21 +43,21 @@ struct CartView: View {
                 VStack(alignment: .leading) {
                     HStack {
                         Text("Products in cart:")
-                            .font(.system(size: 16, weight: .regular, design: .rounded))
-                            .foregroundColor(.ssGray)
+                            .font(.ssCallout)
+                            .foregroundColor(.ssDarkGray)
                         
                         Text("\(cartViewModel.cartProductsCount)")
-                            .font(.system(size: 18, weight: .bold, design: .rounded))
+                            .font(.ssTitle3)
                             .foregroundColor(.accentColor)
                     }
                     
                     HStack {
                         Text("Total cost:")
-                            .font(.system(size: 16, weight: .regular, design: .rounded))
-                            .foregroundColor(.ssGray)
+                            .font(.ssCallout)
+                            .foregroundColor(.ssDarkGray)
                         
-                        Text("\(cartViewModel.cartTotalCost, specifier: "%.2f")")
-                            .font(.system(size: 18, weight: .bold, design: .rounded))
+                        Text("$\(cartViewModel.cartTotalCost, specifier: "%.2f")")
+                            .font(.ssTitle3)
                             .foregroundColor(.accentColor)
                     }
                     
@@ -65,12 +65,12 @@ struct CartView: View {
                         cartViewModel.shouldPresentCheckoutFirstView = true
                     } label: {
                         Text("Checkout")
-                            .font(.system(size: 20, weight: .bold, design: .rounded))
+                            .font(.ssButton)
                     }
                     .buttonStyle(CustomButton())
-                    .padding(.bottom, 15)
                     .disabled(cartViewModel.cartIsEmpty)
                 }
+                .padding(.horizontal)
                 .padding(.bottom, 70)
                 
                 NavigationLink(destination: ProductDetailsView(product: cartViewModel.choosenProduct ?? Product.demoProducts[0])
@@ -107,6 +107,7 @@ struct CartView: View {
                         cartViewModel.removeAllProductsFromCart()
                     } label: {
                         Text("Clean cart")
+                            .font(.ssButton)
                     }
                 }
             }

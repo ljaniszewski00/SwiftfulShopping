@@ -19,9 +19,10 @@ struct ForgotPasswordView: View {
         VStack {
             VStack(alignment: .leading, spacing: 20) {
                 Text("Forgot your password?")
-                    .font(.system(size: 24, weight: .semibold, design: .rounded))
+                    .font(.ssTitle1)
                 Text("Please, type your e-mail and we will send you a link so that you can reset the password.")
-                    .font(.system(size: 16, weight: .regular, design: .rounded))
+                    .font(.ssCallout)
+                    .foregroundColor(.ssDarkGray)
             }
             .padding(.bottom)
             
@@ -45,7 +46,7 @@ struct ForgotPasswordView: View {
         }
         .padding()
         .background {
-            Color(uiColor: .secondarySystemBackground).ignoresSafeArea()
+            Color.windowBackground.ignoresSafeArea()
         }
     }
 }

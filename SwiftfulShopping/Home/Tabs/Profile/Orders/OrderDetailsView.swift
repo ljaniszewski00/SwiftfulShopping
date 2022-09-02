@@ -11,6 +11,7 @@ struct OrderDetailsView: View {
     @EnvironmentObject private var authStateManager: AuthStateManager
     @EnvironmentObject private var tabBarStateManager: TabBarStateManager
     @EnvironmentObject private var profileViewModel: ProfileViewModel
+    @Environment(\.colorScheme) private var colorScheme: ColorScheme
     
     @State private var showProductsList: Bool = true
     
@@ -19,70 +20,79 @@ struct OrderDetailsView: View {
     var body: some View {
         VStack {
             ScrollView(.vertical, showsIndicators: false) {
-                VStack(alignment: .leading, spacing: 40) {
+                VStack(alignment: .leading, spacing: 30) {
                     VStack(alignment: .leading, spacing: 10) {
                         Text("Order Date")
-                            .font(.system(size: 22, weight: .bold, design: .rounded))
+                            .font(.ssTitle2)
+                            .foregroundColor(colorScheme == .light ? .ssBlack : .ssWhite)
+                        
                         Text(Date.getDayMonthYearFrom(date: order.orderDate))
-                            .font(.system(size: 20, weight: .semibold, design: .rounded))
+                            .font(.ssTitle3)
                             .foregroundColor(.accentColor)
                     }
                     
-                    HStack(alignment: .top) {
-                        VStack(alignment: .leading, spacing: 15) {
-                            Text("Customer Info")
-                                .font(.system(size: 22, weight: .bold, design: .rounded))
-                            Text(order.client.description)
-                                .font(.system(size: 16, weight: .semibold, design: .rounded))
-                                .foregroundColor(.accentColor)
-                                
-                        }
-                        Spacer()
-                        VStack(alignment: .leading, spacing: 15) {
-                            Text("Address Info")
-                                .font(.system(size: 22, weight: .bold, design: .rounded))
-                            Text(order.shippingAddress.description)
-                                .font(.system(size: 16, weight: .semibold, design: .rounded))
-                                .foregroundColor(.accentColor)
-                                
-                        }
+                    VStack(alignment: .leading, spacing: 10) {
+                        Text("Customer Info")
+                            .font(.ssTitle2)
+                            .foregroundColor(colorScheme == .light ? .ssBlack : .ssWhite)
+                        
+                        Text(order.client.description)
+                            .font(.ssCallout)
+                            .foregroundColor(.accentColor)
+                            
+                    }
+                    
+                    VStack(alignment: .leading, spacing: 10) {
+                        Text("Address Info")
+                            .font(.ssTitle2)
+                            .foregroundColor(colorScheme == .light ? .ssBlack : .ssWhite)
+                        
+                        Text(order.shippingAddress.description)
+                            .font(.ssCallout)
+                            .foregroundColor(.accentColor)
+                            
                     }
                     
                     VStack(alignment: .leading, spacing: 10) {
                         Text("Status")
-                            .font(.system(size: 22, weight: .bold, design: .rounded))
+                            .font(.ssTitle2)
+                            .foregroundColor(colorScheme == .light ? .ssBlack : .ssWhite)
                             
                         Text(order.status.rawValue)
-                            .font(.system(size: 20, weight: .semibold, design: .rounded))
+                            .font(.ssTitle3)
                             .foregroundColor(.accentColor)
                     }
                     .padding(.bottom, 10)
                     
-                    HStack(spacing: 20) {
-                        Text("Products")
-                            .font(.system(size: 22, weight: .bold, design: .rounded))
-                        
+                    VStack(alignment: .leading, spacing: 0) {
                         Button(action: {
                             showProductsList.toggle()
                         }, label: {
-                            Image(systemName: showProductsList ? "chevron.up" : "chevron.down")
+                            HStack(spacing: 20) {
+                                Text("Products (\(order.shoppingCart.products.count))")
+                                    .font(.ssTitle2)
+                                    .foregroundColor(colorScheme == .light ? .ssBlack : .ssWhite)
+                                Image(systemName: showProductsList ? "chevron.up" : "chevron.down")
+                            }
                         })
-                        .padding(.trailing)
-                    }
-                    
-                    if showProductsList {
-                        ForEach(Array(order.shoppingCart.products.keys), id: \.self) { product in
-                            BasicProductTile(product: product)
-                            Divider()
+                        
+                        if showProductsList {
+                            VStack(alignment: .center, spacing: 20) {
+                                ForEach(Array(order.shoppingCart.products.keys).sorted { $0.name > $1.name }, id: \.self) { product in
+                                    BasicProductTile(product: product)
+                                    Divider()
+                                }
+                            }
                         }
                     }
                     
                     VStack(alignment: .leading, spacing: 10) {
                         Text("Total Price")
-                            .font(.system(size: 22, weight: .bold, design: .rounded))
+                            .font(.ssTitle2)
+                            .foregroundColor(colorScheme == .light ? .ssBlack : .ssWhite)
                             
-                        Text("\(order.totalCost, specifier: "%.2f")")
-                            .font(.system(size: 20, weight: .semibold, design: .rounded))
+                        Text("$\(order.totalCost, specifier: "%.2f")")
+                            .font(.ssTitle3)
                             .foregroundColor(.accentColor)
                     }
                 }
@@ -98,10 +108,9 @@ struct OrderDetailsView: View {
                     }
                 } label: {
                     Text("Return product")
-                        .font(.system(size: 20, weight: .bold, design: .rounded))
+                        .font(.ssButton)
                 }
                 .buttonStyle(CustomButton())
-                .frame(width: UIScreen.main.bounds.width * 0.9)
                 .contentShape(Rectangle())
                 
                 Button {
@@ -110,13 +119,12 @@ struct OrderDetailsView: View {
                     }
                 } label: {
                     Text("Rate the order")
-                        .font(.system(size: 20, weight: .bold, design: .rounded))
+                        .font(.ssButton)
                 }
                 .buttonStyle(CustomButton(textColor: .accentColor, onlyStroke: true))
-                .frame(width: UIScreen.main.bounds.width * 0.9)
                 .contentShape(Rectangle())
             }
-            .padding(.bottom, 20)
+            .padding()
             
             NavigationLink(destination: OrderRateView(order: order)
                                             .environmentObject(authStateManager)

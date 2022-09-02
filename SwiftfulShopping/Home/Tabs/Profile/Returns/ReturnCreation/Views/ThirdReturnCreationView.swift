@@ -12,36 +12,42 @@ struct ThirdReturnCreationView: View {
     @EnvironmentObject private var tabBarStateManager: TabBarStateManager
     @EnvironmentObject private var profileViewModel: ProfileViewModel
     @EnvironmentObject private var returnCreationViewModel: ReturnCreationViewModel
+    @Environment(\.colorScheme) private var colorScheme: ColorScheme
     
     var body: some View {
         VStack(alignment: .leading, spacing: 40) {
             StepsView(stepsNumber: 4, activeStep: 3)
             
-            Text("Choose products delivery method")
-                .font(.system(size: 22, weight: .bold, design: .rounded))
-            
-            VStack(alignment: .leading) {
-                ForEach(ShippingMethod.allCases, id: \.self) { shippingMethod in
-                    HStack {
+            VStack(alignment: .leading, spacing: 20) {
+                Text("How do you want to return the product?")
+                    .font(.ssTitle2)
+                
+                VStack(alignment: .leading, spacing: 15) {
+                    ForEach(ShippingMethod.allCases, id: \.self) { shippingMethod in
                         Button(action: {
-                            returnCreationViewModel.shippingMethod = shippingMethod
+                            withAnimation {
+                                returnCreationViewModel.shippingMethod = shippingMethod
+                            }
                         }, label: {
-                            if returnCreationViewModel.shippingMethod == shippingMethod {
-                                Circle()
-                                    .foregroundColor(.accentColor)
-                                    .frame(width: 25)
-                            } else {
-                                Circle()
-                                    .stroke(lineWidth: 3)
-                                    .foregroundColor(.accentColor)
-                                    .frame(width: 25)
+                            HStack(spacing: 15) {
+                                if returnCreationViewModel.shippingMethod == shippingMethod {
+                                    Circle()
+                                        .foregroundColor(.accentColor)
+                                        .frame(width: 25)
+                                } else {
+                                    Circle()
+                                        .stroke(lineWidth: 3)
+                                        .foregroundColor(.accentColor)
+                                        .frame(width: 25)
+                                }
+                                
+                                Text(shippingMethod.rawValue)
+                                    .font(.ssTitle3)
+                                    .foregroundColor(colorScheme == .light ? .ssBlack : .ssWhite)
                             }
                         })
-                        
-                        Text(shippingMethod.rawValue)
-                            .font(.system(size: 20, weight: .semibold, design: .rounded))
+                        .frame(height: 30)
                     }
-                    .frame(height: 50)
                 }
             }
             
@@ -56,12 +62,10 @@ struct ThirdReturnCreationView: View {
                 }
             } label: {
                 Text("Create Return")
-                    .font(.system(size: 20, weight: .semibold, design: .rounded))
+                    .font(.ssButton)
             }
             .buttonStyle(CustomButton())
-            .frame(width: UIScreen.main.bounds.width * 0.9)
             .contentShape(Rectangle())
-            .padding(.bottom, 20)
             
             NavigationLink(destination: CompletionReturnCreationView()
                                             .environmentObject(authStateManager)
@@ -71,7 +75,6 @@ struct ThirdReturnCreationView: View {
                            isActive: $returnCreationViewModel.shouldPresentCompletionReturnCreationView) { EmptyView() }
         }
         .padding()
-        .scrollOnOverflow()
         .navigationTitle("Create Return")
     }
 }

@@ -35,17 +35,17 @@ struct ProductTileForCartView: View {
             VStack(alignment: .leading) {
                 VStack(alignment: .leading, spacing: 10) {
                     Text(product.company)
-                        .font(.system(size: 14, weight: .regular, design: .rounded))
-                        .foregroundColor(.ssGray)
+                        .font(.ssCallout)
+                        .foregroundColor(.ssDarkGray)
                         .fixedSize(horizontal: false, vertical: true)
                     
                     Text(product.name)
-                        .font(.system(size: 22, weight: .heavy, design: .rounded))
+                        .font(.ssTitle2)
                         .fixedSize(horizontal: false, vertical: true)
                         .foregroundColor(colorScheme == .light ? .ssBlack : .ssWhite)
                     
                     Text("$\(product.price, specifier: "%.2f")")
-                        .font(.system(size: 20, weight: .bold, design: .rounded))
+                        .font(.ssTitle3)
                         .foregroundColor(.accentColor)
                 }
                 
@@ -65,7 +65,7 @@ struct ProductTileForCartView: View {
                         .buttonStyle(BorderlessButtonStyle())
                         
                         Text("\(cartViewModel.getCartProductCount(product: product))")
-                            .font(.system(size: 22, weight: .heavy, design: .rounded))
+                            .font(.ssTitle3)
                         
                         Button {
                             withAnimation {

@@ -21,7 +21,7 @@ struct RectangleCustomTextField: View {
     var body: some View {
         VStack(alignment: .leading) {
             Text(textFieldProperty)
-                .font(.system(size: 16, weight: .bold, design: .rounded))
+                .font(.ssTitle3)
                 .foregroundColor(.accentColor)
             TextField("", text: $text)
                 .keyboardType(textFieldKeyboardType)
@@ -48,8 +48,8 @@ struct RectangleCustomTextField: View {
                 }
             if !textFieldFooter.isEmpty {
                 Text(textFieldFooter)
-                    .font(.system(size: 15))
-                    .foregroundColor(.ssGray)
+                    .font(.ssCallout)
+                    .foregroundColor(.ssDarkGray)
                     .fixedSize(horizontal: false, vertical: true)
             }
         }

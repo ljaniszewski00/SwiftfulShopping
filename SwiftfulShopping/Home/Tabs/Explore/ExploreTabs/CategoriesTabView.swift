@@ -24,7 +24,7 @@ struct CategoriesTabView: View {
                         }
                     } label: {
                         Text(category.rawValue)
-                            .font(.system(size: 16, weight: .bold, design: .rounded))
+                            .font(.ssButton)
                     }
                     .buttonStyle(CustomButton(textColor: .ssWhite, rightChevronNavigationImage: true))
                     .frame(width: UIScreen.main.bounds.width * 0.9)

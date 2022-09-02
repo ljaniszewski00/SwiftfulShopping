@@ -46,9 +46,12 @@ struct SplashScreenView: View {
 
 struct SplashScreenView_Previews: PreviewProvider {
     static var previews: some View {
+        let accentColorManager: AccentColorManager = AccentColorManager()
+        
         ForEach(ColorScheme.allCases, id: \.self) { colorScheme in
             ForEach(["iPhone 13 Pro Max", "iPhone 8"], id: \.self) { deviceName in
                 SplashScreenView()
+                    .environmentObject(accentColorManager)
                     .preferredColorScheme(colorScheme)
                     .previewDevice(PreviewDevice(rawValue: deviceName))
                     .previewDisplayName("\(deviceName) portrait")

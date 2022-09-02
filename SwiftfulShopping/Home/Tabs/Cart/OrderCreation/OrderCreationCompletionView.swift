@@ -36,34 +36,31 @@ struct OrderCreationCompletionView: View {
                 VStack(alignment: .leading, spacing: 40) {
                     VStack(alignment: .leading, spacing: 10) {
                         Text("You have successfuly placed your order!")
-                            .font(.system(size: 22, weight: .heavy, design: .rounded))
+                            .font(.ssTitle1)
                         
                         Text("Please wait patiently for it to be delivered")
-                            .font(.system(size: 16, weight: .regular, design: .rounded))
-                            .foregroundColor(.ssGray)
+                            .font(.ssCallout)
+                            .foregroundColor(.ssDarkGray)
                     }
                     
-                    VStack(alignment: .leading, spacing: 20) {
-                        HStack(spacing: 15) {
+                    VStack(alignment: .leading, spacing: 30) {
+                        VStack(alignment: .leading, spacing: 10) {
                             Text("Order number:")
-                                .font(.system(size: 22, weight: .heavy, design: .rounded))
-                            Spacer()
+                                .font(.ssTitle2)
                             Text(orderCreationViewModel.createdOrder?.id ?? "")
-                                .font(.system(size: 22, weight: .heavy, design: .rounded))
+                                .font(.ssTitle3)
                                 .foregroundColor(.accentColor)
                         }
                         
-                        HStack(spacing: 15) {
+                        VStack(alignment: .leading, spacing: 10) {
                             Text("Expected delivery date:")
-                                .font(.system(size: 22, weight: .heavy, design: .rounded))
-                            Spacer()
+                                .font(.ssTitle2)
                             Text(orderCreationViewModel.createdOrder?.estimatedDeliveryDate.dateString() ?? "")
-                                .font(.system(size: 22, weight: .heavy, design: .rounded))
+                                .font(.ssTitle3)
                                 .foregroundColor(.accentColor)
                         }
                     }
                 }
-                .padding()
                 
                 Spacer()
                 
@@ -75,11 +72,11 @@ struct OrderCreationCompletionView: View {
                     }
                 } label: {
                     Text("Go back to cart")
-                        .font(.system(size: 20, weight: .bold, design: .rounded))
+                        .font(.ssButton)
                 }
                 .buttonStyle(CustomButton())
-                .padding(.bottom, 15)
             }
+            .padding()
             .navigationTitle("Order placed")
             .navigationBarTitleDisplayMode(.inline)
             .navigationBarBackButtonHidden(true)

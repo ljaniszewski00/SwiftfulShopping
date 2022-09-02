@@ -28,8 +28,8 @@ struct SortingAndFilteringSheetView: View {
                     VStack(alignment: .leading, spacing: 0) {
                         VStack {
                             HStack {
-                                Text("Sorting")
-                                    .font(.system(size: 24, weight: .bold, design: .rounded))
+                                Text("Sort By")
+                                    .font(.ssTitle1)
                                 Spacer()
                                 Button {
                                     withAnimation {
@@ -60,7 +60,7 @@ struct SortingAndFilteringSheetView: View {
                                                 }
                                                 Text(sortingMethod.rawValue)
                                                     .foregroundColor(colorScheme == .light ? .ssBlack : .ssWhite)
-                                                    .font(.system(size: 18, weight: .regular, design: .rounded))
+                                                    .font(.ssTitle3)
                                                 Spacer()
                                             }
                                         }
@@ -74,7 +74,7 @@ struct SortingAndFilteringSheetView: View {
                                 }
                             }
                             .padding()
-                            .background(.ultraThinMaterial, in: RoundedRectangle(cornerRadius: 15, style: .continuous))
+                            .background(.ultraThinMaterial, in: RoundedRectangle(cornerRadius: 5, style: .continuous))
                         }
                     }
                     
@@ -82,7 +82,7 @@ struct SortingAndFilteringSheetView: View {
                         VStack {
                             HStack {
                                 Text("Filter By")
-                                    .font(.system(size: 24, weight: .bold, design: .rounded))
+                                    .font(.ssTitle1)
                                 Spacer()
                                 Button {
                                     withAnimation {
@@ -113,7 +113,7 @@ struct SortingAndFilteringSheetView: View {
                                 }
                             }
                             .padding()
-                            .background(.ultraThinMaterial, in: RoundedRectangle(cornerRadius: 15, style: .continuous))
+                            .background(.ultraThinMaterial, in: RoundedRectangle(cornerRadius: 5, style: .continuous))
                         }
                     }
                     .padding(.bottom)
@@ -122,12 +122,15 @@ struct SortingAndFilteringSheetView: View {
                         sortingAndFilteringViewModel.restoreDefaults(originalProductsArray: exploreViewModel.productsFromRepository, currentProductsArray: &exploreViewModel.changingProductsToBeDisplayed)
                     } label: {
                         Text("Restore Defaults")
-                            .font(.system(size: 20, weight: .bold, design: .rounded))
+                            .font(.ssButton)
                     }
                     .buttonStyle(CustomButton(textColor: .accentColor, onlyStroke: true))
                     .padding(.bottom, sortingAndFilteringViewModel.applyFiltersButtonVisible ? 55 : 0)
                 }
                 .padding()
+            }
+            .background {
+                Color.windowBackground.ignoresSafeArea()
             }
             
             if sortingAndFilteringViewModel.applyFiltersButtonVisible {
@@ -140,7 +143,7 @@ struct SortingAndFilteringSheetView: View {
                     }
                 } label: {
                     Text("Apply")
-                        .font(.system(size: 20, weight: .bold, design: .rounded))
+                        .font(.ssButton)
                 }
                 .buttonStyle(CustomButton())
                 .transition(.move(edge: .bottom))
@@ -162,7 +165,7 @@ struct SortingAndFilteringSheetView: View {
         VStack {
             HStack {
                 Text("Company")
-                    .font(.system(size: 20, weight: .semibold, design: .rounded))
+                    .font(.ssTitle2)
                 Spacer()
                 Button {
                     withAnimation {
@@ -196,7 +199,7 @@ struct SortingAndFilteringSheetView: View {
                         }
                     }
                 }
-                .font(.system(size: 18, weight: .semibold, design: .rounded))
+                .font(.ssTitle3)
             }
         }
     }
@@ -206,7 +209,7 @@ struct SortingAndFilteringSheetView: View {
         VStack {
             HStack {
                 Text("Category")
-                    .font(.system(size: 20, weight: .semibold, design: .rounded))
+                    .font(.ssTitle2)
                 Spacer()
                 Button {
                     withAnimation {
@@ -240,7 +243,7 @@ struct SortingAndFilteringSheetView: View {
                         }
                     }
                 }
-                .font(.system(size: 18, weight: .semibold, design: .rounded))
+                .font(.ssTitle3)
             }
         }
     }
@@ -250,7 +253,7 @@ struct SortingAndFilteringSheetView: View {
         VStack {
             HStack {
                 Text("Price")
-                    .font(.system(size: 20, weight: .semibold, design: .rounded))
+                    .font(.ssTitle2)
                 Spacer()
                 Button {
                     withAnimation {
@@ -287,7 +290,7 @@ struct SortingAndFilteringSheetView: View {
         VStack {
             HStack {
                 Text("Rating")
-                    .font(.system(size: 20, weight: .semibold, design: .rounded))
+                    .font(.ssTitle2)
                 Spacer()
                 Button {
                     withAnimation {
@@ -312,6 +315,7 @@ struct SortingAndFilteringSheetView: View {
                                     sortingAndFilteringViewModel.lowestRatingFilter = starsNumber + 1
                                 } label: {
                                     Image(systemName: "star.fill")
+                                        .foregroundColor(colorScheme == .light ? .ssBlack : .ssWhite)
                                 }
                             }
                             ForEach(sortingAndFilteringViewModel.lowestRatingFilter..<5, id: \.self) { starsNumber in
@@ -319,6 +323,7 @@ struct SortingAndFilteringSheetView: View {
                                     sortingAndFilteringViewModel.lowestRatingFilter = starsNumber + 1
                                 } label: {
                                     Image(systemName: "star")
+                                        .foregroundColor(colorScheme == .light ? .ssBlack : .ssWhite)
                                 }
                             }
                         }
@@ -337,6 +342,7 @@ struct SortingAndFilteringSheetView: View {
                                     sortingAndFilteringViewModel.highestRatingFilter = starsNumber + 1
                                 } label: {
                                     Image(systemName: "star.fill")
+                                        .foregroundColor(colorScheme == .light ? .ssBlack : .ssWhite)
                                 }
                             }
                             ForEach(sortingAndFilteringViewModel.highestRatingFilter..<5, id: \.self) { starsNumber in
@@ -344,6 +350,7 @@ struct SortingAndFilteringSheetView: View {
                                     sortingAndFilteringViewModel.highestRatingFilter = starsNumber + 1
                                 } label: {
                                     Image(systemName: "star")
+                                        .foregroundColor(colorScheme == .light ? .ssBlack : .ssWhite)
                                 }
                             }
                         }

@@ -28,20 +28,23 @@ struct OrderCreationShipmentPaymentView: View {
                 VStack(alignment: .leading, spacing: 30) {
                     VStack(alignment: .leading, spacing: 5) {
                         Text("Consignee Data")
-                            .font(.system(size: 22, weight: .bold, design: .rounded))
+                            .font(.ssTitle2)
                         
                         Text("This will be the delivery addres for package")
-                            .font(.system(size: 16, weight: .regular, design: .rounded))
-                            .foregroundColor(.ssGray)
-                            .padding(.bottom, 10)
+                            .font(.ssCallout)
+                            .foregroundColor(.ssDarkGray)
+                            .padding(.bottom, 15)
                         
                         HStack(alignment: .bottom) {
-                            VStack(alignment: .leading) {
+                            VStack(alignment: .leading, spacing: 5) {
                                 HStack(spacing: 5) {
                                     Text(profileViewModel.profile.firstName)
+                                        .font(.ssTitle3)
                                     Text(profileViewModel.profile.lastName)
+                                        .font(.ssTitle3)
                                 }
                                 Text(orderCreationViewModel.defaultAddress)
+                                    .font(.ssCallout).fontWeight(.regular)
                             }
                             
                             Spacer()
@@ -52,23 +55,23 @@ struct OrderCreationShipmentPaymentView: View {
                                 }
                             } label: {
                                 Text("Change address")
-                                    .font(.system(size: 20, weight: .bold, design: .rounded))
+                                    .font(.ssButton)
                             }
                         }
                     }
                     
-                    VStack(alignment: .leading, spacing: 15) {
+                    VStack(alignment: .leading, spacing: 20) {
                         Text("Choose delivery method")
-                            .font(.system(size: 22, weight: .bold, design: .rounded))
+                            .font(.ssTitle2)
                         
-                        VStack(alignment: .leading) {
+                        VStack(alignment: .leading, spacing: 15) {
                             ForEach(ShippingMethod.allCases, id: \.self) { shippingMethod in
-                                HStack {
-                                    Button(action: {
-                                        withAnimation {
-                                            orderCreationViewModel.choosenShippingMethod = shippingMethod
-                                        }
-                                    }, label: {
+                                Button(action: {
+                                    withAnimation {
+                                        orderCreationViewModel.choosenShippingMethod = shippingMethod
+                                    }
+                                }, label: {
+                                    HStack(spacing: 15) {
                                         if orderCreationViewModel.choosenShippingMethod == shippingMethod {
                                             Circle()
                                                 .foregroundColor(.accentColor)
@@ -79,28 +82,28 @@ struct OrderCreationShipmentPaymentView: View {
                                                 .foregroundColor(.accentColor)
                                                 .frame(width: 25)
                                         }
-                                    })
-                                    
-                                    Text(shippingMethod.rawValue)
-                                        .font(.system(size: 20, weight: .regular, design: .rounded))
-                                }
-                                .frame(height: 50)
+                                        
+                                        Text(shippingMethod.rawValue)
+                                            .font(.ssTitle3)
+                                            .foregroundColor(colorScheme == .light ? .ssBlack : .ssWhite)
+                                    }
+                                })
                             }
                         }
                     }
                     
-                    VStack(alignment: .leading, spacing: 15) {
+                    VStack(alignment: .leading, spacing: 20) {
                         Text("Choose payment method:")
-                            .font(.system(size: 22, weight: .bold, design: .rounded))
+                            .font(.ssTitle2)
                         
-                        VStack(alignment: .leading) {
+                        VStack(alignment: .leading, spacing: 15) {
                             ForEach(PaymentMethod.allCases, id: \.self) { paymentMethod in
-                                HStack {
-                                    Button(action: {
-                                        withAnimation {
-                                            orderCreationViewModel.choosenPaymentMethod = paymentMethod
-                                        }
-                                    }, label: {
+                                Button(action: {
+                                    withAnimation {
+                                        orderCreationViewModel.choosenPaymentMethod = paymentMethod
+                                    }
+                                }, label: {
+                                    HStack(spacing: 15) {
                                         if orderCreationViewModel.choosenPaymentMethod == paymentMethod {
                                             Circle()
                                                 .foregroundColor(.accentColor)
@@ -111,65 +114,21 @@ struct OrderCreationShipmentPaymentView: View {
                                                 .foregroundColor(.accentColor)
                                                 .frame(width: 25)
                                         }
-                                    })
-                                    
-                                    Text(paymentMethod.rawValue)
-                                        .font(.system(size: 20, weight: .regular, design: .rounded))
-                                }
-                                .frame(height: 50)
+                                        
+                                        Text(paymentMethod.rawValue)
+                                            .font(.ssTitle3)
+                                            .foregroundColor(colorScheme == .light ? .ssBlack : .ssWhite)
+                                    }
+                                })
                             }
                         }
                     }
                     
                     VStack(alignment: .leading) {
                         Text("Would you like to receive invoice?")
-                            .font(.system(size: 22, weight: .bold, design: .rounded))
+                            .font(.ssTitle2)
                         
-                        HStack {
-                            Button(action: {
-                                withAnimation {
-                                    orderCreationViewModel.toReceiveInvoice = true
-                                }
-                            }, label: {
-                                if orderCreationViewModel.toReceiveInvoice {
-                                    Circle()
-                                        .foregroundColor(.accentColor)
-                                        .frame(width: 25)
-                                } else {
-                                    Circle()
-                                        .stroke(lineWidth: 3)
-                                        .foregroundColor(.accentColor)
-                                        .frame(width: 25)
-                                }
-                            })
-                            
-                            Text("Yes")
-                                .font(.system(size: 20, weight: .regular, design: .rounded))
-                        }
-                        .frame(height: 50)
-                        
-                        HStack {
-                            Button(action: {
-                                withAnimation {
-                                    orderCreationViewModel.toReceiveInvoice = false
-                                }
-                            }, label: {
-                                if !orderCreationViewModel.toReceiveInvoice {
-                                    Circle()
-                                        .foregroundColor(.accentColor)
-                                        .frame(width: 25)
-                                } else {
-                                    Circle()
-                                        .stroke(lineWidth: 3)
-                                        .foregroundColor(.accentColor)
-                                        .frame(width: 25)
-                                }
-                            })
-                            
-                            Text("No")
-                                .font(.system(size: 20, weight: .regular, design: .rounded))
-                        }
-                        .frame(height: 50)
+                        SingleSelectionToggle(selection: $orderCreationViewModel.toReceiveInvoice)
                     }
                 }
                 .padding()
@@ -179,10 +138,10 @@ struct OrderCreationShipmentPaymentView: View {
                 orderCreationViewModel.shouldPresentOrderCreationSummaryView = true
             } label: {
                 Text("Summary")
-                    .font(.system(size: 20, weight: .bold, design: .rounded))
+                    .font(.ssButton)
             }
             .buttonStyle(CustomButton())
-            .padding(.bottom, 15)
+            .padding()
             .disabled(orderCreationViewModel.cannotProceedToSummaryView)
             
             NavigationLink(destination: OrderCreationSummaryView()

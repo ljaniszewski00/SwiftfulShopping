@@ -23,7 +23,9 @@ struct SingleProductRatingView: View {
                     
                     VStack(alignment: .leading, spacing: 15) {
                         Text("How do you find the product?")
-                            .font(.system(size: 22, weight: .heavy, design: .rounded))
+                            .font(.ssTitle2)
+                            .fixedSize(horizontal: false, vertical: true)
+                            .multilineTextAlignment(.leading)
                         
                         HStack {
                             ForEach(1...5, id: \.self) { starNumber in
@@ -43,7 +45,9 @@ struct SingleProductRatingView: View {
                     
                     VStack(alignment: .leading) {
                         Text("Please, write a few words about it.")
-                            .font(.system(size: 22, weight: .heavy, design: .rounded))
+                            .font(.ssTitle2)
+                            .fixedSize(horizontal: false, vertical: true)
+                            .multilineTextAlignment(.leading)
                         
                         VStack(alignment: .trailing, spacing: 5) {
                             TextEditor(text: $ratingViewModel.textForRating)
@@ -56,8 +60,8 @@ struct SingleProductRatingView: View {
                                 .border(Color.accentColor)
                             
                             Text("\(ratingViewModel.textForRating.count) / 300")
-                                .font(.system(size: 16, design: .rounded))
-                                .foregroundColor(ratingViewModel.ratingTextTooLong ? .red : .ssGray)
+                                .font(.ssCallout)
+                                .foregroundColor(ratingViewModel.ratingTextTooLong ? .red : .ssDarkGray)
                         }
                     }
                     
@@ -69,7 +73,7 @@ struct SingleProductRatingView: View {
                         }
                     } label: {
                         Text("Add opinion")
-                            .font(.system(size: 20, weight: .bold, design: .rounded))
+                            .font(.ssButton)
                     }
                     .buttonStyle(CustomButton(textColor: .ssWhite))
                     .disabled(ratingViewModel.cannotAddOpinion)

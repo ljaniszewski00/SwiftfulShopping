@@ -43,7 +43,7 @@ struct ProductRecognizerView: View {
                                 searchViewModel.shouldPresentImagePicker = true
                             } label: {
                                 Text("Choose other image")
-                                    .font(.system(size: 18, weight: .semibold, design: .rounded))
+                                    .font(.ssTitle3)
                             }
                         }
                         .padding()
@@ -64,7 +64,7 @@ struct ProductRecognizerView: View {
                             }
                         } label: {
                             Text("Recognize")
-                                .font(.system(size: 20, weight: .bold, design: .rounded))
+                                .font(.ssButton)
                         }
                         .buttonStyle(CustomButton())
                         
@@ -81,7 +81,7 @@ struct ProductRecognizerView: View {
                             }
                         } label: {
                             Text(productRecognizer.sourceForImageRecognition == .camera ? "Use Photo Library" : "Use Camera")
-                                .font(.system(size: 20, weight: .bold, design: .rounded))
+                                .font(.ssButton)
                         }
                         .buttonStyle(CustomButton(textColor: .accentColor, onlyStroke: true))
                     }
@@ -104,11 +104,11 @@ struct ProductRecognizerView: View {
             VStack(alignment: .center, spacing: 40) {
                 VStack(alignment: .center, spacing: 20) {
                     Text("Recognition Results")
-                        .font(.system(size: 24, weight: .bold, design: .rounded))
+                        .font(.ssTitle1)
                     
                     Text("Choose one of them to search for such product or try to recognize the product again")
-                        .font(.system(size: 18, weight: .semibold, design: .rounded))
-                        .foregroundColor(.ssGray)
+                        .font(.ssTitle3)
+                        .foregroundColor(.ssDarkGray)
                         .fixedSize(horizontal: false, vertical: true)
                 }
                 LazyVGrid(columns: gridColumns, alignment: .leading, spacing: 10) {
@@ -127,7 +127,7 @@ struct ProductRecognizerView: View {
                         }
                     }
                 }
-                .font(.system(size: 18, weight: .semibold, design: .rounded))
+                .font(.ssCallout)
                 
                 Spacer()
                 
@@ -137,7 +137,7 @@ struct ProductRecognizerView: View {
                     }
                 } label: {
                     Text("Try again")
-                        .font(.system(size: 20, weight: .bold, design: .rounded))
+                        .font(.ssButton)
                 }
                 .buttonStyle(CustomButton(textColor: .accentColor, onlyStroke: true))
             }
@@ -182,10 +182,10 @@ struct ProductRecognizerView: View {
                 
                 VStack(spacing: 15) {
                     Text("Recognizing Product")
-                        .font(.system(size: 20, weight: .bold, design: .rounded))
+                        .font(.ssTitle3)
                     
                     Text("Please wait a few seconds...")
-                        .font(.system(size: 18, weight: .regular, design: .rounded))
+                        .font(.ssCallout)
                 }
                 .padding(.bottom)
             }

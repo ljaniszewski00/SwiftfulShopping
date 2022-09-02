@@ -43,7 +43,7 @@ struct ExploreView: View {
                                 HStack {
                                     ForEach(ExploreViewTabs.allCases, id: \.self) { tabName in
                                         Text(tabName.rawValue)
-                                            .font(.system(size: 16, weight: .bold, design: .rounded))
+                                            .font(.ssButton)
                                             .foregroundColor(colorScheme == .light ? .ssBlack : .ssWhite)
                                             .padding()
                                             .if(tabName == exploreViewModel.selectedTab) {
@@ -82,7 +82,7 @@ struct ExploreView: View {
                                                                 .frame(width: 17, height: 17)
                                                                 .foregroundColor(.red)
                                                             Text(String(sortingAndFilteringViewModel.numberOfFiltersApplied))
-                                                                .font(.system(size: 14, weight: .regular, design: .rounded))
+                                                                .font(.ssBody)
                                                                 .foregroundColor(.ssWhite)
                                                         }
                                                         .offset(x: 17, y: -17)
@@ -97,7 +97,7 @@ struct ExploreView: View {
                                                 .frame(width: 25, height: 25)
                                                 .foregroundColor(.accentColor)
                                             Text(exploreViewModel.displayedCategory?.rawValue ?? "")
-                                                .font(.system(size: 16, weight: .bold, design: .rounded))
+                                                .font(.ssCallout)
                                         }
                                         .onTapGesture {
                                             withAnimation {

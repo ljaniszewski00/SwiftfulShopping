@@ -26,7 +26,7 @@ struct SecondReturnCreationView: View {
                 StepsView(stepsNumber: 4, activeStep: 2)
                 
                 Text("Provide bank account data to get your money back")
-                    .font(.system(size: 22, weight: .bold, design: .rounded))
+                    .font(.ssTitle2)
                 
                 VStack(spacing: 20) {
                     RectangleCustomTextField(
@@ -67,12 +67,10 @@ struct SecondReturnCreationView: View {
                     }
                 } label: {
                     Text("Continue")
-                        .font(.system(size: 20, weight: .bold, design: .rounded))
+                        .font(.ssButton)
                 }
                 .buttonStyle(CustomButton())
-                .frame(width: UIScreen.main.bounds.width * 0.9)
                 .contentShape(Rectangle())
-                .padding(.bottom, 20)
                 .disabled(returnCreationViewModel.fieldsNotValidated)
             }
             .padding()
