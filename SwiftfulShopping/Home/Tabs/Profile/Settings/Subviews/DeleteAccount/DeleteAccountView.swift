@@ -40,7 +40,7 @@ struct DeleteAccountView: View {
                         }
                     } label: {
                         Text("Delete Account")
-                            .font(.system(size: 20, weight: .bold, design: .rounded))
+                            .font(.ssButton)
                     }
                     .buttonStyle(CustomButton())
                     .padding(.bottom, 30)

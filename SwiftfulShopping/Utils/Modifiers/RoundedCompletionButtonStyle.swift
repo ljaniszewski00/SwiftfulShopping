@@ -27,12 +27,12 @@ struct RoundedCompletionButtonStyle: ButtonStyle {
 
             if actionCompleted {
                 Text(actionCompletedText)
-                    .font(.system(size: 16, weight: .bold, design: .rounded))
+                    .font(.ssButton)
                     .foregroundColor(.accentColor)
                     .padding()
             } else {
                 configuration.label
-                    .font(.system(size: 16, weight: .bold, design: .rounded))
+                    .font(.ssButton)
                     .foregroundColor(colorScheme == .light ? .ssBlack : .ssWhite)
                     .padding()
             }

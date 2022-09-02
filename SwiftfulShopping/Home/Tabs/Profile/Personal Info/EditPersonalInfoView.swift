@@ -45,7 +45,7 @@ struct EditPersonalInfoView: View {
                     }
                 } label: {
                     Text("Save")
-                        .font(.system(size: 20, weight: .bold, design: .rounded))
+                        .font(.ssButton)
                 }
                 .buttonStyle(CustomButton())
                 .contentShape(Rectangle())

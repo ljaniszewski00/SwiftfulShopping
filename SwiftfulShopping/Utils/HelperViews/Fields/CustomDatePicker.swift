@@ -391,7 +391,7 @@ struct CustomDatePicker: View {
                             ZStack {
                                 RoundedRectangle(cornerRadius: 5)
                                 Text("Pick Today")
-                                    .font(.system(size: 20, weight: .semibold, design: .rounded))
+                                    .font(.system(size: 18, weight: .semibold, design: .rounded))
                                     .foregroundColor(colorScheme == .light ? .ssBlack : .ssWhite)
                             }
                         }

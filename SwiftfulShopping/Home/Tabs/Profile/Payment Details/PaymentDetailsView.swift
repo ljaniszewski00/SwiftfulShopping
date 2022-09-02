@@ -11,6 +11,7 @@ struct PaymentDetailsView: View {
     @EnvironmentObject private var authStateManager: AuthStateManager
     @EnvironmentObject private var tabBarStateManager: TabBarStateManager
     @EnvironmentObject private var profileViewModel: ProfileViewModel
+    @Environment(\.colorScheme) private var colorScheme: ColorScheme
     
     @StateObject private var paymentDetailsViewModel: PaymentDetailsViewModel = PaymentDetailsViewModel()
     
@@ -19,9 +20,10 @@ struct PaymentDetailsView: View {
     
     var body: some View {
         ScrollView(.vertical, showsIndicators: false) {
-            VStack(alignment: .leading, spacing: 15) {
+            VStack(alignment: .leading, spacing: 25) {
                 Text("Choose default payment method:")
-                    .font(.system(size: 22, weight: .bold, design: .rounded))
+                    .font(.ssTitle1)
+                    .fixedSize(horizontal: false, vertical: true)
                 
                 VStack(alignment: .leading, spacing: 20) {
                     ForEach(PaymentMethod.allCases, id: \.self) { paymentMethod in
@@ -29,26 +31,27 @@ struct PaymentDetailsView: View {
                             Button(action: {
                                 profileViewModel.changeDefaultPaymentMethod(newDefaultPaymentMethod: paymentMethod)
                             }, label: {
-                                if profileViewModel.profile.defaultPaymentMethod == paymentMethod {
-                                    Circle()
-                                        .foregroundColor(.accentColor)
-                                        .frame(width: 25)
-                                } else {
-                                    Circle()
-                                        .stroke(lineWidth: 3)
-                                        .foregroundColor(.accentColor)
-                                        .frame(width: 25)
+                                HStack(spacing: 15) {
+                                    if profileViewModel.profile.defaultPaymentMethod == paymentMethod {
+                                        Circle()
+                                            .foregroundColor(.accentColor)
+                                            .frame(width: 25)
+                                    } else {
+                                        Circle()
+                                            .stroke(lineWidth: 3)
+                                            .foregroundColor(.accentColor)
+                                            .frame(width: 25)
+                                    }
+                                    
+                                    Text(paymentMethod.rawValue)
+                                        .font(.ssTitle3)
+                                        .foregroundColor(colorScheme == .light ? .ssBlack : .ssWhite)
+                                    if paymentMethod == .applePay {
+                                        Image("apple_pay_logo")
+                                            .resizable()
+                                    }
                                 }
                             })
-                            
-                            HStack {
-                                Text(paymentMethod.rawValue)
-                                    .font(.system(size: 20, weight: .regular, design: .rounded))
-                                if paymentMethod == .applePay {
-                                    Image("apple_pay_logo")
-                                        .resizable()
-                                }
-                            }
                         }
                         
                         if paymentMethod == .creditCard && profileViewModel.profile.defaultPaymentMethod == .creditCard {
@@ -82,7 +85,7 @@ struct PaymentDetailsView: View {
             VStack(alignment: .leading) {
                 HStack {
                     Text(paymentDetailsViewModel.cardCompany.rawValue)
-                        .font(.system(size: 20, weight: .bold, design: .rounded))
+                        .font(.ssTitle3)
                         .foregroundColor(.ssWhite)
                     Spacer()
                     Image("card_chip")
@@ -103,10 +106,10 @@ struct PaymentDetailsView: View {
                     
                     VStack(alignment: .leading) {
                         Text("CARD HOLDER")
-                            .font(.system(size: 14, weight: .bold, design: .rounded))
+                            .font(.ssCaption1)
                             .foregroundColor(Color.ssGray)
                         Text(paymentDetailsViewModel.cardHolderName)
-                            .font(.system(size: 16, weight: .bold, design: .rounded))
+                            .font(.ssCallout)
                             .foregroundColor(Color.ssWhite)
                         
                     }
@@ -115,17 +118,20 @@ struct PaymentDetailsView: View {
                     
                     VStack(alignment: .leading) {
                         Text("EXPIRES")
-                            .font(.system(size: 14, weight: .bold, design: .rounded))
+                            .font(.ssCaption1)
                             .foregroundColor(Color.ssGray)
                         Text(paymentDetailsViewModel.validThruDate)
-                            .font(.system(size: 16, weight: .bold, design: .rounded))
+                            .font(.ssCallout)
                             .foregroundColor(Color.ssWhite)
                     }
                 }
             }
             .frame(width: ScreenBoundsSupplier.shared.getScreenWidth() * 0.85, height: 210)
             .padding()
-            .background(LinearGradient(gradient: Gradient(colors: [Color(#colorLiteral(red: 0.5481430292, green: 0, blue: 0.4720868468, alpha: 1)), Color.blue]), startPoint: .topLeading, endPoint: .bottomTrailing))
+            .background(LinearGradient(gradient: Gradient(colors: [Color(hex: "#6BC3AA"),
+                                                                   Color(hex: "#A5DFBC")]),
+                                       startPoint: .topLeading,
+                                       endPoint: .bottomTrailing))
             .cornerRadius(15)
             
             Button {
@@ -134,7 +140,7 @@ struct PaymentDetailsView: View {
                 }
             } label: {
                 Text(paymentDetailsViewModel.editingCardData ? "Save" : "Edit Card Data")
-                    .font(.system(size: 20, weight: .bold, design: .rounded))
+                    .font(.ssButton)
             }
             .buttonStyle(CustomButton())
             .contentShape(Rectangle())
@@ -159,7 +165,7 @@ struct PaymentDetailsView: View {
                     
                     VStack(alignment: .leading) {
                         Text("Valid Thru")
-                            .font(.system(size: 16, weight: .bold, design: .rounded))
+                            .font(.ssTitle3)
                             .foregroundColor(.accentColor)
                         
                         CustomDatePicker(includeDayPicking: false,

@@ -25,35 +25,42 @@ struct CompletionReturnCreationView: View {
         } else {
             VStack(alignment: .center) {
                 StepsView(stepsNumber: 4, activeStep: 4)
-                    .padding(.vertical)
+                    .padding(.bottom)
                 
                 VStack(alignment: .leading, spacing: 40) {
                     VStack(alignment: .leading, spacing: 10) {
                         Text("You have successfuly created a return!")
-                            .font(.system(size: 22, weight: .heavy, design: .rounded))
+                            .font(.ssTitle1)
+                            .fixedSize(horizontal: false, vertical: true)
+                            .multilineTextAlignment(.leading)
                         
                         Text("Please wait patiently for hearing from us soon")
-                            .font(.system(size: 16, weight: .regular, design: .rounded))
-                            .foregroundColor(.ssGray)
+                            .font(.ssCallout)
+                            .foregroundColor(.ssDarkGray)
                     }
                     
                     VStack(alignment: .leading, spacing: 10) {
                         Text("Return number")
-                            .font(.system(size: 22, weight: .bold, design: .rounded))
+                            .font(.ssTitle2)
+                            .fixedSize(horizontal: false, vertical: true)
+                            .multilineTextAlignment(.leading)
                         Text(returnCreationViewModel.createdReturn?.id ?? "")
-                            .font(.system(size: 20, weight: .semibold, design: .rounded))
+                            .font(.ssTitle3)
+                            .fixedSize(horizontal: false, vertical: true)
+                            .multilineTextAlignment(.leading)
                             .foregroundColor(.accentColor)
                     }
                     
                     VStack(alignment: .leading, spacing: 10) {
                         Text("Money to be returned:")
-                            .font(.system(size: 22, weight: .bold, design: .rounded))
-                        Text("\(returnCreationViewModel.createdReturn?.returnPrice ?? 0, specifier: "%.2f")")
-                            .font(.system(size: 20, weight: .semibold, design: .rounded))
+                            .font(.ssTitle2)
+                            .fixedSize(horizontal: false, vertical: true)
+                            .multilineTextAlignment(.leading)
+                        Text("$\(returnCreationViewModel.createdReturn?.returnPrice ?? 0, specifier: "%.2f")")
+                            .font(.ssTitle3)
                             .foregroundColor(.accentColor)
                     }
                 }
-                .padding()
                 
                 Spacer()
                 
@@ -63,11 +70,11 @@ struct CompletionReturnCreationView: View {
                     }
                 } label: {
                     Text("Close")
-                        .font(.system(size: 20, weight: .bold, design: .rounded))
+                        .font(.ssButton)
                 }
                 .buttonStyle(CustomButton())
-                .padding(.bottom, 15)
             }
+            .padding()
             .navigationTitle("Return created")
             .navigationBarTitleDisplayMode(.inline)
             .navigationBarBackButtonHidden(true)

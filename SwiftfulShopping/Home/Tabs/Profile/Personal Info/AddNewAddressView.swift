@@ -25,49 +25,47 @@ struct AddNewAddressView: View {
     var body: some View {
         ScrollView(.vertical) {
             VStack(alignment: .center, spacing: 40) {
-                VStack(alignment: .leading, spacing: 20) {
-                    RectangleCustomTextField(
-                        textFieldProperty: "Street Name",
-                        text: $personalInfoViewModel.newStreetName,
-                        isFocusedParentView: $isStreetNameTextFieldFocused)
+                VStack(alignment: .leading, spacing: 40) {
+                    VStack(alignment: .leading, spacing: 20) {
+                        RectangleCustomTextField(
+                            textFieldProperty: "Street Name",
+                            text: $personalInfoViewModel.newStreetName,
+                            isFocusedParentView: $isStreetNameTextFieldFocused)
+                        
+                        RectangleCustomTextField(
+                            textFieldProperty: "Street Number",
+                            text: $personalInfoViewModel.newStreetNumber,
+                            isFocusedParentView: $isStreetNumberTextFieldFocused)
+                        
+                        RectangleCustomTextField(
+                            textFieldProperty: "Apartment Number",
+                            textFieldFooter: "This field is optional",
+                            text: $personalInfoViewModel.newApartmentNumber,
+                            isFocusedParentView: $isApartmentNumberTextFieldFocused)
+                        
+                        RectangleCustomTextField(
+                            textFieldProperty: "Postal code",
+                            text: $personalInfoViewModel.newZipCode,
+                            isFocusedParentView: $isZipCodeTextFieldFocused)
+                        
+                        RectangleCustomTextField(
+                            textFieldProperty: "City",
+                            text: $personalInfoViewModel.newCity,
+                            isFocusedParentView: $isCityTextFieldFocused)
+                        
+                        RectangleCustomTextField(
+                            textFieldProperty: "Country",
+                            text: $personalInfoViewModel.newCountry,
+                            isFocusedParentView: $isCountryTextFieldFocused)
+                    }
                     
-                    RectangleCustomTextField(
-                        textFieldProperty: "Street Number",
-                        text: $personalInfoViewModel.newStreetNumber,
-                        isFocusedParentView: $isStreetNumberTextFieldFocused)
-                    
-                    RectangleCustomTextField(
-                        textFieldProperty: "Apartment Number",
-                        textFieldFooter: "This field is optional",
-                        text: $personalInfoViewModel.newApartmentNumber,
-                        isFocusedParentView: $isApartmentNumberTextFieldFocused)
-                    
-                    RectangleCustomTextField(
-                        textFieldProperty: "Postal code",
-                        text: $personalInfoViewModel.newZipCode,
-                        isFocusedParentView: $isZipCodeTextFieldFocused)
-                    
-                    RectangleCustomTextField(
-                        textFieldProperty: "City",
-                        text: $personalInfoViewModel.newCity,
-                        isFocusedParentView: $isCityTextFieldFocused)
-                    
-                    RectangleCustomTextField(
-                        textFieldProperty: "Country",
-                        text: $personalInfoViewModel.newCountry,
-                        isFocusedParentView: $isCountryTextFieldFocused)
-                    
-                    HStack {
-                        Text("Use as default address")
-                            .font(.system(size: 20, weight: .bold, design: .rounded))
+                    VStack(alignment: .leading, spacing: 10) {
+                        Text("Use as default address?")
+                            .font(.ssTitle2)
                             .fixedSize(horizontal: false, vertical: true)
                             .foregroundColor(.accentColor)
-                        Spacer()
-                        Toggle("", isOn: $personalInfoViewModel.toBeDefaultAddress)
-                            .toggleStyle(CheckMarkToggleStyle())
+                        SingleSelectionToggle(selection: $personalInfoViewModel.toBeDefaultAddress)
                     }
-                    .padding(.top, 20)
-                    
                 }
                 
                 Button {
@@ -77,12 +75,11 @@ struct AddNewAddressView: View {
                     }
                 } label: {
                     Text("Add new address")
-                        .font(.system(size: 20, weight: .bold, design: .rounded))
+                        .font(.ssButton)
                 }
                 .buttonStyle(CustomButton())
                 .contentShape(Rectangle())
                 .disabled(personalInfoViewModel.newAddressFieldsNotValidated)
-                .padding(.bottom, 10)
             }
             .padding()
         }

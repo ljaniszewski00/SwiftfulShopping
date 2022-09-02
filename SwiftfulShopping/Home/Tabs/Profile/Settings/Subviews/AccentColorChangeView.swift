@@ -15,7 +15,7 @@ struct AccentColorChangeView: View {
         VStack {
             HStack {
                 Text("Adjust Theme Color")
-                    .font(.largeTitle)
+                    .font(.ssTitle1)
                     .bold()
                     .foregroundColor(.accentColor)
                     
@@ -47,7 +47,7 @@ struct AccentColorChangeView: View {
             HStack {
                 ColorPicker(selection: $accentColorManager.ownColor) {
                     Text("Add Custom")
-                        .font(.system(size: 22, weight: .bold, design: .rounded))
+                        .font(.ssTitle2)
                 }
                 .onChange(of: accentColorManager.ownColor) { _ in
                     accentColorManager.saveOwnColor()

@@ -43,7 +43,7 @@ struct ChangeEmailView: View {
                         }
                     } label: {
                         Text("Verify Credentials")
-                            .font(.system(size: 20, weight: .bold, design: .rounded))
+                            .font(.ssButton)
                     }
                     .buttonStyle(CustomButton())
                     .padding(.bottom, 30)
@@ -65,7 +65,7 @@ struct ChangeEmailView: View {
                             }
                         } label: {
                             Text("Change Email Address")
-                                .font(.system(size: 20, weight: .bold, design: .rounded))
+                                .font(.ssButton)
                         }
                         .buttonStyle(CustomButton())
                     }

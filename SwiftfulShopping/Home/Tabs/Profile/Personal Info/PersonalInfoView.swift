@@ -32,7 +32,7 @@ struct PersonalInfoView: View {
                     VStack(alignment: .leading, spacing: 40) {
                         VStack(alignment: .leading, spacing: 10) {
                             Text("First Name")
-                                .font(.system(size: 22, weight: .bold, design: .rounded))
+                                .font(.ssTitle2)
                             
                             Button {
                                 shouldPresentEditPersonalInfoView = true
@@ -43,8 +43,8 @@ struct PersonalInfoView: View {
                                         .foregroundColor(.accentColor)
                                     HStack {
                                         Text(profileViewModel.profile.firstName)
-                                            .font(.system(size: 20, weight: .semibold, design: .rounded))
-                                            .foregroundColor(.accentColor)
+                                            .font(.ssTitle3)
+                                            .foregroundColor(colorScheme == .light ? .ssBlack : .ssWhite)
                                             .padding()
                                         Spacer()
                                         Image(systemName: "chevron.right")
@@ -57,7 +57,7 @@ struct PersonalInfoView: View {
                         
                         VStack(alignment: .leading, spacing: 10) {
                             Text("Last Name")
-                                .font(.system(size: 22, weight: .bold, design: .rounded))
+                                .font(.ssTitle2)
                             
                             Button {
                                 shouldPresentEditPersonalInfoView = true
@@ -68,8 +68,8 @@ struct PersonalInfoView: View {
                                         .foregroundColor(.accentColor)
                                     HStack {
                                         Text(profileViewModel.profile.lastName)
-                                            .font(.system(size: 20, weight: .semibold, design: .rounded))
-                                            .foregroundColor(.accentColor)
+                                            .font(.ssTitle3)
+                                            .foregroundColor(colorScheme == .light ? .ssBlack : .ssWhite)
                                             .padding()
                                         Spacer()
                                         Image(systemName: "chevron.right")
@@ -82,7 +82,7 @@ struct PersonalInfoView: View {
                         
                         VStack(alignment: .leading, spacing: 10) {
                             Text("Email Address")
-                                .font(.system(size: 22, weight: .bold, design: .rounded))
+                                .font(.ssTitle2)
                             
                             Button {
                                 shouldPresentEditPersonalInfoView = true
@@ -93,8 +93,8 @@ struct PersonalInfoView: View {
                                         .foregroundColor(.accentColor)
                                     HStack {
                                         Text(profileViewModel.profile.email)
-                                            .font(.system(size: 20, weight: .semibold, design: .rounded))
-                                            .foregroundColor(.accentColor)
+                                            .font(.ssTitle3)
+                                            .foregroundColor(colorScheme == .light ? .ssBlack : .ssWhite)
                                             .padding()
                                         Spacer()
                                         Image(systemName: "chevron.right")
@@ -107,7 +107,7 @@ struct PersonalInfoView: View {
                         
                         VStack(alignment: .leading, spacing: 10) {
                             Text("Address")
-                                .font(.system(size: 22, weight: .bold, design: .rounded))
+                                .font(.ssTitle2)
                             
                             SelectionDropdownMenu(selection: $personalInfoViewModel.defaultAddress,
                                                   dataWithImagesToChoose: personalInfoViewModel.addresses,
@@ -115,6 +115,7 @@ struct PersonalInfoView: View {
                             .onChange(of: personalInfoViewModel.defaultAddress) { newDefaultAddress in
                                 profileViewModel.changeDefaultAddress(addressDescription: newDefaultAddress)
                             }
+                            .padding(.bottom)
                             
                             Button {
                                 withAnimation {
@@ -122,11 +123,10 @@ struct PersonalInfoView: View {
                                 }
                             } label: {
                                 Text("Add New Address")
-                                    .font(.system(size: 20, weight: .bold, design: .rounded))
+                                    .font(.ssButton)
                             }
                             .contentShape(Rectangle())
                             .buttonStyle(CustomButton())
-                            .padding(.vertical, 10)
                         }
                     }
                 }

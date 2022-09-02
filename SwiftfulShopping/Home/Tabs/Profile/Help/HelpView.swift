@@ -19,7 +19,7 @@ struct HelpView: View {
             VStack(alignment: .leading, spacing: 80) {
                 VStack(alignment: .leading, spacing: 30) {
                     Text("Contact Us")
-                        .font(.system(size: 22, weight: .heavy, design: .rounded))
+                        .font(.ssTitle2)
                     VStack(alignment: .trailing, spacing: 20) {
                         RectangleCustomTextField(
                             textFieldProperty: "Email Address",
@@ -39,6 +39,7 @@ struct HelpView: View {
                             }
                         } label: {
                             Text("Contact Us")
+                                .font(.ssButton)
                         }
                         .buttonStyle(RoundedCompletionButtonStyle(actionCompleted: helpViewModel.contactUsButtonClicked, actionCompletedText: "Wait until We contact You"))
                         .contentShape(Rectangle())
@@ -48,7 +49,7 @@ struct HelpView: View {
                 
                 VStack(alignment: .leading, spacing: 30) {
                     Text("Subscribe to Newsletter")
-                        .font(.system(size: 22, weight: .heavy, design: .rounded))
+                        .font(.ssTitle2)
                     VStack(alignment: .trailing, spacing: 20) {
                         RectangleCustomTextField(
                             textFieldProperty: "Email Address",
@@ -62,6 +63,7 @@ struct HelpView: View {
                             }
                         } label: {
                             Text("Subscribe")
+                                .font(.ssButton)
                         }
                         .buttonStyle(RoundedCompletionButtonStyle(actionCompleted: helpViewModel.signForNewsletterActionClicked, actionCompletedText: "Subscribed"))
                         .contentShape(Rectangle())

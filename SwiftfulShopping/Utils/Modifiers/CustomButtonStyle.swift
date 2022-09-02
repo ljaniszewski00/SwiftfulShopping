@@ -24,7 +24,7 @@ struct CustomButton: ButtonStyle {
                     .foregroundColor(imageColor)
             }
             configuration.label
-                .font(.system(size: 20, weight: .semibold, design: .rounded))
+                .font(.ssButton)
                 .foregroundColor(textColor)
             if rightChevronNavigationImage {
                 Spacer()
