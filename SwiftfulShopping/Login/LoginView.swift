@@ -158,12 +158,11 @@ struct LoginView: View {
         } label: {
             ZStack {
                 RoundedRectangle(cornerRadius: 5)
-                    .foregroundColor(.ssDarkBlue)
+                    .foregroundColor(Color(hex: "#1977F2"))
                 HStack {
                     Image(uiImage: UIImage(named: "facebook_logo")!)
                         .resizable()
                         .frame(width: 25, height: 25)
-                        .clipShape(Circle())
                     Spacer()
                     Text("Sign in with Facebook")
                         .font(.ssButton)
@@ -187,7 +186,6 @@ struct LoginView: View {
                     Image(uiImage: UIImage(named: "github_logo")!)
                         .resizable()
                         .frame(width: 25, height: 25)
-                        .clipShape(Circle())
                     Spacer()
                     Text("Sign in with GitHub")
                         .font(.ssButton)
