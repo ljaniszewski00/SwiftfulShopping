@@ -51,7 +51,7 @@ struct LoginView: View {
                                 HStack {
                                     Spacer()
                                     Text("Forgot password?")
-                                        .font(.ssBody)
+                                        .font(.ssBody).fontWeight(.semibold)
                                         .foregroundColor(.accentColor)
                                         .onTapGesture {
                                             showForgotPasswordSheet = true
@@ -82,7 +82,7 @@ struct LoginView: View {
                                             .environmentObject(contentViewModel)
                                     } label: {
                                         Text("Register here")
-                                            .font(.ssBody)
+                                            .font(.ssBody).fontWeight(.semibold)
                                             .foregroundColor(.accentColor)
                                     }
                                 }
