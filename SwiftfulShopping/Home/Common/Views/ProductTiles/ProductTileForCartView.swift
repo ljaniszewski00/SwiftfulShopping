@@ -48,36 +48,18 @@ struct ProductTileForCartView: View {
                         .font(.ssTitle3)
                         .foregroundColor(.accentColor)
                 }
+                .padding(.bottom)
                 
                 Spacer()
                 
                 if includeButtonsForAmountChange {
-                    HStack(spacing: 20) {
-                        Button {
-                            withAnimation {
-                                cartViewModel.removeProductFromCart(product: product, quantity: 1)
-                            }
-                        } label: {
-                            Image(systemName: "minus.square.fill")
-                                .resizable()
-                                .frame(width: 30, height: 30)
-                        }
-                        .buttonStyle(BorderlessButtonStyle())
-                        
-                        Text("\(cartViewModel.getCartProductCount(product: product))")
-                            .font(.ssTitle3)
-                        
-                        Button {
-                            withAnimation {
-                                cartViewModel.addProductToCart(product: product, quantity: 1)
-                            }
-                        } label: {
-                            Image(systemName: "plus.square.fill")
-                                .resizable()
-                                .frame(width: 30, height: 30)
-                        }
-                        .buttonStyle(BorderlessButtonStyle())
-                    }
+                    QuantityInput(quantity: cartViewModel.getCartProductCount(product: product),
+                                  minusAction: {
+                        cartViewModel.removeProductFromCart(product: product, quantity: 1)
+                    },
+                                  plusAction: {
+                        cartViewModel.addProductToCart(product: product, quantity: 1)
+                    })
                 }
             }
             .padding()

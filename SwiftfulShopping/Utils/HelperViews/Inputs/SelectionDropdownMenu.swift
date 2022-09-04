@@ -50,7 +50,7 @@ struct SelectionDropdownMenu: View {
         .background {
             RoundedRectangle(cornerRadius: 5)
                 .stroke(lineWidth: 1)
-                .foregroundColor(.ssGray)
+                .foregroundColor(.ssDarkGray)
         }
     }
     

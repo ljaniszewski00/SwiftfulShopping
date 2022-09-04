@@ -17,6 +17,7 @@ struct Product {
     var unitsSold: Int = 0
     var introducedForSale: Date = Date()
     var isRecommended: Bool = false
+    var keywords: [String] = []
     var rating: ProductRating
     var imagesURLs: [String] = ["https://res.cloudinary.com/drqqwwpen/image/upload/v1596474380/pcs/not-available_g2vsum.jpg"]
 }

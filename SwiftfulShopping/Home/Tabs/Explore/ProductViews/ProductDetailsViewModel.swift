@@ -35,4 +35,14 @@ class ProductDetailsViewModel: ObservableObject {
             self?.fetchingProductImages = false
         })
     }
+    
+    func decreaseProductQuantity(by: Int = 1) {
+        if productQuantityToBasket > 1 {
+            productQuantityToBasket -= 1
+        }
+    }
+    
+    func increaseProductQuantity(by: Int = 1) {
+        productQuantityToBasket += 1
+    }
 }

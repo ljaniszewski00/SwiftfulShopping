@@ -86,32 +86,13 @@ struct ProductDetailsView: View {
                     
                     Spacer()
                     
-                    HStack(spacing: 20) {
-                        Button {
-                            if productDetailsViewModel.productQuantityToBasket > 1 {
-                                withAnimation {
-                                    productDetailsViewModel.productQuantityToBasket -= 1
-                                }
-                            }
-                        } label: {
-                            Image(systemName: "minus.square.fill")
-                                .resizable()
-                                .frame(width: 40, height: 40)
-                        }
-                        
-                        Text("\(productDetailsViewModel.productQuantityToBasket)")
-                            .font(.ssTitle3)
-                        
-                        Button {
-                            withAnimation {
-                                productDetailsViewModel.productQuantityToBasket += 1
-                            }
-                        } label: {
-                            Image(systemName: "plus.square.fill")
-                                .resizable()
-                                .frame(width: 40, height: 40)
-                        }
-                    }
+                    QuantityInput(quantity: productDetailsViewModel.productQuantityToBasket,
+                                  minusAction: {
+                        productDetailsViewModel.decreaseProductQuantity()
+                    },
+                                  plusAction: {
+                        productDetailsViewModel.increaseProductQuantity()
+                    })
                 }
                 .padding()
                 
