@@ -8,18 +8,48 @@
 import Foundation
 
 struct Product {
-    var id: String = UUID().uuidString
+    var id: String
     var name: String
     var company: String
     var productDescription: String
     var category: Category
     var price: Double
-    var unitsSold: Int = 0
-    var introducedForSale: Date = Date()
-    var isRecommended: Bool = false
-    var keywords: [String] = []
+    var unitsSold: Int
+    var introducedForSale: Date
+    var isRecommended: Bool
+    var keywords: [String]
     var rating: ProductRating
-    var imagesURLs: [String] = ["https://res.cloudinary.com/drqqwwpen/image/upload/v1596474380/pcs/not-available_g2vsum.jpg"]
+    var imagesURLs: [String]
+    
+    init(id: String = UUID().uuidString,
+         name: String,
+         company: String,
+         productDescription: String,
+         category: Category,
+         price: Double,
+         unitsSold: Int = 0,
+         introducedForSale: Date = Date(),
+         isRecommended: Bool = false,
+         keywords: [String] = [],
+         rating: ProductRating,
+         imagesURLs: [String] = ["https://res.cloudinary.com/drqqwwpen/image/upload/v1596474380/pcs/not-available_g2vsum.jpg"]) {
+        self.id = id
+        self.name = name
+        self.company = company
+        self.productDescription = productDescription
+        self.category = category
+        self.price = price
+        self.unitsSold = unitsSold
+        self.introducedForSale = introducedForSale
+        self.isRecommended = isRecommended
+        if keywords.isEmpty {
+            self.keywords = [name, company, productDescription]
+        } else {
+            self.keywords = keywords
+        }
+        self.rating = rating
+        self.imagesURLs = imagesURLs
+    }
 }
 
 extension Product: Equatable, Hashable {
