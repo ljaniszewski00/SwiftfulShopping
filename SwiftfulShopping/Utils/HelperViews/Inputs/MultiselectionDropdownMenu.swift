@@ -1,32 +1,32 @@
 //
-//  SelectionDropdownMenu.swift
+//  MultiselectionDropdownMenu.swift
 //  SwiftfulShopping
 //
-//  Created by Łukasz Janiszewski on 27/08/2022.
+//  Created by Łukasz Janiszewski on 04/09/2022.
 //
 
 import SwiftUI
 
-struct SelectionDropdownMenu: View {
+struct MultiselectionDropdownMenu: View {
     @Environment(\.colorScheme) var colorScheme
     
-    @Binding private var selection: String
-    private var dataWithImagesToChoose: [String: String?]
+    @Binding private var dataSelected: [String]
+    private var dataToChoose: [String]
     private var includeSearchField: Bool
     
-    init(selection: Binding<String>,
-         dataWithImagesToChoose: [String: String?],
+    init(dataSelected: Binding<[String]>,
+         dataToChoose: [String],
          includeSearchField: Bool = true) {
-        self._selection = selection
-        self.dataWithImagesToChoose = dataWithImagesToChoose
+        self._dataSelected = dataSelected
+        self.dataToChoose = dataToChoose
         self.includeSearchField = includeSearchField
     }
     
     var elementsNames: [String] {
         if searchText.isEmpty {
-            return Array(dataWithImagesToChoose.keys).sorted(by: >)
+            return dataToChoose.sorted(by: >)
         } else {
-            return Array(dataWithImagesToChoose.keys).sorted(by: >).filter {
+            return dataToChoose.sorted(by: >).filter {
                 $0.lowercased().contains(searchText.lowercased())
             }
         }
@@ -38,7 +38,8 @@ struct SelectionDropdownMenu: View {
     
     var body: some View {
         VStack {
-            buildSelectedElementRow()
+            buildSelectedElementsList()
+                .frame(height: 54)
             
             if isExpanded {
                 VStack(spacing: 0) {
@@ -54,29 +55,34 @@ struct SelectionDropdownMenu: View {
         }
     }
     
-    @ViewBuilder func buildSelectedElementRow() -> some View {
+    @ViewBuilder func buildSelectedElementsList() -> some View {
         Button {
             isExpanded.toggle()
         } label: {
             HStack {
-                HStack(spacing: 20) {
-                    if !elementsNames.isEmpty {
-                        if let dataImage = dataWithImagesToChoose[selection], let imageName = dataImage {
-                            Image(imageName)
+                ScrollView(.horizontal, showsIndicators: false) {
+                    HStack(spacing: 10) {
+                        ForEach(dataSelected, id: \.self) { selected in
+                            Text(selected)
+                                .font(.system(size: 16, weight: .semibold, design: .rounded))
+                                .foregroundColor(colorScheme == .light ? .ssBlack : .ssWhite)
+                                .fixedSize(horizontal: false, vertical: true)
+                                .multilineTextAlignment(.leading)
+                                .padding(.all, 8)
+                                .background {
+                                    RoundedRectangle(cornerRadius: 5)
+                                        .foregroundColor(.accentColor)
+                                        .opacity(0.4)
+                                }
                         }
                     }
-                    Text(selection)
-                        .font(.system(size: 18, weight: .semibold, design: .rounded))
-                        .foregroundColor(colorScheme == .light ? .ssBlack : .ssWhite)
-                        .fixedSize(horizontal: false, vertical: true)
-                        .multilineTextAlignment(.leading)
                 }
                 
                 Spacer()
                 
-                if dataWithImagesToChoose.count > 1 {
+                if dataToChoose.count > 1 {
                     Image(systemName: isExpanded ? "chevron.up" : "chevron.down")
-                        .foregroundColor(.ssGray)
+                        .foregroundColor(.ssDarkGray)
                 }
             }
             .padding()
@@ -96,31 +102,29 @@ struct SelectionDropdownMenu: View {
                 
                 ForEach(elementsNames, id: \.self) { elementName in
                     Button {
-                        selection = elementName
-                        isExpanded = false
+                        if dataSelected.contains(elementName) {
+                            if let index = dataSelected.firstIndex(of: elementName) {
+                                dataSelected.remove(at: index)
+                            }
+                        } else {
+                            dataSelected.append(elementName)
+                        }
                     } label: {
                         HStack {
-                            HStack(spacing: 20) {
-                                if !elementsNames.isEmpty {
-                                    if let dataImage = dataWithImagesToChoose[elementName], let imageName = dataImage {
-                                        Image(imageName)
-                                    }
-                                }
-                                Text(elementName)
-                                    .font(.system(size: 18, weight: .semibold, design: .rounded))
-                                    .foregroundColor(colorScheme == .light ? .ssBlack : .ssWhite)
-                            }
+                            Text(elementName)
+                                .font(.system(size: 18, weight: .semibold, design: .rounded))
+                                .foregroundColor(colorScheme == .light ? .ssBlack : .ssWhite)
                             
                             Spacer()
                             
-                            if elementName == selection {
+                            if dataSelected.contains(elementName) {
                                 Image(systemName: "checkmark")
                                     .foregroundColor(colorScheme == .light ? .ssBlack : .ssWhite)
                             }
                         }
                         .padding()
                         .frame(minWidth: 200, maxWidth: .infinity)
-                        .if(elementName == selection) {
+                        .if(dataSelected.contains(elementName)) {
                             $0
                                 .background {
                                     Color.accentColor
@@ -134,27 +138,23 @@ struct SelectionDropdownMenu: View {
     }
 }
 
-struct SelectionDropdown_Previews: PreviewProvider {
-    @State static var selection: String = Countries.england.rawValue
+struct MultiselectionDropdownMenu_Previews: PreviewProvider {
+    @State static var dataSelected: [String] = [Countries.england.rawValue,
+                                                Countries.poland.rawValue]
     
-    static var dataWithImagesToChoose: [String: String?] {
-        var dataWithImagesToChoose: [String: String?] = [:]
-        for country in Countries.allCases {
-            if country.rawValue.contains(" ") {
-                let countrySubstring = country.rawValue.components(separatedBy: " ")[0]
-                dataWithImagesToChoose[country.rawValue] = countrySubstring.lowercased()
-            } else {
-                dataWithImagesToChoose[country.rawValue] = country.rawValue.lowercased()
-            }
+    static var dataToChoose: [String] {
+        var dataToChoose: [String] = []
+        Countries.allCases.map {
+            dataToChoose.append($0.rawValue)
         }
-        return dataWithImagesToChoose
+        return dataToChoose
     }
     
     static var previews: some View {
         ForEach(ColorScheme.allCases, id: \.self) { colorScheme in
             ForEach(["iPhone 13 Pro Max", "iPhone 8"], id: \.self) { deviceName in
-                SelectionDropdownMenu(selection: $selection,
-                                      dataWithImagesToChoose: dataWithImagesToChoose)
+                MultiselectionDropdownMenu(dataSelected: $dataSelected,
+                                           dataToChoose: dataToChoose)
                     .preferredColorScheme(colorScheme)
                     .previewDevice(PreviewDevice(rawValue: deviceName))
                     .previewDisplayName("\(deviceName) portrait")

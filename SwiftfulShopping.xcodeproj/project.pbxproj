@@ -113,6 +113,7 @@
 		0A35557C28A05859005993E5 /* DeleteAccountView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A35557B28A05859005993E5 /* DeleteAccountView.swift */; };
 		0A35557E28A05A43005993E5 /* AccentColorChangeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A35557D28A05A43005993E5 /* AccentColorChangeView.swift */; };
 		0A35558028A05DD9005993E5 /* ColorSchemeChangeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A35557F28A05DD9005993E5 /* ColorSchemeChangeView.swift */; };
+		0A3AA90028C51D3700116C7D /* MultiselectionDropdownMenu.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A3AA8FF28C51D3700116C7D /* MultiselectionDropdownMenu.swift */; };
 		0A3B08DD28AD22BE00A54385 /* ProductRecognizerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A3B08DC28AD22BE00A54385 /* ProductRecognizerView.swift */; };
 		0A3B08E228AD292C00A54385 /* Resnet50.mlmodel in Sources */ = {isa = PBXBuildFile; fileRef = 0A3B08E128AD292C00A54385 /* Resnet50.mlmodel */; };
 		0A3B08E428AD4D1C00A54385 /* CameraViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A3B08E328AD4D1C00A54385 /* CameraViewModel.swift */; };
@@ -417,6 +418,7 @@
 		0A35557B28A05859005993E5 /* DeleteAccountView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeleteAccountView.swift; sourceTree = "<group>"; };
 		0A35557D28A05A43005993E5 /* AccentColorChangeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccentColorChangeView.swift; sourceTree = "<group>"; };
 		0A35557F28A05DD9005993E5 /* ColorSchemeChangeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorSchemeChangeView.swift; sourceTree = "<group>"; };
+		0A3AA8FF28C51D3700116C7D /* MultiselectionDropdownMenu.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MultiselectionDropdownMenu.swift; sourceTree = "<group>"; };
 		0A3B08DC28AD22BE00A54385 /* ProductRecognizerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductRecognizerView.swift; sourceTree = "<group>"; };
 		0A3B08E128AD292C00A54385 /* Resnet50.mlmodel */ = {isa = PBXFileReference; lastKnownFileType = file.mlmodel; path = Resnet50.mlmodel; sourceTree = "<group>"; };
 		0A3B08E328AD4D1C00A54385 /* CameraViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CameraViewModel.swift; sourceTree = "<group>"; };
@@ -636,6 +638,7 @@
 				0A2D5FB628BA2BC300E76D71 /* SelectionDropdownMenu.swift */,
 				0A2D5FD628BA42EB00E76D71 /* SingleSelectionToggle.swift */,
 				0A22F57428C4BCE000C568EA /* QuantityInput.swift */,
+				0A3AA8FF28C51D3700116C7D /* MultiselectionDropdownMenu.swift */,
 			);
 			path = Inputs;
 			sourceTree = "<group>";
@@ -1515,6 +1518,7 @@
 				0A453B8D2851DFE600870EA9 /* ExploreViewModel.swift in Sources */,
 				0A35556E28A04EF6005993E5 /* AccentColorManager.swift in Sources */,
 				0A26FF362885B4100001FA93 /* CategoriesTabView.swift in Sources */,
+				0A3AA90028C51D3700116C7D /* MultiselectionDropdownMenu.swift in Sources */,
 				0A3441BC28A41E44005FFFD5 /* SortingAndFilteringSheetView.swift in Sources */,
 				0A3DE45B2889AAA9008B050B /* ProductColor.swift in Sources */,
 				0A268B43286712C8006CF0E2 /* Date.swift in Sources */,
