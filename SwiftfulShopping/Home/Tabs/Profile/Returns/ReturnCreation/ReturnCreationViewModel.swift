@@ -22,7 +22,6 @@ class ReturnCreationViewModel: ObservableObject {
     @Published var shouldPresentSecondReturnCreationView: Bool = false
     @Published var shouldPresentThirdReturnCreationView: Bool = false
     @Published var shouldPresentCompletionReturnCreationView: Bool = false
-    @Published var shouldPresentProfileView: Bool = false
     
     @Published var orderForReturn: Order?
     @Published var createdReturn: Return?

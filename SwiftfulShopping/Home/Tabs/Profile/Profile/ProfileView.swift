@@ -143,46 +143,28 @@ struct ProfileView: View {
                     .padding(.bottom, 20)
                     .padding(.top, 90)
                     
-                    NavigationLink(destination: OrdersView()
-                                                    .environmentObject(authStateManager)
-                                                    .environmentObject(tabBarStateManager)
-                                                    .environmentObject(profileViewModel),
+                    NavigationLink(destination: OrdersView(),
                                    tag: "Orders",
                                    selection: $selection) { EmptyView() }
+                        .isDetailLink(false)
                     
-                    NavigationLink(destination: ReturnsView()
-                                                    .environmentObject(authStateManager)
-                                                    .environmentObject(tabBarStateManager)
-                                                    .environmentObject(profileViewModel),
+                    NavigationLink(destination: ReturnsView(),
                                    tag: "Returns",
                                    selection: $selection) { EmptyView() }
                     
-                    NavigationLink(destination: PersonalInfoView()
-                                                    .environmentObject(authStateManager)
-                                                    .environmentObject(tabBarStateManager)
-                                                    .environmentObject(profileViewModel),
+                    NavigationLink(destination: PersonalInfoView(),
                                    tag: "Personal Info",
                                    selection: $selection) { EmptyView() }
                     
-                    NavigationLink(destination: PaymentDetailsView()
-                                                    .environmentObject(authStateManager)
-                                                    .environmentObject(tabBarStateManager)
-                                                    .environmentObject(profileViewModel),
+                    NavigationLink(destination: PaymentDetailsView(),
                                    tag: "Payment Details",
                                    selection: $selection) { EmptyView() }
                     
-                    NavigationLink(destination: HelpView()
-                                                    .environmentObject(authStateManager)
-                                                    .environmentObject(tabBarStateManager)
-                                                    .environmentObject(profileViewModel),
+                    NavigationLink(destination: HelpView(),
                                    tag: "Help",
                                    selection: $selection) { EmptyView() }
                     
-                    NavigationLink(destination: SettingsView()
-                                                    .environmentObject(authStateManager)
-                                                    .environmentObject(accentColorManager)
-                                                    .environmentObject(tabBarStateManager)
-                                                    .environmentObject(profileViewModel),
+                    NavigationLink(destination: SettingsView(),
                                    isActive: $profileViewModel.shouldPresentSettingsView,
                                    label: { EmptyView() })
                 }
@@ -211,6 +193,10 @@ struct ProfileView: View {
             }
         }
         .navigationViewStyle(.stack)
+        .environmentObject(authStateManager)
+        .environmentObject(accentColorManager)
+        .environmentObject(tabBarStateManager)
+        .environmentObject(profileViewModel)
     }
 }
 

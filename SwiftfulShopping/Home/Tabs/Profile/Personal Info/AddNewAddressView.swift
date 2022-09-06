@@ -12,8 +12,8 @@ struct AddNewAddressView: View {
     @EnvironmentObject private var tabBarStateManager: TabBarStateManager
     @EnvironmentObject private var profileViewModel: ProfileViewModel
     @EnvironmentObject private var personalInfoViewModel: PersonalInfoViewModel
-    @Environment(\.colorScheme) var colorScheme
-    @Environment(\.presentationMode) var presentationMode
+    @Environment(\.colorScheme) private var colorScheme: ColorScheme
+    @Environment(\.dismiss) private var dismiss: DismissAction
     
     @State private var isStreetNameTextFieldFocused: Bool = false
     @State private var isStreetNumberTextFieldFocused: Bool = false
@@ -71,7 +71,7 @@ struct AddNewAddressView: View {
                 Button {
                     withAnimation {
                         profileViewModel.addNewAddress(address: personalInfoViewModel.createNewAddress(), toBeDefault: personalInfoViewModel.toBeDefaultAddress)
-                        presentationMode.wrappedValue.dismiss()
+                        dismiss()
                     }
                 } label: {
                     Text("Add new address")
@@ -84,6 +84,19 @@ struct AddNewAddressView: View {
             .padding()
         }
         .navigationTitle("Add new address")
+        .navigationBarBackButtonHidden(true)
+        .toolbar {
+            ToolbarItem(placement: .navigationBarLeading) {
+                Button {
+                    dismiss()
+                } label: {
+                    Image(systemName: "arrow.backward.circle.fill")
+                        .resizable()
+                        .frame(width: 30, height: 30)
+                        .foregroundColor(.accentColor)
+                }
+            }
+        }
     }
 }
 

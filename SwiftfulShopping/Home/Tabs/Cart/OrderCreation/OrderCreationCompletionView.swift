@@ -16,71 +16,59 @@ struct OrderCreationCompletionView: View {
     @EnvironmentObject private var cartViewModel: CartViewModel
     @EnvironmentObject private var orderCreationViewModel: OrderCreationViewModel
     
+    @Environment(\.dismiss) private var dismiss: DismissAction
+    
     var body: some View {
-        if orderCreationViewModel.shouldPresentCartView {
-            withAnimation {
-                CartView()
-                    .environmentObject(authStateManager)
-                    .environmentObject(tabBarStateManager)
-                    .environmentObject(exploreViewModel)
-                    .environmentObject(profileViewModel)
-                    .environmentObject(favoritesViewModel)
-                    .environmentObject(cartViewModel)
-                    .navigationBarHidden(true)
-            }
-        } else {
-            VStack(alignment: .center) {
-                StepsView(stepsNumber: 4, activeStep: 4)
-                    .padding(.vertical)
+        VStack(alignment: .center) {
+            StepsView(stepsNumber: 4, activeStep: 4)
+                .padding(.vertical)
+            
+            VStack(alignment: .leading, spacing: 40) {
+                VStack(alignment: .leading, spacing: 10) {
+                    Text("You have successfuly placed your order!")
+                        .font(.ssTitle1)
+                    
+                    Text("Please wait patiently for it to be delivered")
+                        .font(.ssCallout)
+                        .foregroundColor(.ssDarkGray)
+                }
                 
-                VStack(alignment: .leading, spacing: 40) {
+                VStack(alignment: .leading, spacing: 30) {
                     VStack(alignment: .leading, spacing: 10) {
-                        Text("You have successfuly placed your order!")
-                            .font(.ssTitle1)
-                        
-                        Text("Please wait patiently for it to be delivered")
-                            .font(.ssCallout)
-                            .foregroundColor(.ssDarkGray)
+                        Text("Order number:")
+                            .font(.ssTitle2)
+                        Text(orderCreationViewModel.createdOrder?.id ?? "")
+                            .font(.ssTitle3)
+                            .foregroundColor(.accentColor)
                     }
                     
-                    VStack(alignment: .leading, spacing: 30) {
-                        VStack(alignment: .leading, spacing: 10) {
-                            Text("Order number:")
-                                .font(.ssTitle2)
-                            Text(orderCreationViewModel.createdOrder?.id ?? "")
-                                .font(.ssTitle3)
-                                .foregroundColor(.accentColor)
-                        }
-                        
-                        VStack(alignment: .leading, spacing: 10) {
-                            Text("Expected delivery date:")
-                                .font(.ssTitle2)
-                            Text(orderCreationViewModel.createdOrder?.estimatedDeliveryDate.dateString() ?? "")
-                                .font(.ssTitle3)
-                                .foregroundColor(.accentColor)
-                        }
+                    VStack(alignment: .leading, spacing: 10) {
+                        Text("Expected delivery date:")
+                            .font(.ssTitle2)
+                        Text(orderCreationViewModel.createdOrder?.estimatedDeliveryDate.dateString() ?? "")
+                            .font(.ssTitle3)
+                            .foregroundColor(.accentColor)
                     }
                 }
-                
-                Spacer()
-                
-                Button {
-                    withAnimation {
-                        cartViewModel.cart.removeAllProductsFromCart()
-                        cartViewModel.shouldPresentCheckoutFirstView = false
-                        orderCreationViewModel.shouldPresentCartView = true
-                    }
-                } label: {
-                    Text("Go back to cart")
-                        .font(.ssButton)
-                }
-                .buttonStyle(CustomButton())
             }
-            .padding()
-            .navigationTitle("Order placed")
-            .navigationBarTitleDisplayMode(.inline)
-            .navigationBarBackButtonHidden(true)
+            
+            Spacer()
+            
+            Button {
+                withAnimation {
+                    cartViewModel.cart.removeAllProductsFromCart()
+                    cartViewModel.shouldPresentCheckoutFirstView = false
+                }
+            } label: {
+                Text("Go back to cart")
+                    .font(.ssButton)
+            }
+            .buttonStyle(CustomButton())
         }
+        .padding()
+        .navigationTitle("Order placed")
+        .navigationBarTitleDisplayMode(.inline)
+        .navigationBarBackButtonHidden(true)
     }
 }
 

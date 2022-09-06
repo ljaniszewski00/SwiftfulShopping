@@ -77,9 +77,6 @@ struct LoginView: View {
                                     
                                     NavigationLink(isActive: $contentViewModel.presentRegisterView) {
                                         RegisterView()
-                                            .environmentObject(authStateManager)
-                                            .environmentObject(locationManager)
-                                            .environmentObject(contentViewModel)
                                     } label: {
                                         Text("Register here")
                                             .font(.ssBody).fontWeight(.semibold)
@@ -100,8 +97,6 @@ struct LoginView: View {
                         .padding()
                         .sheet(isPresented: $showForgotPasswordSheet) {
                             ForgotPasswordView()
-                                .environmentObject(loginViewModel)
-                                .environmentObject(forgotPasswordViewModel)
                                 .onAppear {
                                     forgotPasswordViewModel.email = loginViewModel.email
                                 }
@@ -124,6 +119,11 @@ struct LoginView: View {
             .navigationBarBackButtonHidden(true)
         }
         .navigationViewStyle(.stack)
+        .environmentObject(authStateManager)
+        .environmentObject(locationManager)
+        .environmentObject(contentViewModel)
+        .environmentObject(loginViewModel)
+        .environmentObject(forgotPasswordViewModel)
     }
     
     @ViewBuilder

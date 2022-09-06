@@ -10,6 +10,7 @@ import SwiftUI
 struct DeleteAccountView: View {
     @EnvironmentObject private var authStateManager: AuthStateManager
     @EnvironmentObject private var settingsViewModel: SettingsViewModel
+    @Environment(\.dismiss) private var dismiss: DismissAction
     
     @StateObject private var deleteAccountViewModel: DeleteAccountViewModel = DeleteAccountViewModel()
     @StateObject var errorManager = ErrorManager.shared
@@ -53,6 +54,19 @@ struct DeleteAccountView: View {
         .modifier(ErrorModal(isPresented: $errorManager.showErrorModal, customError: errorManager.customError ?? ErrorManager.unknownError))
         .navigationTitle("Delete Account")
         .navigationBarTitleDisplayMode(.large)
+        .navigationBarBackButtonHidden(true)
+        .toolbar {
+            ToolbarItem(placement: .navigationBarLeading) {
+                Button {
+                    dismiss()
+                } label: {
+                    Image(systemName: "arrow.backward.circle.fill")
+                        .resizable()
+                        .frame(width: 30, height: 30)
+                        .foregroundColor(.accentColor)
+                }
+            }
+        }
         .actionSheet(isPresented: $deleteAccountViewModel.shouldPresentActionSheet) {
             ActionSheet(title: Text("Are you sure?"), message: Text("All your data will be lost!"), buttons: [
                 .destructive(Text("Delete Account"), action: {

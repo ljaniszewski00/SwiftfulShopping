@@ -10,6 +10,7 @@ import SwiftUI
 struct ChangeEmailView: View {
     @EnvironmentObject private var authStateManager: AuthStateManager
     @EnvironmentObject private var settingsViewModel: SettingsViewModel
+    @Environment(\.dismiss) private var dismiss: DismissAction
     
     @StateObject private var changeEmailViewModel: ChangeEmailViewModel = ChangeEmailViewModel()
     @StateObject var errorManager = ErrorManager.shared
@@ -80,6 +81,19 @@ struct ChangeEmailView: View {
         .modifier(ErrorModal(isPresented: $errorManager.showErrorModal, customError: errorManager.customError ?? ErrorManager.unknownError))
         .navigationTitle("Change Email")
         .navigationBarTitleDisplayMode(.large)
+        .navigationBarBackButtonHidden(true)
+        .toolbar {
+            ToolbarItem(placement: .navigationBarLeading) {
+                Button {
+                    dismiss()
+                } label: {
+                    Image(systemName: "arrow.backward.circle.fill")
+                        .resizable()
+                        .frame(width: 30, height: 30)
+                        .foregroundColor(.accentColor)
+                }
+            }
+        }
     }
 }
 

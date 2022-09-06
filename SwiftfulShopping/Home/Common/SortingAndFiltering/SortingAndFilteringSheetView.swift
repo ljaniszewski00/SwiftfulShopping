@@ -24,7 +24,7 @@ struct SortingAndFilteringSheetView: View {
     var body: some View {
         ZStack(alignment: .bottom) {
             ScrollView(.vertical, showsIndicators: false) {
-                VStack(alignment: .center, spacing: 30) {
+                VStack(alignment: .center, spacing: 20) {
                     VStack(alignment: .leading, spacing: 0) {
                         VStack {
                             HStack {
@@ -116,7 +116,6 @@ struct SortingAndFilteringSheetView: View {
                             .background(.ultraThinMaterial, in: RoundedRectangle(cornerRadius: 5, style: .continuous))
                         }
                     }
-                    .padding(.bottom)
                     
                     Button {
                         sortingAndFilteringViewModel.restoreDefaults(originalProductsArray: exploreViewModel.productsFromRepository, currentProductsArray: &exploreViewModel.changingProductsToBeDisplayed)
@@ -125,12 +124,13 @@ struct SortingAndFilteringSheetView: View {
                             .font(.ssButton)
                     }
                     .buttonStyle(CustomButton(textColor: .accentColor, onlyStroke: true))
-                    .padding(.bottom, sortingAndFilteringViewModel.applyFiltersButtonVisible ? 55 : 0)
+                    .padding(.bottom, sortingAndFilteringViewModel.applyFiltersButtonVisible ? 65 : 0)
                 }
                 .padding()
             }
             .background {
-                Color.windowBackground.ignoresSafeArea()
+                Color(uiColor: .secondarySystemBackground)
+                    .ignoresSafeArea()
             }
             
             if sortingAndFilteringViewModel.applyFiltersButtonVisible {
@@ -145,6 +145,7 @@ struct SortingAndFilteringSheetView: View {
                     Text("Apply")
                         .font(.ssButton)
                 }
+                .padding()
                 .buttonStyle(CustomButton())
                 .transition(.move(edge: .bottom))
                 .animation(.default)

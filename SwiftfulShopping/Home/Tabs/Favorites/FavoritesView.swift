@@ -29,7 +29,6 @@ struct FavoritesView: View {
                                 }
                             } label: {
                                 ListProductCardTileView(product: product)
-                                    .environmentObject(favoritesViewModel)
                             }
                             .buttonStyle(ScaledButtonStyle())
                         }
@@ -40,12 +39,6 @@ struct FavoritesView: View {
                 .navigationBarTitleDisplayMode(.inline)
                 
                 NavigationLink(destination: ProductDetailsView(product: favoritesViewModel.choosenProduct ?? Product.demoProducts[0])
-                                                .environmentObject(authStateManager)
-                                                .environmentObject(tabBarStateManager)
-                                                .environmentObject(exploreViewModel)
-                                                .environmentObject(profileViewModel)
-                                                .environmentObject(favoritesViewModel)
-                                                .environmentObject(cartViewModel)
                                                 .onAppear {
                                                     tabBarStateManager.hideTabBar()
                                                 }
@@ -57,6 +50,12 @@ struct FavoritesView: View {
             }
         }
         .navigationViewStyle(.stack)
+        .environmentObject(authStateManager)
+        .environmentObject(tabBarStateManager)
+        .environmentObject(exploreViewModel)
+        .environmentObject(profileViewModel)
+        .environmentObject(favoritesViewModel)
+        .environmentObject(cartViewModel)
     }
 }
 

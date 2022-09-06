@@ -17,6 +17,7 @@ struct OrderCreationSummaryView: View {
     @EnvironmentObject private var orderCreationViewModel: OrderCreationViewModel
     
     @Environment(\.colorScheme) var colorScheme
+    @Environment(\.dismiss) private var dismiss: DismissAction
     
     var body: some View {
         VStack {
@@ -52,7 +53,7 @@ struct OrderCreationSummaryView: View {
                         
                         Text(orderCreationViewModel.choosenShippingMethod?.rawValue ?? "")
                             .font(.ssTitle3)
-                            .foregroundColor(colorScheme == .light ? .ssBlack : .ssWhite)
+                            .foregroundColor(.accentColor)
                     }
                     
                     VStack(alignment: .leading, spacing: 15) {
@@ -61,7 +62,7 @@ struct OrderCreationSummaryView: View {
                         
                         Text(orderCreationViewModel.choosenPaymentMethod?.rawValue ?? "")
                             .font(.ssTitle3)
-                            .foregroundColor(colorScheme == .light ? .ssBlack : .ssWhite)
+                            .foregroundColor(.accentColor)
                     }
                     
                     VStack(alignment: .leading) {
@@ -78,7 +79,6 @@ struct OrderCreationSummaryView: View {
                         
                         ForEach(Array(cartViewModel.cart.products.keys).sorted { $0.id > $1.id}, id: \.self) { product in
                             ProductTileForCartView(product: product, includeButtonsForAmountChange: false)
-                                .environmentObject(cartViewModel)
                                 .padding()
                         }
                     }
@@ -102,12 +102,6 @@ struct OrderCreationSummaryView: View {
             .padding()
             
             NavigationLink(destination: OrderCreationCompletionView()
-                                            .environmentObject(authStateManager)
-                                            .environmentObject(tabBarStateManager)
-                                            .environmentObject(exploreViewModel)
-                                            .environmentObject(profileViewModel)
-                                            .environmentObject(favoritesViewModel)
-                                            .environmentObject(cartViewModel)
                                             .environmentObject(orderCreationViewModel)
                                             .onAppear {
                                                 tabBarStateManager.hideTabBar()
@@ -117,9 +111,23 @@ struct OrderCreationSummaryView: View {
                                             },
                            isActive: $orderCreationViewModel.shouldPresentOrderCreationCompletionView,
                            label: { EmptyView() })
+            .isDetailLink(false)
         }
         .navigationTitle("Order Summary")
         .navigationBarTitleDisplayMode(.inline)
+        .navigationBarBackButtonHidden(true)
+        .toolbar {
+            ToolbarItem(placement: .navigationBarLeading) {
+                Button {
+                    dismiss()
+                } label: {
+                    Image(systemName: "arrow.backward.circle.fill")
+                        .resizable()
+                        .frame(width: 30, height: 30)
+                        .foregroundColor(.accentColor)
+                }
+            }
+        }
     }
 }
 

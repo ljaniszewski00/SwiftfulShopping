@@ -12,6 +12,7 @@ struct OrderDetailsView: View {
     @EnvironmentObject private var tabBarStateManager: TabBarStateManager
     @EnvironmentObject private var profileViewModel: ProfileViewModel
     @Environment(\.colorScheme) private var colorScheme: ColorScheme
+    @Environment(\.dismiss) private var dismiss: DismissAction
     
     @State private var showProductsList: Bool = true
     
@@ -131,16 +132,31 @@ struct OrderDetailsView: View {
                                             .environmentObject(tabBarStateManager)
                                             .environmentObject(profileViewModel),
                            isActive: $profileViewModel.shouldPresentOrderRateView) { EmptyView() }
+                .isDetailLink(false)
             
             NavigationLink(destination: ReturnCreationView(order: order)
                                             .environmentObject(authStateManager)
                                             .environmentObject(tabBarStateManager)
                                             .environmentObject(profileViewModel),
                            isActive: $profileViewModel.shouldPresentReturnCreationView) { EmptyView() }
+                .isDetailLink(false)
             
         }
         .navigationTitle("Order No. \(order.id)")
         .navigationBarTitleDisplayMode(.inline)
+        .navigationBarBackButtonHidden(true)
+        .toolbar {
+            ToolbarItem(placement: .navigationBarLeading) {
+                Button {
+                    dismiss()
+                } label: {
+                    Image(systemName: "arrow.backward.circle.fill")
+                        .resizable()
+                        .frame(width: 30, height: 30)
+                        .foregroundColor(.accentColor)
+                }
+            }
+        }
     }
 }
 

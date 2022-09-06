@@ -11,6 +11,7 @@ struct OrderRateView: View {
     @EnvironmentObject private var authStateManager: AuthStateManager
     @EnvironmentObject private var tabBarStateManager: TabBarStateManager
     @EnvironmentObject private var profileViewModel: ProfileViewModel
+    @Environment(\.dismiss) private var dismiss: DismissAction
     
     @StateObject private var ratingViewModel: RatingViewModel = RatingViewModel()
     
@@ -26,14 +27,25 @@ struct OrderRateView: View {
             }
             
             NavigationLink(destination: SingleProductRatingView()
-                                            .environmentObject(authStateManager)
-                                            .environmentObject(tabBarStateManager)
-                                            .environmentObject(profileViewModel)
                                             .environmentObject(ratingViewModel),
                            isActive: $ratingViewModel.shouldPresentSingleProductRatingPage) { EmptyView() }
+                .isDetailLink(false)
         }
         .navigationTitle("Rate the order")
         .navigationBarTitleDisplayMode(.inline)
+        .navigationBarBackButtonHidden(true)
+        .toolbar {
+            ToolbarItem(placement: .navigationBarLeading) {
+                Button {
+                    dismiss()
+                } label: {
+                    Image(systemName: "arrow.backward.circle.fill")
+                        .resizable()
+                        .frame(width: 30, height: 30)
+                        .foregroundColor(.accentColor)
+                }
+            }
+        }
     }
 }
 

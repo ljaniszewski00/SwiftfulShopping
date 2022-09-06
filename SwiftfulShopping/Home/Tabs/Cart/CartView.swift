@@ -30,7 +30,6 @@ struct CartView: View {
                 List {
                     ForEach(Array(cartViewModel.cart.products.keys).sorted { $0.id > $1.id}, id: \.self) { product in
                         ProductTileForCartView(product: product)
-                            .environmentObject(cartViewModel)
                             .onTapGesture {
                                 withAnimation(.interactiveSpring(response: 0.6, dampingFraction: 0.7, blendDuration: 0.7)) {
                                     cartViewModel.changeFocusedProductFor(product: product)
@@ -74,12 +73,6 @@ struct CartView: View {
                 .padding(.bottom, 70)
                 
                 NavigationLink(destination: ProductDetailsView(product: cartViewModel.choosenProduct ?? Product.demoProducts[0])
-                                                .environmentObject(authStateManager)
-                                                .environmentObject(tabBarStateManager)
-                                                .environmentObject(exploreViewModel)
-                                                .environmentObject(profileViewModel)
-                                                .environmentObject(favoritesViewModel)
-                                                .environmentObject(cartViewModel)
                                                 .onAppear {
                                                     tabBarStateManager.hideTabBar()
                                                 },
@@ -87,17 +80,12 @@ struct CartView: View {
                                label: { EmptyView() })
                 
                 NavigationLink(destination: OrderCreationShipmentPaymentView()
-                                                .environmentObject(authStateManager)
-                                                .environmentObject(tabBarStateManager)
-                                                .environmentObject(exploreViewModel)
-                                                .environmentObject(profileViewModel)
-                                                .environmentObject(favoritesViewModel)
-                                                .environmentObject(cartViewModel)
                                                 .onAppear {
                                                     tabBarStateManager.hideTabBar()
                                                 },
                                isActive: $cartViewModel.shouldPresentCheckoutFirstView,
                                label: { EmptyView() })
+                .isDetailLink(false)
             }
             .navigationTitle("Cart")
             .navigationBarTitleDisplayMode(.inline)
@@ -116,6 +104,12 @@ struct CartView: View {
             }
         }
         .navigationViewStyle(.stack)
+        .environmentObject(authStateManager)
+        .environmentObject(tabBarStateManager)
+        .environmentObject(exploreViewModel)
+        .environmentObject(profileViewModel)
+        .environmentObject(favoritesViewModel)
+        .environmentObject(cartViewModel)
     }
 }
 

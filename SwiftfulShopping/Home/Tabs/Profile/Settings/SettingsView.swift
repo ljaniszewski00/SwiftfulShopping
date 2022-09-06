@@ -18,8 +18,8 @@ struct SettingsView: View {
     
     @State private var selection: String?
     
-    @Environment(\.colorScheme) var colorScheme
-    @Environment(\.dismiss) var dismiss
+    @Environment(\.colorScheme) private var colorScheme: ColorScheme
+    @Environment(\.dismiss) private var dismiss: DismissAction
     
     enum NavigationViewsNames: String, CaseIterable {
         case changeEmail = "Change Email"
@@ -65,7 +65,6 @@ struct SettingsView: View {
                 })
                 
                 NavigationLink(destination: AccentColorChangeView()
-                                                .environmentObject(accentColorManager)
                                                 .environmentObject(settingsViewModel)
                                                 .onAppear {
                                                     tabBarStateManager.hideTabBar()
@@ -106,7 +105,6 @@ struct SettingsView: View {
             
             Section {
                 NavigationLink(destination: ChangeEmailView()
-                                                .environmentObject(authStateManager)
                                                 .environmentObject(settingsViewModel)
                                                 .onAppear {
                                                     tabBarStateManager.hideTabBar()
@@ -125,7 +123,6 @@ struct SettingsView: View {
                 .disabled(!networkNanager.isConnected)
                 
                 NavigationLink(destination: ChangePasswordView()
-                                                .environmentObject(authStateManager)
                                                 .environmentObject(settingsViewModel)
                                                 .onAppear {
                                                     tabBarStateManager.hideTabBar()
@@ -144,7 +141,6 @@ struct SettingsView: View {
                 .disabled(!networkNanager.isConnected)
                 
                 NavigationLink(destination: DeleteAccountView()
-                                                .environmentObject(authStateManager)
                                                 .environmentObject(settingsViewModel)
                                                 .onAppear {
                                                     withAnimation() {
@@ -226,6 +222,19 @@ struct SettingsView: View {
         }
         .navigationTitle("Settings")
         .navigationBarTitleDisplayMode(.inline)
+        .navigationBarBackButtonHidden(true)
+        .toolbar {
+            ToolbarItem(placement: .navigationBarLeading) {
+                Button {
+                    dismiss()
+                } label: {
+                    Image(systemName: "arrow.backward.circle.fill")
+                        .resizable()
+                        .frame(width: 30, height: 30)
+                        .foregroundColor(.accentColor)
+                }
+            }
+        }
         .onAppear {
             tabBarStateManager.showTabBar()
         }

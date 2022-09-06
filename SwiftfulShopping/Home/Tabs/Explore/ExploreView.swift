@@ -134,38 +134,14 @@ struct ExploreView: View {
                             if exploreViewModel.selectedTab == .categories {
                                 if exploreViewModel.displayedCategory == nil {
                                     CategoriesTabView()
-                                        .environmentObject(authStateManager)
-                                        .environmentObject(tabBarStateManager)
-                                        .environmentObject(exploreViewModel)
-                                        .environmentObject(profileViewModel)
                                 } else {
                                     ProductsListView()
-                                        .environmentObject(authStateManager)
-                                        .environmentObject(tabBarStateManager)
-                                        .environmentObject(exploreViewModel)
-                                        .environmentObject(profileViewModel)
-                                        .environmentObject(favoritesViewModel)
-                                        .environmentObject(cartViewModel)
-                                        .environmentObject(sortingAndFilteringViewModel)
                                 }
                             } else {
                                 ProductsListView()
-                                    .environmentObject(authStateManager)
-                                    .environmentObject(tabBarStateManager)
-                                    .environmentObject(exploreViewModel)
-                                    .environmentObject(profileViewModel)
-                                    .environmentObject(favoritesViewModel)
-                                    .environmentObject(cartViewModel)
-                                    .environmentObject(sortingAndFilteringViewModel)
                             }
                             
                             NavigationLink(destination: ProductDetailsView(product: exploreViewModel.choosenProduct ?? Product.demoProducts[0])
-                                                            .environmentObject(authStateManager)
-                                                            .environmentObject(tabBarStateManager)
-                                                            .environmentObject(exploreViewModel)
-                                                            .environmentObject(profileViewModel)
-                                                            .environmentObject(favoritesViewModel)
-                                                            .environmentObject(cartViewModel)
                                                             .onAppear {
                                                                 tabBarStateManager.hideTabBar()
                                                             }
@@ -212,11 +188,9 @@ struct ExploreView: View {
             .navigationTitle("Explore")
             .toolbar {
                 ToolbarItem(placement: .navigationBarTrailing) {
-                    NavigationLink(destination: NotificationsView()
-                                                    .environmentObject(authStateManager)
-                                                    .environmentObject(tabBarStateManager)
-                                                    .environmentObject(profileViewModel)
-                    ) { Image(systemName: "bell") }
+                    NavigationLink(destination: NotificationsView()) {
+                        Image(systemName: "bell")
+                    }
                 }
             }
             .modifier(LoadingIndicatorModal(isPresented:
@@ -224,6 +198,13 @@ struct ExploreView: View {
             .modifier(ErrorModal(isPresented: $errorManager.showErrorModal, customError: errorManager.customError ?? ErrorManager.unknownError))
         }
         .navigationViewStyle(.stack)
+        .environmentObject(authStateManager)
+        .environmentObject(tabBarStateManager)
+        .environmentObject(exploreViewModel)
+        .environmentObject(profileViewModel)
+        .environmentObject(favoritesViewModel)
+        .environmentObject(cartViewModel)
+        .environmentObject(sortingAndFilteringViewModel)
     }
 }
 

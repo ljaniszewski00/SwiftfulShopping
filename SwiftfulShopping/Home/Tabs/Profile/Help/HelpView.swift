@@ -8,6 +8,8 @@
 import SwiftUI
 
 struct HelpView: View {
+    @Environment(\.dismiss) var dismiss
+    
     @StateObject private var helpViewModel: HelpViewModel = HelpViewModel()
     
     @State private var isContactEmailTextFieldFocused: Bool = false
@@ -76,6 +78,20 @@ struct HelpView: View {
             .padding()
         }
         .navigationTitle("Help")
+        .navigationBarTitleDisplayMode(.inline)
+        .navigationBarBackButtonHidden(true)
+        .toolbar {
+            ToolbarItem(placement: .navigationBarLeading) {
+                Button {
+                    dismiss()
+                } label: {
+                    Image(systemName: "arrow.backward.circle.fill")
+                        .resizable()
+                        .frame(width: 30, height: 30)
+                        .foregroundColor(.accentColor)
+                }
+            }
+        }
     }
 }
 

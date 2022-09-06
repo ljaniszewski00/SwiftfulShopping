@@ -13,6 +13,7 @@ struct ThirdReturnCreationView: View {
     @EnvironmentObject private var profileViewModel: ProfileViewModel
     @EnvironmentObject private var returnCreationViewModel: ReturnCreationViewModel
     @Environment(\.colorScheme) private var colorScheme: ColorScheme
+    @Environment(\.dismiss) private var dismiss: DismissAction
     
     var body: some View {
         VStack(alignment: .leading, spacing: 40) {
@@ -68,14 +69,26 @@ struct ThirdReturnCreationView: View {
             .contentShape(Rectangle())
             
             NavigationLink(destination: CompletionReturnCreationView()
-                                            .environmentObject(authStateManager)
-                                            .environmentObject(tabBarStateManager)
-                                            .environmentObject(profileViewModel)
                                             .environmentObject(returnCreationViewModel),
                            isActive: $returnCreationViewModel.shouldPresentCompletionReturnCreationView) { EmptyView() }
+                .isDetailLink(false)
         }
         .padding()
         .navigationTitle("Create Return")
+        .navigationBarTitleDisplayMode(.inline)
+        .navigationBarBackButtonHidden(true)
+        .toolbar {
+            ToolbarItem(placement: .navigationBarLeading) {
+                Button {
+                    dismiss()
+                } label: {
+                    Image(systemName: "arrow.backward.circle.fill")
+                        .resizable()
+                        .frame(width: 30, height: 30)
+                        .foregroundColor(.accentColor)
+                }
+            }
+        }
     }
 }
 

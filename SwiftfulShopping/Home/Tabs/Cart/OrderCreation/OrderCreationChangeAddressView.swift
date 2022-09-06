@@ -11,8 +11,8 @@ struct OrderCreationChangeAddressView: View {
     @EnvironmentObject private var profileViewModel: ProfileViewModel
     @EnvironmentObject private var orderCreationViewModel: OrderCreationViewModel
     
-    @Environment(\.colorScheme) var colorScheme
-    @Environment(\.presentationMode) var presentationMode
+    @Environment(\.colorScheme) private var colorScheme: ColorScheme
+    @Environment(\.dismiss) private var dismiss: DismissAction
     
     @State private var addressSectionExpanded: Bool = false
     
@@ -44,7 +44,7 @@ struct OrderCreationChangeAddressView: View {
                     
                     Button {
                         withAnimation {
-                            presentationMode.wrappedValue.dismiss()
+                            dismiss()
                         }
                     } label: {
                         Text("Save")
@@ -117,7 +117,7 @@ struct OrderCreationChangeAddressView: View {
                                 profileViewModel.addNewAddress(address: createdAddress, toBeDefault: orderCreationViewModel.addressToBeDefault)
                             }
                             
-                            presentationMode.wrappedValue.dismiss()
+                            dismiss()
                         }
                     } label: {
                         Text("Add new address")
@@ -132,6 +132,19 @@ struct OrderCreationChangeAddressView: View {
         }
         .navigationTitle("Change delivery address")
         .navigationBarTitleDisplayMode(.inline)
+        .navigationBarBackButtonHidden(true)
+        .toolbar {
+            ToolbarItem(placement: .navigationBarLeading) {
+                Button {
+                    dismiss()
+                } label: {
+                    Image(systemName: "arrow.backward.circle.fill")
+                        .resizable()
+                        .frame(width: 30, height: 30)
+                        .foregroundColor(.accentColor)
+                }
+            }
+        }
     }
 }
 

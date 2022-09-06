@@ -16,8 +16,8 @@ struct ProductRecognizerView: View {
     @StateObject private var productRecognizer = ProductRecognizer()
     @StateObject private var errorManager = ErrorManager.shared
     
-    @Environment(\.dismiss) private var dismiss
-    @Environment(\.colorScheme) var colorScheme: ColorScheme
+    @Environment(\.dismiss) private var dismiss: DismissAction
+    @Environment(\.colorScheme) private var colorScheme: ColorScheme
     
     private let gridColumns = [GridItem(.flexible(), spacing: 0),
                                GridItem(.flexible(), spacing: 0),
@@ -96,6 +96,19 @@ struct ProductRecognizerView: View {
         }
         .navigationTitle("Recognize Product")
         .navigationBarTitleDisplayMode(.inline)
+        .navigationBarBackButtonHidden(true)
+        .toolbar {
+            ToolbarItem(placement: .navigationBarLeading) {
+                Button {
+                    dismiss()
+                } label: {
+                    Image(systemName: "arrow.backward.circle.fill")
+                        .resizable()
+                        .frame(width: 30, height: 30)
+                        .foregroundColor(.accentColor)
+                }
+            }
+        }
         .sheet(isPresented: $productRecognizer.shouldPresentSheetWithResults, onDismiss: {
             if productRecognizer.sourceForImageRecognition == .camera {
                 cameraViewModel.startCapturing()

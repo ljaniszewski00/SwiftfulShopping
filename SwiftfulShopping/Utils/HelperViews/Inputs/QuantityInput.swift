@@ -8,6 +8,8 @@
 import SwiftUI
 
 struct QuantityInput: View {
+    @Environment(\.colorScheme) private var colorScheme: ColorScheme
+    
     var label: String
     
     var selection: Binding<Int>?
@@ -54,7 +56,7 @@ struct QuantityInput: View {
                 
                 Text(String(selection != nil ? selection!.wrappedValue : (quantity != nil ? quantity! : 0)))
                     .font(.ssButton)
-                    .foregroundColor(.ssDarkGray)
+                    .foregroundColor(colorScheme == .light ? .ssBlack : .ssWhite)
                     .fixedSize(horizontal: true, vertical: false)
                     .padding()
                     .frame(width: 70)

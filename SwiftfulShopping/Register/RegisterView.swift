@@ -43,9 +43,6 @@ struct RegisterView: View {
                         
                         NavigationLink(isActive: $registerViewModel.presentSecondRegisterView) {
                             SecondRegisterView()
-                                .environmentObject(authStateManager)
-                                .environmentObject(locationManager)
-                                .environmentObject(contentViewModel)
                                 .environmentObject(registerViewModel)
                         } label: {
                             Button("Next") {

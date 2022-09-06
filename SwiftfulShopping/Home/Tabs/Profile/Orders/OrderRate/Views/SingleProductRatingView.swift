@@ -81,6 +81,21 @@ struct SingleProductRatingView: View {
                 .padding()
             }
         }
+        .navigationTitle("Rate the product")
+        .navigationBarTitleDisplayMode(.inline)
+        .navigationBarBackButtonHidden(true)
+        .toolbar {
+            ToolbarItem(placement: .navigationBarLeading) {
+                Button {
+                    dismiss()
+                } label: {
+                    Image(systemName: "arrow.backward.circle.fill")
+                        .resizable()
+                        .frame(width: 30, height: 30)
+                        .foregroundColor(.accentColor)
+                }
+            }
+        }
         .onDisappear {
             ratingViewModel.clearForNextProduct()
         }

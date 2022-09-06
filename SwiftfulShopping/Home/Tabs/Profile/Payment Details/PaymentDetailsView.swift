@@ -12,6 +12,7 @@ struct PaymentDetailsView: View {
     @EnvironmentObject private var tabBarStateManager: TabBarStateManager
     @EnvironmentObject private var profileViewModel: ProfileViewModel
     @Environment(\.colorScheme) private var colorScheme: ColorScheme
+    @Environment(\.dismiss) var dismiss
     
     @StateObject private var paymentDetailsViewModel: PaymentDetailsViewModel = PaymentDetailsViewModel()
     
@@ -67,6 +68,20 @@ struct PaymentDetailsView: View {
             .padding(.bottom, 40)
         }
         .navigationTitle("Payment Details")
+        .navigationBarTitleDisplayMode(.inline)
+        .navigationBarBackButtonHidden(true)
+        .toolbar {
+            ToolbarItem(placement: .navigationBarLeading) {
+                Button {
+                    dismiss()
+                } label: {
+                    Image(systemName: "arrow.backward.circle.fill")
+                        .resizable()
+                        .frame(width: 30, height: 30)
+                        .foregroundColor(.accentColor)
+                }
+            }
+        }
         .onAppear {
             if let userCard = profileViewModel.profile.creditCard {
                 paymentDetailsViewModel.cardNumber = userCard.cardNumber

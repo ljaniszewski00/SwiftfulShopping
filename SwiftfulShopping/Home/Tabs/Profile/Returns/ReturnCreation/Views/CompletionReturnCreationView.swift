@@ -14,71 +14,61 @@ struct CompletionReturnCreationView: View {
     @EnvironmentObject private var returnCreationViewModel: ReturnCreationViewModel
     
     var body: some View {
-        if returnCreationViewModel.shouldPresentProfileView {
-            withAnimation {
-                ProfileView()
-                    .environmentObject(authStateManager)
-                    .environmentObject(tabBarStateManager)
-                    .environmentObject(profileViewModel)
-                    .navigationBarHidden(true)
-            }
-        } else {
-            VStack(alignment: .center) {
-                StepsView(stepsNumber: 4, activeStep: 4)
-                    .padding(.bottom)
-                
-                VStack(alignment: .leading, spacing: 40) {
-                    VStack(alignment: .leading, spacing: 10) {
-                        Text("You have successfuly created a return!")
-                            .font(.ssTitle1)
-                            .fixedSize(horizontal: false, vertical: true)
-                            .multilineTextAlignment(.leading)
-                        
-                        Text("Please wait patiently for hearing from us soon")
-                            .font(.ssCallout)
-                            .foregroundColor(.ssDarkGray)
-                    }
+        VStack(alignment: .center) {
+            StepsView(stepsNumber: 4, activeStep: 4)
+                .padding(.bottom)
+            
+            VStack(alignment: .leading, spacing: 40) {
+                VStack(alignment: .leading, spacing: 10) {
+                    Text("You have successfuly created a return!")
+                        .font(.ssTitle1)
+                        .fixedSize(horizontal: false, vertical: true)
+                        .multilineTextAlignment(.leading)
                     
-                    VStack(alignment: .leading, spacing: 10) {
-                        Text("Return number")
-                            .font(.ssTitle2)
-                            .fixedSize(horizontal: false, vertical: true)
-                            .multilineTextAlignment(.leading)
-                        Text(returnCreationViewModel.createdReturn?.id ?? "")
-                            .font(.ssTitle3)
-                            .fixedSize(horizontal: false, vertical: true)
-                            .multilineTextAlignment(.leading)
-                            .foregroundColor(.accentColor)
-                    }
-                    
-                    VStack(alignment: .leading, spacing: 10) {
-                        Text("Money to be returned:")
-                            .font(.ssTitle2)
-                            .fixedSize(horizontal: false, vertical: true)
-                            .multilineTextAlignment(.leading)
-                        Text("$\(returnCreationViewModel.createdReturn?.returnPrice ?? 0, specifier: "%.2f")")
-                            .font(.ssTitle3)
-                            .foregroundColor(.accentColor)
-                    }
+                    Text("Please wait patiently for hearing from us soon")
+                        .font(.ssCallout)
+                        .foregroundColor(.ssDarkGray)
                 }
                 
-                Spacer()
-                
-                Button {
-                    withAnimation {
-                        returnCreationViewModel.shouldPresentProfileView = true
-                    }
-                } label: {
-                    Text("Close")
-                        .font(.ssButton)
+                VStack(alignment: .leading, spacing: 10) {
+                    Text("Return number")
+                        .font(.ssTitle2)
+                        .fixedSize(horizontal: false, vertical: true)
+                        .multilineTextAlignment(.leading)
+                    Text(returnCreationViewModel.createdReturn?.id ?? "")
+                        .font(.ssTitle3)
+                        .fixedSize(horizontal: false, vertical: true)
+                        .multilineTextAlignment(.leading)
+                        .foregroundColor(.accentColor)
                 }
-                .buttonStyle(CustomButton())
+                
+                VStack(alignment: .leading, spacing: 10) {
+                    Text("Money to be returned:")
+                        .font(.ssTitle2)
+                        .fixedSize(horizontal: false, vertical: true)
+                        .multilineTextAlignment(.leading)
+                    Text("$\(returnCreationViewModel.createdReturn?.returnPrice ?? 0, specifier: "%.2f")")
+                        .font(.ssTitle3)
+                        .foregroundColor(.accentColor)
+                }
             }
-            .padding()
-            .navigationTitle("Return created")
-            .navigationBarTitleDisplayMode(.inline)
-            .navigationBarBackButtonHidden(true)
+            
+            Spacer()
+            
+            Button {
+                withAnimation {
+                    profileViewModel.shouldPresentReturnCreationView = false
+                }
+            } label: {
+                Text("Close")
+                    .font(.ssButton)
+            }
+            .buttonStyle(CustomButton())
         }
+        .padding()
+        .navigationTitle("Return created")
+        .navigationBarTitleDisplayMode(.inline)
+        .navigationBarBackButtonHidden(true)
     }
 }
 

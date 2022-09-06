@@ -106,22 +106,8 @@ struct SearchView: View {
                                     
                                     VStack {
                                         SearchedProductsListView()
-                                            .environmentObject(authStateManager)
-                                            .environmentObject(tabBarStateManager)
-                                            .environmentObject(exploreViewModel)
-                                            .environmentObject(profileViewModel)
-                                            .environmentObject(favoritesViewModel)
-                                            .environmentObject(cartViewModel)
-                                            .environmentObject(searchViewModel)
-                                            .environmentObject(sortingAndFilteringViewModel)
                                         
                                         NavigationLink(destination: ProductDetailsView(product: searchViewModel.choosenProduct ?? Product.demoProducts[0])
-                                                                        .environmentObject(authStateManager)
-                                                                        .environmentObject(tabBarStateManager)
-                                                                        .environmentObject(exploreViewModel)
-                                                                        .environmentObject(profileViewModel)
-                                                                        .environmentObject(favoritesViewModel)
-                                                                        .environmentObject(cartViewModel)
                                                                         .onAppear {
                                                                             tabBarStateManager.hideTabBar()
                                                                         },
@@ -129,8 +115,6 @@ struct SearchView: View {
                                                        label: { EmptyView() })
                                         
                                         NavigationLink(destination: ProductRecognizerView()
-                                                                        .environmentObject(exploreViewModel)
-                                                                        .environmentObject(searchViewModel)
                                                                         .onAppear {
                                                                             tabBarStateManager.hideTabBar()
                                                                         }
@@ -218,6 +202,14 @@ struct SearchView: View {
             }
         }
         .navigationViewStyle(.stack)
+        .environmentObject(authStateManager)
+        .environmentObject(tabBarStateManager)
+        .environmentObject(exploreViewModel)
+        .environmentObject(profileViewModel)
+        .environmentObject(favoritesViewModel)
+        .environmentObject(cartViewModel)
+        .environmentObject(searchViewModel)
+        .environmentObject(sortingAndFilteringViewModel)
         .onAppear {
             searchViewModel.onAppear()
         }

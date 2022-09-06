@@ -18,7 +18,6 @@ class OrderCreationViewModel: ObservableObject {
     @Published var shouldPresentOrderCreationAddressChangeView: Bool = false
     @Published var shouldPresentOrderCreationSummaryView: Bool = false
     @Published var shouldPresentOrderCreationCompletionView: Bool = false
-    @Published var shouldPresentCartView: Bool = false
     
     @Published var newStreetName: String = ""
     @Published var newStreetNumber: String = ""

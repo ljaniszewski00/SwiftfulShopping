@@ -12,6 +12,7 @@ struct PersonalInfoView: View {
     @EnvironmentObject private var tabBarStateManager: TabBarStateManager
     @EnvironmentObject private var profileViewModel: ProfileViewModel
     @Environment(\.colorScheme) var colorScheme
+    @Environment(\.dismiss) private var dismiss: DismissAction
     
     @StateObject private var personalInfoViewModel: PersonalInfoViewModel = PersonalInfoViewModel()
     
@@ -134,6 +135,20 @@ struct PersonalInfoView: View {
             .padding()
         }
         .navigationTitle("Personal Information")
+        .navigationBarTitleDisplayMode(.inline)
+        .navigationBarBackButtonHidden(true)
+        .toolbar {
+            ToolbarItem(placement: .navigationBarLeading) {
+                Button {
+                    dismiss()
+                } label: {
+                    Image(systemName: "arrow.backward.circle.fill")
+                        .resizable()
+                        .frame(width: 30, height: 30)
+                        .foregroundColor(.accentColor)
+                }
+            }
+        }
         .onAppear {
             personalInfoViewModel.setupAddresses(defaultProfileAddress:
                                                     profileViewModel.profile.defaultAddress,
@@ -142,16 +157,10 @@ struct PersonalInfoView: View {
         }
         
         NavigationLink(destination: AddNewAddressView()
-                                        .environmentObject(authStateManager)
-                                        .environmentObject(tabBarStateManager)
-                                        .environmentObject(profileViewModel)
                                         .environmentObject(personalInfoViewModel),
                        isActive: $shouldPresentAddNewAddressView) { EmptyView() }
         
         NavigationLink(destination: EditPersonalInfoView()
-                                        .environmentObject(authStateManager)
-                                        .environmentObject(tabBarStateManager)
-                                        .environmentObject(profileViewModel)
                                         .environmentObject(personalInfoViewModel)
                                         .onAppear {
                                             personalInfoViewModel.newFirstName = profileViewModel.profile.firstName

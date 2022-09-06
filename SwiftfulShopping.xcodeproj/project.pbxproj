@@ -839,8 +839,8 @@
 				0A5A7CE928953B8900736B07 /* OrderCreationShipmentPaymentView.swift */,
 				0A5A7CED289546DF00736B07 /* OrderCreationSummaryView.swift */,
 				0A5A7CEF2895476500736B07 /* OrderCreationCompletionView.swift */,
-				0A5A7CEB289543AD00736B07 /* OrderCreationViewModel.swift */,
 				0A5A7CF728968DCB00736B07 /* OrderCreationChangeAddressView.swift */,
+				0A5A7CEB289543AD00736B07 /* OrderCreationViewModel.swift */,
 			);
 			path = OrderCreation;
 			sourceTree = "<group>";

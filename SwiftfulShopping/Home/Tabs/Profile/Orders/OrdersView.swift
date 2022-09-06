@@ -12,6 +12,8 @@ struct OrdersView: View {
     @EnvironmentObject private var tabBarStateManager: TabBarStateManager
     @EnvironmentObject private var profileViewModel: ProfileViewModel
     
+    @Environment(\.dismiss) private var dismiss: DismissAction
+    
     var body: some View {
         List {
             ForEach(profileViewModel.datesForOrdersViewListSections, id: \.self) { stringDate in
@@ -59,10 +61,23 @@ struct OrdersView: View {
                         .foregroundColor(.accentColor)
                 }
             }
-            .navigationTitle("Orders")
-            .navigationBarTitleDisplayMode(.inline)
         }
         .listStyle(.grouped)
+        .navigationTitle("Orders")
+        .navigationBarTitleDisplayMode(.inline)
+        .navigationBarBackButtonHidden(true)
+        .toolbar {
+            ToolbarItem(placement: .navigationBarLeading) {
+                Button {
+                    dismiss()
+                } label: {
+                    Image(systemName: "arrow.backward.circle.fill")
+                        .resizable()
+                        .frame(width: 30, height: 30)
+                        .foregroundColor(.accentColor)
+                }
+            }
+        }
     }
 }
 

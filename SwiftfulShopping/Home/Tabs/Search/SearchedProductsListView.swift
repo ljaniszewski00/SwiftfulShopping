@@ -24,8 +24,6 @@ struct SearchedProductsListView: View {
             .padding()
             .sheet(isPresented: $exploreViewModel.presentSortingAndFilteringSheet) {
                 SortingAndFilteringSheetView()
-                    .environmentObject(exploreViewModel)
-                    .environmentObject(sortingAndFilteringViewModel)
             }
     }
     
@@ -40,13 +38,9 @@ struct SearchedProductsListView: View {
                 } label: {
                     if displayMethod == .list {
                         ListProductCardTileView(product: product)
-                            .environmentObject(favoritesViewModel)
-                            .environmentObject(cartViewModel)
                             .measureSize(size: $searchViewModel.productTileSize)
                     } else {
                         GridProductCardTileView(product: product)
-                            .environmentObject(favoritesViewModel)
-                            .environmentObject(cartViewModel)
                             .measureSize(size: $searchViewModel.productTileSize)
                     }
                 }

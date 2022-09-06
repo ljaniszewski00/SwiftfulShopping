@@ -17,7 +17,8 @@ struct OrderCreationShipmentPaymentView: View {
     
     @StateObject private var orderCreationViewModel = OrderCreationViewModel()
     
-    @Environment(\.colorScheme) var colorScheme
+    @Environment(\.colorScheme) private var colorScheme: ColorScheme
+    @Environment(\.dismiss) private var dismiss: DismissAction
     
     var body: some View {
         VStack {
@@ -145,30 +146,38 @@ struct OrderCreationShipmentPaymentView: View {
             .disabled(orderCreationViewModel.cannotProceedToSummaryView)
             
             NavigationLink(destination: OrderCreationSummaryView()
-                                            .environmentObject(authStateManager)
-                                            .environmentObject(tabBarStateManager)
-                                            .environmentObject(exploreViewModel)
-                                            .environmentObject(profileViewModel)
-                                            .environmentObject(favoritesViewModel)
-                                            .environmentObject(cartViewModel)
                                             .environmentObject(orderCreationViewModel)
                                             .onAppear {
                                                 tabBarStateManager.hideTabBar()
                                             },
                            isActive: $orderCreationViewModel.shouldPresentOrderCreationSummaryView,
                            label: { EmptyView() })
+            .isDetailLink(false)
             
             NavigationLink(destination: OrderCreationChangeAddressView()
-                                            .environmentObject(profileViewModel)
                                             .environmentObject(orderCreationViewModel)
                                             .onAppear {
                                                 tabBarStateManager.hideTabBar()
                                             },
                            isActive: $orderCreationViewModel.shouldPresentOrderCreationAddressChangeView,
                            label: { EmptyView() })
+            .isDetailLink(false)
         }
         .navigationTitle("Shipment and Payment")
         .navigationBarTitleDisplayMode(.inline)
+        .navigationBarBackButtonHidden(true)
+        .toolbar {
+            ToolbarItem(placement: .navigationBarLeading) {
+                Button {
+                    dismiss()
+                } label: {
+                    Image(systemName: "arrow.backward.circle.fill")
+                        .resizable()
+                        .frame(width: 30, height: 30)
+                        .foregroundColor(.accentColor)
+                }
+            }
+        }
         .onAppear {
             if orderCreationViewModel.defaultAddress.isEmpty {
                 orderCreationViewModel.setupAddresses(defaultProfileAddress:

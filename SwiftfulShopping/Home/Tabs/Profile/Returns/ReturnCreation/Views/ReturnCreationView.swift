@@ -14,6 +14,8 @@ struct ReturnCreationView: View {
     
     @StateObject private var returnCreationViewModel: ReturnCreationViewModel = ReturnCreationViewModel()
     
+    @Environment(\.dismiss) private var dismiss: DismissAction
+    
     var order: Order
     
     var body: some View {
@@ -84,16 +86,28 @@ struct ReturnCreationView: View {
             .padding()
         }
         .navigationTitle("Create Return")
+        .navigationBarTitleDisplayMode(.inline)
+        .navigationBarBackButtonHidden(true)
+        .toolbar {
+            ToolbarItem(placement: .navigationBarLeading) {
+                Button {
+                    dismiss()
+                } label: {
+                    Image(systemName: "arrow.backward.circle.fill")
+                        .resizable()
+                        .frame(width: 30, height: 30)
+                        .foregroundColor(.accentColor)
+                }
+            }
+        }
         .onAppear {
             returnCreationViewModel.orderForReturn = order
         }
         
         NavigationLink(destination: SecondReturnCreationView()
-                                        .environmentObject(authStateManager)
-                                        .environmentObject(tabBarStateManager)
-                                        .environmentObject(profileViewModel)
                                         .environmentObject(returnCreationViewModel),
                        isActive: $returnCreationViewModel.shouldPresentSecondReturnCreationView) { EmptyView() }
+            .isDetailLink(false)
     }
 }
 

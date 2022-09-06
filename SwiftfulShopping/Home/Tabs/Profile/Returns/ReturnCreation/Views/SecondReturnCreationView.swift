@@ -12,6 +12,7 @@ struct SecondReturnCreationView: View {
     @EnvironmentObject private var tabBarStateManager: TabBarStateManager
     @EnvironmentObject private var profileViewModel: ProfileViewModel
     @EnvironmentObject private var returnCreationViewModel: ReturnCreationViewModel
+    @Environment(\.dismiss) private var dismiss: DismissAction
     
     @State private var isBankAccountTextFieldFocused: Bool = false
     @State private var isBankAccountHolderFirstNameTextFieldFocused: Bool = false
@@ -76,13 +77,25 @@ struct SecondReturnCreationView: View {
             .padding()
         }
         .navigationTitle("Create Return")
+        .navigationBarTitleDisplayMode(.inline)
+        .navigationBarBackButtonHidden(true)
+        .toolbar {
+            ToolbarItem(placement: .navigationBarLeading) {
+                Button {
+                    dismiss()
+                } label: {
+                    Image(systemName: "arrow.backward.circle.fill")
+                        .resizable()
+                        .frame(width: 30, height: 30)
+                        .foregroundColor(.accentColor)
+                }
+            }
+        }
         
         NavigationLink(destination: ThirdReturnCreationView()
-                                        .environmentObject(authStateManager)
-                                        .environmentObject(tabBarStateManager)
-                                        .environmentObject(profileViewModel)
                                         .environmentObject(returnCreationViewModel),
                        isActive: $returnCreationViewModel.shouldPresentThirdReturnCreationView) { EmptyView() }
+            .isDetailLink(false)
     }
 }
 

@@ -135,7 +135,6 @@ class SortingAndFilteringViewModel: ObservableObject {
                     }
                 }
             case .rating:
-                print("here")
                 if lowestRatingFilter > 0 {
                     productsArray = productsArray.filter {
                         $0.rating.averageRating >= Double(lowestRatingFilter)
