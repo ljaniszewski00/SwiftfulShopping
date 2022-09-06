@@ -19,56 +19,73 @@ struct OrderCreationCompletionView: View {
     @Environment(\.dismiss) private var dismiss: DismissAction
     
     var body: some View {
-        VStack(alignment: .center) {
-            StepsView(stepsNumber: 4, activeStep: 4)
-                .padding(.vertical)
-            
-            VStack(alignment: .leading, spacing: 40) {
-                VStack(alignment: .leading, spacing: 10) {
-                    Text("You have successfuly placed your order!")
-                        .font(.ssTitle1)
+        GeometryReader { geometry in
+            ScrollView(.vertical, showsIndicators: false) {
+                VStack(alignment: .center) {
+                    StepsView(stepsNumber: 4, activeStep: 4)
+                        .padding(.vertical)
                     
-                    Text("Please wait patiently for it to be delivered")
-                        .font(.ssCallout)
-                        .foregroundColor(.ssDarkGray)
-                }
-                
-                VStack(alignment: .leading, spacing: 30) {
-                    VStack(alignment: .leading, spacing: 10) {
-                        Text("Order number:")
-                            .font(.ssTitle2)
-                        Text(orderCreationViewModel.createdOrder?.id ?? "")
-                            .font(.ssTitle3)
-                            .foregroundColor(.accentColor)
+                    VStack(alignment: .leading, spacing: 0) {
+                        VStack(alignment: .leading, spacing: 10) {
+                            Text("You have successfuly placed your order!")
+                                .font(.ssTitle2)
+                            
+                            Text("Please wait patiently for it to be delivered")
+                                .font(.ssCallout)
+                                .foregroundColor(.ssDarkGray)
+                        }
+                        
+                        HStack {
+                            Spacer()
+                            LottieView(name: "successful_order_creation", loopMode: .playOnce, contentMode: .scaleAspectFill)
+                                .frame(width: ScreenBoundsSupplier.shared.getScreenWidth() * 0.5,
+                                       height: ScreenBoundsSupplier.shared.getScreenHeight() * 0.25)
+                            Spacer()
+                        }
+                        
+                        VStack(alignment: .leading, spacing: 30) {
+                            VStack(alignment: .leading, spacing: 10) {
+                                Text("Order number:")
+                                    .font(.ssTitle3)
+                                Text(orderCreationViewModel.createdOrder?.id ?? "")
+                                    .font(.ssCallout)
+                                    .foregroundColor(.accentColor)
+                                    .fixedSize(horizontal: false, vertical: true)
+                                    .multilineTextAlignment(.leading)
+                            }
+                            
+                            VStack(alignment: .leading, spacing: 10) {
+                                Text("Expected delivery date:")
+                                    .font(.ssTitle3)
+                                Text(orderCreationViewModel.createdOrder?.estimatedDeliveryDate.dateString() ?? "")
+                                    .font(.ssCallout)
+                                    .foregroundColor(.accentColor)
+                                    .fixedSize(horizontal: false, vertical: true)
+                                    .multilineTextAlignment(.leading)
+                            }
+                        }
                     }
                     
-                    VStack(alignment: .leading, spacing: 10) {
-                        Text("Expected delivery date:")
-                            .font(.ssTitle2)
-                        Text(orderCreationViewModel.createdOrder?.estimatedDeliveryDate.dateString() ?? "")
-                            .font(.ssTitle3)
-                            .foregroundColor(.accentColor)
+                    Spacer()
+                    
+                    Button {
+                        withAnimation {
+                            cartViewModel.cart.removeAllProductsFromCart()
+                            cartViewModel.shouldPresentCheckoutFirstView = false
+                        }
+                    } label: {
+                        Text("Go back to cart")
+                            .font(.ssButton)
                     }
+                    .buttonStyle(CustomButton())
                 }
+                .padding()
+                .frame(minHeight: geometry.size.height)
             }
-            
-            Spacer()
-            
-            Button {
-                withAnimation {
-                    cartViewModel.cart.removeAllProductsFromCart()
-                    cartViewModel.shouldPresentCheckoutFirstView = false
-                }
-            } label: {
-                Text("Go back to cart")
-                    .font(.ssButton)
-            }
-            .buttonStyle(CustomButton())
+            .navigationTitle("Order placed")
+            .navigationBarTitleDisplayMode(.inline)
+            .navigationBarBackButtonHidden(true)
         }
-        .padding()
-        .navigationTitle("Order placed")
-        .navigationBarTitleDisplayMode(.inline)
-        .navigationBarBackButtonHidden(true)
     }
 }
 
