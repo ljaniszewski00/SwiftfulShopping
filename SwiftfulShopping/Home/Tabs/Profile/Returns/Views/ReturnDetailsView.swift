@@ -8,6 +8,8 @@
 import SwiftUI
 
 struct ReturnDetailsView: View {
+    @EnvironmentObject private var tabBarStateManager: TabBarStateManager
+    
     @Environment(\.colorScheme) private var colorScheme: ColorScheme
     @Environment(\.dismiss) private var dismiss: DismissAction
     
@@ -72,6 +74,7 @@ struct ReturnDetailsView: View {
                 }
             }
             .padding()
+            .padding(.bottom, tabBarStateManager.tabBarSize.height * 0.6)
         }
         .navigationTitle("Return No. \(userReturn.id)")
         .navigationBarTitleDisplayMode(.inline)

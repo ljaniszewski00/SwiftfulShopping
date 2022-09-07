@@ -67,6 +67,8 @@ class OrderCreationViewModel: ObservableObject {
     }
     
     func applyDiscount() -> Discount? {
+        discountCode.removeAll()
+        
         /*
          SOME DATABASE CHECKING IF DISCOUNT CODE IS LEGIBLE:
         

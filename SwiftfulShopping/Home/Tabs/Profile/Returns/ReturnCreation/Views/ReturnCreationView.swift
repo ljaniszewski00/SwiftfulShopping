@@ -84,6 +84,7 @@ struct ReturnCreationView: View {
                 .contentShape(Rectangle())
             }
             .padding()
+            .padding(.bottom, tabBarStateManager.tabBarSize.height * 0.6)
         }
         .navigationTitle("Create Return")
         .navigationBarTitleDisplayMode(.inline)

@@ -157,6 +157,7 @@ struct HomeView: View {
                     .padding(.bottom, 10)
                     .frame(height: 100, alignment: .center)
                     .background(.ultraThinMaterial, in: RoundedRectangle(cornerRadius: 40, style: .continuous))
+                    .measureSize(size: $tabBarStateManager.tabBarSize)
                     .navigationBarTitle("")
                     .navigationBarTitleDisplayMode(.inline)
                     .transition(.move(edge: .bottom))
@@ -164,9 +165,9 @@ struct HomeView: View {
                     .zIndex(1)
                 }
             }
-            .modifier(LoadingIndicatorModal(isPresented:
-                                                                $homeViewModel.showLoadingModal))
-            .modifier(ErrorModal(isPresented: $errorManager.showErrorModal, customError: errorManager.customError ?? ErrorManager.unknownError))
+            .modifier(LoadingIndicatorModal(isPresented: $homeViewModel.showLoadingModal))
+            .modifier(ErrorModal(isPresented: $errorManager.showErrorModal,
+                                 customError: errorManager.customError ?? ErrorManager.unknownError))
             .onAppear {
                 exploreViewModel.fetchProducts()
                 cartViewModel.restorePreviousCart()

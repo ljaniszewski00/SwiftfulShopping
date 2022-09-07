@@ -29,7 +29,7 @@ struct ReturnsView: View {
                                         .foregroundColor(.accentColor)
                                 }
                                 
-                                Text("\(userReturn.returnPrice, specifier: "%.2f")")
+                                Text("$\(userReturn.returnPrice, specifier: "%.2f")")
                                     .font(.ssTitle3)
                                     .foregroundColor(.accentColor)
                                 

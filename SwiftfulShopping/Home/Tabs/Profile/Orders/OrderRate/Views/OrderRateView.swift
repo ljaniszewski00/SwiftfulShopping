@@ -31,7 +31,7 @@ struct OrderRateView: View {
                            isActive: $ratingViewModel.shouldPresentSingleProductRatingPage) { EmptyView() }
                 .isDetailLink(false)
         }
-        .navigationTitle("Rate the order")
+        .navigationTitle("Rate products")
         .navigationBarTitleDisplayMode(.inline)
         .navigationBarBackButtonHidden(true)
         .toolbar {

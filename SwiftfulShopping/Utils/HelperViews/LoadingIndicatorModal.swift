@@ -17,24 +17,18 @@ struct LoadingIndicatorModal: ViewModifier {
 
     func body(content: Content) -> some View {
         content
-            .disabled(isPresented)
+            .allowsHitTesting(!isPresented)
+            .blur(radius: isPresented ? 3 : 0)
             .overlay(popupContent())
     }
 
     @ViewBuilder private func popupContent() -> some View {
         if isPresented {
-            ZStack {
-                Color.ssBlack
-                    .opacity(0.5)
-                    .ignoresSafeArea()
-                
-                ZStack {
-                    RoundedRectangle(cornerRadius: 4)
-                        .foregroundColor(Color(uiColor: .secondarySystemBackground))
-                    ProgressView()
-                }
-                .frame(width: 100, height: 100)
-            }
+            ProgressView()
+                .progressViewStyle(CircularProgressViewStyle(tint: Color.accentColor))
+                .scaleEffect(1.5)
+                .transition(.move(edge: .bottom))
+                .animation(.default.speed(1))
         }
     }
 }

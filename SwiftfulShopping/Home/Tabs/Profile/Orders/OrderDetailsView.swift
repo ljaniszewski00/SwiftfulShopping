@@ -108,7 +108,7 @@ struct OrderDetailsView: View {
                         profileViewModel.shouldPresentReturnCreationView = true
                     }
                 } label: {
-                    Text("Return product")
+                    Text("Return products")
                         .font(.ssButton)
                 }
                 .buttonStyle(CustomButton())
@@ -142,6 +142,7 @@ struct OrderDetailsView: View {
                 .isDetailLink(false)
             
         }
+        .padding(.bottom, tabBarStateManager.tabBarSize.height * 0.6)
         .navigationTitle("Order No. \(order.id)")
         .navigationBarTitleDisplayMode(.inline)
         .navigationBarBackButtonHidden(true)

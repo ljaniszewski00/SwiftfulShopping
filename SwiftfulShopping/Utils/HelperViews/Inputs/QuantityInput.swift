@@ -40,6 +40,7 @@ struct QuantityInput: View {
             
             HStack(spacing: 0) {
                 Button {
+                    UIImpactFeedbackGenerator(style: .medium).impactOccurred()
                     if selection != nil {
                         selection!.wrappedValue -= 1
                     } else {
@@ -67,6 +68,7 @@ struct QuantityInput: View {
                     }
                 
                 Button {
+                    UIImpactFeedbackGenerator(style: .medium).impactOccurred()
                     if selection != nil {
                         selection!.wrappedValue += 1
                     } else {
