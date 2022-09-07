@@ -10,23 +10,24 @@ import SwiftUI
 struct ColorSchemeChangeView: View {
     @EnvironmentObject private var settingsViewModel: SettingsViewModel
     @Environment(\.dismiss) private var dismiss: DismissAction
+    @Environment(\.colorScheme) private var colorScheme: ColorScheme
     
     var body: some View {
         List {
             ForEach(Appearance.allCases, id: \.self) { appearance in
-                HStack {
-                    Text(appearance.rawValue.capitalized)
-                    
-                    Spacer()
-                    
-                    if appearance == settingsViewModel.appThemeSetting {
-                        Image(systemName: "checkmark")
-                            .foregroundColor(.accentColor)
-                    }
-                }
-                .onTapGesture {
-                    withAnimation {
-                        settingsViewModel.appThemeSetting = appearance
+                Button {
+                    settingsViewModel.appThemeSetting = appearance
+                } label: {
+                    HStack {
+                        Text(appearance.rawValue.capitalized)
+                            .foregroundColor(colorScheme == .light ? .black : .white)
+                        
+                        Spacer()
+                        
+                        if appearance == settingsViewModel.appThemeSetting {
+                            Image(systemName: "checkmark")
+                                .foregroundColor(.accentColor)
+                        }
                     }
                 }
             }
