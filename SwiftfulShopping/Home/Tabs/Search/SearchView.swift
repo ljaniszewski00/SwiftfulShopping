@@ -104,16 +104,7 @@ struct SearchView: View {
                                     .padding([.horizontal, .top])
                                     .measureSize(size: $searchViewModel.filterAndDisplayPaneSize)
                                     
-                                    VStack {
-                                        SearchedProductsListView()
-                                        
-                                        NavigationLink(destination: ProductDetailsView(product: searchViewModel.choosenProduct ?? Product.demoProducts[0])
-                                                                        .onAppear {
-                                                                            tabBarStateManager.hideTabBar()
-                                                                        },
-                                                       isActive: $searchViewModel.shouldPresentProductDetailsView,
-                                                       label: { EmptyView() })
-                                    }
+                                    SearchedProductsListView()
                                 }
                                 
                                 if !exploreViewModel.searchProductsText.isEmpty && exploreViewModel.changingProductsToBeDisplayed.isEmpty {
@@ -182,6 +173,13 @@ struct SearchView: View {
                                                     tabBarStateManager.showTabBar()
                                                 },
                                isActive: $searchViewModel.shouldPresentProductRecognizerView,
+                               label: { EmptyView() })
+                
+                NavigationLink(destination: ProductDetailsView(product: searchViewModel.choosenProduct ?? Product.demoProducts[0])
+                                                .onAppear {
+                                                    tabBarStateManager.hideTabBar()
+                                                },
+                               isActive: $searchViewModel.shouldPresentProductDetailsView,
                                label: { EmptyView() })
             }
             .navigationTitle("Search")

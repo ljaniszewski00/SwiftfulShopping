@@ -109,4 +109,19 @@ class ExploreViewModel: ObservableObject {
     func restoreOriginalProductsArray() {
         changingProductsToBeDisplayed = productsFromRepository
     }
+    
+    func getProductsListFor(recognitionResults: [String]) -> [Product] {
+        var products: Set<Product> = []
+        for recognitionResult in recognitionResults {
+            for productFromRepository in productsFromRepository {
+                for keyword in productFromRepository.keywords {
+                    if keyword.lowercased().contains(recognitionResult.lowercased()) {
+                        products.insert(productFromRepository)
+                    }
+                }
+            }
+        }
+        
+        return Array(products)
+    }
 }

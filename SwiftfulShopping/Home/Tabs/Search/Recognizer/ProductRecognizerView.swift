@@ -114,33 +114,34 @@ struct ProductRecognizerView: View {
                 cameraViewModel.startCapturing()
             }
         }) {
-            VStack(alignment: .center, spacing: 40) {
-                VStack(alignment: .center, spacing: 20) {
-                    Text("Recognition Results")
-                        .font(.ssTitle1)
+            VStack(alignment: .center, spacing: 20) {
+                if exploreViewModel.getProductsListFor(recognitionResults: productRecognizer.getFormattedResults()).isEmpty {
+                    EmptyView()
+                } else {
+                    VStack(alignment: .center, spacing: 20) {
+                        Text("Recognition Results")
+                            .font(.ssTitle1)
+                        
+                        Text("Choose one of the products listed below if it is what you wanted. Otherwise, try recognizing the product again.")
+                            .font(.ssCallout)
+                            .foregroundColor(.ssDarkGray)
+                            .fixedSize(horizontal: false, vertical: true)
+                    }
                     
-                    Text("Choose one of them to search for such product or try to recognize the product again")
-                        .font(.ssTitle3)
-                        .foregroundColor(.ssDarkGray)
-                        .fixedSize(horizontal: false, vertical: true)
-                }
-                LazyVGrid(columns: gridColumns, alignment: .leading, spacing: 10) {
-                    ForEach(productRecognizer.getFormattedResults(), id: \.self) { recognitionResult in
-                        Button {
-                            withAnimation {
-                                exploreViewModel.searchProductsText = recognitionResult
+                    List {
+                        ForEach(exploreViewModel.getProductsListFor(recognitionResults: productRecognizer.getFormattedResults()), id: \.self) { product in
+                            Button {
+                                searchViewModel.choosenProduct = product
                                 productRecognizer.shouldPresentSheetWithResults = false
-                                dismiss()
+                                searchViewModel.shouldPresentProductRecognizerView = false
+                                searchViewModel.shouldPresentProductDetailsView = true
+                            } label: {
+                                BasicProductTile(product: product)
                             }
-                        } label: {
-                            Text(recognitionResult)
-                                .padding(12)
-                                .background(.ultraThinMaterial, in: RoundedRectangle(cornerRadius: 15, style: .continuous))
-                                .foregroundColor(colorScheme == .light ? Color(uiColor: .darkGray) : .ssWhite)
                         }
                     }
+                    .listStyle(.grouped)
                 }
-                .font(.ssCallout)
                 
                 Spacer()
                 
