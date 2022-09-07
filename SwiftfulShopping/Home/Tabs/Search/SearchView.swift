@@ -114,12 +114,12 @@ struct SearchView: View {
                                                    contentMode: .scaleAspectFill)
                                         .frame(width: ScreenBoundsSupplier.shared.getScreenWidth(),
                                                height: ScreenBoundsSupplier.shared.getScreenHeight() * 0.5)
-                                        VStack(spacing: 10) {
+                                        VStack(spacing: 20) {
                                             Text("No products found!")
-                                                .font(.ssTitle1)
+                                                .font(.ssTitle2)
                                                 .fixedSize(horizontal: false, vertical: true)
                                             Text("Please try another search key or change filtering method.")
-                                                .font(.ssTitle3)
+                                                .font(.ssCallout)
                                                 .foregroundColor(.ssDarkGray)
                                                 .fixedSize(horizontal: false, vertical: true)
                                         }

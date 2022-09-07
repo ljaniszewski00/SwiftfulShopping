@@ -116,7 +116,22 @@ struct ProductRecognizerView: View {
         }) {
             VStack(alignment: .center, spacing: 20) {
                 if exploreViewModel.getProductsListFor(recognitionResults: productRecognizer.getFormattedResults()).isEmpty {
-                    EmptyView()
+                    VStack {
+                        LottieView(name: "searchNoResults",
+                                   loopMode: .loop,
+                                   contentMode: .scaleAspectFill)
+                        .frame(width: ScreenBoundsSupplier.shared.getScreenWidth(),
+                               height: ScreenBoundsSupplier.shared.getScreenHeight() * 0.5)
+                        VStack(spacing: 20) {
+                            Text("No products found!")
+                                .font(.ssTitle2)
+                                .fixedSize(horizontal: false, vertical: true)
+                            Text("Try recognizing the product again by clicking button down below.")
+                                .font(.ssCallout)
+                                .foregroundColor(.ssDarkGray)
+                                .fixedSize(horizontal: false, vertical: true)
+                        }
+                    }
                 } else {
                     VStack(alignment: .center, spacing: 20) {
                         Text("Recognition Results")
