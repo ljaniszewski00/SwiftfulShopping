@@ -35,7 +35,15 @@ class CartViewModel: ObservableObject {
     }
     
     var cartTotalCost: Double {
-        cart.getCartTotalCost()
+        cart.totalCost
+    }
+    
+    var cartTotalCostWithDiscounts: Double {
+        cart.totalCostWithAppliedDiscounts
+    }
+    
+    var cartAppliedDiscounts: [Discount] {
+        Array(cart.appliedDiscounts)
     }
     
     func getCartProductCount(product: Product) -> Int {
@@ -95,5 +103,17 @@ class CartViewModel: ObservableObject {
     func changeFocusedProductFor(product: Product) {
         choosenProduct = product
         shouldPresentProductDetailsView = true
+    }
+    
+    func applyDiscount(discount: Discount) {
+        cart.applyDiscount(discount: discount)
+    }
+    
+    func removeDiscount(discount: Discount) {
+        cart.removeDiscount(discount: discount)
+    }
+    
+    func makeAllAppliedDiscountsRedeemedBy(userID: String) {
+        
     }
 }

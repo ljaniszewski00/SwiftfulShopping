@@ -113,16 +113,6 @@ struct SearchView: View {
                                                                         },
                                                        isActive: $searchViewModel.shouldPresentProductDetailsView,
                                                        label: { EmptyView() })
-                                        
-                                        NavigationLink(destination: ProductRecognizerView()
-                                                                        .onAppear {
-                                                                            tabBarStateManager.hideTabBar()
-                                                                        }
-                                                                        .onDisappear {
-                                                                            tabBarStateManager.showTabBar()
-                                                                        },
-                                                       isActive: $searchViewModel.shouldPresentProductRecognizerView,
-                                                       label: { EmptyView() })
                                     }
                                 }
                                 
@@ -183,6 +173,16 @@ struct SearchView: View {
                         .padding(.bottom, 60)
                     }
                 }
+                
+                NavigationLink(destination: ProductRecognizerView()
+                                                .onAppear {
+                                                    tabBarStateManager.hideTabBar()
+                                                }
+                                                .onDisappear {
+                                                    tabBarStateManager.showTabBar()
+                                                },
+                               isActive: $searchViewModel.shouldPresentProductRecognizerView,
+                               label: { EmptyView() })
             }
             .navigationTitle("Search")
             .navigationBarTitleDisplayMode(.inline)

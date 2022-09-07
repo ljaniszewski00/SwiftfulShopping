@@ -28,6 +28,8 @@ class OrderCreationViewModel: ObservableObject {
     @Published var addressToBeSaved: Bool = false
     @Published var addressToBeDefault: Bool = false
     
+    @Published var discountCode: String = ""
+    
     @Published var createdOrder: Order?
     
     var newAddressFieldsNotValidated: Bool {
@@ -54,14 +56,24 @@ class OrderCreationViewModel: ObservableObject {
     }
     
     private func eraseNewAddressData() {
-        newStreetName = ""
-        newStreetNumber = ""
-        newApartmentNumber = ""
-        newZipCode = ""
-        newCity = ""
-        newCountry = ""
+        newStreetName.removeAll()
+        newStreetNumber.removeAll()
+        newApartmentNumber.removeAll()
+        newZipCode.removeAll()
+        newCity.removeAll()
+        newCountry.removeAll()
         addressToBeSaved = false
         addressToBeDefault = false
+    }
+    
+    func applyDiscount() -> Discount? {
+        /*
+         SOME DATABASE CHECKING IF DISCOUNT CODE IS LEGIBLE:
+        
+         var fetchedDiscount = fetchDiscountData(self.discountCode)
+         */
+        
+        return Discount.demoDiscounts[0]
     }
     
     func createOrder(client: Profile,

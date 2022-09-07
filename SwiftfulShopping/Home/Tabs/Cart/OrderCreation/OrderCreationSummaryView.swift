@@ -19,6 +19,10 @@ struct OrderCreationSummaryView: View {
     @Environment(\.colorScheme) var colorScheme
     @Environment(\.dismiss) private var dismiss: DismissAction
     
+    @StateObject var errorManager = ErrorManager.shared
+    
+    @State private var isCouponTextFieldFocused: Bool = false
+    
     var body: some View {
         VStack {
             StepsView(stepsNumber: 4, activeStep: 3)
@@ -82,6 +86,90 @@ struct OrderCreationSummaryView: View {
                                 .padding()
                         }
                     }
+                    
+                    VStack(alignment: .leading, spacing: 10) {
+                        HStack {
+                            Text("Products in cart:")
+                                .font(.ssCallout)
+                                .foregroundColor(.ssDarkGray)
+                            
+                            Text("\(cartViewModel.cartProductsCount)")
+                                .font(.ssTitle3)
+                                .foregroundColor(.accentColor)
+                        }
+                        
+                        HStack {
+                            Text("Total cost:")
+                                .font(.ssCallout)
+                                .foregroundColor(.ssDarkGray)
+                            
+                            Text("$\(cartViewModel.cartTotalCost, specifier: "%.2f")")
+                                .font(.ssTitle3)
+                                .foregroundColor(.accentColor)
+                        }
+                        
+                        VStack(alignment: .leading, spacing: 15) {
+                            Text("Do you have coupon code?")
+                                .font(.ssTitle2)
+                            
+                            HStack(alignment: .bottom) {
+                                RectangleCustomTextField(textFieldProperty: "Coupon code",
+                                                         text: $orderCreationViewModel.discountCode,
+                                                         isFocusedParentView:
+                                                            $isCouponTextFieldFocused)
+                                
+                                Button {
+                                    if let discount = orderCreationViewModel.applyDiscount() {
+                                        cartViewModel.applyDiscount(discount: discount)
+                                    } else {
+                                        errorManager.generateCustomError(errorType: .discountApplyError)
+                                    }
+                                } label: {
+                                    Text("Apply")
+                                        .font(.ssButton)
+                                }
+                                .buttonStyle(CustomButton())
+                                .disabled(orderCreationViewModel.discountCode.isEmpty)
+                                .frame(width: ScreenBoundsSupplier.shared.getScreenWidth() * 0.25)
+                            }
+                        }
+                        .padding(.vertical, 15)
+                        
+                        if !cartViewModel.cartAppliedDiscounts.isEmpty {
+                            ForEach(cartViewModel.cartAppliedDiscounts, id: \.self) { appliedDiscount in
+                                HStack {
+                                    Button {
+                                        cartViewModel.removeDiscount(discount: appliedDiscount)
+                                    } label: {
+                                        Image(systemName: "xmark.circle.fill")
+                                    }
+                                    
+                                    Text("\(appliedDiscount.discountCode):")
+                                        .font(.ssCallout)
+                                        .foregroundColor(.ssDarkGray)
+                                    
+                                    Spacer()
+                                    
+                                    Text("-\(appliedDiscount.discountValuePercent, specifier: "%.2f")%")
+                                        .font(.ssCallout)
+                                        .foregroundColor(.accentColor)
+                                }
+                            }
+                        }
+                        
+                        HStack {
+                            Text("Total cost with discounts:")
+                                .font(.ssCallout)
+                                .foregroundColor(.ssDarkGray)
+                            
+                            Spacer()
+                            
+                            Text("$\(cartViewModel.cartTotalCostWithDiscounts, specifier: "%.2f")")
+                                .font(.ssTitle3)
+                                .foregroundColor(.accentColor)
+                        }
+                        .padding(.top, 10)
+                    }
                 }
                 .padding()
             }
@@ -91,8 +179,13 @@ struct OrderCreationSummaryView: View {
                     orderCreationViewModel.createOrder(client: profileViewModel.profile,
                                                        shoppingCart: cartViewModel.cart,
                                                        shippingAddress: desiredAddress)
-                    profileViewModel.orders.append(orderCreationViewModel.createdOrder!)
-                    orderCreationViewModel.shouldPresentOrderCreationCompletionView = true
+                    if let createdOrder = orderCreationViewModel.createdOrder {
+                        profileViewModel.orders.append(createdOrder)
+                        cartViewModel.makeAllAppliedDiscountsRedeemedBy(userID: profileViewModel.profile.id)
+                        orderCreationViewModel.shouldPresentOrderCreationCompletionView = true
+                    } else {
+                        errorManager.generateCustomError(errorType: .orderCreateError)
+                    }
                 }
             } label: {
                 Text("Complete")
@@ -164,6 +257,8 @@ struct OrderCreationSummaryView_Previews: PreviewProvider {
                                                        Product.demoProducts[1]: 1,
                                                        Product.demoProducts[2]: 3,
                                                        Product.demoProducts[3]: 1]
+                        cartViewModel.cart.appliedDiscounts.insert(Discount.demoDiscounts[0])
+                        cartViewModel.cart.appliedDiscounts.insert(Discount.demoDiscounts[1])
                     }
             }
         }

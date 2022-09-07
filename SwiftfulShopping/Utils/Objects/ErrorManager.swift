@@ -13,14 +13,20 @@ final class ErrorManager: ObservableObject {
         .productRecognizerError: 2,
         .loginError: 3,
         .registerError: 4,
+        .discountApplyError: 5,
+        .orderCreateError: 6,
         .unknown: 0
     ]
+    
+    private static let errorDescriptionSuffix: String = "Please try again later."
 
     private let errorsDescriptions: [ErrorType: String] = [
         .networkError: "No internet connection. Some functions will be unavailable.",
-        .productRecognizerError: "Error occured while recognizing your product. Please try again later.",
-        .loginError: "Error occured while trying to log in. Please try again later.",
-        .registerError: "Error occured while trying to register. Please try again later.",
+        .productRecognizerError: "Error occured while recognizing your product. \(errorDescriptionSuffix)",
+        .loginError: "Error occured while trying to log in. \(errorDescriptionSuffix)",
+        .registerError: "Error occured while trying to register. \(errorDescriptionSuffix)",
+        .discountApplyError: "Error applying discount code. \(errorDescriptionSuffix)",
+        .orderCreateError: "Error creating your order. \(errorDescriptionSuffix)",
         .unknown: ""
     ]
     

@@ -144,7 +144,7 @@ struct MultiselectionDropdownMenu_Previews: PreviewProvider {
     
     static var dataToChoose: [String] {
         var dataToChoose: [String] = []
-        Countries.allCases.map {
+        _ = Countries.allCases.map {
             dataToChoose.append($0.rawValue)
         }
         return dataToChoose

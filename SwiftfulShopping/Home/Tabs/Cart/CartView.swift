@@ -157,6 +157,10 @@ struct CartView_Previews: PreviewProvider {
                     .onAppear {
                         authStateManager.isGuest = false
                         authStateManager.isLogged = true
+                        
+                        for product in Product.demoProducts {
+                            cartViewModel.cart.products[product] = 1
+                        }
                     }
             }
         }
