@@ -17,6 +17,7 @@ struct Product {
     var unitsSold: Int
     var introducedForSale: Date
     var isRecommended: Bool
+    var isNew: Bool
     var keywords: [String]
     var rating: ProductRating
     var imagesURLs: [String]
@@ -30,6 +31,7 @@ struct Product {
          unitsSold: Int = 0,
          introducedForSale: Date = Date(),
          isRecommended: Bool = false,
+         isNew: Bool = true,
          keywords: [String] = [],
          rating: ProductRating,
          imagesURLs: [String] = ["https://res.cloudinary.com/drqqwwpen/image/upload/v1596474380/pcs/not-available_g2vsum.jpg"]) {
@@ -42,6 +44,7 @@ struct Product {
         self.unitsSold = unitsSold
         self.introducedForSale = introducedForSale
         self.isRecommended = isRecommended
+        self.isNew = isNew
         if keywords.isEmpty {
             self.keywords = [name, company, productDescription]
         } else {

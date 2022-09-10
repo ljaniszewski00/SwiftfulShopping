@@ -20,16 +20,13 @@ struct ExploreView: View {
     
     @StateObject var errorManager = ErrorManager.shared
     
-    @AppStorage("productsListDisplayMethod") var displayMethod: ProductDisplayMethod = .list
-    
     @State var offset: CGPoint = .zero
     
     var buttonUpVisible: Bool {
         if exploreViewModel.changingProductsToBeDisplayed.isEmpty {
             return false
         } else {
-            let heightToShow = exploreViewModel.productTileSize.height + exploreViewModel.tabsSize.height
-            return offset.y >= heightToShow
+            return offset.y >= exploreViewModel.categoriesTileSize.height
         }
     }
     
@@ -39,107 +36,27 @@ struct ExploreView: View {
                 ZStack(alignment: .bottomTrailing) {
                     ScrollView(.vertical, showsIndicators: true) {
                         VStack(alignment: .center) {
-                            ScrollView(.horizontal, showsIndicators: false) {
-                                HStack {
-                                    ForEach(ExploreViewTabs.allCases, id: \.self) { tabName in
-                                        Text(tabName.rawValue)
-                                            .font(.ssButton)
-                                            .foregroundColor(colorScheme == .light ? .ssBlack : .ssWhite)
-                                            .padding()
-                                            .if(tabName == exploreViewModel.selectedTab) {
-                                                $0
-                                                    .background {
-                                                        RoundedRectangle(cornerRadius: 10)
-                                                            .foregroundColor(.accentColor)
-                                                    }
-                                            }
-                                            .onTapGesture {
-                                                withAnimation {
-                                                    exploreViewModel.selectedTab = tabName
-                                                }
-                                            }
-                                    }
-                                }
-                                .padding()
-                                .measureSize(size: $exploreViewModel.tabsSize)
-                            }
+                            buildCategoriesList()
                             
-                            if exploreViewModel.selectedTab != .categories {
-                                HStack(spacing: 20) {
-                                    Button {
-                                        withAnimation {
-                                            exploreViewModel.presentSortingAndFilteringSheet = true
-                                        }
-                                    } label: {
-                                        Image(systemName: "slider.horizontal.3")
-                                            .resizable()
-                                            .frame(width: 25, height: 20)
-                                            .if(sortingAndFilteringViewModel.numberOfFiltersApplied > 0) {
-                                                $0
-                                                    .overlay(
-                                                        ZStack {
-                                                            Circle()
-                                                                .frame(width: 17, height: 17)
-                                                                .foregroundColor(.red)
-                                                            Text(String(sortingAndFilteringViewModel.numberOfFiltersApplied))
-                                                                .font(.ssBody)
-                                                                .foregroundColor(.ssWhite)
-                                                        }
-                                                        .offset(x: 17, y: -17)
-                                                    )
-                                            }
-                                    }
-                                    
-                                    if (exploreViewModel.selectedTab == .categories && exploreViewModel.displayedCategory != nil) {
-                                        HStack {
-                                            Image(systemName: "multiply.circle.fill")
-                                                .resizable()
-                                                .frame(width: 25, height: 25)
-                                                .foregroundColor(.accentColor)
-                                            Text(exploreViewModel.displayedCategory?.rawValue ?? "")
-                                                .font(.ssCallout)
-                                        }
-                                        .onTapGesture {
-                                            withAnimation {
-                                                exploreViewModel.displayedCategory = nil
-                                            }
-                                        }
-                                    }
-                                    
-                                    Spacer()
-                                    
-                                    Button {
-                                        withAnimation {
-                                            displayMethod = .grid
-                                        }
-                                    } label: {
-                                        Image(systemName: "rectangle.grid.3x2")
-                                            .resizable()
-                                            .frame(width: 25, height: 20)
-                                    }
-                                    
-                                    Button {
-                                        withAnimation {
-                                            displayMethod = .list
-                                        }
-                                    } label: {
-                                        Image(systemName: "list.bullet")
-                                            .resizable()
-                                            .frame(width: 25, height: 20)
-                                    }
-                                }
-                                .padding(.horizontal)
-                            }
+                            buildNewestProductsList()
+                                .padding(.bottom)
                             
-                            if exploreViewModel.selectedTab == .categories {
-                                if exploreViewModel.displayedCategory == nil {
-                                    CategoriesTabView()
-                                } else {
-                                    ProductsListView()
-                                }
-                            } else {
-                                ProductsListView()
+                            buildCompaniesGrid()
+                            
+                            buildRecommendedProductsList()
+                            
+                            Button {
+                                exploreViewModel.productsForSource = .all
+                                exploreViewModel.shouldPresentAllProducts = true
+                            } label: {
+                                Text("All Products")
                             }
+                            .buttonStyle(CustomButton())
+                            .padding()
+                            
+                            NavigationLink(destination: ProductsListView(),
+                                           isActive: $exploreViewModel.shouldPresentAllProducts,
+                                           label: { EmptyView() })
                             
                             NavigationLink(destination: ProductDetailsView(product: exploreViewModel.choosenProduct ?? Product.demoProducts[0])
                                                             .onAppear {
@@ -165,28 +82,41 @@ struct ExploreView: View {
                         }
                     }
                     
-                    if buttonUpVisible && exploreViewModel.selectedTab != .categories {
+                    if buttonUpVisible {
                         Button {
                             exploreViewModel.scrollProductsListToBeginning = true
                         } label: {
-                            Image(systemName: "arrow.up")
-                                .foregroundColor(colorScheme == .light ? .ssBlack : .ssWhite)
+                            Image(systemName: "arrowtriangle.up.fill")
+                                .resizable()
+                                .frame(width: 20, height: 20)
+                                .foregroundColor(.ssWhite)
                                 .padding()
                                 .background {
                                     Circle()
                                         .foregroundColor(.accentColor)
+                                        .shadow(color: .black,
+                                                radius: 5,
+                                                x: 3,
+                                                y: 3)
                                 }
                                 .transition(.move(edge: .trailing))
                                 .animation(.default.speed(0.5))
-                                .zIndex(1)
                         }
                         .padding()
                         .padding(.bottom, 60)
+                        .zIndex(1)
                     }
                 }
             }
-            .navigationTitle("Explore")
+            .navigationTitle("")
+            .navigationBarTitleDisplayMode(.inline)
             .toolbar {
+                ToolbarItem(placement: .navigationBarLeading) {
+                    Text("SwiftfulShopping")
+                        .font(.ssTitle3).fontWeight(.bold)
+                        .foregroundColor(.accentColor)
+                }
+                
                 ToolbarItem(placement: .navigationBarTrailing) {
                     NavigationLink(destination: NotificationsView()) {
                         Image(systemName: "bell")
@@ -205,6 +135,174 @@ struct ExploreView: View {
         .environmentObject(favoritesViewModel)
         .environmentObject(cartViewModel)
         .environmentObject(sortingAndFilteringViewModel)
+    }
+    
+    @ViewBuilder
+    func buildCategoriesList() -> some View {
+        VStack(alignment: .leading, spacing: 15) {
+            Text("Categories")
+                .font(.ssTitle2)
+                .foregroundColor(.ssBlack)
+                .padding([.leading, .top])
+                .frame(width: ScreenBoundsSupplier.shared.getScreenWidth(), alignment: .leading)
+                .padding(.bottom, 10)
+                .background {
+                    Rectangle()
+                        .foregroundColor(.accentColor)
+                }
+            
+            ScrollView(.horizontal, showsIndicators: false) {
+                HStack {
+                    ForEach(Category.allCases, id: \.self) { category in
+                        Button {
+                            exploreViewModel.productsForSource = .category
+                            exploreViewModel.choosenCategory = category
+                            exploreViewModel.shouldPresentAllCategoryProducts = true
+                        } label: {
+                            VStack(spacing: 15) {
+                                Image(systemName: "cart")
+                                    .resizable()
+                                    .aspectRatio(contentMode: .fill)
+                                    .frame(width: 25, height: 25)
+                                    .foregroundColor(.ssDarkGray)
+                                Text(category.rawValue)
+                                    .font(.ssButton)
+                                    .foregroundColor(.ssDarkGray)
+                            }
+                        }
+                        .padding()
+                    }
+                }
+            }
+            
+            NavigationLink(destination: ProductsListView(),
+                           isActive: $exploreViewModel.shouldPresentAllCategoryProducts,
+                           label: { EmptyView() })
+        }
+        .background(.ultraThinMaterial, in: Rectangle())
+        .measureSize(size: $exploreViewModel.categoriesTileSize)
+    }
+    
+    @ViewBuilder
+    func prepareProductsListFor(products: [Product]) -> some View {
+        VStack {
+            ForEach(products, id: \.id) { product in
+                Button {
+                    withAnimation(.interactiveSpring(response: 0.6, dampingFraction: 0.7, blendDuration: 0.7)) {
+                        exploreViewModel.changeFocusedProductFor(product: product)
+                    }
+                } label: {
+                    ListProductCardTileView(product: product)
+                }
+                .buttonStyle(ScaledButtonStyle())
+            }
+        }
+        .padding()
+    }
+    
+    @ViewBuilder
+    func buildNewestProductsList() -> some View {
+        VStack(alignment: .leading, spacing: 0) {
+            Text("Newest")
+                .font(.ssTitle2)
+                .foregroundColor(.ssBlack)
+                .padding([.leading, .top])
+            
+            prepareProductsListFor(products: exploreViewModel.newestProducts)
+            
+            HStack {
+                Spacer()
+                
+                Button {
+                    exploreViewModel.productsForSource = .newest
+                    exploreViewModel.shouldPresentAllNewProducts = true
+                } label: {
+                    Text("See all newest")
+                        .font(.ssButton)
+                        .foregroundColor(.accentColor)
+                }
+            }
+            .padding(.trailing)
+            
+            NavigationLink(destination: ProductsListView(),
+                           isActive: $exploreViewModel.shouldPresentAllNewProducts,
+                           label: { EmptyView() })
+        }
+    }
+    
+    @ViewBuilder
+    func buildCompaniesGrid() -> some View {
+        VStack(alignment: .leading, spacing: 25) {
+            Text("Companies")
+                .font(.ssTitle2)
+                .foregroundColor(.ssBlack)
+                .padding([.leading, .top])
+                .frame(width: ScreenBoundsSupplier.shared.getScreenWidth(), alignment: .leading)
+                .padding(.bottom, 10)
+                .background {
+                    Rectangle()
+                        .foregroundColor(.accentColor)
+                }
+            
+            LazyVGrid(columns: [
+                GridItem(.adaptive(minimum: 80), alignment: .top)
+            ], spacing: 20) {
+                ForEach(exploreViewModel.productsCompanies, id: \.self) { company in
+                    Button {
+                        exploreViewModel.productsForSource = .company
+                        exploreViewModel.choosenCompany = company
+                        exploreViewModel.shouldPresentAllCompanyProducts = true
+                    } label: {
+                        VStack(spacing: 15) {
+                            Image(systemName: "building.2")
+                                .resizable()
+                                .aspectRatio(contentMode: .fill)
+                                .frame(width: 25, height: 25)
+                                .foregroundColor(.ssDarkGray)
+                            Text(company)
+                                .font(.ssButton)
+                                .foregroundColor(.ssDarkGray)
+                        }
+                    }
+                    
+                }
+            }
+            
+            NavigationLink(destination: ProductsListView(),
+                           isActive: $exploreViewModel.shouldPresentAllCompanyProducts,
+                           label: { EmptyView() })
+        }
+        .background(.ultraThinMaterial, in: Rectangle())
+    }
+    
+    @ViewBuilder
+    func buildRecommendedProductsList() -> some View {
+        VStack(alignment: .leading, spacing: 0) {
+            Text("Recommended")
+                .font(.ssTitle2)
+                .foregroundColor(.ssBlack)
+                .padding([.leading, .top])
+            
+            prepareProductsListFor(products: exploreViewModel.recommendedProducts)
+            
+            HStack {
+                Spacer()
+                
+                Button {
+                    exploreViewModel.productsForSource = .recommended
+                    exploreViewModel.shouldPresentAllRecommendedProducts = true
+                } label: {
+                    Text("See all recommended")
+                        .font(.ssButton)
+                        .foregroundColor(.accentColor)
+                }
+            }
+            .padding(.trailing)
+            
+            NavigationLink(destination: ProductsListView(),
+                           isActive: $exploreViewModel.shouldPresentAllRecommendedProducts,
+                           label: { EmptyView() })
+        }
     }
 }
 
@@ -231,6 +329,7 @@ struct ExploreView_Previews: PreviewProvider {
                     .previewDevice(PreviewDevice(rawValue: deviceName))
                     .previewDisplayName("\(deviceName) portrait")
                     .onAppear {
+                        exploreViewModel.fetchProducts()
                         authStateManager.isGuest = false
                         authStateManager.isLogged = true
                     }
