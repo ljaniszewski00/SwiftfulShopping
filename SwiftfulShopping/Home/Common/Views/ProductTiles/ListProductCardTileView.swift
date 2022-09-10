@@ -31,6 +31,7 @@ struct ListProductCardTileView: View {
                 .aspectRatio(contentMode: .fit)
                 .clipShape(RoundedRectangle(cornerRadius: 15))
                 .padding(.trailing)
+                .layoutPriority(1)
 
             VStack(alignment: .leading, spacing: 10) {
                 Text(product.company)

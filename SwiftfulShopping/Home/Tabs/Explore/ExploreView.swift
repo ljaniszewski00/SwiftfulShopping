@@ -108,8 +108,7 @@ struct ExploreView: View {
                     }
                 }
             }
-            .navigationTitle("")
-            .navigationBarTitleDisplayMode(.inline)
+            .navigationTitle("Explore")
             .toolbar {
                 ToolbarItem(placement: .navigationBarLeading) {
                     Text("SwiftfulShopping")
