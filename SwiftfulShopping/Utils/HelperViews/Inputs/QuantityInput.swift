@@ -60,7 +60,7 @@ struct QuantityInput: View {
                     .foregroundColor(colorScheme == .light ? .black : .ssWhite)
                     .fixedSize(horizontal: true, vertical: false)
                     .padding()
-                    .frame(width: 70)
+                    .frame(width: 60)
                     .background {
                         Rectangle()
                             .foregroundColor(.accentColor)

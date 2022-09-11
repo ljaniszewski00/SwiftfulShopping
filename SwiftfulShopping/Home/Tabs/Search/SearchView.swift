@@ -149,19 +149,25 @@ struct SearchView: View {
                         Button {
                             searchViewModel.scrollProductsListToBeginning = true
                         } label: {
-                            Image(systemName: "arrow.up")
-                                .foregroundColor(colorScheme == .light ? .black : .ssWhite)
+                            Image(systemName: "arrowtriangle.up.fill")
+                                .resizable()
+                                .frame(width: 20, height: 20)
+                                .foregroundColor(.ssWhite)
                                 .padding()
                                 .background {
                                     Circle()
                                         .foregroundColor(.accentColor)
+                                        .shadow(color: .black,
+                                                radius: 5,
+                                                x: 3,
+                                                y: 3)
                                 }
-                                .transition(.move(edge: .trailing))
-                                .animation(.default.speed(0.5))
-                                .zIndex(1)
                         }
                         .padding()
                         .padding(.bottom, 60)
+                        .transition(.move(edge: .trailing))
+                        .animation(.default.speed(0.5))
+                        .zIndex(1)
                     }
                 }
                 

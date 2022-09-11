@@ -104,6 +104,8 @@ struct ExploreView: View {
                         }
                         .padding()
                         .padding(.bottom, 60)
+                        .transition(.move(edge: .trailing))
+                        .animation(.default.speed(0.5))
                         .zIndex(1)
                     }
                 }

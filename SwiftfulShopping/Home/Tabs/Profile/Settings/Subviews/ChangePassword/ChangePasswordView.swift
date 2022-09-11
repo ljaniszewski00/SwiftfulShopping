@@ -22,7 +22,7 @@ struct ChangePasswordView: View {
     var body: some View {
         ScrollView(.vertical, showsIndicators: false) {
             VStack(spacing: 20) {
-                VStack(spacing: 0) {
+                VStack(spacing: 20) {
                     CustomTextField(textFieldProperty: "Email Address",
                                     textFieldImageName: "envelope.fill",
                                     textFieldKeyboardType: .emailAddress,
@@ -36,7 +36,6 @@ struct ChangePasswordView: View {
                                     text: $changePasswordViewModel.oldPassword,
                                     isFocusedParentView: $isOldPasswordTextFieldFocused)
                     .disabled(changePasswordViewModel.showNewPasswordTextField)
-                    .padding(.bottom)
                     
                     Button {
                         withAnimation {

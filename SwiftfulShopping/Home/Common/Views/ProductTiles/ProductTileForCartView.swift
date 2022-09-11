@@ -25,7 +25,7 @@ struct ProductTileForCartView: View {
                         .aspectRatio(contentMode: .fit)
                         .clipShape(RoundedRectangle(cornerRadius: 15))
                         .frame(width:
-                                ScreenBoundsSupplier.shared.getScreenWidth() * 0.45,
+                                ScreenBoundsSupplier.shared.getScreenWidth() * 0.3,
                                height:
                                 ScreenBoundsSupplier.shared.getScreenHeight() * 0.2)
                 }
@@ -35,13 +35,13 @@ struct ProductTileForCartView: View {
                 .aspectRatio(contentMode: .fit)
                 .clipShape(RoundedRectangle(cornerRadius: 15))
                 .frame(width:
-                        ScreenBoundsSupplier.shared.getScreenWidth() * 0.45,
+                        ScreenBoundsSupplier.shared.getScreenWidth() * 0.25,
                        height:
                         ScreenBoundsSupplier.shared.getScreenHeight() * 0.2)
                 .padding(.trailing)
-                .layoutPriority(1)
+                .layoutPriority(2)
 
-            VStack(alignment: .leading, spacing: 20) {
+            VStack(alignment: .leading, spacing: 40) {
                 VStack(alignment: .leading, spacing: 10) {
                     Text(product.company)
                         .font(.ssCaption1)
@@ -66,6 +66,8 @@ struct ProductTileForCartView: View {
                                   plusAction: {
                         cartViewModel.addProductToCart(product: product, quantity: 1)
                     })
+                    .scaledToFit()
+                    .frame(height: 30)
                 }
             }
         }

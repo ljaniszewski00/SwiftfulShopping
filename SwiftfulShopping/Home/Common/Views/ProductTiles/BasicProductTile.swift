@@ -9,9 +9,11 @@ import SwiftUI
 import Kingfisher
 
 struct BasicProductTile: View {
+    @EnvironmentObject private var ratingViewModel: RatingViewModel
     @Environment(\.colorScheme) var colorScheme
     
     var product: Product
+    var includeRateButton: Bool = false
     
     var body: some View {
         HStack(alignment: .top) {
@@ -38,21 +40,39 @@ struct BasicProductTile: View {
                 .padding(.trailing)
                 .layoutPriority(1)
 
-            VStack(alignment: .leading, spacing: 20) {
-                VStack(alignment: .leading, spacing: 10) {
-                    Text(product.company)
-                        .font(.ssCaption1)
-                        .foregroundColor(.ssDarkGray)
-                        .fixedSize(horizontal: false, vertical: true)
-                    
-                    Text(product.name)
-                        .font(.ssTitle3)
-                        .fixedSize(horizontal: false, vertical: true)
-                        .foregroundColor(colorScheme == .light ? .black : .ssWhite)
-                    
-                    Text("$\(product.price, specifier: "%.2f")")
-                        .font(.ssCallout)
-                        .foregroundColor(.accentColor)
+            VStack(alignment: .leading) {
+                VStack(alignment: .leading, spacing: 20) {
+                    VStack(alignment: .leading, spacing: 10) {
+                        Text(product.company)
+                            .font(.ssCaption1)
+                            .foregroundColor(.ssDarkGray)
+                            .fixedSize(horizontal: false, vertical: true)
+                        
+                        Text(product.name)
+                            .font(.ssTitle3)
+                            .fixedSize(horizontal: false, vertical: true)
+                            .foregroundColor(colorScheme == .light ? .black : .ssWhite)
+                        
+                        Text("$\(product.price, specifier: "%.2f")")
+                            .font(.ssCallout)
+                            .foregroundColor(.accentColor)
+                    }
+                }
+                .padding(.bottom, 15)
+                
+                Button {
+                    withAnimation {
+                        ratingViewModel.activeProduct = product
+                        ratingViewModel.shouldPresentSingleProductRatingPage = true
+                    }
+                } label: {
+                    Text("Rate product")
+                        .fontWeight(.bold)
+                        .foregroundColor(.ssWhite)
+                        .padding(.all, 12)
+                        .background {
+                            RoundedRectangle(cornerRadius: 5)
+                        }
                 }
             }
         }
@@ -62,9 +82,11 @@ struct BasicProductTile: View {
 
 struct BasicProductTile_Previews: PreviewProvider {
     static var previews: some View {
+        let ratingViewModel = RatingViewModel()
         ForEach(ColorScheme.allCases, id: \.self) { colorScheme in
             ForEach(["iPhone 13 Pro Max", "iPhone 8"], id: \.self) { deviceName in
                 BasicProductTile(product: Product.demoProducts[2])
+                    .environmentObject(ratingViewModel)
                     .preferredColorScheme(colorScheme)
                     .previewDevice(PreviewDevice(rawValue: deviceName))
                     .previewDisplayName("\(deviceName) portrait")

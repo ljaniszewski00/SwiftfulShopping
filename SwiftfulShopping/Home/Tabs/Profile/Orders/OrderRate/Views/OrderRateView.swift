@@ -21,7 +21,8 @@ struct OrderRateView: View {
         VStack {
             List {
                 ForEach(Array(order.shoppingCart.products.keys), id: \.self) { product in
-                    ProductTileForRateView(product: product)
+                    BasicProductTile(product: product,
+                                     includeRateButton: true)
                         .environmentObject(ratingViewModel)
                 }
             }
