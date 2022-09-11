@@ -24,76 +24,51 @@ struct ListProductCardTileView: View {
                         .resizable()
                         .aspectRatio(contentMode: .fit)
                         .clipShape(RoundedRectangle(cornerRadius: 15))
+                        .frame(width:
+                                ScreenBoundsSupplier.shared.getScreenWidth() * 0.45,
+                               height:
+                                ScreenBoundsSupplier.shared.getScreenHeight() * 0.2)
                 }
                 .retry(maxCount: 3, interval: .seconds(3))
                 .cancelOnDisappear(true)
                 .resizable()
                 .aspectRatio(contentMode: .fit)
                 .clipShape(RoundedRectangle(cornerRadius: 15))
+                .frame(width:
+                        ScreenBoundsSupplier.shared.getScreenWidth() * 0.45,
+                       height:
+                        ScreenBoundsSupplier.shared.getScreenHeight() * 0.2)
                 .padding(.trailing)
                 .layoutPriority(1)
 
             VStack(alignment: .leading, spacing: 10) {
-                Text(product.company)
-                    .font(.ssCallout)
-                    .foregroundColor(.ssDarkGray)
-                    .fixedSize(horizontal: false, vertical: true)
-                
-                Text(product.name)
-                    .font(.ssTitle2)
-                    .fixedSize(horizontal: false, vertical: true)
-                    .foregroundColor(colorScheme == .light ? .ssBlack : .ssWhite)
-                
-                Text("$\(product.price, specifier: "%.2f")")
-                    .font(.ssTitle3)
-                    .foregroundColor(.accentColor)
-                    .padding(.bottom, 5)
-                
-                VStack(alignment: .leading, spacing: 10) {
-                    HStack {
-                        ForEach(1...Int(round(product.rating.averageRating)), id: \.self) { _ in
-                            Image(systemName: "star.fill")
-                                .resizable()
-                                .frame(width: 20, height: 20)
-                                .foregroundColor(.accentColor)
-                        }
+                HStack(alignment: .top) {
+                    VStack(alignment: .leading, spacing: 10) {
+                        Text(product.company)
+                            .font(.ssCaption1)
+                            .foregroundColor(.ssDarkGray)
+                            .fixedSize(horizontal: false, vertical: true)
                         
-                        ForEach(Int(round(product.rating.averageRating))..<5, id: \.self) { _ in
-                            Image(systemName: "star")
-                                .resizable()
-                                .frame(width: 20, height: 20)
-                                .foregroundColor(.accentColor)
-                        }
+                        Text(product.name)
+                            .font(.ssTitle3)
+                            .fixedSize(horizontal: false, vertical: true)
+                            .foregroundColor(colorScheme == .light ? .black : .ssWhite)
+                        
+                        Text("$\(product.price, specifier: "%.2f")")
+                            .font(.ssCallout)
+                            .foregroundColor(.accentColor)
+                            .padding(.bottom, 5)
                     }
                     
-                    Text("\(product.rating.ratingsNumber) ratings")
-                        .font(.ssCallout)
-                        .foregroundColor(.ssDarkGray)
-                }
-                .padding(.bottom, 15)
-                
-                HStack {
-                    Button {
-                        withAnimation {
-                            cartViewModel.addProductToCart(product: product, quantity: 1)
-                        }
-                    } label: {
-                        Text("Add to Cart")
-                            .font(.ssCallout)
-                            .foregroundColor(.ssWhite)
-                            .padding(.all, 10)
-                            .background {
-                                RoundedRectangle(cornerRadius: 5)
-                            }
-                    }
                     Spacer()
+                    
                     if favoritesViewModel.favoriteProducts.contains(product) {
                         Button {
                             favoritesViewModel.removeFromFavorites(product: product)
                         } label: {
                             Image(systemName: "heart.fill")
                                 .resizable()
-                                .frame(width: 28, height: 25)
+                                .frame(width: 23, height: 20)
                         }
                     } else {
                         Button {
@@ -101,9 +76,47 @@ struct ListProductCardTileView: View {
                         } label: {
                             Image(systemName: "heart")
                                 .resizable()
-                                .frame(width: 28, height: 25)
+                                .frame(width: 23, height: 20)
                         }
                     }
+                }
+                
+                VStack(alignment: .leading, spacing: 10) {
+                    HStack {
+                        ForEach(1...Int(round(product.rating.averageRating)), id: \.self) { _ in
+                            Image(systemName: "star.fill")
+                                .resizable()
+                                .frame(width: 15, height: 15)
+                                .foregroundColor(.accentColor)
+                        }
+                        
+                        ForEach(Int(round(product.rating.averageRating))..<5, id: \.self) { _ in
+                            Image(systemName: "star")
+                                .resizable()
+                                .frame(width: 15, height: 15)
+                                .foregroundColor(.accentColor)
+                        }
+                    }
+                    
+                    Text("\(product.rating.ratingsNumber) ratings")
+                        .font(.ssCaption1)
+                        .foregroundColor(.ssDarkGray)
+                }
+                .padding(.bottom, 15)
+                
+                Button {
+                    withAnimation {
+                        cartViewModel.addProductToCart(product: product, quantity: 1)
+                    }
+                } label: {
+                    Text("Add to Cart")
+                        .font(.ssButton)
+                        .foregroundColor(.ssWhite)
+                        .padding(.all, 10)
+                        .background {
+                            RoundedRectangle(cornerRadius: 5)
+                        }
+                        .fixedSize(horizontal: true, vertical: false)
                 }
             }
         }
@@ -118,7 +131,7 @@ struct ListProductCardTileView_Previews: PreviewProvider {
         let favoritesViewModel = FavoritesViewModel()
         ForEach(ColorScheme.allCases, id: \.self) { colorScheme in
             ForEach(["iPhone 13 Pro Max", "iPhone 8"], id: \.self) { deviceName in
-                ListProductCardTileView(product: Product.demoProducts[0])
+                ListProductCardTileView(product: Product.demoProducts[2])
                     .environmentObject(cartViewModel)
                     .environmentObject(favoritesViewModel)
                     .preferredColorScheme(colorScheme)

@@ -190,7 +190,7 @@ struct SettingsView: View {
                             .frame(width: 30)
                         Text("Terms and Conditions")
                             .font(.ssButton).fontWeight(.regular)
-                            .foregroundColor(colorScheme == .light ? .ssBlack : .ssWhite)
+                            .foregroundColor(colorScheme == .light ? .black : .ssWhite)
                     }
                 })
                 

@@ -23,7 +23,7 @@ struct ReturnDetailsView: View {
                 VStack(alignment: .leading, spacing: 10) {
                     Text("Return Date")
                         .font(.ssTitle2)
-                        .foregroundColor(colorScheme == .light ? .ssBlack : .ssWhite)
+                        .foregroundColor(colorScheme == .light ? .black : .ssWhite)
                     
                     Text(Date.getDayMonthYearFrom(date: userReturn.returnDate))
                         .font(.ssTitle3)
@@ -33,7 +33,7 @@ struct ReturnDetailsView: View {
                 VStack(alignment: .leading, spacing: 10) {
                     Text("Status")
                         .font(.ssTitle2)
-                        .foregroundColor(colorScheme == .light ? .ssBlack : .ssWhite)
+                        .foregroundColor(colorScheme == .light ? .black : .ssWhite)
                         
                     Text(userReturn.status.rawValue)
                         .font(.ssTitle3)
@@ -47,7 +47,7 @@ struct ReturnDetailsView: View {
                         HStack(spacing: 20) {
                             Text("Products (\(userReturn.products.count))")
                                 .font(.ssTitle2)
-                                .foregroundColor(colorScheme == .light ? .ssBlack : .ssWhite)
+                                .foregroundColor(colorScheme == .light ? .black : .ssWhite)
                             
                             Image(systemName: showProductsList ? "chevron.up" : "chevron.down")
                         }
@@ -62,11 +62,12 @@ struct ReturnDetailsView: View {
                         }
                     }
                 }
-                
-                VStack(alignment: .leading, spacing: 10) {
-                    Text("Total price to be returned")
+                HStack {
+                    Text("Total return price")
                         .font(.ssTitle2)
-                        .foregroundColor(colorScheme == .light ? .ssBlack : .ssWhite)
+                        .foregroundColor(colorScheme == .light ? .black : .ssWhite)
+                    
+                    Spacer()
                         
                     Text("$\(userReturn.returnPrice, specifier: "%.2f")")
                         .font(.ssTitle3)

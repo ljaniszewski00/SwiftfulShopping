@@ -46,7 +46,7 @@ struct PaymentDetailsView: View {
                                     
                                     Text(paymentMethod.rawValue)
                                         .font(.ssTitle3)
-                                        .foregroundColor(colorScheme == .light ? .ssBlack : .ssWhite)
+                                        .foregroundColor(colorScheme == .light ? .black : .ssWhite)
                                     if paymentMethod == .applePay {
                                         Image("apple_pay_logo")
                                             .resizable()

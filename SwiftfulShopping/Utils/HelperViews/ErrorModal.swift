@@ -45,11 +45,11 @@ struct ErrorModal: ViewModifier {
                     VStack {
                         Text("\(customError.errorCode): \(customError.errorType.rawValue)")
                             .font(Font.system(size: Constants.titleFontSize, weight: .bold, design: .rounded))
-                            .foregroundColor(.ssBlack)
+                            .foregroundColor(.black)
                         Text(customError.errorDescription)
                             .font(Font.system(size: Constants.descriptionFontSize, weight: .regular, design: .rounded))
                             .fixedSize(horizontal: false, vertical: true)
-                            .foregroundColor(.ssBlack)
+                            .foregroundColor(.black)
                     }
                     .padding()
                 }

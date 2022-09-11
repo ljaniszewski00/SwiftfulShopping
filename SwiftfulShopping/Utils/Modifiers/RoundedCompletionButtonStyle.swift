@@ -33,12 +33,12 @@ struct RoundedCompletionButtonStyle: ButtonStyle {
             } else {
                 configuration.label
                     .font(.ssButton)
-                    .foregroundColor(colorScheme == .light ? .ssBlack : .ssWhite)
+                    .foregroundColor(colorScheme == .light ? .black : .ssWhite)
                     .padding()
             }
             
             Image(systemName: actionCompleted ? "checkmark" : "chevron.right")
-                .foregroundColor(actionCompleted ? .accentColor : (colorScheme == .light ? .ssBlack : .ssWhite))
+                .foregroundColor(actionCompleted ? .accentColor : (colorScheme == .light ? .black : .ssWhite))
         }
         .padding(.horizontal)
         .background {

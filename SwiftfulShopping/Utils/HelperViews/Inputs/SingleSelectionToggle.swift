@@ -29,7 +29,7 @@ struct SingleSelectionToggle: View {
                     
                     Text(firstLabel)
                         .font(.system(size: 20, weight: .semibold, design: .rounded))
-                        .foregroundColor(colorScheme == .light ? .ssBlack : .ssWhite)
+                        .foregroundColor(colorScheme == .light ? .black : .ssWhite)
                 }
             })
             
@@ -45,7 +45,7 @@ struct SingleSelectionToggle: View {
                     
                     Text(secondLabel)
                         .font(.system(size: 20, weight: .semibold, design: .rounded))
-                        .foregroundColor(colorScheme == .light ? .ssBlack : .ssWhite)
+                        .foregroundColor(colorScheme == .light ? .black : .ssWhite)
                 }
             })
         }

@@ -86,7 +86,7 @@ struct OrderCreationShipmentPaymentView: View {
                                         
                                         Text(shippingMethod.rawValue)
                                             .font(.ssTitle3)
-                                            .foregroundColor(colorScheme == .light ? .ssBlack : .ssWhite)
+                                            .foregroundColor(colorScheme == .light ? .black : .ssWhite)
                                     }
                                 })
                             }
@@ -118,7 +118,7 @@ struct OrderCreationShipmentPaymentView: View {
                                         
                                         Text(paymentMethod.rawValue)
                                             .font(.ssTitle3)
-                                            .foregroundColor(colorScheme == .light ? .ssBlack : .ssWhite)
+                                            .foregroundColor(colorScheme == .light ? .black : .ssWhite)
                                     }
                                 })
                             }

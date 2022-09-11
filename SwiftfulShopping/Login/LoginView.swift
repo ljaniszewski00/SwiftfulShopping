@@ -85,7 +85,7 @@ struct LoginView: View {
                                 }
                                 
                                 LabelledDivider(label: "Or",
-                                                color: colorScheme == .light ? .ssBlack : .ssWhite)
+                                                color: colorScheme == .light ? .black : .ssWhite)
                                     .padding(.vertical)
                                 
                                 buildGoogleLogInButton()
@@ -143,7 +143,7 @@ struct LoginView: View {
                     Spacer()
                     Text("Sign in with Google")
                         .font(.ssButton)
-                        .foregroundColor(colorScheme == .light ? .ssBlack : .ssWhite)
+                        .foregroundColor(colorScheme == .light ? .black : .ssWhite)
                     Spacer()
                 }
                 .padding()

@@ -24,33 +24,39 @@ struct ProductTileForCartView: View {
                         .resizable()
                         .aspectRatio(contentMode: .fit)
                         .clipShape(RoundedRectangle(cornerRadius: 15))
+                        .frame(width:
+                                ScreenBoundsSupplier.shared.getScreenWidth() * 0.45,
+                               height:
+                                ScreenBoundsSupplier.shared.getScreenHeight() * 0.2)
                 }
                 .retry(maxCount: 3, interval: .seconds(3))
                 .cancelOnDisappear(true)
                 .resizable()
                 .aspectRatio(contentMode: .fit)
                 .clipShape(RoundedRectangle(cornerRadius: 15))
-                .padding([.vertical, .trailing])
+                .frame(width:
+                        ScreenBoundsSupplier.shared.getScreenWidth() * 0.45,
+                       height:
+                        ScreenBoundsSupplier.shared.getScreenHeight() * 0.2)
+                .padding(.trailing)
+                .layoutPriority(1)
 
-            VStack(alignment: .leading) {
+            VStack(alignment: .leading, spacing: 20) {
                 VStack(alignment: .leading, spacing: 10) {
                     Text(product.company)
-                        .font(.ssCallout)
+                        .font(.ssCaption1)
                         .foregroundColor(.ssDarkGray)
                         .fixedSize(horizontal: false, vertical: true)
                     
                     Text(product.name)
-                        .font(.ssTitle2)
+                        .font(.ssTitle3)
                         .fixedSize(horizontal: false, vertical: true)
-                        .foregroundColor(colorScheme == .light ? .ssBlack : .ssWhite)
+                        .foregroundColor(colorScheme == .light ? .black : .ssWhite)
                     
                     Text("$\(product.price, specifier: "%.2f")")
-                        .font(.ssTitle3)
+                        .font(.ssCallout)
                         .foregroundColor(.accentColor)
                 }
-                .padding(.bottom)
-                
-                Spacer()
                 
                 if includeButtonsForAmountChange {
                     QuantityInput(quantity: cartViewModel.getCartProductCount(product: product),
@@ -62,8 +68,8 @@ struct ProductTileForCartView: View {
                     })
                 }
             }
-            .padding()
         }
+        .padding()
     }
 }
 
@@ -73,7 +79,7 @@ struct ProductTileForCartView_Previews: PreviewProvider {
         
         ForEach(ColorScheme.allCases, id: \.self) { colorScheme in
             ForEach(["iPhone 13 Pro Max", "iPhone 8"], id: \.self) { deviceName in
-                ProductTileForCartView(product: Product.demoProducts[0])
+                ProductTileForCartView(product: Product.demoProducts[2])
                     .environmentObject(cartViewModel)
                     .preferredColorScheme(colorScheme)
                     .previewDevice(PreviewDevice(rawValue: deviceName))

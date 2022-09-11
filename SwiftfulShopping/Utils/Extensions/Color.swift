@@ -64,7 +64,7 @@ extension Color {
     static let ssBlack: Color = Color(hex: "#484C55")
     static let ssDisabled: Color = Color(hex: "#D0DAE2")
 
-    static let colorRegularText: Color = Color.ssBlack
+    static let colorRegularText: Color = Color.black
     static let colorDimmedText: Color = Color(hex: "#9DAEBA")
 
     static let mainText: Color = Color(hex: "#121517")

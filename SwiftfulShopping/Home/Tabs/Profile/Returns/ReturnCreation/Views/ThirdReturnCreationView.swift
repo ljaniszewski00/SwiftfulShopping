@@ -44,7 +44,7 @@ struct ThirdReturnCreationView: View {
                                 
                                 Text(shippingMethod.rawValue)
                                     .font(.ssTitle3)
-                                    .foregroundColor(colorScheme == .light ? .ssBlack : .ssWhite)
+                                    .foregroundColor(colorScheme == .light ? .black : .ssWhite)
                             }
                         })
                         .frame(height: 30)

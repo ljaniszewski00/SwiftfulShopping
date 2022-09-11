@@ -197,7 +197,7 @@ struct ProductRecognizerView: View {
     
     @ViewBuilder func buildRecognitionModal() -> some View {
         ZStack {
-            Color.ssBlack
+            Color.black
                 .opacity(0.5)
                 .ignoresSafeArea()
             

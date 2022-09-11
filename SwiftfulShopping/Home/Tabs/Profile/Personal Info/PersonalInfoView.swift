@@ -45,7 +45,7 @@ struct PersonalInfoView: View {
                                     HStack {
                                         Text(profileViewModel.profile.firstName)
                                             .font(.ssTitle3)
-                                            .foregroundColor(colorScheme == .light ? .ssBlack : .ssWhite)
+                                            .foregroundColor(colorScheme == .light ? .black : .ssWhite)
                                             .padding()
                                         Spacer()
                                         Image(systemName: "chevron.right")
@@ -70,7 +70,7 @@ struct PersonalInfoView: View {
                                     HStack {
                                         Text(profileViewModel.profile.lastName)
                                             .font(.ssTitle3)
-                                            .foregroundColor(colorScheme == .light ? .ssBlack : .ssWhite)
+                                            .foregroundColor(colorScheme == .light ? .black : .ssWhite)
                                             .padding()
                                         Spacer()
                                         Image(systemName: "chevron.right")
@@ -95,7 +95,7 @@ struct PersonalInfoView: View {
                                     HStack {
                                         Text(profileViewModel.profile.email)
                                             .font(.ssTitle3)
-                                            .foregroundColor(colorScheme == .light ? .ssBlack : .ssWhite)
+                                            .foregroundColor(colorScheme == .light ? .black : .ssWhite)
                                             .padding()
                                         Spacer()
                                         Image(systemName: "chevron.right")

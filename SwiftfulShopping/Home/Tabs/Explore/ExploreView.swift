@@ -141,7 +141,7 @@ struct ExploreView: View {
         VStack(alignment: .leading, spacing: 15) {
             Text("Categories")
                 .font(.ssTitle2)
-                .foregroundColor(.ssBlack)
+                .foregroundColor(.black)
                 .padding([.leading, .top])
                 .frame(width: ScreenBoundsSupplier.shared.getScreenWidth(), alignment: .leading)
                 .padding(.bottom, 10)
@@ -204,7 +204,7 @@ struct ExploreView: View {
         VStack(alignment: .leading, spacing: 0) {
             Text("Newest")
                 .font(.ssTitle2)
-                .foregroundColor(.ssBlack)
+                .foregroundColor(colorScheme == .light ? .black : .ssWhite)
                 .padding([.leading, .top])
             
             prepareProductsListFor(products: exploreViewModel.newestProducts)
@@ -234,7 +234,7 @@ struct ExploreView: View {
         VStack(alignment: .leading, spacing: 25) {
             Text("Companies")
                 .font(.ssTitle2)
-                .foregroundColor(.ssBlack)
+                .foregroundColor(.black)
                 .padding([.leading, .top])
                 .frame(width: ScreenBoundsSupplier.shared.getScreenWidth(), alignment: .leading)
                 .padding(.bottom, 10)
@@ -266,6 +266,7 @@ struct ExploreView: View {
                     
                 }
             }
+            .padding(.horizontal)
             
             NavigationLink(destination: ProductsListView(),
                            isActive: $exploreViewModel.shouldPresentAllCompanyProducts,
@@ -279,7 +280,7 @@ struct ExploreView: View {
         VStack(alignment: .leading, spacing: 0) {
             Text("Recommended")
                 .font(.ssTitle2)
-                .foregroundColor(.ssBlack)
+                .foregroundColor(colorScheme == .light ? .black : .ssWhite)
                 .padding([.leading, .top])
             
             prepareProductsListFor(products: exploreViewModel.recommendedProducts)

@@ -93,7 +93,7 @@ struct ProductDetailsRatingsSection: View {
                         HStack {
                             Text("Comments (\(product.rating.reviewsNumber))")
                                 .font(.ssTitle3)
-                                .foregroundColor(colorScheme == .light ? .ssBlack : .ssWhite)
+                                .foregroundColor(colorScheme == .light ? .black : .ssWhite)
                         }
                         Image(systemName: ratingsSectionExpanded ? "chevron.up" : "chevron.down")
                     })

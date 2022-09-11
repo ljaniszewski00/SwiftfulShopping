@@ -65,7 +65,7 @@ struct MultiselectionDropdownMenu: View {
                         ForEach(dataSelected, id: \.self) { selected in
                             Text(selected)
                                 .font(.system(size: 16, weight: .semibold, design: .rounded))
-                                .foregroundColor(colorScheme == .light ? .ssBlack : .ssWhite)
+                                .foregroundColor(colorScheme == .light ? .black : .ssWhite)
                                 .fixedSize(horizontal: false, vertical: true)
                                 .multilineTextAlignment(.leading)
                                 .padding(.all, 8)
@@ -113,13 +113,13 @@ struct MultiselectionDropdownMenu: View {
                         HStack {
                             Text(elementName)
                                 .font(.system(size: 18, weight: .semibold, design: .rounded))
-                                .foregroundColor(colorScheme == .light ? .ssBlack : .ssWhite)
+                                .foregroundColor(colorScheme == .light ? .black : .ssWhite)
                             
                             Spacer()
                             
                             if dataSelected.contains(elementName) {
                                 Image(systemName: "checkmark")
-                                    .foregroundColor(colorScheme == .light ? .ssBlack : .ssWhite)
+                                    .foregroundColor(colorScheme == .light ? .black : .ssWhite)
                             }
                         }
                         .padding()

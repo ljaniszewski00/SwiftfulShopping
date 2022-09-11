@@ -59,7 +59,7 @@ struct SortingAndFilteringSheetView: View {
                                                     Image(systemName: "checkmark")
                                                 }
                                                 Text(sortingMethod.rawValue)
-                                                    .foregroundColor(colorScheme == .light ? .ssBlack : .ssWhite)
+                                                    .foregroundColor(colorScheme == .light ? .black : .ssWhite)
                                                     .font(.ssTitle3)
                                                 Spacer()
                                             }
@@ -316,7 +316,7 @@ struct SortingAndFilteringSheetView: View {
                                     sortingAndFilteringViewModel.lowestRatingFilter = starsNumber + 1
                                 } label: {
                                     Image(systemName: "star.fill")
-                                        .foregroundColor(colorScheme == .light ? .ssBlack : .ssWhite)
+                                        .foregroundColor(colorScheme == .light ? .black : .ssWhite)
                                 }
                             }
                             ForEach(sortingAndFilteringViewModel.lowestRatingFilter..<5, id: \.self) { starsNumber in
@@ -324,7 +324,7 @@ struct SortingAndFilteringSheetView: View {
                                     sortingAndFilteringViewModel.lowestRatingFilter = starsNumber + 1
                                 } label: {
                                     Image(systemName: "star")
-                                        .foregroundColor(colorScheme == .light ? .ssBlack : .ssWhite)
+                                        .foregroundColor(colorScheme == .light ? .black : .ssWhite)
                                 }
                             }
                         }
@@ -343,7 +343,7 @@ struct SortingAndFilteringSheetView: View {
                                     sortingAndFilteringViewModel.highestRatingFilter = starsNumber + 1
                                 } label: {
                                     Image(systemName: "star.fill")
-                                        .foregroundColor(colorScheme == .light ? .ssBlack : .ssWhite)
+                                        .foregroundColor(colorScheme == .light ? .black : .ssWhite)
                                 }
                             }
                             ForEach(sortingAndFilteringViewModel.highestRatingFilter..<5, id: \.self) { starsNumber in
@@ -351,7 +351,7 @@ struct SortingAndFilteringSheetView: View {
                                     sortingAndFilteringViewModel.highestRatingFilter = starsNumber + 1
                                 } label: {
                                     Image(systemName: "star")
-                                        .foregroundColor(colorScheme == .light ? .ssBlack : .ssWhite)
+                                        .foregroundColor(colorScheme == .light ? .black : .ssWhite)
                                 }
                             }
                         }

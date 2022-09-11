@@ -9,9 +9,10 @@ import SwiftUI
 
 extension Font {
     static let ssNavigationTitleFont = Font.system(.largeTitle, design: .rounded).bold()
+    static let ssLargeTitle = Font.system(.largeTitle, design: .rounded)
     static let ssTitle1 = Font.system(.title, design: .rounded).bold()
-    static let ssTitle2 = Font.system(.title2, design: .rounded).bold()
-    static let ssTitle3 = Font.system(.title3, design: .rounded).weight(.semibold)
+    static let ssTitle2 = Font.system(size: 20, design: .rounded).bold()
+    static let ssTitle3 = Font.system(size: 18, design: .rounded).weight(.semibold)
     static let ssCallout = Font.system(.callout, design: .rounded).weight(.semibold)
     
     static let ssHeadline = Font.system(.headline, design: .rounded)
@@ -21,5 +22,5 @@ extension Font {
     static let ssCaption1 = Font.system(.caption, design: .rounded)
     static let ssCaption2 = Font.system(.caption2, design: .rounded)
     
-    static let ssButton = Font.system(size: 18, weight: .bold, design: .rounded)
+    static let ssButton = Font.system(size: 16, weight: .bold, design: .rounded)
 }

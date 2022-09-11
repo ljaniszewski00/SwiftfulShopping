@@ -25,7 +25,7 @@ struct OrderDetailsView: View {
                     VStack(alignment: .leading, spacing: 10) {
                         Text("Order Date")
                             .font(.ssTitle2)
-                            .foregroundColor(colorScheme == .light ? .ssBlack : .ssWhite)
+                            .foregroundColor(colorScheme == .light ? .black : .ssWhite)
                         
                         Text(Date.getDayMonthYearFrom(date: order.orderDate))
                             .font(.ssTitle3)
@@ -35,7 +35,7 @@ struct OrderDetailsView: View {
                     VStack(alignment: .leading, spacing: 10) {
                         Text("Customer Info")
                             .font(.ssTitle2)
-                            .foregroundColor(colorScheme == .light ? .ssBlack : .ssWhite)
+                            .foregroundColor(colorScheme == .light ? .black : .ssWhite)
                         
                         Text(order.client.description)
                             .font(.ssCallout)
@@ -46,7 +46,7 @@ struct OrderDetailsView: View {
                     VStack(alignment: .leading, spacing: 10) {
                         Text("Address Info")
                             .font(.ssTitle2)
-                            .foregroundColor(colorScheme == .light ? .ssBlack : .ssWhite)
+                            .foregroundColor(colorScheme == .light ? .black : .ssWhite)
                         
                         Text(order.shippingAddress.description)
                             .font(.ssCallout)
@@ -57,7 +57,7 @@ struct OrderDetailsView: View {
                     VStack(alignment: .leading, spacing: 10) {
                         Text("Status")
                             .font(.ssTitle2)
-                            .foregroundColor(colorScheme == .light ? .ssBlack : .ssWhite)
+                            .foregroundColor(colorScheme == .light ? .black : .ssWhite)
                             
                         Text(order.status.rawValue)
                             .font(.ssTitle3)
@@ -72,7 +72,7 @@ struct OrderDetailsView: View {
                             HStack(spacing: 20) {
                                 Text("Products (\(order.shoppingCart.products.count))")
                                     .font(.ssTitle2)
-                                    .foregroundColor(colorScheme == .light ? .ssBlack : .ssWhite)
+                                    .foregroundColor(colorScheme == .light ? .black : .ssWhite)
                                 Image(systemName: showProductsList ? "chevron.up" : "chevron.down")
                             }
                         })
@@ -87,10 +87,12 @@ struct OrderDetailsView: View {
                         }
                     }
                     
-                    VStack(alignment: .leading, spacing: 10) {
+                    HStack {
                         Text("Total Price")
                             .font(.ssTitle2)
-                            .foregroundColor(colorScheme == .light ? .ssBlack : .ssWhite)
+                            .foregroundColor(colorScheme == .light ? .black : .ssWhite)
+                        
+                        Spacer()
                             
                         Text("$\(order.totalCost, specifier: "%.2f")")
                             .font(.ssTitle3)

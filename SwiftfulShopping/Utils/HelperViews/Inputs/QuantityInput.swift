@@ -57,7 +57,7 @@ struct QuantityInput: View {
                 
                 Text(String(selection != nil ? selection!.wrappedValue : (quantity != nil ? quantity! : 0)))
                     .font(.ssButton)
-                    .foregroundColor(colorScheme == .light ? .ssBlack : .ssWhite)
+                    .foregroundColor(colorScheme == .light ? .black : .ssWhite)
                     .fixedSize(horizontal: true, vertical: false)
                     .padding()
                     .frame(width: 70)

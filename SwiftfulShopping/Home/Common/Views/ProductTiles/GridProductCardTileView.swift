@@ -43,7 +43,7 @@ struct GridProductCardTileView: View {
                         Text(product.name)
                             .font(.ssTitle2)
                             .fixedSize(horizontal: false, vertical: true)
-                            .foregroundColor(colorScheme == .light ? .ssBlack : .ssWhite)
+                            .foregroundColor(colorScheme == .light ? .black : .ssWhite)
                         
                         Text("$\(product.price, specifier: "%.2f")")
                             .font(.ssTitle3)

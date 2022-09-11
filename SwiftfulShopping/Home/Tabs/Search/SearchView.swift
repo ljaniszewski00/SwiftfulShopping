@@ -150,7 +150,7 @@ struct SearchView: View {
                             searchViewModel.scrollProductsListToBeginning = true
                         } label: {
                             Image(systemName: "arrow.up")
-                                .foregroundColor(colorScheme == .light ? .ssBlack : .ssWhite)
+                                .foregroundColor(colorScheme == .light ? .black : .ssWhite)
                                 .padding()
                                 .background {
                                     Circle()

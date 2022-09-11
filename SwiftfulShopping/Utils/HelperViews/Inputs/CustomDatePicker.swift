@@ -354,7 +354,7 @@ struct CustomDatePicker: View {
                     .foregroundColor(pickingDate ? .accentColor : .ssGray)
                 Text(wholeDateToDisplay)
                     .font(.system(size: 20, weight: .semibold, design: .rounded))
-                    .foregroundColor(colorScheme == .light ? .ssBlack : .ssWhite)
+                    .foregroundColor(colorScheme == .light ? .black : .ssWhite)
                 
                 Spacer()
                 
@@ -392,7 +392,7 @@ struct CustomDatePicker: View {
                                 RoundedRectangle(cornerRadius: 5)
                                 Text("Pick Today")
                                     .font(.system(size: 18, weight: .semibold, design: .rounded))
-                                    .foregroundColor(colorScheme == .light ? .ssBlack : .ssWhite)
+                                    .foregroundColor(colorScheme == .light ? .black : .ssWhite)
                             }
                         }
                         .frame(height: 50)
@@ -470,7 +470,7 @@ struct CustomDatePicker: View {
                 decrementMonthNumber()
             } label: {
                 Image(systemName: "chevron.left")
-                    .foregroundColor(colorScheme == .light ? .ssBlack : .ssWhite)
+                    .foregroundColor(colorScheme == .light ? .black : .ssWhite)
                     .padding(.all, 10)
                     .background {
                         Circle().foregroundColor(.accentColor)
@@ -492,7 +492,7 @@ struct CustomDatePicker: View {
                 } label: {
                     Text("\(pickedMonthName),")
                         .font(.system(size: 24, weight: .semibold, design: .rounded))
-                        .foregroundColor(colorScheme == .light ? .ssBlack : .ssWhite)
+                        .foregroundColor(colorScheme == .light ? .black : .ssWhite)
                         .frame(minWidth: 130,
                                maxWidth: .infinity,
                                alignment: .trailing)
@@ -508,7 +508,7 @@ struct CustomDatePicker: View {
                 } label: {
                     Text(String(pickedYearNumber))
                         .font(.system(size: 24, weight: .semibold, design: .rounded))
-                        .foregroundColor(colorScheme == .light ? .ssBlack : .ssWhite)
+                        .foregroundColor(colorScheme == .light ? .black : .ssWhite)
                         .frame(minWidth: 70,
                                maxWidth: .infinity,
                                alignment: .leading)
@@ -529,7 +529,7 @@ struct CustomDatePicker: View {
                 incrementMonthNumber()
             } label: {
                 Image(systemName: "chevron.right")
-                    .foregroundColor(colorScheme == .light ? .ssBlack : .ssWhite)
+                    .foregroundColor(colorScheme == .light ? .black : .ssWhite)
                     .padding(.all, 10)
                     .background {
                         Circle().foregroundColor(.accentColor)
@@ -581,7 +581,7 @@ struct CustomDatePicker: View {
                                     
                                     Text(String(calendarDay.value))
                                         .font(.system(size: 18, weight: .regular, design: .rounded))
-                                        .foregroundColor(calendarDay.isCurrentMonth ? (colorScheme == .light ? .ssBlack : .ssWhite) : .ssGray)
+                                        .foregroundColor(calendarDay.isCurrentMonth ? (colorScheme == .light ? .black : .ssWhite) : .ssGray)
                                 }
                             }
                             .frame(width: 40, height: 30)

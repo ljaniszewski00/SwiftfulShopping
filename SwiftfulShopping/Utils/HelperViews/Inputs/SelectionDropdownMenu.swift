@@ -67,7 +67,7 @@ struct SelectionDropdownMenu: View {
                     }
                     Text(selection)
                         .font(.system(size: 18, weight: .semibold, design: .rounded))
-                        .foregroundColor(colorScheme == .light ? .ssBlack : .ssWhite)
+                        .foregroundColor(colorScheme == .light ? .black : .ssWhite)
                         .fixedSize(horizontal: false, vertical: true)
                         .multilineTextAlignment(.leading)
                 }
@@ -108,14 +108,14 @@ struct SelectionDropdownMenu: View {
                                 }
                                 Text(elementName)
                                     .font(.system(size: 18, weight: .semibold, design: .rounded))
-                                    .foregroundColor(colorScheme == .light ? .ssBlack : .ssWhite)
+                                    .foregroundColor(colorScheme == .light ? .black : .ssWhite)
                             }
                             
                             Spacer()
                             
                             if elementName == selection {
                                 Image(systemName: "checkmark")
-                                    .foregroundColor(colorScheme == .light ? .ssBlack : .ssWhite)
+                                    .foregroundColor(colorScheme == .light ? .black : .ssWhite)
                             }
                         }
                         .padding()
