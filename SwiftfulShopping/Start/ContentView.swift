@@ -13,6 +13,7 @@ struct ContentView: View {
     @StateObject private var authStateManager = AuthStateManager()
     @StateObject private var locationManager = LocationManager()
     @StateObject private var contentViewModel = ContentViewModel()
+    @StateObject var errorManager = ErrorManager.shared
     
     var body: some View {
         if authStateManager.isLogged && !authStateManager.isGuest {
@@ -23,23 +24,31 @@ struct ContentView: View {
                     .transition(.slide)
             } else {
                 VStack(spacing: 10) {
+                    Image("AppLogoHorizontal")
+                        .resizable()
+                        .scaledToFit()
+                    
                     Spacer()
-                    Text("Swiftful")
-                        .font(.system(size: 45, weight: .heavy, design: .rounded))
-                    Button(action: {
-                        contentViewModel.authenticate()
-                    }, label: {
-                        Image(systemName: "faceid")
-                            .resizable()
-                            .scaledToFit()
-                            .frame(width: ScreenBoundsSupplier.shared.getScreenWidth() * 0.3,
-                                   height: ScreenBoundsSupplier.shared.getScreenHeight() * 0.25)
-                    })
-                    Text("Shopping")
-                        .font(.system(size: 45, weight: .heavy, design: .rounded))
+                    
+                    if contentViewModel.presentSuccessfulUnlockAnimation {
+                        LottieView(name: "faceID_success",
+                                   loopMode: .playOnce,
+                                   contentMode: .scaleAspectFit)
+                        .frame(width: ScreenBoundsSupplier.shared.getScreenWidth() * 0.7)
+                    }
+                    
                     Spacer()
                 }
                 .padding()
+                .modifier(ErrorModal(isPresented: $errorManager.showErrorModal,
+                                     customError: errorManager.customError ?? ErrorManager.unknownError))
+                .onAppear {
+                    contentViewModel.authenticate()
+                }
+                .onChange(of: contentViewModel.authenticationError?.localizedDescription) { error in
+                    errorManager.generateCustomError(errorType: .biometricRecognitionError,
+                                                     additionalErrorDescription: error)
+                }
             }
         } else {
             LoginView()

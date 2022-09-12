@@ -14,5 +14,7 @@ enum ErrorType: String {
     case registerError = "Register Error"
     case discountApplyError = "Discount Apply Error"
     case orderCreateError = "Order Create Error"
+    case biometricRecognitionError = "Biometric Recognition Error"
+    
     case unknown = "Unknown Error"
 }

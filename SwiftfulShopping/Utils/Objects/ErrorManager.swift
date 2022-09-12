@@ -15,6 +15,7 @@ final class ErrorManager: ObservableObject {
         .registerError: 4,
         .discountApplyError: 5,
         .orderCreateError: 6,
+        .biometricRecognitionError: 7,
         .unknown: 0
     ]
     
@@ -27,6 +28,7 @@ final class ErrorManager: ObservableObject {
         .registerError: "Error occured while trying to register. \(errorDescriptionSuffix)",
         .discountApplyError: "Error applying discount code. \(errorDescriptionSuffix)",
         .orderCreateError: "Error creating your order. \(errorDescriptionSuffix)",
+        .biometricRecognitionError: "Error authenticating using biometry. Please try again.",
         .unknown: ""
     ]
     

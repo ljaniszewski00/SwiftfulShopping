@@ -59,7 +59,7 @@ struct ProductDetailsView: View {
                     VStack(alignment: .leading, spacing: 30) {
                         HStack {
                             Text(product.productDescription)
-                                .font(.ssBody).fontWeight(.semibold)
+                                .font(.ssBody)
                             Spacer()
                         }
                         

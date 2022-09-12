@@ -27,6 +27,21 @@ struct ImagesCarouselView<Content: View>: View {
                         .onTapGesture {
                             stopSliding.toggle()
                         }
+                        .onSwiped { direction in
+                            stopSliding = true
+                            switch direction {
+                            case .left:
+                                if currentIndex > 0 {
+                                    currentIndex -= 1
+                                }
+                            case .right:
+                                if currentIndex < numberOfImages - 1 {
+                                    currentIndex += 1
+                                }
+                            default:
+                                break
+                            }
+                        }
                 }
                 .frame(width: geometry.size.width, height: geometry.size.height, alignment: .leading)
                 .offset(x: CGFloat(self.currentIndex) * -geometry.size.width, y: 0)

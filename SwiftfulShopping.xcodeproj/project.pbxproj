@@ -12,6 +12,7 @@
 		0A2165AE28A2C1E0006842F0 /* ChangeEmailViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A2165AD28A2C1E0006842F0 /* ChangeEmailViewModel.swift */; };
 		0A2165B128A2C200006842F0 /* ChangePasswordViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A2165B028A2C200006842F0 /* ChangePasswordViewModel.swift */; };
 		0A2165B428A2C217006842F0 /* DeleteAccountViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A2165B328A2C217006842F0 /* DeleteAccountViewModel.swift */; };
+		0A2288A428CFD2D900636F56 /* SwipeModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A2288A328CFD2D900636F56 /* SwipeModifier.swift */; };
 		0A22F57528C4BCE000C568EA /* QuantityInput.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A22F57428C4BCE000C568EA /* QuantityInput.swift */; };
 		0A237401288D62730076A5AB /* ProductsRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A237400288D62730076A5AB /* ProductsRepository.swift */; };
 		0A237403288D68720076A5AB /* UserDefaultsKeys.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A237402288D68720076A5AB /* UserDefaultsKeys.swift */; };
@@ -348,6 +349,7 @@
 		0A2165AD28A2C1E0006842F0 /* ChangeEmailViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChangeEmailViewModel.swift; sourceTree = "<group>"; };
 		0A2165B028A2C200006842F0 /* ChangePasswordViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChangePasswordViewModel.swift; sourceTree = "<group>"; };
 		0A2165B328A2C217006842F0 /* DeleteAccountViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeleteAccountViewModel.swift; sourceTree = "<group>"; };
+		0A2288A328CFD2D900636F56 /* SwipeModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwipeModifier.swift; sourceTree = "<group>"; };
 		0A22F57428C4BCE000C568EA /* QuantityInput.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuantityInput.swift; sourceTree = "<group>"; };
 		0A237400288D62730076A5AB /* ProductsRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductsRepository.swift; sourceTree = "<group>"; };
 		0A237402288D68720076A5AB /* UserDefaultsKeys.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDefaultsKeys.swift; sourceTree = "<group>"; };
@@ -979,6 +981,7 @@
 				0A56D8A6285F28E60009680C /* ScrollOnContentOverflow.swift */,
 				0ACD58CC284A6F6500AA9DA0 /* Hidden.swift */,
 				0A4686F228BC19F000F520B3 /* MeasureViewSize.swift */,
+				0A2288A328CFD2D900636F56 /* SwipeModifier.swift */,
 			);
 			path = Modifiers;
 			sourceTree = "<group>";
@@ -1487,6 +1490,7 @@
 				0AD89746289D0C4A00BFDAA1 /* ProfileViewModel.swift in Sources */,
 				0A35557C28A05859005993E5 /* DeleteAccountView.swift in Sources */,
 				0A25D69328BC000600FF6ED5 /* ScrollView.swift in Sources */,
+				0A2288A428CFD2D900636F56 /* SwipeModifier.swift in Sources */,
 				0A2D5FD728BA42EB00E76D71 /* SingleSelectionToggle.swift in Sources */,
 				0A2FE0B728A1BB2000E8D30E /* SplashScreenView.swift in Sources */,
 				0ACD5909284A6F6600AA9DA0 /* RegisterViewModel.swift in Sources */,

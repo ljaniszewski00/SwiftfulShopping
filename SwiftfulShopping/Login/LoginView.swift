@@ -30,13 +30,9 @@ struct LoginView: View {
             GeometryReader { geometry in
                 ScrollView(.vertical, showsIndicators: false) {
                     VStack(spacing: 0) {
-                        Image("AppIconImage")
+                        Image("AppLogoHorizontal")
                             .resizable()
-                            .frame(width: 250, height: 250)
-                            .scaleEffect(1.4)
-                            .offset(y: -30)
-                            .frame(minWidth: 300, maxWidth: .infinity,
-                                   minHeight: 300)
+                            .scaledToFit()
                         
                         Spacer()
                         
