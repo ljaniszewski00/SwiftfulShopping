@@ -43,7 +43,9 @@ struct ContentView: View {
                 .modifier(ErrorModal(isPresented: $errorManager.showErrorModal,
                                      customError: errorManager.customError ?? ErrorManager.unknownError))
                 .onAppear {
-                    contentViewModel.authenticate()
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
+                        contentViewModel.authenticate()
+                    }
                 }
                 .onChange(of: contentViewModel.authenticationError?.localizedDescription) { error in
                     errorManager.generateCustomError(errorType: .biometricRecognitionError,
