@@ -30,9 +30,19 @@ struct LoginView: View {
             GeometryReader { geometry in
                 ScrollView(.vertical, showsIndicators: false) {
                     VStack(spacing: 0) {
-                        Image("AppLogoHorizontal")
-                            .resizable()
-                            .scaledToFit()
+                        if colorScheme == .light {
+                            Image("SwiftfulShoppingLogo - horizontal (gray)")
+                                .resizable()
+                                .aspectRatio(contentMode: .fill)
+                                .frame(width: ScreenBoundsSupplier.shared.getScreenWidth(),
+                                       height: ScreenBoundsSupplier.shared.getScreenHeight() * 0.2)
+                        } else if colorScheme == .dark {
+                            Image("SwiftfulShoppingLogo - horizontal (white)")
+                                .resizable()
+                                .aspectRatio(contentMode: .fill)
+                                .frame(width: ScreenBoundsSupplier.shared.getScreenWidth(),
+                                       height: ScreenBoundsSupplier.shared.getScreenHeight() * 0.2)
+                        }
                         
                         Spacer()
                         

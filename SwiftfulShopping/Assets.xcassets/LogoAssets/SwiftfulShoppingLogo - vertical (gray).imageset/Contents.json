@@ -1,17 +1,15 @@
 {
   "images" : [
     {
-      "filename" : "SwiftfulShopping2.png",
+      "filename" : "SwiftfulShoppingLogo - vertical (gray).png",
       "idiom" : "universal",
       "scale" : "1x"
     },
     {
-      "filename" : "SwiftfulShopping2-1.png",
       "idiom" : "universal",
       "scale" : "2x"
     },
     {
-      "filename" : "SwiftfulShopping2-2.png",
       "idiom" : "universal",
       "scale" : "3x"
     }
