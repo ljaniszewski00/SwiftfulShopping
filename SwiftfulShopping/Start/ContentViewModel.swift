@@ -11,7 +11,6 @@ import LocalAuthentication
 class ContentViewModel: ObservableObject {
     @AppStorage("locked") var biometricLock: Bool = false
     @AppStorage("shouldShowOnboarding") var shouldShowOnboarding: Bool = true
-    @Published var presentSuccessfulUnlockAnimation: Bool = false
     @Published var unlocked: Bool = false
     @Published var authenticationError: Error?
     
@@ -29,13 +28,8 @@ class ContentViewModel: ObservableObject {
             context.evaluatePolicy(.deviceOwnerAuthenticationWithBiometrics, localizedReason: reason) { success, authenticationError in
                 // authentication has now completed
                 DispatchQueue.main.async {
-                    self.presentSuccessfulUnlockAnimation = true
+                    self.unlocked = success
                     self.authenticationError = authenticationError
-                    if success {
-                        DispatchQueue.main.asyncAfter(deadline: .now() + 4.5) {
-                            self.unlocked = success
-                        }
-                    }
                 }
             }
         } else {

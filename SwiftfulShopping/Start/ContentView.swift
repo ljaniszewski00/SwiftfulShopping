@@ -29,21 +29,12 @@ struct ContentView: View {
                         .scaledToFit()
                     
                     Spacer()
-                    
-                    if contentViewModel.presentSuccessfulUnlockAnimation {
-                        LottieView(name: "faceID_success",
-                                   loopMode: .playOnce,
-                                   contentMode: .scaleAspectFit)
-                        .frame(width: ScreenBoundsSupplier.shared.getScreenWidth() * 0.7)
-                    }
-                    
-                    Spacer()
                 }
                 .padding()
                 .modifier(ErrorModal(isPresented: $errorManager.showErrorModal,
                                      customError: errorManager.customError ?? ErrorManager.unknownError))
                 .onAppear {
-                    DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
                         contentViewModel.authenticate()
                     }
                 }
