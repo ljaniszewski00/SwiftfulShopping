@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import Kingfisher
 
 struct ExploreView: View {
     @EnvironmentObject private var authStateManager: AuthStateManager
@@ -99,13 +100,11 @@ struct ExploreView: View {
                                                 x: 3,
                                                 y: 3)
                                 }
-                                .transition(.move(edge: .trailing))
-                                .animation(.default.speed(0.5))
                         }
                         .padding()
                         .padding(.bottom, 60)
                         .transition(.move(edge: .trailing))
-                        .animation(.default.speed(0.5))
+                        .animation(.default)
                         .zIndex(1)
                     }
                 }
@@ -161,17 +160,25 @@ struct ExploreView: View {
                             exploreViewModel.shouldPresentAllCategoryProducts = true
                         } label: {
                             VStack(spacing: 15) {
-                                Image(systemName: "cart")
+                                KFImage(URL(string: exploreViewModel.productsCategoriesWithImageURL[category] ?? "") ?? URL(string: ""))
+                                    .placeholder {
+                                        Image("product_placeholder_image")
+                                            .resizable()
+                                            .aspectRatio(contentMode: .fill)
+                                            .frame(width: 40, height: 40)
+                                    }
+                                    .retry(maxCount: 3, interval: .seconds(3))
+                                    .cancelOnDisappear(true)
                                     .resizable()
                                     .aspectRatio(contentMode: .fill)
-                                    .frame(width: 25, height: 25)
-                                    .foregroundColor(.ssDarkGray)
+                                    .frame(width: 40, height: 40)
+                                
                                 Text(category.rawValue)
                                     .font(.ssButton)
                                     .foregroundColor(.ssDarkGray)
                             }
                         }
-                        .padding()
+                        .padding(.horizontal)
                     }
                 }
             }

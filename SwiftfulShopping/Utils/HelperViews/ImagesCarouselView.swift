@@ -31,12 +31,12 @@ struct ImagesCarouselView<Content: View>: View {
                             stopSliding = true
                             switch direction {
                             case .left:
-                                if currentIndex > 0 {
-                                    currentIndex -= 1
-                                }
-                            case .right:
                                 if currentIndex < numberOfImages - 1 {
                                     currentIndex += 1
+                                }
+                            case .right:
+                                if currentIndex > 0 {
+                                    currentIndex -= 1
                                 }
                             default:
                                 break

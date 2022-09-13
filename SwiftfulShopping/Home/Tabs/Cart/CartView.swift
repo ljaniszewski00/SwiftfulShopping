@@ -57,26 +57,29 @@ struct CartView: View {
                             .onDelete(perform: cartViewModel.removeProducts)
                         }
                         
-                        VStack(alignment: .leading) {
-                            HStack {
-                                Text("Products in cart:")
-                                    .font(.ssCallout)
-                                    .foregroundColor(.ssDarkGray)
+                        HStack {
+                            VStack(alignment: .leading) {
+                                HStack {
+                                    Text("Products in cart:")
+                                        .font(.ssCallout)
+                                        .foregroundColor(.ssDarkGray)
+                                    
+                                    Text("\(cartViewModel.cartProductsCount)")
+                                        .font(.ssTitle3)
+                                        .foregroundColor(.accentColor)
+                                }
                                 
-                                Text("\(cartViewModel.cartProductsCount)")
-                                    .font(.ssTitle3)
-                                    .foregroundColor(.accentColor)
+                                HStack {
+                                    Text("Total cost:")
+                                        .font(.ssCallout)
+                                        .foregroundColor(.ssDarkGray)
+                                    
+                                    Text("$\(cartViewModel.cartTotalCost, specifier: "%.2f")")
+                                        .font(.ssTitle3)
+                                        .foregroundColor(.accentColor)
+                                }
                             }
-                            
-                            HStack {
-                                Text("Total cost:")
-                                    .font(.ssCallout)
-                                    .foregroundColor(.ssDarkGray)
-                                
-                                Text("$\(cartViewModel.cartTotalCost, specifier: "%.2f")")
-                                    .font(.ssTitle3)
-                                    .foregroundColor(.accentColor)
-                            }
+                            .padding(.trailing, 40)
                             
                             Button {
                                 cartViewModel.shouldPresentCheckoutFirstView = true
@@ -88,7 +91,7 @@ struct CartView: View {
                             .disabled(cartViewModel.cartIsEmpty)
                         }
                         .padding(.horizontal)
-                        .padding(.bottom, 70)
+                        .padding(.bottom, 80)
                         
                         NavigationLink(destination: ProductDetailsView(product: cartViewModel.choosenProduct ?? Product.demoProducts[0])
                                                         .onAppear {

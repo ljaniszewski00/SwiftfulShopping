@@ -18,6 +18,8 @@ struct ProductTileForCartView: View {
     
     var body: some View {
         HStack(alignment: .center) {
+            Spacer()
+            
             KFImage(URL(string: product.imagesURLs.first!)!)
                 .placeholder {
                     Image("product_placeholder_image")
@@ -25,7 +27,7 @@ struct ProductTileForCartView: View {
                         .aspectRatio(contentMode: .fit)
                         .clipShape(RoundedRectangle(cornerRadius: 15))
                         .frame(width:
-                                ScreenBoundsSupplier.shared.getScreenWidth() * 0.3,
+                                ScreenBoundsSupplier.shared.getScreenWidth() * 0.35,
                                height:
                                 ScreenBoundsSupplier.shared.getScreenHeight() * 0.2)
                 }
@@ -35,11 +37,13 @@ struct ProductTileForCartView: View {
                 .aspectRatio(contentMode: .fit)
                 .clipShape(RoundedRectangle(cornerRadius: 15))
                 .frame(width:
-                        ScreenBoundsSupplier.shared.getScreenWidth() * 0.25,
+                        ScreenBoundsSupplier.shared.getScreenWidth() * 0.35,
                        height:
                         ScreenBoundsSupplier.shared.getScreenHeight() * 0.2)
                 .padding(.trailing)
                 .layoutPriority(2)
+            
+            Spacer()
 
             VStack(alignment: .leading, spacing: 40) {
                 VStack(alignment: .leading, spacing: 10) {
@@ -70,8 +74,9 @@ struct ProductTileForCartView: View {
                     .frame(height: 30)
                 }
             }
+            
+            Spacer()
         }
-        .padding()
     }
 }
 

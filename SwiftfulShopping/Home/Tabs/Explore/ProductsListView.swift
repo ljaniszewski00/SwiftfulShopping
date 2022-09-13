@@ -66,7 +66,7 @@ struct ProductsListView: View {
                 }
             }
             
-            ToolbarItem(placement: .navigation) {
+            ToolbarItem(placement: .navigationBarLeading) {
                 Text("SwiftfulShopping")
                     .font(.ssTitle3).fontWeight(.bold)
                     .foregroundColor(.accentColor)

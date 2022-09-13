@@ -24,13 +24,22 @@ struct GridProductCardTileView: View {
                         .resizable()
                         .aspectRatio(contentMode: .fit)
                         .clipShape(RoundedRectangle(cornerRadius: 15))
+                        .frame(width:
+                                ScreenBoundsSupplier.shared.getScreenWidth() * 0.6,
+                               height:
+                                ScreenBoundsSupplier.shared.getScreenHeight() * 0.3)
                 }
                 .retry(maxCount: 3, interval: .seconds(3))
                 .cancelOnDisappear(true)
                 .resizable()
                 .aspectRatio(contentMode: .fit)
                 .clipShape(RoundedRectangle(cornerRadius: 15))
-                .padding(.trailing)
+                .frame(width:
+                        ScreenBoundsSupplier.shared.getScreenWidth() * 0.6,
+                       height:
+                        ScreenBoundsSupplier.shared.getScreenHeight() * 0.3)
+                .padding(.vertical)
+                .layoutPriority(1)
 
             VStack {
                 HStack(alignment: .top) {
@@ -126,7 +135,7 @@ struct GridProductCardTileView_Previews: PreviewProvider {
         let favoritesViewModel = FavoritesViewModel()
         ForEach(ColorScheme.allCases, id: \.self) { colorScheme in
             ForEach(["iPhone 13 Pro Max", "iPhone 8"], id: \.self) { deviceName in
-                GridProductCardTileView(product: Product.demoProducts[0])
+                GridProductCardTileView(product: Product.demoProducts[1])
                     .environmentObject(cartViewModel)
                     .environmentObject(favoritesViewModel)
                     .preferredColorScheme(colorScheme)

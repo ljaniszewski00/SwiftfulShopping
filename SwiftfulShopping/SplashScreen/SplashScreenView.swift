@@ -9,6 +9,7 @@ import SwiftUI
 
 struct SplashScreenView: View {
     @EnvironmentObject private var accentColorManager: AccentColorManager
+    @Environment(\.colorScheme) var colorScheme
     
     @StateObject private var splashScreenViewModel: SplashScreenViewModel = SplashScreenViewModel()
     
@@ -19,18 +20,26 @@ struct SplashScreenView: View {
                     .environmentObject(accentColorManager)
             } else {
                 VStack {
-                    Spacer()
-                    VStack(spacing: 10) {
-                        Text("Swiftful")
-                            .font(.system(size: 45, weight: .heavy, design: .rounded))
-                            .offset(y: 200)
-                        LottieView(name: "cartSplashScreen",
-                                   loopMode: .loop,
-                                   contentMode: .scaleAspectFill)
-                        Text("Shopping")
-                            .font(.system(size: 45, weight: .heavy, design: .rounded))
-                            .offset(y: -200)
+                    if colorScheme == .light {
+                        Image("SwiftfulShoppingLogo - horizontal (gray)")
+                            .resizable()
+                            .aspectRatio(contentMode: .fill)
+                            .frame(width: ScreenBoundsSupplier.shared.getScreenWidth(),
+                                   height: ScreenBoundsSupplier.shared.getScreenHeight() * 0.2)
+                    } else if colorScheme == .dark {
+                        Image("SwiftfulShoppingLogo - horizontal (white)")
+                            .resizable()
+                            .aspectRatio(contentMode: .fill)
+                            .frame(width: ScreenBoundsSupplier.shared.getScreenWidth(),
+                                   height: ScreenBoundsSupplier.shared.getScreenHeight() * 0.2)
                     }
+                    
+                    Spacer()
+                    
+                    LottieView(name: "cartSplashScreen",
+                               loopMode: .loop,
+                               contentMode: .scaleAspectFill)
+                    
                     Spacer()
                 }
                 .onAppear {

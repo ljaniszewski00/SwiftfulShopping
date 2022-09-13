@@ -36,6 +36,17 @@ class ExploreViewModel: ObservableObject {
     @Published var scrollProductsListToBeginning: Bool = false
     @Published var categoriesTileSize: CGSize = .zero
     
+    var productsCategoriesWithImageURL: [Category: String] {
+        var productsCategoriesWithImageURL: [Category: String] = [:]
+        for category in productsCategories {
+            for product in productsFromRepository where product.category == category {
+                productsCategoriesWithImageURL[category] = product.imagesURLs[0]
+                break
+            }
+        }
+        return productsCategoriesWithImageURL
+    }
+    
     var productsCategories: [Category] {
         var categories: Set<Category> = []
         for product in productsFromRepository {

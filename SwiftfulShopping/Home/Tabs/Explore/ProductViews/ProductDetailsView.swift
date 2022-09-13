@@ -23,27 +23,33 @@ struct ProductDetailsView: View {
     var product: Product
     
     var body: some View {
-        VStack {
+        VStack(spacing: 0) {
             ScrollView(.vertical, showsIndicators: false) {
                 VStack(alignment: .center, spacing: 30) {
-                    if productDetailsViewModel.fetchingProductImages {
-                        Image("product_placeholder_image")
-                            .resizable()
-                            .frame(width: 200, height: 200)
-                    } else {
-                        GeometryReader { geometry in
-                            ImagesCarouselView(numberOfImages: productDetailsViewModel.productImages.count) {
-                                ForEach(productDetailsViewModel.productImages, id: \.self) { image in
-                                    Image(uiImage: image)
-                                        .resizable()
-                                        .scaledToFit()
-                                        .frame(width: geometry.size.width, height: geometry.size.height)
-                                        .clipped()
+                    Group {
+                        if productDetailsViewModel.fetchingProductImages {
+                            Image("product_placeholder_image")
+                                .resizable()
+                                .scaledToFit()
+                                .frame(height: 400, alignment: .center)
+                                .clipped()
+                        } else {
+                            GeometryReader { geometry in
+                                ImagesCarouselView(numberOfImages: productDetailsViewModel.productImages.count) {
+                                    ForEach(productDetailsViewModel.productImages, id: \.self) { image in
+                                        Image(uiImage: image)
+                                            .resizable()
+                                            .scaledToFit()
+                                            .frame(width: geometry.size.width,
+                                                   height: geometry.size.height)
+                                            .clipped()
+                                    }
                                 }
                             }
+                            .frame(height: 400, alignment: .center)
                         }
-                        .frame(height: 400, alignment: .center)
                     }
+                    .padding(.horizontal)
 
                     VStack(alignment: .center, spacing: 15) {
                         Text(product.company)
@@ -68,33 +74,15 @@ struct ProductDetailsView: View {
                     .padding()
                 }
             }
-            .ignoresSafeArea(.container, edges: [.top])
             
-            VStack(spacing: 10) {
-                HStack {
-                    HStack(spacing: 15) {
-                        ForEach(ProductColor.allCases, id: \.self) { color in
-                            Button {
-                            } label: {
-                                Circle()
-                                    .foregroundColor(Color(uiColor: color.rawValue))
-                                    .frame(width: 25, height: 25)
-                                    .opacity(0.9)
-                            }
-                        }
-                    }
-                    
-                    Spacer()
-                    
-                    QuantityInput(quantity: productDetailsViewModel.productQuantityToBasket,
-                                  minusAction: {
-                        productDetailsViewModel.decreaseProductQuantity()
-                    },
-                                  plusAction: {
-                        productDetailsViewModel.increaseProductQuantity()
-                    })
-                }
-                .padding()
+            HStack {
+                QuantityInput(quantity: productDetailsViewModel.productQuantityToBasket,
+                              minusAction: {
+                    productDetailsViewModel.decreaseProductQuantity()
+                },
+                              plusAction: {
+                    productDetailsViewModel.increaseProductQuantity()
+                })
                 
                 Button {
                     UIImpactFeedbackGenerator(style: .medium).impactOccurred()
@@ -104,9 +92,9 @@ struct ProductDetailsView: View {
                         .font(.ssButton)
                 }
                 .buttonStyle(CustomButton())
-                .padding(.horizontal)
+                .padding(.leading)
             }
-            .padding(.bottom, 20)
+            .padding()
             .background {
                 RoundedRectangle(cornerRadius: 15)
                     .foregroundColor(Color(uiColor: .secondarySystemBackground)
@@ -165,7 +153,7 @@ struct ProductDetailsView_Previews: PreviewProvider {
         let favoritesViewModel = FavoritesViewModel()
         ForEach(ColorScheme.allCases, id: \.self) { colorScheme in
             ForEach(["iPhone 13 Pro Max", "iPhone 8"], id: \.self) { deviceName in
-                ProductDetailsView(product: Product.demoProducts[0])
+                ProductDetailsView(product: Product.demoProducts[1])
                     .environmentObject(authStateManager)
                     .environmentObject(tabBarStateManager)
                     .environmentObject(exploreViewModel)

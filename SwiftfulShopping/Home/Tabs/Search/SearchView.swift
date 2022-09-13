@@ -166,7 +166,7 @@ struct SearchView: View {
                         .padding()
                         .padding(.bottom, 60)
                         .transition(.move(edge: .trailing))
-                        .animation(.default.speed(0.5))
+                        .animation(.default)
                         .zIndex(1)
                     }
                 }
