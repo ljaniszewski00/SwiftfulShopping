@@ -87,6 +87,7 @@ struct ProductRecognizerView: View {
                     }
                     .padding()
                     .background(.ultraThinMaterial, in: RoundedRectangle(cornerRadius: 15, style: .continuous))
+                    .padding(.horizontal)
                 }
                 
                 if productRecognizer.shouldPresentRecognizingAnimation {
@@ -146,12 +147,14 @@ struct ProductRecognizerView: View {
                     List {
                         ForEach(exploreViewModel.getProductsListFor(recognitionResults: productRecognizer.getFormattedResults()), id: \.self) { product in
                             Button {
-                                searchViewModel.choosenProduct = product
-                                productRecognizer.shouldPresentSheetWithResults = false
-                                searchViewModel.shouldPresentProductRecognizerView = false
-                                searchViewModel.shouldPresentProductDetailsView = true
+                                DispatchQueue.main.async {
+                                    searchViewModel.choosenProduct = product
+                                    productRecognizer.shouldPresentSheetWithResults = false
+                                    searchViewModel.shouldPresentProductRecognizerView = false
+                                    searchViewModel.shouldPresentProductDetailsView = true
+                                }
                             } label: {
-                                BasicProductTile(product: product)
+                                BasicProductTile(product: product, includeRateButton: false)
                             }
                         }
                     }

@@ -70,10 +70,14 @@ class CameraViewModel: NSObject, ObservableObject, AVCaptureVideoDataOutputSampl
     }
     
     func startCapturing() {
-        captureSession.startRunning()
+        DispatchQueue.global(qos: .background).async { [weak self] in
+            self?.captureSession.startRunning()
+        }
     }
     
     func stopCapturing() {
-        captureSession.stopRunning()
+        DispatchQueue.global(qos: .background).async { [weak self] in
+            self?.captureSession.stopRunning()
+        }
     }
 }

@@ -14,6 +14,7 @@ struct ProductDetailsView: View {
     @EnvironmentObject private var profileViewModel: ProfileViewModel
     @EnvironmentObject private var favoritesViewModel: FavoritesViewModel
     @EnvironmentObject private var cartViewModel: CartViewModel
+    @EnvironmentObject private var searchViewModel: SearchViewModel
     
     @StateObject private var productDetailsViewModel: ProductDetailsViewModel = ProductDetailsViewModel()
     @StateObject private var networkNanager = NetworkManager.shared
@@ -151,6 +152,7 @@ struct ProductDetailsView_Previews: PreviewProvider {
         let profileViewModel = ProfileViewModel()
         let cartViewModel = CartViewModel()
         let favoritesViewModel = FavoritesViewModel()
+        let searchViewModel = SearchViewModel()
         ForEach(ColorScheme.allCases, id: \.self) { colorScheme in
             ForEach(["iPhone 13 Pro Max", "iPhone 8"], id: \.self) { deviceName in
                 ProductDetailsView(product: Product.demoProducts[1])
@@ -160,6 +162,7 @@ struct ProductDetailsView_Previews: PreviewProvider {
                     .environmentObject(profileViewModel)
                     .environmentObject(favoritesViewModel)
                     .environmentObject(cartViewModel)
+                    .environmentObject(searchViewModel)
                     .preferredColorScheme(colorScheme)
                     .previewDevice(PreviewDevice(rawValue: deviceName))
                     .previewDisplayName("\(deviceName) portrait")
