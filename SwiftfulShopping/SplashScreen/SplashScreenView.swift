@@ -42,6 +42,10 @@ struct SplashScreenView: View {
                     
                     Spacer()
                 }
+                .background {
+                    Color(uiColor: .secondarySystemBackground)
+                        .ignoresSafeArea()
+                }
                 .onAppear {
 //                    DispatchQueue.main.asyncAfter(deadline: .now() + 2.5) {
 //                        splashScreenViewModel.shouldPresentContentView = true
