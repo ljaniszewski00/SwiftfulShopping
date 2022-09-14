@@ -60,19 +60,21 @@ struct BasicProductTile: View {
                 }
                 .padding(.bottom, 15)
                 
-                Button {
-                    withAnimation {
-                        ratingViewModel.activeProduct = product
-                        ratingViewModel.shouldPresentSingleProductRatingPage = true
-                    }
-                } label: {
-                    Text("Rate product")
-                        .fontWeight(.bold)
-                        .foregroundColor(.ssWhite)
-                        .padding(.all, 12)
-                        .background {
-                            RoundedRectangle(cornerRadius: 5)
+                if includeRateButton {
+                    Button {
+                        withAnimation {
+                            ratingViewModel.activeProduct = product
+                            ratingViewModel.shouldPresentSingleProductRatingPage = true
                         }
+                    } label: {
+                        Text("Rate product")
+                            .fontWeight(.bold)
+                            .foregroundColor(.ssWhite)
+                            .padding(.all, 12)
+                            .background {
+                                RoundedRectangle(cornerRadius: 5)
+                            }
+                    }
                 }
             }
         }

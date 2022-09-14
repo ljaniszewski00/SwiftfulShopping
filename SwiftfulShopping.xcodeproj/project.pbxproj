@@ -119,6 +119,8 @@
 		0A3B08E828AD921C00A54385 /* CameraView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A3B08E728AD921C00A54385 /* CameraView.swift */; };
 		0A3B08EB28AD95F300A54385 /* ProductRecognizer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A3B08EA28AD95F300A54385 /* ProductRecognizer.swift */; };
 		0A3B08ED28AD972C00A54385 /* SourceForImageRecognition.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A3B08EC28AD972C00A54385 /* SourceForImageRecognition.swift */; };
+		0A3D7F5928D1FD7800D51327 /* MobileNetV2.mlmodel in Sources */ = {isa = PBXBuildFile; fileRef = 0A3D7F5728D1FD7800D51327 /* MobileNetV2.mlmodel */; };
+		0A3D7F5A28D1FD7800D51327 /* SqueezeNet.mlmodel in Sources */ = {isa = PBXBuildFile; fileRef = 0A3D7F5828D1FD7800D51327 /* SqueezeNet.mlmodel */; };
 		0A3DE45328899F65008B050B /* Category.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A3DE45228899F65008B050B /* Category.swift */; };
 		0A3DE4552889A1A2008B050B /* GridProductCardTileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A3DE4542889A1A2008B050B /* GridProductCardTileView.swift */; };
 		0A3DE4592889A1BD008B050B /* ProductDetailsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A3DE4582889A1BD008B050B /* ProductDetailsView.swift */; };
@@ -425,6 +427,8 @@
 		0A3B08E728AD921C00A54385 /* CameraView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CameraView.swift; sourceTree = "<group>"; };
 		0A3B08EA28AD95F300A54385 /* ProductRecognizer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductRecognizer.swift; sourceTree = "<group>"; };
 		0A3B08EC28AD972C00A54385 /* SourceForImageRecognition.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SourceForImageRecognition.swift; sourceTree = "<group>"; };
+		0A3D7F5728D1FD7800D51327 /* MobileNetV2.mlmodel */ = {isa = PBXFileReference; lastKnownFileType = file.mlmodel; path = MobileNetV2.mlmodel; sourceTree = "<group>"; };
+		0A3D7F5828D1FD7800D51327 /* SqueezeNet.mlmodel */ = {isa = PBXFileReference; lastKnownFileType = file.mlmodel; path = SqueezeNet.mlmodel; sourceTree = "<group>"; };
 		0A3DE45228899F65008B050B /* Category.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Category.swift; sourceTree = "<group>"; };
 		0A3DE4542889A1A2008B050B /* GridProductCardTileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GridProductCardTileView.swift; sourceTree = "<group>"; };
 		0A3DE4582889A1BD008B050B /* ProductDetailsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductDetailsView.swift; sourceTree = "<group>"; };
@@ -732,6 +736,8 @@
 		0A3B08E528AD4D2200A54385 /* MLModel */ = {
 			isa = PBXGroup;
 			children = (
+				0A3D7F5728D1FD7800D51327 /* MobileNetV2.mlmodel */,
+				0A3D7F5828D1FD7800D51327 /* SqueezeNet.mlmodel */,
 				0A3B08E128AD292C00A54385 /* Resnet50.mlmodel */,
 			);
 			path = MLModel;
@@ -1455,6 +1461,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				0A3D7F5928D1FD7800D51327 /* MobileNetV2.mlmodel in Sources */,
 				0A26FF302885B3BE0001FA93 /* ProductsListView.swift in Sources */,
 				0A154B4A28BD66A2001E4BE3 /* String.swift in Sources */,
 				0A3245F3288B18FE0046043D /* ListProductCardTileView.swift in Sources */,
@@ -1469,6 +1476,7 @@
 				0ACD58FD284A6F6600AA9DA0 /* CustomTextField.swift in Sources */,
 				0A3245ED288AD4F90046043D /* ScaledButtonStyle.swift in Sources */,
 				0A5A7CEA28953B8900736B07 /* OrderCreationShipmentPaymentView.swift in Sources */,
+				0A3D7F5A28D1FD7800D51327 /* SqueezeNet.mlmodel in Sources */,
 				0ACD59B6284B74CD00AA9DA0 /* Countries.swift in Sources */,
 				0A26FF25288597410001FA93 /* HelpViewModel.swift in Sources */,
 				0A24E3F328CD1CD100041F88 /* ProductsListSource.swift in Sources */,

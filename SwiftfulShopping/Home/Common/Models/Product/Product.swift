@@ -46,9 +46,9 @@ struct Product {
         self.isRecommended = isRecommended
         self.isNew = isNew
         if keywords.isEmpty {
-            self.keywords = [name, company, productDescription]
+            self.keywords = [name, company, category.rawValue]
         } else {
-            self.keywords = keywords
+            self.keywords = keywords + [name, company, category.rawValue]
         }
         self.rating = rating
         self.imagesURLs = imagesURLs
@@ -80,6 +80,7 @@ extension Product {
                                                   price: 799.99,
                                                   unitsSold: 100,
                                                   isRecommended: true,
+                                                  keywords: ["telephone", "phone", "mobile phone", "iPhone", "mobile device"],
                                                   rating: ProductRating.demoProductsRatings[0],
                                                   imagesURLs: ["https://store.storeimages.cdn-apple.com/4668/as-images.apple.com/is/iphone-13-pro-max-green-select?wid=940&hei=1112&fmt=png-alpha&.v=1644969385495",
                                                                "https://store.storeimages.cdn-apple.com/4668/as-images.apple.com/is/iphone-13-pro-max-silver-select?wid=940&hei=1112&fmt=png-alpha&.v=1645552346280"]),

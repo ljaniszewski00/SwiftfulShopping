@@ -20,17 +20,25 @@ class ProductRecognizer: ObservableObject {
     @Published var shouldPresentSheetWithResults: Bool = false
     @Published var shouldPresentRecognizingAnimation: Bool = false
     
+    private let MLModels: [MLModel?] = [try? Resnet50(configuration: MLModelConfiguration()).model,
+                                        try? MobileNetV2(configuration: MLModelConfiguration()).model,
+                                        try? SqueezeNet(configuration: MLModelConfiguration()).model]
+    private let maxRecognitionsNumberPerModel: Int = 3
+    
     func recognizeProduct(pixelBuffer: CVPixelBuffer?, errorManager: ErrorManager, completion: @escaping (() -> ())) {
         self.pixelBuffer = pixelBuffer
-        if let request = buildRecognitionRequest(errorManager: errorManager) {
+        if let requests = buildRecognitionRequests(errorManager: errorManager) {
             switch sourceForImageRecognition {
             case .camera:
-                recognizeProductFromCamera(request: request, errorManager: errorManager)
+                recognizeProductFromCamera(requests: requests, errorManager: errorManager)
             case .photoLibrary:
-                recognizeProductFromPhotoLibrary(request: request, errorManager: errorManager)
+                if let firstRequest = requests.first {
+                    recognizeProductFromPhotoLibrary(request: firstRequest, errorManager: errorManager)
+                }
             }
-            let result = prepareRecognitionResults(request: request, errorManager: errorManager)
+            let result = prepareRecognitionResults(requests: requests, errorManager: errorManager)
             self.recognitionResult = result
+            print(self.recognitionResult)
             completion()
         }
     }
@@ -47,25 +55,32 @@ class ProductRecognizer: ObservableObject {
         return Array(resultsSplitted)
     }
     
-    private func buildRecognitionRequest(errorManager: ErrorManager) -> VNCoreMLRequest? {
-        if let model = try? VNCoreMLModel(for: Resnet50(configuration: MLModelConfiguration()).model) {
-            return VNCoreMLRequest(model: model) { [weak self] request, error in
-                if let error = error {
-                    self?.generateError(errorManager: errorManager,
-                                  additionalErrorDescription: error.localizedDescription)
+    private func buildRecognitionRequests(errorManager: ErrorManager) -> [VNCoreMLRequest]? {
+        var requests: [VNCoreMLRequest]?
+        for MLModel in MLModels {
+            if let MLModel = MLModel, let model = try? VNCoreMLModel(for: MLModel) {
+                if requests == nil {
+                    requests = []
                 }
+                let request = VNCoreMLRequest(model: model) { [weak self] request, error in
+                    if let error = error {
+                        self?.generateError(errorManager: errorManager,
+                                            additionalErrorDescription: error.localizedDescription)
+                    }
+                }
+                requests!.append(request)
+            } else {
+                generateError(errorManager: errorManager,
+                              additionalErrorDescription: "Error getting recognition model")
             }
-        } else {
-            generateError(errorManager: errorManager,
-                          additionalErrorDescription: "Error getting recognition model")
-            return nil
         }
+        return requests
     }
     
-    private func recognizeProductFromCamera(request: VNCoreMLRequest, errorManager: ErrorManager) {
+    private func recognizeProductFromCamera(requests: [VNCoreMLRequest], errorManager: ErrorManager) {
         if let cvPixelBuffer = self.pixelBuffer {
             do {
-                try VNImageRequestHandler(cvPixelBuffer: cvPixelBuffer, options: [:]).perform([request])
+                try VNImageRequestHandler(cvPixelBuffer: cvPixelBuffer, options: [:]).perform(requests)
             } catch(let error) {
                 generateError(errorManager: errorManager,
                               additionalErrorDescription: error.localizedDescription)
@@ -90,15 +105,32 @@ class ProductRecognizer: ObservableObject {
         }
     }
     
-    private func prepareRecognitionResults(request: VNCoreMLRequest, errorManager: ErrorManager) -> String? {
-        if let firstResult = request.results?[0] as? VNClassificationObservation,
-           let secondResult = request.results?[1] as? VNClassificationObservation {
-            return firstResult.identifier + ", " + secondResult.identifier
-        } else {
-            generateError(errorManager: errorManager,
-                          additionalErrorDescription: "Error getting first result from results")
-            return nil
+    private func prepareRecognitionResults(requests: [VNCoreMLRequest], errorManager: ErrorManager) -> String? {
+        var resultString: String?
+        for request in requests {
+            if let results = request.results {
+                var iterationEndIndex = maxRecognitionsNumberPerModel
+                if results.count < 3 {
+                    iterationEndIndex = results.endIndex
+                }
+                
+                if resultString == nil {
+                    resultString = ""
+                }
+                
+                for resultNumber in 0...iterationEndIndex {
+                    let observation = results[resultNumber] as? VNClassificationObservation
+                    if resultString == nil {
+                        resultString = ""
+                    }
+                    resultString! += "\(String(describing: observation?.identifier)), "
+                }
+            } else {
+                generateError(errorManager: errorManager,
+                              additionalErrorDescription: "Error processing recognition results")
+            }
         }
+        return resultString
     }
     
     private func generateError(errorManager: ErrorManager, additionalErrorDescription: String?) {
