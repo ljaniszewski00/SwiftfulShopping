@@ -59,6 +59,10 @@ struct ContentView: View {
                 .environmentObject(authStateManager)
                 .environmentObject(locationManager)
                 .environmentObject(contentViewModel)
+                .onAppear {
+                    authStateManager.isGuest = false
+                    authStateManager.isLogged = true
+                }
         }
     }
 }

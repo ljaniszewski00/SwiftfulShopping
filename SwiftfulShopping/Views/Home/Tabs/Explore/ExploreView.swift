@@ -123,8 +123,6 @@ struct ExploreView: View {
                     }
                 }
             }
-            .modifier(LoadingIndicatorModal(isPresented:
-                                                                $exploreViewModel.showLoadingModal))
             .modifier(ErrorModal(isPresented: $errorManager.showErrorModal, customError: errorManager.customError ?? ErrorManager.unknownError))
         }
         .navigationViewStyle(.stack)

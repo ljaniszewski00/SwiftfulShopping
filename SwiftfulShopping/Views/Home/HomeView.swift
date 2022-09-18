@@ -165,7 +165,6 @@ struct HomeView: View {
                     .zIndex(1)
                 }
             }
-            .modifier(LoadingIndicatorModal(isPresented: $homeViewModel.showLoadingModal))
             .modifier(ErrorModal(isPresented: $errorManager.showErrorModal,
                                  customError: errorManager.customError ?? ErrorManager.unknownError))
             .onAppear {
