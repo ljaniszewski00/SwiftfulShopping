@@ -121,6 +121,10 @@
 		0A3B08ED28AD972C00A54385 /* SourceForImageRecognition.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A3B08EC28AD972C00A54385 /* SourceForImageRecognition.swift */; };
 		0A3D7F5928D1FD7800D51327 /* MobileNetV2.mlmodel in Sources */ = {isa = PBXBuildFile; fileRef = 0A3D7F5728D1FD7800D51327 /* MobileNetV2.mlmodel */; };
 		0A3D7F5A28D1FD7800D51327 /* SqueezeNet.mlmodel in Sources */ = {isa = PBXBuildFile; fileRef = 0A3D7F5828D1FD7800D51327 /* SqueezeNet.mlmodel */; };
+		0A3D7F5C28D7563600D51327 /* codes.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = 0A3D7F5B28D7563600D51327 /* codes.xcconfig */; };
+		0A3D7F5E28D7583500D51327 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A3D7F5D28D7583500D51327 /* Constants.swift */; };
+		0A3D7F6128D75AA300D51327 /* Supabase in Frameworks */ = {isa = PBXBuildFile; productRef = 0A3D7F6028D75AA300D51327 /* Supabase */; };
+		0A3D7F6528D75B6700D51327 /* SupabaseManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A3D7F6428D75B6700D51327 /* SupabaseManager.swift */; };
 		0A3DE45328899F65008B050B /* Category.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A3DE45228899F65008B050B /* Category.swift */; };
 		0A3DE4552889A1A2008B050B /* GridProductCardTileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A3DE4542889A1A2008B050B /* GridProductCardTileView.swift */; };
 		0A3DE4592889A1BD008B050B /* ProductDetailsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A3DE4582889A1BD008B050B /* ProductDetailsView.swift */; };
@@ -429,6 +433,9 @@
 		0A3B08EC28AD972C00A54385 /* SourceForImageRecognition.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SourceForImageRecognition.swift; sourceTree = "<group>"; };
 		0A3D7F5728D1FD7800D51327 /* MobileNetV2.mlmodel */ = {isa = PBXFileReference; lastKnownFileType = file.mlmodel; path = MobileNetV2.mlmodel; sourceTree = "<group>"; };
 		0A3D7F5828D1FD7800D51327 /* SqueezeNet.mlmodel */ = {isa = PBXFileReference; lastKnownFileType = file.mlmodel; path = SqueezeNet.mlmodel; sourceTree = "<group>"; };
+		0A3D7F5B28D7563600D51327 /* codes.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = codes.xcconfig; sourceTree = "<group>"; };
+		0A3D7F5D28D7583500D51327 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
+		0A3D7F6428D75B6700D51327 /* SupabaseManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SupabaseManager.swift; sourceTree = "<group>"; };
 		0A3DE45228899F65008B050B /* Category.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Category.swift; sourceTree = "<group>"; };
 		0A3DE4542889A1A2008B050B /* GridProductCardTileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GridProductCardTileView.swift; sourceTree = "<group>"; };
 		0A3DE4582889A1BD008B050B /* ProductDetailsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductDetailsView.swift; sourceTree = "<group>"; };
@@ -540,6 +547,7 @@
 			files = (
 				0A420ACB289F109500AA4C52 /* Kingfisher in Frameworks */,
 				0A2FE0B028A1B9E700E8D30E /* Lottie in Frameworks */,
+				0A3D7F6128D75AA300D51327 /* Supabase in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -761,6 +769,27 @@
 			path = Recognizer;
 			sourceTree = "<group>";
 		};
+		0A3D7F6228D75B4200D51327 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				0A2FE0BA28A1C00F00E8D30E /* Start */,
+				0A2FE0B328A1BAF700E8D30E /* SplashScreen */,
+				0ACD58DC284A6F6600AA9DA0 /* Login */,
+				0ACD58D3284A6F6600AA9DA0 /* Register */,
+				0ACD58D9284A6F6600AA9DA0 /* ForgotPassword */,
+				0ACD58D6284A6F6600AA9DA0 /* Home */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		0A3D7F6328D75B5300D51327 /* Supabase */ = {
+			isa = PBXGroup;
+			children = (
+				0A3D7F6428D75B6700D51327 /* SupabaseManager.swift */,
+			);
+			path = Supabase;
+			sourceTree = "<group>";
+		};
 		0A3DE4572889A1AD008B050B /* ProductViews */ = {
 			isa = PBXGroup;
 			children = (
@@ -922,17 +951,14 @@
 		0ACD5895284A6E9200AA9DA0 /* SwiftfulShopping */ = {
 			isa = PBXGroup;
 			children = (
-				0A2FE0BA28A1C00F00E8D30E /* Start */,
-				0A2FE0B328A1BAF700E8D30E /* SplashScreen */,
-				0ACD58DC284A6F6600AA9DA0 /* Login */,
-				0ACD58D3284A6F6600AA9DA0 /* Register */,
-				0ACD58D9284A6F6600AA9DA0 /* ForgotPassword */,
-				0ACD58D6284A6F6600AA9DA0 /* Home */,
+				0A3D7F6328D75B5300D51327 /* Supabase */,
+				0A3D7F6228D75B4200D51327 /* Views */,
 				0ACD58C0284A6F6500AA9DA0 /* Utils */,
 				0ACD58D2284A6F6500AA9DA0 /* Info.plist */,
 				0ACD589A284A6E9300AA9DA0 /* Assets.xcassets */,
 				0ACD591E284A7E6F00AA9DA0 /* Resources */,
 				0ACD589C284A6E9300AA9DA0 /* Preview Content */,
+				0A3D7F5B28D7563600D51327 /* codes.xcconfig */,
 			);
 			path = SwiftfulShopping;
 			sourceTree = "<group>";
@@ -971,6 +997,7 @@
 				0ACD58CA284A6F6500AA9DA0 /* Extensions */,
 				0ACD58CE284A6F6500AA9DA0 /* Functions */,
 				0ACD58CF284A6F6500AA9DA0 /* HelperViews */,
+				0A3D7F5D28D7583500D51327 /* Constants.swift */,
 			);
 			path = Utils;
 			sourceTree = "<group>";
@@ -1258,6 +1285,7 @@
 			packageProductDependencies = (
 				0A420ACA289F109500AA4C52 /* Kingfisher */,
 				0A2FE0AF28A1B9E700E8D30E /* Lottie */,
+				0A3D7F6028D75AA300D51327 /* Supabase */,
 			);
 			productName = SwiftfulShopping;
 			productReference = 0ACD5893284A6E9200AA9DA0 /* SwiftfulShopping.app */;
@@ -1334,6 +1362,7 @@
 			packageReferences = (
 				0A420AC9289F109500AA4C52 /* XCRemoteSwiftPackageReference "Kingfisher" */,
 				0A2FE0AE28A1B9E700E8D30E /* XCRemoteSwiftPackageReference "lottie-ios" */,
+				0A3D7F5F28D75AA300D51327 /* XCRemoteSwiftPackageReference "supabase-swift" */,
 			);
 			productRefGroup = 0ACD5894284A6E9200AA9DA0 /* Products */;
 			projectDirPath = "";
@@ -1360,6 +1389,7 @@
 				0ACD5950284A7EFC00AA9DA0 /* Karla-ExtraLightItalic.ttf in Resources */,
 				0ACD5979284A7F0E00AA9DA0 /* Rubik-SemiBoldItalic.ttf in Resources */,
 				0ACD5970284A7F0E00AA9DA0 /* Rubik-Medium.ttf in Resources */,
+				0A3D7F5C28D7563600D51327 /* codes.xcconfig in Resources */,
 				0ACD598E284A7F0E00AA9DA0 /* Rubik-SemiBold.ttf in Resources */,
 				0ACD5944284A7EFC00AA9DA0 /* Karla-Bold.ttf in Resources */,
 				0ACD5991284A7F0E00AA9DA0 /* Rubik-MediumItalic.ttf in Resources */,
@@ -1529,12 +1559,14 @@
 				0ACD5906284A6F6600AA9DA0 /* RegisterView.swift in Sources */,
 				0AB8D9902864B583003DC2E6 /* ShippingMethod.swift in Sources */,
 				0A27E7D0287B4EE800D033D9 /* CreditCard.swift in Sources */,
+				0A3D7F5E28D7583500D51327 /* Constants.swift in Sources */,
 				0A56D8A7285F28E60009680C /* ScrollOnContentOverflow.swift in Sources */,
 				0A35557328A052FD005993E5 /* SettingsViewModel.swift in Sources */,
 				0A3DE4552889A1A2008B050B /* GridProductCardTileView.swift in Sources */,
 				0A27E7CC287B091200D033D9 /* EditPersonalInfoView.swift in Sources */,
 				0A268B57286884A3006CF0E2 /* RectangleCustomTextField.swift in Sources */,
 				0ACD590F284A6F6600AA9DA0 /* HomeView.swift in Sources */,
+				0A3D7F6528D75B6700D51327 /* SupabaseManager.swift in Sources */,
 				0A56D8A5285F27D80009680C /* CartViewModel.swift in Sources */,
 				0AB8D9922864DFE3003DC2E6 /* PaymentMethod.swift in Sources */,
 				0A35558028A05DD9005993E5 /* ColorSchemeChangeView.swift in Sources */,
@@ -1727,6 +1759,7 @@
 /* Begin XCBuildConfiguration section */
 		0ACD58B5284A6E9300AA9DA0 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 0A3D7F5B28D7563600D51327 /* codes.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				CLANG_ANALYZER_NONNULL = YES;
@@ -1787,6 +1820,7 @@
 		};
 		0ACD58B6284A6E9300AA9DA0 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 0A3D7F5B28D7563600D51327 /* codes.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				CLANG_ANALYZER_NONNULL = YES;
@@ -1841,6 +1875,7 @@
 		};
 		0ACD58B8284A6E9300AA9DA0 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 0A3D7F5B28D7563600D51327 /* codes.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
@@ -1850,6 +1885,7 @@
 				DEVELOPMENT_TEAM = T3SR62DCTW;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = SwiftfulShopping/Info.plist;
 				INFOPLIST_KEY_NSCameraUsageDescription = "Used to take profile picture and regocnize products";
 				INFOPLIST_KEY_NSFaceIDUsageDescription = "Used to unlock app";
 				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "Location used to fill registration address data";
@@ -1865,14 +1901,18 @@
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = ljaniszewski.SwiftfulShopping;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
 		};
 		0ACD58B9284A6E9300AA9DA0 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 0A3D7F5B28D7563600D51327 /* codes.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
@@ -1882,6 +1922,7 @@
 				DEVELOPMENT_TEAM = T3SR62DCTW;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = SwiftfulShopping/Info.plist;
 				INFOPLIST_KEY_NSCameraUsageDescription = "Used to take profile picture and regocnize products";
 				INFOPLIST_KEY_NSFaceIDUsageDescription = "Used to unlock app";
 				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "Location used to fill registration address data";
@@ -1897,14 +1938,18 @@
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = ljaniszewski.SwiftfulShopping;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Release;
 		};
 		0ACD58BB284A6E9300AA9DA0 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 0A3D7F5B28D7563600D51327 /* codes.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
@@ -1925,6 +1970,7 @@
 		};
 		0ACD58BC284A6E9300AA9DA0 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 0A3D7F5B28D7563600D51327 /* codes.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
@@ -1945,6 +1991,7 @@
 		};
 		0ACD58BE284A6E9300AA9DA0 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 0A3D7F5B28D7563600D51327 /* codes.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CODE_SIGN_STYLE = Automatic;
@@ -1963,6 +2010,7 @@
 		};
 		0ACD58BF284A6E9300AA9DA0 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 0A3D7F5B28D7563600D51327 /* codes.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CODE_SIGN_STYLE = Automatic;
@@ -2029,6 +2077,14 @@
 				minimumVersion = 3.0.0;
 			};
 		};
+		0A3D7F5F28D75AA300D51327 /* XCRemoteSwiftPackageReference "supabase-swift" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/supabase/supabase-swift.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 0.0.9;
+			};
+		};
 		0A420AC9289F109500AA4C52 /* XCRemoteSwiftPackageReference "Kingfisher" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/onevcat/Kingfisher.git";
@@ -2044,6 +2100,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 0A2FE0AE28A1B9E700E8D30E /* XCRemoteSwiftPackageReference "lottie-ios" */;
 			productName = Lottie;
+		};
+		0A3D7F6028D75AA300D51327 /* Supabase */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 0A3D7F5F28D75AA300D51327 /* XCRemoteSwiftPackageReference "supabase-swift" */;
+			productName = Supabase;
 		};
 		0A420ACA289F109500AA4C52 /* Kingfisher */ = {
 			isa = XCSwiftPackageProductDependency;

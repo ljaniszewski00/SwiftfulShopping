@@ -127,7 +127,7 @@ class ExploreViewModel: ObservableObject {
     
     func fetchProducts() {
         showLoadingModal = true
-        DispatchQueue.main.asyncAfter(deadline: .now() + 0) { [weak self] in
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) { [weak self] in
             self?.productsFromRepository = ProductsRepository.shared.products
             self?.productsToBeDisplayed = ProductsRepository.shared.products
             self?.showLoadingModal = false

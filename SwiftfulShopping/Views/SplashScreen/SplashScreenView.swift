@@ -47,10 +47,9 @@ struct SplashScreenView: View {
                         .ignoresSafeArea()
                 }
                 .onAppear {
-//                    DispatchQueue.main.asyncAfter(deadline: .now() + 2.5) {
-//                        splashScreenViewModel.shouldPresentContentView = true
-//                    }
-                    splashScreenViewModel.shouldPresentContentView = true
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 2.5) {
+                        splashScreenViewModel.shouldPresentContentView = true
+                    }
                 }
             }
         }

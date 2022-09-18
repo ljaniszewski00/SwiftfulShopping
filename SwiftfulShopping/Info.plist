@@ -2,14 +2,9 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
-	<key>UILaunchScreen</key>
-	<dict>
-		<key>UIImageName</key>
-		<string>AppIconImage</string>
-		<key>UIImageRespectsSafeAreaInsets</key>
-		<true/>
-		<key>UILaunchScreen</key>
-		<dict/>
-	</dict>
+	<key>Supabase key</key>
+	<string>$(SUPABASE_KEY)</string>
+	<key>Supabase project key</key>
+	<string>$(SUPABASE_PROJECT_KEY)</string>
 </dict>
 </plist>

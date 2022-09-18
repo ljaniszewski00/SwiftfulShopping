@@ -339,8 +339,6 @@ struct ExploreView_Previews: PreviewProvider {
                     .previewDisplayName("\(deviceName) portrait")
                     .onAppear {
                         exploreViewModel.fetchProducts()
-                        authStateManager.isGuest = false
-                        authStateManager.isLogged = true
                     }
             }
         }

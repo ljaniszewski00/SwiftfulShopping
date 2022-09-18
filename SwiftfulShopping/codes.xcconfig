@@ -1,0 +1,12 @@
+//
+//  codes.xcconfig
+//  SwiftfulShopping
+//
+//  Created by Łukasz Janiszewski on 18/09/2022.
+//
+
+// Configuration settings file format documentation can be found at:
+// https://help.apple.com/xcode/#/dev745c5c974
+
+SUPABASE_KEY = sbp_18db4133d5efd0dbc52396714e9616c8985a6fdc
+SUPABASE_PROJECT_KEY = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imd6em5qamNibWp0dGN3cm9qbHhvIiwicm9sZSI6ImFub24iLCJpYXQiOjE2NjM1MDk5MzcsImV4cCI6MTk3OTA4NTkzN30.bQaib-21hxjU2I275y20I0OP90zJU1pjErLnT1Gyv50
