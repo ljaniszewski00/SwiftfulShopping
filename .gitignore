@@ -90,3 +90,4 @@ fastlane/test_output
 iOSInjectionProject/
 *.xcconfig
 SwiftfulShopping/codes.xcconfig
+SwiftfulShopping/GoogleService-Info.plist
