@@ -12,10 +12,16 @@ final class ErrorManager: ObservableObject {
         .networkError: 1,
         .productRecognizerError: 2,
         .loginError: 3,
-        .registerError: 4,
-        .discountApplyError: 5,
-        .orderCreateError: 6,
-        .biometricRecognitionError: 7,
+        .googleSignInError: 4,
+        .facebookSignInError: 5,
+        .githubSignInError: 6,
+        .registerError: 7,
+        .discountApplyError: 8,
+        .orderCreateError: 9,
+        .biometricRecognitionError: 10,
+        .changeEmailError: 11,
+        .changePasswordError: 12,
+        .deleteAccountError: 13,
         .unknown: 0
     ]
     
@@ -25,10 +31,16 @@ final class ErrorManager: ObservableObject {
         .networkError: "No internet connection. Some functions will be unavailable.",
         .productRecognizerError: "Error occured while recognizing your product. \(errorDescriptionSuffix)",
         .loginError: "Error occured while trying to log in. \(errorDescriptionSuffix)",
+        .googleSignInError: "Error occured while trying to log in via Google. \(errorDescriptionSuffix)",
+        .facebookSignInError: "Error occured while trying to log in via Facebook. \(errorDescriptionSuffix)",
+        .githubSignInError: "Error occured while trying to log in via GitHub. \(errorDescriptionSuffix)",
         .registerError: "Error occured while trying to register. \(errorDescriptionSuffix)",
         .discountApplyError: "Error applying discount code. \(errorDescriptionSuffix)",
         .orderCreateError: "Error creating your order. \(errorDescriptionSuffix)",
         .biometricRecognitionError: "Error authenticating using biometry. Please try again.",
+        .changeEmailError: "Error occured while trying to change the email. \(errorDescriptionSuffix)",
+        .changePasswordError: "Error occured while trying to change the password. \(errorDescriptionSuffix)",
+        .deleteAccountError: "Error occured while trying delete the account. \(errorDescriptionSuffix)",
         .unknown: ""
     ]
     

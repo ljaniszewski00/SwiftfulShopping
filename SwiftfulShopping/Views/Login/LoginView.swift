@@ -135,9 +135,14 @@ struct LoginView: View {
     @ViewBuilder
     func buildGoogleLogInButton() -> some View {
         Button {
-            FirebaseAuthManager.client.googleSignInCredentials { (credential, error) in
-                FirebaseAuthManager.client.firebaseGoogleSignIn { success, error in
-                    print(success)
+            FirebaseAuthManager.client.firebaseGoogleSignIn { success, error in
+                if success {
+                    authStateManager.didLogged()
+                } else {
+                    if let error = error {
+                        ErrorManager.shared.generateCustomError(errorType: .googleSignInError,
+                                                                additionalErrorDescription: error.localizedDescription)
+                    }
                 }
             }
         } label: {

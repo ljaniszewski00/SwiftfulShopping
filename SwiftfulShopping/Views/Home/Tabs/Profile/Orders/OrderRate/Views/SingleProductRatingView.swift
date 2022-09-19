@@ -104,7 +104,7 @@ struct SingleProductRatingView: View {
 
 struct SingleProductRatingView_Previews: PreviewProvider {
     static var previews: some View {
-        let authStateManager = AuthStateManager(isGuestDefault: true)
+        let authStateManager = AuthStateManager()
         let tabBarStateManager = TabBarStateManager()
         let profileViewModel = ProfileViewModel()
         let ratingViewModel = RatingViewModel()
@@ -119,8 +119,7 @@ struct SingleProductRatingView_Previews: PreviewProvider {
                     .previewDevice(PreviewDevice(rawValue: deviceName))
                     .previewDisplayName("\(deviceName) portrait")
                     .onAppear {
-                        authStateManager.isGuest = false
-                        authStateManager.isLogged = true
+                        authStateManager.didLogged()
                         ratingViewModel.activeProduct = Product.demoProducts[0]
                     }
             }

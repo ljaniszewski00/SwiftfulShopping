@@ -91,7 +91,7 @@ struct OrderCreationCompletionView: View {
 
 struct OrderCreationCompletionView_Previews: PreviewProvider {
     static var previews: some View {
-        let authStateManager = AuthStateManager(isGuestDefault: true)
+        let authStateManager = AuthStateManager()
         let tabBarStateManager = TabBarStateManager()
         let exploreViewModel = ExploreViewModel()
         let profileViewModel = ProfileViewModel()
@@ -112,8 +112,7 @@ struct OrderCreationCompletionView_Previews: PreviewProvider {
                     .previewDevice(PreviewDevice(rawValue: deviceName))
                     .previewDisplayName("\(deviceName) portrait")
                     .onAppear {
-                        authStateManager.isGuest = false
-                        authStateManager.isLogged = true
+                        authStateManager.didLogged()
                         orderCreationViewModel.createdOrder = Order.demoOrders[0]
                     }
             }

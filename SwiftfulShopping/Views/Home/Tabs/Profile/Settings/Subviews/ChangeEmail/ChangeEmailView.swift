@@ -98,7 +98,7 @@ struct ChangeEmailView: View {
 
 struct ChangeEmailView_Previews: PreviewProvider {
     static var previews: some View {
-        let authStateManager = AuthStateManager(isGuestDefault: true)
+        let authStateManager = AuthStateManager()
         let settingsViewModel = SettingsViewModel()
         ForEach(ColorScheme.allCases, id: \.self) { colorScheme in
             ForEach(["iPhone 13 Pro Max", "iPhone 8"], id: \.self) { deviceName in
@@ -109,8 +109,7 @@ struct ChangeEmailView_Previews: PreviewProvider {
                     .previewDevice(PreviewDevice(rawValue: deviceName))
                     .previewDisplayName("\(deviceName) portrait")
                     .onAppear {
-                        authStateManager.isGuest = false
-                        authStateManager.isLogged = true
+                        authStateManager.didLogged()
                     }
             }
         }

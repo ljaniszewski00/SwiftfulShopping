@@ -129,7 +129,15 @@ struct ProfileView: View {
                             Spacer()
                             Button {
                                 withAnimation {
-                                    authStateManager.logoutCompletely()
+                                    let (logoutSuccess, logoutError) = FirebaseAuthManager.client.firebaseSignOut()
+                                    if logoutSuccess {
+                                        authStateManager.didLogout()
+                                    } else {
+                                        if let logoutError = logoutError {
+                                            ErrorManager.shared.generateCustomError(errorType: .logoutError,
+                                                                                    additionalErrorDescription: logoutError.localizedDescription)
+                                        }
+                                    }
                                 }
                             } label: {
                                 Text("Logout")
@@ -202,7 +210,7 @@ struct ProfileView: View {
 
 struct ProfileView_Previews: PreviewProvider {
     static var previews: some View {
-        let authStateManager = AuthStateManager(isGuestDefault: true)
+        let authStateManager = AuthStateManager()
         let accentColorManager = AccentColorManager()
         let tabBarStateManager = TabBarStateManager()
         let profileViewModel = ProfileViewModel()
@@ -216,10 +224,6 @@ struct ProfileView_Previews: PreviewProvider {
                     .preferredColorScheme(colorScheme)
                     .previewDevice(PreviewDevice(rawValue: deviceName))
                     .previewDisplayName("\(deviceName) portrait")
-                    .onAppear {
-                        authStateManager.isGuest = false
-                        authStateManager.isLogged = true
-                    }
             }
         }
     }

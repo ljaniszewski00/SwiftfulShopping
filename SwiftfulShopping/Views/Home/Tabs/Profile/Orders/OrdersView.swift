@@ -83,7 +83,7 @@ struct OrdersView: View {
 
 struct OrdersView_Previews: PreviewProvider {
     static var previews: some View {
-        let authStateManager = AuthStateManager(isGuestDefault: true)
+        let authStateManager = AuthStateManager()
         let tabBarStateManager = TabBarStateManager()
         let profileViewModel = ProfileViewModel()
         ForEach(ColorScheme.allCases, id: \.self) { colorScheme in
@@ -96,8 +96,7 @@ struct OrdersView_Previews: PreviewProvider {
                     .previewDevice(PreviewDevice(rawValue: deviceName))
                     .previewDisplayName("\(deviceName) portrait")
                     .onAppear {
-                        authStateManager.isGuest = false
-                        authStateManager.isLogged = true
+                        authStateManager.didLogged()
                     }
             }
         }

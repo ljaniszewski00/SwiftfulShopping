@@ -10,13 +10,15 @@ import Firebase
 import GoogleSignIn
 
 class FirebaseAuthManager: ObservableObject {
+    let auth: Auth = Auth.auth()
+    
     static var client: FirebaseAuthManager = {
         FirebaseAuthManager()
     }()
     
     private init() {}
     
-    func googleSignInCredentials(completion: @escaping ((AuthCredential?, Error?) -> ())) {
+    private func getGoogleSignInCredentials(completion: @escaping ((AuthCredential?, Error?) -> ())) {
         guard let clientID = FirebaseApp.app()?.options.clientID else { return }
         let config = GIDConfiguration(clientID: clientID)
         
@@ -42,9 +44,9 @@ class FirebaseAuthManager: ObservableObject {
     }
     
     func firebaseGoogleSignIn(completion: @escaping ((Bool, Error?) -> ())) {
-        googleSignInCredentials { credential, error in
+        getGoogleSignInCredentials { [weak self] credential, error in
             if let credential = credential {
-                Auth.auth().signIn(with: credential) { (result, error) in
+                self?.auth.signIn(with: credential) { (result, error) in
                     if let error = error {
                         completion(false, error)
                     }
@@ -54,6 +56,15 @@ class FirebaseAuthManager: ObservableObject {
                 completion(false, error)
             }
         }
+    }
+    
+    func firebaseSignOut() -> (Bool, Error?) {
+        do {
+            try auth.signOut()
+        } catch let signOutError as NSError {
+            return (false, signOutError)
+        }
+        return (true, nil)
     }
 }
 

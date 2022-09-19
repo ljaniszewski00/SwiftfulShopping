@@ -94,7 +94,7 @@ struct ThirdReturnCreationView: View {
 
 struct ThirdReturnCreationView_Previews: PreviewProvider {
     static var previews: some View {
-        let authStateManager = AuthStateManager(isGuestDefault: true)
+        let authStateManager = AuthStateManager()
         let tabBarStateManager = TabBarStateManager()
         let profileViewModel = ProfileViewModel()
         let returnCreationViewModel = ReturnCreationViewModel()
@@ -109,8 +109,7 @@ struct ThirdReturnCreationView_Previews: PreviewProvider {
                     .previewDevice(PreviewDevice(rawValue: deviceName))
                     .previewDisplayName("\(deviceName) portrait")
                     .onAppear {
-                        authStateManager.isGuest = false
-                        authStateManager.isLogged = true
+                        authStateManager.didLogged()
                         returnCreationViewModel.orderForReturn = Order.demoOrders[0]
                     }
             }

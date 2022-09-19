@@ -61,7 +61,7 @@ struct FavoritesView: View {
 
 struct FavoritesView_Previews: PreviewProvider {
     static var previews: some View {
-        let authStateManager = AuthStateManager(isGuestDefault: true)
+        let authStateManager = AuthStateManager()
         let tabBarStateManager = TabBarStateManager()
         let exploreViewModel = ExploreViewModel()
         let profileViewModel = ProfileViewModel()
@@ -80,9 +80,6 @@ struct FavoritesView_Previews: PreviewProvider {
                     .previewDevice(PreviewDevice(rawValue: deviceName))
                     .previewDisplayName("\(deviceName) portrait")
                     .onAppear {
-                        authStateManager.isGuest = false
-                        authStateManager.isLogged = true
-                        
                         favoritesViewModel.favoriteProducts = Product.demoProducts
                     }
             }

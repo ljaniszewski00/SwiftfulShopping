@@ -102,7 +102,7 @@ struct AddNewAddressView: View {
 
 struct AddNewAddressView_Previews: PreviewProvider {
     static var previews: some View {
-        let authStateManager = AuthStateManager(isGuestDefault: true)
+        let authStateManager = AuthStateManager()
         let tabBarStateManager = TabBarStateManager()
         let profileViewModel = ProfileViewModel()
         let personalInfoViewModel = PersonalInfoViewModel()
@@ -116,10 +116,6 @@ struct AddNewAddressView_Previews: PreviewProvider {
                     .preferredColorScheme(colorScheme)
                     .previewDevice(PreviewDevice(rawValue: deviceName))
                     .previewDisplayName("\(deviceName) portrait")
-                    .onAppear {
-                        authStateManager.isGuest = false
-                        authStateManager.isLogged = true
-                    }
             }
         }
     }

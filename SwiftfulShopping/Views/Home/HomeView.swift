@@ -48,7 +48,7 @@ struct HomeView: View {
     ]
     
     var body: some View {
-        if authStateManager.isLogged || authStateManager.isGuest {
+        if authStateManager.isLogged {
             ZStack(alignment: .bottom) {
                 Group {
                     switch selectedTab {
@@ -187,7 +187,7 @@ struct HomeView: View {
 
 struct HomeView_Previews: PreviewProvider {
     static var previews: some View {
-        let authStateManager = AuthStateManager(isGuestDefault: true)
+        let authStateManager = AuthStateManager()
         let accentColorManager = AccentColorManager()
         ForEach(ColorScheme.allCases, id: \.self) { colorScheme in
             ForEach(["iPhone 13 Pro Max", "iPhone 8"], id: \.self) { deviceName in

@@ -74,7 +74,7 @@ struct CompletionReturnCreationView: View {
 
 struct CompletionReturnCreationView_Previews: PreviewProvider {
     static var previews: some View {
-        let authStateManager = AuthStateManager(isGuestDefault: true)
+        let authStateManager = AuthStateManager()
         let tabBarStateManager = TabBarStateManager()
         let profileViewModel = ProfileViewModel()
         let returnCreationViewModel = ReturnCreationViewModel()
@@ -89,8 +89,7 @@ struct CompletionReturnCreationView_Previews: PreviewProvider {
                     .previewDevice(PreviewDevice(rawValue: deviceName))
                     .previewDisplayName("\(deviceName) portrait")
                     .onAppear {
-                        authStateManager.isGuest = false
-                        authStateManager.isLogged = true
+                        authStateManager.didLogged()
                         returnCreationViewModel.orderForReturn = Order.demoOrders[0]
                         returnCreationViewModel.createdReturn = Return.demoReturns[0]
                     }

@@ -17,7 +17,7 @@ struct ContentView: View {
     @StateObject var errorManager = ErrorManager.shared
     
     var body: some View {
-        if authStateManager.isLogged && !authStateManager.isGuest {
+        if authStateManager.isLogged {
             if contentViewModel.unlocked || !contentViewModel.biometricLock {
                 HomeView()
                     .environmentObject(authStateManager)
@@ -59,10 +59,6 @@ struct ContentView: View {
                 .environmentObject(authStateManager)
                 .environmentObject(locationManager)
                 .environmentObject(contentViewModel)
-                .onAppear {
-                    authStateManager.isGuest = false
-                    authStateManager.isLogged = true
-                }
         }
     }
 }
