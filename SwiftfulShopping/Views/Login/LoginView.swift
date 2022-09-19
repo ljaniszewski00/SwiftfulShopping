@@ -135,7 +135,11 @@ struct LoginView: View {
     @ViewBuilder
     func buildGoogleLogInButton() -> some View {
         Button {
-            
+            FirebaseAuthManager.client.googleSignInCredentials { (credential, error) in
+                FirebaseAuthManager.client.firebaseGoogleSignIn { success, error in
+                    print(success)
+                }
+            }
         } label: {
             ZStack {
                 RoundedRectangle(cornerRadius: 5)
