@@ -53,6 +53,7 @@ struct ErrorModal: ViewModifier {
                     }
                     .padding()
                 }
+                .padding(.top)
                 .animation(.easeInOut(duration: 0.5))
                 .transition(.offset(x: Constants.xAxisTransition,
                                     y: geometry.aboveScreenEdge))

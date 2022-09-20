@@ -8,6 +8,8 @@
 import SwiftUI
 import FirebaseCore
 import GoogleSignIn
+import FBSDKCoreKit
+import FacebookCore
 
 @main
 struct SwiftlyShoppingApp: App {
@@ -35,6 +37,29 @@ class AppDelegate: NSObject, UIApplicationDelegate {
         //Initializing Firebase
         FirebaseApp.configure()
         
+        ApplicationDelegate.shared.application(application, didFinishLaunchingWithOptions: launchOptions)
+        
         return true
+    }
+    
+    func application(_ app: UIApplication,
+                     open url: URL,
+                     options: [UIApplication.OpenURLOptionsKey : Any] = [:]) -> Bool {
+        return ApplicationDelegate.shared.application(app, open: url, options: options)
+    }
+}
+
+class SceneDelegate: NSObject, UISceneDelegate {
+    func scene(_ scene: UIScene, openURLContexts URLContexts: Set<UIOpenURLContext>) {
+        guard let url = URLContexts.first?.url else {
+                return
+            }
+
+        ApplicationDelegate.shared.application(
+            UIApplication.shared,
+            open: url,
+            sourceApplication: nil,
+            annotation: [UIApplication.OpenURLOptionsKey.annotation]
+        )
     }
 }

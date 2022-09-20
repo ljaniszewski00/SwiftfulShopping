@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		0A13460228BBA02A002D596E /* Font.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A13460128BBA02A002D596E /* Font.swift */; };
 		0A154B4A28BD66A2001E4BE3 /* String.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A154B4928BD66A2001E4BE3 /* String.swift */; };
+		0A1C61A628DA1CCA00BF4ED3 /* FacebookLogin in Frameworks */ = {isa = PBXBuildFile; productRef = 0A1C61A528DA1CCA00BF4ED3 /* FacebookLogin */; };
 		0A21490228D9060900748128 /* GoogleSignInSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 0A21490128D9060900748128 /* GoogleSignInSwift */; };
 		0A21490428D9101400748128 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 0A21490328D9101400748128 /* GoogleService-Info.plist */; };
 		0A2165AE28A2C1E0006842F0 /* ChangeEmailViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A2165AD28A2C1E0006842F0 /* ChangeEmailViewModel.swift */; };
@@ -275,6 +276,7 @@
 /* Begin PBXFileReference section */
 		0A13460128BBA02A002D596E /* Font.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Font.swift; sourceTree = "<group>"; };
 		0A154B4928BD66A2001E4BE3 /* String.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = String.swift; sourceTree = "<group>"; };
+		0A1C61A728DA20BC00BF4ED3 /* SwiftfulShopping.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = SwiftfulShopping.entitlements; sourceTree = "<group>"; };
 		0A21490328D9101400748128 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		0A2165AD28A2C1E0006842F0 /* ChangeEmailViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChangeEmailViewModel.swift; sourceTree = "<group>"; };
 		0A2165B028A2C200006842F0 /* ChangePasswordViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChangePasswordViewModel.swift; sourceTree = "<group>"; };
@@ -449,6 +451,7 @@
 				0A83215A28D911EE008234C2 /* FirebaseAuth in Frameworks */,
 				0A2FE0B028A1B9E700E8D30E /* Lottie in Frameworks */,
 				0A3D7F6128D75AA300D51327 /* Supabase in Frameworks */,
+				0A1C61A628DA1CCA00BF4ED3 /* FacebookLogin in Frameworks */,
 				0A21490228D9060900748128 /* GoogleSignInSwift in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -861,6 +864,7 @@
 		0ACD5895284A6E9200AA9DA0 /* SwiftfulShopping */ = {
 			isa = PBXGroup;
 			children = (
+				0A1C61A728DA20BC00BF4ED3 /* SwiftfulShopping.entitlements */,
 				0A21490328D9101400748128 /* GoogleService-Info.plist */,
 				0A83215D28D9120C008234C2 /* Firebase */,
 				0A3D7F6328D75B5300D51327 /* Supabase */,
@@ -1143,6 +1147,7 @@
 				0A21490128D9060900748128 /* GoogleSignInSwift */,
 				0A83215928D911EE008234C2 /* FirebaseAuth */,
 				0A83215B28D911EE008234C2 /* FirebaseAuthCombine-Community */,
+				0A1C61A528DA1CCA00BF4ED3 /* FacebookLogin */,
 			);
 			productName = SwiftfulShopping;
 			productReference = 0ACD5893284A6E9200AA9DA0 /* SwiftfulShopping.app */;
@@ -1222,6 +1227,7 @@
 				0A3D7F5F28D75AA300D51327 /* XCRemoteSwiftPackageReference "supabase-swift" */,
 				0A21490028D9060900748128 /* XCRemoteSwiftPackageReference "GoogleSignIn-iOS" */,
 				0A83215828D911EE008234C2 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
+				0A1C61A428DA1CCA00BF4ED3 /* XCRemoteSwiftPackageReference "facebook-ios-sdk" */,
 			);
 			productRefGroup = 0ACD5894284A6E9200AA9DA0 /* Products */;
 			projectDirPath = "";
@@ -1658,6 +1664,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = SwiftfulShopping/SwiftfulShopping.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"SwiftfulShopping/Preview Content\"";
@@ -1695,6 +1702,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = SwiftfulShopping/SwiftfulShopping.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"SwiftfulShopping/Preview Content\"";
@@ -1848,6 +1856,14 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
+		0A1C61A428DA1CCA00BF4ED3 /* XCRemoteSwiftPackageReference "facebook-ios-sdk" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/facebook/facebook-ios-sdk";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 9.0.0;
+			};
+		};
 		0A21490028D9060900748128 /* XCRemoteSwiftPackageReference "GoogleSignIn-iOS" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/google/GoogleSignIn-iOS";
@@ -1891,6 +1907,11 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		0A1C61A528DA1CCA00BF4ED3 /* FacebookLogin */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 0A1C61A428DA1CCA00BF4ED3 /* XCRemoteSwiftPackageReference "facebook-ios-sdk" */;
+			productName = FacebookLogin;
+		};
 		0A21490128D9060900748128 /* GoogleSignInSwift */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = 0A21490028D9060900748128 /* XCRemoteSwiftPackageReference "GoogleSignIn-iOS" */;

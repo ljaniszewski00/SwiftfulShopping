@@ -169,7 +169,16 @@ struct LoginView: View {
     @ViewBuilder
     func buildFacebookLogInButton() -> some View {
         Button {
-            
+            FirebaseAuthManager.client.firebaseFacebookSignIn { success, error in
+                if success {
+                    authStateManager.didLogged()
+                } else {
+                    if let error = error {
+                        ErrorManager.shared.generateCustomError(errorType: .facebookSignInError,
+                                                                additionalErrorDescription: error.localizedDescription)
+                    }
+                }
+            }
         } label: {
             ZStack {
                 RoundedRectangle(cornerRadius: 5)

@@ -8,6 +8,8 @@
 import SwiftUI
 import Firebase
 import GoogleSignIn
+import FBSDKLoginKit
+import FacebookLogin
 
 class FirebaseAuthManager: ObservableObject {
     let auth: Auth = Auth.auth()
@@ -17,6 +19,9 @@ class FirebaseAuthManager: ObservableObject {
     }()
     
     private init() {}
+    
+    
+    // MARK: Google SignIn
     
     private func getGoogleSignInCredentials(completion: @escaping ((AuthCredential?, Error?) -> ())) {
         guard let clientID = FirebaseApp.app()?.options.clientID else { return }
@@ -57,6 +62,58 @@ class FirebaseAuthManager: ObservableObject {
             }
         }
     }
+    
+    
+    // MARK: Facebook SignIn
+    
+    private func getFacebookSignInCredentials(completion: @escaping ((AuthCredential?, Error?) -> ())) {
+        LoginManager().logIn(permissions: ["email"],
+                             from: nil) { result, error in
+            if let error = error {
+                completion(nil, error)
+            } else {
+                if let result = result, let token = result.token {
+                    let tokenString = token.tokenString
+                    let credential = FacebookAuthProvider.credential(withAccessToken:
+                                                                        tokenString)
+                    completion(credential, nil)
+                } else {
+                    completion(nil, error)
+                }
+            }
+        }
+    }
+    
+    func firebaseFacebookSignIn(completion: @escaping ((Bool, Error?) -> ())) {
+        getFacebookSignInCredentials { [weak self] credential, error in
+            if let credential = credential {
+                self?.auth.signIn(with: credential) { (result, error) in
+                    if let error = error {
+                        completion(false, error)
+                    }
+                    completion(true, nil)
+                }
+            } else {
+                completion(false, error)
+            }
+        }
+    }
+    
+    
+    // MARK: GitHub SignIn
+    
+    private func getGitHubSignInCredentials(completion: @escaping ((AuthCredential?, Error?) -> ())) {
+        
+    }
+    
+    func firebaseGitHubSignIn(completion: @escaping ((Bool, Error?) -> ())) {
+        getFacebookSignInCredentials { [weak self] credential, error in
+            
+        }
+    }
+    
+    
+    // MARK: Firebase SignOut
     
     func firebaseSignOut() -> (Bool, Error?) {
         do {

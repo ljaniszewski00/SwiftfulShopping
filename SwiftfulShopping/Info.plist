@@ -12,7 +12,21 @@
 				<string>com.googleusercontent.apps.376063248531-6humtnlsjp7cnbhauvc8jk6bunipkm9k</string>
 			</array>
 		</dict>
+		<dict>
+			<key>CFBundleTypeRole</key>
+			<string>Editor</string>
+			<key>CFBundleURLSchemes</key>
+			<array>
+				<string>fb452454256946045</string>
+			</array>
+		</dict>
 	</array>
+    <key>FacebookAppID</key>
+    <string>452454256946045</string>
+    <key>FacebookClientToken</key>
+    <string>9469d0566558ae5e288f78d5b31cbfd0</string>
+    <key>FacebookDisplayName</key>
+    <string>SwiftfulShopping-iOS</string>
 	<key>Supabase key</key>
 	<string>$(SUPABASE_KEY)</string>
 	<key>Supabase project key</key>
