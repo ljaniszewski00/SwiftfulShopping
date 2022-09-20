@@ -49,7 +49,7 @@ struct SecondRegisterView: View {
                         withAnimation {
                             let (success, message) = registerViewModel.completeSecondRegistrationStep()
                             if success {
-                                authStateManager.didLogged()
+                                authStateManager.didLogged(with: .emailPassword)
                             } else {
                                 errorManager.generateCustomError(errorType: .registerError,
                                                                  additionalErrorDescription: message)

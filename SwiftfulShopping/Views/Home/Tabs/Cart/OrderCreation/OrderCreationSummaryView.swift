@@ -247,7 +247,7 @@ struct OrderCreationSummaryView_Previews: PreviewProvider {
                     .previewDevice(PreviewDevice(rawValue: deviceName))
                     .previewDisplayName("\(deviceName) portrait")
                     .onAppear {
-                        authStateManager.didLogged()
+                        authStateManager.didLogged(with: .emailPassword)
                         orderCreationViewModel.choosenShippingMethod = .parcel
                         orderCreationViewModel.defaultAddress = Address.demoAddress.description
                         orderCreationViewModel.choosenPaymentMethod = PaymentMethod.creditCard

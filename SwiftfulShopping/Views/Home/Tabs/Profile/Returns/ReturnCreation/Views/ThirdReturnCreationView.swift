@@ -109,7 +109,7 @@ struct ThirdReturnCreationView_Previews: PreviewProvider {
                     .previewDevice(PreviewDevice(rawValue: deviceName))
                     .previewDisplayName("\(deviceName) portrait")
                     .onAppear {
-                        authStateManager.didLogged()
+                        authStateManager.didLogged(with: .emailPassword)
                         returnCreationViewModel.orderForReturn = Order.demoOrders[0]
                     }
             }

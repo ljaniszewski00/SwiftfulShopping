@@ -158,7 +158,7 @@ struct CartView_Previews: PreviewProvider {
                     .previewDevice(PreviewDevice(rawValue: deviceName))
                     .previewDisplayName("\(deviceName) portrait")
                     .onAppear {
-                        authStateManager.didLogged()
+                        authStateManager.didLogged(with: .emailPassword)
                         
                         for product in Product.demoProducts {
                             cartViewModel.cart.products[product] = 1

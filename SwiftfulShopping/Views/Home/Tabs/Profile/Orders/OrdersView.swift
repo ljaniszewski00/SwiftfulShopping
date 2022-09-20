@@ -96,7 +96,7 @@ struct OrdersView_Previews: PreviewProvider {
                     .previewDevice(PreviewDevice(rawValue: deviceName))
                     .previewDisplayName("\(deviceName) portrait")
                     .onAppear {
-                        authStateManager.didLogged()
+                        authStateManager.didLogged(with: .emailPassword)
                     }
             }
         }
