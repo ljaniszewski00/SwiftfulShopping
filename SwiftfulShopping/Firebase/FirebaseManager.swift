@@ -13,12 +13,17 @@ import FacebookLogin
 
 class FirebaseAuthManager: ObservableObject {
     let auth: Auth = Auth.auth()
+    let provider = OAuthProvider(providerID: "github.com")
     
     static var client: FirebaseAuthManager = {
         FirebaseAuthManager()
     }()
     
-    private init() {}
+    private init() {
+        provider.customParameters = [
+            "allow_signup": "false"
+        ]
+    }
     
     
     // MARK: Google SignIn
@@ -103,12 +108,30 @@ class FirebaseAuthManager: ObservableObject {
     // MARK: GitHub SignIn
     
     private func getGitHubSignInCredentials(completion: @escaping ((AuthCredential?, Error?) -> ())) {
-        
+        provider.getCredentialWith(nil) { credential, error in
+            if let error = error {
+                completion(nil, error)
+            } else {
+                completion(credential, error)
+            }
+        }
     }
     
     func firebaseGitHubSignIn(completion: @escaping ((Bool, Error?) -> ())) {
-        getFacebookSignInCredentials { [weak self] credential, error in
-            
+        getGitHubSignInCredentials { [weak self] credential, error in
+            if let credential = credential {
+                self?.auth.signIn(with: credential) { authResult, error in
+                    if let error = error {
+                        completion(false, error)
+                    } else {
+                        completion(true, nil)
+                    }
+                    
+//                    guard let oauthCredential = authResult.credential as? OAuthCredential else { return }
+                }
+            } else {
+                completion(false, error)
+            }
         }
     }
     

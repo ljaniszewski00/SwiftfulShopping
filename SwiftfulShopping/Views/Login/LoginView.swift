@@ -70,7 +70,7 @@ struct LoginView: View {
                             VStack(spacing: 20) {
                                 Button("Login") {
                                     withAnimation() {
-                                        authStateManager.didLogged()
+                                        authStateManager.didLogged(with: .emailPassword)
                                     }
                                 }
                                 .buttonStyle(CustomButton())
@@ -137,7 +137,7 @@ struct LoginView: View {
         Button {
             FirebaseAuthManager.client.firebaseGoogleSignIn { success, error in
                 if success {
-                    authStateManager.didLogged()
+                    authStateManager.didLogged(with: .google)
                 } else {
                     if let error = error {
                         ErrorManager.shared.generateCustomError(errorType: .googleSignInError,
@@ -171,7 +171,7 @@ struct LoginView: View {
         Button {
             FirebaseAuthManager.client.firebaseFacebookSignIn { success, error in
                 if success {
-                    authStateManager.didLogged()
+                    authStateManager.didLogged(with: .facebook)
                 } else {
                     if let error = error {
                         ErrorManager.shared.generateCustomError(errorType: .facebookSignInError,
@@ -201,7 +201,16 @@ struct LoginView: View {
     @ViewBuilder
     func buildGitHubLogInButton() -> some View {
         Button {
-            
+            FirebaseAuthManager.client.firebaseGitHubSignIn { success, error in
+                if success {
+                    authStateManager.didLogged(with: .github)
+                } else {
+                    if let error = error {
+                        ErrorManager.shared.generateCustomError(errorType: .facebookSignInError,
+                                                                additionalErrorDescription: error.localizedDescription)
+                    }
+                }
+            }
         } label: {
             ZStack {
                 RoundedRectangle(cornerRadius: 5)
