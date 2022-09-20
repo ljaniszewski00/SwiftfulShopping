@@ -274,7 +274,7 @@ struct LoginView: View {
                     authStateManager.didLogged(with: loginViewModel.choosenSignInMethod)
                 } else {
                     if let error = error {
-                        ErrorManager.shared.generateCustomError(errorType: .facebookSignInError,
+                        ErrorManager.shared.generateCustomError(errorType: .githubSignInError,
                                                                 additionalErrorDescription: error.localizedDescription)
                     }
                 }
