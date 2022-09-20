@@ -23,6 +23,9 @@ struct LoginView: View {
     @State private var isEmailTextFieldFocused: Bool = false
     @State private var isPasswordTextFieldFocused: Bool = false
     
+    @State private var isPhoneNumberTextFieldFocused: Bool = false
+    @State private var isVerificationCodeTextFieldFocused: Bool = false
+    
     @State private var showForgotPasswordSheet = false
     
     var body: some View {
@@ -49,19 +52,27 @@ struct LoginView: View {
                         VStack(spacing: 40) {
                             VStack(spacing: 15) {
                                 VStack(spacing: 20) {
-                                    CustomTextField(textFieldProperty: "e-mail", textFieldImageName: "envelope", textFieldSignsLimit: 0, text: $loginViewModel.email, isFocusedParentView: $isEmailTextFieldFocused)
+                                    CustomTextField(textFieldProperty: "e-mail",
+                                                    textFieldImageName: "envelope",
+                                                    textFieldSignsLimit: 0,
+                                                    text: $loginViewModel.email,
+                                                    isFocusedParentView: $isEmailTextFieldFocused)
                                     
-                                    CustomTextField(isSecureField: true, textFieldProperty: "password", textFieldImageName: "lock", text: $loginViewModel.password, isFocusedParentView: $isPasswordTextFieldFocused)
-                                }
-                                
-                                HStack {
-                                    Spacer()
-                                    Text("Forgot password?")
-                                        .font(.ssBody).fontWeight(.semibold)
-                                        .foregroundColor(.accentColor)
-                                        .onTapGesture {
-                                            showForgotPasswordSheet = true
-                                        }
+                                    CustomTextField(isSecureField: true,
+                                                    textFieldProperty: "password",
+                                                    textFieldImageName: "lock",
+                                                    text: $loginViewModel.password,
+                                                    isFocusedParentView: $isPasswordTextFieldFocused)
+                                    
+                                    HStack {
+                                        Spacer()
+                                        Text("Forgot password?")
+                                            .font(.ssBody).fontWeight(.semibold)
+                                            .foregroundColor(.accentColor)
+                                            .onTapGesture {
+                                                showForgotPasswordSheet = true
+                                            }
+                                    }
                                 }
                             }
                             
@@ -69,8 +80,23 @@ struct LoginView: View {
                             
                             VStack(spacing: 20) {
                                 Button("Login") {
-                                    withAnimation() {
-                                        authStateManager.didLogged(with: .emailPassword)
+                                    withAnimation {
+                                        loginViewModel.showLoadingModal = true
+                                        loginViewModel.choosenSignInMethod = .emailPassword
+                                        FirebaseAuthManager.client.firebaseEmailPasswordSignIn(email: loginViewModel.email,
+                                                                                               password: loginViewModel.password) { success, error in
+                                            loginViewModel.showLoadingModal = false
+                                            if success {
+                                                
+                                                
+                                                authStateManager.didLogged(with: loginViewModel.choosenSignInMethod)
+                                            } else {
+                                                if let error = error {
+                                                    ErrorManager.shared.generateCustomError(errorType: .emailPasswordSignInError,
+                                                                                            additionalErrorDescription: error.localizedDescription)
+                                                }
+                                            }
+                                        }
                                     }
                                 }
                                 .buttonStyle(CustomButton())
@@ -90,7 +116,7 @@ struct LoginView: View {
                                     }
                                 }
                                 
-                                LabelledDivider(label: "Or",
+                                LabelledDivider(label: "OR",
                                                 color: colorScheme == .light ? .black : .ssWhite)
                                     .padding(.vertical)
                                 
@@ -106,6 +132,12 @@ struct LoginView: View {
                                 .onAppear {
                                     forgotPasswordViewModel.email = loginViewModel.email
                                 }
+                        }
+                        
+                        NavigationLink(isActive: $loginViewModel.showFirstTimeLoginView) {
+                            FirstTimeLoginView()
+                        } label: {
+                            EmptyView()
                         }
                     }
                     .frame(minWidth: geometry.size.width,
@@ -132,12 +164,42 @@ struct LoginView: View {
         .environmentObject(forgotPasswordViewModel)
     }
     
+    
+    // MARK: Phone Auth to be implemented after getting Apple Developer Account with APNs and Background Refresh
+    
+//    @ViewBuilder
+//    func buildPhoneLogInButton() -> some View {
+//        Button {
+//            loginViewModel.choosenSignInMethod = .phoneNumber
+//        } label: {
+//            ZStack {
+//                RoundedRectangle(cornerRadius: 5)
+//                    .stroke()
+//                    .foregroundColor(.ssDarkGray)
+//                HStack {
+//                    Image(systemName: "phone.fill")
+//                        .resizable()
+//                        .frame(width: 25, height: 25)
+//                    Spacer()
+//                    Text("Sign in with Phone Number")
+//                        .font(.ssButton)
+//                        .foregroundColor(colorScheme == .light ? .black : .ssWhite)
+//                    Spacer()
+//                }
+//                .padding()
+//            }
+//        }
+//    }
+    
     @ViewBuilder
     func buildGoogleLogInButton() -> some View {
         Button {
+            loginViewModel.choosenSignInMethod = .google
             FirebaseAuthManager.client.firebaseGoogleSignIn { success, error in
                 if success {
-                    authStateManager.didLogged(with: .google)
+                    // Checking if user is logging for the first time
+                    
+                    authStateManager.didLogged(with: loginViewModel.choosenSignInMethod)
                 } else {
                     if let error = error {
                         ErrorManager.shared.generateCustomError(errorType: .googleSignInError,
@@ -169,9 +231,12 @@ struct LoginView: View {
     @ViewBuilder
     func buildFacebookLogInButton() -> some View {
         Button {
+            loginViewModel.choosenSignInMethod = .facebook
             FirebaseAuthManager.client.firebaseFacebookSignIn { success, error in
                 if success {
-                    authStateManager.didLogged(with: .facebook)
+                    // Checking if user is logging for the first time
+                    
+                    authStateManager.didLogged(with: loginViewModel.choosenSignInMethod)
                 } else {
                     if let error = error {
                         ErrorManager.shared.generateCustomError(errorType: .facebookSignInError,
@@ -201,9 +266,12 @@ struct LoginView: View {
     @ViewBuilder
     func buildGitHubLogInButton() -> some View {
         Button {
+            loginViewModel.choosenSignInMethod = .github
             FirebaseAuthManager.client.firebaseGitHubSignIn { success, error in
                 if success {
-                    authStateManager.didLogged(with: .github)
+                    // Checking if user is logging for the first time
+                    
+                    authStateManager.didLogged(with: loginViewModel.choosenSignInMethod)
                 } else {
                     if let error = error {
                         ErrorManager.shared.generateCustomError(errorType: .facebookSignInError,

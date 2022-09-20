@@ -6,10 +6,15 @@
 //
 
 import Foundation
+import Firebase
 
 class AuthStateManager: ObservableObject {
     @Published var isLogged: Bool = false
-    var loggedWith: SignInMethod?
+    @Published var loggedWith: SignInMethod?
+    
+    var user: User? {
+        Auth.auth().currentUser
+    }
     
     func didLogged(with signInMethod: SignInMethod) {
         self.loggedWith = signInMethod

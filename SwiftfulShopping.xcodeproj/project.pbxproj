@@ -10,6 +10,7 @@
 		0A13460228BBA02A002D596E /* Font.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A13460128BBA02A002D596E /* Font.swift */; };
 		0A154B4A28BD66A2001E4BE3 /* String.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A154B4928BD66A2001E4BE3 /* String.swift */; };
 		0A1C61A628DA1CCA00BF4ED3 /* FacebookLogin in Frameworks */ = {isa = PBXBuildFile; productRef = 0A1C61A528DA1CCA00BF4ED3 /* FacebookLogin */; };
+		0A1C61A928DA6C9E00BF4ED3 /* FirstTimeLoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A1C61A828DA6C9E00BF4ED3 /* FirstTimeLoginView.swift */; };
 		0A21490228D9060900748128 /* GoogleSignInSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 0A21490128D9060900748128 /* GoogleSignInSwift */; };
 		0A21490428D9101400748128 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 0A21490328D9101400748128 /* GoogleService-Info.plist */; };
 		0A2165AE28A2C1E0006842F0 /* ChangeEmailViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A2165AD28A2C1E0006842F0 /* ChangeEmailViewModel.swift */; };
@@ -277,6 +278,7 @@
 		0A13460128BBA02A002D596E /* Font.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Font.swift; sourceTree = "<group>"; };
 		0A154B4928BD66A2001E4BE3 /* String.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = String.swift; sourceTree = "<group>"; };
 		0A1C61A728DA20BC00BF4ED3 /* SwiftfulShopping.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = SwiftfulShopping.entitlements; sourceTree = "<group>"; };
+		0A1C61A828DA6C9E00BF4ED3 /* FirstTimeLoginView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirstTimeLoginView.swift; sourceTree = "<group>"; };
 		0A21490328D9101400748128 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		0A2165AD28A2C1E0006842F0 /* ChangeEmailViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChangeEmailViewModel.swift; sourceTree = "<group>"; };
 		0A2165B028A2C200006842F0 /* ChangePasswordViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChangePasswordViewModel.swift; sourceTree = "<group>"; };
@@ -1025,6 +1027,7 @@
 			children = (
 				0ACD58DD284A6F6600AA9DA0 /* LoginViewModel.swift */,
 				0ACD58DE284A6F6600AA9DA0 /* LoginView.swift */,
+				0A1C61A828DA6C9E00BF4ED3 /* FirstTimeLoginView.swift */,
 			);
 			path = Login;
 			sourceTree = "<group>";
@@ -1295,6 +1298,7 @@
 				0A56D8B1285F2C8A0009680C /* ReturnsView.swift in Sources */,
 				0A268B4928685C41006CF0E2 /* ReturnCreationView.swift in Sources */,
 				0A2FE0B928A1BB2A00E8D30E /* SplashScreenViewModel.swift in Sources */,
+				0A1C61A928DA6C9E00BF4ED3 /* FirstTimeLoginView.swift in Sources */,
 				0A26FF292885A5EF0001FA93 /* ImagePicker.swift in Sources */,
 				0ACD58DF284A6F6600AA9DA0 /* CustomButtonStyle.swift in Sources */,
 				0A355566289FD3D7005993E5 /* LoadingIndicatorModal.swift in Sources */,

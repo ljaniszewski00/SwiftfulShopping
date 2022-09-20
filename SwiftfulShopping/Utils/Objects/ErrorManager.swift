@@ -12,16 +12,18 @@ final class ErrorManager: ObservableObject {
         .networkError: 1,
         .productRecognizerError: 2,
         .loginError: 3,
-        .googleSignInError: 4,
-        .facebookSignInError: 5,
-        .githubSignInError: 6,
-        .registerError: 7,
-        .discountApplyError: 8,
-        .orderCreateError: 9,
-        .biometricRecognitionError: 10,
-        .changeEmailError: 11,
-        .changePasswordError: 12,
-        .deleteAccountError: 13,
+        .emailPasswordSignInError: 4,
+        .phoneSignInError: 5,
+        .googleSignInError: 6,
+        .facebookSignInError: 7,
+        .githubSignInError: 8,
+        .registerError: 9,
+        .discountApplyError: 10,
+        .orderCreateError: 11,
+        .biometricRecognitionError: 12,
+        .changeEmailError: 13,
+        .changePasswordError: 14,
+        .deleteAccountError: 15,
         .unknown: 0
     ]
     
@@ -31,6 +33,8 @@ final class ErrorManager: ObservableObject {
         .networkError: "No internet connection. Some functions will be unavailable.",
         .productRecognizerError: "Error occured while recognizing your product. \(errorDescriptionSuffix)",
         .loginError: "Error occured while trying to log in. \(errorDescriptionSuffix)",
+        .emailPasswordSignInError: "Error occured while trying to log in with email and password. \(errorDescriptionSuffix)",
+        .phoneSignInError: "Error occured while trying to log in with phone number. \(errorDescriptionSuffix)",
         .googleSignInError: "Error occured while trying to log in via Google. \(errorDescriptionSuffix)",
         .facebookSignInError: "Error occured while trying to log in via Facebook. \(errorDescriptionSuffix)",
         .githubSignInError: "Error occured while trying to log in via GitHub. \(errorDescriptionSuffix)",
@@ -56,7 +60,7 @@ final class ErrorManager: ObservableObject {
             if let additionalErrorDescription = additionalErrorDescription {
                 customError = CustomError(errorType: errorType,
                                           errorCode: errorCode,
-                                          errorDescription: errorDescription + "\n" + additionalErrorDescription)
+                                          errorDescription: errorDescription + "\n\n" + additionalErrorDescription)
                 
             } else {
                 customError = CustomError(errorType: errorType,

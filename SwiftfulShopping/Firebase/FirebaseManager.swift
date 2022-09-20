@@ -13,17 +13,79 @@ import FacebookLogin
 
 class FirebaseAuthManager: ObservableObject {
     let auth: Auth = Auth.auth()
-    let provider = OAuthProvider(providerID: "github.com")
+    let gitHubProvider = OAuthProvider(providerID: "github.com")
     
     static var client: FirebaseAuthManager = {
         FirebaseAuthManager()
     }()
     
     private init() {
-        provider.customParameters = [
+        gitHubProvider.customParameters = [
             "allow_signup": "false"
         ]
     }
+    
+    
+    // MARK: Phone Auth to be implemented after getting Apple Developer Account with APNs and Background Refresh
+    
+    func firebaseEmailPasswordSignIn(email: String,
+                                     password: String,
+                                     completion: @escaping ((Bool, Error?) -> ())) {
+        auth.signIn(withEmail: email, password: password) { authResult, error in
+            if let error = error {
+                completion(false, error)
+            } else {
+                if let _ = authResult {
+                    completion(true, nil)
+                }
+            }
+        }
+    }
+    
+    
+    // MARK: Phone Auth to be implemented after getting Apple Developer Account
+    // MARK: Phone SignIn
+    
+//    func getPhoneSignInVerificationCode(phoneNumber: String,
+//                                        completion: @escaping ((Bool, Error?) -> ())) {
+//        phoneProvider
+//            .verifyPhoneNumber(phoneNumber, uiDelegate: nil) { verificationID, error in
+//                if let error = error {
+//                    print(error.localizedDescription)
+//                    completion(false, error)
+//                } else {
+//                    UserDefaults.standard.set(verificationID, forKey: "phoneVerificationID")
+//                    completion(true, error)
+//                }
+//            }
+//    }
+//
+//    private func getPhoneSignInCredentials(verificationCode: String,
+//                                           completion: @escaping ((AuthCredential?, Error?) -> ())) {
+//        if let verificationID = UserDefaults.standard.string(forKey: "authVerificationID") {
+//            let credential = phoneProvider.credential(withVerificationID: verificationID,
+//                                                      verificationCode: verificationCode)
+//            completion(credential, nil)
+//        } else {
+//            completion(nil, nil)
+//        }
+//    }
+//
+//    func firebasePhoneSignIn(verificationCode: String,
+//                             completion: @escaping ((Bool, Error?) -> ())) {
+//        getPhoneSignInCredentials(verificationCode: verificationCode) { [weak self] credential, error in
+//            if let credential = credential {
+//                self?.auth.signIn(with: credential) { (result, error) in
+//                    if let error = error {
+//                        completion(false, error)
+//                    }
+//                    completion(true, nil)
+//                }
+//            } else {
+//                completion(false, error)
+//            }
+//        }
+//    }
     
     
     // MARK: Google SignIn
@@ -108,7 +170,7 @@ class FirebaseAuthManager: ObservableObject {
     // MARK: GitHub SignIn
     
     private func getGitHubSignInCredentials(completion: @escaping ((AuthCredential?, Error?) -> ())) {
-        provider.getCredentialWith(nil) { credential, error in
+        gitHubProvider.getCredentialWith(nil) { credential, error in
             if let error = error {
                 completion(nil, error)
             } else {

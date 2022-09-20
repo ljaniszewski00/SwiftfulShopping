@@ -11,6 +11,8 @@ enum ErrorType: String {
     case networkError = "Network Error"
     case productRecognizerError = "Product Recognizer Error"
     case loginError = "Login Error"
+    case emailPasswordSignInError = "Email And Password Sign In Error"
+    case phoneSignInError = "Phone Sign In Error"
     case googleSignInError = "Google Sign In Error"
     case facebookSignInError = "Facebook Sign In Error"
     case githubSignInError = "Github Sign In Error"
