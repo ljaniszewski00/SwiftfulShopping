@@ -10,7 +10,5 @@ import Foundation
 class ForgotPasswordViewModel: ObservableObject {
     @Published var email: String = ""
     
-    func completeForgotPassword() {
-        
-    }
+    @Published var showLoadingModal: Bool = false
 }

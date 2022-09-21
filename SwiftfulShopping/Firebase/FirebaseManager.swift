@@ -54,6 +54,16 @@ class FirebaseAuthManager: ObservableObject {
         }
     }
     
+    func firebaseSendPasswordReset(email: String, completion: @escaping ((Bool, Error?) -> ())) {
+        auth.sendPasswordReset(withEmail: email) { error in
+            if let error = error {
+                completion(false, error)
+            } else {
+                completion(true, nil)
+            }
+        }
+    }
+    
     
     // MARK: Phone Auth to be implemented after getting Apple Developer Account
     // MARK: Phone SignIn

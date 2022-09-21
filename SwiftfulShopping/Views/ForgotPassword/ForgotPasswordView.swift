@@ -11,6 +11,8 @@ struct ForgotPasswordView: View {
     @EnvironmentObject private var loginViewModel: LoginViewModel
     @EnvironmentObject private var forgotPasswordViewModel: ForgotPasswordViewModel
     
+    @StateObject var errorManager = ErrorManager.shared
+    
     @State private var isEmailTextFieldFocused: Bool = false
     
     @Environment(\.dismiss) var dismiss
@@ -26,12 +28,27 @@ struct ForgotPasswordView: View {
             }
             .padding(.bottom)
             
-            CustomTextField(textFieldProperty: "e-mail", textFieldImageName: "envelope", textFieldSignsLimit: 0, text: $forgotPasswordViewModel.email, isFocusedParentView: $isEmailTextFieldFocused)
+            CustomTextField(textFieldProperty: "e-mail",
+                            textFieldImageName: "envelope",
+                            textFieldSignsLimit: 0,
+                            text: $forgotPasswordViewModel.email,
+                            isFocusedParentView: $isEmailTextFieldFocused)
             
             Spacer()
             
-            Button("Reset password") {
-                dismiss()
+            Button("Send recovery e-mail") {
+                forgotPasswordViewModel.showLoadingModal = true
+                FirebaseAuthManager.client.firebaseSendPasswordReset(email: forgotPasswordViewModel.email) { success, error in
+                    forgotPasswordViewModel.showLoadingModal = false
+                    if success {
+                        dismiss()
+                    } else {
+                        if let error = error {
+                            ErrorManager.shared.generateCustomError(errorType: .changePasswordError,
+                                                                    additionalErrorDescription: error.localizedDescription)
+                        }
+                    }
+                }
             }
             .buttonStyle(CustomButton())
             .contentShape(Rectangle())
@@ -49,6 +66,10 @@ struct ForgotPasswordView: View {
             Color(uiColor: .secondarySystemBackground)
                 .ignoresSafeArea()
         }
+        .modifier(LoadingIndicatorModal(isPresented:
+                                            $forgotPasswordViewModel.showLoadingModal))
+        .modifier(ErrorModal(isPresented: $errorManager.showErrorModal,
+                             customError: errorManager.customError ?? ErrorManager.unknownError))
     }
 }
 
