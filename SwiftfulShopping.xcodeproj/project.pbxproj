@@ -31,6 +31,7 @@
 		0A268B5328687FA9006CF0E2 /* ReturnCreationViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A268B5228687FA9006CF0E2 /* ReturnCreationViewModel.swift */; };
 		0A268B57286884A3006CF0E2 /* RectangleCustomTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A268B56286884A3006CF0E2 /* RectangleCustomTextField.swift */; };
 		0A268B592868A21E006CF0E2 /* ThirdReturnCreationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A268B582868A21E006CF0E2 /* ThirdReturnCreationView.swift */; };
+		0A26B70828DB9030000CD899 /* FirstTimeLoginViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A26B70728DB9030000CD899 /* FirstTimeLoginViewModel.swift */; };
 		0A26FF25288597410001FA93 /* HelpViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A26FF24288597410001FA93 /* HelpViewModel.swift */; };
 		0A26FF2728859AF60001FA93 /* RoundedCompletionButtonStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A26FF2628859AF60001FA93 /* RoundedCompletionButtonStyle.swift */; };
 		0A26FF292885A5EF0001FA93 /* ImagePicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A26FF282885A5EF0001FA93 /* ImagePicker.swift */; };
@@ -298,6 +299,7 @@
 		0A268B5228687FA9006CF0E2 /* ReturnCreationViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReturnCreationViewModel.swift; sourceTree = "<group>"; };
 		0A268B56286884A3006CF0E2 /* RectangleCustomTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RectangleCustomTextField.swift; sourceTree = "<group>"; };
 		0A268B582868A21E006CF0E2 /* ThirdReturnCreationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThirdReturnCreationView.swift; sourceTree = "<group>"; };
+		0A26B70728DB9030000CD899 /* FirstTimeLoginViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirstTimeLoginViewModel.swift; sourceTree = "<group>"; };
 		0A26FF24288597410001FA93 /* HelpViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HelpViewModel.swift; sourceTree = "<group>"; };
 		0A26FF2628859AF60001FA93 /* RoundedCompletionButtonStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoundedCompletionButtonStyle.swift; sourceTree = "<group>"; };
 		0A26FF282885A5EF0001FA93 /* ImagePicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImagePicker.swift; sourceTree = "<group>"; };
@@ -1028,6 +1030,7 @@
 				0ACD58DD284A6F6600AA9DA0 /* LoginViewModel.swift */,
 				0ACD58DE284A6F6600AA9DA0 /* LoginView.swift */,
 				0A1C61A828DA6C9E00BF4ED3 /* FirstTimeLoginView.swift */,
+				0A26B70728DB9030000CD899 /* FirstTimeLoginViewModel.swift */,
 			);
 			path = Login;
 			sourceTree = "<group>";
@@ -1329,6 +1332,7 @@
 				0A22F57528C4BCE000C568EA /* QuantityInput.swift in Sources */,
 				0A2FE0A728A16C3E00E8D30E /* ErrorManager.swift in Sources */,
 				0A3DE45328899F65008B050B /* Category.swift in Sources */,
+				0A26B70828DB9030000CD899 /* FirstTimeLoginViewModel.swift in Sources */,
 				0A33A07228ABCAAC0013AE92 /* TabsWithProducts.swift in Sources */,
 				0A30460328A96B9A00F218B3 /* UIApplication.swift in Sources */,
 				0A3149E528982DFC001920D2 /* SingleProductRatingView.swift in Sources */,
