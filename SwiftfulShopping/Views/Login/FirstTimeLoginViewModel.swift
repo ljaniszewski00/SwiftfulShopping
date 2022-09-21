@@ -8,6 +8,7 @@
 import Foundation
 
 class FirstTimeLoginViewModel: ObservableObject {
+    @Published var fullName: String = ""
     @Published var streetName: String = ""
     @Published var streetNumber: String = ""
     @Published var apartmentNumber: String = ""
@@ -17,8 +18,7 @@ class FirstTimeLoginViewModel: ObservableObject {
     
     @Published var sameDataOnInvoice: Bool = true
     
-    @Published var firstNameInvoice: String = ""
-    @Published var lastNameInvoice: String = ""
+    @Published var fullNameInvoice: String = ""
     @Published var streetNameInvoice: String = ""
     @Published var streetNumberInvoice: String = ""
     @Published var apartmentNumberInvoice: String = ""
@@ -57,6 +57,12 @@ class FirstTimeLoginViewModel: ObservableObject {
     
     // MARK: Generic methods to validate letters and numeric fields
     
+    private func isFullNameValid(text: String) -> Bool {
+        let components = text.components(separatedBy: .whitespacesAndNewlines)
+        let words = components.filter { !$0.isEmpty }
+        return words.count >= 2
+    }
+    
     private func isLettersOnlyFieldValid(text: String) -> Bool {
         let numbersRange = text.rangeOfCharacter(from: .decimalDigits)
         let hasNumbers = (numbersRange != nil)
@@ -76,6 +82,14 @@ class FirstTimeLoginViewModel: ObservableObject {
     }
     
     // MARK: Validating Shipment Address fields
+    
+    var isFullNameValid: Bool {
+        if fullName.isEmpty {
+            return true
+        } else {
+            return isLettersOnlyFieldValid(text: fullName) && isFullNameValid(text: fullName)
+        }
+    }
     
     var isStreetNameValid: Bool {
         isLettersOnlyFieldValid(text: streetName)
@@ -100,12 +114,12 @@ class FirstTimeLoginViewModel: ObservableObject {
     
     // MARK: Validating Invoice fields
     
-    var isInvoiceFirstNameValid: Bool {
-        isLettersOnlyFieldValid(text: firstNameInvoice)
-    }
-    
-    var isInvoiceLastNameValid: Bool {
-        isLettersOnlyFieldValid(text: lastNameInvoice)
+    var isInvoiceFullNameValid: Bool {
+        if fullNameInvoice.isEmpty {
+            return true
+        } else {
+            return isLettersOnlyFieldValid(text: fullNameInvoice) && isFullNameValid(text: fullNameInvoice)
+        }
     }
     
     var isInvoiceStreetNameValid: Bool {
@@ -131,19 +145,50 @@ class FirstTimeLoginViewModel: ObservableObject {
     
     // MARK: Final validation of each section
     
-    var addressDataGiven: Bool {
-        !streetName.isEmpty && !streetNumber.isEmpty && !zipCode.isEmpty && !city.isEmpty && !country.isEmpty
+    var addressDataValid: Bool {
+        !fullName.isEmpty &&
+        isFullNameValid &&
+        !streetName.isEmpty &&
+        isStreetNameValid &&
+        !streetNumber.isEmpty &&
+        isStreetNumberValid &&
+        !zipCode.isEmpty &&
+        isZipCodeValid &&
+        !city.isEmpty &&
+        isCityNameValid &&
+        !country.isEmpty
     }
     
-    var invoiceDataGiven: Bool {
-        !streetNameInvoice.isEmpty && !streetNumberInvoice.isEmpty && !zipCodeInvoice.isEmpty && !cityInvoice.isEmpty && !countryInvoice.isEmpty
+    var invoiceDataValid: Bool {
+        !fullNameInvoice.isEmpty &&
+        isFullNameValid &&
+        !streetNameInvoice.isEmpty &&
+        isInvoiceStreetNameValid &&
+        !streetNumberInvoice.isEmpty &&
+        isInvoiceStreetNumberValid &&
+        !zipCodeInvoice.isEmpty &&
+        isInvoiceZipCodeValid &&
+        !cityInvoice.isEmpty &&
+        isInvoiceCityNameValid &&
+        !countryInvoice.isEmpty
     }
     
     var canCompleteLogin: Bool {
         if sameDataOnInvoice {
-            return addressDataGiven
+            return addressDataValid
         } else {
-            return addressDataGiven && invoiceDataGiven
+            return addressDataValid && invoiceDataValid
+        }
+    }
+    
+    func fillInvoiceData() {
+        if sameDataOnInvoice {
+            fullNameInvoice = fullName
+            streetNameInvoice = streetName
+            streetNumberInvoice = streetNumber
+            zipCodeInvoice = zipCode
+            cityInvoice = city
+            countryInvoice = country
         }
     }
 }

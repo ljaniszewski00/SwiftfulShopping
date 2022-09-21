@@ -17,6 +17,7 @@ struct SecondRegisterView: View {
     
     @StateObject var errorManager = ErrorManager.shared
     
+    @State private var isFullNameShipmentTextFieldFocused: Bool = false
     @State private var isStreetNameTextFieldFocused: Bool = false
     @State private var isStreetNumberTextFieldFocused: Bool = false
     @State private var isApartmentNumberTextFieldFocused: Bool = false
@@ -24,8 +25,7 @@ struct SecondRegisterView: View {
     @State private var isCityTextFieldFocused: Bool = false
     @State private var isCountryTextFieldFocused: Bool = false
     
-    @State private var isFirstNameInvoiceTextFieldFocused: Bool = false
-    @State private var isLastNameInvoiceTextFieldFocused: Bool = false
+    @State private var isFullNameInvoiceTextFieldFocused: Bool = false
     @State private var isStreetNameInvoiceTextFieldFocused: Bool = false
     @State private var isStreetNumberInvoiceTextFieldFocused: Bool = false
     @State private var isApartmentNumberInvoiceTextFieldFocused: Bool = false
@@ -38,25 +38,34 @@ struct SecondRegisterView: View {
             ScrollView(.vertical, showsIndicators: false) {
                 VStack {
                     StepsView(stepsNumber: 2, activeStep: 2)
-                        .padding(.vertical)
+                        .padding(.bottom)
                     
-                    buildRegisterSecondPane()
+                    buildAddressPane()
                         .padding(.bottom, 20)
                     
                     Spacer()
                     
                     Button("Register") {
                         withAnimation {
-                            let (success, message) = registerViewModel.completeSecondRegistrationStep()
-                            if success {
-                                authStateManager.didLogged(with: .emailPassword)
-                            } else {
-                                errorManager.generateCustomError(errorType: .registerError,
-                                                                 additionalErrorDescription: message)
+                            registerViewModel.completeRegistration()
+                            registerViewModel.showLoadingModal = true
+                            FirebaseAuthManager.client.firebaseSignUp(email: registerViewModel.email,
+                                                                      password: registerViewModel.password) { success, error in
+                                registerViewModel.showLoadingModal = false
+                                if success {
+                                    // Checking if user is logging for the first time
+                                    
+                                    authStateManager.didLogged(with: .emailPassword)
+                                } else {
+                                    if let error = error {
+                                        ErrorManager.shared.generateCustomError(errorType: .registerError,
+                                                                                additionalErrorDescription: error.localizedDescription)
+                                    }
+                                }
                             }
                         }
                     }
-                    .disabled(!registerViewModel.addressDataGiven)
+                    .disabled(!registerViewModel.canCompleteRegistration)
                     .buttonStyle(CustomButton())
                     .contentShape(Rectangle())
                 }
@@ -102,120 +111,216 @@ struct SecondRegisterView: View {
     }
     
     @ViewBuilder
-    func buildRegisterSecondPane() -> some View {
+    func buildShipmentAddressPane() -> some View {
         VStack(alignment: .leading, spacing: 20) {
+            Text("Shipment Address:")
+                .font(.ssTitle2)
+                .foregroundColor(.accentColor)
+            
+            VStack(alignment: .leading, spacing: 15) {
+                VStack(alignment: .leading) {
+                    CustomTextField(textFieldProperty: "Full Name",
+                                    textFieldImageName: "person",
+                                    text: $registerViewModel.fullName,
+                                    isFocusedParentView: $isFullNameShipmentTextFieldFocused)
+                    
+                    if !registerViewModel.isFullNameShipmentValid {
+                        buildErrorMessage(message: "Full name should not contain any numbers and has to consist of at least two words.")
+                    }
+                }
+                
+                VStack(alignment: .leading) {
+                    CustomTextField(textFieldProperty: "Street Name",
+                                    text: $registerViewModel.streetName,
+                                    isFocusedParentView: $isStreetNameTextFieldFocused)
+                    
+                    if !registerViewModel.isStreetNameValid {
+                        buildErrorMessage(message: "Street name should not contain any numbers")
+                    }
+                }
+                
+                VStack(alignment: .leading) {
+                    CustomTextField(textFieldProperty: "Street Number",
+                                    textFieldKeyboardType: .phonePad,
+                                    text: $registerViewModel.streetNumber,
+                                    isFocusedParentView: $isStreetNumberTextFieldFocused)
+                    
+                    if !registerViewModel.isStreetNumberValid {
+                        buildErrorMessage(message: "Street number should contain only numbers.")
+                    }
+                }
+                
+                
+                VStack(alignment: .leading) {
+                    CustomTextField(textFieldProperty: "Apartment Number",
+                                    textFieldKeyboardType: .phonePad,
+                                    text: $registerViewModel.apartmentNumber,
+                                    isFocusedParentView: $isApartmentNumberTextFieldFocused)
+                    
+                    buildOptionalApartmentNumberFieldInfo()
+                    
+                    if !registerViewModel.isApartmentNumberValid {
+                        buildErrorMessage(message: "Apartment number should contain only numbers.")
+                    }
+                }
+                
+                VStack(alignment: .leading) {
+                    CustomTextField(textFieldProperty: "Zip Code",
+                                    textFieldKeyboardType: .phonePad,
+                                    text: $registerViewModel.zipCode,
+                                    isFocusedParentView: $isZipCodeTextFieldFocused)
+                    
+                    if !registerViewModel.isZipCodeValid {
+                        buildErrorMessage(message: "Zip Code should contain only 5 digits and be formatted like XXXXX.")
+                    }
+                }
+                
+                VStack(alignment: .leading) {
+                    CustomTextField(textFieldProperty: "City",
+                                    text: $registerViewModel.city,
+                                    isFocusedParentView: $isCityTextFieldFocused)
+                    
+                    if !registerViewModel.isCityNameValid {
+                        buildErrorMessage(message: "City name should not contain any numbers.")
+                    }
+                }
+            }
+            
             VStack(alignment: .leading, spacing: 10) {
-                Text("Shipment Address:")
-                    .font(.ssTitle1)
+                Text("Country:")
+                    .font(.ssTitle3)
+                    .foregroundColor(.accentColor)
+                
+                SelectionDropdownMenu(selection: $registerViewModel.country,
+                                      dataWithImagesToChoose: registerViewModel.countries)
+            }
+        }
+    }
+    
+    @ViewBuilder
+    func buildInvoiceAddressPane() -> some View {
+        if !registerViewModel.sameDataOnInvoice {
+            VStack(alignment: .leading, spacing: 5) {
+                Text("Invoice Data")
+                    .font(.ssTitle2)
                     .foregroundColor(.accentColor)
                     .padding(.bottom)
                 
-                CustomTextField(textFieldProperty: "Street Name",
-                                text: $registerViewModel.streetName,
-                                isFocusedParentView: $isStreetNameTextFieldFocused)
-                
-                CustomTextField(textFieldProperty: "Street Number",
-                                textFieldKeyboardType: .phonePad,
-                                text: $registerViewModel.streetNumber,
-                                isFocusedParentView: $isStreetNumberTextFieldFocused)
-                
-                CustomTextField(textFieldProperty: "Apartment Number",
-                                textFieldKeyboardType: .phonePad,
-                                text: $registerViewModel.apartmentNumber,
-                                isFocusedParentView: $isApartmentNumberTextFieldFocused)
-                
-                CustomTextField(textFieldProperty: "Zip Code",
-                                textFieldKeyboardType: .phonePad,
-                                text: $registerViewModel.zipCode, isFocusedParentView: $isZipCodeTextFieldFocused)
-                
-                CustomTextField(textFieldProperty: "City",
-                                text: $registerViewModel.city,
-                                isFocusedParentView: $isCityTextFieldFocused)
-            }
-            
-            VStack(alignment: .leading, spacing: 20) {
-                VStack(alignment: .leading, spacing: 10) {
-                    Text("Country:")
-                        .font(.ssTitle3)
-                        .foregroundColor(.accentColor)
+                VStack(alignment: .leading, spacing: 15) {
+                    VStack(alignment: .leading) {
+                        CustomTextField(textFieldProperty: "Full Name",
+                                        textFieldImageName: "person",
+                                        text: $registerViewModel.fullNameInvoice,
+                                        isFocusedParentView: $isFullNameInvoiceTextFieldFocused)
+                        
+                        if !registerViewModel.isInvoiceFullNameValid {
+                            buildErrorMessage(message: "Full name should not contain any numbers and has to consist of at least two words.")
+                        }
+                    }
                     
-                    SelectionDropdownMenu(selection: $registerViewModel.country,
-                                      dataWithImagesToChoose: countries)
-                        .frame(maxHeight: 350)
+                    VStack(alignment: .leading) {
+                        CustomTextField(textFieldProperty: "Street Name",
+                                        text: $registerViewModel.streetNameInvoice,
+                                        isFocusedParentView: $isStreetNameInvoiceTextFieldFocused)
+                        
+                        if !registerViewModel.isInvoiceStreetNameValid {
+                            buildErrorMessage(message: "Street name should not contain any numbers")
+                        }
+                    }
                     
-                    Spacer()
-                }
-                
-                VStack(alignment: .leading, spacing: 10) {
-                    Text("Same address on invoice?")
-                        .font(.ssTitle2)
-                        .foregroundColor(.accentColor)
+                    VStack(alignment: .leading) {
+                        CustomTextField(textFieldProperty: "Street Number",
+                                        textFieldKeyboardType: .phonePad,
+                                        text: $registerViewModel.streetNumberInvoice,
+                                        isFocusedParentView: $isStreetNumberInvoiceTextFieldFocused)
+                        
+                        if !registerViewModel.isInvoiceStreetNumberValid {
+                            buildErrorMessage(message: "Street number should contain only numbers.")
+                        }
+                    }
                     
-                    SingleSelectionToggle(selection: $registerViewModel.sameDataOnInvoice)
-                }
-            }
-            .padding(.bottom)
-            
-            if !registerViewModel.sameDataOnInvoice {
-                VStack(alignment: .leading, spacing: 10) {
-                    Text("Invoice Data")
-                        .font(.ssTitle1)
-                        .foregroundColor(.accentColor)
-                        .padding(.bottom)
+                    VStack(alignment: .leading) {
+                        CustomTextField(textFieldProperty: "Apartment Number",
+                                        textFieldKeyboardType: .phonePad,
+                                        text: $registerViewModel.apartmentNumberInvoice,
+                                        isFocusedParentView: $isApartmentNumberInvoiceTextFieldFocused)
+                        
+                        buildOptionalApartmentNumberFieldInfo()
+                        
+                        if !registerViewModel.isInvoiceApartmentNumberValid {
+                            buildErrorMessage(message: "Apartment number should contain only numbers.")
+                        }
+                    }
                     
-                    CustomTextField(textFieldProperty: "First Name",
-                                    textFieldImageName: "person",
-                                    text: $registerViewModel.firstNameInvoice,
-                                    isFocusedParentView: $isFirstNameInvoiceTextFieldFocused)
+                    VStack(alignment: .leading) {
+                        CustomTextField(textFieldProperty: "Zip Code",
+                                        textFieldKeyboardType: .phonePad,
+                                        text: $registerViewModel.zipCodeInvoice,
+                                        isFocusedParentView: $isZipCodeInvoiceTextFieldFocused)
+                        
+                        if !registerViewModel.isInvoiceZipCodeValid {
+                            buildErrorMessage(message: "Zip Code should contain only 5 digits and be formatted like XXXXX.")
+                        }
+                    }
                     
-                    CustomTextField(textFieldProperty: "Last Name",
-                                    textFieldImageName: "person",
-                                    text: $registerViewModel.lastNameInvoice,
-                                    isFocusedParentView: $isLastNameInvoiceTextFieldFocused)
+                    VStack(alignment: .leading) {
+                        CustomTextField(textFieldProperty: "City",
+                                        text: $registerViewModel.cityInvoice,
+                                        isFocusedParentView: $isCityInvoiceTextFieldFocused)
+                        
+                        if !registerViewModel.isInvoiceCityNameValid {
+                            buildErrorMessage(message: "City name should not contain any numbers.")
+                        }
+                    }
                     
-                    CustomTextField(textFieldProperty: "Street Name",
-                                    text: $registerViewModel.streetNameInvoice,
-                                    isFocusedParentView: $isStreetNameInvoiceTextFieldFocused)
-                    
-                    CustomTextField(textFieldProperty: "Street Number",
-                                    textFieldKeyboardType: .phonePad,
-                                    text: $registerViewModel.streetNumberInvoice,
-                                    isFocusedParentView: $isStreetNumberInvoiceTextFieldFocused)
-                    
-                    CustomTextField(textFieldProperty: "Apartment Number",
-                                    textFieldKeyboardType: .phonePad,
-                                    text: $registerViewModel.apartmentNumberInvoice,
-                                    isFocusedParentView: $isApartmentNumberInvoiceTextFieldFocused)
-                    
-                    CustomTextField(textFieldProperty: "Zip Code",
-                                    textFieldKeyboardType: .phonePad,
-                                    text: $registerViewModel.zipCodeInvoice,
-                                    isFocusedParentView: $isZipCodeInvoiceTextFieldFocused)
-                    
-                    CustomTextField(textFieldProperty: "City",
-                                    text: $registerViewModel.cityInvoice,
-                                    isFocusedParentView: $isCityInvoiceTextFieldFocused)
-                }
-                
-                VStack(alignment: .leading, spacing: 10) {
-                    Text("Country:")
-                        .font(.ssTitle3)
-                        .foregroundColor(.accentColor)
-                    
-                    SelectionDropdownMenu(selection: $registerViewModel.countryInvoice,
-                                      dataWithImagesToChoose: countries)
+                    VStack(alignment: .leading, spacing: 10) {
+                        Text("Country:")
+                            .font(.ssTitle3)
+                            .foregroundColor(.accentColor)
+                        
+                        SelectionDropdownMenu(selection: $registerViewModel.countryInvoice,
+                                              dataWithImagesToChoose: registerViewModel.countries)
+                    }
                 }
             }
         }
     }
     
-    private let countries: [String: String?] = ["Czech": "czech",
-                                                "England": "england",
-                                                "France": "france",
-                                                "Germany": "germany",
-                                                "Poland": "poland",
-                                                "Spain": "spain",
-                                                "United States": "united"]
+    @ViewBuilder
+    func buildAddressPane() -> some View {
+        VStack(alignment: .leading, spacing: 20) {
+            buildShipmentAddressPane()
+            
+            VStack(alignment: .leading, spacing: 10) {
+                Text("Same address on invoice?")
+                    .font(.ssTitle3)
+                    .foregroundColor(.accentColor)
+                
+                SingleSelectionToggle(selection: $registerViewModel.sameDataOnInvoice)
+            }
+            .padding(.bottom)
+            
+            buildInvoiceAddressPane()
+        }
+    }
+    
+    @ViewBuilder
+    func buildOptionalApartmentNumberFieldInfo() -> some View {
+        Text("This field is optional.")
+            .font(.caption)
+            .fontWeight(.semibold)
+            .foregroundColor(.ssDarkGray)
+            .padding(.bottom, 5)
+    }
+    
+    @ViewBuilder
+    func buildErrorMessage(message: String) -> some View {
+        Text(message)
+            .font(.caption)
+            .fontWeight(.semibold)
+            .foregroundColor(.red)
+            .fixedSize(horizontal: false, vertical: true)
+    }
 }
 
 struct SecondRegisterView_Previews: PreviewProvider {

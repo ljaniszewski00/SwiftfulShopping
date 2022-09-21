@@ -18,6 +18,7 @@ struct FirstTimeLoginView: View {
     @StateObject private var firstTimeLoginViewModel: FirstTimeLoginViewModel = FirstTimeLoginViewModel()
     @StateObject var errorManager = ErrorManager.shared
     
+    @State private var isFullNameTextFieldFocused: Bool = false
     @State private var isStreetNameTextFieldFocused: Bool = false
     @State private var isStreetNumberTextFieldFocused: Bool = false
     @State private var isApartmentNumberTextFieldFocused: Bool = false
@@ -25,8 +26,7 @@ struct FirstTimeLoginView: View {
     @State private var isCityTextFieldFocused: Bool = false
     @State private var isCountryTextFieldFocused: Bool = false
     
-    @State private var isFirstNameInvoiceTextFieldFocused: Bool = false
-    @State private var isLastNameInvoiceTextFieldFocused: Bool = false
+    @State private var isFullNameInvoiceTextFieldFocused: Bool = false
     @State private var isStreetNameInvoiceTextFieldFocused: Bool = false
     @State private var isStreetNumberInvoiceTextFieldFocused: Bool = false
     @State private var isApartmentNumberInvoiceTextFieldFocused: Bool = false
@@ -56,6 +56,7 @@ struct FirstTimeLoginView: View {
                     
                     Button("Complete Login") {
                         withAnimation {
+                            firstTimeLoginViewModel.fillInvoiceData()
                             loginViewModel.addressProvidingCompletion() { success in
                                 if let signInMethod = authStateManager.loggedWith {
                                     authStateManager.didLogged(with: signInMethod)
@@ -115,63 +116,72 @@ struct FirstTimeLoginView: View {
                 .font(.ssTitle2)
                 .foregroundColor(.accentColor)
             
-            VStack(alignment: .leading) {
-                CustomTextField(textFieldProperty: "Street Name",
-                                text: $firstTimeLoginViewModel.streetName,
-                                isFocusedParentView: $isStreetNameTextFieldFocused)
-                
-                if !firstTimeLoginViewModel.isStreetNameValid {
-                    buildErrorMessage(message: "Street name should not contain any numbers")
+            VStack(alignment: .leading, spacing: 15) {
+                VStack(alignment: .leading) {
+                    CustomTextField(textFieldProperty: "Full Name",
+                                    textFieldImageName: "person",
+                                    text: $firstTimeLoginViewModel.fullName,
+                                    isFocusedParentView: $isFullNameTextFieldFocused)
+                    
+                    if !firstTimeLoginViewModel.isFullNameValid {
+                        buildErrorMessage(message: "Full name should not contain any numbers and has to consist of at least two words.")
+                    }
                 }
-            }
-            
-            VStack(alignment: .leading) {
-                CustomTextField(textFieldProperty: "Street Number",
-                                textFieldKeyboardType: .phonePad,
-                                text: $firstTimeLoginViewModel.streetNumber,
-                                isFocusedParentView: $isStreetNumberTextFieldFocused)
                 
-                if !firstTimeLoginViewModel.isStreetNumberValid {
-                    buildErrorMessage(message: "Street number should contain only numbers.")
+                VStack(alignment: .leading) {
+                    CustomTextField(textFieldProperty: "Street Name",
+                                    text: $firstTimeLoginViewModel.streetName,
+                                    isFocusedParentView: $isStreetNameTextFieldFocused)
+                    
+                    if !firstTimeLoginViewModel.isStreetNameValid {
+                        buildErrorMessage(message: "Street name should not contain any numbers")
+                    }
                 }
-            }
-            
-            
-            VStack(alignment: .leading) {
-                CustomTextField(textFieldProperty: "Apartment Number",
-                                textFieldKeyboardType: .phonePad,
-                                text: $firstTimeLoginViewModel.apartmentNumber,
-                                isFocusedParentView: $isApartmentNumberTextFieldFocused)
                 
-                Text("This field is optional.")
-                    .font(.caption)
-                    .fontWeight(.semibold)
-                    .foregroundColor(.ssDarkGray)
-                    .padding(.bottom, 1)
-                
-                if !firstTimeLoginViewModel.isApartmentNumberValid {
-                    buildErrorMessage(message: "Apartment number should contain only numbers.")
+                VStack(alignment: .leading) {
+                    CustomTextField(textFieldProperty: "Street Number",
+                                    textFieldKeyboardType: .phonePad,
+                                    text: $firstTimeLoginViewModel.streetNumber,
+                                    isFocusedParentView: $isStreetNumberTextFieldFocused)
+                    
+                    if !firstTimeLoginViewModel.isStreetNumberValid {
+                        buildErrorMessage(message: "Street number should contain only numbers.")
+                    }
                 }
-            }
-            
-            VStack(alignment: .leading) {
-                CustomTextField(textFieldProperty: "Zip Code",
-                                textFieldKeyboardType: .phonePad,
-                                text: $firstTimeLoginViewModel.zipCode,
-                                isFocusedParentView: $isZipCodeTextFieldFocused)
                 
-                if !firstTimeLoginViewModel.isZipCodeValid {
-                    buildErrorMessage(message: "Zip Code should contain only 5 digits and be formatted like XXXXX or XX-XXX.")
+                
+                VStack(alignment: .leading) {
+                    CustomTextField(textFieldProperty: "Apartment Number",
+                                    textFieldKeyboardType: .phonePad,
+                                    text: $firstTimeLoginViewModel.apartmentNumber,
+                                    isFocusedParentView: $isApartmentNumberTextFieldFocused)
+                    
+                    buildOptionalApartmentNumberFieldInfo()
+                    
+                    if !firstTimeLoginViewModel.isApartmentNumberValid {
+                        buildErrorMessage(message: "Apartment number should contain only numbers.")
+                    }
                 }
-            }
-            
-            VStack(alignment: .leading) {
-                CustomTextField(textFieldProperty: "City",
-                                text: $firstTimeLoginViewModel.city,
-                                isFocusedParentView: $isCityTextFieldFocused)
                 
-                if !firstTimeLoginViewModel.isCityNameValid {
-                    buildErrorMessage(message: "City name should not contain any numbers.")
+                VStack(alignment: .leading) {
+                    CustomTextField(textFieldProperty: "Zip Code",
+                                    textFieldKeyboardType: .phonePad,
+                                    text: $firstTimeLoginViewModel.zipCode,
+                                    isFocusedParentView: $isZipCodeTextFieldFocused)
+                    
+                    if !firstTimeLoginViewModel.isZipCodeValid {
+                        buildErrorMessage(message: "Zip Code should contain only 5 digits and be formatted like XXXXX.")
+                    }
+                }
+                
+                VStack(alignment: .leading) {
+                    CustomTextField(textFieldProperty: "City",
+                                    text: $firstTimeLoginViewModel.city,
+                                    isFocusedParentView: $isCityTextFieldFocused)
+                    
+                    if !firstTimeLoginViewModel.isCityNameValid {
+                        buildErrorMessage(message: "City name should not contain any numbers.")
+                    }
                 }
             }
             
@@ -189,101 +199,88 @@ struct FirstTimeLoginView: View {
     @ViewBuilder
     func buildInvoiceAddressPane() -> some View {
         if !firstTimeLoginViewModel.sameDataOnInvoice {
-            VStack(alignment: .leading, spacing: 10) {
+            VStack(alignment: .leading, spacing: 5) {
                 Text("Invoice Data")
                     .font(.ssTitle2)
                     .foregroundColor(.accentColor)
                     .padding(.bottom)
                 
-                VStack(alignment: .leading) {
-                    CustomTextField(textFieldProperty: "First Name",
-                                    textFieldImageName: "person",
-                                    text: $firstTimeLoginViewModel.firstNameInvoice,
-                                    isFocusedParentView: $isFirstNameInvoiceTextFieldFocused)
+                VStack(alignment: .leading, spacing: 15) {
+                    VStack(alignment: .leading) {
+                        CustomTextField(textFieldProperty: "Full Name",
+                                        textFieldImageName: "person",
+                                        text: $firstTimeLoginViewModel.fullNameInvoice,
+                                        isFocusedParentView: $isFullNameInvoiceTextFieldFocused)
+                        
+                        if !firstTimeLoginViewModel.isInvoiceFullNameValid {
+                            buildErrorMessage(message: "Full name should not contain any numbers and has to consist of at least two words.")
+                        }
+                    }
                     
-                    if !firstTimeLoginViewModel.isInvoiceFirstNameValid {
-                        buildErrorMessage(message: "First name should not contain any numbers")
+                    VStack(alignment: .leading) {
+                        CustomTextField(textFieldProperty: "Street Name",
+                                        text: $firstTimeLoginViewModel.streetNameInvoice,
+                                        isFocusedParentView: $isStreetNameInvoiceTextFieldFocused)
+                        
+                        if !firstTimeLoginViewModel.isInvoiceStreetNameValid {
+                            buildErrorMessage(message: "Street name should not contain any numbers")
+                        }
+                    }
+                    
+                    VStack(alignment: .leading) {
+                        CustomTextField(textFieldProperty: "Street Number",
+                                        textFieldKeyboardType: .phonePad,
+                                        text: $firstTimeLoginViewModel.streetNumberInvoice,
+                                        isFocusedParentView: $isStreetNumberInvoiceTextFieldFocused)
+                        
+                        if !firstTimeLoginViewModel.isInvoiceStreetNumberValid {
+                            buildErrorMessage(message: "Street number should contain only numbers.")
+                        }
+                    }
+                    
+                    VStack(alignment: .leading) {
+                        CustomTextField(textFieldProperty: "Apartment Number",
+                                        textFieldKeyboardType: .phonePad,
+                                        text: $firstTimeLoginViewModel.apartmentNumberInvoice,
+                                        isFocusedParentView: $isApartmentNumberInvoiceTextFieldFocused)
+                        
+                        buildOptionalApartmentNumberFieldInfo()
+                        
+                        if !firstTimeLoginViewModel.isInvoiceApartmentNumberValid {
+                            buildErrorMessage(message: "Apartment number should contain only numbers.")
+                        }
+                    }
+                    
+                    VStack(alignment: .leading) {
+                        CustomTextField(textFieldProperty: "Zip Code",
+                                        textFieldKeyboardType: .phonePad,
+                                        text: $firstTimeLoginViewModel.zipCodeInvoice,
+                                        isFocusedParentView: $isZipCodeInvoiceTextFieldFocused)
+                        
+                        if !firstTimeLoginViewModel.isInvoiceZipCodeValid {
+                            buildErrorMessage(message: "Zip Code should contain only 5 digits and be formatted like XXXXX.")
+                        }
+                    }
+                    
+                    VStack(alignment: .leading) {
+                        CustomTextField(textFieldProperty: "City",
+                                        text: $firstTimeLoginViewModel.cityInvoice,
+                                        isFocusedParentView: $isCityInvoiceTextFieldFocused)
+                        
+                        if !firstTimeLoginViewModel.isInvoiceCityNameValid {
+                            buildErrorMessage(message: "City name should not contain any numbers.")
+                        }
+                    }
+                    
+                    VStack(alignment: .leading, spacing: 10) {
+                        Text("Country:")
+                            .font(.ssTitle3)
+                            .foregroundColor(.accentColor)
+                        
+                        SelectionDropdownMenu(selection: $firstTimeLoginViewModel.countryInvoice,
+                                              dataWithImagesToChoose: firstTimeLoginViewModel.countries)
                     }
                 }
-                
-                VStack(alignment: .leading) {
-                    CustomTextField(textFieldProperty: "Last Name",
-                                    textFieldImageName: "person",
-                                    text: $firstTimeLoginViewModel.lastNameInvoice,
-                                    isFocusedParentView: $isLastNameInvoiceTextFieldFocused)
-                    
-                    if !firstTimeLoginViewModel.isInvoiceLastNameValid {
-                        buildErrorMessage(message: "Last name should contain only numbers.")
-                    }
-                }
-                
-                VStack(alignment: .leading) {
-                    CustomTextField(textFieldProperty: "Street Name",
-                                    text: $firstTimeLoginViewModel.streetNameInvoice,
-                                    isFocusedParentView: $isStreetNameInvoiceTextFieldFocused)
-                    
-                    if !firstTimeLoginViewModel.isInvoiceStreetNameValid {
-                        buildErrorMessage(message: "Street name should not contain any numbers")
-                    }
-                }
-                
-                VStack(alignment: .leading) {
-                    CustomTextField(textFieldProperty: "Street Number",
-                                    textFieldKeyboardType: .phonePad,
-                                    text: $firstTimeLoginViewModel.streetNumberInvoice,
-                                    isFocusedParentView: $isStreetNumberInvoiceTextFieldFocused)
-                    
-                    if !firstTimeLoginViewModel.isInvoiceStreetNumberValid {
-                        buildErrorMessage(message: "Street number should contain only numbers.")
-                    }
-                }
-                
-                VStack(alignment: .leading) {
-                    CustomTextField(textFieldProperty: "Apartment Number",
-                                    textFieldKeyboardType: .phonePad,
-                                    text: $firstTimeLoginViewModel.apartmentNumberInvoice,
-                                    isFocusedParentView: $isApartmentNumberInvoiceTextFieldFocused)
-                    
-                    Text("This field is optional")
-                        .font(.callout)
-                        .fontWeight(.semibold)
-                        .foregroundColor(.ssDarkGray)
-                        .padding(.bottom, 1)
-                    
-                    if !firstTimeLoginViewModel.isInvoiceApartmentNumberValid {
-                        buildErrorMessage(message: "Apartment number should contain only numbers.")
-                    }
-                }
-                
-                VStack(alignment: .leading) {
-                    CustomTextField(textFieldProperty: "Zip Code",
-                                    textFieldKeyboardType: .phonePad,
-                                    text: $firstTimeLoginViewModel.zipCodeInvoice,
-                                    isFocusedParentView: $isZipCodeInvoiceTextFieldFocused)
-                    
-                    if !firstTimeLoginViewModel.isInvoiceZipCodeValid {
-                        buildErrorMessage(message: "Zip Code should contain only 5 digits and be formatted like XXXXX.")
-                    }
-                }
-                
-                VStack(alignment: .leading) {
-                    CustomTextField(textFieldProperty: "City",
-                                    text: $firstTimeLoginViewModel.cityInvoice,
-                                    isFocusedParentView: $isCityInvoiceTextFieldFocused)
-                    
-                    if !firstTimeLoginViewModel.isInvoiceCityNameValid {
-                        buildErrorMessage(message: "City name should not contain any numbers.")
-                    }
-                }
-            }
-            
-            VStack(alignment: .leading, spacing: 10) {
-                Text("Country:")
-                    .font(.ssTitle3)
-                    .foregroundColor(.accentColor)
-                
-                SelectionDropdownMenu(selection: $firstTimeLoginViewModel.countryInvoice,
-                                      dataWithImagesToChoose: firstTimeLoginViewModel.countries)
             }
         }
     }
@@ -295,7 +292,7 @@ struct FirstTimeLoginView: View {
             
             VStack(alignment: .leading, spacing: 10) {
                 Text("Same address on invoice?")
-                    .font(.ssTitle2)
+                    .font(.ssTitle3)
                     .foregroundColor(.accentColor)
                 
                 SingleSelectionToggle(selection: $firstTimeLoginViewModel.sameDataOnInvoice)
@@ -304,6 +301,15 @@ struct FirstTimeLoginView: View {
             
             buildInvoiceAddressPane()
         }
+    }
+    
+    @ViewBuilder
+    func buildOptionalApartmentNumberFieldInfo() -> some View {
+        Text("This field is optional.")
+            .font(.caption)
+            .fontWeight(.semibold)
+            .foregroundColor(.ssDarkGray)
+            .padding(.bottom, 5)
     }
     
     @ViewBuilder

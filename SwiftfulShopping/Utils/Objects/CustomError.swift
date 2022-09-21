@@ -9,6 +9,5 @@ import Foundation
 
 struct CustomError {
     var errorType: ErrorType
-    var errorCode: Int
     var errorDescription: String = ""
 }

@@ -26,7 +26,19 @@ class FirebaseAuthManager: ObservableObject {
     }
     
     
-    // MARK: Phone Auth to be implemented after getting Apple Developer Account with APNs and Background Refresh
+    func firebaseSignUp(email: String,
+                        password: String,
+                        completion: @escaping ((Bool, Error?) -> ())) {
+        auth.createUser(withEmail: email, password: password) { authResult, error in
+            if let error = error {
+                completion(false, error)
+            } else {
+                if let _ = authResult {
+                    completion(true, nil)
+                }
+            }
+        }
+    }
     
     func firebaseEmailPasswordSignIn(email: String,
                                      password: String,

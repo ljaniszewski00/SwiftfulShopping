@@ -42,8 +42,8 @@ struct ErrorModal: ViewModifier {
                                 .stroke(lineWidth: 3)
                                 .foregroundColor(.errorModalStroke)
                         }
-                    VStack {
-                        Text("\(customError.errorCode): \(customError.errorType.rawValue)")
+                    VStack(alignment: .center, spacing: 10) {
+                        Text(customError.errorType.rawValue)
                             .font(Font.system(size: Constants.titleFontSize, weight: .bold, design: .rounded))
                             .foregroundColor(.black)
                         Text(customError.errorDescription)
@@ -53,7 +53,7 @@ struct ErrorModal: ViewModifier {
                     }
                     .padding()
                 }
-                .padding(.top)
+                .padding(.top, 20)
                 .animation(.easeInOut(duration: 0.5))
                 .transition(.offset(x: Constants.xAxisTransition,
                                     y: geometry.aboveScreenEdge))

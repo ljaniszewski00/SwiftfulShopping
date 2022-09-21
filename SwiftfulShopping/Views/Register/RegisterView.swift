@@ -19,8 +19,7 @@ struct RegisterView: View {
     
     @StateObject var errorManager = ErrorManager.shared
     
-    @State private var isFirstNameTextFieldFocused: Bool = false
-    @State private var isLastNameTextFieldFocused: Bool = false
+    @State private var isFullNameTextFieldFocused: Bool = false
     @State private var isUsernameTextFieldFocused: Bool = false
     
     @State private var isEmailTextFieldFocused: Bool = false
@@ -33,7 +32,7 @@ struct RegisterView: View {
             ScrollView(.vertical, showsIndicators: false) {
                 VStack {
                     StepsView(stepsNumber: 2, activeStep: 1)
-                        .padding(.vertical)
+                        .padding(.bottom)
                     
                     VStack {
                         buildRegisterFirstPane()
@@ -47,17 +46,10 @@ struct RegisterView: View {
                         } label: {
                             Button("Next") {
                                 withAnimation {
-                                    let (success, message) = registerViewModel.completeFirstRegistrationStep()
-                                    if success {
-                                        registerViewModel.dataError = false
-                                        registerViewModel.presentSecondRegisterView = true
-                                    } else {
-                                        errorManager.generateCustomError(errorType: .registerError,
-                                                                         additionalErrorDescription: message)
-                                    }
+                                    registerViewModel.completeFirstRegisterStep()
                                 }
                             }
-                            .disabled(registerViewModel.checkPersonalDataFieldsEmpty())
+                            .disabled(!registerViewModel.canCompleteFirstRegistrationStep)
                             .buttonStyle(CustomButton())
                             .contentShape(Rectangle())
                         }
@@ -88,33 +80,43 @@ struct RegisterView: View {
                         .foregroundColor(.accentColor)
                 })
             }
-            
-            ToolbarItem(placement: .navigationBarTrailing) {
-                Button(action: {
-                    registerViewModel.fillPersonalData()
-                }, label: {
-                    Image(systemName: "square.and.arrow.down")
-                        .foregroundColor(.accentColor)
-                })
-            }
         }
     }
     
     @ViewBuilder
     func buildRegisterFirstPane() -> some View {
         VStack {
-            VStack(spacing: 20) {
-                VStack(alignment: .leading, spacing: 10) {
+            VStack(spacing: 30) {
+                VStack(alignment: .leading, spacing: 20) {
                     Text("Personal Information:")
                         .font(.ssTitle1)
                         .foregroundColor(.accentColor)
-                        .padding(.bottom)
                     
-                    CustomTextField(textFieldProperty: "First Name", textFieldImageName: "person", textFieldSignsLimit: 0, text: $registerViewModel.firstName, isFocusedParentView: $isFirstNameTextFieldFocused)
-                    
-                    CustomTextField(textFieldProperty: "Last Name", textFieldImageName: "person", textFieldSignsLimit: 0, text: $registerViewModel.lastName, isFocusedParentView: $isLastNameTextFieldFocused)
-                    
-                    CustomTextField(textFieldProperty: "Username", textFieldImageName: "person", textFieldSignsLimit: 20, text: $registerViewModel.username, isFocusedParentView: $isUsernameTextFieldFocused)
+                    VStack {
+                        VStack(alignment: .leading, spacing: 10) {
+                            CustomTextField(textFieldProperty: "Full Name",
+                                            textFieldImageName: "person",
+                                            textFieldSignsLimit: 0,
+                                            text: $registerViewModel.fullName,
+                                            isFocusedParentView: $isFullNameTextFieldFocused)
+                            
+                            if !registerViewModel.isFullNameValid {
+                                buildErrorMessage(message: "Full name should not contain any numbers and has to consist of at least two words.")
+                            }
+                        }
+                        
+                        VStack(alignment: .leading) {
+                            CustomTextField(textFieldProperty: "Username",
+                                            textFieldImageName: "person",
+                                            textFieldSignsLimit: 20,
+                                            text: $registerViewModel.username,
+                                            isFocusedParentView: $isUsernameTextFieldFocused)
+                            
+                            if !registerViewModel.isUsernameValid {
+                                buildErrorMessage(message: "Username should contain at least 5 characters")
+                            }
+                        }
+                    }
                 }
                 
                 VStack(alignment: .leading, spacing: 10) {
@@ -123,39 +125,60 @@ struct RegisterView: View {
                         .foregroundColor(.accentColor)
                     CustomDatePicker(includeDayPicking: true, datePicked: $registerViewModel.birthDate)
                 }
-            }
-            .padding(.bottom, 30)
-            
-            VStack(alignment: .leading, spacing: 10) {
-                Text("Credentials:")
-                    .font(.ssTitle2)
-                    .foregroundColor(.accentColor)
-                    .padding(.bottom)
                 
-                CustomTextField(textFieldProperty: "E-mail", textFieldImageName: "envelope", textFieldSignsLimit: 0, text: $registerViewModel.email, isFocusedParentView: $isEmailTextFieldFocused)
-                
-                VStack(alignment: .trailing, spacing: 10) {
-                    CustomTextField(isSecureField: true, textFieldProperty: "Password", textFieldImageName: "lock", text: $registerViewModel.password, isFocusedParentView: $isPasswordTextFieldFocused)
+                VStack(alignment: .leading, spacing: 20) {
+                    Text("Credentials:")
+                        .font(.ssTitle2)
+                        .foregroundColor(.accentColor)
                     
-                    HStack(alignment: .center) {
-                        if showPasswordHint {
-                            Text("Password should be at least 8 characters long and should contain a number.")
-                                .font(.ssCallout)
-                                .foregroundColor(registerViewModel.dataError ? .red : .ssDarkGray)
+                    VStack(alignment: .leading, spacing: 10) {
+                        CustomTextField(textFieldProperty: "E-mail",
+                                        textFieldImageName: "envelope",
+                                        textFieldSignsLimit: 0,
+                                        text: $registerViewModel.email,
+                                        isFocusedParentView: $isEmailTextFieldFocused)
+                        
+                        if !registerViewModel.isEmailValid {
+                            buildErrorMessage(message: "Email should be between 2 and 64 characters and contain @")
                         }
+                    }
+                    
+                    VStack(alignment: .trailing, spacing: 10) {
+                        CustomTextField(isSecureField: true,
+                                        textFieldProperty: "Password",
+                                        textFieldImageName: "lock",
+                                        text: $registerViewModel.password,
+                                        isFocusedParentView: $isPasswordTextFieldFocused)
                         
-                        Spacer()
-                        
-                        Button {
-                            showPasswordHint.toggle()
-                        } label: {
-                            Image(systemName: "questionmark.circle")
-                                .foregroundColor(registerViewModel.dataError ? .red : showPasswordHint ? .accentColor : .ssGray)
+                        HStack(alignment: .top) {
+                            if showPasswordHint {
+                                Text("Password should be at least 8 characters long, should contain a number and a big letter")
+                                    .font(.ssCaption1)
+                                    .foregroundColor(registerViewModel.isPasswordValid ? .ssDarkGray : .red)
+                            }
+                            
+                            Spacer()
+                            
+                            Button {
+                                showPasswordHint.toggle()
+                            } label: {
+                                Image(systemName: "questionmark.circle")
+                                    .foregroundColor(registerViewModel.isPasswordValid ? .ssDarkGray : .red)
+                            }
                         }
                     }
                 }
             }
         }
+    }
+    
+    @ViewBuilder
+    func buildErrorMessage(message: String) -> some View {
+        Text(message)
+            .font(.caption)
+            .fontWeight(.semibold)
+            .foregroundColor(.red)
+            .fixedSize(horizontal: false, vertical: true)
     }
 }
 
