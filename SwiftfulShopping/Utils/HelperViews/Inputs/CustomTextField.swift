@@ -20,99 +20,98 @@ struct CustomTextField: View {
     @State private var showPassword = true
     
     var body: some View {
-        VStack {
-            VStack(alignment: .leading, spacing: 4) {
-                HStack(spacing: 15) {
-                    Group {
-                        if !textFieldImageName.isEmpty {
-                            Image(systemName: textFieldImageName)
-                                .foregroundColor(isFocused ? .accentColor : .ssDarkGray)
-                        }
-                        
-                        if !isSecureField {
-                            TextField("", text: $text)
-                                .keyboardType(textFieldKeyboardType)
-                                .onTapGesture {
-                                    withAnimation(.easeIn) {
-                                        isFocusedParentView = true
-                                        isFocused = true
-                                    }
+        VStack(alignment: .leading, spacing: 4) {
+            HStack(alignment: .bottom, spacing: 15) {
+                Group {
+                    if !textFieldImageName.isEmpty {
+                        Image(systemName: textFieldImageName)
+                            .foregroundColor(isFocused ? .accentColor : .ssDarkGray)
+                    }
+                    
+                    if !isSecureField {
+                        TextField("", text: $text)
+                            .keyboardType(textFieldKeyboardType)
+                            .onTapGesture {
+                                withAnimation(.easeIn) {
+                                    isFocusedParentView = true
+                                    isFocused = true
                                 }
-                                .onSubmit {
-                                    withAnimation(.easeOut) {
-                                        isFocused = false
-                                        isFocusedParentView = false
-                                    }
-                                }
-                                .onChange(of: text) { [text] newValue in
-                                    if newValue.count > textFieldSignsLimit && textFieldSignsLimit != 0 {
-                                        self.text = text
-                                    }
-                                }
-                            
-                            if showPassword == false {
-                                Button(action: {
-                                    showPassword.toggle()
-                                    isSecureField.toggle()
-                                }, label: {
-                                    Image(systemName: "eye.slash")
-                                        .foregroundColor(.ssDarkGray)
-                                })
                             }
-                        } else {
-                            SecureField("", text: $text)
-                                .onTapGesture {
-                                    withAnimation(.easeIn) {
-                                        isFocusedParentView = true
-                                        isFocused = true
-                                    }
+                            .onSubmit {
+                                withAnimation(.easeOut) {
+                                    isFocused = false
+                                    isFocusedParentView = false
                                 }
-                                .onSubmit {
-                                    withAnimation(.easeOut) {
-                                        isFocused = false
-                                        isFocusedParentView = false
-                                    }
+                            }
+                            .onChange(of: text) { [text] newValue in
+                                if newValue.count > textFieldSignsLimit && textFieldSignsLimit != 0 {
+                                    self.text = text
                                 }
-                            
+                            }
+                        
+                        if showPassword == false {
                             Button(action: {
                                 showPassword.toggle()
                                 isSecureField.toggle()
                             }, label: {
-                                Image(systemName: "eye")
-                                    .foregroundColor(.ssGray)
+                                Image(systemName: "eye.slash")
+                                    .foregroundColor(.ssDarkGray)
                             })
                         }
+                    } else {
+                        SecureField("", text: $text)
+                            .onTapGesture {
+                                withAnimation(.easeIn) {
+                                    isFocusedParentView = true
+                                    isFocused = true
+                                }
+                            }
+                            .onSubmit {
+                                withAnimation(.easeOut) {
+                                    isFocused = false
+                                    isFocusedParentView = false
+                                }
+                            }
                         
-                        if textFieldSignsLimit != 0 {
-                            Text("\(text.count)/\(textFieldSignsLimit)")
-                                .font(.caption)
-                                .foregroundColor(isFocused ? .accentColor : .ssGray)
-                        }
+                        Button(action: {
+                            showPassword.toggle()
+                            isSecureField.toggle()
+                        }, label: {
+                            Image(systemName: "eye")
+                                .foregroundColor(.ssGray)
+                        })
                     }
-                    .focused($isFocused)
-                    .disableAutocorrection(true)
-                    .autocapitalization(.none)
-                }
-                .background(
-                    Text(textFieldProperty)
-                        .padding(.leading, 30)
-                        .scaleEffect(text.isEmpty ? (isFocused ? 0.8 : 1) : (isFocused ? 0.8 : 0.8))
-                        .offset(x: text.isEmpty ? (isFocused ? -30 : (textFieldImageName.isEmpty ? -30 : 0)) : -30, y: text.isEmpty ? (isFocused ? -23 : 0) : -23)
-                        .foregroundColor(isFocused ? .accentColor : .ssDarkGray)
                     
-                    , alignment: .leading
-                )
-                .padding(.horizontal)
-                
-                RoundedRectangle(cornerRadius: 5)
-                    .fill(isFocused ? Color.accentColor : Color.ssGray)
-                    .opacity(isFocused ? 1 : 0.5)
-                    .frame(height: 1)
+                    if textFieldSignsLimit != 0 {
+                        Text("\(text.count)/\(textFieldSignsLimit)")
+                            .font(.caption)
+                            .foregroundColor(isFocused ? .accentColor : .ssGray)
+                    }
+                }
+                .focused($isFocused)
+                .disableAutocorrection(true)
+                .autocapitalization(.none)
             }
-            .padding(.top, 24)
-            .padding(.bottom, 16)
-            .background(Color.ssGray.opacity(0.25))
-            .cornerRadius(5)
+            .background(
+                Text(textFieldProperty)
+                    .padding(.leading, 30)
+                    .scaleEffect(text.isEmpty ? (isFocused ? 0.8 : 1) : (isFocused ? 0.8 : 0.8))
+                    .offset(x: text.isEmpty ? (isFocused ? -30 : (textFieldImageName.isEmpty ? -30 : 0)) : -30, y: text.isEmpty ? (isFocused ? -23 : 0) : -23)
+                    .foregroundColor(isFocused ? .accentColor : .ssDarkGray)
+                
+                , alignment: .leading
+            )
+            .padding(.horizontal)
+            
+            RoundedRectangle(cornerRadius: 5)
+                .fill(isFocused ? Color.accentColor : Color.ssGray)
+                .opacity(isFocused ? 1 : 0.5)
+                .frame(height: 1)
         }
+        .animation(.default)
+        .padding(.top, isFocused ? 15 : (text.isEmpty ? 0 : 15))
+        .frame(height: 60)
+        .background(Color.ssGray.opacity(0.25))
+        .cornerRadius(5)
     }
 }
