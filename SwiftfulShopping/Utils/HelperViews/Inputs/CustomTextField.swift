@@ -96,7 +96,8 @@ struct CustomTextField: View {
                 Text(textFieldProperty)
                     .padding(.leading, 30)
                     .scaleEffect(text.isEmpty ? (isFocused ? 0.8 : 1) : (isFocused ? 0.8 : 0.8))
-                    .offset(x: text.isEmpty ? (isFocused ? -30 : (textFieldImageName.isEmpty ? -30 : 0)) : -30, y: text.isEmpty ? (isFocused ? -23 : 0) : -23)
+                    .offset(x: text.isEmpty ? (isFocused ? -30 : (textFieldImageName.isEmpty ? -30 : 0)) : -30,
+                            y: text.isEmpty ? (isFocused ? -23 : 0) : -23)
                     .foregroundColor(isFocused ? .accentColor : .ssDarkGray)
                 
                 , alignment: .leading
@@ -108,7 +109,7 @@ struct CustomTextField: View {
                 .opacity(isFocused ? 1 : 0.5)
                 .frame(height: 1)
         }
-        .animation(.default)
+        .animation(.default.speed(1.9))
         .padding(.top, isFocused ? 15 : (text.isEmpty ? 0 : 15))
         .frame(height: 60)
         .background(Color.ssGray.opacity(0.25))
