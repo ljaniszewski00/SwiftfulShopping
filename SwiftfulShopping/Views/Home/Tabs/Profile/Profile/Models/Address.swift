@@ -9,12 +9,14 @@ import Foundation
 
 struct Address {
     var id: String = UUID().uuidString
+    var userID: String = UUID().uuidString
     var streetName: String
     var streetNumber: String
     var apartmentNumber: String
     var zipCode: String
     var city: String
     var country: String
+    var isDefaultAddress: Bool = false
 }
 
 extension Address: CustomStringConvertible {

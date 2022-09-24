@@ -26,6 +26,7 @@ final class ErrorManager: ObservableObject {
         .changeEmailError: "Error occured while trying to change the email. \(errorDescriptionSuffix)",
         .changePasswordError: "Error occured while trying to change the password. \(errorDescriptionSuffix)",
         .deleteAccountError: "Error occured while trying delete the account. \(errorDescriptionSuffix)",
+        .databaseManagerEncodingError: "Error encoding requestes data. \(errorDescriptionSuffix)",
         .unknown: ""
     ]
     

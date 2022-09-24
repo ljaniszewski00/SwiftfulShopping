@@ -138,6 +138,8 @@
 		0A420AC8289F101300AA4C52 /* ProductDetailsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A420AC7289F101300AA4C52 /* ProductDetailsViewModel.swift */; };
 		0A420ACB289F109500AA4C52 /* Kingfisher in Frameworks */ = {isa = PBXBuildFile; productRef = 0A420ACA289F109500AA4C52 /* Kingfisher */; };
 		0A420ACD289F1A7A00AA4C52 /* ImagesCarouselView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A420ACC289F1A7A00AA4C52 /* ImagesCarouselView.swift */; };
+		0A431EC328DF7E5200DB6EAC /* DatabaseTable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A431EC228DF7E5200DB6EAC /* DatabaseTable.swift */; };
+		0A431EC528DF7EA400DB6EAC /* SupabaseDatabaseManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A431EC428DF7EA400DB6EAC /* SupabaseDatabaseManager.swift */; };
 		0A453B8B2851DFDC00870EA9 /* ExploreView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A453B8A2851DFDC00870EA9 /* ExploreView.swift */; };
 		0A453B8D2851DFE600870EA9 /* ExploreViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A453B8C2851DFE600870EA9 /* ExploreViewModel.swift */; };
 		0A4686F328BC19F000F520B3 /* MeasureViewSize.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A4686F228BC19F000F520B3 /* MeasureViewSize.swift */; };
@@ -373,6 +375,8 @@
 		0A3E59C4289C611000067AD1 /* ProductRating.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductRating.swift; sourceTree = "<group>"; };
 		0A420AC7289F101300AA4C52 /* ProductDetailsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductDetailsViewModel.swift; sourceTree = "<group>"; };
 		0A420ACC289F1A7A00AA4C52 /* ImagesCarouselView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImagesCarouselView.swift; sourceTree = "<group>"; };
+		0A431EC228DF7E5200DB6EAC /* DatabaseTable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DatabaseTable.swift; sourceTree = "<group>"; };
+		0A431EC428DF7EA400DB6EAC /* SupabaseDatabaseManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SupabaseDatabaseManager.swift; sourceTree = "<group>"; };
 		0A453B8A2851DFDC00870EA9 /* ExploreView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExploreView.swift; sourceTree = "<group>"; };
 		0A453B8C2851DFE600870EA9 /* ExploreViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExploreViewModel.swift; sourceTree = "<group>"; };
 		0A4686F228BC19F000F520B3 /* MeasureViewSize.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MeasureViewSize.swift; sourceTree = "<group>"; };
@@ -694,7 +698,9 @@
 		0A3D7F6328D75B5300D51327 /* Supabase */ = {
 			isa = PBXGroup;
 			children = (
+				0A431EC128DF7E4300DB6EAC /* Enums */,
 				0A3D7F6428D75B6700D51327 /* SupabaseManager.swift */,
+				0A431EC428DF7EA400DB6EAC /* SupabaseDatabaseManager.swift */,
 			);
 			path = Supabase;
 			sourceTree = "<group>";
@@ -707,6 +713,14 @@
 				0A420AC7289F101300AA4C52 /* ProductDetailsViewModel.swift */,
 			);
 			path = ProductViews;
+			sourceTree = "<group>";
+		};
+		0A431EC128DF7E4300DB6EAC /* Enums */ = {
+			isa = PBXGroup;
+			children = (
+				0A431EC228DF7E5200DB6EAC /* DatabaseTable.swift */,
+			);
+			path = Enums;
 			sourceTree = "<group>";
 		};
 		0A56D8A8285F2BE30009680C /* Profile */ = {
@@ -1279,9 +1293,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				0A431EC528DF7EA400DB6EAC /* SupabaseDatabaseManager.swift in Sources */,
 				0A3D7F5928D1FD7800D51327 /* MobileNetV2.mlmodel in Sources */,
 				0A26FF302885B3BE0001FA93 /* ProductsListView.swift in Sources */,
 				0A154B4A28BD66A2001E4BE3 /* String.swift in Sources */,
+				0A431EC328DF7E5200DB6EAC /* DatabaseTable.swift in Sources */,
 				0A3245F3288B18FE0046043D /* ListProductCardTileView.swift in Sources */,
 				0A3B08E428AD4D1C00A54385 /* CameraViewModel.swift in Sources */,
 				0A5A7CF62896878800736B07 /* OrderStatus.swift in Sources */,

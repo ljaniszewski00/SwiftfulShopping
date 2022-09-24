@@ -24,6 +24,8 @@ enum ErrorType: String {
     case discountApplyError = "Discount Apply Error"
     case orderCreateError = "Order Create Error"
     case biometricRecognitionError = "Biometric Recognition Error"
+    case databaseManagerEncodingError = "Database Manager: Encoding Error"
+    case databaseManagerFetchUsersError = "Database Manager: Fetch Users Error"
     
     case unknown = "Unknown Error"
 }

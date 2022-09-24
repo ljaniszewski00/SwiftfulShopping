@@ -7,7 +7,7 @@
 
 import Foundation
 
-enum ShippingMethod: String {
+enum ShippingMethod: String, Codable {
     case pickup = "Pickup"
     case parcel = "Parcel Locker"
     case courier = "Courier"

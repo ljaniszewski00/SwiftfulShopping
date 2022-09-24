@@ -7,7 +7,7 @@
 
 import Foundation
 
-enum PaymentMethod: String {
+enum PaymentMethod: String, Codable {
     case cash = "Cash"
     case creditCard = "Credit Card"
     case applePay = "Apple Pay"
