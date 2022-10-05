@@ -59,16 +59,16 @@ class ProfileViewModel: ObservableObject {
     }
 
     func changeDefaultAddress(addressDescription: String) {
-        for address in profile.addresses {
+        for address in profile.shipmentAddresses {
             if address.description == addressDescription {
-                profile.defaultAddress = address
+                profile.defaultShipmentAddress = address
                 break
             }
         }
     }
     
     func getAddressFor(addressDescription: String) -> Address? {
-        for address in profile.addresses {
+        for address in profile.shipmentAddresses {
             if address.description == addressDescription {
                 return address
             }
@@ -76,14 +76,10 @@ class ProfileViewModel: ObservableObject {
         return nil
     }
 
-    func editPersonalData(firstName: String = "",
-                          lastName: String = "",
+    func editPersonalData(fullName: String,
                           emailAddress: String = "") {
-        if !firstName.isEmpty {
-            profile.firstName = firstName
-        }
-        if !lastName.isEmpty {
-            profile.lastName = lastName
+        if !fullName.isEmpty {
+            profile.fullName = fullName
         }
         if !emailAddress.isEmpty {
             profile.email = emailAddress
@@ -91,9 +87,9 @@ class ProfileViewModel: ObservableObject {
     }
 
     func addNewAddress(address: Address, toBeDefault: Bool = false) {
-        profile.addresses.append(address)
+        profile.shipmentAddresses.append(address)
         if toBeDefault {
-            profile.defaultAddress = address
+            profile.defaultShipmentAddress = address
         }
     }
 

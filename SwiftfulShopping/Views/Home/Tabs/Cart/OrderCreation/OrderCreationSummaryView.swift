@@ -40,12 +40,8 @@ struct OrderCreationSummaryView: View {
                             .padding(.bottom, 15)
                         
                         VStack(alignment: .leading, spacing: 5) {
-                            HStack(spacing: 5) {
-                                Text(profileViewModel.profile.firstName)
-                                    .font(.ssTitle3)
-                                Text(profileViewModel.profile.lastName)
-                                    .font(.ssTitle3)
-                            }
+                            Text(profileViewModel.profile.fullName)
+                                .font(.ssTitle3)
                             Text(orderCreationViewModel.defaultAddress)
                                 .font(.ssCallout).fontWeight(.regular)
                         }

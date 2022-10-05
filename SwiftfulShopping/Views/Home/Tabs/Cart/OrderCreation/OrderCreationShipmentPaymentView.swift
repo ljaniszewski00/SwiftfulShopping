@@ -38,12 +38,8 @@ struct OrderCreationShipmentPaymentView: View {
                         
                         HStack(alignment: .bottom) {
                             VStack(alignment: .leading, spacing: 5) {
-                                HStack(spacing: 5) {
-                                    Text(profileViewModel.profile.firstName)
-                                        .font(.ssTitle3)
-                                    Text(profileViewModel.profile.lastName)
-                                        .font(.ssTitle3)
-                                }
+                                Text(profileViewModel.profile.fullName)
+                                    .font(.ssTitle3)
                                 Text(orderCreationViewModel.defaultAddress)
                                     .font(.ssCallout).fontWeight(.regular)
                             }
@@ -181,9 +177,9 @@ struct OrderCreationShipmentPaymentView: View {
         .onAppear {
             if orderCreationViewModel.defaultAddress.isEmpty {
                 orderCreationViewModel.setupAddresses(defaultProfileAddress:
-                                                        profileViewModel.profile.defaultAddress,
+                                                        profileViewModel.profile.defaultShipmentAddress,
                                                       profileAddresses:
-                                                        profileViewModel.profile.addresses)
+                                                        profileViewModel.profile.shipmentAddresses)
             }
             
             if orderCreationViewModel.choosenShippingMethod == nil {

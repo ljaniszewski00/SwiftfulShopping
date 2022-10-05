@@ -32,5 +32,5 @@ extension CreditCard: CustomStringConvertible {
 extension Profile {
     static let demoCard = CreditCard(cardNumber: "5321 1234 1242 6432",
                                      validThru: "03/24",
-                                     cardholderName: Profile.demoProfile.firstName + Profile.demoProfile.lastName)
+                                     cardholderName: Profile.demoProfile.fullName)
 }

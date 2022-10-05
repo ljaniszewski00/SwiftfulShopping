@@ -43,32 +43,7 @@ struct PersonalInfoView: View {
                                         .stroke(lineWidth: 2)
                                         .foregroundColor(.accentColor)
                                     HStack {
-                                        Text(profileViewModel.profile.firstName)
-                                            .font(.ssTitle3)
-                                            .foregroundColor(colorScheme == .light ? .black : .ssWhite)
-                                            .padding()
-                                        Spacer()
-                                        Image(systemName: "chevron.right")
-                                            .foregroundColor(.accentColor)
-                                            .padding()
-                                    }
-                                }
-                            }
-                        }
-                        
-                        VStack(alignment: .leading, spacing: 10) {
-                            Text("Last Name")
-                                .font(.ssTitle2)
-                            
-                            Button {
-                                shouldPresentEditPersonalInfoView = true
-                            } label: {
-                                ZStack {
-                                    RoundedRectangle(cornerRadius: 3)
-                                        .stroke(lineWidth: 2)
-                                        .foregroundColor(.accentColor)
-                                    HStack {
-                                        Text(profileViewModel.profile.lastName)
+                                        Text(profileViewModel.profile.fullName)
                                             .font(.ssTitle3)
                                             .foregroundColor(colorScheme == .light ? .black : .ssWhite)
                                             .padding()
@@ -151,9 +126,9 @@ struct PersonalInfoView: View {
         }
         .onAppear {
             personalInfoViewModel.setupAddresses(defaultProfileAddress:
-                                                    profileViewModel.profile.defaultAddress,
+                                                    profileViewModel.profile.defaultShipmentAddress,
                                                  profileAddresses:
-                                                    profileViewModel.profile.addresses)
+                                                    profileViewModel.profile.shipmentAddresses)
         }
         
         NavigationLink(destination: AddNewAddressView()
@@ -163,8 +138,7 @@ struct PersonalInfoView: View {
         NavigationLink(destination: EditPersonalInfoView()
                                         .environmentObject(personalInfoViewModel)
                                         .onAppear {
-                                            personalInfoViewModel.newFirstName = profileViewModel.profile.firstName
-                                            personalInfoViewModel.newLastName = profileViewModel.profile.lastName
+                                            personalInfoViewModel.newFullName = profileViewModel.profile.fullName
                                             personalInfoViewModel.newEmailAddress = profileViewModel.profile.email
                                         },
                        isActive: $shouldPresentEditPersonalInfoView) { EmptyView() }

@@ -50,7 +50,7 @@ class OrderCreationViewModel: ObservableObject {
     }
     
     func createNewAddress() -> Address {
-        let newAddress = Address(streetName: newStreetName, streetNumber: newStreetNumber, apartmentNumber: newApartmentNumber, zipCode: newZipCode, city: newCity, country: newCountry)
+        let newAddress = Address(fullName: "", streetName: newStreetName, streetNumber: newStreetNumber, apartmentNumber: newApartmentNumber, zipCode: newZipCode, city: newCity, country: newCountry)
         eraseNewAddressData()
         return newAddress
     }

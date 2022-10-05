@@ -162,9 +162,9 @@ struct OrderCreationChangeAddressView_Previews: PreviewProvider {
                     .previewDisplayName("\(deviceName) portrait")
                     .onAppear {
                         orderCreationViewModel.setupAddresses(defaultProfileAddress:
-                                                                profileViewModel.profile.defaultAddress,
+                                                                profileViewModel.profile.defaultShipmentAddress,
                                                               profileAddresses:
-                                                                profileViewModel.profile.addresses)
+                                                                profileViewModel.profile.shipmentAddresses)
                         
                         if orderCreationViewModel.choosenShippingMethod == nil {
                             orderCreationViewModel.choosenShippingMethod = profileViewModel.profile.defaultShippingMethod

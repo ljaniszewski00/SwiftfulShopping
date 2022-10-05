@@ -10,6 +10,7 @@ import Foundation
 struct Address {
     var id: String = UUID().uuidString
     var userID: String = UUID().uuidString
+    var fullName: String
     var streetName: String
     var streetNumber: String
     var apartmentNumber: String
@@ -17,6 +18,7 @@ struct Address {
     var city: String
     var country: String
     var isDefaultAddress: Bool = false
+    var isInvoiceAddress: Bool = false
 }
 
 extension Address: CustomStringConvertible {
@@ -36,20 +38,23 @@ extension Address: Equatable, Hashable {
 }
 
 extension Address {
-    static let demoAddress: Address = Address(streetName: "Wierzbowskiego",
+    static let demoAddress: Address = Address(fullName: "John Doe",
+                                              streetName: "Wierzbowskiego",
                                               streetNumber: "13",
                                               apartmentNumber: "26",
                                               zipCode: "23-123",
                                               city: "New York",
                                               country: "United States")
     
-    static let otherAddresses: [Address] = [Address(streetName: "Więckowskiego",
+    static let otherAddresses: [Address] = [Address(fullName: "John Doe",
+                                                    streetName: "Więckowskiego",
                                                     streetNumber: "324",
                                                     apartmentNumber: "64",
                                                     zipCode: "23-123",
                                                     city: "New York",
                                                     country: "United States"),
-                                            Address(streetName: "Brzozowa",
+                                            Address(fullName: "John Doe",
+                                                    streetName: "Brzozowa",
                                                     streetNumber: "352",
                                                     apartmentNumber: "67",
                                                     zipCode: "23-123",

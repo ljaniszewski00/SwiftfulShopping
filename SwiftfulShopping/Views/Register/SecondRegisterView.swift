@@ -47,19 +47,23 @@ struct SecondRegisterView: View {
                     
                     Button("Register") {
                         withAnimation {
-                            registerViewModel.completeRegistration()
-                            registerViewModel.showLoadingModal = true
-                            FirebaseAuthManager.client.firebaseSignUp(email: registerViewModel.email,
-                                                                      password: registerViewModel.password) { success, error in
-                                registerViewModel.showLoadingModal = false
-                                if success {
-                                    // Checking if user is logging for the first time
-                                    
-                                    authStateManager.didLogged(with: .emailPassword)
+                            registerViewModel.completeRegistration() { success, error in
+                                if let error = error {
+                                    ErrorManager.shared.generateCustomError(errorType: .registerError,
+                                                                            additionalErrorDescription: error.localizedDescription)
                                 } else {
-                                    if let error = error {
-                                        ErrorManager.shared.generateCustomError(errorType: .registerError,
-                                                                                additionalErrorDescription: error.localizedDescription)
+                                    registerViewModel.showLoadingModal = true
+                                    FirebaseAuthManager.client.firebaseSignUp(email: registerViewModel.email,
+                                                                              password: registerViewModel.password) { success, error in
+                                        registerViewModel.showLoadingModal = false
+                                        if success {
+                                            authStateManager.didLogged(with: .emailPassword)
+                                        } else {
+                                            if let error = error {
+                                                ErrorManager.shared.generateCustomError(errorType: .registerError,
+                                                                                        additionalErrorDescription: error.localizedDescription)
+                                            }
+                                        }
                                     }
                                 }
                             }

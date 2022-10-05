@@ -9,14 +9,14 @@ import Foundation
 
 struct Profile {
     var id: String = UUID().uuidString
-    var firstName: String
-    var lastName: String
+    var fullName: String
     var username: String
     var birthDate: Date
     var email: String
     var country: Countries = .poland
-    var defaultAddress: Address
-    var addresses: [Address] = []
+    var defaultShipmentAddress: Address
+    var shipmentAddresses: [Address] = []
+    var invoiceAddress: Address
     var defaultShippingMethod: ShippingMethod = .courier
     var defaultPaymentMethod: PaymentMethod = .creditCard
     var creditCard: CreditCard?
@@ -27,20 +27,20 @@ struct Profile {
 
 extension Profile: CustomStringConvertible {
     var description: String {
-        return "\(firstName) \(lastName)\n\(username)\n\(email)"
+        return "\(fullName)\n\(username)\n\(email)"
     }
 }
 
 extension Profile {
-    static let demoProfile = Profile(firstName: "Jan",
-                                     lastName: "Kowalski",
+    static let demoProfile = Profile(fullName: "Jan Kowalski",
                                      username: "jan.kowalski",
                                      birthDate: Date(),
                                      email: "jan.kowalski@email.com",
-                                     defaultAddress: Address.demoAddress,
-                                     addresses: [Address.demoAddress,
-                                                 Address.otherAddresses[0],
-                                                 Address.otherAddresses[1]],
+                                     defaultShipmentAddress: Address.demoAddress,
+                                     shipmentAddresses: [Address.demoAddress,
+                                                         Address.otherAddresses[0],
+                                                         Address.otherAddresses[1]],
+                                     invoiceAddress: Address.demoAddress,
                                      userProductsRatings: [Product.demoProducts[0].id: 3,
                                                            Product.demoProducts[1].id: 1,
                                                            Product.demoProducts[2].id: 5,

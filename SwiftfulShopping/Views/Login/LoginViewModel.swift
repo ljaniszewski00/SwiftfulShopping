@@ -17,7 +17,6 @@ class LoginViewModel: ObservableObject {
     
     @Published var showFirstTimeLoginView: Bool = false
     
-    
     func addressProvidingCompletion(completion: @escaping ((Bool) -> ())) {
         
     }

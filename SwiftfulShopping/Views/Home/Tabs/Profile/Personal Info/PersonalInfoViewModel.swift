@@ -11,8 +11,7 @@ class PersonalInfoViewModel: ObservableObject {
     @Published var defaultAddress: String = ""
     @Published var addresses: [String: String?] = [:]
     
-    @Published var newFirstName: String = ""
-    @Published var newLastName: String = ""
+    @Published var newFullName: String = ""
     @Published var newEmailAddress: String = ""
     
     @Published var newStreetName: String = ""
@@ -32,7 +31,9 @@ class PersonalInfoViewModel: ObservableObject {
     }
     
     var newPersonalInfoFieldsNotValidated: Bool {
-        newFirstName.isEmpty || newLastName.isEmpty || newEmailAddress.isEmpty
+        let components = newFullName.components(separatedBy: .whitespacesAndNewlines)
+        let words = components.filter { !$0.isEmpty }
+        return words.count < 2 || newEmailAddress.isEmpty
     }
     
     var newAddressFieldsNotValidated: Bool {
@@ -40,6 +41,6 @@ class PersonalInfoViewModel: ObservableObject {
     }
     
     func createNewAddress() -> Address {
-        Address(streetName: newStreetName, streetNumber: newStreetNumber, apartmentNumber: newApartmentNumber, zipCode: newZipCode, city: newCity, country: newCountry)
+        Address(fullName: newFullName, streetName: newStreetName, streetNumber: newStreetNumber, apartmentNumber: newApartmentNumber, zipCode: newZipCode, city: newCity, country: newCountry)
     }
 }

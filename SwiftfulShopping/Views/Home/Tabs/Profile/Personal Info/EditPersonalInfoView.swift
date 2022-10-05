@@ -14,8 +14,7 @@ struct EditPersonalInfoView: View {
     @EnvironmentObject private var personalInfoViewModel: PersonalInfoViewModel
     @Environment(\.dismiss) var dismiss
     
-    @State private var isFirstNameTextFieldFocused: Bool = false
-    @State private var isLastNameTextFieldFocused: Bool = false
+    @State private var isFullNameTextFieldFocused: Bool = false
     @State private var isEmailAddressTextFieldFocused: Bool = false
     
     var body: some View {
@@ -24,13 +23,8 @@ struct EditPersonalInfoView: View {
                 VStack(alignment: .leading, spacing: 20) {
                     RectangleCustomTextField(
                         textFieldProperty: "First Name",
-                        text: $personalInfoViewModel.newFirstName,
-                        isFocusedParentView: $isFirstNameTextFieldFocused)
-                    
-                    RectangleCustomTextField(
-                        textFieldProperty: "Last Name",
-                        text: $personalInfoViewModel.newLastName,
-                        isFocusedParentView: $isLastNameTextFieldFocused)
+                        text: $personalInfoViewModel.newFullName,
+                        isFocusedParentView: $isFullNameTextFieldFocused)
                     
                     RectangleCustomTextField(
                         textFieldProperty: "Email Address",
