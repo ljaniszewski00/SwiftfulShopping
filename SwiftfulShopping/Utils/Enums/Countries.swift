@@ -24,3 +24,9 @@ enum Countries: String, CaseIterable {
                                         .spain,
                                         .unitedStates]
 }
+
+extension Countries {
+    static func withLabel(_ label: String) -> Countries? {
+        return self.allCases.first { "\($0)" == label }
+    }
+}

@@ -18,3 +18,9 @@ extension PaymentMethod: CaseIterable {
         return [.cash, .creditCard, .applePay]
     }
 }
+
+extension PaymentMethod {
+    static func withLabel(_ label: String) -> PaymentMethod? {
+        return self.allCases.first { "\($0)" == label }
+    }
+}

@@ -8,6 +8,6 @@
 import Foundation
 
 enum DatabaseTable: String {
-    case users = "Users"
+    case profiles = "Profiles"
     case addresses = "Addresses"
 }

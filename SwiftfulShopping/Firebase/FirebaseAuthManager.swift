@@ -1,5 +1,5 @@
 //
-//  FirebaseManager.swift
+//  FirebaseAuthManager.swift
 //  SwiftfulShopping
 //
 //  Created by Łukasz Janiszewski on 19/09/2022.

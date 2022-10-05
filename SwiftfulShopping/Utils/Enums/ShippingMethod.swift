@@ -18,3 +18,9 @@ extension ShippingMethod: CaseIterable {
         return [.pickup, .parcel, .courier]
     }
 }
+
+extension ShippingMethod {
+    static func withLabel(_ label: String) -> ShippingMethod? {
+        return self.allCases.first { "\($0)" == label }
+    }
+}
