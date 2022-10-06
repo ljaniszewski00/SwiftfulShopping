@@ -112,12 +112,13 @@ struct OrderCreationChangeAddressView: View {
                     
                     Button {
                         withAnimation {
-                            let createdAddress = orderCreationViewModel.createNewAddress()
-                            if orderCreationViewModel.addressToBeSaved {
-                                profileViewModel.addNewAddress(address: createdAddress, toBeDefault: orderCreationViewModel.addressToBeDefault)
+                            if let createdAddress = orderCreationViewModel.createNewAddress() {
+                                if orderCreationViewModel.addressToBeSaved {
+                                    profileViewModel.addNewAddress(address: createdAddress, toBeDefault: orderCreationViewModel.addressToBeDefault)
+                                }
+                                
+                                dismiss()
                             }
-                            
-                            dismiss()
                         }
                     } label: {
                         Text("Add new address")

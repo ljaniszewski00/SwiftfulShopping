@@ -47,23 +47,25 @@ struct SecondRegisterView: View {
                     
                     Button("Register") {
                         withAnimation {
-                            registerViewModel.completeRegistration() { success, error in
-                                if let error = error {
-                                    ErrorManager.shared.generateCustomError(errorType: .registerError,
-                                                                            additionalErrorDescription: error.localizedDescription)
-                                } else {
-                                    registerViewModel.showLoadingModal = true
-                                    FirebaseAuthManager.client.firebaseSignUp(email: registerViewModel.email,
-                                                                              password: registerViewModel.password) { success, error in
+                            registerViewModel.showLoadingModal = true
+                            
+                            FirebaseAuthManager.client.firebaseSignUp(email: registerViewModel.email,
+                                                                      password: registerViewModel.password) { success, error in
+                                if success {
+                                    registerViewModel.completeRegistration() { success, error in
                                         registerViewModel.showLoadingModal = false
-                                        if success {
-                                            authStateManager.didLogged(with: .emailPassword)
+                                        if let error = error {
+                                            ErrorManager.shared.generateCustomError(errorType: .registerError,
+                                                                                    additionalErrorDescription: error.localizedDescription)
                                         } else {
-                                            if let error = error {
-                                                ErrorManager.shared.generateCustomError(errorType: .registerError,
-                                                                                        additionalErrorDescription: error.localizedDescription)
-                                            }
+                                            authStateManager.didLogged(with: .emailPassword)
                                         }
+                                    }
+                                } else {
+                                    registerViewModel.showLoadingModal = false
+                                    if let error = error {
+                                        ErrorManager.shared.generateCustomError(errorType: .registerError,
+                                                                                additionalErrorDescription: error.localizedDescription)
                                     }
                                 }
                             }

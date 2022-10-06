@@ -15,6 +15,9 @@ class FirebaseAuthManager: ObservableObject {
     let auth: Auth = Auth.auth()
     let gitHubProvider = OAuthProvider(providerID: "github.com")
     
+    @Published var user: User?
+    @Published var loggedWith: SignInMethod?
+    
     static var client: FirebaseAuthManager = {
         FirebaseAuthManager()
     }()
@@ -29,11 +32,13 @@ class FirebaseAuthManager: ObservableObject {
     func firebaseSignUp(email: String,
                         password: String,
                         completion: @escaping ((Bool, Error?) -> ())) {
-        auth.createUser(withEmail: email, password: password) { authResult, error in
+        auth.createUser(withEmail: email, password: password) { [weak self] authResult, error in
             if let error = error {
                 completion(false, error)
             } else {
-                if let _ = authResult {
+                if let authResult = authResult {
+                    self?.user = authResult.user
+                    self?.loggedWith = .emailPassword
                     completion(true, nil)
                 }
             }
@@ -43,11 +48,12 @@ class FirebaseAuthManager: ObservableObject {
     func firebaseEmailPasswordSignIn(email: String,
                                      password: String,
                                      completion: @escaping ((Bool, Error?) -> ())) {
-        auth.signIn(withEmail: email, password: password) { authResult, error in
+        auth.signIn(withEmail: email, password: password) { [weak self] authResult, error in
             if let error = error {
                 completion(false, error)
             } else {
                 if let _ = authResult {
+                    self?.loggedWith = .emailPassword
                     completion(true, nil)
                 }
             }
@@ -143,8 +149,13 @@ class FirebaseAuthManager: ObservableObject {
                 self?.auth.signIn(with: credential) { (result, error) in
                     if let error = error {
                         completion(false, error)
+                    } else {
+                        if let result = result {
+                            self?.user = result.user
+                            self?.loggedWith = .google
+                            completion(true, nil)
+                        }
                     }
-                    completion(true, nil)
                 }
             } else {
                 completion(false, error)
@@ -179,8 +190,13 @@ class FirebaseAuthManager: ObservableObject {
                 self?.auth.signIn(with: credential) { (result, error) in
                     if let error = error {
                         completion(false, error)
+                    } else {
+                        if let result = result {
+                            self?.user = result.user
+                            self?.loggedWith = .facebook
+                            completion(true, nil)
+                        }
                     }
-                    completion(true, nil)
                 }
             } else {
                 completion(false, error)
@@ -204,14 +220,16 @@ class FirebaseAuthManager: ObservableObject {
     func firebaseGitHubSignIn(completion: @escaping ((Bool, Error?) -> ())) {
         getGitHubSignInCredentials { [weak self] credential, error in
             if let credential = credential {
-                self?.auth.signIn(with: credential) { authResult, error in
+                self?.auth.signIn(with: credential) { result, error in
                     if let error = error {
                         completion(false, error)
                     } else {
-                        completion(true, nil)
+                        if let result = result {
+                            self?.user = result.user
+                            self?.loggedWith = .github
+                            completion(true, nil)
+                        }
                     }
-                    
-//                    guard let oauthCredential = authResult.credential as? OAuthCredential else { return }
                 }
             } else {
                 completion(false, error)
@@ -225,6 +243,8 @@ class FirebaseAuthManager: ObservableObject {
     func firebaseSignOut() -> (Bool, Error?) {
         do {
             try auth.signOut()
+            self.user = nil
+            self.loggedWith = nil
         } catch let signOutError as NSError {
             return (false, signOutError)
         }

@@ -68,7 +68,7 @@ struct PersonalInfoView: View {
                                         .stroke(lineWidth: 2)
                                         .foregroundColor(.accentColor)
                                     HStack {
-                                        Text(profileViewModel.profile.email)
+                                        Text(profileViewModel.profile.email ?? "")
                                             .font(.ssTitle3)
                                             .foregroundColor(colorScheme == .light ? .black : .ssWhite)
                                             .padding()
@@ -139,7 +139,7 @@ struct PersonalInfoView: View {
                                         .environmentObject(personalInfoViewModel)
                                         .onAppear {
                                             personalInfoViewModel.newFullName = profileViewModel.profile.fullName
-                                            personalInfoViewModel.newEmailAddress = profileViewModel.profile.email
+                                            personalInfoViewModel.newEmailAddress = profileViewModel.profile.email ?? ""
                                         },
                        isActive: $shouldPresentEditPersonalInfoView) { EmptyView() }
     }

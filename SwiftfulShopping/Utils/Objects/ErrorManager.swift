@@ -15,6 +15,7 @@ final class ErrorManager: ObservableObject {
         .productRecognizerError: "Error occured while recognizing your product. \(errorDescriptionSuffix)",
         .loginError: "Error occured while trying to log in. \(errorDescriptionSuffix)",
         .registerError: "Error occured while trying to register. \(errorDescriptionSuffix)",
+        .firstTimeLoginError: "Error occured while trying to log in for the first time. \(errorDescriptionSuffix)",
         .emailPasswordSignInError: "Error occured while trying to log in with email and password. \(errorDescriptionSuffix)",
         .phoneSignInError: "Error occured while trying to log in with phone number. \(errorDescriptionSuffix)",
         .googleSignInError: "Error occured while trying to log in via Google. \(errorDescriptionSuffix)",

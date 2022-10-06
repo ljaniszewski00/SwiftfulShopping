@@ -10,9 +10,9 @@ import Foundation
 struct Profile {
     var id: String = UUID().uuidString
     var fullName: String
-    var username: String
-    var birthDate: Date
-    var email: String
+    var username: String?
+    var birthDate: Date?
+    var email: String?
     var country: Countries = .poland
     var defaultShipmentAddress: Address
     var shipmentAddresses: [Address] = []
@@ -23,6 +23,7 @@ struct Profile {
     var userProductsRatings: [String: Int] = [:]
     var userProductsReviews: [String: String] = [:]
     var imageURL: String?
+    var createdWith: SignInMethod?
 }
 
 extension Profile: CustomStringConvertible {

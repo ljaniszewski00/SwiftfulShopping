@@ -34,8 +34,10 @@ struct EditPersonalInfoView: View {
                 
                 Button {
                     withAnimation {
-                        profileViewModel.addNewAddress(address: personalInfoViewModel.createNewAddress(), toBeDefault: personalInfoViewModel.toBeDefaultAddress)
-                        dismiss()
+                        if let newAddress = personalInfoViewModel.createNewAddress() {
+                            profileViewModel.addNewAddress(address: newAddress, toBeDefault: personalInfoViewModel.toBeDefaultAddress)
+                            dismiss()
+                        }
                     }
                 } label: {
                     Text("Save")

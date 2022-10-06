@@ -17,11 +17,17 @@ class LoginViewModel: ObservableObject {
     
     @Published var showFirstTimeLoginView: Bool = false
     
-    func addressProvidingCompletion(completion: @escaping ((Bool) -> ())) {
-        
-    }
-    
-    func verifyAccount() {
-        
+    func checkIfUserLoggingFirstTime(completion: @escaping ((Bool, Error?) -> ())) {
+        FirestoreManager.client.getUsersUIDs() { usersUIDs in
+            if let usersUIDs = usersUIDs, let user = FirebaseAuthManager.client.user {
+                if usersUIDs.contains(user.uid) {
+                    completion(false, nil)
+                } else {
+                    completion(true, nil)
+                }
+            } else {
+                completion(true, nil)
+            }
+        }
     }
 }

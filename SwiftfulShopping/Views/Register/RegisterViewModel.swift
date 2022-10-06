@@ -281,7 +281,12 @@ class RegisterViewModel: ObservableObject {
     }
     
     func completeRegistration(completion: @escaping ((Bool, Error?) -> ())) {
-        let shipmentAddress = Address(fullName: fullName,
+        guard let user = FirebaseAuthManager.client.user else {
+            return
+        }
+        
+        let shipmentAddress = Address(userID: user.uid,
+                                      fullName: fullName,
                                       streetName: streetName,
                                       streetNumber: streetNumber,
                                       apartmentNumber: apartmentNumber,
@@ -296,7 +301,8 @@ class RegisterViewModel: ObservableObject {
                 if self!.sameDataOnInvoice {
                     invoiceAddress = shipmentAddress
                 } else {
-                    invoiceAddress = Address(fullName: self!.fullNameInvoice,
+                    invoiceAddress = Address(userID: user.uid,
+                                             fullName: self!.fullNameInvoice,
                                              streetName: self!.streetNameInvoice,
                                              streetNumber: self!.streetNumberInvoice,
                                              apartmentNumber: self!.apartmentNumberInvoice,
@@ -309,12 +315,14 @@ class RegisterViewModel: ObservableObject {
                     if let error = error {
                         completion(false, error)
                     } else {
-                        let profile = Profile(fullName: self!.fullName,
+                        let profile = Profile(id: user.uid,
+                                              fullName: self!.fullName,
                                               username: self!.username,
                                               birthDate: self!.birthDate,
                                               email: self!.email,
                                               defaultShipmentAddress: shipmentAddress,
-                                              invoiceAddress: invoiceAddress!)
+                                              invoiceAddress: invoiceAddress!,
+                                              createdWith: FirebaseAuthManager.client.loggedWith)
                         FirestoreManager.client.createProfile(profile: profile) { success, error in
                             if let error = error {
                                 completion(false, error)

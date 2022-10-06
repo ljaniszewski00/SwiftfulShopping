@@ -9,7 +9,7 @@ import Foundation
 
 struct Address {
     var id: String = UUID().uuidString
-    var userID: String = UUID().uuidString
+    var userID: String
     var fullName: String
     var streetName: String
     var streetNumber: String
@@ -23,7 +23,7 @@ struct Address {
 
 extension Address: CustomStringConvertible {
     var description: String {
-        return "\(streetName) \(streetNumber)/\(apartmentNumber)\n\(zipCode) \(city)\n\(country)"
+        return "\(fullName)\n\(streetName) \(streetNumber)/\(apartmentNumber)\n\(zipCode) \(city)\n\(country)"
     }
 }
 
@@ -38,7 +38,8 @@ extension Address: Equatable, Hashable {
 }
 
 extension Address {
-    static let demoAddress: Address = Address(fullName: "John Doe",
+    static let demoAddress: Address = Address(userID: UUID().uuidString,
+                                              fullName: "John Doe 1",
                                               streetName: "Wierzbowskiego",
                                               streetNumber: "13",
                                               apartmentNumber: "26",
@@ -46,14 +47,16 @@ extension Address {
                                               city: "New York",
                                               country: "United States")
     
-    static let otherAddresses: [Address] = [Address(fullName: "John Doe",
+    static let otherAddresses: [Address] = [Address(userID: UUID().uuidString,
+                                                    fullName: "John Doe 2",
                                                     streetName: "Więckowskiego",
                                                     streetNumber: "324",
                                                     apartmentNumber: "64",
                                                     zipCode: "23-123",
                                                     city: "New York",
                                                     country: "United States"),
-                                            Address(fullName: "John Doe",
+                                            Address(userID: UUID().uuidString,
+                                                    fullName: "John Doe 3",
                                                     streetName: "Brzozowa",
                                                     streetNumber: "352",
                                                     apartmentNumber: "67",

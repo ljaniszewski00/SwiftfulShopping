@@ -12,6 +12,7 @@ enum ErrorType: String {
     case productRecognizerError = "Product Recognizer Error"
     case loginError = "Login Error"
     case registerError = "Register Error"
+    case firstTimeLoginError = "First Time Login Error"
     case emailPasswordSignInError = "Email and Password Sign In Error"
     case phoneSignInError = "Phone Sign In Error"
     case googleSignInError = "Google Sign In Error"

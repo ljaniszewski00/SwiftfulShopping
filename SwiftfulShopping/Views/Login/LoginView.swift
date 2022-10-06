@@ -198,8 +198,18 @@ struct LoginView: View {
             FirebaseAuthManager.client.firebaseGoogleSignIn { success, error in
                 if success {
                     // Checking if user is logging for the first time
-                    
-                    authStateManager.didLogged(with: loginViewModel.choosenSignInMethod)
+                    loginViewModel.checkIfUserLoggingFirstTime { loggingFirstTime, error in
+                        if let error = error {
+                            ErrorManager.shared.generateCustomError(errorType: .googleSignInError,
+                                                                    additionalErrorDescription: error.localizedDescription)
+                        } else {
+                            if loggingFirstTime {
+                                loginViewModel.showFirstTimeLoginView = true
+                            } else {
+                                authStateManager.didLogged(with: loginViewModel.choosenSignInMethod)
+                            }
+                        }
+                    }
                 } else {
                     if let error = error {
                         ErrorManager.shared.generateCustomError(errorType: .googleSignInError,
@@ -235,8 +245,18 @@ struct LoginView: View {
             FirebaseAuthManager.client.firebaseFacebookSignIn { success, error in
                 if success {
                     // Checking if user is logging for the first time
-                    
-                    authStateManager.didLogged(with: loginViewModel.choosenSignInMethod)
+                    loginViewModel.checkIfUserLoggingFirstTime { loggingFirstTime, error in
+                        if let error = error {
+                            ErrorManager.shared.generateCustomError(errorType: .googleSignInError,
+                                                                    additionalErrorDescription: error.localizedDescription)
+                        } else {
+                            if loggingFirstTime {
+                                loginViewModel.showFirstTimeLoginView = true
+                            } else {
+                                authStateManager.didLogged(with: loginViewModel.choosenSignInMethod)
+                            }
+                        }
+                    }
                 } else {
                     if let error = error {
                         ErrorManager.shared.generateCustomError(errorType: .facebookSignInError,
@@ -270,8 +290,18 @@ struct LoginView: View {
             FirebaseAuthManager.client.firebaseGitHubSignIn { success, error in
                 if success {
                     // Checking if user is logging for the first time
-                    
-                    authStateManager.didLogged(with: loginViewModel.choosenSignInMethod)
+                    loginViewModel.checkIfUserLoggingFirstTime { loggingFirstTime, error in
+                        if let error = error {
+                            ErrorManager.shared.generateCustomError(errorType: .googleSignInError,
+                                                                    additionalErrorDescription: error.localizedDescription)
+                        } else {
+                            if loggingFirstTime {
+                                loginViewModel.showFirstTimeLoginView = true
+                            } else {
+                                authStateManager.didLogged(with: loginViewModel.choosenSignInMethod)
+                            }
+                        }
+                    }
                 } else {
                     if let error = error {
                         ErrorManager.shared.generateCustomError(errorType: .githubSignInError,

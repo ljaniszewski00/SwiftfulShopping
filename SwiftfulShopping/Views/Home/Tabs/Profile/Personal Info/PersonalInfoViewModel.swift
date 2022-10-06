@@ -40,7 +40,11 @@ class PersonalInfoViewModel: ObservableObject {
         newStreetName.isEmpty || newStreetNumber.isEmpty || newZipCode.isEmpty || newCity.isEmpty || newCountry.isEmpty
     }
     
-    func createNewAddress() -> Address {
-        Address(fullName: newFullName, streetName: newStreetName, streetNumber: newStreetNumber, apartmentNumber: newApartmentNumber, zipCode: newZipCode, city: newCity, country: newCountry)
+    func createNewAddress() -> Address? {
+        guard let user = FirebaseAuthManager.client.user else {
+            return nil
+        }
+        
+        return Address(userID: user.uid, fullName: newFullName, streetName: newStreetName, streetNumber: newStreetNumber, apartmentNumber: newApartmentNumber, zipCode: newZipCode, city: newCity, country: newCountry)
     }
 }

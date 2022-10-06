@@ -49,8 +49,12 @@ class OrderCreationViewModel: ObservableObject {
         }
     }
     
-    func createNewAddress() -> Address {
-        let newAddress = Address(fullName: "", streetName: newStreetName, streetNumber: newStreetNumber, apartmentNumber: newApartmentNumber, zipCode: newZipCode, city: newCity, country: newCountry)
+    func createNewAddress() -> Address? {
+        guard let user = FirebaseAuthManager.client.user else {
+            return nil
+        }
+        
+        let newAddress = Address(userID: user.uid, fullName: "", streetName: newStreetName, streetNumber: newStreetNumber, apartmentNumber: newApartmentNumber, zipCode: newZipCode, city: newCity, country: newCountry)
         eraseNewAddressData()
         return newAddress
     }

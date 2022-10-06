@@ -26,6 +26,8 @@ class FirstTimeLoginViewModel: ObservableObject {
     @Published var cityInvoice: String = ""
     @Published var countryInvoice: String = Countries.poland.rawValue
     
+    @Published var showLoadingModal: Bool = false
+    
     let countries: [String: String?] = ["Czech": "czech",
                                         "England": "england",
                                         "France": "france",
@@ -189,6 +191,60 @@ class FirstTimeLoginViewModel: ObservableObject {
             zipCodeInvoice = zipCode
             cityInvoice = city
             countryInvoice = country
+        }
+    }
+    
+    func completeFirstTimeLogin(completion: @escaping ((Bool, Error?) -> ())) {
+        guard let user = FirebaseAuthManager.client.user else {
+            return
+        }
+        
+        let shipmentAddress = Address(userID: user.uid,
+                                      fullName: fullName,
+                                      streetName: streetName,
+                                      streetNumber: streetNumber,
+                                      apartmentNumber: apartmentNumber,
+                                      zipCode: zipCode,
+                                      city: city,
+                                      country: country)
+        FirestoreManager.client.createShipmentAddress(shipmentAddress: shipmentAddress) { [weak self] success, error in
+            if let error = error {
+                completion(false, error)
+            } else {
+                let invoiceAddress: Address?
+                if self!.sameDataOnInvoice {
+                    invoiceAddress = shipmentAddress
+                } else {
+                    invoiceAddress = Address(userID: user.uid,
+                                             fullName: self!.fullNameInvoice,
+                                             streetName: self!.streetNameInvoice,
+                                             streetNumber: self!.streetNumberInvoice,
+                                             apartmentNumber: self!.apartmentNumberInvoice,
+                                             zipCode: self!.zipCodeInvoice,
+                                             city: self!.cityInvoice,
+                                             country: self!.countryInvoice)
+                }
+                
+                FirestoreManager.client.createInvoiceAddress(invoiceAddress: invoiceAddress!) { [weak self] success, error in
+                    if let error = error {
+                        completion(false, error)
+                    } else {
+                        let profile = Profile(id: user.uid,
+                                              fullName: self!.fullName,
+                                              email: user.email,
+                                              defaultShipmentAddress: shipmentAddress,
+                                              invoiceAddress: invoiceAddress!,
+                                              createdWith: FirebaseAuthManager.client.loggedWith)
+                        FirestoreManager.client.createProfile(profile: profile) { success, error in
+                            if let error = error {
+                                completion(false, error)
+                            } else {
+                                completion(true, nil)
+                            }
+                        }
+                    }
+                }
+            }
         }
     }
 }

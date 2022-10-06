@@ -56,10 +56,17 @@ struct FirstTimeLoginView: View {
                     
                     Button("Complete Login") {
                         withAnimation {
+                            firstTimeLoginViewModel.showLoadingModal = true
                             firstTimeLoginViewModel.fillInvoiceData()
-                            loginViewModel.addressProvidingCompletion() { success in
-                                if let signInMethod = authStateManager.loggedWith {
-                                    authStateManager.didLogged(with: signInMethod)
+                            firstTimeLoginViewModel.completeFirstTimeLogin() { success, error in
+                                firstTimeLoginViewModel.showLoadingModal = false
+                                if let error = error {
+                                    ErrorManager.shared.generateCustomError(errorType: .firstTimeLoginError,
+                                                                            additionalErrorDescription: error.localizedDescription)
+                                } else {
+                                    if let signInMethod = authStateManager.loggedWith {
+                                        authStateManager.didLogged(with: signInMethod)
+                                    }
                                 }
                             }
                         }
@@ -74,6 +81,10 @@ struct FirstTimeLoginView: View {
             .background {
                 Color(uiColor: .secondarySystemBackground).ignoresSafeArea()
             }
+            .modifier(LoadingIndicatorModal(isPresented:
+                                                $firstTimeLoginViewModel.showLoadingModal))
+            .modifier(ErrorModal(isPresented: $errorManager.showErrorModal,
+                                 customError: errorManager.customError ?? ErrorManager.unknownError))
             .navigationTitle("")
             .navigationBarHidden(false)
             .navigationBarBackButtonHidden(true)
