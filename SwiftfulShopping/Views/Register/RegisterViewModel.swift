@@ -9,6 +9,9 @@ import Foundation
 
 
 class RegisterViewModel: ObservableObject {
+    @Published var usersUsernames: [String]?
+    @Published var usersEmails: [String]?
+    
     @Published var fullName: String = ""
     @Published var username: String = ""
     @Published var birthDate: Date = Date()
@@ -45,6 +48,17 @@ class RegisterViewModel: ObservableObject {
                                         "Spain": "spain",
                                         "United States": "united"]
     
+    func onFirstRegisterViewAppear() {
+        FirestoreManager.client.listenToUsersUsernamesAndEmails { [weak self] usersUsernames, usersEmails in
+            self?.usersUsernames = usersUsernames
+            self?.usersEmails = usersEmails
+        }
+    }
+    
+    func onFirstRegisterViewDisappear() {
+        
+    }
+    
     func getAddressDataFromLocation(addressData: [String: String]) {
         if !addressData.isEmpty {
             if let streetName = addressData["streetName"] {
@@ -64,6 +78,7 @@ class RegisterViewModel: ObservableObject {
             }
         }
     }
+    
     
     // MARK: Generic methods to validate letters and numeric fields
     
@@ -115,11 +130,27 @@ class RegisterViewModel: ObservableObject {
         }
     }
     
+    var usernameTaken: Bool {
+        if let usersUsernames = usersUsernames {
+            return usersUsernames.contains(username)
+        } else {
+            return false
+        }
+    }
+    
     var isUsernameValid: Bool {
         if username.isEmpty {
             return true
         } else {
             return username.count >= 5
+        }
+    }
+    
+    var emailTaken: Bool {
+        if let usersEmails = usersEmails {
+            return usersEmails.contains(email)
+        } else {
+            return false
         }
     }
     
@@ -208,8 +239,10 @@ class RegisterViewModel: ObservableObject {
         isFullNameValid &&
         !username.isEmpty &&
         isUsernameValid &&
+        !usernameTaken &&
         !email.isEmpty &&
         isEmailValid &&
+        !emailTaken &&
         !password.isEmpty &&
         isPasswordValid
     }

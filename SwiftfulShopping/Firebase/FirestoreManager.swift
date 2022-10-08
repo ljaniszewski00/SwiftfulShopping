@@ -46,6 +46,29 @@ class FirestoreManager: ObservableObject {
             }
     }
     
+    func listenToUsersUsernamesAndEmails(completion: @escaping (([String]?, [String]?) -> ())) {
+        self.db.collection(DatabaseCollections.profiles.rawValue)
+            .addSnapshotListener { querySnapshot, error in
+                if let error = error {
+                    print("Error getting documents for users usernames: \(error.localizedDescription)")
+                } else {
+                    let usernames = querySnapshot?.documents.map {
+                        let data = $0.data()
+                        return data["username"] as? String ?? ""
+                    }
+                    let emails = querySnapshot?.documents.map {
+                        let data = $0.data()
+                        return data["emails"] as? String ?? ""
+                    }
+                    completion(usernames, emails)
+                }
+            }
+    }
+    
+    func cancelListening(listener: ListenerRegistration) {
+        listener.remove()
+    }
+    
     func getUserProfile(userID: String, completion: @escaping ((Profile?) -> ())) {
         getShipmentAddressesFor(userID: userID) { [weak self] shipmentAddresses in
             if let shipmentAddresses = shipmentAddresses {

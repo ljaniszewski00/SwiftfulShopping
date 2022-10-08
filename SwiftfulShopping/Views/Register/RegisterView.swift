@@ -63,6 +63,12 @@ struct RegisterView: View {
                                                 $registerViewModel.showLoadingModal))
             .modifier(ErrorModal(isPresented: $errorManager.showErrorModal,
                                  customError: errorManager.customError ?? ErrorManager.unknownError))
+            .onAppear {
+                registerViewModel.onFirstRegisterViewAppear()
+            }
+            .onDisappear {
+                registerViewModel.onFirstRegisterViewDisappear()
+            }
         }
         .background {
             Color(uiColor: .secondarySystemBackground).ignoresSafeArea()
@@ -115,6 +121,10 @@ struct RegisterView: View {
                             if !registerViewModel.isUsernameValid {
                                 buildErrorMessage(message: "Username should contain at least 5 characters")
                             }
+                            
+                            if registerViewModel.usernameTaken {
+                                buildErrorMessage(message: "Username has already been taken")
+                            }
                         }
                     }
                 }
@@ -140,6 +150,10 @@ struct RegisterView: View {
                         
                         if !registerViewModel.isEmailValid {
                             buildErrorMessage(message: "Email should be between 2 and 64 characters and contain @")
+                        }
+                        
+                        if registerViewModel.emailTaken {
+                            buildErrorMessage(message: "Email has already been used")
                         }
                     }
                     
