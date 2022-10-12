@@ -11,20 +11,49 @@ struct Order {
     var id: String = UUID().uuidString
     var orderDate: Date = Date()
     var estimatedDeliveryDate: Date
-    var client: Profile
-    var shoppingCart: Cart
+    var clientID: String
+    var shoppingCartID: String
     var shippingMethod: ShippingMethod
-    var shippingAddress: Address
+    var shippingAddressID: String
     var paymentMethod: PaymentMethod = .creditCard
     var invoice: Bool
     var totalCost: Double
     var status: OrderStatus = .placed
     
-    init(client: Profile, shoppingCart: Cart, shippingMethod: ShippingMethod, shippingAddress: Address, paymentMethod: PaymentMethod = .creditCard, invoice: Bool = false) {
-        self.client = client
-        self.shoppingCart = shoppingCart
+    init(id: String,
+         orderDate: Date,
+         estimatedDeliveryDate: Date,
+         clientID: String,
+         shoppingCartID: String,
+         shippingMethod: ShippingMethod,
+         shippingAddressID: String,
+         paymentMethod: PaymentMethod,
+         invoice: Bool,
+         totalCost: Double,
+         status: OrderStatus) {
+        self.id = id
+        self.orderDate = orderDate
+        self.estimatedDeliveryDate = estimatedDeliveryDate
+        self.clientID = clientID
+        self.shoppingCartID = shoppingCartID
         self.shippingMethod = shippingMethod
-        self.shippingAddress = shippingAddress
+        self.shippingAddressID = shippingAddressID
+        self.paymentMethod = paymentMethod
+        self.invoice = invoice
+        self.totalCost = totalCost
+        self.status = status
+    }
+    
+    init(clientID: String,
+         shoppingCartID: String,
+         shippingMethod: ShippingMethod,
+         shippingAddressID: String,
+         paymentMethod: PaymentMethod = .creditCard,
+         invoice: Bool = false) {
+        self.clientID = clientID
+        self.shoppingCartID = shoppingCartID
+        self.shippingMethod = shippingMethod
+        self.shippingAddressID = shippingAddressID
         self.paymentMethod = paymentMethod
         self.invoice = invoice
         
@@ -51,20 +80,20 @@ extension Order: CustomStringConvertible {
 }
 
 extension Order {
-    static let demoOrders: [Order] = [Order(client: Profile.demoProfile,
+    static let demoOrders: [Order] = [Order(clientID: Profile.demoProfile.id,
                                             shoppingCart: Cart.demoCart,
                                             shippingMethod: .pickup,
-                                            shippingAddress: Address.demoAddress),
-                                      Order(client: Profile.demoProfile,
+                                            shippingAddressID: Address.demoAddress.id),
+                                      Order(clientID: Profile.demoProfile.id,
                                             shoppingCart: Cart.demoCart,
                                             shippingMethod: .parcel,
-                                            shippingAddress: Address.demoAddress),
-                                      Order(client: Profile.demoProfile,
+                                            shippingAddressID: Address.demoAddress.id),
+                                      Order(clientID: Profile.demoProfile.id,
                                             shoppingCart: Cart.demoCart,
                                             shippingMethod: .parcel,
-                                            shippingAddress: Address.demoAddress),
-                                      Order(client: Profile.demoProfile,
+                                            shippingAddressID: Address.demoAddress.id),
+                                      Order(clientID: Profile.demoProfile.id,
                                             shoppingCart: Cart.demoCart,
                                             shippingMethod: .parcel,
-                                            shippingAddress: Address.demoAddress)]
+                                            shippingAddressID: Address.demoAddress.id)]
 }

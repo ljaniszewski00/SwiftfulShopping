@@ -17,3 +17,15 @@ enum OrderStatus: String {
     case closed = "Closed"
     case returned = "Returned"
 }
+
+extension OrderStatus: CaseIterable {
+    static var allCases: [OrderStatus] {
+        return [.placed, .payed, .picked, .readyToBeSend, .sent, .delivered, .closed, .returned]
+    }
+}
+
+extension OrderStatus {
+    static func withLabel(_ label: String) -> OrderStatus? {
+        return self.allCases.first { "\($0)" == label }
+    }
+}

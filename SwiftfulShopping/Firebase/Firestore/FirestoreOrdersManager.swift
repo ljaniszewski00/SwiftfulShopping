@@ -1,0 +1,102 @@
+//
+//  FirestoreOrdersManager.swift
+//  SwiftfulShopping
+//
+//  Created by Łukasz Janiszewski on 12/10/2022.
+//
+
+import Foundation
+import Firebase
+
+class FirestoreOrdersManager: ObservableObject {
+    private let db = Firestore.firestore()
+    
+    static var client: FirestoreOrdersManager = {
+        FirestoreOrdersManager()
+    }()
+    
+    private init() {}
+    
+    
+    // MARK: SELECT DATABASE OPERATIONS
+    
+    func getUserOrders(userID: String, completion: @escaping (([Order]?) -> ())) {
+        db.collection(DatabaseCollections.orders.rawValue)
+            .whereField("clientID", isEqualTo: userID)
+            .getDocuments { (querySnapshot, error) in
+                if let error = error {
+                    print("Error fetching orders data: \(error.localizedDescription)")
+                } else {
+                    let orders = querySnapshot!.documents.map { (queryDocumentSnapshot) -> Order in
+                        
+                        let data = queryDocumentSnapshot.data()
+
+                        let id = data["id"] as? String ?? ""
+                        let orderDate = data["orderDate"] as? Date ?? Date()
+                        let estimatedDeliveryDate = data["estimatedDeliveryDate"] as? Date ?? Date()
+                        let clientID = data["clientID"] as? String ?? ""
+                        let shoppingCartID = data["shoppingCartID"] as? String ?? ""
+                        let shippingMethod = data["shippingMethod"] as? String ?? ""
+                        let shippingAddressID = data["shippingAddressID"] as? String ?? ""
+                        let paymentMethod = data["paymentMethod"] as? String ?? ""
+                        let invoice = data["invoice"] as? Bool ?? false
+                        let totalCost = data["totalCost"] as? Double ?? 0.0
+                        let status = data["status"] as? String ?? ""
+                        
+                        return Order(id: id,
+                                     orderDate: orderDate,
+                                     estimatedDeliveryDate: estimatedDeliveryDate,
+                                     clientID: clientID,
+                                     shoppingCartID: shoppingCartID,
+                                     shippingMethod: ShippingMethod.withLabel(shippingMethod) ?? .courier,
+                                     shippingAddressID: shippingAddressID,
+                                     paymentMethod: PaymentMethod.withLabel(paymentMethod) ?? .creditCard,
+                                     invoice: invoice,
+                                     totalCost: totalCost,
+                                     status: OrderStatus.withLabel(status) ?? .placed)
+                    }
+                    
+                    print("Successfully fetched user orders data")
+                    
+                    completion(orders)
+                }
+            }
+    }
+    
+    
+    // MARK: INSERT DATABASE OPERATIONS
+    
+    func createUserOrder(order: Order, completion: @escaping ((Bool, Error?) -> ())) {
+        let profileDocumentData: [String: Any] = [
+            "id": order.id,
+            "orderDate": order.orderDate,
+            "estimatedDeliveryDate": order.estimatedDeliveryDate,
+            "clientID": order.clientID,
+            "shoppingCartID": order.shoppingCartID,
+            "shippingMethod": order.shippingMethod,
+            "shippingAddressID": order.shippingAddressID,
+            "paymentMethod": order.paymentMethod,
+            "invoice": order.invoice,
+            "totalCost": order.totalCost,
+            "status": order.status
+        ]
+        
+        self.db.collection(DatabaseCollections.orders.rawValue)
+            .document(order.id)
+            .setData(profileDocumentData) { (error) in
+            if let error = error {
+                print("Error creating user's order data: \(error.localizedDescription)")
+                completion(false, error)
+            } else {
+                print("Successfully created user's order data for user identifying with id: \(order.clientID) in database")
+                completion(true, nil)
+            }
+        }
+    }
+}
+
+extension FirestoreOrdersManager: NSCopying {
+    func copy(with zone: NSZone? = nil) -> Any {
+        return self
+    }
+}

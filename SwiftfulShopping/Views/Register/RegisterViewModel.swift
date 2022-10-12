@@ -6,9 +6,10 @@
 //
 
 import Foundation
-
+import FirebaseFirestore
 
 class RegisterViewModel: ObservableObject {
+    @Published var usersAndEmailsListener: ListenerRegistration?
     @Published var usersUsernames: [String]?
     @Published var usersEmails: [String]?
     
@@ -49,10 +50,10 @@ class RegisterViewModel: ObservableObject {
                                         "United States": "united"]
     
     func onFirstRegisterViewAppear() {
-        FirestoreManager.client.listenToUsersUsernamesAndEmails { [weak self] usersUsernames, usersEmails in
-            self?.usersUsernames = usersUsernames
-            self?.usersEmails = usersEmails
-        }
+        FirestoreAuthenticationManager.client.listenToUsersUsernamesAndEmails(completion: { usersUsernames, usersEmails in
+            self.usersUsernames = usersUsernames
+            self.usersEmails = usersEmails
+        })
     }
     
     func onFirstRegisterViewDisappear() {
@@ -169,6 +170,7 @@ class RegisterViewModel: ObservableObject {
             return isPasswordValid(text: password)
         }
     }
+    
     
     // MARK: Validating Shipment Address fields
     
@@ -326,7 +328,7 @@ class RegisterViewModel: ObservableObject {
                                       zipCode: zipCode,
                                       city: city,
                                       country: country)
-        FirestoreManager.client.createShipmentAddress(shipmentAddress: shipmentAddress) { [weak self] success, error in
+        FirestoreAuthenticationManager.client.createShipmentAddress(shipmentAddress: shipmentAddress) { [weak self] success, error in
             if let error = error {
                 completion(false, error)
             } else {
@@ -344,7 +346,7 @@ class RegisterViewModel: ObservableObject {
                                              country: self!.countryInvoice)
                 }
                 
-                FirestoreManager.client.createInvoiceAddress(invoiceAddress: invoiceAddress!) { [weak self] success, error in
+                FirestoreAuthenticationManager.client.createInvoiceAddress(invoiceAddress: invoiceAddress!) { [weak self] success, error in
                     if let error = error {
                         completion(false, error)
                     } else {
@@ -356,7 +358,7 @@ class RegisterViewModel: ObservableObject {
                                               defaultShipmentAddress: shipmentAddress,
                                               invoiceAddress: invoiceAddress!,
                                               createdWith: FirebaseAuthManager.client.loggedWith)
-                        FirestoreManager.client.createProfile(profile: profile) { success, error in
+                        FirestoreAuthenticationManager.client.createProfile(profile: profile) { success, error in
                             if let error = error {
                                 completion(false, error)
                             } else {

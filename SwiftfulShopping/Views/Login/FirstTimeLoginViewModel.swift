@@ -207,7 +207,7 @@ class FirstTimeLoginViewModel: ObservableObject {
                                       zipCode: zipCode,
                                       city: city,
                                       country: country)
-        FirestoreManager.client.createShipmentAddress(shipmentAddress: shipmentAddress) { [weak self] success, error in
+        FirestoreAuthenticationManager.client.createShipmentAddress(shipmentAddress: shipmentAddress) { [weak self] success, error in
             if let error = error {
                 completion(false, error)
             } else {
@@ -225,7 +225,7 @@ class FirstTimeLoginViewModel: ObservableObject {
                                              country: self!.countryInvoice)
                 }
                 
-                FirestoreManager.client.createInvoiceAddress(invoiceAddress: invoiceAddress!) { [weak self] success, error in
+                FirestoreAuthenticationManager.client.createInvoiceAddress(invoiceAddress: invoiceAddress!) { [weak self] success, error in
                     if let error = error {
                         completion(false, error)
                     } else {
@@ -235,7 +235,7 @@ class FirstTimeLoginViewModel: ObservableObject {
                                               defaultShipmentAddress: shipmentAddress,
                                               invoiceAddress: invoiceAddress!,
                                               createdWith: FirebaseAuthManager.client.loggedWith)
-                        FirestoreManager.client.createProfile(profile: profile) { success, error in
+                        FirestoreAuthenticationManager.client.createProfile(profile: profile) { success, error in
                             if let error = error {
                                 completion(false, error)
                             } else {

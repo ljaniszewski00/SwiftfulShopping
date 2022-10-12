@@ -12,7 +12,7 @@ struct Return {
     var returnDate: Date = Date()
     var clientID: String
     var orderID: String
-    var products: [Product]
+    var productsIDs: [String]
     var returnPrice: Double
     var returnMethod: ShippingMethod
     var status: ReturnStatus = .reported
@@ -23,14 +23,6 @@ struct Return {
     var bankAccountOwnerPostalCode: String = ""
     var bankAccountOwnerCity: String = ""
     var bankAccountOwnerCountry: String = ""
-}
-
-enum ReturnStatus: String {
-    case reported = "Reported"
-    case sent = "Sent"
-    case delivered = "Delivered"
-    case moneyReturned = "Money returned"
-    case closed = "Closed"
 }
 
 extension Return: Equatable, Hashable {
@@ -54,7 +46,7 @@ extension Return {
                                                returnDate: Date(),
                                                clientID: Profile.demoProfile.id,
                                                orderID: Order.demoOrders[0].id,
-                                               products: Product.demoProducts,
+                                               productsIDs: Product.demoProducts.map { $0.id },
                                                returnPrice: Order.demoOrders[0].totalCost,
                                                returnMethod: Order.demoOrders[0].shippingMethod,
                                                status: .reported),
@@ -62,7 +54,7 @@ extension Return {
                                                returnDate: Date(),
                                                clientID: Profile.demoProfile.id,
                                                orderID: Order.demoOrders[1].id,
-                                               products: Product.demoProducts,
+                                               productsIDs: Product.demoProducts.map { $0.id },
                                                returnPrice: Order.demoOrders[1].totalCost,
                                                returnMethod: Order.demoOrders[1].shippingMethod,
                                                status: .reported)]
