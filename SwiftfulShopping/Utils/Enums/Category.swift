@@ -15,8 +15,16 @@ enum Category: String, CaseIterable {
     case watches = "Watches"
     case accessories = "Accessories"
     case other = "Other"
-    
+}
+
+extension Category {
     static var allCases: [Category] {
         [.computers, .phones, .tablets, .laptops, .watches, .accessories, .other]
+    }
+}
+
+extension Category {
+    static func withLabel(_ label: String) -> Category? {
+        return self.allCases.first { "\($0)" == label }
     }
 }

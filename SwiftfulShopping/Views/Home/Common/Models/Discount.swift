@@ -9,21 +9,32 @@ import Foundation
 
 struct Discount {
     var id: String = UUID().uuidString
+    var productID: String = Product.demoProducts[0].id
     var discountCode: String
     var discountValuePercent: Double
-    var redeemed: Bool = false
-    var redemptionDate: Date? = nil
-    var redeemedByUserID: String? = nil
+    var redeemedByUsersIDs: [String] = []
+    var redemptionNumber: Int = 0
+    var maxRedemptionNumber: Int = 1
     
     init(discountCode: String, discountValuePercent: Double) {
         self.discountCode = discountCode
         self.discountValuePercent = discountValuePercent
     }
     
-    mutating func redeemDiscount(userID: String) {
-        self.redeemed = true
-        self.redemptionDate = Date()
-        self.redeemedByUserID = userID
+    init(id: String,
+         productID: String,
+         discountCode: String,
+         discountValuePercent: Double,
+         redeemedByUsersIDs: [String],
+         redemptionNumber: Int,
+         maxRedemptionNumber: Int) {
+        self.id = id
+        self.productID = productID
+        self.discountCode = discountCode
+        self.discountValuePercent = discountValuePercent
+        self.redeemedByUsersIDs = redeemedByUsersIDs
+        self.redemptionNumber = redemptionNumber
+        self.maxRedemptionNumber = maxRedemptionNumber
     }
 }
 
@@ -42,7 +53,7 @@ extension Discount: CustomStringConvertible {
         if redeemed {
             return "\(id)\nDiscount Code: \(discountCode)\nDiscountValue (Percent): \(discountValuePercent)"
         } else {
-            return "\(id)\nDiscount Code: \(discountCode)\nDiscountValue (Percent: \(discountValuePercent)\nRedeemed: Yes\nRedemption Date: \(String(describing: redemptionDate))\nRedeemed By UserID: \(redeemedByUserID ?? "")"
+            return "\(id)\nDiscount Code: \(discountCode)\nDiscountValue (Percent: \(discountValuePercent)\nRedeemed: Yes\n\nRedeemed By UsersIDs: \(redeemedByUsersIDs)"
         }
     }
 }

@@ -19,7 +19,6 @@ struct Product {
     var isRecommended: Bool
     var isNew: Bool
     var keywords: [String]
-    var rating: ProductRating
     var imagesURLs: [String]
     
     init(id: String = UUID().uuidString,
@@ -33,7 +32,6 @@ struct Product {
          isRecommended: Bool = false,
          isNew: Bool = true,
          keywords: [String] = [],
-         rating: ProductRating,
          imagesURLs: [String] = ["https://res.cloudinary.com/drqqwwpen/image/upload/v1596474380/pcs/not-available_g2vsum.jpg"]) {
         self.id = id
         self.name = name
@@ -50,7 +48,6 @@ struct Product {
         } else {
             self.keywords = keywords + [name, company, category.rawValue]
         }
-        self.rating = rating
         self.imagesURLs = imagesURLs
     }
 }
@@ -81,7 +78,6 @@ extension Product {
                                                   unitsSold: 100,
                                                   isRecommended: true,
                                                   keywords: ["telephone", "phone", "mobile phone", "iPhone", "mobile device"],
-                                                  rating: ProductRating.demoProductsRatings[0],
                                                   imagesURLs: ["https://store.storeimages.cdn-apple.com/4668/as-images.apple.com/is/iphone-13-pro-max-green-select?wid=940&hei=1112&fmt=png-alpha&.v=1644969385495",
                                                                "https://store.storeimages.cdn-apple.com/4668/as-images.apple.com/is/iphone-13-pro-max-silver-select?wid=940&hei=1112&fmt=png-alpha&.v=1645552346280"]),
                                           Product(id: "222222222222222",
@@ -92,7 +88,6 @@ extension Product {
                                                   price: 599.99,
                                                   unitsSold: 100,
                                                   isRecommended: true,
-                                                  rating: ProductRating.demoProductsRatings[0],
                                                   imagesURLs: ["https://mac-shop.pl/environment/cache/images/500_500_productGfx_14857.webp",
                                                                "https://www.orange.pl/medias/sys_master/root/images/h51/h41/11348699611166/ipad-air-5g-spacegray-front-OraProductZoom.png"]),
                                           Product(id: "33333333333333333",
@@ -102,7 +97,6 @@ extension Product {
                                                   category: .tablets,
                                                   price: 899.99,
                                                   unitsSold: 10,
-                                                  rating: ProductRating.demoProductsRatings[0],
                                                   imagesURLs: ["https://www.orange.pl/medias/sys_master/root/images/hfa/h0a/9792549683230/ipad-pro-11-space-gray-front-OraProductZoom.png",
                                                                "https://toppng.com/uploads/preview/starting-at-ipad-pro-105-11569058975xz9kcmjfqn.png"]),
                                           Product(id: "444444444444444",
@@ -113,7 +107,6 @@ extension Product {
                                                   price: 999.99,
                                                   unitsSold: 100,
                                                   isRecommended: true,
-                                                  rating: ProductRating.demoProductsRatings[0],
                                                   imagesURLs: ["https://support.apple.com/library/APPLE/APPLECARE_ALLGEOS/SP825/macbookair.png",
                                                                "https://static.api.plenti.app/file/product/2900"]),
                                           Product(id: "55555555555555",
@@ -123,7 +116,6 @@ extension Product {
                                                   category: .laptops,
                                                   price: 1399.99,
                                                   unitsSold: 100,
-                                                  rating: ProductRating.demoProductsRatings[0],
                                                   imagesURLs: ["https://w7.pngwing.com/pngs/279/698/png-transparent-macbookpro-apple-material-apple-macbook-pro-computer-product-in-kind.png",
                                                                "https://toppng.com/uploads/preview/macbook-pro-with-touch-bar-11562986819zyl2ty8n0m.png"]),
                                           Product(id: "6666666666666",
@@ -133,7 +125,6 @@ extension Product {
                                                   category: .computers,
                                                   price: 1599.99,
                                                   unitsSold: 100,
-                                                  rating: ProductRating.demoProductsRatings[0],
                                                   imagesURLs: ["https://images.macrumors.com/t/ylfMwnTtxo7SQpK6767ULmfZarY=/1600x1200/smart/article-new/2013/09/imac-m1-blue-isolated-16x9-500k.png",
                                                                "https://upload.wikimedia.org/wikipedia/commons/thumb/4/4c/M1_iMac_vector.svg/1200px-M1_iMac_vector.svg.png"]),
                                           Product(id: "77777777777777",
@@ -143,7 +134,6 @@ extension Product {
                                                   category: .computers,
                                                   price: 2599.99,
                                                   unitsSold: 100,
-                                                  rating: ProductRating.demoProductsRatings[0],
                                                   imagesURLs: ["https://imagazine.pl/wp-content/uploads/2019/06/Mac-Pro-2019-mid-and-Pro-Display-XDR-10.png",
                                                                "https://macmedic.com.au/wp-content/uploads/2021/07/MacMedic-Sydney-Mac_Pro_2-up_Screen__USEN.png"]),
                                           Product(id: "88888888888888",
@@ -153,7 +143,6 @@ extension Product {
                                                   category: .watches,
                                                   price: 499.99,
                                                   unitsSold: 100,
-                                                  rating: ProductRating.demoProductsRatings[0],
                                                   imagesURLs: ["https://store.storeimages.cdn-apple.com/4668/as-images.apple.com/is/MN2D3_VW_PF+watch-45-alum-starlight-cell-7s_VW_PF_WF_SI?wid=2000&hei=2000&fmt=png-alpha&.v=1645128285436,1631661830000",
                                                        "https://cdn.shopify.com/s/files/1/0613/5683/5009/products/series7-480_grande.png?v=1653135860"]),
                                           Product(id: "999999999999999",
@@ -163,7 +152,6 @@ extension Product {
                                                   category: .accessories,
                                                   price: 249.99,
                                                   unitsSold: 100,
-                                                  rating: ProductRating.demoProductsRatings[0],
                                                   imagesURLs: ["https://www.freepnglogos.com/uploads/airpods-png/airpods-apple-news-articles-stories-trends-for-today-14.png",
                                                                "https://i.pinimg.com/originals/cf/8a/5e/cf8a5e66b8641f3b1b11e364e84fb093.png"]),
                                           Product(id: "101010101010101010",
@@ -173,7 +161,6 @@ extension Product {
                                                   category: .accessories,
                                                   price: 499.99,
                                                   unitsSold: 100,
-                                                  rating: ProductRating.demoProductsRatings[0],
                                                   imagesURLs: ["https://www.apple.com/v/airpods-max/e/images/overview/hero__gnfk5g59t0qe_xlarge.png",
                                                                "https://www.apple.com/v/airpods-max/e/images/overview/design_hero_cups__ddp0h9jo76gm_large.png"]),
                                           Product(id: "111111111111111111111111",
@@ -183,11 +170,6 @@ extension Product {
                                                   category: .accessories,
                                                   price: 399.99,
                                                   unitsSold: 100,
-                                                  rating: ProductRating.demoProductsRatings[0],
                                                   imagesURLs: ["https://w7.pngwing.com/pngs/326/890/png-transparent-apple-tv-4k-apple-tv-4th-generation-4k-resolution-new-autumn-products-television-electronics-media-player-thumbnail.png",
                                                                "https://w7.pngwing.com/pngs/393/564/png-transparent-apple-tv-4th-generation-television-apple-tv-4k-creative-certificate-material-television-electronics-electronic-device-thumbnail.png"])]
-    
-    mutating func addRate(authorID: String, authorFirstName: String, rating: Int, review: String?) {
-        self.rating.productRates.append(ProductRate(authorID: authorID, authorFirstName: authorFirstName, rating: rating, review: review))
-    }
 }

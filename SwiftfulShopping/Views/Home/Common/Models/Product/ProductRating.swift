@@ -44,6 +44,7 @@ extension ProductRating: Equatable, Hashable {
 
 struct ProductRate {
     var id: String = UUID().uuidString
+    var productID: String = Product.demoProducts[0].id
     var authorID: String
     var authorFirstName: String
     var rating: Int
