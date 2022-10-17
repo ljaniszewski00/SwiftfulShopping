@@ -173,6 +173,25 @@ class FirestoreProfileManager: ObservableObject {
             }
     }
     
+    func updateEmail(newEmail: String, profile: Profile, completion: @escaping ((Bool, Error?) -> ())) {
+        self.db.collection(DatabaseCollections.profiles.rawValue)
+            .document(profile.id)
+            .getDocument { documentSnapshot, error in
+                if let error = error {
+                    completion(false, error)
+                    print("Error updating email in profile data: \(error.localizedDescription)")
+                } else {
+                    let updateData: [String: Any] = [
+                        "email": newEmail
+                    ]
+                    
+                    documentSnapshot?.reference.updateData(updateData)
+                    print("Successfully updated email in profile data")
+                    completion(true, nil)
+                }
+            }
+    }
+    
     func makeAddressInvoiceAddress(shipmentAddressToBeMakeInvoiceAddress: Address, completion: @escaping ((Bool, Error?) -> ())) {
         self.db.collection(DatabaseCollections.invoiceAddresses.rawValue)
             .whereField("userID", isEqualTo: shipmentAddressToBeMakeInvoiceAddress.userID)
@@ -208,6 +227,21 @@ class FirestoreProfileManager: ObservableObject {
     
     // MARK: DELETE DATABASE OPERATIONS
     
+    func deleteProfile(profile: Profile, completion: @escaping ((Bool, Error?) -> ())) {
+        self.db.collection(DatabaseCollections.profiles.rawValue)
+            .document(profile.id)
+            .getDocument { documentSnapshot, error in
+                if let error = error {
+                    print("Error deleting profile data: \(error.localizedDescription)")
+                    completion(false, error)
+                } else {
+                    documentSnapshot?.reference.delete()
+                    print("Successfully deleted profile data")
+                    completion(true, nil)
+                }
+            }
+    }
+    
     func deleteShipmentAddress(shipmentAddress: Address, completion: @escaping ((Bool, Error?) -> ())) {
         self.db.collection(DatabaseCollections.shipmentAddresses.rawValue)
             .document(shipmentAddress.id)
@@ -218,6 +252,21 @@ class FirestoreProfileManager: ObservableObject {
                 } else {
                     documentSnapshot?.reference.delete()
                     print("Successfully deleted shipment address data")
+                    completion(true, nil)
+                }
+            }
+    }
+    
+    func deleteShipmentAddress(invoiceAddress: Address, completion: @escaping ((Bool, Error?) -> ())) {
+        self.db.collection(DatabaseCollections.invoiceAddresses.rawValue)
+            .document(invoiceAddress.id)
+            .getDocument { documentSnapshot, error in
+                if let error = error {
+                    print("Error deleting invoice address data: \(error.localizedDescription)")
+                    completion(false, error)
+                } else {
+                    documentSnapshot?.reference.delete()
+                    print("Successfully deleted invoice address data")
                     completion(true, nil)
                 }
             }

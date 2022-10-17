@@ -238,17 +238,91 @@ class FirebaseAuthManager: ObservableObject {
     }
     
     
-    // MARK: Firebase SignOut
+    // MARK: Firebase account management
     
     func firebaseSignOut() -> (Bool, Error?) {
         do {
             try auth.signOut()
             self.user = nil
             self.loggedWith = nil
+            return (true, nil)
         } catch let signOutError as NSError {
             return (false, signOutError)
         }
-        return (true, nil)
+    }
+    
+    func sendRecoveryEmail(email: String, completion: @escaping ((Bool, Error?) -> ())) {
+        auth.sendPasswordReset(withEmail: email) { (error) in
+            if let error = error {
+                print("Error sending recovery email: \(error.localizedDescription)")
+                completion(false, error)
+            } else {
+                print("Recovery email has been sent")
+                completion(true, nil)
+            }
+        }
+    }
+    
+    func changeEmailAddress(userID: String, oldEmailAddress: String, password: String, newEmailAddress: String, completion: @escaping ((Bool, Error?) -> ())) {
+        let credential = EmailAuthProvider.credential(withEmail: oldEmailAddress, password: password)
+        
+        user?.reauthenticate(with: credential) { [self] (result, error) in
+            if let error = error {
+                print("Error re-authenticating user \(error)")
+                completion(false, error)
+            } else {
+                user?.updateEmail(to: newEmailAddress) { (error) in
+                    if let error = error {
+                        print("Error changing email address: \(error.localizedDescription)")
+                        completion(false, error)
+                    } else {
+                        completion(true, nil)
+                    }
+                }
+            }
+        }
+    }
+    
+    func changePassword(emailAddress: String, oldPassword: String, newPassword: String, completion: @escaping ((Bool, Error?) -> ())) {
+        let credential = EmailAuthProvider.credential(withEmail: emailAddress, password: oldPassword)
+        
+        user?.reauthenticate(with: credential) { [self] (result, error) in
+            if let error = error {
+                print("Error re-authenticating user \(error)")
+                completion(false, error)
+            } else {
+                user?.updatePassword(to: newPassword) { (error) in
+                    if let error = error {
+                        print("Error changing password: \(error.localizedDescription)")
+                        completion(false, error)
+                    } else {
+                        print("Successfully changed password")
+                        completion(true, nil)
+                    }
+                }
+            }
+        }
+    }
+    
+    func deleteUser(email: String, password: String, completion: @escaping ((Bool, Error?) -> ())) {
+        let credential = EmailAuthProvider.credential(withEmail: email, password: password)
+        
+        user?.reauthenticate(with: credential) { [self] (result, error) in
+            if let error = error {
+                print("Error re-authenticating user \(error)")
+                completion(false, error)
+            } else {
+                user?.delete { (error) in
+                    if let error = error {
+                        print("Could not delete user: \(error)")
+                        completion(false, error)
+                    } else {
+                        let result = self.firebaseSignOut()
+                        completion(result.0, result.1)
+                    }
+                }
+            }
+        }
     }
 }
 
