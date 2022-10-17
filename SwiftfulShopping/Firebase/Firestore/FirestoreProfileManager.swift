@@ -192,7 +192,7 @@ class FirestoreProfileManager: ObservableObject {
             }
     }
     
-    func makeAddressInvoiceAddress(shipmentAddressToBeMakeInvoiceAddress: Address, completion: @escaping ((Bool, Error?) -> ())) {
+    func makeAddressInvoiceAddress(shipmentAddressToBeMakeInvoiceAddress: Address, completion: @escaping ((Result<Bool, Error>) -> ())) {
         self.db.collection(DatabaseCollections.invoiceAddresses.rawValue)
             .whereField("userID", isEqualTo: shipmentAddressToBeMakeInvoiceAddress.userID)
             .getDocuments { querySnapshot, error in
@@ -214,11 +214,11 @@ class FirestoreProfileManager: ObservableObject {
                         .getDocument { documentSnapshot, error in
                             if let error = error {
                                 print("Error updating invoice address data: \(error.localizedDescription)")
-                                completion(false, error)
+                                completion(.failure(error))
                             } else {
                                 documentSnapshot?.reference.updateData(updateData)
                                 print("Successfully updated invoice address data")
-                                completion(true, nil)
+                                completion(.success(true))
                             }
                         }
                 }
