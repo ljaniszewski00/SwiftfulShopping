@@ -173,15 +173,27 @@ class FirestoreProductsManager: ObservableObject {
         }
     }
     
-    func redeemDiscount(userID: String, discount: Discount, completion: @escaping (([Discount]?) -> ())) {
-        let updatedDiscountDocumentData: [String: Any] = [
+    
+    // MARK: UPDATE DATABASE OPERATIONS
+    
+    func redeemDiscount(userID: String, discount: Discount, completion: @escaping ((Bool, Error?) -> ())) {
+        let updateData: [String: Any] = [
             "redeemedByUsersIDs": FieldValue.arrayUnion([userID]),
             "redemptionNumber": FieldValue.increment(Int64(1))
         ]
         
-        db.collection(DatabaseCollections.discounts.rawValue)
+        self.db.collection(DatabaseCollections.discounts.rawValue)
             .document(discount.id)
-            .updateData(updatedDiscountDocumentData)
+            .getDocument { documentSnapshot, error in
+                if let error = error {
+                    print("Error redeeming discount: \(error.localizedDescription)")
+                    completion(false, error)
+                } else {
+                    documentSnapshot?.reference.updateData(updateData)
+                    print("Successfully redeemed discount code \(discount.discountCode) by user \(userID)")
+                    completion(true, nil)
+                }
+            }
     }
 }
 

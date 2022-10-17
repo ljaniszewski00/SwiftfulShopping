@@ -93,6 +93,28 @@ class FirestoreOrdersManager: ObservableObject {
             }
         }
     }
+    
+    
+    // MARK: UPDATE DATABASE OPERATIONS
+    
+    func updateOrderStatus(order: Order, newStatus: OrderStatus, completion: @escaping ((Bool, Error?) -> ())) {
+        let updateData: [String: Any] = [
+            "status": newStatus.rawValue
+        ]
+        
+        self.db.collection(DatabaseCollections.orders.rawValue)
+            .document(order.id)
+            .getDocument { documentSnapshot, error in
+                if let error = error {
+                    print("Error updating order's status: \(error.localizedDescription)")
+                    completion(false, error)
+                } else {
+                    documentSnapshot?.reference.updateData(updateData)
+                    print("Successfully changed status of order \(order.id) from \(order.status.rawValue) to \(newStatus.rawValue)")
+                    completion(true, nil)
+                }
+            }
+    }
 }
 
 extension FirestoreOrdersManager: NSCopying {

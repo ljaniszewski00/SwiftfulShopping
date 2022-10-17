@@ -140,7 +140,6 @@ class FirestoreProfileManager: ObservableObject {
                     let zipCode = data["zipCode"] as? String ?? ""
                     let city = data["city"] as? String ?? ""
                     let country = data["country"] as? String ?? ""
-                    let isDefaultAddress = data["isDefaultAddress"] as? Bool ?? false
                     
                     completion(Address(id: id,
                                        userID: userID,
@@ -151,7 +150,75 @@ class FirestoreProfileManager: ObservableObject {
                                        zipCode: zipCode,
                                        city: city,
                                        country: country,
-                                       isDefaultAddress: isDefaultAddress))
+                                       isDefaultAddress: true))
+                }
+            }
+    }
+    
+    
+    // MARK: UPDATE DATABASE OPERATIONS
+    
+    func updateProfileData(profileID: String, profileDataToUpdate: [String: Any], completion: @escaping ((Bool, Error?) -> ())) {
+        self.db.collection(DatabaseCollections.profiles.rawValue)
+            .document(profileID)
+            .getDocument { documentSnapshot, error in
+                if let error = error {
+                    print("Error updating profile data: \(error.localizedDescription)")
+                    completion(false, error)
+                } else {
+                    documentSnapshot?.reference.updateData(profileDataToUpdate)
+                    print("Successfully updated profile data")
+                    completion(true, nil)
+                }
+            }
+    }
+    
+    func makeAddressInvoiceAddress(shipmentAddressToBeMakeInvoiceAddress: Address, completion: @escaping ((Bool, Error?) -> ())) {
+        self.db.collection(DatabaseCollections.invoiceAddresses.rawValue)
+            .whereField("userID", isEqualTo: shipmentAddressToBeMakeInvoiceAddress.userID)
+            .getDocuments { querySnapshot, error in
+                if let invoiceAddressDocument = querySnapshot?.documents.first {
+                    let updateData: [String: Any] = [
+                        "id": shipmentAddressToBeMakeInvoiceAddress.id,
+                        "userID": shipmentAddressToBeMakeInvoiceAddress.userID,
+                        "fullName": shipmentAddressToBeMakeInvoiceAddress.fullName,
+                        "streetName": shipmentAddressToBeMakeInvoiceAddress.streetName,
+                        "streetNumber": shipmentAddressToBeMakeInvoiceAddress.streetNumber,
+                        "apartmentNumber": shipmentAddressToBeMakeInvoiceAddress.apartmentNumber,
+                        "zipCode": shipmentAddressToBeMakeInvoiceAddress.zipCode,
+                        "city": shipmentAddressToBeMakeInvoiceAddress.city,
+                        "country": shipmentAddressToBeMakeInvoiceAddress.country
+                    ]
+                    
+                    self.db.collection(DatabaseCollections.invoiceAddresses.rawValue)
+                        .document(invoiceAddressDocument.documentID)
+                        .getDocument { documentSnapshot, error in
+                            if let error = error {
+                                print("Error updating invoice address data: \(error.localizedDescription)")
+                                completion(false, error)
+                            } else {
+                                documentSnapshot?.reference.updateData(updateData)
+                                print("Successfully updated invoice address data")
+                                completion(true, nil)
+                            }
+                        }
+                }
+            }
+    }
+    
+    // MARK: DELETE DATABASE OPERATIONS
+    
+    func deleteShipmentAddress(shipmentAddress: Address, completion: @escaping ((Bool, Error?) -> ())) {
+        self.db.collection(DatabaseCollections.shipmentAddresses.rawValue)
+            .document(shipmentAddress.id)
+            .getDocument { documentSnapshot, error in
+                if let error = error {
+                    print("Error deleting shipment address data: \(error.localizedDescription)")
+                    completion(false, error)
+                } else {
+                    documentSnapshot?.reference.delete()
+                    print("Successfully deleted shipment address data")
+                    completion(true, nil)
                 }
             }
     }

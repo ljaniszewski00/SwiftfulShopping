@@ -103,6 +103,28 @@ class FirestoreReturnsManager: ObservableObject {
             }
         }
     }
+    
+    
+    // MARK: UPDATE DATABASE OPERATIONS
+    
+    func updateReturnStatus(returnObject: Return, newStatus: ReturnStatus, completion: @escaping ((Bool, Error?) -> ())) {
+        let updateData: [String: Any] = [
+            "status": newStatus.rawValue
+        ]
+        
+        self.db.collection(DatabaseCollections.returns.rawValue)
+            .document(returnObject.id)
+            .getDocument { documentSnapshot, error in
+                if let error = error {
+                    print("Error updating return's status: \(error.localizedDescription)")
+                    completion(false, error)
+                } else {
+                    documentSnapshot?.reference.updateData(updateData)
+                    print("Successfully changed status of return \(returnObject.id) from \(returnObject.status.rawValue) to \(newStatus.rawValue)")
+                    completion(true, nil)
+                }
+            }
+    }
 }
 
 extension FirestoreReturnsManager: NSCopying {

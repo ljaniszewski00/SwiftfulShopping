@@ -130,7 +130,6 @@ class FirestoreAuthenticationManager: ObservableObject {
             "zipCode": invoiceAddress.zipCode,
             "city": invoiceAddress.city,
             "country": invoiceAddress.country,
-            "isDefaultAddress": invoiceAddress.isDefaultAddress
         ]
         
         self.db.collection(DatabaseCollections.invoiceAddresses.rawValue)
