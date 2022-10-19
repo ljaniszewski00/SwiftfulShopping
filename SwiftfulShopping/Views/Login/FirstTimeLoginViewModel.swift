@@ -194,7 +194,7 @@ class FirstTimeLoginViewModel: ObservableObject {
         }
     }
     
-    func completeFirstTimeLogin(completion: @escaping ((Bool, Error?) -> ())) {
+    func completeFirstTimeLogin(completion: @escaping ((VoidResult) -> ())) {
         guard let user = FirebaseAuthManager.client.user else {
             return
         }
@@ -207,10 +207,9 @@ class FirstTimeLoginViewModel: ObservableObject {
                                       zipCode: zipCode,
                                       city: city,
                                       country: country)
-        FirestoreAuthenticationManager.client.createShipmentAddress(shipmentAddress: shipmentAddress) { [weak self] success, error in
-            if let error = error {
-                completion(false, error)
-            } else {
+        FirestoreAuthenticationManager.client.createShipmentAddress(shipmentAddress: shipmentAddress) { [weak self] result in
+            switch result {
+            case .success:
                 let invoiceAddress: Address?
                 if self!.sameDataOnInvoice {
                     invoiceAddress = shipmentAddress
@@ -225,25 +224,29 @@ class FirstTimeLoginViewModel: ObservableObject {
                                              country: self!.countryInvoice)
                 }
                 
-                FirestoreAuthenticationManager.client.createInvoiceAddress(invoiceAddress: invoiceAddress!) { [weak self] success, error in
-                    if let error = error {
-                        completion(false, error)
-                    } else {
+                FirestoreAuthenticationManager.client.createInvoiceAddress(invoiceAddress: invoiceAddress!) { [weak self] result in
+                    switch result {
+                    case .success:
                         let profile = Profile(id: user.uid,
                                               fullName: self!.fullName,
                                               email: user.email,
                                               defaultShipmentAddress: shipmentAddress,
                                               invoiceAddress: invoiceAddress!,
                                               createdWith: FirebaseAuthManager.client.loggedWith)
-                        FirestoreAuthenticationManager.client.createProfile(profile: profile) { success, error in
-                            if let error = error {
-                                completion(false, error)
-                            } else {
-                                completion(true, nil)
+                        FirestoreAuthenticationManager.client.createProfile(profile: profile) { result in
+                            switch result {
+                            case .success:
+                                completion(.success)
+                            case .failure(let error):
+                                completion(.failure(error))
                             }
                         }
+                    case .failure(let error):
+                        completion(.failure(error))
                     }
                 }
+            case .failure(let error):
+                completion(.failure(error))
             }
         }
     }

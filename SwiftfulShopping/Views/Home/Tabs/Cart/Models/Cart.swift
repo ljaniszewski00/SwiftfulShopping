@@ -9,89 +9,51 @@ import Foundation
 
 struct Cart {
     var id: String = UUID().uuidString
+    var clientID: String = Profile.demoProfile.id
+    var orderID: String = Order.demoOrders[0].id
     var cartName: String = "Default"
-    var products: [Product: Int] = [:]
-    var appliedDiscounts: Set<Discount> = []
+    var productsIDsWithQuantity: [String: Int] = [:]
+    var appliedDiscountsIDs: [String] = []
+    var totalCost: Double = 0.0
+    var totalCostWithAppliedDiscounts: Double = 0.0
     
-    var totalCost: Double {
-        var totalCost: Double = 0
-        _ = products.map { product, quantity in
-            totalCost += product.price * Double(quantity)
-        }
-        
-        return totalCost
+    init() {}
+    
+    init(id: String = UUID().uuidString,
+         clientID: String,
+         orderID: String,
+         cartName: String,
+         productsIDsWithQuantity: [String: Int],
+         appliedDiscountsIDs: [String],
+         totalCost: Double,
+         totalCostWithAppliedDiscounts: Double) {
+        self.id = id
+        self.clientID = clientID
+        self.orderID = orderID
+        self.cartName = cartName
+        self.productsIDsWithQuantity = productsIDsWithQuantity
+        self.appliedDiscountsIDs = appliedDiscountsIDs
+        self.totalCost = totalCost
+        self.totalCostWithAppliedDiscounts = totalCostWithAppliedDiscounts
+    }
+}
+
+extension Cart: Equatable, Hashable {
+    static func == (lhs: Cart, rhs: Cart) -> Bool {
+        return lhs.id == rhs.id
     }
     
-    var totalCostWithAppliedDiscounts: Double {
-        var totalCostWithAppliedDiscounts = totalCost
-        _ = appliedDiscounts.map { discount in
-            totalCostWithAppliedDiscounts *= (1 - (discount.discountValuePercent / 100))
-        }
-        return totalCostWithAppliedDiscounts
+    func hash(into hasher: inout Hasher) {
+        hasher.combine(id)
     }
-    
-    static var shared: Cart = {
-        return Cart()
-    }()
-    
-    mutating func addProductToCart(product: Product, quantity: Int) {
-        if products[product] != nil {
-            products[product]! += quantity
-        } else {
-            products[product] = quantity
-        }
-    }
-    
-    mutating func removeProductFromCart(product: Product, quantity: Int = 0) {
-        if products[product] != nil {
-            if products[product]! >= 0 {
-                if quantity == 0 || products[product]! - quantity <= 0 {
-                    products[product] = nil
-                } else {
-                    products[product]! -= quantity
-                }
-            }
-        }
-    }
-    
-    mutating func removeAllProductsFromCart() {
-        products.removeAll()
-    }
-    
-    mutating func applyDiscount(discount: Discount) {
-        appliedDiscounts.insert(discount)
-    }
-    
-    mutating func removeDiscount(discount: Discount) {
-        appliedDiscounts.remove(discount)
-    }
-    
-    func getProduct(at offsets: IndexSet) -> Product? {
-        let productsArray = Array(self.products.keys).sorted { $0.id > $1.id }
-        
-        if let indexToDelete = offsets.first {
-            return productsArray[indexToDelete]
-        } else {
-            return nil
-        }
-    }
-    
-    func getCartProductCount(product: Product) -> Int {
-        if let productCount = products[product] {
-            return productCount
-        } else {
-            return 0
-        }
-    }
-    
-    func getCartProductsCount() -> Int {
-        return products.keys.count
+}
+
+extension Cart: CustomStringConvertible {
+    var description: String {
+        "\(id)\nClientID: \(clientID)\nOrderID: \(orderID)\nCart Name: \(cartName)\nProductsIDsWithQuantity: \(productsIDsWithQuantity)\nAppliedDiscountsIDs: \(appliedDiscountsIDs)\nTotalCost: \(totalCost)\nTotalCostWithAppliedDiscounts: \(totalCostWithAppliedDiscounts)"
     }
 }
 
 extension Cart {
-    static let demoCart = Cart(products: [Product.demoProducts[0]: 1,
-                                          Product.demoProducts[1]: 2,
-                                          Product.demoProducts[2]: 3,
-                                          Product.demoProducts[3]: 4])
+    static let demoCart = Cart()
 }

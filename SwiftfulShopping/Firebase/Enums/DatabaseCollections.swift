@@ -15,6 +15,7 @@ enum DatabaseCollections: String {
     case invoiceAddresses = "Invoice Addresses"
     
     // MARK: For FirestoreOrdersManager
+    case carts = "Carts"
     case orders = "Orders"
     
     // MARK: For FirestoreReturnsManager

@@ -20,12 +20,13 @@ class FirestoreOrdersManager: ObservableObject {
     
     // MARK: SELECT DATABASE OPERATIONS
     
-    func getUserOrders(userID: String, completion: @escaping (([Order]?) -> ())) {
+    func getUserOrders(userID: String, completion: @escaping ((Result<[Order]?, Error>) -> ())) {
         db.collection(DatabaseCollections.orders.rawValue)
             .whereField("clientID", isEqualTo: userID)
             .getDocuments { (querySnapshot, error) in
                 if let error = error {
                     print("Error fetching orders data: \(error.localizedDescription)")
+                    completion(.failure(error))
                 } else {
                     let orders = querySnapshot!.documents.map { (queryDocumentSnapshot) -> Order in
                         
@@ -57,8 +58,7 @@ class FirestoreOrdersManager: ObservableObject {
                     }
                     
                     print("Successfully fetched user orders data")
-                    
-                    completion(orders)
+                    completion(.success(orders))
                 }
             }
     }
@@ -66,7 +66,7 @@ class FirestoreOrdersManager: ObservableObject {
     
     // MARK: INSERT DATABASE OPERATIONS
     
-    func createUserOrder(order: Order, completion: @escaping ((Bool, Error?) -> ())) {
+    func createUserOrder(order: Order, completion: @escaping ((VoidResult) -> ())) {
         let profileDocumentData: [String: Any] = [
             "id": order.id,
             "orderDate": order.orderDate,
@@ -86,10 +86,10 @@ class FirestoreOrdersManager: ObservableObject {
             .setData(profileDocumentData) { (error) in
             if let error = error {
                 print("Error creating user's order data: \(error.localizedDescription)")
-                completion(false, error)
+                completion(.failure(error))
             } else {
                 print("Successfully created user's order data for user identifying with id: \(order.clientID) in database")
-                completion(true, nil)
+                completion(.success)
             }
         }
     }
@@ -97,7 +97,7 @@ class FirestoreOrdersManager: ObservableObject {
     
     // MARK: UPDATE DATABASE OPERATIONS
     
-    func updateOrderStatus(order: Order, newStatus: OrderStatus, completion: @escaping ((Bool, Error?) -> ())) {
+    func updateOrderStatus(order: Order, newStatus: OrderStatus, completion: @escaping ((VoidResult) -> ())) {
         let updateData: [String: Any] = [
             "status": newStatus.rawValue
         ]
@@ -107,11 +107,11 @@ class FirestoreOrdersManager: ObservableObject {
             .getDocument { documentSnapshot, error in
                 if let error = error {
                     print("Error updating order's status: \(error.localizedDescription)")
-                    completion(false, error)
+                    completion(.failure(error))
                 } else {
                     documentSnapshot?.reference.updateData(updateData)
                     print("Successfully changed status of order \(order.id) from \(order.status.rawValue) to \(newStatus.rawValue)")
-                    completion(true, nil)
+                    completion(.success)
                 }
             }
     }

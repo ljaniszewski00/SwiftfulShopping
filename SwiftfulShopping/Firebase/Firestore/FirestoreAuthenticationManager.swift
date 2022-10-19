@@ -20,25 +20,27 @@ class FirestoreAuthenticationManager: ObservableObject {
     
     // MARK: SELECT DATABASE OPERATIONS
     
-    func getUsersUIDs(completion: @escaping (([String]?) -> ())) {
+    func getUsersUIDs(completion: @escaping ((Result<[String]?, Error>) -> ())) {
         self.db.collection(DatabaseCollections.profiles.rawValue)
             .getDocuments { querySnapshot, error in
                 if let error = error {
                     print("Error getting documents for users uids: \(error.localizedDescription)")
+                    completion(.failure(error))
                 } else {
                     let documentsIDs = querySnapshot?.documents.map {
                         $0.documentID
                     }
-                    completion(documentsIDs)
+                    completion(.success(documentsIDs))
                 }
             }
     }
     
-    func listenToUsersUsernamesAndEmails(completion: @escaping ([String]?, [String]?) -> Void) {
+    func listenToUsersUsernamesAndEmails(completion: @escaping ((Result<([String]?, [String]?), Error>)) -> Void) {
         self.db.collection(DatabaseCollections.profiles.rawValue)
             .addSnapshotListener { querySnapshot, error in
                 if let error = error {
                     print("Error getting documents for users usernames: \(error.localizedDescription)")
+                    completion(.failure(error))
                 } else {
                     let usernames = querySnapshot?.documents.map {
                         let data = $0.data()
@@ -48,7 +50,7 @@ class FirestoreAuthenticationManager: ObservableObject {
                         let data = $0.data()
                         return data["emails"] as? String ?? ""
                     }
-                    completion(usernames, emails)
+                    completion(.success((usernames, emails)))
                 }
             }
     }
@@ -60,7 +62,7 @@ class FirestoreAuthenticationManager: ObservableObject {
     
     // MARK: INSERT DATABASE OPERATIONS
     
-    func createProfile(profile: Profile, completion: @escaping ((Bool, Error?) -> ())) {
+    func createProfile(profile: Profile, completion: @escaping ((VoidResult) -> ())) {
         let profileDocumentData: [String: Any] = [
             "id": profile.id,
             "fullName": profile.fullName,
@@ -84,15 +86,15 @@ class FirestoreAuthenticationManager: ObservableObject {
             .setData(profileDocumentData) { (error) in
             if let error = error {
                 print("Error creating user's profile data: \(error.localizedDescription)")
-                completion(false, error)
+                completion(.failure(error))
             } else {
                 print("Successfully created user's profile data for user identifying with id: \(profile.id) in database")
-                completion(true, nil)
+                completion(.success)
             }
         }
     }
     
-    func createShipmentAddress(shipmentAddress: Address, completion: @escaping ((Bool, Error?) -> ())) {
+    func createShipmentAddress(shipmentAddress: Address, completion: @escaping ((VoidResult) -> ())) {
         let shipmentAddressDocumentData: [String: Any] = [
             "id": shipmentAddress.id,
             "userID": shipmentAddress.userID,
@@ -111,15 +113,15 @@ class FirestoreAuthenticationManager: ObservableObject {
             .setData(shipmentAddressDocumentData) { (error) in
             if let error = error {
                 print("Error creating user's shipment address data: \(error.localizedDescription)")
-                completion(false, error)
+                completion(.failure(error))
             } else {
                 print("Successfully created user's shipment data for user identifying with id: \(shipmentAddress.userID) in database")
-                completion(true, nil)
+                completion(.success)
             }
         }
     }
     
-    func createInvoiceAddress(invoiceAddress: Address, completion: @escaping ((Bool, Error?) -> ())) {
+    func createInvoiceAddress(invoiceAddress: Address, completion: @escaping ((VoidResult) -> ())) {
         let invoiceAddressDocumentData: [String: Any] = [
             "id": invoiceAddress.id,
             "userID": invoiceAddress.userID,
@@ -137,10 +139,10 @@ class FirestoreAuthenticationManager: ObservableObject {
             .setData(invoiceAddressDocumentData) { (error) in
             if let error = error {
                 print("Error creating user's invoice address data: \(error.localizedDescription)")
-                completion(false, error)
+                completion(.failure(error))
             } else {
                 print("Successfully created user's invoice address data for user identifying with id: \(invoiceAddress.userID) in database")
-                completion(true, nil)
+                completion(.success)
             }
         }
     }

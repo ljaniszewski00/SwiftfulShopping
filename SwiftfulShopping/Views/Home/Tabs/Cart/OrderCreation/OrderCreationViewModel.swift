@@ -83,13 +83,36 @@ class OrderCreationViewModel: ObservableObject {
     }
     
     func createOrder(client: Profile,
-                     shoppingCart: Cart,
-                     shippingAddress: Address) {
-        createdOrder = Order(client: client,
-                             shoppingCart: shoppingCart,
-                             shippingMethod: choosenShippingMethod!,
-                             shippingAddress: shippingAddress,
-                             paymentMethod: choosenPaymentMethod!,
-                             invoice: toReceiveInvoice)
+                     productsWithQuantity: [Product: Int],
+                     appliedDiscounts: [Discount],
+                     totalCost: Double,
+                     totalCostWithAppliedDiscounts: Double,
+                     shippingAddress: Address,
+                     completion: @escaping ((Result<Order?, Error>) -> ())) {
+        let productsIDsWithQuantity = Dictionary(uniqueKeysWithValues: productsWithQuantity.map { key, value in
+            (key.id, value)
+        })
+        
+        let cart = Cart(clientID: client.id,
+                        orderID: UUID().uuidString,
+                        cartName: "Default",
+                        productsIDsWithQuantity: productsIDsWithQuantity,
+                        appliedDiscountsIDs: appliedDiscounts.map { $0.id },
+                        totalCost: totalCost,
+                        totalCostWithAppliedDiscounts: totalCostWithAppliedDiscounts)
+        
+        let order = Order(id: cart.orderID,
+                          orderDate: Date(),
+                          estimatedDeliveryDate: calculateEstimatedDeliveryDate(orderDate: Date()),
+                          clientID: client.id,
+                          shoppingCartID: cart.id,
+                          shippingMethod: choosenShippingMethod ?? .pickup,
+                          shippingAddressID: shippingAddress.id,
+                          paymentMethod: choosenPaymentMethod ?? .applePay,
+                          invoice: toReceiveInvoice,
+                          totalCost: totalCostWithAppliedDiscounts,
+                          status: .placed)
+        
+        completion(.success(order))
     }
 }

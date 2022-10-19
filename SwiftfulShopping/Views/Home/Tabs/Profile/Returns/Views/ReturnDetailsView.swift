@@ -16,6 +16,7 @@ struct ReturnDetailsView: View {
     @State private var showProductsList: Bool = true
     
     var userReturn: Return
+    var returnProductsList: [Product]
     
     var body: some View {
         ScrollView(.vertical, showsIndicators: false) {
@@ -45,7 +46,7 @@ struct ReturnDetailsView: View {
                         showProductsList.toggle()
                     }, label: {
                         HStack(spacing: 20) {
-                            Text("Products (\(userReturn.products.count))")
+                            Text("Products (\(returnProductsList.count))")
                                 .font(.ssTitle2)
                                 .foregroundColor(colorScheme == .light ? .black : .ssWhite)
                             
@@ -55,7 +56,7 @@ struct ReturnDetailsView: View {
                     
                     if showProductsList {
                         VStack(alignment: .center, spacing: 20) {
-                            ForEach(userReturn.products, id: \.self) { product in
+                            ForEach(returnProductsList, id: \.self) { product in
                                 BasicProductTile(product: product)
                                 Divider()
                             }
@@ -102,7 +103,8 @@ struct ReturnDetailsView_Previews: PreviewProvider {
         let profileViewModel = ProfileViewModel()
         ForEach(ColorScheme.allCases, id: \.self) { colorScheme in
             ForEach(["iPhone 13 Pro Max", "iPhone 8"], id: \.self) { deviceName in
-                ReturnDetailsView(userReturn: profileViewModel.returns[0])
+                ReturnDetailsView(userReturn: profileViewModel.returns[0], returnProductsList: [Product.demoProducts[0],
+                                                                                                Product.demoProducts[1]])
                     .environmentObject(authStateManager)
                     .environmentObject(tabBarStateManager)
                     .environmentObject(profileViewModel)

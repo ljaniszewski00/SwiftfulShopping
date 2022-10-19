@@ -8,7 +8,8 @@
 import Foundation
 
 class CartViewModel: ObservableObject {
-    @Published var cart: Cart = Cart.shared
+    @Published var productsForCart: [Product: Int] = [:]
+    @Published var appliedDiscounts: Set<Discount> = []
     
     @Published var choosenProduct: Product?
     @Published var shouldPresentProductDetailsView: Bool = false
@@ -20,38 +21,55 @@ class CartViewModel: ObservableObject {
             let cartProductsIDs = Array(cartProductsIDsFromDefaults.keys)
             for productID in cartProductsIDs {
                 if let productForProductID = ProductsRepository.shared.getProductFor(productID: productID) {
-                    self.cart.products[productForProductID] = cartProductsIDsFromDefaults[productID]
+                    productsForCart[productForProductID] = cartProductsIDsFromDefaults[productID]
                 }
             }
         }
     }
     
     var cartIsEmpty: Bool {
-        cart.products.isEmpty
+        productsForCart.isEmpty
     }
     
     var cartProductsCount: Int {
-        cart.getCartProductsCount()
+        productsForCart.keys.count
     }
     
     var cartTotalCost: Double {
-        cart.totalCost
+        var totalCost: Double = 0
+        _ = productsForCart.map { product, quantity in
+            totalCost += product.price * Double(quantity)
+        }
+
+        return totalCost
     }
     
-    var cartTotalCostWithDiscounts: Double {
-        cart.totalCostWithAppliedDiscounts
+    var cartTotalCostWithAppliedDiscounts: Double {
+        var totalCostWithAppliedDiscounts = cartTotalCost
+        _ = appliedDiscounts.map { discount in
+            totalCostWithAppliedDiscounts *= (1 - (discount.discountValuePercent / 100))
+        }
+        return totalCostWithAppliedDiscounts
     }
     
-    var cartAppliedDiscounts: [Discount] {
-        Array(cart.appliedDiscounts)
+    var sortedAppliedDiscounts: [Discount] {
+        Array(appliedDiscounts).sorted { $0.discountValuePercent > $1.discountValuePercent }
     }
     
     func getCartProductCount(product: Product) -> Int {
-        cart.getCartProductCount(product: product)
+        if let productCount = productsForCart[product] {
+            return productCount
+        } else {
+            return 0
+        }
     }
     
     func addProductToCart(product: Product, quantity: Int) {
-        cart.addProductToCart(product: product, quantity: quantity)
+        if productsForCart[product] != nil {
+            productsForCart[product]! += quantity
+        } else {
+            productsForCart[product] = quantity
+        }
         
         if let cartProductsIDsFromDefaults = UserDefaults.standard.object(forKey: UserDefaultsKeys.cart.rawValue) as? [String: Int] {
             if cartProductsIDsFromDefaults[product.id] != nil {
@@ -69,7 +87,15 @@ class CartViewModel: ObservableObject {
     }
     
     func removeProductFromCart(product: Product, quantity: Int = 0) {
-        cart.removeProductFromCart(product: product, quantity: quantity)
+        if productsForCart[product] != nil {
+            if productsForCart[product]! >= 0 {
+                if quantity == 0 || productsForCart[product]! - quantity <= 0 {
+                    productsForCart[product] = nil
+                } else {
+                    productsForCart[product]! -= quantity
+                }
+            }
+        }
         
         if let cartProductsIDsFromDefaults = UserDefaults.standard.object(forKey: UserDefaultsKeys.cart.rawValue) as? [String: Int] {
             if cartProductsIDsFromDefaults[product.id] != nil {
@@ -90,13 +116,15 @@ class CartViewModel: ObservableObject {
     }
     
     func removeProducts(at offsets: IndexSet) {
-        if let productToBeRemoved = cart.getProduct(at: offsets) {
-            removeProductFromCart(product: productToBeRemoved, quantity: 0)
+        let productsArray = Array(productsForCart.keys).sorted { $0.id > $1.id }
+
+        if let indexToDelete = offsets.first {
+            removeProductFromCart(product: productsArray[indexToDelete], quantity: 0)
         }
     }
     
     func removeAllProductsFromCart() {
-        cart.removeAllProductsFromCart()
+        productsForCart.removeAll()
         UserDefaults.standard.removeObject(forKey: UserDefaultsKeys.cart.rawValue)
     }
     
@@ -106,14 +134,10 @@ class CartViewModel: ObservableObject {
     }
     
     func applyDiscount(discount: Discount) {
-        cart.applyDiscount(discount: discount)
+        appliedDiscounts.insert(discount)
     }
     
     func removeDiscount(discount: Discount) {
-        cart.removeDiscount(discount: discount)
-    }
-    
-    func makeAllAppliedDiscountsRedeemedBy(userID: String) {
-        
+        appliedDiscounts.remove(discount)
     }
 }

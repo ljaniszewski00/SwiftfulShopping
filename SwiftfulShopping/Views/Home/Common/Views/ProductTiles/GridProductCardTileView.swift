@@ -15,6 +15,7 @@ struct GridProductCardTileView: View {
     @Environment(\.colorScheme) var colorScheme
     
     var product: Product
+    var productRating: ProductRating
     
     var body: some View {
         VStack(alignment: .center, spacing: 0) {
@@ -63,14 +64,14 @@ struct GridProductCardTileView: View {
                     
                     VStack(alignment: .trailing, spacing: 10) {
                         HStack {
-                            ForEach(1...Int(round(product.rating.averageRating)), id: \.self) { _ in
+                            ForEach(1...Int(round(productRating.averageRating)), id: \.self) { _ in
                                 Image(systemName: "star.fill")
                                     .resizable()
                                     .frame(width: 20, height: 20)
                                     .foregroundColor(.accentColor)
                             }
                             
-                            ForEach(Int(round(product.rating.averageRating))..<5, id: \.self) { _ in
+                            ForEach(Int(round(productRating.averageRating))..<5, id: \.self) { _ in
                                 Image(systemName: "star")
                                     .resizable()
                                     .frame(width: 20, height: 20)
@@ -78,7 +79,7 @@ struct GridProductCardTileView: View {
                             }
                         }
                         
-                        Text("\(product.rating.ratingsNumber) ratings")
+                        Text("\(productRating.ratingsNumber) ratings")
                             .font(.ssCallout)
                             .foregroundColor(.ssDarkGray)
                     }
@@ -135,7 +136,7 @@ struct GridProductCardTileView_Previews: PreviewProvider {
         let favoritesViewModel = FavoritesViewModel()
         ForEach(ColorScheme.allCases, id: \.self) { colorScheme in
             ForEach(["iPhone 13 Pro Max", "iPhone 8"], id: \.self) { deviceName in
-                GridProductCardTileView(product: Product.demoProducts[1])
+                GridProductCardTileView(product: Product.demoProducts[1], productRating: ProductRating.demoProductsRatings[0])
                     .environmentObject(cartViewModel)
                     .environmentObject(favoritesViewModel)
                     .preferredColorScheme(colorScheme)

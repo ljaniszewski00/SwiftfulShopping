@@ -77,7 +77,7 @@ struct OrderCreationSummaryView: View {
                         Text("Products")
                             .font(.ssTitle2)
                         
-                        ForEach(Array(cartViewModel.cart.products.keys).sorted { $0.id > $1.id}, id: \.self) { product in
+                        ForEach(Array(cartViewModel.productsForCart.keys).sorted { $0.id > $1.id}, id: \.self) { product in
                             ProductTileForCartView(product: product, includeButtonsForAmountChange: false)
                                 .padding()
                         }
@@ -131,8 +131,8 @@ struct OrderCreationSummaryView: View {
                         }
                         .padding(.vertical, 15)
                         
-                        if !cartViewModel.cartAppliedDiscounts.isEmpty {
-                            ForEach(cartViewModel.cartAppliedDiscounts, id: \.self) { appliedDiscount in
+                        if !cartViewModel.appliedDiscounts.isEmpty {
+                            ForEach(Array(cartViewModel.appliedDiscounts).sorted { $0.discountValuePercent > $1.discountValuePercent }, id: \.self) { appliedDiscount in
                                 HStack {
                                     Button {
                                         cartViewModel.removeDiscount(discount: appliedDiscount)
@@ -160,7 +160,7 @@ struct OrderCreationSummaryView: View {
                             
                             Spacer()
                             
-                            Text("$\(cartViewModel.cartTotalCostWithDiscounts, specifier: "%.2f")")
+                            Text("$\(cartViewModel.cartTotalCostWithAppliedDiscounts, specifier: "%.2f")")
                                 .font(.ssTitle3)
                                 .foregroundColor(.accentColor)
                         }
@@ -173,14 +173,21 @@ struct OrderCreationSummaryView: View {
             Button {
                 if let desiredAddress = profileViewModel.getAddressFor(addressDescription: orderCreationViewModel.defaultAddress) {
                     orderCreationViewModel.createOrder(client: profileViewModel.profile,
-                                                       shoppingCart: cartViewModel.cart,
-                                                       shippingAddress: desiredAddress)
-                    if let createdOrder = orderCreationViewModel.createdOrder {
-                        profileViewModel.orders.append(createdOrder)
-                        cartViewModel.makeAllAppliedDiscountsRedeemedBy(userID: profileViewModel.profile.id)
-                        orderCreationViewModel.shouldPresentOrderCreationCompletionView = true
-                    } else {
-                        errorManager.generateCustomError(errorType: .orderCreateError)
+                                                       productsWithQuantity: cartViewModel.productsForCart,
+                                                       appliedDiscounts: cartViewModel.sortedAppliedDiscounts,
+                                                       totalCost: cartViewModel.cartTotalCost,
+                                                       totalCostWithAppliedDiscounts: cartViewModel.cartTotalCostWithAppliedDiscounts,
+                                                      shippingAddress: desiredAddress) { result in
+                        switch result {
+                        case .success(let order):
+                            if let createdOrder = order {
+                                profileViewModel.orders.append(createdOrder)
+                                orderCreationViewModel.shouldPresentOrderCreationCompletionView = true
+                            }
+                        case .failure(let error):
+                            errorManager.generateCustomError(errorType: .orderCreateError,
+                                                             additionalErrorDescription: error.localizedDescription)
+                        }
                     }
                 }
             } label: {

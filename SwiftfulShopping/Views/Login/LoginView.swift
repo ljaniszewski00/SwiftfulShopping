@@ -84,17 +84,14 @@ struct LoginView: View {
                                         loginViewModel.showLoadingModal = true
                                         loginViewModel.choosenSignInMethod = .emailPassword
                                         FirebaseAuthManager.client.firebaseEmailPasswordSignIn(email: loginViewModel.email,
-                                                                                               password: loginViewModel.password) { success, error in
+                                                                                               password: loginViewModel.password) { result in
                                             loginViewModel.showLoadingModal = false
-                                            if success {
-                                                
-                                                
+                                            switch result {
+                                            case .success:
                                                 authStateManager.didLogged(with: loginViewModel.choosenSignInMethod)
-                                            } else {
-                                                if let error = error {
-                                                    ErrorManager.shared.generateCustomError(errorType: .emailPasswordSignInError,
-                                                                                            additionalErrorDescription: error.localizedDescription)
-                                                }
+                                            case .error(let error):
+                                                ErrorManager.shared.generateCustomError(errorType: .emailPasswordSignInError,
+                                                                                        additionalErrorDescription: error.localizedDescription)
                                             }
                                         }
                                     }
@@ -195,26 +192,13 @@ struct LoginView: View {
     func buildGoogleLogInButton() -> some View {
         Button {
             loginViewModel.choosenSignInMethod = .google
-            FirebaseAuthManager.client.firebaseGoogleSignIn { success, error in
-                if success {
-                    // Checking if user is logging for the first time
-                    loginViewModel.checkIfUserLoggingFirstTime { loggingFirstTime, error in
-                        if let error = error {
-                            ErrorManager.shared.generateCustomError(errorType: .googleSignInError,
-                                                                    additionalErrorDescription: error.localizedDescription)
-                        } else {
-                            if loggingFirstTime {
-                                loginViewModel.showFirstTimeLoginView = true
-                            } else {
-                                authStateManager.didLogged(with: loginViewModel.choosenSignInMethod)
-                            }
-                        }
-                    }
-                } else {
-                    if let error = error {
-                        ErrorManager.shared.generateCustomError(errorType: .googleSignInError,
-                                                                additionalErrorDescription: error.localizedDescription)
-                    }
+            FirebaseAuthManager.client.firebaseGoogleSignIn { result in
+                switch result {
+                case .success:
+                    checkIfUserLoggingFirstTime()
+                case .failure(let error):
+                    ErrorManager.shared.generateCustomError(errorType: .googleSignInError,
+                                                            additionalErrorDescription: error.localizedDescription)
                 }
             }
         } label: {
@@ -242,26 +226,13 @@ struct LoginView: View {
     func buildFacebookLogInButton() -> some View {
         Button {
             loginViewModel.choosenSignInMethod = .facebook
-            FirebaseAuthManager.client.firebaseFacebookSignIn { success, error in
-                if success {
-                    // Checking if user is logging for the first time
-                    loginViewModel.checkIfUserLoggingFirstTime { loggingFirstTime, error in
-                        if let error = error {
-                            ErrorManager.shared.generateCustomError(errorType: .googleSignInError,
-                                                                    additionalErrorDescription: error.localizedDescription)
-                        } else {
-                            if loggingFirstTime {
-                                loginViewModel.showFirstTimeLoginView = true
-                            } else {
-                                authStateManager.didLogged(with: loginViewModel.choosenSignInMethod)
-                            }
-                        }
-                    }
-                } else {
-                    if let error = error {
-                        ErrorManager.shared.generateCustomError(errorType: .facebookSignInError,
-                                                                additionalErrorDescription: error.localizedDescription)
-                    }
+            FirebaseAuthManager.client.firebaseFacebookSignIn { result in
+                switch result {
+                case .success:
+                    checkIfUserLoggingFirstTime()
+                case .failure(let error):
+                    ErrorManager.shared.generateCustomError(errorType: .facebookSignInError,
+                                                            additionalErrorDescription: error.localizedDescription)
                 }
             }
         } label: {
@@ -287,26 +258,13 @@ struct LoginView: View {
     func buildGitHubLogInButton() -> some View {
         Button {
             loginViewModel.choosenSignInMethod = .github
-            FirebaseAuthManager.client.firebaseGitHubSignIn { success, error in
-                if success {
-                    // Checking if user is logging for the first time
-                    loginViewModel.checkIfUserLoggingFirstTime { loggingFirstTime, error in
-                        if let error = error {
-                            ErrorManager.shared.generateCustomError(errorType: .googleSignInError,
-                                                                    additionalErrorDescription: error.localizedDescription)
-                        } else {
-                            if loggingFirstTime {
-                                loginViewModel.showFirstTimeLoginView = true
-                            } else {
-                                authStateManager.didLogged(with: loginViewModel.choosenSignInMethod)
-                            }
-                        }
-                    }
-                } else {
-                    if let error = error {
-                        ErrorManager.shared.generateCustomError(errorType: .githubSignInError,
-                                                                additionalErrorDescription: error.localizedDescription)
-                    }
+            FirebaseAuthManager.client.firebaseGitHubSignIn { result in
+                switch result {
+                case .success:
+                    checkIfUserLoggingFirstTime()
+                case .failure(let error):
+                    ErrorManager.shared.generateCustomError(errorType: .githubSignInError,
+                                                            additionalErrorDescription: error.localizedDescription)
                 }
             }
         } label: {
@@ -324,6 +282,23 @@ struct LoginView: View {
                     Spacer()
                 }
                 .padding()
+            }
+        }
+    }
+    
+    func checkIfUserLoggingFirstTime() {
+        // Checking if user is logging for the first time
+        loginViewModel.checkIfUserLoggingFirstTime { result in
+            switch result {
+            case .success(let loggingFirstTime):
+                if loggingFirstTime {
+                    loginViewModel.showFirstTimeLoginView = true
+                } else {
+                    authStateManager.didLogged(with: loginViewModel.choosenSignInMethod)
+                }
+            case .failure(let error):
+                ErrorManager.shared.generateCustomError(errorType: .googleSignInError,
+                                                        additionalErrorDescription: error.localizedDescription)
             }
         }
     }

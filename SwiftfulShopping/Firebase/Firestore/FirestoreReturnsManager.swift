@@ -20,12 +20,13 @@ class FirestoreReturnsManager: ObservableObject {
     
     // MARK: SELECT DATABASE OPERATIONS
     
-    func getUserReturns(userID: String, completion: @escaping (([Return]?) -> ())) {
+    func getUserReturns(userID: String, completion: @escaping ((Result<[Return]?, Error>) -> ())) {
         db.collection(DatabaseCollections.returns.rawValue)
             .whereField("clientID", isEqualTo: userID)
             .getDocuments { (querySnapshot, error) in
                 if let error = error {
                     print("Error fetching returns data: \(error.localizedDescription)")
+                    completion(.failure(error))
                 } else {
                     let returns = querySnapshot!.documents.map { (queryDocumentSnapshot) -> Return in
                         
@@ -64,8 +65,7 @@ class FirestoreReturnsManager: ObservableObject {
                     }
                     
                     print("Successfully fetched user returns data")
-                    
-                    completion(returns)
+                    completion(.success(returns))
                 }
             }
     }
@@ -73,7 +73,7 @@ class FirestoreReturnsManager: ObservableObject {
     
     // MARK: INSERT DATABASE OPERATIONS
     
-    func createUserReturn(returnObject: Return, completion: @escaping ((Bool, Error?) -> ())) {
+    func createUserReturn(returnObject: Return, completion: @escaping ((VoidResult) -> ())) {
         let profileDocumentData: [String: Any] = [
             "id": returnObject.id,
             "returnDate": returnObject.returnDate,
@@ -96,10 +96,10 @@ class FirestoreReturnsManager: ObservableObject {
             .setData(profileDocumentData) { (error) in
             if let error = error {
                 print("Error creating user's return data: \(error.localizedDescription)")
-                completion(false, error)
+                completion(.failure(error))
             } else {
                 print("Successfully created user's return data for user identifying with id: \(returnObject.clientID) in database")
-                completion(true, nil)
+                completion(.success)
             }
         }
     }
@@ -107,7 +107,7 @@ class FirestoreReturnsManager: ObservableObject {
     
     // MARK: UPDATE DATABASE OPERATIONS
     
-    func updateReturnStatus(returnObject: Return, newStatus: ReturnStatus, completion: @escaping ((Bool, Error?) -> ())) {
+    func updateReturnStatus(returnObject: Return, newStatus: ReturnStatus, completion: @escaping ((VoidResult) -> ())) {
         let updateData: [String: Any] = [
             "status": newStatus.rawValue
         ]
@@ -117,11 +117,11 @@ class FirestoreReturnsManager: ObservableObject {
             .getDocument { documentSnapshot, error in
                 if let error = error {
                     print("Error updating return's status: \(error.localizedDescription)")
-                    completion(false, error)
+                    completion(.failure(error))
                 } else {
                     documentSnapshot?.reference.updateData(updateData)
                     print("Successfully changed status of return \(returnObject.id) from \(returnObject.status.rawValue) to \(newStatus.rawValue)")
-                    completion(true, nil)
+                    completion(.success)
                 }
             }
     }

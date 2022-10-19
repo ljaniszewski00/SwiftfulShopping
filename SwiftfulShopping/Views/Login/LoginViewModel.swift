@@ -17,16 +17,19 @@ class LoginViewModel: ObservableObject {
     
     @Published var showFirstTimeLoginView: Bool = false
     
-    func checkIfUserLoggingFirstTime(completion: @escaping ((Bool, Error?) -> ())) {
-        FirestoreAuthenticationManager.client.getUsersUIDs() { usersUIDs in
-            if let usersUIDs = usersUIDs, let user = FirebaseAuthManager.client.user {
-                if usersUIDs.contains(user.uid) {
-                    completion(false, nil)
-                } else {
-                    completion(true, nil)
+    func checkIfUserLoggingFirstTime(completion: @escaping ((Result<Bool, Error>) -> ())) {
+        FirestoreAuthenticationManager.client.getUsersUIDs() { result in
+            switch result {
+            case .success(let usersUIDs):
+                if let usersUIDs = usersUIDs, let user = FirebaseAuthManager.client.user {
+                    if usersUIDs.contains(user.uid) {
+                        completion(.success(false))
+                    } else {
+                        completion(.success(true))
+                    }
                 }
-            } else {
-                completion(true, nil)
+            case .failure(let error):
+                completion(.failure(error))
             }
         }
     }

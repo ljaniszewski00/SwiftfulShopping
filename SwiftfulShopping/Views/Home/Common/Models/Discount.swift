@@ -50,11 +50,7 @@ extension Discount: Equatable, Hashable {
 
 extension Discount: CustomStringConvertible {
     var description: String {
-        if redeemed {
-            return "\(id)\nDiscount Code: \(discountCode)\nDiscountValue (Percent): \(discountValuePercent)"
-        } else {
-            return "\(id)\nDiscount Code: \(discountCode)\nDiscountValue (Percent: \(discountValuePercent)\nRedeemed: Yes\n\nRedeemed By UsersIDs: \(redeemedByUsersIDs)"
-        }
+        return "\(id)\nDiscount Code: \(discountCode)\nDiscountValue (Percent: \(discountValuePercent)\nRedeemed: Yes\n\nRedeemed By UsersIDs: \(redeemedByUsersIDs)"
     }
 }
 

@@ -129,6 +129,9 @@
 		0A3B08E828AD921C00A54385 /* CameraView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A3B08E728AD921C00A54385 /* CameraView.swift */; };
 		0A3B08EB28AD95F300A54385 /* ProductRecognizer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A3B08EA28AD95F300A54385 /* ProductRecognizer.swift */; };
 		0A3B08ED28AD972C00A54385 /* SourceForImageRecognition.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A3B08EC28AD972C00A54385 /* SourceForImageRecognition.swift */; };
+		0A3C7AD429005F470079B290 /* FirestoreCartManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A3C7AD329005F470079B290 /* FirestoreCartManager.swift */; };
+		0A3C7AD629006B360079B290 /* Result.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A3C7AD529006B360079B290 /* Result.swift */; };
+		0A3C7AD829006B710079B290 /* VoidResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A3C7AD729006B710079B290 /* VoidResult.swift */; };
 		0A3D7F5928D1FD7800D51327 /* MobileNetV2.mlmodel in Sources */ = {isa = PBXBuildFile; fileRef = 0A3D7F5728D1FD7800D51327 /* MobileNetV2.mlmodel */; };
 		0A3D7F5A28D1FD7800D51327 /* SqueezeNet.mlmodel in Sources */ = {isa = PBXBuildFile; fileRef = 0A3D7F5828D1FD7800D51327 /* SqueezeNet.mlmodel */; };
 		0A3DE45328899F65008B050B /* Category.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A3DE45228899F65008B050B /* Category.swift */; };
@@ -372,6 +375,9 @@
 		0A3B08E728AD921C00A54385 /* CameraView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CameraView.swift; sourceTree = "<group>"; };
 		0A3B08EA28AD95F300A54385 /* ProductRecognizer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductRecognizer.swift; sourceTree = "<group>"; };
 		0A3B08EC28AD972C00A54385 /* SourceForImageRecognition.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SourceForImageRecognition.swift; sourceTree = "<group>"; };
+		0A3C7AD329005F470079B290 /* FirestoreCartManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirestoreCartManager.swift; sourceTree = "<group>"; };
+		0A3C7AD529006B360079B290 /* Result.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Result.swift; sourceTree = "<group>"; };
+		0A3C7AD729006B710079B290 /* VoidResult.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VoidResult.swift; sourceTree = "<group>"; };
 		0A3D7F5728D1FD7800D51327 /* MobileNetV2.mlmodel */ = {isa = PBXFileReference; lastKnownFileType = file.mlmodel; path = MobileNetV2.mlmodel; sourceTree = "<group>"; };
 		0A3D7F5828D1FD7800D51327 /* SqueezeNet.mlmodel */ = {isa = PBXFileReference; lastKnownFileType = file.mlmodel; path = SqueezeNet.mlmodel; sourceTree = "<group>"; };
 		0A3DE45228899F65008B050B /* Category.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Category.swift; sourceTree = "<group>"; };
@@ -662,6 +668,7 @@
 				0A383D0928F75B8500D15B48 /* FirestoreProductsManager.swift */,
 				0A383D0B28F75B9000D15B48 /* FirestoreOrdersManager.swift */,
 				0A383D0D28F75BF200D15B48 /* FirestoreReturnsManager.swift */,
+				0A3C7AD329005F470079B290 /* FirestoreCartManager.swift */,
 			);
 			path = Firestore;
 			sourceTree = "<group>";
@@ -991,6 +998,7 @@
 				0A25D69228BC000600FF6ED5 /* ScrollView.swift */,
 				0A154B4928BD66A2001E4BE3 /* String.swift */,
 				0A83216028D91A6E008234C2 /* View.swift */,
+				0A3C7AD529006B360079B290 /* Result.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -1151,6 +1159,7 @@
 				0A24E3F228CD1CD100041F88 /* ProductsListSource.swift */,
 				0A83216228D91D96008234C2 /* SignInMethod.swift */,
 				0A383D0F28F7672C00D15B48 /* ReturnStatus.swift */,
+				0A3C7AD729006B710079B290 /* VoidResult.swift */,
 			);
 			path = Enums;
 			sourceTree = "<group>";
@@ -1352,6 +1361,7 @@
 				0A56D8AF285F2C830009680C /* OrdersView.swift in Sources */,
 				0A3B08E228AD292C00A54385 /* Resnet50.mlmodel in Sources */,
 				0ACD58E2284A6F6600AA9DA0 /* CheckmarkToggleStyle.swift in Sources */,
+				0A3C7AD429005F470079B290 /* FirestoreCartManager.swift in Sources */,
 				0A237401288D62730076A5AB /* ProductsRepository.swift in Sources */,
 				0ACD5899284A6E9200AA9DA0 /* ContentView.swift in Sources */,
 				0A3B08DD28AD22BE00A54385 /* ProductRecognizerView.swift in Sources */,
@@ -1427,6 +1437,7 @@
 				0A2DECBF288C5FB200D563C9 /* ExploreViewTabs.swift in Sources */,
 				0ACD5897284A6E9200AA9DA0 /* SwiftfulShoppingApp.swift in Sources */,
 				0ACD599F284B71AF00AA9DA0 /* ProfileView.swift in Sources */,
+				0A3C7AD629006B360079B290 /* Result.swift in Sources */,
 				0ACD58E5284A6F6600AA9DA0 /* LandscapeModifier.swift in Sources */,
 				0A83216128D91A6E008234C2 /* View.swift in Sources */,
 				0ACD5912284A6F6600AA9DA0 /* ForgotPasswordViewModel.swift in Sources */,
@@ -1453,6 +1464,7 @@
 				0A35557128A052F3005993E5 /* SettingsView.swift in Sources */,
 				0A27E7D4287B509300D033D9 /* CardCompany.swift in Sources */,
 				0A2EB51928B38AA5009E6E8F /* CustomDatePicker.swift in Sources */,
+				0A3C7AD829006B710079B290 /* VoidResult.swift in Sources */,
 				0A2FE0BC28A1C02200E8D30E /* ContentViewModel.swift in Sources */,
 				0A83216328D91D96008234C2 /* SignInMethod.swift in Sources */,
 				0A2D5FB728BA2BC300E76D71 /* SelectionDropdownMenu.swift in Sources */,

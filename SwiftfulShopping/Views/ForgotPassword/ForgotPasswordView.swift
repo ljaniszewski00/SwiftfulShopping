@@ -38,15 +38,14 @@ struct ForgotPasswordView: View {
             
             Button("Send recovery e-mail") {
                 forgotPasswordViewModel.showLoadingModal = true
-                FirebaseAuthManager.client.firebaseSendPasswordReset(email: forgotPasswordViewModel.email) { success, error in
+                FirebaseAuthManager.client.firebaseSendPasswordReset(email: forgotPasswordViewModel.email) { result in
                     forgotPasswordViewModel.showLoadingModal = false
-                    if success {
+                    switch result {
+                    case .success:
                         dismiss()
-                    } else {
-                        if let error = error {
-                            ErrorManager.shared.generateCustomError(errorType: .changePasswordError,
-                                                                    additionalErrorDescription: error.localizedDescription)
-                        }
+                    case .failure(let error):
+                        ErrorManager.shared.generateCustomError(errorType: .changePasswordError,
+                                                                additionalErrorDescription: error.localizedDescription)
                     }
                 }
             }

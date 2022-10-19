@@ -70,7 +70,7 @@ struct OrderCreationCompletionView: View {
                     
                     Button {
                         withAnimation {
-                            cartViewModel.cart.removeAllProductsFromCart()
+                            cartViewModel.removeAllProductsFromCart()
                             cartViewModel.shouldPresentCheckoutFirstView = false
                         }
                     } label: {

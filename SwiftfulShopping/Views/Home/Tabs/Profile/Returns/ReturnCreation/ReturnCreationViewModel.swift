@@ -48,8 +48,18 @@ class ReturnCreationViewModel: ObservableObject {
             returnPrice += productsForReturn.price
         }
         
-        let newlyCreatedReturn = Return(clientID: clientID, orderID: orderID, products: productsForReturn, returnPrice: returnPrice, returnMethod: shippingMethod, bankAccountNumber: bankAccountNumber, bankAccountOwnerName: nameOfBankAccountOwner, bankAccountOwnerStreetAndHouseNumber: streetAndHouseNumber, bankAccountOwnerPostalCode: postalCode, bankAccountOwnerCity: city, bankAccountOwnerCountry: country)
+        let newestCreatedReturn = Return(clientID: clientID,
+                                         orderID: orderID,
+                                         productsIDs: productsForReturn.map { $0.id },
+                                         returnPrice: returnPrice,
+                                         returnMethod: shippingMethod,
+                                         bankAccountNumber: bankAccountNumber,
+                                         bankAccountOwnerName: nameOfBankAccountOwner,
+                                         bankAccountOwnerStreetAndHouseNumber: streetAndHouseNumber,
+                                         bankAccountOwnerPostalCode: postalCode,
+                                         bankAccountOwnerCity: city,
+                                         bankAccountOwnerCountry: country)
         
-        createdReturn = newlyCreatedReturn
+        createdReturn = newestCreatedReturn
     }
 }

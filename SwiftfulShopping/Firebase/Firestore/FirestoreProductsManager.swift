@@ -20,11 +20,12 @@ class FirestoreProductsManager: ObservableObject {
     
     // MARK: SELECT DATABASE OPERATIONS
     
-    func getProducts(userID: String, completion: @escaping (([Product]?) -> ())) {
+    func getProducts(userID: String, completion: @escaping ((Result<[Product]?, Error>) -> ())) {
         db.collection(DatabaseCollections.products.rawValue)
             .addSnapshotListener { querySnapshot, error in
                 if let error = error {
                     print("Error fetching products data: \(error.localizedDescription)")
+                    completion(.failure(error))
                 } else {
                     let products = querySnapshot!.documents.map { (queryDocumentSnapshot) -> Product in
                         
@@ -59,19 +60,19 @@ class FirestoreProductsManager: ObservableObject {
                     }
                     
                     print("Successfully fetched products data")
-                    
-                    completion(products)
+                    completion(.success(products))
                 }
             }
     }
     
-    func getProductRatings(productID: String, completion: @escaping ((ProductRating?) -> ())) {
+    func getProductRatings(productID: String, completion: @escaping ((Result<ProductRating?, Error>) -> ())) {
         db.collection(DatabaseCollections.productsRatings.rawValue)
             .document(productID)
             .collection(DatabaseCollections.productRates.rawValue)
             .addSnapshotListener { querySnapshot, error in
                 if let error = error {
                     print("Error fetching product rates data: \(error.localizedDescription)")
+                    completion(.failure(error))
                 } else {
                     let productRates = querySnapshot!.documents.map { (queryDocumentSnapshot) -> ProductRate in
                         
@@ -96,18 +97,18 @@ class FirestoreProductsManager: ObservableObject {
                     
                     let productRating = ProductRating(id: productID,
                                                       productRates: productRates)
-                    
-                    completion(productRating)
+                    completion(.success(productRating))
                 }
             }
     }
     
-    func getDiscounts(productID: String, completion: @escaping (([Discount]?) -> ())) {
+    func getDiscounts(productID: String, completion: @escaping ((Result<[Discount]?, Error>) -> ())) {
         db.collection(DatabaseCollections.discounts.rawValue)
             .whereField("productID", isEqualTo: productID)
             .getDocuments { querySnapshot, error in
                 if let error = error {
                     print("Error fetching discount data: \(error.localizedDescription)")
+                    completion(.failure(error))
                 } else {
                     let discounts = querySnapshot!.documents.map { (queryDocumentSnapshot) -> Discount in
                         
@@ -131,8 +132,7 @@ class FirestoreProductsManager: ObservableObject {
                     }
                     
                     print("Successfully fetched discounts data")
-                    
-                    completion(discounts)
+                    completion(.success(discounts))
                 }
             }
     }
@@ -140,7 +140,7 @@ class FirestoreProductsManager: ObservableObject {
     
     // MARK: INSERT DATABASE OPERATIONS
     
-    func addProductRate(userID: String, productRate: ProductRate, completion: @escaping ((Bool, Error?) -> ())) {
+    func addProductRate(userID: String, productRate: ProductRate, completion: @escaping ((VoidResult) -> ())) {
         let productRatingDocumentData: [String: Any] = [
             "id": productRate.productID
         ]
@@ -150,7 +150,7 @@ class FirestoreProductsManager: ObservableObject {
             .setData(productRatingDocumentData) { (error) in
             if let error = error {
                 print("Error creating product's rating data: \(error.localizedDescription)")
-                completion(false, error)
+                completion(.failure(error))
             } else {
                 print("Successfully created product's rating data for user identifying with id: \(userID) in database")
                 let productRateDocumentData: [String: Any] = [
@@ -168,7 +168,7 @@ class FirestoreProductsManager: ObservableObject {
                     .document(productRate.id)
                     .setData(productRateDocumentData)
                     
-                completion(true, nil)
+                completion(.success)
             }
         }
     }
@@ -176,7 +176,7 @@ class FirestoreProductsManager: ObservableObject {
     
     // MARK: UPDATE DATABASE OPERATIONS
     
-    func redeemDiscount(userID: String, discount: Discount, completion: @escaping ((Bool, Error?) -> ())) {
+    func redeemDiscount(userID: String, discount: Discount, completion: @escaping ((VoidResult) -> ())) {
         let updateData: [String: Any] = [
             "redeemedByUsersIDs": FieldValue.arrayUnion([userID]),
             "redemptionNumber": FieldValue.increment(Int64(1))
@@ -187,11 +187,11 @@ class FirestoreProductsManager: ObservableObject {
             .getDocument { documentSnapshot, error in
                 if let error = error {
                     print("Error redeeming discount: \(error.localizedDescription)")
-                    completion(false, error)
+                    completion(.failure(error))
                 } else {
                     documentSnapshot?.reference.updateData(updateData)
                     print("Successfully redeemed discount code \(discount.discountCode) by user \(userID)")
-                    completion(true, nil)
+                    completion(.success)
                 }
             }
     }

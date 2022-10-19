@@ -315,7 +315,7 @@ class RegisterViewModel: ObservableObject {
         }
     }
     
-    func completeRegistration(completion: @escaping ((Bool, Error?) -> ())) {
+    func completeRegistration(completion: @escaping ((VoidResult) -> ())) {
         guard let user = FirebaseAuthManager.client.user else {
             return
         }
@@ -330,7 +330,7 @@ class RegisterViewModel: ObservableObject {
                                       country: country)
         FirestoreAuthenticationManager.client.createShipmentAddress(shipmentAddress: shipmentAddress) { [weak self] success, error in
             if let error = error {
-                completion(false, error)
+                completion(.failure(error))
             } else {
                 let invoiceAddress: Address?
                 if self!.sameDataOnInvoice {
@@ -348,7 +348,7 @@ class RegisterViewModel: ObservableObject {
                 
                 FirestoreAuthenticationManager.client.createInvoiceAddress(invoiceAddress: invoiceAddress!) { [weak self] success, error in
                     if let error = error {
-                        completion(false, error)
+                        completion(.failure(error))
                     } else {
                         let profile = Profile(id: user.uid,
                                               fullName: self!.fullName,
@@ -360,9 +360,9 @@ class RegisterViewModel: ObservableObject {
                                               createdWith: FirebaseAuthManager.client.loggedWith)
                         FirestoreAuthenticationManager.client.createProfile(profile: profile) { success, error in
                             if let error = error {
-                                completion(false, error)
+                                completion(.failure(error))
                             } else {
-                                completion(true, nil)
+                                completion(.success)
                             }
                         }
                     }

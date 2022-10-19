@@ -50,23 +50,23 @@ struct SecondRegisterView: View {
                             registerViewModel.showLoadingModal = true
                             
                             FirebaseAuthManager.client.firebaseSignUp(email: registerViewModel.email,
-                                                                      password: registerViewModel.password) { success, error in
-                                if success {
-                                    registerViewModel.completeRegistration() { success, error in
+                                                                      password: registerViewModel.password) { result in
+                                switch result {
+                                case .success:
+                                    registerViewModel.completeRegistration() { result in
                                         registerViewModel.showLoadingModal = false
-                                        if let error = error {
+                                        switch result {
+                                        case .success:
+                                            authStateManager.didLogged(with: .emailPassword)
+                                        case .failure(let error):
                                             ErrorManager.shared.generateCustomError(errorType: .registerError,
                                                                                     additionalErrorDescription: error.localizedDescription)
-                                        } else {
-                                            authStateManager.didLogged(with: .emailPassword)
                                         }
                                     }
-                                } else {
+                                case .failure(let error):
                                     registerViewModel.showLoadingModal = false
-                                    if let error = error {
-                                        ErrorManager.shared.generateCustomError(errorType: .registerError,
-                                                                                additionalErrorDescription: error.localizedDescription)
-                                    }
+                                    ErrorManager.shared.generateCustomError(errorType: .registerError,
+                                                                            additionalErrorDescription: error.localizedDescription)
                                 }
                             }
                         }

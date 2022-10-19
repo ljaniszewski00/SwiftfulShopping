@@ -17,7 +17,7 @@ struct Order {
     var shippingAddressID: String
     var paymentMethod: PaymentMethod = .creditCard
     var invoice: Bool
-    var totalCost: Double
+    var totalCost: Double = 0.0
     var status: OrderStatus = .placed
     
     init(id: String,
@@ -58,8 +58,6 @@ struct Order {
         self.invoice = invoice
         
         self.estimatedDeliveryDate = calculateEstimatedDeliveryDate(orderDate: Date())
-        
-        self.totalCost = shoppingCart.products.keys.map { $0.price }.reduce(0, +)
     }
 }
 
@@ -81,19 +79,19 @@ extension Order: CustomStringConvertible {
 
 extension Order {
     static let demoOrders: [Order] = [Order(clientID: Profile.demoProfile.id,
-                                            shoppingCart: Cart.demoCart,
+                                            shoppingCartID: Cart.demoCart.id,
                                             shippingMethod: .pickup,
                                             shippingAddressID: Address.demoAddress.id),
                                       Order(clientID: Profile.demoProfile.id,
-                                            shoppingCart: Cart.demoCart,
-                                            shippingMethod: .parcel,
+                                            shoppingCartID: Cart.demoCart.id,
+                                            shippingMethod: .pickup,
                                             shippingAddressID: Address.demoAddress.id),
                                       Order(clientID: Profile.demoProfile.id,
-                                            shoppingCart: Cart.demoCart,
-                                            shippingMethod: .parcel,
+                                            shoppingCartID: Cart.demoCart.id,
+                                            shippingMethod: .pickup,
                                             shippingAddressID: Address.demoAddress.id),
                                       Order(clientID: Profile.demoProfile.id,
-                                            shoppingCart: Cart.demoCart,
-                                            shippingMethod: .parcel,
-                                            shippingAddressID: Address.demoAddress.id)]
+                                            shoppingCartID: Cart.demoCart.id,
+                                            shippingMethod: .pickup,
+                                            shippingAddressID: Address.demoAddress.id),]
 }
