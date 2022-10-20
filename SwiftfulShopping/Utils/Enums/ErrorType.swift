@@ -30,6 +30,8 @@ enum ErrorType: String {
     case applyProductRatingError = "Apply Product Rating Error"
     case returnCreateError = "Return Create Error"
     case createAddressError = "Create Address Error"
+    case changeDefaultAddressError = "Change Default Address Error"
+    case changeDefaultPaymentMethodError = "Change Default Payment Method Error"
     
     case unknown = "Unknown Error"
 }

@@ -15,6 +15,7 @@ struct PersonalInfoView: View {
     @Environment(\.dismiss) private var dismiss: DismissAction
     
     @StateObject private var personalInfoViewModel: PersonalInfoViewModel = PersonalInfoViewModel()
+    @StateObject var errorManager = ErrorManager.shared
     
     @State private var isBankAccountTextFieldFocused: Bool = false
     @State private var isBankAccountHolderFirstNameTextFieldFocused: Bool = false
@@ -43,7 +44,7 @@ struct PersonalInfoView: View {
                                         .stroke(lineWidth: 2)
                                         .foregroundColor(.accentColor)
                                     HStack {
-                                        Text(profileViewModel.profile.fullName)
+                                        Text(profileViewModel.profile?.fullName ?? "")
                                             .font(.ssTitle3)
                                             .foregroundColor(colorScheme == .light ? .black : .ssWhite)
                                             .padding()
@@ -68,7 +69,7 @@ struct PersonalInfoView: View {
                                         .stroke(lineWidth: 2)
                                         .foregroundColor(.accentColor)
                                     HStack {
-                                        Text(profileViewModel.profile.email ?? "")
+                                        Text(profileViewModel.profile?.email ?? "")
                                             .font(.ssTitle3)
                                             .foregroundColor(colorScheme == .light ? .black : .ssWhite)
                                             .padding()
@@ -89,7 +90,15 @@ struct PersonalInfoView: View {
                                                   dataWithImagesToChoose: personalInfoViewModel.addresses,
                                                   includeSearchField: false)
                             .onChange(of: personalInfoViewModel.defaultAddress) { newDefaultAddress in
-                                profileViewModel.changeDefaultAddress(addressDescription: newDefaultAddress)
+                                profileViewModel.changeDefaultAddress(addressDescription: newDefaultAddress) { result in
+                                    switch result {
+                                    case .success:
+                                        break
+                                    case .failure(let error):
+                                        errorManager.generateCustomError(errorType: .changeDefaultAddressError,
+                                                                         additionalErrorDescription: error.localizedDescription)
+                                    }
+                                }
                             }
                             .padding(.bottom)
                             
@@ -125,10 +134,12 @@ struct PersonalInfoView: View {
             }
         }
         .onAppear {
-            personalInfoViewModel.setupAddresses(defaultProfileAddress:
-                                                    profileViewModel.profile.defaultShipmentAddress,
-                                                 profileAddresses:
-                                                    profileViewModel.profile.shipmentAddresses)
+            if let profile = profileViewModel.profile {
+                personalInfoViewModel.setupAddresses(defaultProfileAddress:
+                                                        profile.defaultShipmentAddress,
+                                                     profileAddresses:
+                                                        profile.shipmentAddresses)
+            }
         }
         
         NavigationLink(destination: AddNewAddressView()
@@ -138,8 +149,10 @@ struct PersonalInfoView: View {
         NavigationLink(destination: EditPersonalInfoView()
                                         .environmentObject(personalInfoViewModel)
                                         .onAppear {
-                                            personalInfoViewModel.newFullName = profileViewModel.profile.fullName
-                                            personalInfoViewModel.newEmailAddress = profileViewModel.profile.email ?? ""
+                                            if let profile = profileViewModel.profile {
+                                                personalInfoViewModel.newFullName = profile.fullName
+                                                personalInfoViewModel.newEmailAddress = profile.email ?? ""
+                                            }
                                         },
                        isActive: $shouldPresentEditPersonalInfoView) { EmptyView() }
     }

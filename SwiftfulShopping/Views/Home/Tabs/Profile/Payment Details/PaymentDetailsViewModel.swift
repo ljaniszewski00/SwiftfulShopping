@@ -18,6 +18,8 @@ class PaymentDetailsViewModel: ObservableObject {
     
     @Published var editingCardData: Bool = false
     
+    @Published var showLoadingModal: Bool = false
+    
     let pickerDateRange: ClosedRange<Date> = {
         let calendar = Calendar.current
         let startDate = calendar.date(from: DateComponents(year: 1900, month: 1, day: 1))!

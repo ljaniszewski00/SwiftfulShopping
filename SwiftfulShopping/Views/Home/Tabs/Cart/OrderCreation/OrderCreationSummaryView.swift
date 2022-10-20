@@ -40,7 +40,7 @@ struct OrderCreationSummaryView: View {
                             .padding(.bottom, 15)
                         
                         VStack(alignment: .leading, spacing: 5) {
-                            Text(profileViewModel.profile.fullName)
+                            Text(profileViewModel.profile?.fullName ?? "")
                                 .font(.ssTitle3)
                             Text(orderCreationViewModel.defaultAddress)
                                 .font(.ssCallout).fontWeight(.regular)
@@ -171,8 +171,8 @@ struct OrderCreationSummaryView: View {
             }
             
             Button {
-                if let desiredAddress = profileViewModel.getAddressFor(addressDescription: orderCreationViewModel.defaultAddress) {
-                    orderCreationViewModel.createOrder(client: profileViewModel.profile,
+                if let desiredAddress = profileViewModel.getAddressFor(addressDescription: orderCreationViewModel.defaultAddress), let profile = profileViewModel.profile {
+                    orderCreationViewModel.createOrder(client: profile,
                                                        productsWithQuantity: cartViewModel.productsForCart,
                                                        appliedDiscounts: cartViewModel.sortedAppliedDiscounts,
                                                        totalCost: cartViewModel.cartTotalCost,

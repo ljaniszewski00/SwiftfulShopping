@@ -15,6 +15,7 @@ struct PaymentDetailsView: View {
     @Environment(\.dismiss) var dismiss
     
     @StateObject private var paymentDetailsViewModel: PaymentDetailsViewModel = PaymentDetailsViewModel()
+    @StateObject var errorManager = ErrorManager.shared
     
     @State private var isCardNumberTextFieldFocused: Bool = false
     @State private var isCardHolderNameTextFieldFocused: Bool = false
@@ -30,10 +31,21 @@ struct PaymentDetailsView: View {
                     ForEach(PaymentMethod.allCases, id: \.self) { paymentMethod in
                         HStack(spacing: 10) {
                             Button(action: {
-                                profileViewModel.changeDefaultPaymentMethod(newDefaultPaymentMethod: paymentMethod)
+                                paymentDetailsViewModel.showLoadingModal = true
+                                profileViewModel.changeDefaultPaymentMethod(newDefaultPaymentMethod: paymentMethod) { result in
+                                    paymentDetailsViewModel.showLoadingModal = false
+                                    switch result {
+                                    case .success:
+                                        break
+                                    case .failure(let error):
+                                        errorManager.generateCustomError(errorType:
+                                                .changeDefaultPaymentMethodError,
+                                                                         additionalErrorDescription: error.localizedDescription)
+                                    }
+                                }
                             }, label: {
                                 HStack(spacing: 15) {
-                                    if profileViewModel.profile.defaultPaymentMethod == paymentMethod {
+                                    if profileViewModel.profile?.defaultPaymentMethod == paymentMethod {
                                         Circle()
                                             .foregroundColor(.accentColor)
                                             .frame(width: 25)
@@ -55,7 +67,7 @@ struct PaymentDetailsView: View {
                             })
                         }
                         
-                        if paymentMethod == .creditCard && profileViewModel.profile.defaultPaymentMethod == .creditCard {
+                        if paymentMethod == .creditCard && profileViewModel.profile?.defaultPaymentMethod == .creditCard {
                             buildCreditCardSection()
                                 .padding(.bottom)
                         }
@@ -67,6 +79,10 @@ struct PaymentDetailsView: View {
             .padding()
             .padding(.bottom, 40)
         }
+        .modifier(LoadingIndicatorModal(isPresented:
+                                            $paymentDetailsViewModel.showLoadingModal))
+        .modifier(ErrorModal(isPresented: $errorManager.showErrorModal,
+                             customError: errorManager.customError ?? ErrorManager.unknownError))
         .navigationTitle("Payment Details")
         .navigationBarTitleDisplayMode(.inline)
         .navigationBarBackButtonHidden(true)
@@ -83,13 +99,13 @@ struct PaymentDetailsView: View {
             }
         }
         .onAppear {
-            if let userCard = profileViewModel.profile.creditCard {
+            if let profile = profileViewModel.profile, let userCard = profile.creditCard {
                 paymentDetailsViewModel.cardNumber = userCard.cardNumber
                 paymentDetailsViewModel.newDate = Date().getDateFrom(userCard.validThru) ?? Date()
                 paymentDetailsViewModel.cardHolderName = userCard.cardholderName
             } else {
                 paymentDetailsViewModel.initializeDataForNoCard()
-                profileViewModel.profile.creditCard = paymentDetailsViewModel.createNewCard()
+                profileViewModel.addNewCard(card: paymentDetailsViewModel.createNewCard())
             }
         }
     }

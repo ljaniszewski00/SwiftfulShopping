@@ -168,9 +168,13 @@ struct HomeView: View {
             .modifier(ErrorModal(isPresented: $errorManager.showErrorModal,
                                  customError: errorManager.customError ?? ErrorManager.unknownError))
             .onAppear {
-                exploreViewModel.fetchProducts()
-                cartViewModel.restorePreviousCart()
-                favoritesViewModel.fetchFavorites()
+                homeViewModel.showLoadingModal = true
+                
+                profileViewModel.fetchProfile { _ in
+                    exploreViewModel.onAppear()
+                    cartViewModel.restorePreviousCart()
+                    favoritesViewModel.fetchFavorites()
+                }
             }
             .ignoresSafeArea(edges: .bottom)
             .onChange(of: networkManager.isConnected) { newValue in

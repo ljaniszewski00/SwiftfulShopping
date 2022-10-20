@@ -69,15 +69,27 @@ struct SingleProductRatingView: View {
                     
                     Button {
                         withAnimation {
-                            ratingViewModel.applyProductRating(authorID: profileViewModel.profile.id,
-                                                               authorFirstName: profileViewModel.profile.fullName.components(separatedBy: " ").first!) { result in
-                                switch result {
-                                case .success:
-                                    profileViewModel.addUserRating(productID: ratingViewModel.activeProduct!.id, rating: ratingViewModel.productRating, review: ratingViewModel.textForRating)
-                                    dismiss()
-                                case .failure(let error):
-                                    ErrorManager.shared.generateCustomError(errorType: .applyProductRatingError,
-                                                                            additionalErrorDescription: error.localizedDescription)
+                            if let profile = profileViewModel.profile {
+                                ratingViewModel.applyProductRating(authorID: profile.id,
+                                                                   authorFirstName: profile.fullName.components(separatedBy: " ").first!) { result in
+                                    switch result {
+                                    case .success:
+                                        profileViewModel.addUserRating(productID: ratingViewModel.activeProduct!.id,
+                                                                       rating: ratingViewModel.productRating,
+                                                                       review: ratingViewModel.textForRating) { result in
+                                            switch result {
+                                            case .success:
+                                                dismiss()
+                                            case .failure(let error):
+                                                ErrorManager.shared.generateCustomError(errorType: .applyProductRatingError,
+                                                                                        additionalErrorDescription: error.localizedDescription)
+                                            }
+                                        }
+                                        
+                                    case .failure(let error):
+                                        ErrorManager.shared.generateCustomError(errorType: .applyProductRatingError,
+                                                                                additionalErrorDescription: error.localizedDescription)
+                                    }
                                 }
                             }
                         }

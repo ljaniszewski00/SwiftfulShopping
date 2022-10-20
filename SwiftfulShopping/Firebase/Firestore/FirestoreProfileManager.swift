@@ -207,21 +207,21 @@ class FirestoreProfileManager: ObservableObject {
             }
     }
     
-    func makeAddressInvoiceAddress(shipmentAddressToBeMakeInvoiceAddress: Address, completion: @escaping ((VoidResult) -> ())) {
+    func makeAddressInvoiceAddress(shipmentAddressToBeMadeInvoiceAddress: Address, completion: @escaping ((VoidResult) -> ())) {
         self.db.collection(DatabaseCollections.invoiceAddresses.rawValue)
-            .whereField("userID", isEqualTo: shipmentAddressToBeMakeInvoiceAddress.userID)
+            .whereField("userID", isEqualTo: shipmentAddressToBeMadeInvoiceAddress.userID)
             .getDocuments { querySnapshot, error in
                 if let invoiceAddressDocument = querySnapshot?.documents.first {
                     let updateData: [String: Any] = [
-                        "id": shipmentAddressToBeMakeInvoiceAddress.id,
-                        "userID": shipmentAddressToBeMakeInvoiceAddress.userID,
-                        "fullName": shipmentAddressToBeMakeInvoiceAddress.fullName,
-                        "streetName": shipmentAddressToBeMakeInvoiceAddress.streetName,
-                        "streetNumber": shipmentAddressToBeMakeInvoiceAddress.streetNumber,
-                        "apartmentNumber": shipmentAddressToBeMakeInvoiceAddress.apartmentNumber,
-                        "zipCode": shipmentAddressToBeMakeInvoiceAddress.zipCode,
-                        "city": shipmentAddressToBeMakeInvoiceAddress.city,
-                        "country": shipmentAddressToBeMakeInvoiceAddress.country
+                        "id": shipmentAddressToBeMadeInvoiceAddress.id,
+                        "userID": shipmentAddressToBeMadeInvoiceAddress.userID,
+                        "fullName": shipmentAddressToBeMadeInvoiceAddress.fullName,
+                        "streetName": shipmentAddressToBeMadeInvoiceAddress.streetName,
+                        "streetNumber": shipmentAddressToBeMadeInvoiceAddress.streetNumber,
+                        "apartmentNumber": shipmentAddressToBeMadeInvoiceAddress.apartmentNumber,
+                        "zipCode": shipmentAddressToBeMadeInvoiceAddress.zipCode,
+                        "city": shipmentAddressToBeMadeInvoiceAddress.city,
+                        "country": shipmentAddressToBeMadeInvoiceAddress.country
                     ]
                     
                     self.db.collection(DatabaseCollections.invoiceAddresses.rawValue)
@@ -236,6 +236,61 @@ class FirestoreProfileManager: ObservableObject {
                                 completion(.success)
                             }
                         }
+                }
+            }
+    }
+    
+    func makeAddressDefaultShippingAddress(userID: String,
+                                           shipmentAddressToBeMadeDefaultAddress: Address,
+                                           completion: @escaping ((VoidResult) -> ())) {
+        let dataToUpdateForAllDocuments: [String: Any] = [
+            "isDefaultAddress": false
+        ]
+        
+        let dataToUpdateForOneDocument: [String: Any] = [
+            "isDefaultAddress": true
+        ]
+        
+        let dispatchGroup = DispatchGroup()
+        
+        self.db.collection(DatabaseCollections.shipmentAddresses.rawValue)
+            .whereField("userID", isEqualTo: userID)
+            .getDocuments { querySnapshot, error in
+                if let error = error {
+                    completion(.failure(error))
+                } else {
+                    dispatchGroup.enter()
+                    for document in querySnapshot!.documents {
+                        if document.documentID == shipmentAddressToBeMadeDefaultAddress.id {
+                            document.reference.updateData(dataToUpdateForOneDocument)
+                        } else {
+                            document.reference.updateData(dataToUpdateForAllDocuments)
+                        }
+                        dispatchGroup.leave()
+                    }
+                    
+                    dispatchGroup.notify(queue: .main) {
+                        completion(.success)
+                    }
+                }
+            }
+    }
+    
+    func changeDefaultPaymentMethod(userID: String,
+                                    newDefaultPaymentMethod: String,
+                                    completion: @escaping ((VoidResult) -> ())) {
+        let dataToUpdate: [String: Any] = [
+            "defaultPaymentMethod": newDefaultPaymentMethod
+        ]
+        
+        self.db.collection(DatabaseCollections.profiles.rawValue)
+            .document(userID)
+            .getDocument { documentSnapshot, error in
+                if let error = error {
+                    completion(.failure(error))
+                } else {
+                    documentSnapshot?.reference.updateData(dataToUpdate)
+                    completion(.success)
                 }
             }
     }
@@ -272,7 +327,7 @@ class FirestoreProfileManager: ObservableObject {
             }
     }
     
-    func deleteShipmentAddress(invoiceAddress: Address, completion: @escaping ((VoidResult) -> ())) {
+    func deleteInvoiceAddress(invoiceAddress: Address, completion: @escaping ((VoidResult) -> ())) {
         self.db.collection(DatabaseCollections.invoiceAddresses.rawValue)
             .document(invoiceAddress.id)
             .getDocument { documentSnapshot, error in

@@ -51,7 +51,7 @@ struct ProfileView: View {
                 VStack(alignment: .leading) {
                     HStack {
                         VStack(alignment: .leading, spacing: 6) {
-                            Text("Hello, \(profileViewModel.profile.fullName.components(separatedBy: " ").first!)!")
+                            Text("Hello, \(profileViewModel.profile?.fullName.components(separatedBy: " ").first! ?? "")!")
                                 .font(.ssTitle2)
                             Text("We are happy to see you again.")
                                 .font(.ssCallout)

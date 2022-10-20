@@ -8,7 +8,7 @@
 import SwiftUI
 
 class ProfileViewModel: ObservableObject {
-    @Published var profile: Profile = Profile.demoProfile
+    @Published var profile: Profile?
     
     @Published var oldImage = UIImage(named: "blank_profile_image")!
     @Published var image = UIImage(named: "blank_profile_image")!
@@ -17,6 +17,20 @@ class ProfileViewModel: ObservableObject {
     @Published var shouldPresentReturnCreationView: Bool = false
     
     @Published var shouldPresentSettingsView: Bool = false
+    
+    func fetchProfile(completion: @escaping ((VoidResult) -> ())) {
+        if let user = FirebaseAuthManager.client.user {
+            FirestoreProfileManager.client.getUserProfile(userID: user.uid) { [weak self] result in
+                switch result {
+                case .success(let profile):
+                    self?.profile = profile
+                    completion(.success)
+                case .failure(let error):
+                    completion(.failure(error))
+                }
+            }
+        }
+    }
 
     func uploadPhoto() {
         if !image.isEqual(oldImage) {
@@ -24,31 +38,44 @@ class ProfileViewModel: ObservableObject {
         }
     }
 
-    func changeDefaultAddress(addressDescription: String) {
-        for address in profile.shipmentAddresses {
-            if address.description == addressDescription {
-                profile.defaultShipmentAddress = address
-                break
+    func changeDefaultAddress(addressDescription: String, completion: @escaping ((VoidResult) -> ())) {
+        if let profile = profile {
+            for address in profile.shipmentAddresses {
+                if address.description == addressDescription {
+                    FirestoreProfileManager.client.makeAddressDefaultShippingAddress(userID: profile.id,
+                                                                                     shipmentAddressToBeMadeDefaultAddress: address) { result in
+                        completion(result)
+                    }
+                }
             }
         }
     }
     
     func getAddressFor(addressDescription: String) -> Address? {
-        for address in profile.shipmentAddresses {
-            if address.description == addressDescription {
-                return address
+        if let profile = profile {
+            for address in profile.shipmentAddresses {
+                if address.description == addressDescription {
+                    return address
+                }
             }
         }
+        
         return nil
     }
 
     func editPersonalData(fullName: String,
-                          emailAddress: String = "") {
-        if !fullName.isEmpty {
-            profile.fullName = fullName
-        }
-        if !emailAddress.isEmpty {
-            profile.email = emailAddress
+                          emailAddress: String = "",
+                          completion: @escaping ((VoidResult) -> ())) {
+        if let profile = profile {
+            let profileDataToUpdate: [String: Any] = [
+                "fullName": fullName,
+                "email": emailAddress
+            ]
+            
+            FirestoreProfileManager.client.updateProfileData(profileID: profile.id,
+                                                             profileDataToUpdate: profileDataToUpdate) { result in
+                completion(result)
+            }
         }
     }
 
@@ -59,22 +86,42 @@ class ProfileViewModel: ObservableObject {
     }
 
     func editCardData(cardNumber: String, validThru: String, cardholderName: String) {
-        if profile.creditCard != nil {
-            profile.creditCard!.cardNumber = cardNumber
-            profile.creditCard!.validThru = validThru
-            profile.creditCard!.cardholderName = cardholderName
+        if profile != nil {
+            if profile!.creditCard != nil {
+                profile!.creditCard!.cardNumber = cardNumber
+                profile!.creditCard!.validThru = validThru
+                profile!.creditCard!.cardholderName = cardholderName
+            }
         }
     }
 
     func addNewCard(card: CreditCard) {
-        profile.creditCard = card
+        if profile != nil {
+            profile!.creditCard = card
+        }
     }
 
-    func changeDefaultPaymentMethod(newDefaultPaymentMethod: PaymentMethod) {
-        profile.defaultPaymentMethod = newDefaultPaymentMethod
+    func changeDefaultPaymentMethod(newDefaultPaymentMethod: PaymentMethod, completion: @escaping ((VoidResult) -> ())) {
+        if let profile = profile {
+            FirestoreProfileManager.client.changeDefaultPaymentMethod(userID: profile.id,
+                                                                      newDefaultPaymentMethod: newDefaultPaymentMethod.rawValue) { result in
+                completion(result)
+            }
+        }
     }
 
-    func addUserRating(productID: String, rating: Int, review: String?) {
-        profile.addRatingFor(productID: productID, rating: rating, review: review)
+    func addUserRating(productID: String, rating: Int, review: String?, completion: @escaping ((VoidResult) -> ())) {
+        if let profile = profile {
+            let productRating = ProductRating(id: UUID().uuidString,
+                                              productID: productID,
+                                              authorID: profile.id,
+                                              authorFirstName: profile.fullName,
+                                              rating: rating,
+                                              review: review)
+            
+            FirestoreProductsManager.client.addProductRating(userID: profile.id, productRating: productRating) { result in
+                completion(result)
+            }
+        }
     }
 }

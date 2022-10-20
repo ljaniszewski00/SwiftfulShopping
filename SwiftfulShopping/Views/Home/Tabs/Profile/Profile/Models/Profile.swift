@@ -48,11 +48,4 @@ extension Profile {
                                                            Product.demoProducts[3].id: 5,
                                                            Product.demoProducts[4].id: 2],
                                      imageURL: "")
-    
-    mutating func addRatingFor(productID: String, rating: Int, review: String?) {
-        userProductsRatings[productID] = rating
-        if let review = review {
-            userProductsReviews[productID] = review
-        }
-    }
 }

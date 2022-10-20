@@ -31,6 +31,8 @@ final class ErrorManager: ObservableObject {
         .applyProductRatingError: "Error adding new rating. \(errorDescriptionSuffix)",
         .returnCreateError: "Error creating your return. \(errorDescriptionSuffix)",
         .createAddressError: "Error creating address. \(errorDescriptionSuffix)",
+        .changeDefaultAddressError: "Error changing default address. \(errorDescriptionSuffix)",
+        .changeDefaultPaymentMethodError: "Error changing default payment method. \(errorDescriptionSuffix)",
         .unknown: ""
     ]
     

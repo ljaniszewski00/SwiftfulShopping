@@ -168,17 +168,19 @@ struct OrderCreationChangeAddressView_Previews: PreviewProvider {
                     .previewDevice(PreviewDevice(rawValue: deviceName))
                     .previewDisplayName("\(deviceName) portrait")
                     .onAppear {
-                        orderCreationViewModel.setupAddresses(defaultProfileAddress:
-                                                                profileViewModel.profile.defaultShipmentAddress,
-                                                              profileAddresses:
-                                                                profileViewModel.profile.shipmentAddresses)
-                        
-                        if orderCreationViewModel.choosenShippingMethod == nil {
-                            orderCreationViewModel.choosenShippingMethod = profileViewModel.profile.defaultShippingMethod
-                        }
-                        
-                        if orderCreationViewModel.choosenPaymentMethod == nil {
-                            orderCreationViewModel.choosenPaymentMethod = profileViewModel.profile.defaultPaymentMethod
+                        if let profile = profileViewModel.profile {
+                            orderCreationViewModel.setupAddresses(defaultProfileAddress:
+                                                                    profile.defaultShipmentAddress,
+                                                                  profileAddresses:
+                                                                    profile.shipmentAddresses)
+                            
+                            if orderCreationViewModel.choosenShippingMethod == nil {
+                                orderCreationViewModel.choosenShippingMethod = profile.defaultShippingMethod
+                            }
+                            
+                            if orderCreationViewModel.choosenPaymentMethod == nil {
+                                orderCreationViewModel.choosenPaymentMethod = profile.defaultPaymentMethod
+                            }
                         }
                     }
             }

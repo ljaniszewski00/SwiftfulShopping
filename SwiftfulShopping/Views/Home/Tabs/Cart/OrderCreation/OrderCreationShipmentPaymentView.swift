@@ -38,7 +38,7 @@ struct OrderCreationShipmentPaymentView: View {
                         
                         HStack(alignment: .bottom) {
                             VStack(alignment: .leading, spacing: 5) {
-                                Text(profileViewModel.profile.fullName)
+                                Text(profileViewModel.profile?.fullName ?? "")
                                     .font(.ssTitle3)
                                 Text(orderCreationViewModel.defaultAddress)
                                     .font(.ssCallout).fontWeight(.regular)
@@ -175,19 +175,21 @@ struct OrderCreationShipmentPaymentView: View {
             }
         }
         .onAppear {
-            if orderCreationViewModel.defaultAddress.isEmpty {
-                orderCreationViewModel.setupAddresses(defaultProfileAddress:
-                                                        profileViewModel.profile.defaultShipmentAddress,
-                                                      profileAddresses:
-                                                        profileViewModel.profile.shipmentAddresses)
-            }
-            
-            if orderCreationViewModel.choosenShippingMethod == nil {
-                orderCreationViewModel.choosenShippingMethod = profileViewModel.profile.defaultShippingMethod
-            }
-            
-            if orderCreationViewModel.choosenPaymentMethod == nil {
-                orderCreationViewModel.choosenPaymentMethod = profileViewModel.profile.defaultPaymentMethod
+            if let profile = profileViewModel.profile {
+                if orderCreationViewModel.defaultAddress.isEmpty {
+                    orderCreationViewModel.setupAddresses(defaultProfileAddress:
+                                                            profile.defaultShipmentAddress,
+                                                          profileAddresses:
+                                                            profile.shipmentAddresses)
+                }
+                
+                if orderCreationViewModel.choosenShippingMethod == nil {
+                    orderCreationViewModel.choosenShippingMethod = profile.defaultShippingMethod
+                }
+                
+                if orderCreationViewModel.choosenPaymentMethod == nil {
+                    orderCreationViewModel.choosenPaymentMethod = profile.defaultPaymentMethod
+                }
             }
         }
     }

@@ -9,14 +9,15 @@ import Foundation
 
 struct Discount {
     var id: String = UUID().uuidString
-    var productID: String = Product.demoProducts[0].id
+    var productID: String
     var discountCode: String
     var discountValuePercent: Double
     var redeemedByUsersIDs: [String] = []
     var redemptionNumber: Int = 0
     var maxRedemptionNumber: Int = 1
     
-    init(discountCode: String, discountValuePercent: Double) {
+    init(productID: String = Product.demoProducts[0].id, discountCode: String, discountValuePercent: Double) {
+        self.productID = productID
         self.discountCode = discountCode
         self.discountValuePercent = discountValuePercent
     }
