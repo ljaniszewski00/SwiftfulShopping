@@ -15,6 +15,8 @@ struct AddNewAddressView: View {
     @Environment(\.colorScheme) private var colorScheme: ColorScheme
     @Environment(\.dismiss) private var dismiss: DismissAction
     
+    @StateObject var errorManager = ErrorManager()
+    
     @State private var isStreetNameTextFieldFocused: Bool = false
     @State private var isStreetNumberTextFieldFocused: Bool = false
     @State private var isApartmentNumberTextFieldFocused: Bool = false
@@ -71,8 +73,17 @@ struct AddNewAddressView: View {
                 Button {
                     withAnimation {
                         if let newAddress = personalInfoViewModel.createNewAddress() {
-                            profileViewModel.addNewAddress(address: newAddress, toBeDefault: personalInfoViewModel.toBeDefaultAddress)
-                            dismiss()
+                            personalInfoViewModel.showLoadingModal = true
+                            profileViewModel.addNewAddress(address: newAddress, toBeDefault: personalInfoViewModel.toBeDefaultAddress) { result in
+                                personalInfoViewModel.showLoadingModal = false
+                                switch result {
+                                case .success:
+                                    dismiss()
+                                case .failure(let error):
+                                    errorManager.generateCustomError(errorType: .createAddressError,
+                                                                     additionalErrorDescription: error.localizedDescription)
+                                }
+                            }
                         }
                     }
                 } label: {
@@ -85,6 +96,10 @@ struct AddNewAddressView: View {
             }
             .padding()
         }
+        .modifier(LoadingIndicatorModal(isPresented:
+                                            $personalInfoViewModel.showLoadingModal))
+        .modifier(ErrorModal(isPresented: $errorManager.showErrorModal,
+                             customError: errorManager.customError ?? ErrorManager.unknownError))
         .navigationTitle("Add new address")
         .navigationBarBackButtonHidden(true)
         .toolbar {

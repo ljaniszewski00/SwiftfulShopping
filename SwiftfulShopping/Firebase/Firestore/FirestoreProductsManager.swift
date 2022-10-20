@@ -136,9 +136,8 @@ class FirestoreProductsManager: ObservableObject {
             }
     }
     
-    func getDiscounts(productID: String, completion: @escaping ((Result<[Discount]?, Error>) -> ())) {
+    func getDiscounts(completion: @escaping ((Result<[Discount]?, Error>) -> ())) {
         db.collection(DatabaseCollections.discounts.rawValue)
-            .whereField("productID", isEqualTo: productID)
             .getDocuments { querySnapshot, error in
                 if let error = error {
                     print("Error fetching discount data: \(error.localizedDescription)")
@@ -166,6 +165,41 @@ class FirestoreProductsManager: ObservableObject {
                     }
                     
                     print("Successfully fetched discounts data")
+                    completion(.success(discounts))
+                }
+            }
+    }
+    
+    func getDiscountsFor(productID: String, completion: @escaping ((Result<[Discount]?, Error>) -> ())) {
+        db.collection(DatabaseCollections.discounts.rawValue)
+            .whereField("productID", isEqualTo: productID)
+            .getDocuments { querySnapshot, error in
+                if let error = error {
+                    print("Error fetching discounts for product data: \(error.localizedDescription)")
+                    completion(.failure(error))
+                } else {
+                    let discounts = querySnapshot!.documents.map { (queryDocumentSnapshot) -> Discount in
+                        
+                        let data = queryDocumentSnapshot.data()
+
+                        let id = data["id"] as? String ?? ""
+                        let productID = data["productID"] as? String ?? ""
+                        let discountCode = data["discountCode"] as? String ?? ""
+                        let discountValuePercent = data["discountValuePercent"] as? Double ?? 0.0
+                        let redeemedByUsersIDs = data["redeemedByUsersIDs"] as? [String] ?? []
+                        let redemptionNumber = data["redemptionNumber"] as? Int ?? 0
+                        let maxRedemptionNumber = data["maxRedemptionNumber"] as? Int ?? 1
+                        
+                        return Discount(id: id,
+                                        productID: productID,
+                                        discountCode: discountCode,
+                                        discountValuePercent: discountValuePercent,
+                                        redeemedByUsersIDs: redeemedByUsersIDs,
+                                        redemptionNumber: redemptionNumber,
+                                        maxRedemptionNumber: maxRedemptionNumber)
+                    }
+                    
+                    print("Successfully fetched discounts for product data")
                     completion(.success(discounts))
                 }
             }

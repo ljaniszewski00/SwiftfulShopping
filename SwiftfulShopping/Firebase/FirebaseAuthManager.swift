@@ -243,14 +243,14 @@ class FirebaseAuthManager: ObservableObject {
     
     // MARK: Firebase account management
     
-    func firebaseSignOut() -> VoidResult {
+    func firebaseSignOut(completion: @escaping ((VoidResult) -> ())) {
         do {
             try auth.signOut()
             self.user = nil
             self.loggedWith = nil
-            return .success
+            completion(.success)
         } catch let signOutError as NSError {
-            return .failure(signOutError)
+            completion(.failure(signOutError))
         }
     }
     
@@ -269,12 +269,12 @@ class FirebaseAuthManager: ObservableObject {
     func changeEmailAddress(userID: String, oldEmailAddress: String, password: String, newEmailAddress: String, completion: @escaping ((VoidResult) -> ())) {
         let credential = EmailAuthProvider.credential(withEmail: oldEmailAddress, password: password)
         
-        user?.reauthenticate(with: credential) { [self] (result, error) in
+        user?.reauthenticate(with: credential) { [weak self] (result, error) in
             if let error = error {
                 print("Error re-authenticating user \(error)")
                 completion(.failure(error))
             } else {
-                user?.updateEmail(to: newEmailAddress) { (error) in
+                self?.user?.updateEmail(to: newEmailAddress) { (error) in
                     if let error = error {
                         print("Error changing email address: \(error.localizedDescription)")
                         completion(.failure(error))
@@ -289,12 +289,12 @@ class FirebaseAuthManager: ObservableObject {
     func changePassword(emailAddress: String, oldPassword: String, newPassword: String, completion: @escaping ((VoidResult) -> ())) {
         let credential = EmailAuthProvider.credential(withEmail: emailAddress, password: oldPassword)
         
-        user?.reauthenticate(with: credential) { [self] (result, error) in
+        user?.reauthenticate(with: credential) { [weak self] (result, error) in
             if let error = error {
                 print("Error re-authenticating user \(error)")
                 completion(.failure(error))
             } else {
-                user?.updatePassword(to: newPassword) { (error) in
+                self?.user?.updatePassword(to: newPassword) { (error) in
                     if let error = error {
                         print("Error changing password: \(error.localizedDescription)")
                         completion(.failure(error))
@@ -310,18 +310,19 @@ class FirebaseAuthManager: ObservableObject {
     func deleteUser(email: String, password: String, completion: @escaping ((VoidResult) -> ())) {
         let credential = EmailAuthProvider.credential(withEmail: email, password: password)
         
-        user?.reauthenticate(with: credential) { [self] (result, error) in
+        user?.reauthenticate(with: credential) { [weak self] (result, error) in
             if let error = error {
                 print("Error re-authenticating user \(error)")
                 completion(.failure(error))
             } else {
-                user?.delete { (error) in
+                self?.user?.delete { (error) in
                     if let error = error {
                         print("Could not delete user: \(error)")
                         completion(.failure(error))
                     } else {
-                        let result = self.firebaseSignOut()
-                        completion(.success)
+                        self?.firebaseSignOut { result in
+                            completion(result)
+                        }
                     }
                 }
             }

@@ -29,6 +29,8 @@ final class ErrorManager: ObservableObject {
         .deleteAccountError: "Error occured while trying delete the account. \(errorDescriptionSuffix)",
         .databaseManagerEncodingError: "Error encoding requestes data. \(errorDescriptionSuffix)",
         .applyProductRatingError: "Error adding new rating. \(errorDescriptionSuffix)",
+        .returnCreateError: "Error creating your return. \(errorDescriptionSuffix)",
+        .createAddressError: "Error creating address. \(errorDescriptionSuffix)",
         .unknown: ""
     ]
     

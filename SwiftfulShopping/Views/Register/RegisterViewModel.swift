@@ -50,14 +50,15 @@ class RegisterViewModel: ObservableObject {
                                         "United States": "united"]
     
     func onFirstRegisterViewAppear() {
-        FirestoreAuthenticationManager.client.listenToUsersUsernamesAndEmails(completion: { usersUsernames, usersEmails in
-            self.usersUsernames = usersUsernames
-            self.usersEmails = usersEmails
-        })
-    }
-    
-    func onFirstRegisterViewDisappear() {
-        
+        FirestoreAuthenticationManager.client.listenToUsersUsernamesAndEmails { result in
+            switch result {
+            case .success(let (usersUsernames, usersEmails)):
+                self.usersUsernames = usersUsernames
+                self.usersEmails = usersEmails
+            case .failure(_):
+               print("Error fetching usernames and emails for duplicates checking")
+            }
+        }
     }
     
     func getAddressDataFromLocation(addressData: [String: String]) {
@@ -328,10 +329,9 @@ class RegisterViewModel: ObservableObject {
                                       zipCode: zipCode,
                                       city: city,
                                       country: country)
-        FirestoreAuthenticationManager.client.createShipmentAddress(shipmentAddress: shipmentAddress) { [weak self] success, error in
-            if let error = error {
-                completion(.failure(error))
-            } else {
+        FirestoreAuthenticationManager.client.createShipmentAddress(shipmentAddress: shipmentAddress) { [weak self] result in
+            switch result {
+            case .success:
                 let invoiceAddress: Address?
                 if self!.sameDataOnInvoice {
                     invoiceAddress = shipmentAddress
@@ -346,10 +346,9 @@ class RegisterViewModel: ObservableObject {
                                              country: self!.countryInvoice)
                 }
                 
-                FirestoreAuthenticationManager.client.createInvoiceAddress(invoiceAddress: invoiceAddress!) { [weak self] success, error in
-                    if let error = error {
-                        completion(.failure(error))
-                    } else {
+                FirestoreAuthenticationManager.client.createInvoiceAddress(invoiceAddress: invoiceAddress!) { [weak self] result in
+                    switch result {
+                    case .success:
                         let profile = Profile(id: user.uid,
                                               fullName: self!.fullName,
                                               username: self!.username,
@@ -358,15 +357,20 @@ class RegisterViewModel: ObservableObject {
                                               defaultShipmentAddress: shipmentAddress,
                                               invoiceAddress: invoiceAddress!,
                                               createdWith: FirebaseAuthManager.client.loggedWith)
-                        FirestoreAuthenticationManager.client.createProfile(profile: profile) { success, error in
-                            if let error = error {
-                                completion(.failure(error))
-                            } else {
+                        FirestoreAuthenticationManager.client.createProfile(profile: profile) { result in
+                            switch result {
+                            case .success:
                                 completion(.success)
+                            case .failure(let error):
+                                completion(.failure(error))
                             }
                         }
+                    case .failure(let error):
+                        completion(.failure(error))
                     }
                 }
+            case .failure(let error):
+                completion(.failure(error))
             }
         }
     }

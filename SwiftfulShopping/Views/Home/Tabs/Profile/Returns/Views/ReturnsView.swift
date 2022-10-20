@@ -11,14 +11,20 @@ struct ReturnsView: View {
     @EnvironmentObject private var authStateManager: AuthStateManager
     @EnvironmentObject private var tabBarStateManager: TabBarStateManager
     @EnvironmentObject private var profileViewModel: ProfileViewModel
+    
+    @StateObject private var returnsViewModel: ReturnsViewModel = ReturnsViewModel()
+    
     @Environment(\.dismiss) private var dismiss: DismissAction
     
     var body: some View {
         List {
-            ForEach(profileViewModel.datesForReturnsViewListSections, id: \.self) { stringDate in
+            ForEach(returnsViewModel.datesForReturnsViewListSections, id: \.self) { stringDate in
                 Section {
-                    ForEach(profileViewModel.getReturnsFor(date: stringDate), id: \.self) { userReturn in
-                        NavigationLink(destination: ReturnDetailsView(userReturn: userReturn)) {
+                    ForEach(returnsViewModel.getReturnsFor(date: stringDate), id: \.self) { userReturn in
+                        NavigationLink(destination: ReturnDetailsView(userReturn: userReturn,
+                                                                      returnProductsList:
+                                                                        returnsViewModel.getReturnProductsFor(returnObject: userReturn))
+                                                                            .environmentObject(returnsViewModel)) {
                             VStack(alignment: .leading, spacing: 20) {
                                 HStack(spacing: 10) {
                                     Text(userReturn.id)
@@ -37,7 +43,7 @@ struct ReturnsView: View {
                                     HStack {
                                         Text("Products:")
                                             .font(.ssCallout)
-                                        Text("\(userReturn.products.count)")
+                                        Text("\(returnsViewModel.getReturnProductsFor(returnObject: userReturn).count)")
                                             .font(.ssTitle3)
                                             .foregroundColor(.accentColor)
                                     }

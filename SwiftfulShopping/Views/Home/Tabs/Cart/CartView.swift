@@ -46,7 +46,7 @@ struct CartView: View {
                             .padding(.vertical)
                         
                         List {
-                            ForEach(Array(cartViewModel.cart.products.keys).sorted { $0.id > $1.id}, id: \.self) { product in
+                            ForEach(Array(cartViewModel.productsForCart.keys).sorted { $0.id > $1.id}, id: \.self) { product in
                                 ProductTileForCartView(product: product)
                                     .onTapGesture {
                                         withAnimation(.interactiveSpring(response: 0.6, dampingFraction: 0.7, blendDuration: 0.7)) {
@@ -93,7 +93,9 @@ struct CartView: View {
                         .padding(.horizontal)
                         .padding(.bottom, 80)
                         
-                        NavigationLink(destination: ProductDetailsView(product: cartViewModel.choosenProduct ?? Product.demoProducts[0])
+                        NavigationLink(destination: ProductDetailsView(product: cartViewModel.choosenProduct ??
+                                                                       Product.demoProducts[0],
+                                                                       productRatings: exploreViewModel.getRatingsFor(product: cartViewModel.choosenProduct ?? Product.demoProducts[0]))
                                                         .onAppear {
                                                             tabBarStateManager.hideTabBar()
                                                         },
@@ -161,7 +163,7 @@ struct CartView_Previews: PreviewProvider {
                         authStateManager.didLogged(with: .emailPassword)
                         
                         for product in Product.demoProducts {
-                            cartViewModel.cart.products[product] = 1
+                            cartViewModel.productsForCart[product] = 1
                         }
                     }
             }

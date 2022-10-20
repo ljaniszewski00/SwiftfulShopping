@@ -39,7 +39,8 @@ struct FavoritesView: View {
                 .navigationTitle("Favorites")
                 .navigationBarTitleDisplayMode(.inline)
                 
-                NavigationLink(destination: ProductDetailsView(product: favoritesViewModel.choosenProduct ?? Product.demoProducts[0])
+                NavigationLink(destination: ProductDetailsView(product: favoritesViewModel.choosenProduct ?? Product.demoProducts[0],
+                                                               productRatings: exploreViewModel.getRatingsFor(product: favoritesViewModel.choosenProduct ?? Product.demoProducts[0]))
                                                 .onAppear {
                                                     tabBarStateManager.hideTabBar()
                                                 }

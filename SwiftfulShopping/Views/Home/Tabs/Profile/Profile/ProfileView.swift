@@ -129,13 +129,14 @@ struct ProfileView: View {
                             Spacer()
                             Button {
                                 withAnimation {
-                                    let (logoutSuccess, logoutError) = FirebaseAuthManager.client.firebaseSignOut()
-                                    if logoutSuccess {
-                                        authStateManager.didLogout()
-                                    } else {
-                                        if let logoutError = logoutError {
+                                    FirebaseAuthManager.client.firebaseSignOut() { result in
+                                        switch result {
+                                        case .success:
+                                            authStateManager.didLogout()
+                                        case .failure(let error):
                                             ErrorManager.shared.generateCustomError(errorType: .logoutError,
-                                                                                    additionalErrorDescription: logoutError.localizedDescription)
+                                                                                    additionalErrorDescription:
+                                                                                        error.localizedDescription)
                                         }
                                     }
                                 }

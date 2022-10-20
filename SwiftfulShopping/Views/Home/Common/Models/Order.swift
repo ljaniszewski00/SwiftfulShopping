@@ -12,7 +12,10 @@ struct Order {
     var orderDate: Date = Date()
     var estimatedDeliveryDate: Date
     var clientID: String
+    var clientDescription: String
+    var addressDescription: String
     var shoppingCartID: String
+    var productsIDs: [String]
     var shippingMethod: ShippingMethod
     var shippingAddressID: String
     var paymentMethod: PaymentMethod = .creditCard
@@ -24,7 +27,10 @@ struct Order {
          orderDate: Date,
          estimatedDeliveryDate: Date,
          clientID: String,
+         clientDescription: String,
+         addressDescription: String,
          shoppingCartID: String,
+         productsIDs: [String],
          shippingMethod: ShippingMethod,
          shippingAddressID: String,
          paymentMethod: PaymentMethod,
@@ -35,7 +41,10 @@ struct Order {
         self.orderDate = orderDate
         self.estimatedDeliveryDate = estimatedDeliveryDate
         self.clientID = clientID
+        self.clientDescription = clientDescription
+        self.addressDescription = addressDescription
         self.shoppingCartID = shoppingCartID
+        self.productsIDs = productsIDs
         self.shippingMethod = shippingMethod
         self.shippingAddressID = shippingAddressID
         self.paymentMethod = paymentMethod
@@ -45,13 +54,19 @@ struct Order {
     }
     
     init(clientID: String,
+         clientDescription: String,
+         addressDescription: String,
          shoppingCartID: String,
+         productsIDs: [String],
          shippingMethod: ShippingMethod,
          shippingAddressID: String,
          paymentMethod: PaymentMethod = .creditCard,
          invoice: Bool = false) {
         self.clientID = clientID
+        self.clientDescription = clientDescription
+        self.addressDescription = addressDescription
         self.shoppingCartID = shoppingCartID
+        self.productsIDs = productsIDs
         self.shippingMethod = shippingMethod
         self.shippingAddressID = shippingAddressID
         self.paymentMethod = paymentMethod
@@ -79,19 +94,31 @@ extension Order: CustomStringConvertible {
 
 extension Order {
     static let demoOrders: [Order] = [Order(clientID: Profile.demoProfile.id,
+                                            clientDescription: Profile.demoProfile.description,
+                                            addressDescription: Address.demoAddress.description,
                                             shoppingCartID: Cart.demoCart.id,
+                                            productsIDs: Product.demoProducts.map { $0.id },
                                             shippingMethod: .pickup,
                                             shippingAddressID: Address.demoAddress.id),
                                       Order(clientID: Profile.demoProfile.id,
+                                            clientDescription: Profile.demoProfile.description,
+                                            addressDescription: Address.demoAddress.description,
                                             shoppingCartID: Cart.demoCart.id,
+                                            productsIDs: Product.demoProducts.map { $0.id },
                                             shippingMethod: .pickup,
                                             shippingAddressID: Address.demoAddress.id),
                                       Order(clientID: Profile.demoProfile.id,
+                                            clientDescription: Profile.demoProfile.description,
+                                            addressDescription: Address.demoAddress.description,
                                             shoppingCartID: Cart.demoCart.id,
+                                            productsIDs: Product.demoProducts.map { $0.id },
                                             shippingMethod: .pickup,
                                             shippingAddressID: Address.demoAddress.id),
                                       Order(clientID: Profile.demoProfile.id,
+                                            clientDescription: Profile.demoProfile.description,
+                                            addressDescription: Address.demoAddress.description,
                                             shoppingCartID: Cart.demoCart.id,
+                                            productsIDs: Product.demoProducts.map { $0.id },
                                             shippingMethod: .pickup,
-                                            shippingAddressID: Address.demoAddress.id),]
+                                            shippingAddressID: Address.demoAddress.id)]
 }

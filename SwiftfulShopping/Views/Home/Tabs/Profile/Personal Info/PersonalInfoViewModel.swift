@@ -22,6 +22,8 @@ class PersonalInfoViewModel: ObservableObject {
     @Published var newCountry: String = ""
     @Published var toBeDefaultAddress: Bool = false
     
+    @Published var showLoadingModal: Bool = false
+    
     func setupAddresses(defaultProfileAddress: Address, profileAddresses: [Address]) {
         defaultAddress = defaultProfileAddress.description
         for profileAddress in profileAddresses {

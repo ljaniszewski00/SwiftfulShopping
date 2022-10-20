@@ -28,6 +28,7 @@ class OrderCreationViewModel: ObservableObject {
     @Published var addressToBeSaved: Bool = false
     @Published var addressToBeDefault: Bool = false
     
+    @Published var availableDiscounts: [Discount] = []
     @Published var discountCode: String = ""
     
     @Published var createdOrder: Order?
@@ -40,6 +41,12 @@ class OrderCreationViewModel: ObservableObject {
         choosenShippingMethod == nil || defaultAddress.isEmpty || choosenPaymentMethod == nil
     }
     
+    func onAppear() {
+        if let discounts = DiscountsRepository.shared.discounts {
+            self.availableDiscounts = discounts
+        }
+    }
+    
     func setupAddresses(defaultProfileAddress: Address,
                         profileAddresses: [Address]) {
         defaultAddress = defaultProfileAddress.description
@@ -50,13 +57,13 @@ class OrderCreationViewModel: ObservableObject {
     }
     
     func createNewAddress() -> Address? {
-        guard let user = FirebaseAuthManager.client.user else {
+        if let user = FirebaseAuthManager.client.user {
+            let newAddress = Address(userID: user.uid, fullName: "", streetName: newStreetName, streetNumber: newStreetNumber, apartmentNumber: newApartmentNumber, zipCode: newZipCode, city: newCity, country: newCountry)
+            eraseNewAddressData()
+            return newAddress
+        } else {
             return nil
         }
-        
-        let newAddress = Address(userID: user.uid, fullName: "", streetName: newStreetName, streetNumber: newStreetNumber, apartmentNumber: newApartmentNumber, zipCode: newZipCode, city: newCity, country: newCountry)
-        eraseNewAddressData()
-        return newAddress
     }
     
     private func eraseNewAddressData() {
@@ -71,15 +78,11 @@ class OrderCreationViewModel: ObservableObject {
     }
     
     func applyDiscount() -> Discount? {
+        let discount = availableDiscounts.filter { $0.discountCode == discountCode }.first
+        
         discountCode.removeAll()
         
-        /*
-         SOME DATABASE CHECKING IF DISCOUNT CODE IS LEGIBLE:
-        
-         var fetchedDiscount = fetchDiscountData(self.discountCode)
-         */
-        
-        return Discount.demoDiscounts[0]
+        return discount
     }
     
     func createOrder(client: Profile,
@@ -88,7 +91,7 @@ class OrderCreationViewModel: ObservableObject {
                      totalCost: Double,
                      totalCostWithAppliedDiscounts: Double,
                      shippingAddress: Address,
-                     completion: @escaping ((Result<Order?, Error>) -> ())) {
+                     completion: @escaping ((VoidResult) -> ())) {
         let productsIDsWithQuantity = Dictionary(uniqueKeysWithValues: productsWithQuantity.map { key, value in
             (key.id, value)
         })
@@ -105,7 +108,10 @@ class OrderCreationViewModel: ObservableObject {
                           orderDate: Date(),
                           estimatedDeliveryDate: calculateEstimatedDeliveryDate(orderDate: Date()),
                           clientID: client.id,
+                          clientDescription: client.description,
+                          addressDescription: shippingAddress.description,
                           shoppingCartID: cart.id,
+                          productsIDs: productsWithQuantity.keys.map { $0.id },
                           shippingMethod: choosenShippingMethod ?? .pickup,
                           shippingAddressID: shippingAddress.id,
                           paymentMethod: choosenPaymentMethod ?? .applePay,
@@ -113,6 +119,14 @@ class OrderCreationViewModel: ObservableObject {
                           totalCost: totalCostWithAppliedDiscounts,
                           status: .placed)
         
-        completion(.success(order))
+        FirestoreOrdersManager.client.createUserOrder(order: order) { result in
+            switch result {
+            case .success:
+                self.createdOrder = order
+                completion(.success)
+            case .failure(let error):
+                completion(.failure(error))
+            }
+        }
     }
 }

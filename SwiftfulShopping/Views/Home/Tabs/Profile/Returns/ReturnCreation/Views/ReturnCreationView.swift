@@ -36,7 +36,7 @@ struct ReturnCreationView: View {
                         .font(.ssTitle2)
                         .fixedSize(horizontal: false, vertical: true)
                         .multilineTextAlignment(.leading)
-                    ForEach(Array(returnCreationViewModel.orderForReturn?.shoppingCart.products.keys ?? Cart.demoCart.products.keys), id: \.self) { product in
+                    ForEach(returnCreationViewModel.productsForReturn, id: \.self) { product in
                         Button {
                             withAnimation {
                                 returnCreationViewModel.manageProductToReturn(product: product)
@@ -103,6 +103,7 @@ struct ReturnCreationView: View {
         }
         .onAppear {
             returnCreationViewModel.orderForReturn = order
+            
         }
         
         NavigationLink(destination: SecondReturnCreationView()

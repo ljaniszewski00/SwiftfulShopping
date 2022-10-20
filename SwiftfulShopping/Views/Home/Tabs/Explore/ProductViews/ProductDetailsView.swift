@@ -22,6 +22,7 @@ struct ProductDetailsView: View {
     @Environment(\.dismiss) var dismiss
     
     var product: Product
+    var productRatings: [ProductRating]
     
     var body: some View {
         VStack(spacing: 0) {
@@ -70,7 +71,8 @@ struct ProductDetailsView: View {
                             Spacer()
                         }
                         
-                        ProductDetailsRatingsSection(product: product)
+                        ProductDetailsRatingsSection(product: product,
+                                                     productRatings: productRatings)
                     }
                     .padding()
                 }
@@ -155,7 +157,8 @@ struct ProductDetailsView_Previews: PreviewProvider {
         let searchViewModel = SearchViewModel()
         ForEach(ColorScheme.allCases, id: \.self) { colorScheme in
             ForEach(["iPhone 13 Pro Max", "iPhone 8"], id: \.self) { deviceName in
-                ProductDetailsView(product: Product.demoProducts[1])
+                ProductDetailsView(product: Product.demoProducts[1],
+                                   productRatings: ProductRating.demoProductsRatings)
                     .environmentObject(authStateManager)
                     .environmentObject(tabBarStateManager)
                     .environmentObject(exploreViewModel)

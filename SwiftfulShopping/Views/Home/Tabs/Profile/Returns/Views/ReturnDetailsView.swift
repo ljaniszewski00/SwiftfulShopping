@@ -9,6 +9,7 @@ import SwiftUI
 
 struct ReturnDetailsView: View {
     @EnvironmentObject private var tabBarStateManager: TabBarStateManager
+    @EnvironmentObject private var returnsViewModel: ReturnsViewModel
     
     @Environment(\.colorScheme) private var colorScheme: ColorScheme
     @Environment(\.dismiss) private var dismiss: DismissAction
@@ -16,7 +17,7 @@ struct ReturnDetailsView: View {
     @State private var showProductsList: Bool = true
     
     var userReturn: Return
-    var returnProductsList: [Product]
+    @State var returnProductsList: [Product]
     
     var body: some View {
         ScrollView(.vertical, showsIndicators: false) {
@@ -93,6 +94,9 @@ struct ReturnDetailsView: View {
                 }
             }
         }
+        .onAppear {
+            returnProductsList = returnsViewModel.getReturnProductsFor(returnObject: userReturn)
+        }
     }
 }
 
@@ -103,8 +107,9 @@ struct ReturnDetailsView_Previews: PreviewProvider {
         let profileViewModel = ProfileViewModel()
         ForEach(ColorScheme.allCases, id: \.self) { colorScheme in
             ForEach(["iPhone 13 Pro Max", "iPhone 8"], id: \.self) { deviceName in
-                ReturnDetailsView(userReturn: profileViewModel.returns[0], returnProductsList: [Product.demoProducts[0],
-                                                                                                Product.demoProducts[1]])
+                ReturnDetailsView(userReturn: Return.demoReturns[0],
+                                  returnProductsList: [Product.demoProducts[0],
+                                                       Product.demoProducts[1]])
                     .environmentObject(authStateManager)
                     .environmentObject(tabBarStateManager)
                     .environmentObject(profileViewModel)

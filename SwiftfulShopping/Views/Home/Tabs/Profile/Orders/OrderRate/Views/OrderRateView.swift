@@ -16,11 +16,12 @@ struct OrderRateView: View {
     @StateObject private var ratingViewModel: RatingViewModel = RatingViewModel()
     
     var order: Order
+    @State var orderProductsList: [Product] = []
     
     var body: some View {
         VStack {
             List {
-                ForEach(Array(order.shoppingCart.products.keys), id: \.self) { product in
+                ForEach(Array(orderProductsList), id: \.self) { product in
                     BasicProductTile(product: product,
                                      includeRateButton: true)
                         .environmentObject(ratingViewModel)
@@ -47,6 +48,9 @@ struct OrderRateView: View {
                 }
             }
         }
+        .onAppear {
+            self.orderProductsList = ratingViewModel.getProductsListForOrderRating(order: order)
+        }
     }
 }
 
@@ -57,7 +61,7 @@ struct OrderRateView_Previews: PreviewProvider {
         let profileViewModel = ProfileViewModel()
         ForEach(ColorScheme.allCases, id: \.self) { colorScheme in
             ForEach(["iPhone 13 Pro Max", "iPhone 8"], id: \.self) { deviceName in
-                OrderRateView(order: profileViewModel.orders[0])
+                OrderRateView(order: Order.demoOrders[0])
                     .environmentObject(authStateManager)
                     .environmentObject(tabBarStateManager)
                     .environmentObject(profileViewModel)

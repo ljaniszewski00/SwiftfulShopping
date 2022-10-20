@@ -84,17 +84,17 @@ struct LoginView: View {
                                         loginViewModel.showLoadingModal = true
                                         loginViewModel.choosenSignInMethod = .emailPassword
                                         
-                                        FirebaseAuthManager.client.firebaseEmailPasswordSignIn(email: loginViewModel.email,
-                                                                                               password: loginViewModel.password) { result in
-                                            loginViewModel.showLoadingModal = false
-                                            switch result {
-                                            case .success:
-                                                authStateManager.didLogged(with: loginViewModel.choosenSignInMethod)
-                                            case .error(let error):
-                                                ErrorManager.shared.generateCustomError(errorType: .emailPasswordSignInError,
-                                                                                        additionalErrorDescription: error.localizedDescription)
-                                            }
-                                        }
+//                                        FirebaseAuthManager.client.firebaseEmailPasswordSignIn(email: loginViewModel.email,
+//                                                                                               password: loginViewModel.password) { result in
+//                                            loginViewModel.showLoadingModal = false
+//                                            switch result {
+//                                            case .success:
+//                                                authStateManager.didLogged(with: loginViewModel.choosenSignInMethod)
+//                                            case .error(let error):
+//                                                ErrorManager.shared.generateCustomError(errorType: .emailPasswordSignInError,
+//                                                                                        additionalErrorDescription: error.localizedDescription)
+//                                            }
+//                                        }
                                     }
                                 }
                                 .buttonStyle(CustomButton())

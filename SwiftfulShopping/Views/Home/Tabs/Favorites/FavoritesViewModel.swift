@@ -14,8 +14,9 @@ class FavoritesViewModel: ObservableObject {
     @Published var shouldPresentProductDetailsView: Bool = false
     
     func fetchFavorites() {
-        if let favoriteProductsIDsFromDefaults = UserDefaults.standard.object(forKey: UserDefaultsKeys.favorites.rawValue) as? [String] {
-            self.favoriteProducts = ProductsRepository.shared.products.filter {
+        if let favoriteProductsIDsFromDefaults = UserDefaults.standard.object(forKey: UserDefaultsKeys.favorites.rawValue) as? [String],
+            let productsFromRepository = ProductsRepository.shared.products {
+            self.favoriteProducts = productsFromRepository.filter {
                 favoriteProductsIDsFromDefaults.contains($0.id)
             }
         }

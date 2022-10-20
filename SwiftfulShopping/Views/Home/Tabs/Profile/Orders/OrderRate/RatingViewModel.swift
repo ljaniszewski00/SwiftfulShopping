@@ -37,6 +37,14 @@ class RatingViewModel: ObservableObject {
         productRating = rating
     }
     
+    func getProductsListForOrderRating(order: Order) -> [Product] {
+        if let products = ProductsRepository.shared.products {
+            return products.filter { order.productsIDs.contains($0.id) }.sorted { $0.name < $1.name }
+        } else {
+            return []
+        }
+    }
+    
     func applyProductRating(authorID: String, authorFirstName: String, completion: @escaping ((VoidResult) -> ())) {
         let productRating = ProductRating(id: UUID().uuidString,
                                           productID: activeProduct?.id ?? "Error",

@@ -36,7 +36,10 @@ class FirestoreOrdersManager: ObservableObject {
                         let orderDate = data["orderDate"] as? Date ?? Date()
                         let estimatedDeliveryDate = data["estimatedDeliveryDate"] as? Date ?? Date()
                         let clientID = data["clientID"] as? String ?? ""
+                        let clientDescription = data["clientDescription"] as? String ?? ""
+                        let addressDescription = data["addressDescription"] as? String ?? ""
                         let shoppingCartID = data["shoppingCartID"] as? String ?? ""
+                        let productsIDs = data["productsIDs"] as? [String] ?? []
                         let shippingMethod = data["shippingMethod"] as? String ?? ""
                         let shippingAddressID = data["shippingAddressID"] as? String ?? ""
                         let paymentMethod = data["paymentMethod"] as? String ?? ""
@@ -48,7 +51,10 @@ class FirestoreOrdersManager: ObservableObject {
                                      orderDate: orderDate,
                                      estimatedDeliveryDate: estimatedDeliveryDate,
                                      clientID: clientID,
+                                     clientDescription: clientDescription,
+                                     addressDescription: addressDescription,
                                      shoppingCartID: shoppingCartID,
+                                     productsIDs: productsIDs,
                                      shippingMethod: ShippingMethod.withLabel(shippingMethod) ?? .courier,
                                      shippingAddressID: shippingAddressID,
                                      paymentMethod: PaymentMethod.withLabel(paymentMethod) ?? .creditCard,
@@ -73,6 +79,7 @@ class FirestoreOrdersManager: ObservableObject {
             "estimatedDeliveryDate": order.estimatedDeliveryDate,
             "clientID": order.clientID,
             "shoppingCartID": order.shoppingCartID,
+            "productsIDs": order.productsIDs,
             "shippingMethod": order.shippingMethod,
             "shippingAddressID": order.shippingAddressID,
             "paymentMethod": order.paymentMethod,

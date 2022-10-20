@@ -179,11 +179,8 @@ struct OrderCreationSummaryView: View {
                                                        totalCostWithAppliedDiscounts: cartViewModel.cartTotalCostWithAppliedDiscounts,
                                                       shippingAddress: desiredAddress) { result in
                         switch result {
-                        case .success(let order):
-                            if let createdOrder = order {
-                                profileViewModel.orders.append(createdOrder)
-                                orderCreationViewModel.shouldPresentOrderCreationCompletionView = true
-                            }
+                        case .success:
+                            orderCreationViewModel.shouldPresentOrderCreationCompletionView = true
                         case .failure(let error):
                             errorManager.generateCustomError(errorType: .orderCreateError,
                                                              additionalErrorDescription: error.localizedDescription)

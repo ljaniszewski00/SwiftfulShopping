@@ -56,10 +56,15 @@ struct ThirdReturnCreationView: View {
             
             Button {
                 withAnimation {
-                    returnCreationViewModel.createReturn(clientID: profileViewModel.profile.id, orderID: returnCreationViewModel.orderForReturn!.id)
-                    profileViewModel.returns.append(returnCreationViewModel.createdReturn!)
-                    
-                    returnCreationViewModel.shouldPresentCompletionReturnCreationView = true
+                    returnCreationViewModel.createReturn(clientID: profileViewModel.profile.id, orderID: returnCreationViewModel.orderForReturn!.id) { result in
+                        switch result {
+                        case .success:
+                            returnCreationViewModel.shouldPresentCompletionReturnCreationView = true
+                        case .failure(let error):
+                            ErrorManager.shared.generateCustomError(errorType: .returnCreateError,
+                                                                    additionalErrorDescription: error.localizedDescription)
+                        }
+                    }
                 }
             } label: {
                 Text("Create Return")

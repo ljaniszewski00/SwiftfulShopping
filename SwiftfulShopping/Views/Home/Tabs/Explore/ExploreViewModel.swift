@@ -143,7 +143,7 @@ class ExploreViewModel: ObservableObject {
     func fetchRatings() {
         showLoadingModal = true
         if let ratings = RatingsRepository.shared.ratings {
-            ratingsFromRepository = ratings
+            self.ratingsFromRepository = ratings
             showLoadingModal = false
         }
     }

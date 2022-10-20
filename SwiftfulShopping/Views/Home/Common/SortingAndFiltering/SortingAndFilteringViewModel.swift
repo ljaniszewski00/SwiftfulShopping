@@ -72,6 +72,20 @@ class SortingAndFilteringViewModel: ObservableObject {
     }
     
     private func sortProducts(productsArray: inout [Product]) {
+        var productsAverageRatings: [Product: Double] = [:]
+        var productsRatingsNumber: [Product: Int] = [:]
+        var productsReviewsNumber: [Product: Int] = [:]
+        
+        for product in productsArray {
+            if let ratings = RatingsRepository.shared.ratings {
+                let productRatings = ratings.filter { $0.productID == product.id }
+                
+                productsAverageRatings[product] = Double((productRatings.map { $0.rating }.reduce(0, +)) / productRatings.count)
+                productsRatingsNumber[product] = productRatings.count
+                productsReviewsNumber[product] = productRatings.filter { $0.review != nil }.map { $0.review }.count
+            }
+        }
+        
         switch sortingMethod {
         case .priceAscending:
             productsArray = productsArray.sorted(by: { $0.price < $1.price })
@@ -80,13 +94,21 @@ class SortingAndFilteringViewModel: ObservableObject {
         case .popularity:
             productsArray = productsArray.sorted(by: { $0.unitsSold > $1.unitsSold })
         case .ratingAscending:
-            productsArray = productsArray.sorted(by: { $0.rating.averageRating < $1.rating.averageRating })
+            productsArray = productsArray.sorted(by: {
+                productsAverageRatings[$0] ?? 0 < productsAverageRatings[$1] ?? 0
+            })
         case .ratingDescending:
-            productsArray = productsArray.sorted(by: { $0.rating.averageRating > $1.rating.averageRating })
+            productsArray = productsArray.sorted(by: {
+                productsAverageRatings[$0] ?? 0 > productsAverageRatings[$1] ?? 0
+            })
         case .reviewsAscending:
-            productsArray = productsArray.sorted(by: { $0.rating.reviewsNumber < $1.rating.reviewsNumber })
+            productsArray = productsArray.sorted(by: {
+                productsReviewsNumber[$0] ?? 0 < productsReviewsNumber[$1] ?? 0
+            })
         case .reviewsDescending:
-            productsArray = productsArray.sorted(by: { $0.rating.reviewsNumber > $1.rating.reviewsNumber })
+            productsArray = productsArray.sorted(by: {
+                productsReviewsNumber[$0] ?? 0 > productsReviewsNumber[$1] ?? 0
+            })
         }
     }
     
@@ -135,15 +157,25 @@ class SortingAndFilteringViewModel: ObservableObject {
                     }
                 }
             case .rating:
+                var productsAverageRatings: [Product: Double] = [:]
+                
+                for product in productsArray {
+                    if let ratings = RatingsRepository.shared.ratings {
+                        let productRatings = ratings.filter { $0.productID == product.id }
+                        
+                        productsAverageRatings[product] = Double((productRatings.map { $0.rating }.reduce(0, +)) / productRatings.count)
+                    }
+                }
+                
                 if lowestRatingFilter > 0 {
                     productsArray = productsArray.filter {
-                        $0.rating.averageRating >= Double(lowestRatingFilter)
+                        productsAverageRatings[$0] ?? 0 >= Double(lowestRatingFilter)
                     }
                 }
                 
                 if highestRatingFilter > 0 {
                     productsArray = productsArray.filter {
-                        $0.rating.averageRating <= Double(highestRatingFilter)
+                        productsAverageRatings[$0] ?? 0 <= Double(highestRatingFilter)
                     }
                 }
             }

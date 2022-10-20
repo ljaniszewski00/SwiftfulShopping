@@ -28,6 +28,8 @@ enum ErrorType: String {
     case databaseManagerEncodingError = "Database Manager: Encoding Error"
     case databaseManagerFetchUsersError = "Database Manager: Fetch Users Error"
     case applyProductRatingError = "Apply Product Rating Error"
+    case returnCreateError = "Return Create Error"
+    case createAddressError = "Create Address Error"
     
     case unknown = "Unknown Error"
 }

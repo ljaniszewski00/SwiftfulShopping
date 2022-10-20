@@ -12,14 +12,18 @@ struct OrdersView: View {
     @EnvironmentObject private var tabBarStateManager: TabBarStateManager
     @EnvironmentObject private var profileViewModel: ProfileViewModel
     
+    @StateObject private var ordersViewModel: OrdersViewModel = OrdersViewModel()
+    
     @Environment(\.dismiss) private var dismiss: DismissAction
     
     var body: some View {
         List {
-            ForEach(profileViewModel.datesForOrdersViewListSections, id: \.self) { stringDate in
+            ForEach(ordersViewModel.datesForOrdersViewListSections, id: \.self) { stringDate in
                 Section {
-                    ForEach(profileViewModel.getOrdersFor(date: stringDate), id: \.self) { order in
-                        NavigationLink(destination: OrderDetailsView(order: order)) {
+                    ForEach(ordersViewModel.getOrdersFor(date: stringDate), id: \.self) { order in
+                        NavigationLink(destination: OrderDetailsView(order: order,
+                                                                     orderProductsList: ordersViewModel.getOrderProductsFor(order: order))
+                                                                                            .environmentObject(ordersViewModel)) {
                             VStack(alignment: .leading, spacing: 20) {
                                 HStack(spacing: 10) {
                                     Text(order.id)
@@ -38,7 +42,7 @@ struct OrdersView: View {
                                     HStack {
                                         Text("Products:")
                                             .font(.ssCallout)
-                                        Text("\(order.shoppingCart.products.count)")
+                                        Text("\(ordersViewModel.getOrderProductsFor(order: order).count)")
                                             .font(.ssTitle3)
                                             .foregroundColor(.accentColor)
                                     }

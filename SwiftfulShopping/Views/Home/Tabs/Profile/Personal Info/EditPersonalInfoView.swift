@@ -14,6 +14,8 @@ struct EditPersonalInfoView: View {
     @EnvironmentObject private var personalInfoViewModel: PersonalInfoViewModel
     @Environment(\.dismiss) var dismiss
     
+    @StateObject var errorManager = ErrorManager.shared
+    
     @State private var isFullNameTextFieldFocused: Bool = false
     @State private var isEmailAddressTextFieldFocused: Bool = false
     
@@ -35,8 +37,17 @@ struct EditPersonalInfoView: View {
                 Button {
                     withAnimation {
                         if let newAddress = personalInfoViewModel.createNewAddress() {
-                            profileViewModel.addNewAddress(address: newAddress, toBeDefault: personalInfoViewModel.toBeDefaultAddress)
-                            dismiss()
+                            personalInfoViewModel.showLoadingModal = true
+                            profileViewModel.addNewAddress(address: newAddress, toBeDefault: personalInfoViewModel.toBeDefaultAddress) { result in
+                                personalInfoViewModel.showLoadingModal = false
+                                switch result {
+                                case .success:
+                                    dismiss()
+                                case .failure(let error):
+                                    errorManager.generateCustomError(errorType: .createAddressError,
+                                                                     additionalErrorDescription: error.localizedDescription)
+                                }
+                            }
                         }
                     }
                 } label: {
@@ -49,6 +60,10 @@ struct EditPersonalInfoView: View {
             }
             .padding()
         }
+        .modifier(LoadingIndicatorModal(isPresented:
+                                            $personalInfoViewModel.showLoadingModal))
+        .modifier(ErrorModal(isPresented: $errorManager.showErrorModal,
+                             customError: errorManager.customError ?? ErrorManager.unknownError))
         .navigationTitle("Edit personal data")
         .navigationBarBackButtonHidden(true)
         .toolbar {

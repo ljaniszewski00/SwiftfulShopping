@@ -66,9 +66,6 @@ struct RegisterView: View {
             .onAppear {
                 registerViewModel.onFirstRegisterViewAppear()
             }
-            .onDisappear {
-                registerViewModel.onFirstRegisterViewDisappear()
-            }
         }
         .background {
             Color(uiColor: .secondarySystemBackground).ignoresSafeArea()

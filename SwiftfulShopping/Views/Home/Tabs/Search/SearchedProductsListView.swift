@@ -37,10 +37,12 @@ struct SearchedProductsListView: View {
                     }
                 } label: {
                     if displayMethod == .list {
-                        ListProductCardTileView(product: product)
+                        ListProductCardTileView(product: product,
+                                                productRatings: exploreViewModel.getRatingsFor(product: product))
                             .measureSize(size: $searchViewModel.productTileSize)
                     } else {
-                        GridProductCardTileView(product: product)
+                        GridProductCardTileView(product: product,
+                                                productRatings: exploreViewModel.getRatingsFor(product: product))
                             .measureSize(size: $searchViewModel.productTileSize)
                     }
                 }

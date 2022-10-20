@@ -11,12 +11,14 @@ struct OrderDetailsView: View {
     @EnvironmentObject private var authStateManager: AuthStateManager
     @EnvironmentObject private var tabBarStateManager: TabBarStateManager
     @EnvironmentObject private var profileViewModel: ProfileViewModel
+    @EnvironmentObject private var ordersViewModel: OrdersViewModel
     @Environment(\.colorScheme) private var colorScheme: ColorScheme
     @Environment(\.dismiss) private var dismiss: DismissAction
     
     @State private var showProductsList: Bool = true
-    
+
     var order: Order
+    @State var orderProductsList: [Product]
     
     var body: some View {
         VStack {
@@ -37,7 +39,7 @@ struct OrderDetailsView: View {
                             .font(.ssTitle2)
                             .foregroundColor(colorScheme == .light ? .black : .ssWhite)
                         
-                        Text(order.client.description)
+                        Text(order.clientDescription)
                             .font(.ssCallout)
                             .foregroundColor(.accentColor)
                             
@@ -48,7 +50,7 @@ struct OrderDetailsView: View {
                             .font(.ssTitle2)
                             .foregroundColor(colorScheme == .light ? .black : .ssWhite)
                         
-                        Text(order.shippingAddress.description)
+                        Text(order.addressDescription)
                             .font(.ssCallout)
                             .foregroundColor(.accentColor)
                             
@@ -70,7 +72,7 @@ struct OrderDetailsView: View {
                             showProductsList.toggle()
                         }, label: {
                             HStack(spacing: 20) {
-                                Text("Products (\(order.shoppingCart.products.count))")
+                                Text("Products (\(orderProductsList.count))")
                                     .font(.ssTitle2)
                                     .foregroundColor(colorScheme == .light ? .black : .ssWhite)
                                 Image(systemName: showProductsList ? "chevron.up" : "chevron.down")
@@ -79,7 +81,7 @@ struct OrderDetailsView: View {
                         
                         if showProductsList {
                             VStack(alignment: .center, spacing: 20) {
-                                ForEach(Array(order.shoppingCart.products.keys).sorted { $0.name > $1.name }, id: \.self) { product in
+                                ForEach(orderProductsList, id: \.self) { product in
                                     BasicProductTile(product: product)
                                     Divider()
                                 }
@@ -160,6 +162,9 @@ struct OrderDetailsView: View {
                 }
             }
         }
+        .onAppear {
+            
+        }
     }
 }
 
@@ -170,7 +175,9 @@ struct OrderDetailsView_Previews: PreviewProvider {
         let profileViewModel = ProfileViewModel()
         ForEach(ColorScheme.allCases, id: \.self) { colorScheme in
             ForEach(["iPhone 13 Pro Max", "iPhone 8"], id: \.self) { deviceName in
-                OrderDetailsView(order: profileViewModel.orders[0])
+                OrderDetailsView(order: Order.demoOrders[0],
+                                 orderProductsList: [Product.demoProducts[0],
+                                                     Product.demoProducts[1]])
                     .environmentObject(authStateManager)
                     .environmentObject(tabBarStateManager)
                     .environmentObject(profileViewModel)

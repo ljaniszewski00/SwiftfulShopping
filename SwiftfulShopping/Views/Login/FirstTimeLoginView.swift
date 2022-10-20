@@ -58,15 +58,16 @@ struct FirstTimeLoginView: View {
                         withAnimation {
                             firstTimeLoginViewModel.showLoadingModal = true
                             firstTimeLoginViewModel.fillInvoiceData()
-                            firstTimeLoginViewModel.completeFirstTimeLogin() { success, error in
+                            firstTimeLoginViewModel.completeFirstTimeLogin() { result in
                                 firstTimeLoginViewModel.showLoadingModal = false
-                                if let error = error {
-                                    ErrorManager.shared.generateCustomError(errorType: .firstTimeLoginError,
-                                                                            additionalErrorDescription: error.localizedDescription)
-                                } else {
+                                switch result {
+                                case .success:
                                     if let signInMethod = authStateManager.loggedWith {
                                         authStateManager.didLogged(with: signInMethod)
                                     }
+                                case .failure(let error):
+                                    ErrorManager.shared.generateCustomError(errorType: .firstTimeLoginError,
+                                                                            additionalErrorDescription: error.localizedDescription)
                                 }
                             }
                         }

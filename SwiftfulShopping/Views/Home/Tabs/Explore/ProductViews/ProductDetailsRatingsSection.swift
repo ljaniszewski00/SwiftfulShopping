@@ -13,6 +13,15 @@ struct ProductDetailsRatingsSection: View {
     @State private var ratingsSectionExpanded: Bool = true
     
     var product: Product
+    var productRatings: [ProductRating]
+    
+    var productAverageRating: Double {
+        Double((productRatings.map { $0.rating }.reduce(0, +)) / productRatings.count)
+    }
+    
+    var productReviewsNumber: Int {
+        productRatings.filter { $0.review != nil }.count
+    }
     
     var body: some View {
         ScrollView {
@@ -23,17 +32,17 @@ struct ProductDetailsRatingsSection: View {
 
                     HStack(spacing: 30) {
                         VStack(alignment: .center, spacing: 10) {
-                            Text("\(product.rating.averageRating, specifier: "%.2f") / 5")
+                            Text("\(productAverageRating, specifier: "%.2f") / 5")
                                 .font(.system(size: 26, weight: .bold))
                             HStack {
-                                ForEach(1...Int(round(product.rating.averageRating)), id: \.self) { _ in
+                                ForEach(1...Int(round(productAverageRating)), id: \.self) { _ in
                                     Image(systemName: "star.fill")
                                         .resizable()
                                         .frame(width: 20, height: 20)
                                         .foregroundColor(.accentColor)
                                 }
 
-                                ForEach(Int(round(product.rating.averageRating))..<5, id: \.self) { _ in
+                                ForEach(Int(round(productAverageRating))..<5, id: \.self) { _ in
                                     Image(systemName: "star")
                                         .resizable()
                                         .frame(width: 20, height: 20)
@@ -65,7 +74,7 @@ struct ProductDetailsRatingsSection: View {
                                             .frame(width: 130, height: 7)
                                         RoundedRectangle(cornerRadius: 10)
                                             .foregroundColor(.accentColor)
-                                            .frame(width: (130 / CGFloat(product.rating.ratingsNumber)),
+                                            .frame(width: (130 / CGFloat(productRatings.count)),
                                                    height: 7)
                                     }
                                 }
@@ -73,7 +82,7 @@ struct ProductDetailsRatingsSection: View {
 
                             VStack(spacing: 5) {
                                 ForEach(Array(1...5).reversed(), id: \.self) { number in
-                                    Text("\(product.rating.productRates.filter { $0.rating == number }.count)")
+                                    Text("\(productRatings.filter { $0.rating == number }.count)")
                                         .font(.ssCallout)
                                         .foregroundColor(.ssDarkGray)
                                 }
@@ -91,7 +100,7 @@ struct ProductDetailsRatingsSection: View {
                         ratingsSectionExpanded.toggle()
                     }, label: {
                         HStack {
-                            Text("Comments (\(product.rating.reviewsNumber))")
+                            Text("Comments (\(productReviewsNumber))")
                                 .font(.ssTitle3)
                                 .foregroundColor(colorScheme == .light ? .black : .ssWhite)
                         }
@@ -100,8 +109,8 @@ struct ProductDetailsRatingsSection: View {
 
                     if ratingsSectionExpanded {
                         VStack {
-                            ForEach(Array(product.rating.productRates), id: \.self) { productRate in
-                                if productRate.review != nil {
+                            ForEach(Array(productRatings), id: \.self) { productRating in
+                                if let productReview = productRating.review {
                                     VStack(alignment: .leading, spacing: 20) {
                                         HStack(spacing: 20) {
                                             Image("blank_profile_image")
@@ -111,7 +120,7 @@ struct ProductDetailsRatingsSection: View {
                                                 .frame(width: 60, height: 60)
                                             
                                             VStack(alignment: .leading, spacing: 10) {
-                                                Text(productRate.authorFirstName)
+                                                Text(productRating.authorFirstName)
                                                     .font(.ssTitle3)
                                                     .fixedSize(horizontal: false, vertical: true)
                                                 
@@ -121,21 +130,21 @@ struct ProductDetailsRatingsSection: View {
                                                             .resizable()
                                                             .frame(width: 20, height: 20)
                                                             .foregroundColor(.accentColor)
-                                                        Text("\(productRate.rating)")
+                                                        Text("\(productRating.rating)")
                                                             .font(.ssCallout)
                                                     }
 
                                                     Text("•")
                                                         .padding(.horizontal, 5)
 
-                                                    Text(productRate.date.dateString())
+                                                    Text(productRating.date.dateString())
                                                         .font(.ssCallout)
                                                         .fixedSize(horizontal: true, vertical: false)
                                                 }
                                             }
                                         }
 
-                                        Text(productRate.review!)
+                                        Text(productReview)
                                             .font(.ssBody).fontWeight(.regular)
                                             .fixedSize(horizontal: false, vertical: true)
                                     }
@@ -158,7 +167,8 @@ struct ProductDetailsRatingsSection_Previews: PreviewProvider {
     static var previews: some View {
         ForEach(ColorScheme.allCases, id: \.self) { colorScheme in
             ForEach(["iPhone 13 Pro Max", "iPhone 8"], id: \.self) { deviceName in
-                ProductDetailsRatingsSection(product: Product.demoProducts[0])
+                ProductDetailsRatingsSection(product: Product.demoProducts[0],
+                                             productRatings: ProductRating.demoProductsRatings)
                     .preferredColorScheme(colorScheme)
                     .previewDevice(PreviewDevice(rawValue: deviceName))
                     .previewDisplayName("\(deviceName) portrait")
