@@ -83,6 +83,7 @@ struct LoginView: View {
                                     withAnimation {
                                         loginViewModel.showLoadingModal = true
                                         loginViewModel.choosenSignInMethod = .emailPassword
+                                        
                                         FirebaseAuthManager.client.firebaseEmailPasswordSignIn(email: loginViewModel.email,
                                                                                                password: loginViewModel.password) { result in
                                             loginViewModel.showLoadingModal = false

@@ -12,6 +12,7 @@ class ExploreViewModel: ObservableObject {
     
     @Published var productsFromRepository: [Product] = []
     @Published var productsToBeDisplayed: [Product] = []
+    @Published var ratingsFromRepository: [ProductRating] = []
     
     @Published var productsForTab: TabsWithProducts = .exploreView
     
@@ -35,6 +36,11 @@ class ExploreViewModel: ObservableObject {
     
     @Published var scrollProductsListToBeginning: Bool = false
     @Published var categoriesTileSize: CGSize = .zero
+    
+    func onAppear() {
+        fetchProducts()
+        fetchRatings()
+    }
     
     var productsCategoriesWithImageURL: [Category: String] {
         var productsCategoriesWithImageURL: [Category: String] = [:]
@@ -127,11 +133,23 @@ class ExploreViewModel: ObservableObject {
     
     func fetchProducts() {
         showLoadingModal = true
-        DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) { [weak self] in
-            self?.productsFromRepository = ProductsRepository.shared.products
-            self?.productsToBeDisplayed = ProductsRepository.shared.products
-            self?.showLoadingModal = false
+        if let products = ProductsRepository.shared.products {
+            productsFromRepository = products
+            productsToBeDisplayed = products
+            showLoadingModal = false
         }
+    }
+    
+    func fetchRatings() {
+        showLoadingModal = true
+        if let ratings = RatingsRepository.shared.ratings {
+            ratingsFromRepository = ratings
+            showLoadingModal = false
+        }
+    }
+    
+    func getRatingsFor(product: Product) -> [ProductRating] {
+        ratingsFromRepository.filter { $0.id == product.id }
     }
     
     var changingProductsToBeDisplayed: [Product] {

@@ -38,9 +38,11 @@ struct ProductsListView: View {
                         }
                     } label: {
                         if displayMethod == .list {
-                            ListProductCardTileView(product: product)
+                            ListProductCardTileView(product: product,
+                                                    productRatings: exploreViewModel.getRatingsFor(product: product))
                         } else {
-                            GridProductCardTileView(product: product)
+                            GridProductCardTileView(product: product,
+                                                    productRatings: exploreViewModel.getRatingsFor(product: product))
                         }
                     }
                     .buttonStyle(ScaledButtonStyle())

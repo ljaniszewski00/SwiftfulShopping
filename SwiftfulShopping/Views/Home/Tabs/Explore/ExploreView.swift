@@ -198,7 +198,8 @@ struct ExploreView: View {
                         exploreViewModel.changeFocusedProductFor(product: product)
                     }
                 } label: {
-                    ListProductCardTileView(product: product)
+                    ListProductCardTileView(product: product,
+                                            productRatings: exploreViewModel.getRatingsFor(product: product))
                 }
                 .buttonStyle(ScaledButtonStyle())
             }

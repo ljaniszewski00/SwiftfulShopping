@@ -15,6 +15,29 @@ struct ListProductCardTileView: View {
     @Environment(\.colorScheme) var colorScheme
     
     var product: Product
+    var productRatings: [ProductRating]
+    
+    var averageRating: Double {
+        var overallRating: Int = 0
+        for productRating in productRatings {
+            overallRating += productRating.rating
+        }
+        return Double(overallRating / productRatings.count)
+    }
+
+    var ratingsNumber: Int {
+        productRatings.count
+    }
+
+    var reviewsNumber: Int {
+        var count: Int = 0
+        for productRating in productRatings {
+            if productRating.review != nil {
+                count += 1
+            }
+        }
+        return count
+    }
     
     var body: some View {
         HStack(alignment: .center) {
@@ -83,14 +106,14 @@ struct ListProductCardTileView: View {
                 
                 VStack(alignment: .leading, spacing: 10) {
                     HStack {
-                        ForEach(1...Int(round(product.rating.averageRating)), id: \.self) { _ in
+                        ForEach(1...Int(round(averageRating)), id: \.self) { _ in
                             Image(systemName: "star.fill")
                                 .resizable()
                                 .frame(width: 15, height: 15)
                                 .foregroundColor(.accentColor)
                         }
                         
-                        ForEach(Int(round(product.rating.averageRating))..<5, id: \.self) { _ in
+                        ForEach(Int(round(averageRating))..<5, id: \.self) { _ in
                             Image(systemName: "star")
                                 .resizable()
                                 .frame(width: 15, height: 15)
@@ -98,7 +121,7 @@ struct ListProductCardTileView: View {
                         }
                     }
                     
-                    Text("\(product.rating.ratingsNumber) ratings")
+                    Text("\(ratingsNumber) ratings")
                         .font(.ssCaption1)
                         .foregroundColor(.ssDarkGray)
                 }
@@ -131,7 +154,8 @@ struct ListProductCardTileView_Previews: PreviewProvider {
         let favoritesViewModel = FavoritesViewModel()
         ForEach(ColorScheme.allCases, id: \.self) { colorScheme in
             ForEach(["iPhone 13 Pro Max", "iPhone 8"], id: \.self) { deviceName in
-                ListProductCardTileView(product: Product.demoProducts[2])
+                ListProductCardTileView(product: Product.demoProducts[2],
+                                        productRatings: [ProductRating.demoProductsRatings[0]])
                     .environmentObject(cartViewModel)
                     .environmentObject(favoritesViewModel)
                     .preferredColorScheme(colorScheme)

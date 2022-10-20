@@ -15,7 +15,29 @@ struct GridProductCardTileView: View {
     @Environment(\.colorScheme) var colorScheme
     
     var product: Product
-    var productRating: ProductRating
+    var productRatings: [ProductRating]
+    
+    var averageRating: Double {
+        var overallRating: Int = 0
+        for productRating in productRatings {
+            overallRating += productRating.rating
+        }
+        return Double(overallRating / productRatings.count)
+    }
+
+    var ratingsNumber: Int {
+        productRatings.count
+    }
+
+    var reviewsNumber: Int {
+        var count: Int = 0
+        for productRating in productRatings {
+            if productRating.review != nil {
+                count += 1
+            }
+        }
+        return count
+    }
     
     var body: some View {
         VStack(alignment: .center, spacing: 0) {
@@ -64,14 +86,14 @@ struct GridProductCardTileView: View {
                     
                     VStack(alignment: .trailing, spacing: 10) {
                         HStack {
-                            ForEach(1...Int(round(productRating.averageRating)), id: \.self) { _ in
+                            ForEach(1...Int(round(averageRating)), id: \.self) { _ in
                                 Image(systemName: "star.fill")
                                     .resizable()
                                     .frame(width: 20, height: 20)
                                     .foregroundColor(.accentColor)
                             }
                             
-                            ForEach(Int(round(productRating.averageRating))..<5, id: \.self) { _ in
+                            ForEach(Int(round(averageRating))..<5, id: \.self) { _ in
                                 Image(systemName: "star")
                                     .resizable()
                                     .frame(width: 20, height: 20)
@@ -79,7 +101,7 @@ struct GridProductCardTileView: View {
                             }
                         }
                         
-                        Text("\(productRating.ratingsNumber) ratings")
+                        Text("\(ratingsNumber) ratings")
                             .font(.ssCallout)
                             .foregroundColor(.ssDarkGray)
                     }
@@ -136,7 +158,8 @@ struct GridProductCardTileView_Previews: PreviewProvider {
         let favoritesViewModel = FavoritesViewModel()
         ForEach(ColorScheme.allCases, id: \.self) { colorScheme in
             ForEach(["iPhone 13 Pro Max", "iPhone 8"], id: \.self) { deviceName in
-                GridProductCardTileView(product: Product.demoProducts[1], productRating: ProductRating.demoProductsRatings[0])
+                GridProductCardTileView(product: Product.demoProducts[1],
+                                        productRatings: [ProductRating.demoProductsRatings[0]])
                     .environmentObject(cartViewModel)
                     .environmentObject(favoritesViewModel)
                     .preferredColorScheme(colorScheme)

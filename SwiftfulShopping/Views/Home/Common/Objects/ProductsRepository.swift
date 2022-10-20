@@ -8,30 +8,36 @@
 import Foundation
 
 class ProductsRepository: ObservableObject {
-    @Published var products: [Product] = []
+    @Published var products: [Product]?
     
     static var shared: ProductsRepository = {
         ProductsRepository()
     }()
     
     private init() {
-        self.products = Product.demoProducts
+        fetchProducts { [weak self] products in
+            self?.products = products
+        }
+    }
+    
+    func fetchProducts(completion: @escaping (([Product]?) -> ())) {
+        FirestoreProductsManager.client.getProducts { result in
+            switch result {
+            case .success(let products):
+                completion(products)
+            case .failure(let error):
+                print("Error fetching products from repository: \(error.localizedDescription)")
+                completion([])
+            }
+        }
     }
     
     func getProductFor(productID: String) -> Product? {
-        for product in products where product.id == productID {
-            return product
-        }
-        return nil
-    }
-    
-    func addRatingFor(product: inout Product, authorID: String, authorFirstName: String, rating: Int, review: String?) {
-        product.addRate(authorID: authorID, authorFirstName: authorFirstName, rating: rating, review: review)
+        return products?.filter { $0.id == productID }.first
     }
 }
 
 extension ProductsRepository: NSCopying {
-
     func copy(with zone: NSZone? = nil) -> Any {
         return self
     }

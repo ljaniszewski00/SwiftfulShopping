@@ -15,6 +15,8 @@ struct SingleProductRatingView: View {
     
     @Environment(\.dismiss) var dismiss
     
+    @StateObject var errorManager = ErrorManager.shared
+    
     var body: some View {
         VStack(alignment: .leading) {
             ScrollView(.vertical) {
@@ -67,9 +69,17 @@ struct SingleProductRatingView: View {
                     
                     Button {
                         withAnimation {
-                            ratingViewModel.applyProductRating(authorID: profileViewModel.profile.id, authorFirstName: profileViewModel.profile.fullName.components(separatedBy: " ").first!)
-                            profileViewModel.addUserRating(productID: ratingViewModel.activeProduct!.id, rating: ratingViewModel.productRating, review: ratingViewModel.textForRating)
-                            dismiss()
+                            ratingViewModel.applyProductRating(authorID: profileViewModel.profile.id,
+                                                               authorFirstName: profileViewModel.profile.fullName.components(separatedBy: " ").first!) { result in
+                                switch result {
+                                case .success:
+                                    profileViewModel.addUserRating(productID: ratingViewModel.activeProduct!.id, rating: ratingViewModel.productRating, review: ratingViewModel.textForRating)
+                                    dismiss()
+                                case .failure(let error):
+                                    ErrorManager.shared.generateCustomError(errorType: .applyProductRatingError,
+                                                                            additionalErrorDescription: error.localizedDescription)
+                                }
+                            }
                         }
                     } label: {
                         Text("Add opinion")
@@ -80,6 +90,10 @@ struct SingleProductRatingView: View {
                 }
                 .padding()
             }
+            .modifier(LoadingIndicatorModal(isPresented:
+                                                $ratingViewModel.showLoadingModal))
+            .modifier(ErrorModal(isPresented: $errorManager.showErrorModal,
+                                 customError: errorManager.customError ?? ErrorManager.unknownError))
         }
         .navigationTitle("Rate the product")
         .navigationBarTitleDisplayMode(.inline)

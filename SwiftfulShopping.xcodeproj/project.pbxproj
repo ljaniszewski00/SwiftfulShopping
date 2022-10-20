@@ -132,6 +132,7 @@
 		0A3C7AD429005F470079B290 /* FirestoreCartManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A3C7AD329005F470079B290 /* FirestoreCartManager.swift */; };
 		0A3C7AD629006B360079B290 /* Result.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A3C7AD529006B360079B290 /* Result.swift */; };
 		0A3C7AD829006B710079B290 /* VoidResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A3C7AD729006B710079B290 /* VoidResult.swift */; };
+		0A3C7ADA290137230079B290 /* RatingsRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A3C7AD9290137230079B290 /* RatingsRepository.swift */; };
 		0A3D7F5928D1FD7800D51327 /* MobileNetV2.mlmodel in Sources */ = {isa = PBXBuildFile; fileRef = 0A3D7F5728D1FD7800D51327 /* MobileNetV2.mlmodel */; };
 		0A3D7F5A28D1FD7800D51327 /* SqueezeNet.mlmodel in Sources */ = {isa = PBXBuildFile; fileRef = 0A3D7F5828D1FD7800D51327 /* SqueezeNet.mlmodel */; };
 		0A3DE45328899F65008B050B /* Category.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A3DE45228899F65008B050B /* Category.swift */; };
@@ -378,6 +379,7 @@
 		0A3C7AD329005F470079B290 /* FirestoreCartManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirestoreCartManager.swift; sourceTree = "<group>"; };
 		0A3C7AD529006B360079B290 /* Result.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Result.swift; sourceTree = "<group>"; };
 		0A3C7AD729006B710079B290 /* VoidResult.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VoidResult.swift; sourceTree = "<group>"; };
+		0A3C7AD9290137230079B290 /* RatingsRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RatingsRepository.swift; sourceTree = "<group>"; };
 		0A3D7F5728D1FD7800D51327 /* MobileNetV2.mlmodel */ = {isa = PBXFileReference; lastKnownFileType = file.mlmodel; path = MobileNetV2.mlmodel; sourceTree = "<group>"; };
 		0A3D7F5828D1FD7800D51327 /* SqueezeNet.mlmodel */ = {isa = PBXFileReference; lastKnownFileType = file.mlmodel; path = SqueezeNet.mlmodel; sourceTree = "<group>"; };
 		0A3DE45228899F65008B050B /* Category.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Category.swift; sourceTree = "<group>"; };
@@ -526,6 +528,7 @@
 			isa = PBXGroup;
 			children = (
 				0A237400288D62730076A5AB /* ProductsRepository.swift */,
+				0A3C7AD9290137230079B290 /* RatingsRepository.swift */,
 			);
 			path = Objects;
 			sourceTree = "<group>";
@@ -1382,6 +1385,7 @@
 				0A27783028C91B7B00BDE2F1 /* ErrorType.swift in Sources */,
 				0A3DE45B2889AAA9008B050B /* ProductColor.swift in Sources */,
 				0A268B43286712C8006CF0E2 /* Date.swift in Sources */,
+				0A3C7ADA290137230079B290 /* RatingsRepository.swift in Sources */,
 				0A3441C028A423BA005FFFD5 /* SearchedProductsListView.swift in Sources */,
 				0ACD5906284A6F6600AA9DA0 /* RegisterView.swift in Sources */,
 				0AB8D9902864B583003DC2E6 /* ShippingMethod.swift in Sources */,

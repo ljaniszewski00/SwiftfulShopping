@@ -60,7 +60,8 @@ class FirebaseAuthManager: ObservableObject {
         }
     }
     
-    func firebaseSendPasswordReset(email: String, completion: @escaping ((VoidResult) -> ())) {
+    func firebaseSendPasswordReset(email: String,
+                                   completion: @escaping ((VoidResult) -> ())) {
         auth.sendPasswordReset(withEmail: email) { error in
             if let error = error {
                 completion(.failure(error))

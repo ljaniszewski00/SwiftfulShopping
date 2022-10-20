@@ -20,7 +20,7 @@ class FirestoreProductsManager: ObservableObject {
     
     // MARK: SELECT DATABASE OPERATIONS
     
-    func getProducts(userID: String, completion: @escaping ((Result<[Product]?, Error>) -> ())) {
+    func getProducts(completion: @escaping ((Result<[Product]?, Error>) -> ())) {
         db.collection(DatabaseCollections.products.rawValue)
             .addSnapshotListener { querySnapshot, error in
                 if let error = error {
@@ -44,6 +44,7 @@ class FirestoreProductsManager: ObservableObject {
                         let keywords = data["keywords"] as? [String] ?? []
                         let rating = data["rating"] as? String ?? ""
                         let imagesURLs = data["imagesURLs"] as? [String] ?? []
+                        let productRatingsIDs = data["productRatingsIDs"] as? [String] ?? []
                         
                         return Product(id: id,
                                        name: name,
@@ -56,7 +57,8 @@ class FirestoreProductsManager: ObservableObject {
                                        isRecommended: isRecommended,
                                        isNew: isNew,
                                        keywords: keywords,
-                                       imagesURLs: imagesURLs)
+                                       imagesURLs: imagesURLs,
+                                       productRatingsIDs: productRatingsIDs)
                     }
                     
                     print("Successfully fetched products data")
@@ -65,39 +67,71 @@ class FirestoreProductsManager: ObservableObject {
             }
     }
     
-    func getProductRatings(productID: String, completion: @escaping ((Result<ProductRating?, Error>) -> ())) {
+    func getRatings(completion: @escaping ((Result<[ProductRating]?, Error>) -> ())) {
         db.collection(DatabaseCollections.productsRatings.rawValue)
-            .document(productID)
-            .collection(DatabaseCollections.productRates.rawValue)
             .addSnapshotListener { querySnapshot, error in
                 if let error = error {
-                    print("Error fetching product rates data: \(error.localizedDescription)")
+                    print("Error fetching all ratings data: \(error.localizedDescription)")
                     completion(.failure(error))
                 } else {
-                    let productRates = querySnapshot!.documents.map { (queryDocumentSnapshot) -> ProductRate in
+                    let productRatings = querySnapshot!.documents.map { (queryDocumentSnapshot) -> ProductRating in
                         
                         let data = queryDocumentSnapshot.data()
 
                         let id = data["id"] as? String ?? ""
+                        let productID = data["productID"] as? String ?? ""
                         let authorID = data["authorID"] as? String ?? ""
                         let authorFirstName = data["authorFirstName"] as? String ?? ""
                         let rating = data["rating"] as? Int ?? 0
                         let review = data["review"] as? String ?? ""
                         let date = data["date"] as? Date ?? Date()
                         
-                        return ProductRate(id: id,
-                                           authorID: authorID,
-                                           authorFirstName: authorFirstName,
-                                           rating: rating,
-                                           review: review,
-                                           date: date)
+                        return ProductRating(id: id,
+                                             productID: productID,
+                                             authorID: authorID,
+                                             authorFirstName: authorFirstName,
+                                             rating: rating,
+                                             review: review,
+                                             date: date)
+                    }
+                    
+                    print("Successfully fetched all ratings data")
+                    completion(.success(productRatings))
+                }
+            }
+    }
+    
+    func getProductRatings(productID: String, completion: @escaping ((Result<[ProductRating]?, Error>) -> ())) {
+        db.collection(DatabaseCollections.productsRatings.rawValue)
+            .whereField("productID", isEqualTo: productID)
+            .addSnapshotListener { querySnapshot, error in
+                if let error = error {
+                    print("Error fetching product ratings data: \(error.localizedDescription)")
+                    completion(.failure(error))
+                } else {
+                    let productRatings = querySnapshot!.documents.map { (queryDocumentSnapshot) -> ProductRating in
+                        
+                        let data = queryDocumentSnapshot.data()
+
+                        let id = data["id"] as? String ?? ""
+                        let productID = data["productID"] as? String ?? ""
+                        let authorID = data["authorID"] as? String ?? ""
+                        let authorFirstName = data["authorFirstName"] as? String ?? ""
+                        let rating = data["rating"] as? Int ?? 0
+                        let review = data["review"] as? String ?? ""
+                        let date = data["date"] as? Date ?? Date()
+                        
+                        return ProductRating(id: id,
+                                             productID: productID,
+                                             authorID: authorID,
+                                             authorFirstName: authorFirstName,
+                                             rating: rating,
+                                             review: review,
+                                             date: date)
                     }
                     
                     print("Successfully fetched product ratings data")
-                    
-                    let productRating = ProductRating(id: productID,
-                                                      productRates: productRates)
-                    completion(.success(productRating))
+                    completion(.success(productRatings))
                 }
             }
     }
@@ -140,34 +174,25 @@ class FirestoreProductsManager: ObservableObject {
     
     // MARK: INSERT DATABASE OPERATIONS
     
-    func addProductRate(userID: String, productRate: ProductRate, completion: @escaping ((VoidResult) -> ())) {
+    func addProductRating(userID: String, productRating: ProductRating, completion: @escaping ((VoidResult) -> ())) {
         let productRatingDocumentData: [String: Any] = [
-            "id": productRate.productID
+            "id": productRating.id,
+            "productID": productRating.productID,
+            "authorID": productRating.authorID,
+            "authorFirstName": productRating.authorFirstName,
+            "rating": productRating.rating,
+            "review": productRating.review ?? "",
+            "date": productRating.date
         ]
         
         self.db.collection(DatabaseCollections.productsRatings.rawValue)
-            .document(productRate.productID)
+            .document(productRating.id)
             .setData(productRatingDocumentData) { (error) in
             if let error = error {
                 print("Error creating product's rating data: \(error.localizedDescription)")
                 completion(.failure(error))
             } else {
                 print("Successfully created product's rating data for user identifying with id: \(userID) in database")
-                let productRateDocumentData: [String: Any] = [
-                    "id": productRate.id,
-                    "authorID": productRate.authorID,
-                    "authorFirstName": productRate.authorFirstName,
-                    "rating": productRate.rating,
-                    "review": productRate.review ?? "",
-                    "date": productRate.date
-                ]
-                
-                self.db.collection(DatabaseCollections.productsRatings.rawValue)
-                    .document(productRate.productID)
-                    .collection(DatabaseCollections.productRates.rawValue)
-                    .document(productRate.id)
-                    .setData(productRateDocumentData)
-                    
                 completion(.success)
             }
         }

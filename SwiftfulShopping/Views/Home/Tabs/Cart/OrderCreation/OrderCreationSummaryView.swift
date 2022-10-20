@@ -255,12 +255,12 @@ struct OrderCreationSummaryView_Previews: PreviewProvider {
                         orderCreationViewModel.defaultAddress = Address.demoAddress.description
                         orderCreationViewModel.choosenPaymentMethod = PaymentMethod.creditCard
                         orderCreationViewModel.createdOrder = Order.demoOrders[0]
-                        cartViewModel.cart.products = [Product.demoProducts[0]: 2,
-                                                       Product.demoProducts[1]: 1,
-                                                       Product.demoProducts[2]: 3,
-                                                       Product.demoProducts[3]: 1]
-                        cartViewModel.cart.appliedDiscounts.insert(Discount.demoDiscounts[0])
-                        cartViewModel.cart.appliedDiscounts.insert(Discount.demoDiscounts[1])
+                        cartViewModel.productsForCart = [Product.demoProducts[0]: 2,
+                                                         Product.demoProducts[1]: 1,
+                                                         Product.demoProducts[2]: 3,
+                                                         Product.demoProducts[3]: 1]
+                        cartViewModel.appliedDiscounts.insert(Discount.demoDiscounts[0])
+                        cartViewModel.appliedDiscounts.insert(Discount.demoDiscounts[1])
                     }
             }
         }

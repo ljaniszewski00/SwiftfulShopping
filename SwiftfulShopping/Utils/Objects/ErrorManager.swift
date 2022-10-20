@@ -28,6 +28,7 @@ final class ErrorManager: ObservableObject {
         .changePasswordError: "Error occured while trying to change the password. \(errorDescriptionSuffix)",
         .deleteAccountError: "Error occured while trying delete the account. \(errorDescriptionSuffix)",
         .databaseManagerEncodingError: "Error encoding requestes data. \(errorDescriptionSuffix)",
+        .applyProductRatingError: "Error adding new rating. \(errorDescriptionSuffix)",
         .unknown: ""
     ]
     

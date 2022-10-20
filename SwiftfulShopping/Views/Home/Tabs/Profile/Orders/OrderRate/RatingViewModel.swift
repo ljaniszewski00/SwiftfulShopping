@@ -14,6 +14,8 @@ class RatingViewModel: ObservableObject {
     @Published var productRating: Int = 0
     @Published var textForRating: String = ""
     
+    @Published var showLoadingModal: Bool = false
+    
     var cannotAddOpinion: Bool {
         ratingIsNotValid || ratingTextTooLong
     }
@@ -35,11 +37,21 @@ class RatingViewModel: ObservableObject {
         productRating = rating
     }
     
-    func applyProductRating(authorID: String, authorFirstName: String) {
-        ProductsRepository.shared.addRatingFor(product: &(activeProduct)!,
-                                               authorID: authorID,
-                                               authorFirstName: authorFirstName,
-                                               rating: productRating,
-                                               review: textForRating.isEmpty ? nil : textForRating)
+    func applyProductRating(authorID: String, authorFirstName: String, completion: @escaping ((VoidResult) -> ())) {
+        let productRating = ProductRating(id: UUID().uuidString,
+                                          productID: activeProduct?.id ?? "Error",
+                                          authorID: authorID,
+                                          authorFirstName: authorFirstName,
+                                          rating: productRating,
+                                          review: textForRating,
+                                          date: Date())
+        
+        showLoadingModal = true
+        
+        FirestoreProductsManager.client.addProductRating(userID: authorID,
+                                                         productRating: productRating) { [weak self] result in
+            self?.showLoadingModal = false
+            completion(result)
+        }
     }
 }
