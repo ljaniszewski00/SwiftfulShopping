@@ -8,7 +8,6 @@
 import SwiftUI
 
 struct ChangePasswordView: View {
-    @EnvironmentObject private var authStateManager: AuthStateManager
     @EnvironmentObject private var settingsViewModel: SettingsViewModel
     @Environment(\.dismiss) private var dismiss: DismissAction
     
@@ -98,19 +97,14 @@ struct ChangePasswordView: View {
 
 struct ChangePasswordView_Previews: PreviewProvider {
     static var previews: some View {
-        let authStateManager = AuthStateManager()
         let settingsViewModel = SettingsViewModel()
         ForEach(ColorScheme.allCases, id: \.self) { colorScheme in
             ForEach(["iPhone 13 Pro Max", "iPhone 8"], id: \.self) { deviceName in
                 ChangePasswordView()
-                    .environmentObject(authStateManager)
                     .environmentObject(settingsViewModel)
                     .preferredColorScheme(colorScheme)
                     .previewDevice(PreviewDevice(rawValue: deviceName))
                     .previewDisplayName("\(deviceName) portrait")
-                    .onAppear {
-                        authStateManager.didLogged(with: .emailPassword)
-                    }
             }
         }
     }

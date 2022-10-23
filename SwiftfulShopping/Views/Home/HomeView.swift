@@ -8,7 +8,6 @@
 import SwiftUI
 
 struct HomeView: View {
-    @EnvironmentObject private var authStateManager: AuthStateManager
     @EnvironmentObject private var accentColorManager: AccentColorManager
     
     @StateObject private var tabBarStateManager = TabBarStateManager()
@@ -19,6 +18,7 @@ struct HomeView: View {
     @StateObject private var favoritesViewModel = FavoritesViewModel()
     @StateObject private var sortingAndFilteringViewModel = SortingAndFilteringViewModel()
     
+    @StateObject var firebaseAuthManager = FirebaseAuthManager.client
     @StateObject var networkManager = NetworkManager.shared
     @StateObject var errorManager = ErrorManager.shared
     
@@ -48,13 +48,13 @@ struct HomeView: View {
     ]
     
     var body: some View {
-        if authStateManager.isLogged {
+        if firebaseAuthManager.isLogged {
             ZStack(alignment: .bottom) {
                 Group {
                     switch selectedTab {
                     case .explore:
                         ExploreView()
-                            .environmentObject(authStateManager)
+                            .environmentObject(firebaseAuthManager)
                             .environmentObject(tabBarStateManager)
                             .environmentObject(exploreViewModel)
                             .environmentObject(profileViewModel)
@@ -69,7 +69,7 @@ struct HomeView: View {
                             }
                     case .favorites:
                         FavoritesView()
-                            .environmentObject(authStateManager)
+                            .environmentObject(firebaseAuthManager)
                             .environmentObject(tabBarStateManager)
                             .environmentObject(exploreViewModel)
                             .environmentObject(profileViewModel)
@@ -77,7 +77,7 @@ struct HomeView: View {
                             .environmentObject(favoritesViewModel)
                     case .cart:
                         CartView()
-                            .environmentObject(authStateManager)
+                            .environmentObject(firebaseAuthManager)
                             .environmentObject(tabBarStateManager)
                             .environmentObject(exploreViewModel)
                             .environmentObject(profileViewModel)
@@ -85,7 +85,7 @@ struct HomeView: View {
                             .environmentObject(cartViewModel)
                     case .search:
                         SearchView()
-                            .environmentObject(authStateManager)
+                            .environmentObject(firebaseAuthManager)
                             .environmentObject(tabBarStateManager)
                             .environmentObject(exploreViewModel)
                             .environmentObject(profileViewModel)
@@ -100,7 +100,7 @@ struct HomeView: View {
                             }
                     case .profile:
                         ProfileView()
-                            .environmentObject(authStateManager)
+                            .environmentObject(firebaseAuthManager)
                             .environmentObject(accentColorManager)
                             .environmentObject(tabBarStateManager)
                             .environmentObject(profileViewModel)
@@ -168,13 +168,31 @@ struct HomeView: View {
             .modifier(ErrorModal(isPresented: $errorManager.showErrorModal,
                                  customError: errorManager.customError ?? ErrorManager.unknownError))
             .onAppear {
-                homeViewModel.showLoadingModal = true
+//                // MARK: For adding products and rating to database in a quick way
+//                for product in Product.demoProducts {
+//                    print(product)
+//                    FirestoreProductsManager.client.addProduct(product: product) { _ in }
+//                    for rating in ProductRating.demoProductsRatings {
+//                        let productRating = ProductRating(id: UUID().uuidString,
+//                                                          productID: product.id,
+//                                                          authorID: "hVH1eAzuxFMqoFdDtmWlsqOXnFY2",
+//                                                          authorFirstName: "Jan",
+//                                                          rating: rating.rating,
+//                                                          review: rating.review,
+//                                                          date: Date())
+//
+//                        FirestoreProductsManager.client.addProductRating(productRating: rating) { _ in }
+//                    }
+//                }
                 
-                profileViewModel.fetchProfile { _ in
-                    exploreViewModel.onAppear()
-                    cartViewModel.restorePreviousCart()
-                    favoritesViewModel.fetchFavorites()
-                }
+//                homeViewModel.showLoadingModal = true
+//                
+//                profileViewModel.fetchProfile { _ in
+//                    exploreViewModel.onAppear()
+//                    cartViewModel.restorePreviousCart()
+//                    favoritesViewModel.fetchFavorites()
+//                    homeViewModel.showLoadingModal = false
+//                }
             }
             .ignoresSafeArea(edges: .bottom)
             .onChange(of: networkManager.isConnected) { newValue in
@@ -191,12 +209,10 @@ struct HomeView: View {
 
 struct HomeView_Previews: PreviewProvider {
     static var previews: some View {
-        let authStateManager = AuthStateManager()
         let accentColorManager = AccentColorManager()
         ForEach(ColorScheme.allCases, id: \.self) { colorScheme in
             ForEach(["iPhone 13 Pro Max", "iPhone 8"], id: \.self) { deviceName in
                 HomeView()
-                    .environmentObject(authStateManager)
                     .environmentObject(accentColorManager)
                     .preferredColorScheme(colorScheme)
                     .previewDevice(PreviewDevice(rawValue: deviceName))

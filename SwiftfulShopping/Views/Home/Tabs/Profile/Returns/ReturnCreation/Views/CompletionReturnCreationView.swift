@@ -8,7 +8,6 @@
 import SwiftUI
 
 struct CompletionReturnCreationView: View {
-    @EnvironmentObject private var authStateManager: AuthStateManager
     @EnvironmentObject private var tabBarStateManager: TabBarStateManager
     @EnvironmentObject private var profileViewModel: ProfileViewModel
     @EnvironmentObject private var returnCreationViewModel: ReturnCreationViewModel
@@ -74,14 +73,12 @@ struct CompletionReturnCreationView: View {
 
 struct CompletionReturnCreationView_Previews: PreviewProvider {
     static var previews: some View {
-        let authStateManager = AuthStateManager()
         let tabBarStateManager = TabBarStateManager()
         let profileViewModel = ProfileViewModel()
         let returnCreationViewModel = ReturnCreationViewModel()
         ForEach(ColorScheme.allCases, id: \.self) { colorScheme in
             ForEach(["iPhone 13 Pro Max", "iPhone 8"], id: \.self) { deviceName in
                 CompletionReturnCreationView()
-                    .environmentObject(authStateManager)
                     .environmentObject(tabBarStateManager)
                     .environmentObject(profileViewModel)
                     .environmentObject(returnCreationViewModel)
@@ -89,7 +86,6 @@ struct CompletionReturnCreationView_Previews: PreviewProvider {
                     .previewDevice(PreviewDevice(rawValue: deviceName))
                     .previewDisplayName("\(deviceName) portrait")
                     .onAppear {
-                        authStateManager.didLogged(with: .emailPassword)
                         returnCreationViewModel.orderForReturn = Order.demoOrders[0]
                         returnCreationViewModel.createdReturn = Return.demoReturns[0]
                     }

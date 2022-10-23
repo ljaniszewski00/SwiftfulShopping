@@ -8,7 +8,6 @@
 import SwiftUI
 
 struct LoginView: View {
-    @EnvironmentObject private var authStateManager: AuthStateManager
     @EnvironmentObject private var locationManager: LocationManager
     @EnvironmentObject private var contentViewModel: ContentViewModel
     
@@ -89,7 +88,7 @@ struct LoginView: View {
                                             loginViewModel.showLoadingModal = false
                                             switch result {
                                             case .success:
-                                                authStateManager.didLogged(with: loginViewModel.choosenSignInMethod)
+                                                break
                                             case .failure(let error):
                                                 ErrorManager.shared.generateCustomError(errorType: .emailPasswordSignInError,
                                                                                         additionalErrorDescription: error.localizedDescription)
@@ -155,7 +154,6 @@ struct LoginView: View {
             .navigationBarBackButtonHidden(true)
         }
         .navigationViewStyle(.stack)
-        .environmentObject(authStateManager)
         .environmentObject(locationManager)
         .environmentObject(contentViewModel)
         .environmentObject(loginViewModel)
@@ -295,7 +293,7 @@ struct LoginView: View {
                 if loggingFirstTime {
                     loginViewModel.showFirstTimeLoginView = true
                 } else {
-                    authStateManager.didLogged(with: loginViewModel.choosenSignInMethod)
+                    break
                 }
             case .failure(let error):
                 ErrorManager.shared.generateCustomError(errorType: .googleSignInError,
@@ -307,14 +305,12 @@ struct LoginView: View {
 
 struct LoginView_Previews: PreviewProvider {
     static var previews: some View {
-        let authStateManager: AuthStateManager = AuthStateManager()
         let locationManager: LocationManager = LocationManager()
         let contentViewModel: ContentViewModel = ContentViewModel()
         
         ForEach(ColorScheme.allCases, id: \.self) { colorScheme in
             ForEach(["iPhone 13 Pro Max", "iPhone 8"], id: \.self) { deviceName in
                 LoginView()
-                    .environmentObject(authStateManager)
                     .environmentObject(locationManager)
                     .environmentObject(contentViewModel)
                     .preferredColorScheme(colorScheme)

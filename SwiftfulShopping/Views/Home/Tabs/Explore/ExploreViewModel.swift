@@ -42,8 +42,8 @@ class ExploreViewModel: ObservableObject {
         fetchRatings()
     }
     
-    var productsCategoriesWithImageURL: [Category: String] {
-        var productsCategoriesWithImageURL: [Category: String] = [:]
+    var productsCategoriesWithImageURL: [Category: String?] {
+        var productsCategoriesWithImageURL: [Category: String?] = [:]
         for category in productsCategories {
             for product in productsFromRepository where product.category == category {
                 productsCategoriesWithImageURL[category] = product.imagesURLs[0]
@@ -133,19 +133,34 @@ class ExploreViewModel: ObservableObject {
     
     func fetchProducts() {
         showLoadingModal = true
-        if let products = ProductsRepository.shared.products {
-            productsFromRepository = products
-            productsToBeDisplayed = products
-            showLoadingModal = false
+        ProductsRepository.shared.fetchProducts { [weak self] products in
+            self?.showLoadingModal = false
+            if let products = products {
+                self?.productsFromRepository = products
+                self?.productsToBeDisplayed = products
+                print(self?.productsFromRepository)
+            }
         }
+        
+//        if let products = ProductsRepository.shared.products {
+//            productsFromRepository = products
+//            productsToBeDisplayed = products
+//        }
     }
     
     func fetchRatings() {
-        showLoadingModal = true
-        if let ratings = RatingsRepository.shared.ratings {
-            self.ratingsFromRepository = ratings
-            showLoadingModal = false
+        self.showLoadingModal = true
+        RatingsRepository.shared.fetchRatings { [weak self] productsRatings in
+            self?.showLoadingModal = false
+            if let productsRatings = productsRatings {
+                self?.ratingsFromRepository = productsRatings
+                print(self?.ratingsFromRepository)
+            }
         }
+        
+//        if let ratings = RatingsRepository.shared.ratings {
+//            self.ratingsFromRepository = ratings
+//        }
     }
     
     func getRatingsFor(product: Product) -> [ProductRating] {
@@ -215,6 +230,6 @@ class ExploreViewModel: ObservableObject {
             }
         }
         
-        return Array(products)
+        return Array(products).sorted { $0.name < $1.name }
     }
 }

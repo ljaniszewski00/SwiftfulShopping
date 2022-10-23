@@ -46,7 +46,7 @@ class FirestoreProfileManager: ObservableObject {
                                                 let birthDate = data["birthDate"] as? Date ?? Date()
                                                 let email = data["email"] as? String ?? ""
                                                 let country = data["country"] as? String ?? ""
-                                                let defaultShipmentAddress = shipmentAddresses.filter { $0.isDefaultAddress }.first!
+                                                let defaultShipmentAddress = shipmentAddresses.filter { $0.isDefaultAddress }.first ?? shipmentAddresses[0]
                                                 let defaultShippingMethod = data["defaultShippingMethod"] as? String ?? ""
                                                 let defaultPaymentMethod = data["defaultPaymentMethod"] as? String ?? ""
                                                 let userProductsRatings = data["userProductsRatingsIDs"] as? [String: Int] ?? [:]
@@ -130,42 +130,40 @@ class FirestoreProfileManager: ObservableObject {
     
     func getInvoiceAddressFor(userID: String, completion: @escaping ((Result<Address?, Error>) -> ())) {
         self.db.collection(DatabaseCollections.invoiceAddresses.rawValue)
-            .document(userID)
-            .getDocument { documentSnapshot, error in
+            .whereField("userID", isEqualTo: userID)
+            .getDocuments { querySnapshot, error in
                 if let error = error {
                     print("Error fetching invoice addresses data: \(error.localizedDescription)")
                     completion(.failure(error))
                 } else {
-                    guard let documentSnapshot = documentSnapshot, documentSnapshot.exists else {
-                        return
+                    let invoiceAddress = querySnapshot!.documents.map { (queryDocumentSnapshot) -> Address in
+                        
+                        let data = queryDocumentSnapshot.data()
+
+                        let id = data["id"] as? String ?? ""
+                        let userID = data["userID"] as? String ?? ""
+                        let fullName = data["fullName"] as? String ?? ""
+                        let streetName = data["streetName"] as? String ?? ""
+                        let streetNumber = data["streetNumber"] as? String ?? ""
+                        let apartmentNumber = data["apartmentNumber"] as? String ?? ""
+                        let zipCode = data["zipCode"] as? String ?? ""
+                        let city = data["city"] as? String ?? ""
+                        let country = data["country"] as? String ?? ""
+                        
+                        return Address(id: id,
+                                       userID: userID,
+                                       fullName: fullName,
+                                       streetName: streetName,
+                                       streetNumber: streetNumber,
+                                       apartmentNumber: apartmentNumber,
+                                       zipCode: zipCode,
+                                       city: city,
+                                       country: country,
+                                       isDefaultAddress: true)
                     }
+                        .first
                     
-                    guard let data = documentSnapshot.data() else {
-                        return
-                    }
-                    
-                    let id = data["id"] as? String ?? ""
-                    let userID = data["userID"] as? String ?? ""
-                    let fullName = data["fullName"] as? String ?? ""
-                    let streetName = data["streetName"] as? String ?? ""
-                    let streetNumber = data["streetNumber"] as? String ?? ""
-                    let apartmentNumber = data["apartmentNumber"] as? String ?? ""
-                    let zipCode = data["zipCode"] as? String ?? ""
-                    let city = data["city"] as? String ?? ""
-                    let country = data["country"] as? String ?? ""
-                    
-                    let address = Address(id: id,
-                                          userID: userID,
-                                          fullName: fullName,
-                                          streetName: streetName,
-                                          streetNumber: streetNumber,
-                                          apartmentNumber: apartmentNumber,
-                                          zipCode: zipCode,
-                                          city: city,
-                                          country: country,
-                                          isDefaultAddress: true)
-                    
-                    completion(.success(address))
+                    completion(.success(invoiceAddress))
                 }
             }
     }

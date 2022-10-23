@@ -206,7 +206,8 @@ class FirstTimeLoginViewModel: ObservableObject {
                                       apartmentNumber: apartmentNumber,
                                       zipCode: zipCode,
                                       city: city,
-                                      country: country)
+                                      country: country,
+                                      isDefaultAddress: true)
         FirestoreAuthenticationManager.client.createShipmentAddress(shipmentAddress: shipmentAddress) { [weak self] result in
             switch result {
             case .success:
@@ -214,14 +215,26 @@ class FirstTimeLoginViewModel: ObservableObject {
                 if self!.sameDataOnInvoice {
                     invoiceAddress = shipmentAddress
                 } else {
-                    invoiceAddress = Address(userID: user.uid,
-                                             fullName: self!.fullNameInvoice,
-                                             streetName: self!.streetNameInvoice,
-                                             streetNumber: self!.streetNumberInvoice,
-                                             apartmentNumber: self!.apartmentNumberInvoice,
-                                             zipCode: self!.zipCodeInvoice,
-                                             city: self!.cityInvoice,
-                                             country: self!.countryInvoice)
+                    if let fullNameInvoice = self?.fullNameInvoice,
+                       let streetNameInvoice = self?.streetNameInvoice,
+                       let streetNumberInvoice = self?.streetNumberInvoice,
+                       let apartmentNumberInvoice = self?.apartmentNumberInvoice,
+                       let zipCodeInvoice = self?.zipCodeInvoice,
+                       let cityInvoice = self?.cityInvoice,
+                       let countryInvoice = self?.countryInvoice {
+                        
+                        invoiceAddress = Address(userID: user.uid,
+                                                 fullName: fullNameInvoice,
+                                                 streetName: streetNameInvoice,
+                                                 streetNumber: streetNumberInvoice,
+                                                 apartmentNumber: apartmentNumberInvoice,
+                                                 zipCode: zipCodeInvoice,
+                                                 city: cityInvoice,
+                                                 country: countryInvoice,
+                                                 isDefaultAddress: true)
+                    } else {
+                        invoiceAddress = shipmentAddress
+                    }
                 }
                 
                 FirestoreAuthenticationManager.client.createInvoiceAddress(invoiceAddress: invoiceAddress!) { [weak self] result in

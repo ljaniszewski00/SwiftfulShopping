@@ -32,6 +32,7 @@ enum ErrorType: String {
     case createAddressError = "Create Address Error"
     case changeDefaultAddressError = "Change Default Address Error"
     case changeDefaultPaymentMethodError = "Change Default Payment Method Error"
+    case signOutError = "Sign Out Error"
     
     case unknown = "Unknown Error"
 }

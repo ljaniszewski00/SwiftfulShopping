@@ -18,16 +18,32 @@ class FirebaseAuthManager: ObservableObject {
     @Published var user: User?
     @Published var loggedWith: SignInMethod?
     
+    var isLogged: Bool {
+        user != nil
+    }
+    
     static var client: FirebaseAuthManager = {
         FirebaseAuthManager()
     }()
+    
+    func listenToAuthStateChanges() {
+        auth.addStateDidChangeListener { [weak self] auth, user in
+            if let user = user {
+                self?.user = user
+            } else {
+                self?.user = nil
+                self?.loggedWith = nil
+            }
+        }
+    }
     
     private init() {
         gitHubProvider.customParameters = [
             "allow_signup": "false"
         ]
+        
+        listenToAuthStateChanges()
     }
-    
     
     func firebaseSignUp(email: String,
                         password: String,
@@ -52,7 +68,8 @@ class FirebaseAuthManager: ObservableObject {
             if let error = error {
                 completion(.failure(error))
             } else {
-                if let _ = authResult {
+                if let authResult = authResult {
+                    self?.user = authResult.user
                     self?.loggedWith = .emailPassword
                     completion(.success)
                 }

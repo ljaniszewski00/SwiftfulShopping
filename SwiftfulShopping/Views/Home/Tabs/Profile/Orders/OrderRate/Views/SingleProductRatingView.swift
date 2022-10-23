@@ -8,7 +8,6 @@
 import SwiftUI
 
 struct SingleProductRatingView: View {
-    @EnvironmentObject private var authStateManager: AuthStateManager
     @EnvironmentObject private var tabBarStateManager: TabBarStateManager
     @EnvironmentObject private var profileViewModel: ProfileViewModel
     @EnvironmentObject private var ratingViewModel: RatingViewModel
@@ -130,14 +129,12 @@ struct SingleProductRatingView: View {
 
 struct SingleProductRatingView_Previews: PreviewProvider {
     static var previews: some View {
-        let authStateManager = AuthStateManager()
         let tabBarStateManager = TabBarStateManager()
         let profileViewModel = ProfileViewModel()
         let ratingViewModel = RatingViewModel()
         ForEach(ColorScheme.allCases, id: \.self) { colorScheme in
             ForEach(["iPhone 13 Pro Max", "iPhone 8"], id: \.self) { deviceName in
                 SingleProductRatingView()
-                    .environmentObject(authStateManager)
                     .environmentObject(tabBarStateManager)
                     .environmentObject(profileViewModel)
                     .environmentObject(ratingViewModel)
@@ -145,7 +142,6 @@ struct SingleProductRatingView_Previews: PreviewProvider {
                     .previewDevice(PreviewDevice(rawValue: deviceName))
                     .previewDisplayName("\(deviceName) portrait")
                     .onAppear {
-                        authStateManager.didLogged(with: .emailPassword)
                         ratingViewModel.activeProduct = Product.demoProducts[0]
                     }
             }

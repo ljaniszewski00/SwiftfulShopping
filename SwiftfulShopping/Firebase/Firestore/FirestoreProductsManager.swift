@@ -42,7 +42,6 @@ class FirestoreProductsManager: ObservableObject {
                         let isRecommended = data["isRecommended"] as? Bool ?? false
                         let isNew = data["isNew"] as? Bool ?? false
                         let keywords = data["keywords"] as? [String] ?? []
-                        let rating = data["rating"] as? String ?? ""
                         let imagesURLs = data["imagesURLs"] as? [String] ?? []
                         let productRatingsIDs = data["productRatingsIDs"] as? [String] ?? []
                         
@@ -208,7 +207,37 @@ class FirestoreProductsManager: ObservableObject {
     
     // MARK: INSERT DATABASE OPERATIONS
     
-    func addProductRating(userID: String, productRating: ProductRating, completion: @escaping ((VoidResult) -> ())) {
+    func addProduct(product: Product, completion: @escaping ((VoidResult) -> ())) {
+        let productDocumentData: [String: Any] = [
+            "id": product.id,
+            "name": product.name,
+            "company": product.company,
+            "productDescription": product.productDescription,
+            "category": product.category.rawValue,
+            "price": product.price,
+            "unitsSold": product.unitsSold,
+            "introducedForSale": product.introducedForSale,
+            "isRecommended": product.isRecommended,
+            "isNew": product.isNew,
+            "keywords": product.keywords,
+            "imagesURLs": product.imagesURLs,
+            "productRatingsIDs": product.productRatingsIDs,
+        ]
+        
+        self.db.collection(DatabaseCollections.products.rawValue)
+            .document(product.id)
+            .setData(productDocumentData) { (error) in
+            if let error = error {
+                print("Error creating product's data: \(error.localizedDescription)")
+                completion(.failure(error))
+            } else {
+                print("Successfully created product's data in database")
+                completion(.success)
+            }
+        }
+    }
+    
+    func addProductRating(productRating: ProductRating, completion: @escaping ((VoidResult) -> ())) {
         let productRatingDocumentData: [String: Any] = [
             "id": productRating.id,
             "productID": productRating.productID,
@@ -226,7 +255,7 @@ class FirestoreProductsManager: ObservableObject {
                 print("Error creating product's rating data: \(error.localizedDescription)")
                 completion(.failure(error))
             } else {
-                print("Successfully created product's rating data for user identifying with id: \(userID) in database")
+                print("Successfully created product's rating data for user identifying with id: \(productRating.authorID) in database")
                 completion(.success)
             }
         }

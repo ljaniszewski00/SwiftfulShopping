@@ -8,7 +8,6 @@
 import SwiftUI
 
 struct EditPersonalInfoView: View {
-    @EnvironmentObject private var authStateManager: AuthStateManager
     @EnvironmentObject private var tabBarStateManager: TabBarStateManager
     @EnvironmentObject private var profileViewModel: ProfileViewModel
     @EnvironmentObject private var personalInfoViewModel: PersonalInfoViewModel
@@ -83,23 +82,18 @@ struct EditPersonalInfoView: View {
 
 struct EditPersonalInfoView_Previews: PreviewProvider {
     static var previews: some View {
-        let authStateManager = AuthStateManager()
         let tabBarStateManager = TabBarStateManager()
         let profileViewModel = ProfileViewModel()
         let personalInfoViewModel = PersonalInfoViewModel()
         ForEach(ColorScheme.allCases, id: \.self) { colorScheme in
             ForEach(["iPhone 13 Pro Max", "iPhone 8"], id: \.self) { deviceName in
                 EditPersonalInfoView()
-                    .environmentObject(authStateManager)
                     .environmentObject(tabBarStateManager)
                     .environmentObject(profileViewModel)
                     .environmentObject(personalInfoViewModel)
                     .preferredColorScheme(colorScheme)
                     .previewDevice(PreviewDevice(rawValue: deviceName))
                     .previewDisplayName("\(deviceName) portrait")
-                    .onAppear {
-                        authStateManager.didLogged(with: .emailPassword)
-                    }
             }
         }
     }

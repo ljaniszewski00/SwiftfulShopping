@@ -16,7 +16,11 @@ struct ProductDetailsRatingsSection: View {
     var productRatings: [ProductRating]
     
     var productAverageRating: Double {
-        Double((productRatings.map { $0.rating }.reduce(0, +)) / productRatings.count)
+        if productRatings.isEmpty {
+            return 0
+        } else {
+            return Double((productRatings.map { $0.rating }.reduce(0, +)) / productRatings.count)
+        }
     }
     
     var productReviewsNumber: Int {

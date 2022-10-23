@@ -8,7 +8,6 @@
 import SwiftUI
 
 struct FirstTimeLoginView: View {
-    @EnvironmentObject private var authStateManager: AuthStateManager
     @EnvironmentObject private var locationManager: LocationManager
     @EnvironmentObject private var contentViewModel: ContentViewModel
     @EnvironmentObject private var loginViewModel: LoginViewModel
@@ -17,6 +16,7 @@ struct FirstTimeLoginView: View {
     
     @StateObject private var firstTimeLoginViewModel: FirstTimeLoginViewModel = FirstTimeLoginViewModel()
     @StateObject var errorManager = ErrorManager.shared
+    @StateObject private var firebaseAuthManager = FirebaseAuthManager.client
     
     @State private var isFullNameTextFieldFocused: Bool = false
     @State private var isStreetNameTextFieldFocused: Bool = false
@@ -62,9 +62,7 @@ struct FirstTimeLoginView: View {
                                 firstTimeLoginViewModel.showLoadingModal = false
                                 switch result {
                                 case .success:
-                                    if let signInMethod = authStateManager.loggedWith {
-                                        authStateManager.didLogged(with: signInMethod)
-                                    }
+                                    break
                                 case .failure(let error):
                                     ErrorManager.shared.generateCustomError(errorType: .firstTimeLoginError,
                                                                             additionalErrorDescription: error.localizedDescription)
@@ -336,7 +334,6 @@ struct FirstTimeLoginView: View {
 
 struct FirstTimeLoginView_Previews: PreviewProvider {
     static var previews: some View {
-        let authStateManager: AuthStateManager = AuthStateManager()
         let locationManager: LocationManager = LocationManager()
         let contentViewModel: ContentViewModel = ContentViewModel()
         let loginViewModel: LoginViewModel = LoginViewModel()
@@ -344,7 +341,6 @@ struct FirstTimeLoginView_Previews: PreviewProvider {
         ForEach(ColorScheme.allCases, id: \.self) { colorScheme in
             ForEach(["iPhone 13 Pro Max", "iPhone 8"], id: \.self) { deviceName in
                 FirstTimeLoginView()
-                    .environmentObject(authStateManager)
                     .environmentObject(locationManager)
                     .environmentObject(contentViewModel)
                     .environmentObject(loginViewModel)

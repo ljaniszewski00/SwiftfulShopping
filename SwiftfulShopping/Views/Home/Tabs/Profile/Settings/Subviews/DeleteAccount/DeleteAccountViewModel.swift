@@ -15,11 +15,17 @@ class DeleteAccountViewModel: ObservableObject {
     
     @Published var showLoadingModal: Bool = false
     
-    private func verifyCredentials() {
-        
-    }
-    
-    func deleteAccount() {
-        
+    func deleteAccount(completion: @escaping ((VoidResult) -> ())) {
+        showLoadingModal = true
+        FirebaseAuthManager.client.deleteUser(email: email,
+                                              password: password) { [weak self] result in
+            self?.showLoadingModal = false
+            switch result {
+            case .success:
+                completion(.success)
+            case .failure(let error):
+                completion(.failure(error))
+            }
+        }
     }
 }

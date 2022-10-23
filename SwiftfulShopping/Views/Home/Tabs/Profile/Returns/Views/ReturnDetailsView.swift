@@ -102,7 +102,6 @@ struct ReturnDetailsView: View {
 
 struct ReturnDetailsView_Previews: PreviewProvider {
     static var previews: some View {
-        let authStateManager = AuthStateManager()
         let tabBarStateManager = TabBarStateManager()
         let profileViewModel = ProfileViewModel()
         ForEach(ColorScheme.allCases, id: \.self) { colorScheme in
@@ -110,15 +109,11 @@ struct ReturnDetailsView_Previews: PreviewProvider {
                 ReturnDetailsView(userReturn: Return.demoReturns[0],
                                   returnProductsList: [Product.demoProducts[0],
                                                        Product.demoProducts[1]])
-                    .environmentObject(authStateManager)
                     .environmentObject(tabBarStateManager)
                     .environmentObject(profileViewModel)
                     .preferredColorScheme(colorScheme)
                     .previewDevice(PreviewDevice(rawValue: deviceName))
                     .previewDisplayName("\(deviceName) portrait")
-                    .onAppear {
-                        authStateManager.didLogged(with: .emailPassword)
-                    }
             }
         }
     }

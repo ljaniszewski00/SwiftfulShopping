@@ -328,7 +328,8 @@ class RegisterViewModel: ObservableObject {
                                       apartmentNumber: apartmentNumber,
                                       zipCode: zipCode,
                                       city: city,
-                                      country: country)
+                                      country: country,
+                                      isDefaultAddress: true)
         FirestoreAuthenticationManager.client.createShipmentAddress(shipmentAddress: shipmentAddress) { [weak self] result in
             switch result {
             case .success:
@@ -336,33 +337,52 @@ class RegisterViewModel: ObservableObject {
                 if self!.sameDataOnInvoice {
                     invoiceAddress = shipmentAddress
                 } else {
-                    invoiceAddress = Address(userID: user.uid,
-                                             fullName: self!.fullNameInvoice,
-                                             streetName: self!.streetNameInvoice,
-                                             streetNumber: self!.streetNumberInvoice,
-                                             apartmentNumber: self!.apartmentNumberInvoice,
-                                             zipCode: self!.zipCodeInvoice,
-                                             city: self!.cityInvoice,
-                                             country: self!.countryInvoice)
+                    if let fullNameInvoice = self?.fullNameInvoice,
+                       let streetNameInvoice = self?.streetNameInvoice,
+                       let streetNumberInvoice = self?.streetNumberInvoice,
+                       let apartmentNumberInvoice = self?.apartmentNumberInvoice,
+                       let zipCodeInvoice = self?.zipCodeInvoice,
+                       let cityInvoice = self?.cityInvoice,
+                       let countryInvoice = self?.countryInvoice {
+                        
+                        invoiceAddress = Address(userID: user.uid,
+                                                 fullName: fullNameInvoice,
+                                                 streetName: streetNameInvoice,
+                                                 streetNumber: streetNumberInvoice,
+                                                 apartmentNumber: apartmentNumberInvoice,
+                                                 zipCode: zipCodeInvoice,
+                                                 city: cityInvoice,
+                                                 country: countryInvoice,
+                                                 isDefaultAddress: true)
+                    } else {
+                        invoiceAddress = shipmentAddress
+                    }
                 }
                 
                 FirestoreAuthenticationManager.client.createInvoiceAddress(invoiceAddress: invoiceAddress!) { [weak self] result in
                     switch result {
                     case .success:
-                        let profile = Profile(id: user.uid,
-                                              fullName: self!.fullName,
-                                              username: self!.username,
-                                              birthDate: self!.birthDate,
-                                              email: self!.email,
-                                              defaultShipmentAddress: shipmentAddress,
-                                              invoiceAddress: invoiceAddress!,
-                                              createdWith: FirebaseAuthManager.client.loggedWith)
-                        FirestoreAuthenticationManager.client.createProfile(profile: profile) { result in
-                            switch result {
-                            case .success:
-                                completion(.success)
-                            case .failure(let error):
-                                completion(.failure(error))
+                        if let fullName = self?.fullName,
+                           let username = self?.username,
+                           let birthDate = self?.birthDate,
+                           let email = self?.email {
+                            
+                            let profile = Profile(id: user.uid,
+                                                  fullName: fullName,
+                                                  username: username,
+                                                  birthDate: birthDate,
+                                                  email: email,
+                                                  defaultShipmentAddress: shipmentAddress,
+                                                  invoiceAddress: invoiceAddress!,
+                                                  createdWith: FirebaseAuthManager.client.loggedWith)
+                            
+                            FirestoreAuthenticationManager.client.createProfile(profile: profile) { result in
+                                switch result {
+                                case .success:
+                                    completion(.success)
+                                case .failure(let error):
+                                    completion(.failure(error))
+                                }
                             }
                         }
                     case .failure(let error):

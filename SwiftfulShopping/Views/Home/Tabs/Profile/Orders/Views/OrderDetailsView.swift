@@ -8,7 +8,6 @@
 import SwiftUI
 
 struct OrderDetailsView: View {
-    @EnvironmentObject private var authStateManager: AuthStateManager
     @EnvironmentObject private var tabBarStateManager: TabBarStateManager
     @EnvironmentObject private var profileViewModel: ProfileViewModel
     @EnvironmentObject private var ordersViewModel: OrdersViewModel
@@ -132,14 +131,12 @@ struct OrderDetailsView: View {
             .padding()
             
             NavigationLink(destination: OrderRateView(order: order)
-                                            .environmentObject(authStateManager)
                                             .environmentObject(tabBarStateManager)
                                             .environmentObject(profileViewModel),
                            isActive: $profileViewModel.shouldPresentOrderRateView) { EmptyView() }
                 .isDetailLink(false)
             
             NavigationLink(destination: ReturnCreationView(order: order)
-                                            .environmentObject(authStateManager)
                                             .environmentObject(tabBarStateManager)
                                             .environmentObject(profileViewModel),
                            isActive: $profileViewModel.shouldPresentReturnCreationView) { EmptyView() }
@@ -170,7 +167,6 @@ struct OrderDetailsView: View {
 
 struct OrderDetailsView_Previews: PreviewProvider {
     static var previews: some View {
-        let authStateManager = AuthStateManager()
         let tabBarStateManager = TabBarStateManager()
         let profileViewModel = ProfileViewModel()
         ForEach(ColorScheme.allCases, id: \.self) { colorScheme in
@@ -178,15 +174,11 @@ struct OrderDetailsView_Previews: PreviewProvider {
                 OrderDetailsView(order: Order.demoOrders[0],
                                  orderProductsList: [Product.demoProducts[0],
                                                      Product.demoProducts[1]])
-                    .environmentObject(authStateManager)
                     .environmentObject(tabBarStateManager)
                     .environmentObject(profileViewModel)
                     .preferredColorScheme(colorScheme)
                     .previewDevice(PreviewDevice(rawValue: deviceName))
                     .previewDisplayName("\(deviceName) portrait")
-                    .onAppear {
-                        authStateManager.didLogged(with: .emailPassword)
-                    }
             }
         }
     }

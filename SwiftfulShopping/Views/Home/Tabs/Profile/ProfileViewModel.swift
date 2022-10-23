@@ -18,6 +18,8 @@ class ProfileViewModel: ObservableObject {
     
     @Published var shouldPresentSettingsView: Bool = false
     
+    @Published var showLoadingModal = false
+    
     func fetchProfile(completion: @escaping ((VoidResult) -> ())) {
         if let user = FirebaseAuthManager.client.user {
             FirestoreProfileManager.client.getUserProfile(userID: user.uid) { [weak self] result in
@@ -119,8 +121,21 @@ class ProfileViewModel: ObservableObject {
                                               rating: rating,
                                               review: review)
             
-            FirestoreProductsManager.client.addProductRating(userID: profile.id, productRating: productRating) { result in
+            FirestoreProductsManager.client.addProductRating(productRating: productRating) { result in
                 completion(result)
+            }
+        }
+    }
+    
+    func signOut(completion: @escaping ((VoidResult) -> ())) {
+        showLoadingModal = true
+        FirebaseAuthManager.client.firebaseSignOut() { [weak self] result in
+            self?.showLoadingModal = false
+            switch result {
+            case .success:
+                completion(.success)
+            case .failure(let error):
+                completion(.failure(error))
             }
         }
     }

@@ -24,7 +24,7 @@ class ProductDetailsViewModel: ObservableObject {
                 switch result {
                 case .success(let value):
                     self?.productImages.append(value.image)
-                case .failure(let error):
+                case .failure(_):
                     break
                 }
                 group.leave()

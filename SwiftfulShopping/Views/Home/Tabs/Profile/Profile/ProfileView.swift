@@ -8,12 +8,13 @@
 import SwiftUI
 
 struct ProfileView: View {
-    @EnvironmentObject private var authStateManager: AuthStateManager
     @EnvironmentObject private var accentColorManager: AccentColorManager
     @EnvironmentObject private var tabBarStateManager: TabBarStateManager
     @EnvironmentObject private var profileViewModel: ProfileViewModel
     
     @StateObject private var networkNanager = NetworkManager.shared
+    @StateObject private var firebaseAuthManager = FirebaseAuthManager.client
+    @StateObject var errorManager = ErrorManager.shared
     
     @State private var selection: String?
         
@@ -48,6 +49,9 @@ struct ProfileView: View {
     var body: some View {
         NavigationView {
             ScrollView(.vertical, showsIndicators: false) {
+                PullToRefresh(coordinateSpace: .named("PullToRefresh")) {
+                    profileViewModel.fetchProfile { _ in }
+                }
                 VStack(alignment: .leading) {
                     HStack {
                         VStack(alignment: .leading, spacing: 6) {
@@ -128,16 +132,13 @@ struct ProfileView: View {
                         HStack {
                             Spacer()
                             Button {
-                                withAnimation {
-                                    FirebaseAuthManager.client.firebaseSignOut() { result in
-                                        switch result {
-                                        case .success:
-                                            authStateManager.didLogout()
-                                        case .failure(let error):
-                                            ErrorManager.shared.generateCustomError(errorType: .logoutError,
-                                                                                    additionalErrorDescription:
-                                                                                        error.localizedDescription)
-                                        }
+                                profileViewModel.signOut { result in
+                                    switch result {
+                                    case .success:
+                                        break
+                                    case .failure(let error):
+                                        ErrorManager.shared.generateCustomError(errorType: .signOutError,
+                                                                                additionalErrorDescription: error.localizedDescription)
                                     }
                                 }
                             } label: {
@@ -179,6 +180,11 @@ struct ProfileView: View {
                 }
                 .padding()
             }
+            .coordinateSpace(name: "PullToRefresh")
+            .modifier(LoadingIndicatorModal(isPresented:
+                                                $profileViewModel.showLoadingModal))
+            .modifier(ErrorModal(isPresented: $errorManager.showErrorModal,
+                                 customError: errorManager.customError ?? ErrorManager.unknownError))
             .navigationTitle("Profile")
             .navigationBarHidden(true)
             .sheet(isPresented: $shouldPresentImagePicker) {
@@ -202,7 +208,7 @@ struct ProfileView: View {
             }
         }
         .navigationViewStyle(.stack)
-        .environmentObject(authStateManager)
+        .environmentObject(firebaseAuthManager)
         .environmentObject(accentColorManager)
         .environmentObject(tabBarStateManager)
         .environmentObject(profileViewModel)
@@ -211,14 +217,12 @@ struct ProfileView: View {
 
 struct ProfileView_Previews: PreviewProvider {
     static var previews: some View {
-        let authStateManager = AuthStateManager()
         let accentColorManager = AccentColorManager()
         let tabBarStateManager = TabBarStateManager()
         let profileViewModel = ProfileViewModel()
         ForEach(ColorScheme.allCases, id: \.self) { colorScheme in
             ForEach(["iPhone 13 Pro Max", "iPhone 8"], id: \.self) { deviceName in
                 ProfileView()
-                    .environmentObject(authStateManager)
                     .environmentObject(accentColorManager)
                     .environmentObject(tabBarStateManager)
                     .environmentObject(profileViewModel)

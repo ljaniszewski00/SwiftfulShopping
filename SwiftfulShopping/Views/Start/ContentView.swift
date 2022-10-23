@@ -11,16 +11,16 @@ struct ContentView: View {
     @EnvironmentObject private var accentColorManager: AccentColorManager
     @Environment(\.colorScheme) var colorScheme
     
-    @StateObject private var authStateManager = AuthStateManager()
+    @StateObject private var firebaseAuthManager = FirebaseAuthManager.client
     @StateObject private var locationManager = LocationManager()
     @StateObject private var contentViewModel = ContentViewModel()
     @StateObject var errorManager = ErrorManager.shared
     
     var body: some View {
-        if authStateManager.isLogged {
+        if firebaseAuthManager.isLogged {
             if contentViewModel.unlocked || !contentViewModel.biometricLock {
                 HomeView()
-                    .environmentObject(authStateManager)
+                    .environmentObject(firebaseAuthManager)
                     .environmentObject(accentColorManager)
                     .transition(.slide)
             } else {
@@ -56,7 +56,7 @@ struct ContentView: View {
             }
         } else {
             LoginView()
-                .environmentObject(authStateManager)
+                .environmentObject(firebaseAuthManager)
                 .environmentObject(locationManager)
                 .environmentObject(contentViewModel)
         }

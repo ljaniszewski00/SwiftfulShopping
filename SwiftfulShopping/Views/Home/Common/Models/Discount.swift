@@ -16,7 +16,7 @@ struct Discount {
     var redemptionNumber: Int = 0
     var maxRedemptionNumber: Int = 1
     
-    init(productID: String = Product.demoProducts[0].id, discountCode: String, discountValuePercent: Double) {
+    init(productID: String, discountCode: String, discountValuePercent: Double) {
         self.productID = productID
         self.discountCode = discountCode
         self.discountValuePercent = discountValuePercent
@@ -56,14 +56,19 @@ extension Discount: CustomStringConvertible {
 }
 
 extension Discount {
-    static let demoDiscounts: [Discount] = [Discount(discountCode: "discount1",
+    static let demoDiscounts: [Discount] = [Discount(productID: Product.demoProducts[0].id,
+                                                     discountCode: "discount1",
                                                      discountValuePercent: 10),
-                                            Discount(discountCode: "discount2",
+                                            Discount(productID: Product.demoProducts[0].id,
+                                                     discountCode: "discount2",
                                                      discountValuePercent: 25),
-                                            Discount(discountCode: "discount3",
+                                            Discount(productID: Product.demoProducts[0].id,
+                                                     discountCode: "discount3",
                                                      discountValuePercent: 37),
-                                            Discount(discountCode: "discount4",
+                                            Discount(productID: Product.demoProducts[0].id,
+                                                     discountCode: "discount4",
                                                      discountValuePercent: 42),
-                                            Discount(discountCode: "discount5",
+                                            Discount(productID: Product.demoProducts[0].id,
+                                                     discountCode: "discount5",
                                                      discountValuePercent: 51)]
 }

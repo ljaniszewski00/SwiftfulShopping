@@ -18,30 +18,24 @@ struct GridProductCardTileView: View {
     var productRatings: [ProductRating]
     
     var averageRating: Double {
-        var overallRating: Int = 0
-        for productRating in productRatings {
-            overallRating += productRating.rating
+        if productRatings.isEmpty {
+            return 0
+        } else {
+            return Double((productRatings.map { $0.rating }.reduce(0, +)) / productRatings.count)
         }
-        return Double(overallRating / productRatings.count)
+    }
+    
+    var reviewsNumber: Int {
+        productRatings.filter { $0.review != nil }.count
     }
 
     var ratingsNumber: Int {
         productRatings.count
     }
-
-    var reviewsNumber: Int {
-        var count: Int = 0
-        for productRating in productRatings {
-            if productRating.review != nil {
-                count += 1
-            }
-        }
-        return count
-    }
     
     var body: some View {
         VStack(alignment: .center, spacing: 0) {
-            KFImage(URL(string: product.imagesURLs.first!)!)
+            KFImage(URL(string: product.imagesURLs.first ?? URLConstants.emptyProductPhoto)!)
                 .placeholder {
                     Image("product_placeholder_image")
                         .resizable()
@@ -86,11 +80,13 @@ struct GridProductCardTileView: View {
                     
                     VStack(alignment: .trailing, spacing: 10) {
                         HStack {
-                            ForEach(1...Int(round(averageRating)), id: \.self) { _ in
-                                Image(systemName: "star.fill")
-                                    .resizable()
-                                    .frame(width: 20, height: 20)
-                                    .foregroundColor(.accentColor)
+                            if averageRating != 0 {
+                                ForEach(1...Int(round(averageRating)), id: \.self) { _ in
+                                    Image(systemName: "star.fill")
+                                        .resizable()
+                                        .frame(width: 20, height: 20)
+                                        .foregroundColor(.accentColor)
+                                }
                             }
                             
                             ForEach(Int(round(averageRating))..<5, id: \.self) { _ in

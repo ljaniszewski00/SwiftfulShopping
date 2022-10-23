@@ -8,7 +8,6 @@
 import SwiftUI
 
 struct OrderCreationShipmentPaymentView: View {
-    @EnvironmentObject private var authStateManager: AuthStateManager
     @EnvironmentObject private var tabBarStateManager: TabBarStateManager
     @EnvironmentObject private var exploreViewModel: ExploreViewModel
     @EnvironmentObject private var profileViewModel: ProfileViewModel
@@ -197,7 +196,6 @@ struct OrderCreationShipmentPaymentView: View {
 
 struct OrderCreationShipmentPaymentView_Previews: PreviewProvider {
     static var previews: some View {
-        let authStateManager = AuthStateManager()
         let tabBarStateManager = TabBarStateManager()
         let exploreViewModel = ExploreViewModel()
         let profileViewModel = ProfileViewModel()
@@ -206,7 +204,6 @@ struct OrderCreationShipmentPaymentView_Previews: PreviewProvider {
         ForEach(ColorScheme.allCases, id: \.self) { colorScheme in
             ForEach(["iPhone 13 Pro Max", "iPhone 8"], id: \.self) { deviceName in
                 OrderCreationShipmentPaymentView()
-                    .environmentObject(authStateManager)
                     .environmentObject(tabBarStateManager)
                     .environmentObject(exploreViewModel)
                     .environmentObject(profileViewModel)
@@ -215,9 +212,6 @@ struct OrderCreationShipmentPaymentView_Previews: PreviewProvider {
                     .preferredColorScheme(colorScheme)
                     .previewDevice(PreviewDevice(rawValue: deviceName))
                     .previewDisplayName("\(deviceName) portrait")
-                    .onAppear {
-                        authStateManager.didLogged(with: .emailPassword)
-                    }
             }
         }
     }

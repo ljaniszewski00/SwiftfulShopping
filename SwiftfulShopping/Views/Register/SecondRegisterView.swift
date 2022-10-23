@@ -8,7 +8,6 @@
 import SwiftUI
 
 struct SecondRegisterView: View {
-    @EnvironmentObject private var authStateManager: AuthStateManager
     @EnvironmentObject private var locationManager: LocationManager
     @EnvironmentObject private var contentViewModel: ContentViewModel
     @EnvironmentObject private var registerViewModel: RegisterViewModel
@@ -16,6 +15,7 @@ struct SecondRegisterView: View {
     @Environment(\.dismiss) var dismiss
     
     @StateObject var errorManager = ErrorManager.shared
+    @StateObject private var firebaseAuthManager = FirebaseAuthManager.client
     
     @State private var isFullNameShipmentTextFieldFocused: Bool = false
     @State private var isStreetNameTextFieldFocused: Bool = false
@@ -57,7 +57,7 @@ struct SecondRegisterView: View {
                                         registerViewModel.showLoadingModal = false
                                         switch result {
                                         case .success:
-                                            authStateManager.didLogged(with: .emailPassword)
+                                            firebaseAuthManager.loggedWith = .emailPassword
                                         case .failure(let error):
                                             ErrorManager.shared.generateCustomError(errorType: .registerError,
                                                                                     additionalErrorDescription: error.localizedDescription)
@@ -331,7 +331,6 @@ struct SecondRegisterView: View {
 
 struct SecondRegisterView_Previews: PreviewProvider {
     static var previews: some View {
-        let authStateManager: AuthStateManager = AuthStateManager()
         let locationManager: LocationManager = LocationManager()
         let contentViewModel: ContentViewModel = ContentViewModel()
         let registerViewModel: RegisterViewModel = RegisterViewModel()
@@ -339,7 +338,6 @@ struct SecondRegisterView_Previews: PreviewProvider {
         ForEach(ColorScheme.allCases, id: \.self) { colorScheme in
             ForEach(["iPhone 13 Pro Max", "iPhone 8"], id: \.self) { deviceName in
                 SecondRegisterView()
-                    .environmentObject(authStateManager)
                     .environmentObject(locationManager)
                     .environmentObject(contentViewModel)
                     .environmentObject(registerViewModel)

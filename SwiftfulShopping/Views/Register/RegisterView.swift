@@ -9,7 +9,6 @@ import SwiftUI
 import CoreLocationUI
 
 struct RegisterView: View {
-    @EnvironmentObject private var authStateManager: AuthStateManager
     @EnvironmentObject private var locationManager: LocationManager
     @EnvironmentObject private var contentViewModel: ContentViewModel
     
@@ -195,14 +194,12 @@ struct RegisterView: View {
 
 struct RegisterView_Previews: PreviewProvider {
     static var previews: some View {
-        let authStateManager: AuthStateManager = AuthStateManager()
         let locationManager: LocationManager = LocationManager()
         let contentViewModel: ContentViewModel = ContentViewModel()
         
         ForEach(ColorScheme.allCases, id: \.self) { colorScheme in
             ForEach(["iPhone 13 Pro Max", "iPhone 8"], id: \.self) { deviceName in
                 RegisterView()
-                    .environmentObject(authStateManager)
                     .environmentObject(locationManager)
                     .environmentObject(contentViewModel)
                     .preferredColorScheme(colorScheme)

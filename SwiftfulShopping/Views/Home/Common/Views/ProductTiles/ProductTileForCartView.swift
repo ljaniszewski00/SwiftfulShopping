@@ -20,7 +20,7 @@ struct ProductTileForCartView: View {
         HStack(alignment: .center) {
             Spacer()
             
-            KFImage(URL(string: product.imagesURLs.first!)!)
+            KFImage(URL(string: product.imagesURLs.first ?? URLConstants.emptyProductPhoto)!)
                 .placeholder {
                     Image("product_placeholder_image")
                         .resizable()

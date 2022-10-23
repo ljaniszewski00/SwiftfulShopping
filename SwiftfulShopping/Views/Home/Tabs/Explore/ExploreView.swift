@@ -9,7 +9,6 @@ import SwiftUI
 import Kingfisher
 
 struct ExploreView: View {
-    @EnvironmentObject private var authStateManager: AuthStateManager
     @EnvironmentObject private var tabBarStateManager: TabBarStateManager
     @EnvironmentObject private var exploreViewModel: ExploreViewModel
     @EnvironmentObject private var profileViewModel: ProfileViewModel
@@ -128,7 +127,6 @@ struct ExploreView: View {
             .modifier(ErrorModal(isPresented: $errorManager.showErrorModal, customError: errorManager.customError ?? ErrorManager.unknownError))
         }
         .navigationViewStyle(.stack)
-        .environmentObject(authStateManager)
         .environmentObject(tabBarStateManager)
         .environmentObject(exploreViewModel)
         .environmentObject(profileViewModel)
@@ -160,18 +158,20 @@ struct ExploreView: View {
                             exploreViewModel.shouldPresentAllCategoryProducts = true
                         } label: {
                             VStack(spacing: 15) {
-                                KFImage(URL(string: exploreViewModel.productsCategoriesWithImageURL[category] ?? "") ?? URL(string: ""))
-                                    .placeholder {
-                                        Image("product_placeholder_image")
-                                            .resizable()
-                                            .aspectRatio(contentMode: .fill)
-                                            .frame(width: 40, height: 40)
-                                    }
-                                    .retry(maxCount: 3, interval: .seconds(3))
-                                    .cancelOnDisappear(true)
-                                    .resizable()
-                                    .aspectRatio(contentMode: .fill)
-                                    .frame(width: 40, height: 40)
+                                if let categoryImageURLString = exploreViewModel.productsCategoriesWithImageURL[category], let categoryImageURLString = categoryImageURLString {
+                                    KFImage(URL(string: categoryImageURLString)!)
+                                        .placeholder {
+                                            Image("product_placeholder_image")
+                                                .resizable()
+                                                .aspectRatio(contentMode: .fill)
+                                                .frame(width: 40, height: 40)
+                                        }
+                                        .retry(maxCount: 3, interval: .seconds(3))
+                                        .cancelOnDisappear(true)
+                                        .resizable()
+                                        .aspectRatio(contentMode: .fill)
+                                        .frame(width: 40, height: 40)
+                                }
                                 
                                 Text(category.rawValue)
                                     .font(.ssButton)
@@ -318,7 +318,6 @@ struct ExploreView: View {
 
 struct ExploreView_Previews: PreviewProvider {
     static var previews: some View {
-        let authStateManager = AuthStateManager()
         let tabBarStateManager = TabBarStateManager()
         let exploreViewModel = ExploreViewModel()
         let profileViewModel = ProfileViewModel()
@@ -328,7 +327,6 @@ struct ExploreView_Previews: PreviewProvider {
         ForEach(ColorScheme.allCases, id: \.self) { colorScheme in
             ForEach(["iPhone 13 Pro Max", "iPhone 8"], id: \.self) { deviceName in
                 ExploreView()
-                    .environmentObject(authStateManager)
                     .environmentObject(tabBarStateManager)
                     .environmentObject(exploreViewModel)
                     .environmentObject(profileViewModel)
