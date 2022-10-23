@@ -18,7 +18,7 @@ struct ProductsListView: View {
     private var navigationTitle: String {
         switch exploreViewModel.productsForSource {
         case .category:
-            return exploreViewModel.choosenCategory?.rawValue ?? ""
+            return "Explore"
         case .company:
             return exploreViewModel.choosenCompany ?? ""
         default:
@@ -54,31 +54,28 @@ struct ProductsListView: View {
             SortingAndFilteringSheetView()
         }
         .navigationTitle(navigationTitle)
-        .navigationBarTitleDisplayMode(.large)
+        .navigationBarTitleDisplayMode(exploreViewModel.shouldPresentAllCategoryProducts ? .large : .inline)
         .navigationBarBackButtonHidden(true)
-        .toolbar {
-            ToolbarItem(placement: .navigationBarLeading) {
-                Button {
-                    dismiss()
-                } label: {
-                    Image(systemName: "arrow.backward.circle.fill")
-                        .resizable()
-                        .frame(width: 30, height: 30)
-                        .foregroundColor(.accentColor)
+        .if(!exploreViewModel.shouldPresentAllCategoryProducts) {
+            $0
+                .toolbar {
+                    ToolbarItem(placement: .navigationBarLeading) {
+                        Button {
+                            dismiss()
+                        } label: {
+                            Image(systemName: "arrow.backward.circle.fill")
+                                .resizable()
+                                .frame(width: 30, height: 30)
+                                .foregroundColor(.accentColor)
+                        }
+                    }
+                    
+                    ToolbarItem(placement: .navigationBarTrailing) {
+                        NavigationLink(destination: NotificationsView()) {
+                            Image(systemName: "bell")
+                        }
+                    }
                 }
-            }
-            
-            ToolbarItem(placement: .navigationBarLeading) {
-                Text("SwiftfulShopping")
-                    .font(.ssTitle3).fontWeight(.bold)
-                    .foregroundColor(.accentColor)
-            }
-            
-            ToolbarItem(placement: .navigationBarTrailing) {
-                NavigationLink(destination: NotificationsView()) {
-                    Image(systemName: "bell")
-                }
-            }
         }
     }
     

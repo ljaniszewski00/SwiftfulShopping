@@ -39,11 +39,13 @@ struct ProductDetailsRatingsSection: View {
                             Text("\(productAverageRating, specifier: "%.2f") / 5")
                                 .font(.system(size: 26, weight: .bold))
                             HStack {
-                                ForEach(1...Int(round(productAverageRating)), id: \.self) { _ in
-                                    Image(systemName: "star.fill")
-                                        .resizable()
-                                        .frame(width: 20, height: 20)
-                                        .foregroundColor(.accentColor)
+                                if productAverageRating != 0 {
+                                    ForEach(1...Int(round(productAverageRating)), id: \.self) { _ in
+                                        Image(systemName: "star.fill")
+                                            .resizable()
+                                            .frame(width: 20, height: 20)
+                                            .foregroundColor(.accentColor)
+                                    }
                                 }
 
                                 ForEach(Int(round(productAverageRating))..<5, id: \.self) { _ in

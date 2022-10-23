@@ -15,9 +15,9 @@ class ProductsRepository: ObservableObject {
     }()
     
     private init() {
-        fetchProducts { [weak self] products in
-            self?.products = products
-        }
+//        fetchProducts { [weak self] products in
+//            self?.products = products
+//        }
     }
     
     func fetchProducts(completion: @escaping (([Product]?) -> ())) {

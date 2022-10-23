@@ -27,6 +27,6 @@ enum Countries: String, CaseIterable {
 
 extension Countries {
     static func withLabel(_ label: String) -> Countries? {
-        return self.allCases.first { "\($0)" == label }
+        return self.allCases.first { "\($0.rawValue)" == label }
     }
 }

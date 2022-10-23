@@ -26,6 +26,6 @@ extension OrderStatus: CaseIterable {
 
 extension OrderStatus {
     static func withLabel(_ label: String) -> OrderStatus? {
-        return self.allCases.first { "\($0)" == label }
+        return self.allCases.first { "\($0.rawValue)" == label }
     }
 }

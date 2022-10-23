@@ -21,6 +21,6 @@ extension PaymentMethod: CaseIterable {
 
 extension PaymentMethod {
     static func withLabel(_ label: String) -> PaymentMethod? {
-        return self.allCases.first { "\($0)" == label }
+        return self.allCases.first { "\($0.rawValue)" == label }
     }
 }

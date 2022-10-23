@@ -23,6 +23,6 @@ extension ReturnStatus: CaseIterable {
 
 extension ReturnStatus {
     static func withLabel(_ label: String) -> ReturnStatus? {
-        return self.allCases.first { "\($0)" == label }
+        return self.allCases.first { "\($0.rawValue)" == label }
     }
 }

@@ -22,6 +22,6 @@ extension SignInMethod {
 
 extension SignInMethod {
     static func withLabel(_ label: String) -> SignInMethod? {
-        return self.allCases.first { "\($0)" == label }
+        return self.allCases.first { "\($0.rawValue)" == label }
     }
 }

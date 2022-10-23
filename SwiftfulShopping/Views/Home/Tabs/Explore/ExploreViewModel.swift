@@ -45,27 +45,27 @@ class ExploreViewModel: ObservableObject {
     var productsCategoriesWithImageURL: [Category: String?] {
         var productsCategoriesWithImageURL: [Category: String?] = [:]
         for category in productsCategories {
-            for product in productsFromRepository where product.category == category {
-                productsCategoriesWithImageURL[category] = product.imagesURLs[0]
-                break
-            }
+            productsCategoriesWithImageURL[category] = productsFromRepository
+                                                            .filter { $0.category == category }
+                                                            .map { $0.imagesURLs.first }
+                                                            .compactMap { $0 }
+                                                            .first
         }
+        
         return productsCategoriesWithImageURL
     }
     
     var productsCategories: [Category] {
-        var categories: Set<Category> = []
-        for product in productsFromRepository {
-            categories.insert(product.category)
-        }
-        return Array(categories).sorted(by: { $0.rawValue > $1.rawValue })
+        productsFromRepository
+            .map { $0.category }
+            .uniqued()
+            .sorted { $0.rawValue > $1.rawValue }
     }
     
     private var categoryProducts: [Product] {
         if let choosenCategory = choosenCategory {
-            return productsToBeDisplayed.filter {
-                $0.category == choosenCategory
-            }
+            return productsToBeDisplayed
+                .filter { $0.category == choosenCategory }
         } else {
             return productsToBeDisplayed
         }
@@ -138,7 +138,6 @@ class ExploreViewModel: ObservableObject {
             if let products = products {
                 self?.productsFromRepository = products
                 self?.productsToBeDisplayed = products
-                print(self?.productsFromRepository)
             }
         }
         
@@ -154,7 +153,6 @@ class ExploreViewModel: ObservableObject {
             self?.showLoadingModal = false
             if let productsRatings = productsRatings {
                 self?.ratingsFromRepository = productsRatings
-                print(self?.ratingsFromRepository)
             }
         }
         

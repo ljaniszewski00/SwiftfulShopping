@@ -25,6 +25,6 @@ extension Category {
 
 extension Category {
     static func withLabel(_ label: String) -> Category? {
-        return self.allCases.first { "\($0)" == label }
+        return self.allCases.first { "\($0.rawValue)" == label }
     }
 }

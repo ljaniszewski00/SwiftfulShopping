@@ -38,21 +38,23 @@ struct ExploreView: View {
                         VStack(alignment: .center) {
                             buildCategoriesList()
                             
-                            buildNewestProductsList()
-                                .padding(.bottom)
-                            
-                            buildCompaniesGrid()
-                            
-                            buildRecommendedProductsList()
-                            
-                            Button {
-                                exploreViewModel.productsForSource = .all
-                                exploreViewModel.shouldPresentAllProducts = true
-                            } label: {
-                                Text("All Products")
+                            if !exploreViewModel.shouldPresentAllCategoryProducts {
+                                buildNewestProductsList()
+                                    .padding(.bottom)
+                                
+                                buildCompaniesGrid()
+                                
+                                buildRecommendedProductsList()
+                                
+                                Button {
+                                    exploreViewModel.productsForSource = .all
+                                    exploreViewModel.shouldPresentAllProducts = true
+                                } label: {
+                                    Text("All Products")
+                                }
+                                .buttonStyle(CustomButton())
+                                .padding()
                             }
-                            .buttonStyle(CustomButton())
-                            .padding()
                             
                             NavigationLink(destination: ProductsListView(),
                                            isActive: $exploreViewModel.shouldPresentAllProducts,
@@ -138,57 +140,75 @@ struct ExploreView: View {
     @ViewBuilder
     func buildCategoriesList() -> some View {
         VStack(alignment: .leading, spacing: 15) {
-            Text("Categories")
-                .font(.ssTitle2)
-                .foregroundColor(.black)
-                .padding([.leading, .top])
-                .frame(width: ScreenBoundsSupplier.shared.getScreenWidth(), alignment: .leading)
-                .padding(.bottom, 10)
-                .background {
-                    Rectangle()
-                        .foregroundColor(.accentColor)
-                }
-            
-            ScrollView(.horizontal, showsIndicators: false) {
-                HStack {
-                    ForEach(Category.allCases, id: \.self) { category in
-                        Button {
-                            exploreViewModel.productsForSource = .category
-                            exploreViewModel.choosenCategory = category
-                            exploreViewModel.shouldPresentAllCategoryProducts = true
-                        } label: {
-                            VStack(spacing: 15) {
-                                if let categoryImageURLString = exploreViewModel.productsCategoriesWithImageURL[category], let categoryImageURLString = categoryImageURLString {
-                                    KFImage(URL(string: categoryImageURLString)!)
-                                        .placeholder {
-                                            Image("product_placeholder_image")
+            VStack(alignment: .leading, spacing: 0) {
+                Text("Categories")
+                    .font(.ssTitle2)
+                    .foregroundColor(.black)
+                    .padding([.leading, .top])
+                    .frame(width: ScreenBoundsSupplier.shared.getScreenWidth(), alignment: .leading)
+                    .padding(.bottom, 10)
+                    .background {
+                        Rectangle()
+                            .foregroundColor(.accentColor)
+                    }
+                
+                VStack(alignment: .leading, spacing: 5) {
+                    ScrollView(.horizontal, showsIndicators: false) {
+                        HStack {
+                            ForEach(Category.allCases, id: \.self) { category in
+                                Button {
+                                    if exploreViewModel.choosenCategory == category &&
+                                        exploreViewModel.shouldPresentAllCategoryProducts == true {
+                                        exploreViewModel.choosenCategory = nil
+                                        exploreViewModel.shouldPresentAllCategoryProducts = false
+                                    } else {
+                                        exploreViewModel.productsForSource = .category
+                                        exploreViewModel.choosenCategory = category
+                                        exploreViewModel.shouldPresentAllCategoryProducts = true
+                                    }
+                                } label: {
+                                    VStack(spacing: 15) {
+                                        if let categoryImageURLString = exploreViewModel.productsCategoriesWithImageURL[category], let categoryImageURLString = categoryImageURLString {
+                                            KFImage(URL(string: categoryImageURLString)!)
+                                                .placeholder {
+                                                    Image("product_placeholder_image")
+                                                        .resizable()
+                                                        .aspectRatio(contentMode: .fill)
+                                                        .frame(width: 40, height: 40)
+                                                }
+                                                .retry(maxCount: 3, interval: .seconds(3))
+                                                .cancelOnDisappear(true)
                                                 .resizable()
                                                 .aspectRatio(contentMode: .fill)
                                                 .frame(width: 40, height: 40)
+                                                .if(exploreViewModel.shouldPresentAllCategoryProducts) {
+                                                    $0
+                                                        .if(category != exploreViewModel.choosenCategory) {
+                                                            $0
+                                                                .opacity(0.6)
+                                                        }
+                                                }
                                         }
-                                        .retry(maxCount: 3, interval: .seconds(3))
-                                        .cancelOnDisappear(true)
-                                        .resizable()
-                                        .aspectRatio(contentMode: .fill)
-                                        .frame(width: 40, height: 40)
+                                        
+                                        Text(category.rawValue)
+                                            .font(.ssButton)
+                                            .foregroundColor(category == exploreViewModel.choosenCategory ? .black : .ssDarkGray)
+                                    }
+                                    .padding(.vertical)
                                 }
-                                
-                                Text(category.rawValue)
-                                    .font(.ssButton)
-                                    .foregroundColor(.ssDarkGray)
+                                .padding(.horizontal)
                             }
                         }
-                        .padding(.horizontal)
                     }
                 }
+                .background(.ultraThinMaterial, in: Rectangle())
             }
+            .measureSize(size: $exploreViewModel.categoriesTileSize)
             
-            NavigationLink(destination: ProductsListView(),
-                           isActive: $exploreViewModel.shouldPresentAllCategoryProducts,
-                           label: { EmptyView() })
+            if exploreViewModel.shouldPresentAllCategoryProducts {
+                ProductsListView()
+            }
         }
-        .background(.ultraThinMaterial, in: Rectangle())
-        .measureSize(size: $exploreViewModel.categoriesTileSize)
     }
     
     @ViewBuilder

@@ -21,6 +21,6 @@ extension ShippingMethod: CaseIterable {
 
 extension ShippingMethod {
     static func withLabel(_ label: String) -> ShippingMethod? {
-        return self.allCases.first { "\($0)" == label }
+        return self.allCases.first { "\($0.rawValue)" == label }
     }
 }

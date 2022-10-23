@@ -185,14 +185,16 @@ struct HomeView: View {
 //                    }
 //                }
                 
-//                homeViewModel.showLoadingModal = true
-//                
+                homeViewModel.showLoadingModal = true
+                
 //                profileViewModel.fetchProfile { _ in
 //                    exploreViewModel.onAppear()
 //                    cartViewModel.restorePreviousCart()
 //                    favoritesViewModel.fetchFavorites()
 //                    homeViewModel.showLoadingModal = false
 //                }
+                
+                exploreViewModel.onAppear()
             }
             .ignoresSafeArea(edges: .bottom)
             .onChange(of: networkManager.isConnected) { newValue in
