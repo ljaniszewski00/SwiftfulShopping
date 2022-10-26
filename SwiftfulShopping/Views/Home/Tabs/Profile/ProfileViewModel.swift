@@ -10,8 +10,8 @@ import SwiftUI
 class ProfileViewModel: ObservableObject {
     @Published var profile: Profile?
     
-    @Published var oldImage = UIImage(named: "blank_profile_image")!
-    @Published var image = UIImage(named: "blank_profile_image")!
+    @Published var oldImage: UIImage = UIImage(named: "blank_profile_image")!
+    @Published var image: UIImage = UIImage(named: "blank_profile_image")!
     
     @Published var shouldPresentOrderRateView: Bool = false
     @Published var shouldPresentReturnCreationView: Bool = false
@@ -26,6 +26,23 @@ class ProfileViewModel: ObservableObject {
                 switch result {
                 case .success(let profile):
                     self?.profile = profile
+                    if let profileImageURL = profile?.imageURL {
+                        if !profileImageURL.isEmpty {
+                            FirebaseStorageManager.client.downloadImageFromStorage(userID: user.uid,
+                                                                                   imageURL: profileImageURL) { [weak self] result in
+                                switch result {
+                                case .success(let image):
+                                    if let image = image {
+                                        self?.oldImage = image
+                                        self?.image = image
+                                    }
+                                case .failure(_):
+                                    break
+                                }
+                            }
+                        }
+                    }
+                    
                     completion(.success)
                 case .failure(let error):
                     completion(.failure(error))
@@ -34,9 +51,39 @@ class ProfileViewModel: ObservableObject {
         }
     }
 
-    func uploadPhoto() {
-        if !image.isEqual(oldImage) {
-            oldImage = image
+    func changePhoto(completion: @escaping ((VoidResult) -> ())) {
+        if image.isEqual(oldImage) {
+            completion(.success)
+        } else {
+            if let profile = self.profile {
+                if let profileImageURL = profile.imageURL {
+                    if !profileImageURL.isEmpty {
+                        FirebaseStorageManager.client.deleteImageFromStorage(userID: profile.id,
+                                                                             imageURL: profileImageURL) { _ in }
+                    }
+                    FirebaseStorageManager.client.uploadImageToStorage(image: self.image,
+                                                                       userID: profile.id) { [weak self] result in
+                        switch result {
+                        case .success(let imageUUID):
+                            if let imageUUID = imageUUID {
+                                FirestoreProfileManager.client.updateProfileImageURL(profileID: profile.id,
+                                                                                     imageURL: imageUUID) { result in
+                                    switch result {
+                                    case .success:
+                                        self?.oldImage = self!.image
+                                        self?.profile?.imageURL = imageUUID
+                                        completion(.success)
+                                    case .failure(let error):
+                                        completion(.failure(error))
+                                    }
+                                }
+                            }
+                        case .failure(let error):
+                            completion(.failure(error))
+                        }
+                    }
+                }
+            }
         }
     }
 

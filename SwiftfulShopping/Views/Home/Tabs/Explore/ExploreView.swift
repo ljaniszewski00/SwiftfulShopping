@@ -356,9 +356,6 @@ struct ExploreView_Previews: PreviewProvider {
                     .preferredColorScheme(colorScheme)
                     .previewDevice(PreviewDevice(rawValue: deviceName))
                     .previewDisplayName("\(deviceName) portrait")
-                    .onAppear {
-                        exploreViewModel.fetchProducts()
-                    }
             }
         }
     }

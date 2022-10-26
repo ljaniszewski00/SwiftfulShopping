@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import Kingfisher
 
 struct ProfileView: View {
     @EnvironmentObject private var accentColorManager: AccentColorManager
@@ -190,7 +191,15 @@ struct ProfileView: View {
             .sheet(isPresented: $shouldPresentImagePicker) {
                 ImagePicker(sourceType: self.shouldPresentCamera ? .camera : .photoLibrary, selectedImage: $profileViewModel.image)
                     .onDisappear {
-                        profileViewModel.uploadPhoto()
+                        profileViewModel.changePhoto { result in
+                            switch result {
+                            case .success:
+                                break
+                            case .failure(let error):
+                                errorManager.generateCustomError(errorType: .changePhotoError,
+                                                                 additionalErrorDescription: error.localizedDescription)
+                            }
+                        }
                     }
             }
             .actionSheet(isPresented: $shouldPresentAddActionSheet) {

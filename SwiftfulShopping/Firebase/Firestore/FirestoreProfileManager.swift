@@ -186,6 +186,25 @@ class FirestoreProfileManager: ObservableObject {
             }
     }
     
+    func updateProfileImageURL(profileID: String, imageURL: String, completion: @escaping ((VoidResult) -> ())) {
+        self.db.collection(DatabaseCollections.profiles.rawValue)
+            .document(profileID)
+            .getDocument { documentSnapshot, error in
+                if let error = error {
+                    print("Error updating profile image url data: \(error.localizedDescription)")
+                    completion(.failure(error))
+                } else {
+                    let updateData: [String: Any] = [
+                        "imageURL": imageURL
+                    ]
+                    
+                    documentSnapshot?.reference.updateData(updateData)
+                    print("Successfully updated profile image url data")
+                    completion(.success)
+                }
+            }
+    }
+    
     func updateEmail(newEmail: String, profile: Profile, completion: @escaping ((VoidResult) -> ())) {
         self.db.collection(DatabaseCollections.profiles.rawValue)
             .document(profile.id)

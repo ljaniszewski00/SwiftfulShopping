@@ -168,6 +168,7 @@ struct HomeView: View {
             .modifier(ErrorModal(isPresented: $errorManager.showErrorModal,
                                  customError: errorManager.customError ?? ErrorManager.unknownError))
             .onAppear {
+                
 //                // MARK: For adding products and rating to database in a quick way
 //                for product in Product.demoProducts {
 //                    print(product)
@@ -187,14 +188,13 @@ struct HomeView: View {
                 
                 homeViewModel.showLoadingModal = true
                 
-//                profileViewModel.fetchProfile { _ in
-//                    exploreViewModel.onAppear()
-//                    cartViewModel.restorePreviousCart()
-//                    favoritesViewModel.fetchFavorites()
-//                    homeViewModel.showLoadingModal = false
-//                }
-                
-                exploreViewModel.onAppear()
+                profileViewModel.fetchProfile { _ in
+                    exploreViewModel.onAppear {
+                        cartViewModel.restorePreviousCart()
+                        favoritesViewModel.fetchFavorites()
+                        homeViewModel.showLoadingModal = false
+                    }
+                }
             }
             .ignoresSafeArea(edges: .bottom)
             .onChange(of: networkManager.isConnected) { newValue in

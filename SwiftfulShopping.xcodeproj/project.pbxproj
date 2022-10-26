@@ -876,10 +876,10 @@
 		0A83215D28D9120C008234C2 /* Firebase */ = {
 			isa = PBXGroup;
 			children = (
+				88A946B12909DAE20086A8A1 /* Storage */,
+				88A946B02909DADC0086A8A1 /* Auth */,
 				0A383D0228F75B1700D15B48 /* Firestore */,
 				0A431EC128DF7E4300DB6EAC /* Enums */,
-				0A83215E28D91216008234C2 /* FirebaseAuthManager.swift */,
-				0A49CEB528EE04C30064D3DD /* FirebaseStorageManager.swift */,
 			);
 			path = Firebase;
 			sourceTree = "<group>";
@@ -1219,6 +1219,22 @@
 				0A3C7AD729006B710079B290 /* VoidResult.swift */,
 			);
 			path = Enums;
+			sourceTree = "<group>";
+		};
+		88A946B02909DADC0086A8A1 /* Auth */ = {
+			isa = PBXGroup;
+			children = (
+				0A83215E28D91216008234C2 /* FirebaseAuthManager.swift */,
+			);
+			path = Auth;
+			sourceTree = "<group>";
+		};
+		88A946B12909DAE20086A8A1 /* Storage */ = {
+			isa = PBXGroup;
+			children = (
+				0A49CEB528EE04C30064D3DD /* FirebaseStorageManager.swift */,
+			);
+			path = Storage;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */

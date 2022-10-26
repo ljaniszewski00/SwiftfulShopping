@@ -37,9 +37,12 @@ class ExploreViewModel: ObservableObject {
     @Published var scrollProductsListToBeginning: Bool = false
     @Published var categoriesTileSize: CGSize = .zero
     
-    func onAppear() {
-        fetchProducts()
-        fetchRatings()
+    func onAppear(completion: @escaping (() -> ())) {
+        fetchProducts { [weak self] in
+            self?.fetchRatings {
+                completion()
+            }
+        }
     }
     
     var productsCategoriesWithImageURL: [Category: String?] {
@@ -131,34 +134,23 @@ class ExploreViewModel: ObservableObject {
         }
     }
     
-    func fetchProducts() {
-        showLoadingModal = true
+    func fetchProducts(completion: @escaping (() -> ())) {
         ProductsRepository.shared.fetchProducts { [weak self] products in
-            self?.showLoadingModal = false
             if let products = products {
                 self?.productsFromRepository = products
                 self?.productsToBeDisplayed = products
             }
+            completion()
         }
-        
-//        if let products = ProductsRepository.shared.products {
-//            productsFromRepository = products
-//            productsToBeDisplayed = products
-//        }
     }
     
-    func fetchRatings() {
-        self.showLoadingModal = true
+    func fetchRatings(completion: @escaping (() -> ())) {
         RatingsRepository.shared.fetchRatings { [weak self] productsRatings in
-            self?.showLoadingModal = false
             if let productsRatings = productsRatings {
                 self?.ratingsFromRepository = productsRatings
             }
+            completion()
         }
-        
-//        if let ratings = RatingsRepository.shared.ratings {
-//            self.ratingsFromRepository = ratings
-//        }
     }
     
     func getRatingsFor(product: Product) -> [ProductRating] {

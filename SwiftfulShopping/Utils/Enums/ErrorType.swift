@@ -33,6 +33,7 @@ enum ErrorType: String {
     case changeDefaultAddressError = "Change Default Address Error"
     case changeDefaultPaymentMethodError = "Change Default Payment Method Error"
     case signOutError = "Sign Out Error"
+    case changePhotoError = "Change Photo Error"
     
     case unknown = "Unknown Error"
 }
