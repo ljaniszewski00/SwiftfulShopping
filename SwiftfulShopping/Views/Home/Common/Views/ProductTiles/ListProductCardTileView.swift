@@ -123,19 +123,8 @@ struct ListProductCardTileView: View {
                 }
                 .padding(.bottom, 15)
                 
-                Button {
-                    withAnimation {
-                        cartViewModel.addProductToCart(product: product, quantity: 1)
-                    }
-                } label: {
-                    Text("Add to Cart")
-                        .font(.ssButton)
-                        .foregroundColor(.ssWhite)
-                        .padding(.all, 10)
-                        .background {
-                            RoundedRectangle(cornerRadius: 5)
-                        }
-                        .fixedSize(horizontal: true, vertical: false)
+                AddToCartButton {
+                    cartViewModel.addProductToCart(product: product, quantity: 1)
                 }
             }
         }

@@ -13,6 +13,7 @@ struct LottieView: UIViewRepresentable {
     var loopMode: LottieLoopMode = .loop
     var contentMode: UIView.ContentMode = .scaleAspectFit
     var paused: Bool = false
+    var shouldPlay: Bool = true
     
     var animationView = AnimationView()
     
@@ -23,7 +24,9 @@ struct LottieView: UIViewRepresentable {
         animationView.contentMode = contentMode
         animationView.loopMode = loopMode
         animationView.backgroundBehavior = .pauseAndRestore
-        animationView.play()
+        if shouldPlay {
+            animationView.play()
+        }
         
         animationView.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(animationView)
@@ -36,7 +39,18 @@ struct LottieView: UIViewRepresentable {
         return view
     }
     
-    func updateUIView(_ uiView: UIView, context: UIViewRepresentableContext<LottieView>) {
+    func updateUIView(_ uiView: UIView, context: UIViewRepresentableContext<LottieView>) {}
+    
+    func makeCoordinator() -> Coordinator {
+            Coordinator(self)
+        }
+
+    class Coordinator: NSObject {
+        var parent: LottieView
+
+        init(_ parent: LottieView) {
+            self.parent = parent
+        }
     }
     
     func changeAnimationState(pause: Bool) {

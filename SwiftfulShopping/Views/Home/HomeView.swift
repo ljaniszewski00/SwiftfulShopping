@@ -131,14 +131,14 @@ struct HomeView: View {
                                 }
                                 .frame(maxWidth: .infinity)
                                 .foregroundColor(selectedTab == tabItem.tab ? .accentColor : Color(uiColor: .systemGray))
-                                .if(tabItem.tab == .cart && cartViewModel.cartProductsCount > 0) {
+                                .if(tabItem.tab == .cart && cartViewModel.cartAllProductsQuantityCount > 0) {
                                     $0
                                         .overlay(
                                             ZStack {
                                                 Circle()
                                                     .frame(width: 20, height: 20)
                                                     .foregroundColor(.red)
-                                                Text(String(cartViewModel.cartProductsCount))
+                                                Text(String(cartViewModel.cartAllProductsQuantityCount))
                                                     .font(.ssCallout)
                                                     .foregroundColor(.ssWhite)
                                             }

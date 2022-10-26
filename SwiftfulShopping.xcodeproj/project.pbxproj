@@ -271,6 +271,7 @@
 		0AD89747289D0C5E00BFDAA1 /* ProfileViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0AD89745289D0C4A00BFDAA1 /* ProfileViewModel.swift */; };
 		0AD89748289D0C5E00BFDAA1 /* ProfileViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0AD89745289D0C4A00BFDAA1 /* ProfileViewModel.swift */; };
 		0AD8976B289D392F00BFDAA1 /* ProductDetailsRatingsSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0AD8976A289D392F00BFDAA1 /* ProductDetailsRatingsSection.swift */; };
+		88A946AF29099F850086A8A1 /* AddToCartButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88A946AE29099F850086A8A1 /* AddToCartButton.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -474,6 +475,7 @@
 		0ACD59B5284B74CD00AA9DA0 /* Countries.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Countries.swift; sourceTree = "<group>"; };
 		0AD89745289D0C4A00BFDAA1 /* ProfileViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewModel.swift; sourceTree = "<group>"; };
 		0AD8976A289D392F00BFDAA1 /* ProductDetailsRatingsSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductDetailsRatingsSection.swift; sourceTree = "<group>"; };
+		88A946AE29099F850086A8A1 /* AddToCartButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddToCartButton.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -1076,6 +1078,7 @@
 				0A355567289FD3ED005993E5 /* ErrorModal.swift */,
 				0A2FE0B128A1BA3100E8D30E /* LottieView.swift */,
 				0A3643CF29055D17000966AF /* PullToRefresh.swift */,
+				88A946AE29099F850086A8A1 /* AddToCartButton.swift */,
 			);
 			path = HelperViews;
 			sourceTree = "<group>";
@@ -1409,6 +1412,7 @@
 				0AD89746289D0C4A00BFDAA1 /* ProfileViewModel.swift in Sources */,
 				0A35557C28A05859005993E5 /* DeleteAccountView.swift in Sources */,
 				0A25D69328BC000600FF6ED5 /* ScrollView.swift in Sources */,
+				88A946AF29099F850086A8A1 /* AddToCartButton.swift in Sources */,
 				0A2288A428CFD2D900636F56 /* SwipeModifier.swift in Sources */,
 				0A2D5FD728BA42EB00E76D71 /* SingleSelectionToggle.swift in Sources */,
 				0A2FE0B728A1BB2000E8D30E /* SplashScreenView.swift in Sources */,

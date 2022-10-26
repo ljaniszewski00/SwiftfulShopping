@@ -107,18 +107,8 @@ struct GridProductCardTileView: View {
                 ZStack(alignment: .trailing) {
                     HStack {
                         Spacer()
-                        Button {
-                            withAnimation {
-                                cartViewModel.addProductToCart(product: product, quantity: 1)
-                            }
-                        } label: {
-                            Text("Add to Cart")
-                                .font(.ssBody).bold()
-                                .foregroundColor(.ssWhite)
-                                .padding(.all, 10)
-                                .background {
-                                    RoundedRectangle(cornerRadius: 5)
-                                }
+                        AddToCartButton {
+                            cartViewModel.addProductToCart(product: product, quantity: 1)
                         }
                         Spacer()
                     }

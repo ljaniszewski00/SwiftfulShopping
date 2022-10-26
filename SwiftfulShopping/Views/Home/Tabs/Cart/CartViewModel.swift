@@ -31,8 +31,12 @@ class CartViewModel: ObservableObject {
         productsForCart.isEmpty
     }
     
-    var cartProductsCount: Int {
+    var cartUniqueProductsCount: Int {
         productsForCart.keys.count
+    }
+    
+    var cartAllProductsQuantityCount: Int {
+        productsForCart.values.reduce(0, +)
     }
     
     var cartTotalCost: Double {

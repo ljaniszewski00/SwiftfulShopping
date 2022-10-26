@@ -88,7 +88,7 @@ struct OrderCreationSummaryView: View {
                                 .font(.ssCallout)
                                 .foregroundColor(.ssDarkGray)
                             
-                            Text("\(cartViewModel.cartProductsCount)")
+                            Text("\(cartViewModel.cartAllProductsQuantityCount)")
                                 .font(.ssTitle3)
                                 .foregroundColor(.accentColor)
                         }
