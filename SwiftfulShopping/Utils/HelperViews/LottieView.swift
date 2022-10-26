@@ -39,7 +39,20 @@ struct LottieView: UIViewRepresentable {
         return view
     }
     
-    func updateUIView(_ uiView: UIView, context: UIViewRepresentableContext<LottieView>) {}
+    func updateUIView(_ uiView: UIView, context: UIViewRepresentableContext<LottieView>) {
+        if shouldPlay {
+            context.coordinator.parent.animationView.play { finished in
+                if context.coordinator.parent.animationView.loopMode == .playOnce && finished {
+                    context.coordinator.parent.animationView.play()
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.22) {
+                        context.coordinator.parent.animationView.pause()
+                    }
+                }
+            }
+        } else {
+            context.coordinator.parent.animationView.pause()
+        }
+    }
     
     func makeCoordinator() -> Coordinator {
             Coordinator(self)
@@ -50,14 +63,6 @@ struct LottieView: UIViewRepresentable {
 
         init(_ parent: LottieView) {
             self.parent = parent
-        }
-    }
-    
-    func changeAnimationState(pause: Bool) {
-        if pause {
-            self.animationView.pause()
-        } else {
-            self.animationView.play()
         }
     }
 }

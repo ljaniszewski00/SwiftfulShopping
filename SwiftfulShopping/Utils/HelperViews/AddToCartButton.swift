@@ -8,8 +8,9 @@
 import SwiftUI
 
 struct AddToCartButton: View {
+    let onAdd: () -> Void
+    
     @State private var shouldPresentAddAnimation: Bool = false
-    var onAdd: () -> Void
     
     var body: some View {
         Button {
@@ -18,18 +19,19 @@ struct AddToCartButton: View {
                 onAdd()
             }
         } label: {
-            HStack(spacing: -15) {
+            HStack(spacing: -10) {
                 LottieView(name: "add_to_cart",
                            loopMode: .playOnce,
-                           contentMode: .scaleAspectFill,
+                           contentMode: .scaleAspectFit,
                            shouldPlay: shouldPresentAddAnimation)
-                .frame(minWidth: 60, maxHeight: 50)
+                .frame(minWidth: 50, maxHeight: 40)
                 
                 Text("Add to Cart")
                     .font(.ssButton)
                     .foregroundColor(.ssWhite)
                     .padding(.all, 10)
             }
+            .padding(.vertical, 5)
             .background {
                 RoundedRectangle(cornerRadius: 5)
             }

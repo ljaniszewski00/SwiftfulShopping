@@ -124,7 +124,8 @@ struct ListProductCardTileView: View {
                 .padding(.bottom, 15)
                 
                 AddToCartButton {
-                    cartViewModel.addProductToCart(product: product, quantity: 1)
+                    cartViewModel.addProductToCart(product: product,
+                                                   quantity: 1)
                 }
             }
         }

@@ -108,7 +108,8 @@ struct GridProductCardTileView: View {
                     HStack {
                         Spacer()
                         AddToCartButton {
-                            cartViewModel.addProductToCart(product: product, quantity: 1)
+                            cartViewModel.addProductToCart(product: product,
+                                                           quantity: 1)
                         }
                         Spacer()
                     }
