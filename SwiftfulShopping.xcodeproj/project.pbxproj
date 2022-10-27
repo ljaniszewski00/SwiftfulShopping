@@ -272,6 +272,7 @@
 		0AD89748289D0C5E00BFDAA1 /* ProfileViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0AD89745289D0C4A00BFDAA1 /* ProfileViewModel.swift */; };
 		0AD8976B289D392F00BFDAA1 /* ProductDetailsRatingsSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0AD8976A289D392F00BFDAA1 /* ProductDetailsRatingsSection.swift */; };
 		88A946AF29099F850086A8A1 /* AddToCartButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88A946AE29099F850086A8A1 /* AddToCartButton.swift */; };
+		88D94FCF290B358500F9F995 /* ExpandableText.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88D94FCE290B358500F9F995 /* ExpandableText.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -476,6 +477,7 @@
 		0AD89745289D0C4A00BFDAA1 /* ProfileViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewModel.swift; sourceTree = "<group>"; };
 		0AD8976A289D392F00BFDAA1 /* ProductDetailsRatingsSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductDetailsRatingsSection.swift; sourceTree = "<group>"; };
 		88A946AE29099F850086A8A1 /* AddToCartButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddToCartButton.swift; sourceTree = "<group>"; };
+		88D94FCE290B358500F9F995 /* ExpandableText.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExpandableText.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -1079,6 +1081,7 @@
 				0A2FE0B128A1BA3100E8D30E /* LottieView.swift */,
 				0A3643CF29055D17000966AF /* PullToRefresh.swift */,
 				88A946AE29099F850086A8A1 /* AddToCartButton.swift */,
+				88D94FCE290B358500F9F995 /* ExpandableText.swift */,
 			);
 			path = HelperViews;
 			sourceTree = "<group>";
@@ -1537,6 +1540,7 @@
 				0A2165B428A2C217006842F0 /* DeleteAccountViewModel.swift in Sources */,
 				0A27E7D2287B502A00D033D9 /* DetectCardCompany.swift in Sources */,
 				0A35557E28A05A43005993E5 /* AccentColorChangeView.swift in Sources */,
+				88D94FCF290B358500F9F995 /* ExpandableText.swift in Sources */,
 				0A5A7CF42896849D00736B07 /* CalculateEstimatedDeliveryDate.swift in Sources */,
 				0A268B592868A21E006CF0E2 /* ThirdReturnCreationView.swift in Sources */,
 				0A3643CD29054D5F000966AF /* URLConstants.swift in Sources */,
