@@ -23,7 +23,7 @@ struct AddToCartButton: View {
                 LottieView(name: "add_to_cart",
                            loopMode: .playOnce,
                            contentMode: .scaleAspectFit,
-                           shouldPlay: shouldPresentAddAnimation)
+                           shouldPlay: $shouldPresentAddAnimation)
                 .frame(minWidth: 50, maxHeight: 40)
                 
                 Text("Add to Cart")

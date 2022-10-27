@@ -13,7 +13,7 @@ struct LottieView: UIViewRepresentable {
     var loopMode: LottieLoopMode = .loop
     var contentMode: UIView.ContentMode = .scaleAspectFit
     var paused: Bool = false
-    var shouldPlay: Bool = true
+    var shouldPlay: Binding<Bool> = .constant(true)
     
     var animationView = AnimationView()
     
@@ -24,7 +24,7 @@ struct LottieView: UIViewRepresentable {
         animationView.contentMode = contentMode
         animationView.loopMode = loopMode
         animationView.backgroundBehavior = .pauseAndRestore
-        if shouldPlay {
+        if shouldPlay.wrappedValue {
             animationView.play()
         }
         
@@ -40,11 +40,12 @@ struct LottieView: UIViewRepresentable {
     }
     
     func updateUIView(_ uiView: UIView, context: UIViewRepresentableContext<LottieView>) {
-        if shouldPlay {
+        if shouldPlay.wrappedValue {
             context.coordinator.parent.animationView.play { finished in
                 if context.coordinator.parent.animationView.loopMode == .playOnce && finished {
                     context.coordinator.parent.animationView.play()
                     DispatchQueue.main.asyncAfter(deadline: .now() + 0.22) {
+                        shouldPlay.wrappedValue = false
                         context.coordinator.parent.animationView.pause()
                     }
                 }
