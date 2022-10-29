@@ -167,6 +167,7 @@ struct HomeView: View {
             }
             .modifier(ErrorModal(isPresented: $errorManager.showErrorModal,
                                  customError: errorManager.customError ?? ErrorManager.unknownError))
+            .modifier(LoadingIndicatorModal(isPresented: $homeViewModel.showLoadingModal))
             .onAppear {
                 
 //                // MARK: For adding products and rating to database in a quick way

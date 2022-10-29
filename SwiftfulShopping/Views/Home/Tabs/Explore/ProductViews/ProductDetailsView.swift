@@ -20,14 +20,8 @@ struct ProductDetailsView: View {
     
     @Environment(\.dismiss) var dismiss
     
-    @State private var showAllDescription: Bool = false
-    
     var product: Product
     var productRatings: [ProductRating]
-    
-    var productDescription: String {
-        showAllDescription ? product.productDescription : String(self.product.productDescription.prefix(80) + "...")
-    }
     
     var body: some View {
         VStack(spacing: 0) {

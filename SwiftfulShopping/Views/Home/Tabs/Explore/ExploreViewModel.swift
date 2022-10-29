@@ -5,7 +5,7 @@
 //  Created by Łukasz Janiszewski on 09/06/2022.
 //
 
-import SwiftUI
+import Foundation
 
 class ExploreViewModel: ObservableObject {
     @Published var errorManager = ErrorManager.shared
@@ -45,6 +45,25 @@ class ExploreViewModel: ObservableObject {
         }
     }
     
+    private func fetchProducts(completion: @escaping (() -> ())) {
+        ProductsRepository.shared.fetchProducts { [weak self] products in
+            if let products = products {
+                self?.productsFromRepository = products
+                self?.productsToBeDisplayed = products
+            }
+            completion()
+        }
+    }
+    
+    private func fetchRatings(completion: @escaping (() -> ())) {
+        RatingsRepository.shared.fetchRatings { [weak self] productsRatings in
+            if let productsRatings = productsRatings {
+                self?.ratingsFromRepository = productsRatings
+            }
+            completion()
+        }
+    }
+    
     var productsCategoriesWithImageURL: [Category: String?] {
         var productsCategoriesWithImageURL: [Category: String?] = [:]
         for category in productsCategories {
@@ -56,6 +75,12 @@ class ExploreViewModel: ObservableObject {
         }
         
         return productsCategoriesWithImageURL
+    }
+    
+    var productsWithRatings: [Product: [ProductRating]] {
+        Dictionary(uniqueKeysWithValues: productsFromRepository.map { product in
+            (product, ratingsFromRepository.filter { product.id == $0.productID })
+        })
     }
     
     var productsCategories: [Category] {
@@ -134,27 +159,8 @@ class ExploreViewModel: ObservableObject {
         }
     }
     
-    func fetchProducts(completion: @escaping (() -> ())) {
-        ProductsRepository.shared.fetchProducts { [weak self] products in
-            if let products = products {
-                self?.productsFromRepository = products
-                self?.productsToBeDisplayed = products
-            }
-            completion()
-        }
-    }
-    
-    func fetchRatings(completion: @escaping (() -> ())) {
-        RatingsRepository.shared.fetchRatings { [weak self] productsRatings in
-            if let productsRatings = productsRatings {
-                self?.ratingsFromRepository = productsRatings
-            }
-            completion()
-        }
-    }
-    
     func getRatingsFor(product: Product) -> [ProductRating] {
-        ratingsFromRepository.filter { $0.id == product.id }
+        ratingsFromRepository.filter { $0.productID == product.id }
     }
     
     var changingProductsToBeDisplayed: [Product] {
