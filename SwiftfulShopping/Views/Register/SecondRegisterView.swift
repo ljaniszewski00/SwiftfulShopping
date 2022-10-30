@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import texterify_ios_sdk
 
 struct SecondRegisterView: View {
     @EnvironmentObject private var locationManager: LocationManager
@@ -45,7 +46,7 @@ struct SecondRegisterView: View {
                     
                     Spacer()
                     
-                    Button("Register") {
+                    Button(TexterifyManager.localisedString(key: .secondRegisterView(.registerButton))) {
                         withAnimation {
                             registerViewModel.showLoadingModal = true
                             
@@ -81,7 +82,7 @@ struct SecondRegisterView: View {
             .background {
                 Color(uiColor: .secondarySystemBackground).ignoresSafeArea()
             }
-            .navigationTitle("Create Account")
+            .navigationTitle(TexterifyManager.localisedString(key: .secondRegisterView(.navigationTitle)))
             .navigationBarHidden(false)
             .navigationBarBackButtonHidden(true)
             .navigationBarTitleDisplayMode(.inline)
@@ -119,46 +120,45 @@ struct SecondRegisterView: View {
     @ViewBuilder
     func buildShipmentAddressPane() -> some View {
         VStack(alignment: .leading, spacing: 20) {
-            Text("Shipment Address:")
+            Text(TexterifyManager.localisedString(key: .secondRegisterView(.shipmentAddressLabel)))
                 .font(.ssTitle2)
                 .foregroundColor(.accentColor)
             
             VStack(alignment: .leading, spacing: 15) {
                 VStack(alignment: .leading) {
-                    CustomTextField(textFieldProperty: "Full Name",
+                    CustomTextField(textFieldProperty: TexterifyManager.localisedString(key: .secondRegisterView(.fullNameTextField)),
                                     textFieldImageName: "person",
                                     text: $registerViewModel.fullName,
                                     isFocusedParentView: $isFullNameShipmentTextFieldFocused)
                     
                     if !registerViewModel.isFullNameShipmentValid {
-                        buildErrorMessage(message: "Full name should not contain any numbers and has to consist of at least two words.")
+                        buildErrorMessage(message: TexterifyManager.localisedString(key: .secondRegisterView(.fullNameError)))
                     }
                 }
                 
                 VStack(alignment: .leading) {
-                    CustomTextField(textFieldProperty: "Street Name",
+                    CustomTextField(textFieldProperty: TexterifyManager.localisedString(key: .secondRegisterView(.streetNameTextField)),
                                     text: $registerViewModel.streetName,
                                     isFocusedParentView: $isStreetNameTextFieldFocused)
                     
                     if !registerViewModel.isStreetNameValid {
-                        buildErrorMessage(message: "Street name should not contain any numbers")
+                        buildErrorMessage(message: TexterifyManager.localisedString(key: .secondRegisterView(.streetNameError)))
                     }
                 }
                 
                 VStack(alignment: .leading) {
-                    CustomTextField(textFieldProperty: "Street Number",
+                    CustomTextField(textFieldProperty: TexterifyManager.localisedString(key: .secondRegisterView(.streetNumberTextField)),
                                     textFieldKeyboardType: .phonePad,
                                     text: $registerViewModel.streetNumber,
                                     isFocusedParentView: $isStreetNumberTextFieldFocused)
                     
                     if !registerViewModel.isStreetNumberValid {
-                        buildErrorMessage(message: "Street number should contain only numbers.")
+                        buildErrorMessage(message: TexterifyManager.localisedString(key: .secondRegisterView(.streetNumberError)))
                     }
                 }
                 
-                
                 VStack(alignment: .leading) {
-                    CustomTextField(textFieldProperty: "Apartment Number",
+                    CustomTextField(textFieldProperty: TexterifyManager.localisedString(key: .secondRegisterView(.apartmentNumberTextField)),
                                     textFieldKeyboardType: .phonePad,
                                     text: $registerViewModel.apartmentNumber,
                                     isFocusedParentView: $isApartmentNumberTextFieldFocused)
@@ -166,34 +166,34 @@ struct SecondRegisterView: View {
                     buildOptionalApartmentNumberFieldInfo()
                     
                     if !registerViewModel.isApartmentNumberValid {
-                        buildErrorMessage(message: "Apartment number should contain only numbers.")
+                        buildErrorMessage(message: TexterifyManager.localisedString(key: .secondRegisterView(.apartmentNumberError)))
                     }
                 }
                 
                 VStack(alignment: .leading) {
-                    CustomTextField(textFieldProperty: "Zip Code",
+                    CustomTextField(textFieldProperty: TexterifyManager.localisedString(key: .secondRegisterView(.zipCodeTextField)),
                                     textFieldKeyboardType: .phonePad,
                                     text: $registerViewModel.zipCode,
                                     isFocusedParentView: $isZipCodeTextFieldFocused)
                     
                     if !registerViewModel.isZipCodeValid {
-                        buildErrorMessage(message: "Zip Code should contain only 5 digits and be formatted like XXXXX.")
+                        buildErrorMessage(message: TexterifyManager.localisedString(key: .secondRegisterView(.zipCodeError)))
                     }
                 }
                 
                 VStack(alignment: .leading) {
-                    CustomTextField(textFieldProperty: "City",
+                    CustomTextField(textFieldProperty: TexterifyManager.localisedString(key: .secondRegisterView(.cityTextField)),
                                     text: $registerViewModel.city,
                                     isFocusedParentView: $isCityTextFieldFocused)
                     
                     if !registerViewModel.isCityNameValid {
-                        buildErrorMessage(message: "City name should not contain any numbers.")
+                        buildErrorMessage(message: TexterifyManager.localisedString(key: .secondRegisterView(.cityError)))
                     }
                 }
             }
             
             VStack(alignment: .leading, spacing: 10) {
-                Text("Country:")
+                Text(TexterifyManager.localisedString(key: .secondRegisterView(.countryLabel)))
                     .font(.ssTitle3)
                     .foregroundColor(.accentColor)
                 
@@ -207,46 +207,46 @@ struct SecondRegisterView: View {
     func buildInvoiceAddressPane() -> some View {
         if !registerViewModel.sameDataOnInvoice {
             VStack(alignment: .leading, spacing: 5) {
-                Text("Invoice Data")
+                Text(TexterifyManager.localisedString(key: .secondRegisterView(.invoiceDataLabel)))
                     .font(.ssTitle2)
                     .foregroundColor(.accentColor)
                     .padding(.bottom)
                 
                 VStack(alignment: .leading, spacing: 15) {
                     VStack(alignment: .leading) {
-                        CustomTextField(textFieldProperty: "Full Name",
+                        CustomTextField(textFieldProperty: TexterifyManager.localisedString(key: .secondRegisterView(.fullNameTextField)),
                                         textFieldImageName: "person",
                                         text: $registerViewModel.fullNameInvoice,
                                         isFocusedParentView: $isFullNameInvoiceTextFieldFocused)
                         
                         if !registerViewModel.isInvoiceFullNameValid {
-                            buildErrorMessage(message: "Full name should not contain any numbers and has to consist of at least two words.")
+                            buildErrorMessage(message: TexterifyManager.localisedString(key: .secondRegisterView(.fullNameError)))
                         }
                     }
                     
                     VStack(alignment: .leading) {
-                        CustomTextField(textFieldProperty: "Street Name",
+                        CustomTextField(textFieldProperty: TexterifyManager.localisedString(key: .secondRegisterView(.streetNameTextField)),
                                         text: $registerViewModel.streetNameInvoice,
                                         isFocusedParentView: $isStreetNameInvoiceTextFieldFocused)
                         
                         if !registerViewModel.isInvoiceStreetNameValid {
-                            buildErrorMessage(message: "Street name should not contain any numbers")
+                            buildErrorMessage(message: TexterifyManager.localisedString(key: .secondRegisterView(.streetNameError)))
                         }
                     }
                     
                     VStack(alignment: .leading) {
-                        CustomTextField(textFieldProperty: "Street Number",
+                        CustomTextField(textFieldProperty: TexterifyManager.localisedString(key: .secondRegisterView(.streetNumberTextField)),
                                         textFieldKeyboardType: .phonePad,
                                         text: $registerViewModel.streetNumberInvoice,
                                         isFocusedParentView: $isStreetNumberInvoiceTextFieldFocused)
                         
                         if !registerViewModel.isInvoiceStreetNumberValid {
-                            buildErrorMessage(message: "Street number should contain only numbers.")
+                            buildErrorMessage(message: TexterifyManager.localisedString(key: .secondRegisterView(.streetNumberError)))
                         }
                     }
                     
                     VStack(alignment: .leading) {
-                        CustomTextField(textFieldProperty: "Apartment Number",
+                        CustomTextField(textFieldProperty: TexterifyManager.localisedString(key: .secondRegisterView(.apartmentNumberTextField)),
                                         textFieldKeyboardType: .phonePad,
                                         text: $registerViewModel.apartmentNumberInvoice,
                                         isFocusedParentView: $isApartmentNumberInvoiceTextFieldFocused)
@@ -254,33 +254,33 @@ struct SecondRegisterView: View {
                         buildOptionalApartmentNumberFieldInfo()
                         
                         if !registerViewModel.isInvoiceApartmentNumberValid {
-                            buildErrorMessage(message: "Apartment number should contain only numbers.")
+                            buildErrorMessage(message: TexterifyManager.localisedString(key: .secondRegisterView(.apartmentNumberError)))
                         }
                     }
                     
                     VStack(alignment: .leading) {
-                        CustomTextField(textFieldProperty: "Zip Code",
+                        CustomTextField(textFieldProperty: TexterifyManager.localisedString(key: .secondRegisterView(.zipCodeTextField)),
                                         textFieldKeyboardType: .phonePad,
                                         text: $registerViewModel.zipCodeInvoice,
                                         isFocusedParentView: $isZipCodeInvoiceTextFieldFocused)
                         
                         if !registerViewModel.isInvoiceZipCodeValid {
-                            buildErrorMessage(message: "Zip Code should contain only 5 digits and be formatted like XXXXX.")
+                            buildErrorMessage(message: TexterifyManager.localisedString(key: .secondRegisterView(.zipCodeError)))
                         }
                     }
                     
                     VStack(alignment: .leading) {
-                        CustomTextField(textFieldProperty: "City",
+                        CustomTextField(textFieldProperty: TexterifyManager.localisedString(key: .secondRegisterView(.cityTextField)),
                                         text: $registerViewModel.cityInvoice,
                                         isFocusedParentView: $isCityInvoiceTextFieldFocused)
                         
                         if !registerViewModel.isInvoiceCityNameValid {
-                            buildErrorMessage(message: "City name should not contain any numbers.")
+                            buildErrorMessage(message: TexterifyManager.localisedString(key: .secondRegisterView(.cityError)))
                         }
                     }
                     
                     VStack(alignment: .leading, spacing: 10) {
-                        Text("Country:")
+                        Text(TexterifyManager.localisedString(key: .secondRegisterView(.countryLabel)))
                             .font(.ssTitle3)
                             .foregroundColor(.accentColor)
                         
@@ -298,7 +298,7 @@ struct SecondRegisterView: View {
             buildShipmentAddressPane()
             
             VStack(alignment: .leading, spacing: 10) {
-                Text("Same address on invoice?")
+                Text(TexterifyManager.localisedString(key: .secondRegisterView(.sameAddressOnInvoice)))
                     .font(.ssTitle3)
                     .foregroundColor(.accentColor)
                 
@@ -312,7 +312,7 @@ struct SecondRegisterView: View {
     
     @ViewBuilder
     func buildOptionalApartmentNumberFieldInfo() -> some View {
-        Text("This field is optional.")
+        Text(TexterifyManager.localisedString(key: .secondRegisterView(.thisFieldIsOptionalLabel)))
             .font(.caption)
             .fontWeight(.semibold)
             .foregroundColor(.ssDarkGray)

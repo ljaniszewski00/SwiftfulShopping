@@ -7,6 +7,7 @@
 
 import SwiftUI
 import CoreLocationUI
+import texterify_ios_sdk
 
 struct RegisterView: View {
     @EnvironmentObject private var locationManager: LocationManager
@@ -43,7 +44,7 @@ struct RegisterView: View {
                             SecondRegisterView()
                                 .environmentObject(registerViewModel)
                         } label: {
-                            Button("Next") {
+                            Button(TexterifyManager.localisedString(key: .common(.next))) {
                                 withAnimation {
                                     registerViewModel.completeFirstRegisterStep()
                                 }
@@ -69,7 +70,7 @@ struct RegisterView: View {
         .background {
             Color(uiColor: .secondarySystemBackground).ignoresSafeArea()
         }
-        .navigationTitle("Create Account")
+        .navigationTitle(TexterifyManager.localisedString(key: .registerView(.navigationTitle)))
         .navigationBarHidden(false)
         .navigationBarBackButtonHidden(true)
         .navigationBarTitleDisplayMode(.inline)
@@ -90,79 +91,79 @@ struct RegisterView: View {
         VStack {
             VStack(spacing: 30) {
                 VStack(alignment: .leading, spacing: 20) {
-                    Text("Personal Information:")
+                    Text(TexterifyManager.localisedString(key: .registerView(.personalInformationLabel)))
                         .font(.ssTitle1)
                         .foregroundColor(.accentColor)
                     
                     VStack {
                         VStack(alignment: .leading, spacing: 10) {
-                            CustomTextField(textFieldProperty: "Full Name",
+                            CustomTextField(textFieldProperty: TexterifyManager.localisedString(key: .registerView(.fullNameTextField)),
                                             textFieldImageName: "person",
                                             textFieldSignsLimit: 0,
                                             text: $registerViewModel.fullName,
                                             isFocusedParentView: $isFullNameTextFieldFocused)
                             
                             if !registerViewModel.isFullNameValid {
-                                buildErrorMessage(message: "Full name should not contain any numbers and has to consist of at least two words.")
+                                buildErrorMessage(message: TexterifyManager.localisedString(key: .registerView(.fullNameError)))
                             }
                         }
                         
                         VStack(alignment: .leading) {
-                            CustomTextField(textFieldProperty: "Username",
+                            CustomTextField(textFieldProperty: TexterifyManager.localisedString(key: .registerView(.usernameTextField)),
                                             textFieldImageName: "person",
                                             textFieldSignsLimit: 20,
                                             text: $registerViewModel.username,
                                             isFocusedParentView: $isUsernameTextFieldFocused)
                             
                             if !registerViewModel.isUsernameValid {
-                                buildErrorMessage(message: "Username should contain at least 5 characters")
+                                buildErrorMessage(message: TexterifyManager.localisedString(key: .registerView(.usernameErrorCharacters)))
                             }
                             
                             if registerViewModel.usernameTaken {
-                                buildErrorMessage(message: "Username has already been taken")
+                                buildErrorMessage(message: TexterifyManager.localisedString(key: .registerView(.usernameErrorTaken)))
                             }
                         }
                     }
                 }
                 
                 VStack(alignment: .leading, spacing: 10) {
-                    Text("Birth Date:")
+                    Text(TexterifyManager.localisedString(key: .registerView(.birthDataLabel)))
                         .font(.ssTitle2)
                         .foregroundColor(.accentColor)
                     CustomDatePicker(includeDayPicking: true, datePicked: $registerViewModel.birthDate)
                 }
                 
                 VStack(alignment: .leading, spacing: 20) {
-                    Text("Credentials:")
+                    Text(TexterifyManager.localisedString(key: .registerView(.credentialsLabel)))
                         .font(.ssTitle2)
                         .foregroundColor(.accentColor)
                     
                     VStack(alignment: .leading, spacing: 10) {
-                        CustomTextField(textFieldProperty: "E-mail",
+                        CustomTextField(textFieldProperty: TexterifyManager.localisedString(key: .registerView(.emailTextField)),
                                         textFieldImageName: "envelope",
                                         textFieldSignsLimit: 0,
                                         text: $registerViewModel.email,
                                         isFocusedParentView: $isEmailTextFieldFocused)
                         
                         if !registerViewModel.isEmailValid {
-                            buildErrorMessage(message: "Email should be between 2 and 64 characters and contain @")
+                            buildErrorMessage(message: TexterifyManager.localisedString(key: .registerView(.emailErrorCharacters)))
                         }
                         
                         if registerViewModel.emailTaken {
-                            buildErrorMessage(message: "Email has already been used")
+                            buildErrorMessage(message: TexterifyManager.localisedString(key: .registerView(.emailErrorTaken)))
                         }
                     }
                     
                     VStack(alignment: .trailing, spacing: 10) {
                         CustomTextField(isSecureField: true,
-                                        textFieldProperty: "Password",
+                                        textFieldProperty: TexterifyManager.localisedString(key: .registerView(.passwordTextField)),
                                         textFieldImageName: "lock",
                                         text: $registerViewModel.password,
                                         isFocusedParentView: $isPasswordTextFieldFocused)
                         
                         HStack(alignment: .top) {
                             if showPasswordHint {
-                                Text("Password should be at least 8 characters long, should contain a number and a big letter")
+                                Text(TexterifyManager.localisedString(key: .registerView(.passwordError)))
                                     .font(.ssCaption1)
                                     .foregroundColor(registerViewModel.isPasswordValid ? .ssDarkGray : .red)
                             }

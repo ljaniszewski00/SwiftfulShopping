@@ -9,4 +9,5 @@ import Foundation
 
 public enum CommonLocalizable: String {
     case cancel = "Common_cancel"
+    case next = "Common_next"
 }

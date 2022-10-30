@@ -8,7 +8,7 @@
 import Foundation
 
 public enum ForgotPasswordViewLocalizable: String {
-    case navigationTitle = "ForgotPasswordView_navigation_title"
-    case instructionToTypeEmail = "ForgotPasswordView_instruction_to_type_email"
-    case sendRecoveryEmail = "ForgotPasswordView_send_recovery_email"
+    case navigationTitle = "ForgotPasswordView_navigationTitle"
+    case instructionToTypeEmail = "ForgotPasswordView_instructionToTypeEmail"
+    case sendRecoveryEmail = "ForgotPasswordView_sendRecoveryEmail"
 }

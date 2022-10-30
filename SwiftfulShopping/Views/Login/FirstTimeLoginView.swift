@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import texterify_ios_sdk
 
 struct FirstTimeLoginView: View {
     @EnvironmentObject private var locationManager: LocationManager
@@ -39,11 +40,10 @@ struct FirstTimeLoginView: View {
             ScrollView(.vertical, showsIndicators: false) {
                 VStack {
                     VStack(alignment: .leading, spacing: 10) {
-                        Text("Logging for the first time?")
+                        Text(TexterifyManager.localisedString(key: .firstTimeLoginView(.loggingForTheFirstTimeLabel)))
                             .font(.ssTitle1)
-                            
                         
-                        Text("Please provide shipment and invoice information to speed up order process. You will be able to change it in your profile later.")
+                        Text(TexterifyManager.localisedString(key: .firstTimeLoginView(.provideShipmentInvoiceDataInstructions)))
                             .font(.ssCallout)
                             .foregroundColor(.ssDarkGray)
                     }
@@ -54,7 +54,7 @@ struct FirstTimeLoginView: View {
                     
                     Spacer()
                     
-                    Button("Complete Login") {
+                    Button(TexterifyManager.localisedString(key: .firstTimeLoginView(.completeLoginButton))) {
                         withAnimation {
                             firstTimeLoginViewModel.showLoadingModal = true
                             firstTimeLoginViewModel.fillInvoiceData()
@@ -122,46 +122,46 @@ struct FirstTimeLoginView: View {
     @ViewBuilder
     func buildShipmentAddressPane() -> some View {
         VStack(alignment: .leading, spacing: 20) {
-            Text("Shipment Address:")
+            Text(TexterifyManager.localisedString(key: .firstTimeLoginView(.shipmentAddressLabel)))
                 .font(.ssTitle2)
                 .foregroundColor(.accentColor)
             
             VStack(alignment: .leading, spacing: 15) {
                 VStack(alignment: .leading) {
-                    CustomTextField(textFieldProperty: "Full Name",
+                    CustomTextField(textFieldProperty: TexterifyManager.localisedString(key: .firstTimeLoginView(.fullNameTextField)),
                                     textFieldImageName: "person",
                                     text: $firstTimeLoginViewModel.fullName,
                                     isFocusedParentView: $isFullNameTextFieldFocused)
                     
                     if !firstTimeLoginViewModel.isFullNameValid {
-                        buildErrorMessage(message: "Full name should not contain any numbers and has to consist of at least two words.")
+                        buildErrorMessage(message: TexterifyManager.localisedString(key: .firstTimeLoginView(.fullNameError)))
                     }
                 }
                 
                 VStack(alignment: .leading) {
-                    CustomTextField(textFieldProperty: "Street Name",
+                    CustomTextField(textFieldProperty: TexterifyManager.localisedString(key: .firstTimeLoginView(.streetNameTextField)),
                                     text: $firstTimeLoginViewModel.streetName,
                                     isFocusedParentView: $isStreetNameTextFieldFocused)
                     
                     if !firstTimeLoginViewModel.isStreetNameValid {
-                        buildErrorMessage(message: "Street name should not contain any numbers")
+                        buildErrorMessage(message: TexterifyManager.localisedString(key: .firstTimeLoginView(.streetNameError)))
                     }
                 }
                 
                 VStack(alignment: .leading) {
-                    CustomTextField(textFieldProperty: "Street Number",
+                    CustomTextField(textFieldProperty: TexterifyManager.localisedString(key: .firstTimeLoginView(.streetNumberTextField)),
                                     textFieldKeyboardType: .phonePad,
                                     text: $firstTimeLoginViewModel.streetNumber,
                                     isFocusedParentView: $isStreetNumberTextFieldFocused)
                     
                     if !firstTimeLoginViewModel.isStreetNumberValid {
-                        buildErrorMessage(message: "Street number should contain only numbers.")
+                        buildErrorMessage(message: TexterifyManager.localisedString(key: .firstTimeLoginView(.streetNumberError)))
                     }
                 }
                 
                 
                 VStack(alignment: .leading) {
-                    CustomTextField(textFieldProperty: "Apartment Number",
+                    CustomTextField(textFieldProperty: TexterifyManager.localisedString(key: .firstTimeLoginView(.apartmentNumberTextField)),
                                     textFieldKeyboardType: .phonePad,
                                     text: $firstTimeLoginViewModel.apartmentNumber,
                                     isFocusedParentView: $isApartmentNumberTextFieldFocused)
@@ -169,34 +169,34 @@ struct FirstTimeLoginView: View {
                     buildOptionalApartmentNumberFieldInfo()
                     
                     if !firstTimeLoginViewModel.isApartmentNumberValid {
-                        buildErrorMessage(message: "Apartment number should contain only numbers.")
+                        buildErrorMessage(message: TexterifyManager.localisedString(key: .firstTimeLoginView(.apartmentNumberError)))
                     }
                 }
                 
                 VStack(alignment: .leading) {
-                    CustomTextField(textFieldProperty: "Zip Code",
+                    CustomTextField(textFieldProperty: TexterifyManager.localisedString(key: .firstTimeLoginView(.zipCodeTextField)),
                                     textFieldKeyboardType: .phonePad,
                                     text: $firstTimeLoginViewModel.zipCode,
                                     isFocusedParentView: $isZipCodeTextFieldFocused)
                     
                     if !firstTimeLoginViewModel.isZipCodeValid {
-                        buildErrorMessage(message: "Zip Code should contain only 5 digits and be formatted like XXXXX.")
+                        buildErrorMessage(message: TexterifyManager.localisedString(key: .firstTimeLoginView(.zipCodeError)))
                     }
                 }
                 
                 VStack(alignment: .leading) {
-                    CustomTextField(textFieldProperty: "City",
+                    CustomTextField(textFieldProperty: TexterifyManager.localisedString(key: .firstTimeLoginView(.cityTextField)),
                                     text: $firstTimeLoginViewModel.city,
                                     isFocusedParentView: $isCityTextFieldFocused)
                     
                     if !firstTimeLoginViewModel.isCityNameValid {
-                        buildErrorMessage(message: "City name should not contain any numbers.")
+                        buildErrorMessage(message: TexterifyManager.localisedString(key: .firstTimeLoginView(.cityError)))
                     }
                 }
             }
             
             VStack(alignment: .leading, spacing: 10) {
-                Text("Country:")
+                Text(TexterifyManager.localisedString(key: .firstTimeLoginView(.countryLabel)))
                     .font(.ssTitle3)
                     .foregroundColor(.accentColor)
                 
@@ -210,46 +210,46 @@ struct FirstTimeLoginView: View {
     func buildInvoiceAddressPane() -> some View {
         if !firstTimeLoginViewModel.sameDataOnInvoice {
             VStack(alignment: .leading, spacing: 5) {
-                Text("Invoice Data")
+                Text(TexterifyManager.localisedString(key: .firstTimeLoginView(.invoiceDataLabel)))
                     .font(.ssTitle2)
                     .foregroundColor(.accentColor)
                     .padding(.bottom)
                 
                 VStack(alignment: .leading, spacing: 15) {
                     VStack(alignment: .leading) {
-                        CustomTextField(textFieldProperty: "Full Name",
+                        CustomTextField(textFieldProperty: TexterifyManager.localisedString(key: .firstTimeLoginView(.fullNameTextField)),
                                         textFieldImageName: "person",
                                         text: $firstTimeLoginViewModel.fullNameInvoice,
                                         isFocusedParentView: $isFullNameInvoiceTextFieldFocused)
                         
                         if !firstTimeLoginViewModel.isInvoiceFullNameValid {
-                            buildErrorMessage(message: "Full name should not contain any numbers and has to consist of at least two words.")
+                            buildErrorMessage(message: TexterifyManager.localisedString(key: .firstTimeLoginView(.fullNameError)))
                         }
                     }
                     
                     VStack(alignment: .leading) {
-                        CustomTextField(textFieldProperty: "Street Name",
+                        CustomTextField(textFieldProperty: TexterifyManager.localisedString(key: .firstTimeLoginView(.streetNameTextField)),
                                         text: $firstTimeLoginViewModel.streetNameInvoice,
                                         isFocusedParentView: $isStreetNameInvoiceTextFieldFocused)
                         
                         if !firstTimeLoginViewModel.isInvoiceStreetNameValid {
-                            buildErrorMessage(message: "Street name should not contain any numbers")
+                            buildErrorMessage(message: TexterifyManager.localisedString(key: .firstTimeLoginView(.streetNameError)))
                         }
                     }
                     
                     VStack(alignment: .leading) {
-                        CustomTextField(textFieldProperty: "Street Number",
+                        CustomTextField(textFieldProperty: TexterifyManager.localisedString(key: .firstTimeLoginView(.streetNumberTextField)),
                                         textFieldKeyboardType: .phonePad,
                                         text: $firstTimeLoginViewModel.streetNumberInvoice,
                                         isFocusedParentView: $isStreetNumberInvoiceTextFieldFocused)
                         
                         if !firstTimeLoginViewModel.isInvoiceStreetNumberValid {
-                            buildErrorMessage(message: "Street number should contain only numbers.")
+                            buildErrorMessage(message: TexterifyManager.localisedString(key: .firstTimeLoginView(.streetNumberError)))
                         }
                     }
                     
                     VStack(alignment: .leading) {
-                        CustomTextField(textFieldProperty: "Apartment Number",
+                        CustomTextField(textFieldProperty: TexterifyManager.localisedString(key: .firstTimeLoginView(.apartmentNumberTextField)),
                                         textFieldKeyboardType: .phonePad,
                                         text: $firstTimeLoginViewModel.apartmentNumberInvoice,
                                         isFocusedParentView: $isApartmentNumberInvoiceTextFieldFocused)
@@ -257,33 +257,33 @@ struct FirstTimeLoginView: View {
                         buildOptionalApartmentNumberFieldInfo()
                         
                         if !firstTimeLoginViewModel.isInvoiceApartmentNumberValid {
-                            buildErrorMessage(message: "Apartment number should contain only numbers.")
+                            buildErrorMessage(message: TexterifyManager.localisedString(key: .firstTimeLoginView(.apartmentNumberError)))
                         }
                     }
                     
                     VStack(alignment: .leading) {
-                        CustomTextField(textFieldProperty: "Zip Code",
+                        CustomTextField(textFieldProperty: TexterifyManager.localisedString(key: .firstTimeLoginView(.zipCodeTextField)),
                                         textFieldKeyboardType: .phonePad,
                                         text: $firstTimeLoginViewModel.zipCodeInvoice,
                                         isFocusedParentView: $isZipCodeInvoiceTextFieldFocused)
                         
                         if !firstTimeLoginViewModel.isInvoiceZipCodeValid {
-                            buildErrorMessage(message: "Zip Code should contain only 5 digits and be formatted like XXXXX.")
+                            buildErrorMessage(message: TexterifyManager.localisedString(key: .firstTimeLoginView(.zipCodeError)))
                         }
                     }
                     
                     VStack(alignment: .leading) {
-                        CustomTextField(textFieldProperty: "City",
+                        CustomTextField(textFieldProperty: TexterifyManager.localisedString(key: .firstTimeLoginView(.cityTextField)),
                                         text: $firstTimeLoginViewModel.cityInvoice,
                                         isFocusedParentView: $isCityInvoiceTextFieldFocused)
                         
                         if !firstTimeLoginViewModel.isInvoiceCityNameValid {
-                            buildErrorMessage(message: "City name should not contain any numbers.")
+                            buildErrorMessage(message: TexterifyManager.localisedString(key: .firstTimeLoginView(.cityError)))
                         }
                     }
                     
                     VStack(alignment: .leading, spacing: 10) {
-                        Text("Country:")
+                        Text(TexterifyManager.localisedString(key: .firstTimeLoginView(.countryLabel)))
                             .font(.ssTitle3)
                             .foregroundColor(.accentColor)
                         
@@ -301,7 +301,7 @@ struct FirstTimeLoginView: View {
             buildShipmentAddressPane()
             
             VStack(alignment: .leading, spacing: 10) {
-                Text("Same address on invoice?")
+                Text(TexterifyManager.localisedString(key: .firstTimeLoginView(.sameAddressOnInvoice)))
                     .font(.ssTitle3)
                     .foregroundColor(.accentColor)
                 
@@ -315,7 +315,7 @@ struct FirstTimeLoginView: View {
     
     @ViewBuilder
     func buildOptionalApartmentNumberFieldInfo() -> some View {
-        Text("This field is optional.")
+        Text(TexterifyManager.localisedString(key: .firstTimeLoginView(.thisFieldIsOptionalLabel)))
             .font(.caption)
             .fontWeight(.semibold)
             .foregroundColor(.ssDarkGray)
