@@ -113,13 +113,15 @@ class OrderCreationViewModel: ObservableObject {
             case .success:
                 self?.createdOrder = order
                 
-                if !appliedDiscounts.isEmpty {
-                    FirestoreProductsManager.client.redeemDiscounts(userID: client.id,
-                                                                    discounts: appliedDiscounts) {
+                FirestoreCartsManager.client.createUserCart(cart: cart) { _ in
+                    if !appliedDiscounts.isEmpty {
+                        FirestoreProductsManager.client.redeemDiscounts(userID: client.id,
+                                                                        discounts: appliedDiscounts) {
+                            completion(.success)
+                        }
+                    } else {
                         completion(.success)
                     }
-                } else {
-                    completion(.success)
                 }
             case .failure(let error):
                 completion(.failure(error))

@@ -85,6 +85,11 @@ struct ReturnsView: View {
         .onAppear {
             returnsViewModel.userReturns = profileViewModel.userReturns
         }
+        .refreshable {
+            profileViewModel.fetchUserReturns {
+                returnsViewModel.userReturns = profileViewModel.userReturns
+            }
+        }
     }
 }
 
