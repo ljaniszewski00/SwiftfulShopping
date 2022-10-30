@@ -14,26 +14,17 @@ class ProductsRepository: ObservableObject {
         ProductsRepository()
     }()
     
-    private init() {
-//        fetchProducts { [weak self] products in
-//            self?.products = products
-//        }
-    }
-    
     func fetchProducts(completion: @escaping (([Product]?) -> ())) {
-        FirestoreProductsManager.client.getProducts { result in
+        FirestoreProductsManager.client.getProducts { [weak self] result in
             switch result {
             case .success(let products):
+                self?.products = products
                 completion(products)
             case .failure(let error):
                 print("Error fetching products from repository: \(error.localizedDescription)")
                 completion([])
             }
         }
-    }
-    
-    func getProductFor(productID: String) -> Product? {
-        return products?.filter { $0.id == productID }.first
     }
 }
 

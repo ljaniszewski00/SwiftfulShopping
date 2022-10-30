@@ -21,14 +21,6 @@ class ReturnsViewModel: ObservableObject {
         }
     }
     
-    func fetchUserReturns(userID: String) {
-        showLoadingModal = true
-        if let userReturns = ReturnsRepository.shared.userReturns {
-            self.userReturns = userReturns
-            showLoadingModal = false
-        }
-    }
-    
     func getReturnsFor(date: String) -> [Return] {
         return userReturns.filter {
             Date.getMonthNameAndYearFrom(date: $0.returnDate) == date

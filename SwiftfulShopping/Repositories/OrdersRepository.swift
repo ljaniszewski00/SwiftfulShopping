@@ -14,12 +14,11 @@ class OrdersRepository: ObservableObject {
         OrdersRepository()
     }()
     
-    private init() {}
-    
     func fetchUserOrders(userID: String, completion: @escaping (([Order]?) -> ())) {
-        FirestoreOrdersManager.client.getUserOrders(userID: userID) { result in
+        FirestoreOrdersManager.client.getUserOrders(userID: userID) { [weak self] result in
             switch result {
             case .success(let userOrders):
+                self?.userOrders = userOrders
                 completion(userOrders)
             case .failure(let error):
                 print("Error fetching user orders from repository: \(error.localizedDescription)")

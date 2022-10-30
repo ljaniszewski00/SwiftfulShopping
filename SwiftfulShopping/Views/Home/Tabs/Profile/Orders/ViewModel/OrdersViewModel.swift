@@ -21,14 +21,6 @@ class OrdersViewModel: ObservableObject {
         }
     }
     
-    func fetchUserOrders(userID: String) {
-        showLoadingModal = true
-        if let userOrders = OrdersRepository.shared.userOrders {
-            self.userOrders = userOrders
-            showLoadingModal = false
-        }
-    }
-    
     func getOrdersFor(date: String) -> [Order] {
         return userOrders.filter {
             Date.getMonthNameAndYearFrom(date: $0.orderDate) == date

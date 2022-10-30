@@ -82,6 +82,9 @@ struct ReturnsView: View {
                 }
             }
         }
+        .onAppear {
+            returnsViewModel.userReturns = profileViewModel.userReturns
+        }
     }
 }
 

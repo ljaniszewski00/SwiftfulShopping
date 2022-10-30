@@ -304,6 +304,35 @@ class FirestoreProductsManager: ObservableObject {
                 }
             }
     }
+    
+    func redeemDiscounts(userID: String, discounts: [Discount], completion: @escaping (() -> ())) {
+        let group = DispatchGroup()
+        
+        for discount in discounts {
+            group.enter()
+            
+            let updateData: [String: Any] = [
+                "redeemedByUsersIDs": FieldValue.arrayUnion([userID]),
+                "redemptionNumber": FieldValue.increment(Int64(1))
+            ]
+            
+            self.db.collection(DatabaseCollections.discounts.rawValue)
+                .document(discount.id)
+                .getDocument { documentSnapshot, error in
+                    if let error = error {
+                        print("Error redeeming discount: \(error.localizedDescription)")
+                    } else {
+                        documentSnapshot?.reference.updateData(updateData)
+                        print("Successfully redeemed discount code \(discount.discountCode) by user \(userID)")
+                    }
+                    group.leave()
+                }
+        }
+        
+        group.notify(queue: .main) {
+            completion()
+        }
+    }
 }
 
 extension FirestoreProductsManager: NSCopying {

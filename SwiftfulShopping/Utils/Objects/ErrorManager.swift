@@ -35,6 +35,7 @@ final class ErrorManager: ObservableObject {
         .changeDefaultPaymentMethodError: "Error changing default payment method. \(errorDescriptionSuffix)",
         .signOutError: "Error signing out. \(errorDescriptionSuffix)",
         .changePhotoError: "Error changing photo. \(errorDescriptionSuffix)",
+        .dataFetchError: "Error fetching data. \(errorDescriptionSuffix)",
         .unknown: ""
     ]
     

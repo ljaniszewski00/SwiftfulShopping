@@ -37,7 +37,7 @@ class ExploreViewModel: ObservableObject {
     @Published var scrollProductsListToBeginning: Bool = false
     @Published var categoriesTileSize: CGSize = .zero
     
-    func onAppear(completion: @escaping (() -> ())) {
+    func fetchData(completion: @escaping (() -> ())) {
         fetchProducts { [weak self] in
             self?.fetchRatings {
                 completion()

@@ -174,33 +174,11 @@ struct HomeView: View {
                                  customError: errorManager.customError ?? ErrorManager.unknownError))
             .modifier(LoadingIndicatorModal(isPresented: $homeViewModel.showLoadingModal))
             .onAppear {
+                homeViewModel.showLoadingModal = true
+                self.onAppear {
+                    homeViewModel.showLoadingModal = false
+                }
                 
-//                // MARK: For adding products and rating to database in a quick way
-//                for product in Product.demoProducts {
-//                    print(product)
-//                    FirestoreProductsManager.client.addProduct(product: product) { _ in }
-//                    for rating in ProductRating.demoProductsRatings {
-//                        let productRating = ProductRating(id: UUID().uuidString,
-//                                                          productID: product.id,
-//                                                          authorID: "hVH1eAzuxFMqoFdDtmWlsqOXnFY2",
-//                                                          authorFirstName: "Jan",
-//                                                          rating: rating.rating,
-//                                                          review: rating.review,
-//                                                          date: Date())
-//
-//                        FirestoreProductsManager.client.addProductRating(productRating: rating) { _ in }
-//                    }
-//                }
-                
-//                homeViewModel.showLoadingModal = true
-//
-//                profileViewModel.fetchProfile { _ in
-//                    exploreViewModel.onAppear {
-//                        cartViewModel.restorePreviousCart()
-//                        favoritesViewModel.fetchFavorites()
-//                        homeViewModel.showLoadingModal = false
-//                    }
-//                }
             }
             .ignoresSafeArea(edges: .bottom)
             .onChange(of: networkManager.isConnected) { newValue in
@@ -211,6 +189,23 @@ struct HomeView: View {
         } else {
             ContentView()
                 .transition(.slide)
+        }
+    }
+    
+    func onAppear(completion: @escaping (() -> ())) {
+        profileViewModel.fetchData { result in
+            switch result {
+            case .success:
+                exploreViewModel.fetchData {
+                    cartViewModel.onAppear()
+                    favoritesViewModel.fetchFavorites()
+                    completion()
+                }
+            case .failure(let error):
+                errorManager.generateCustomError(errorType: .dataFetchError,
+                                                 additionalErrorDescription: error.localizedDescription)
+                completion()
+            }
         }
     }
 }

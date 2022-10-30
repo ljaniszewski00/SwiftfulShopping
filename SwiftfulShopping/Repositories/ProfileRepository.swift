@@ -14,18 +14,11 @@ class ProfileRepository: ObservableObject {
         ProfileRepository()
     }()
     
-    private init() {
-        if let userID = FirebaseAuthManager.client.user?.uid {
-            fetchProfile(userID: userID) { [weak self] profile in
-                self?.profile = profile
-            }
-        }
-    }
-    
     func fetchProfile(userID: String, completion: @escaping ((Profile?) -> ())) {
-        FirestoreProfileManager.client.getUserProfile(userID: userID) { result in
+        FirestoreProfileManager.client.getUserProfile(userID: userID) { [weak self] result in
             switch result {
             case .success(let profile):
+                self?.profile = profile
                 completion(profile)
             case .failure(let error):
                 print("Error fetching ratings from repository: \(error.localizedDescription)")

@@ -28,7 +28,6 @@ class OrderCreationViewModel: ObservableObject {
     @Published var addressToBeSaved: Bool = false
     @Published var addressToBeDefault: Bool = false
     
-    @Published var availableDiscounts: [Discount] = []
     @Published var discountCode: String = ""
     
     @Published var createdOrder: Order?
@@ -39,12 +38,6 @@ class OrderCreationViewModel: ObservableObject {
     
     var cannotProceedToSummaryView: Bool {
         choosenShippingMethod == nil || defaultAddress.isEmpty || choosenPaymentMethod == nil
-    }
-    
-    func onAppear() {
-        if let discounts = DiscountsRepository.shared.discounts {
-            self.availableDiscounts = discounts
-        }
     }
     
     func setupAddresses(defaultProfileAddress: Address,
@@ -77,12 +70,8 @@ class OrderCreationViewModel: ObservableObject {
         addressToBeDefault = false
     }
     
-    func applyDiscount() -> Discount? {
-        let discount = availableDiscounts.filter { $0.discountCode == discountCode }.first
-        
+    func applyDiscount() {
         discountCode.removeAll()
-        
-        return discount
     }
     
     func createOrder(client: Profile,
@@ -119,11 +108,19 @@ class OrderCreationViewModel: ObservableObject {
                           totalCost: totalCostWithAppliedDiscounts,
                           status: .placed)
         
-        FirestoreOrdersManager.client.createUserOrder(order: order) { result in
+        FirestoreOrdersManager.client.createUserOrder(order: order) { [weak self] result in
             switch result {
             case .success:
-                self.createdOrder = order
-                completion(.success)
+                self?.createdOrder = order
+                
+                if !appliedDiscounts.isEmpty {
+                    FirestoreProductsManager.client.redeemDiscounts(userID: client.id,
+                                                                    discounts: appliedDiscounts) {
+                        completion(.success)
+                    }
+                } else {
+                    completion(.success)
+                }
             case .failure(let error):
                 completion(.failure(error))
             }

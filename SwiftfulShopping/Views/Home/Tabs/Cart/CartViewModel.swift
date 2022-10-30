@@ -8,6 +8,8 @@
 import Foundation
 
 class CartViewModel: ObservableObject {
+    @Published var availableDiscounts: [Discount] = []
+    
     @Published var productsForCart: [Product: Int] = [:]
     @Published var appliedDiscounts: Set<Discount> = []
     
@@ -16,11 +18,31 @@ class CartViewModel: ObservableObject {
     
     @Published var shouldPresentCheckoutFirstView: Bool = false
     
+    func onAppear() {
+        fetchData()
+        restorePreviousCart()
+    }
+    
+    func fetchData() {
+        fetchDiscounts {}
+    }
+    
+    func fetchDiscounts(completion: @escaping (() -> ())) {
+        FirestoreProductsManager.client.getDiscounts { [weak self] result in
+            switch result {
+            case .success(let discounts):
+                self?.availableDiscounts = discounts ?? []
+            case .failure(_):
+                completion()
+            }
+        }
+    }
+    
     func restorePreviousCart() {
         if let cartProductsIDsFromDefaults = UserDefaults.standard.dictionary(forKey: UserDefaultsKeys.cart.rawValue) as? [String: Int] {
             let cartProductsIDs = Array(cartProductsIDsFromDefaults.keys)
             for productID in cartProductsIDs {
-                if let productForProductID = ProductsRepository.shared.getProductFor(productID: productID) {
+                if let productForProductID = ProductsRepository.shared.products?.filter({ $0.id == productID }).first {
                     productsForCart[productForProductID] = cartProductsIDsFromDefaults[productID]
                 }
             }
@@ -137,8 +159,17 @@ class CartViewModel: ObservableObject {
         shouldPresentProductDetailsView = true
     }
     
-    func applyDiscount(discount: Discount) {
-        appliedDiscounts.insert(discount)
+    func applyDiscount(discountCode: String) -> Bool {
+        if let desiredDiscount = availableDiscounts.filter({ $0.discountCode == discountCode }).first {
+            if Array(productsForCart.keys).map({ $0.id }).contains(desiredDiscount.productID) {
+                appliedDiscounts.insert(desiredDiscount)
+                return true
+            } else {
+                return false
+            }
+        } else {
+            return false
+        }
     }
     
     func removeDiscount(discount: Discount) {

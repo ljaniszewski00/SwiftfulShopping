@@ -9,6 +9,8 @@ import SwiftUI
 
 class ProfileViewModel: ObservableObject {
     @Published var profile: Profile?
+    @Published var userOrders: [Order] = []
+    @Published var userReturns: [Return] = []
     
     @Published var oldImage: UIImage = UIImage(named: "blank_profile_image")!
     @Published var image: UIImage = UIImage(named: "blank_profile_image")!
@@ -19,6 +21,21 @@ class ProfileViewModel: ObservableObject {
     @Published var shouldPresentSettingsView: Bool = false
     
     @Published var showLoadingModal = false
+    
+    func fetchData(completion: @escaping ((VoidResult) -> ())) {
+        fetchProfile { [weak self] result in
+            switch result {
+            case .success:
+                self?.fetchUserOrders {
+                    self?.fetchUserReturns {
+                        completion(.success)
+                    }
+                }
+            case .failure(let error):
+                completion(.failure(error))
+            }
+        }
+    }
     
     func fetchProfile(completion: @escaping ((VoidResult) -> ())) {
         if let user = FirebaseAuthManager.client.user {
@@ -47,6 +64,24 @@ class ProfileViewModel: ObservableObject {
                 case .failure(let error):
                     completion(.failure(error))
                 }
+            }
+        }
+    }
+    
+    func fetchUserOrders(completion: @escaping (() -> ())) {
+        if let user = FirebaseAuthManager.client.user {
+            OrdersRepository.shared.fetchUserOrders(userID: user.uid) { [weak self] orders in
+                self?.userOrders = orders ?? []
+                completion()
+            }
+        }
+    }
+    
+    func fetchUserReturns(completion: @escaping (() -> ())) {
+        if let user = FirebaseAuthManager.client.user {
+            ReturnsRepository.shared.fetchUserReturns(userID: user.uid) { [weak self] returns in
+                self?.userReturns = returns ?? []
+                completion()
             }
         }
     }

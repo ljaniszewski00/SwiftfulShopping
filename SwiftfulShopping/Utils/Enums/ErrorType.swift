@@ -34,6 +34,7 @@ enum ErrorType: String {
     case changeDefaultPaymentMethodError = "Change Default Payment Method Error"
     case signOutError = "Sign Out Error"
     case changePhotoError = "Change Photo Error"
+    case dataFetchError = "Data Fetch Error"
     
     case unknown = "Unknown Error"
 }

@@ -14,16 +14,11 @@ class DiscountsRepository: ObservableObject {
         DiscountsRepository()
     }()
     
-    private init() {
-        fetchDiscounts { [weak self] discounts in
-            self?.discounts = discounts
-        }
-    }
-    
     func fetchDiscounts(completion: @escaping (([Discount]?) -> ())) {
-        FirestoreProductsManager.client.getDiscounts { result in
+        FirestoreProductsManager.client.getDiscounts { [weak self] result in
             switch result {
             case .success(let discounts):
+                self?.discounts = discounts
                 completion(discounts)
             case .failure(let error):
                 print("Error fetching discounts from repository: \(error.localizedDescription)")

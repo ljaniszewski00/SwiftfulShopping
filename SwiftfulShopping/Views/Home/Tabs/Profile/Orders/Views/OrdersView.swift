@@ -81,6 +81,9 @@ struct OrdersView: View {
                 }
             }
         }
+        .onAppear {
+            ordersViewModel.userOrders = profileViewModel.userOrders
+        }
     }
 }
 

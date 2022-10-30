@@ -114,11 +114,11 @@ struct OrderCreationSummaryView: View {
                                                             $isCouponTextFieldFocused)
                                 
                                 Button {
-                                    if let discount = orderCreationViewModel.applyDiscount() {
-                                        cartViewModel.applyDiscount(discount: discount)
-                                    } else {
-                                        errorManager.generateCustomError(errorType: .discountApplyError)
+                                    let success = cartViewModel.applyDiscount(discountCode: orderCreationViewModel.discountCode)
+                                    if !success {
+                                        errorManager.generateCustomError(errorType: .discountApplyError, additionalErrorDescription: "The discount code You entered is either invalid or it does not apply to selected products.")
                                     }
+                                    orderCreationViewModel.applyDiscount()
                                 } label: {
                                     Text("Apply")
                                         .font(.ssButton)

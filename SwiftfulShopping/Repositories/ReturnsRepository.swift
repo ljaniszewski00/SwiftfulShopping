@@ -17,9 +17,10 @@ class ReturnsRepository: ObservableObject {
     private init() {}
     
     func fetchUserReturns(userID: String, completion: @escaping (([Return]?) -> ())) {
-        FirestoreReturnsManager.client.getUserReturns(userID: userID) { result in
+        FirestoreReturnsManager.client.getUserReturns(userID: userID) { [weak self] result in
             switch result {
             case .success(let userReturns):
+                self?.userReturns = userReturns
                 completion(userReturns)
             case .failure(let error):
                 print("Error fetching user orders from repository: \(error.localizedDescription)")
