@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import texterify_ios_sdk
 
 struct LoginView: View {
     @EnvironmentObject private var locationManager: LocationManager
@@ -65,7 +66,7 @@ struct LoginView: View {
                                     
                                     HStack {
                                         Spacer()
-                                        Text("Forgot password?")
+                                        Text(TexterifyManager.localisedString(key: .loginView(.forgotPassword)))
                                             .font(.ssBody).fontWeight(.semibold)
                                             .foregroundColor(.accentColor)
                                             .onTapGesture {
@@ -78,7 +79,7 @@ struct LoginView: View {
                             Spacer()
                             
                             VStack(spacing: 20) {
-                                Button("Login") {
+                                Button(TexterifyManager.localisedString(key: .loginView(.loginButton))) {
                                     withAnimation {
                                         loginViewModel.showLoadingModal = true
                                         loginViewModel.choosenSignInMethod = .emailPassword
@@ -101,19 +102,19 @@ struct LoginView: View {
                                 .contentShape(Rectangle())
                                 
                                 HStack(spacing: 10) {
-                                    Text("Don't have an account?")
+                                    Text(TexterifyManager.localisedString(key: .loginView(.dontHaveAnAccount)))
                                         .font(.ssBody)
                                     
                                     NavigationLink(isActive: $contentViewModel.presentRegisterView) {
                                         RegisterView()
                                     } label: {
-                                        Text("Register here")
+                                        Text(TexterifyManager.localisedString(key: .loginView(.registerHere)))
                                             .font(.ssBody).fontWeight(.semibold)
                                             .foregroundColor(.accentColor)
                                     }
                                 }
                                 
-                                LabelledDivider(label: "OR",
+                                LabelledDivider(label: TexterifyManager.localisedString(key: .loginView(.orLabel)),
                                                 color: colorScheme == .light ? .black : .ssWhite)
                                     .padding(.vertical)
                                 
@@ -149,7 +150,7 @@ struct LoginView: View {
                 .modifier(ErrorModal(isPresented: $errorManager.showErrorModal,
                                      customError: errorManager.customError ?? ErrorManager.unknownError))
             }
-            .navigationTitle("Login")
+            .navigationTitle(TexterifyManager.localisedString(key: .loginView(.navigationTitle)))
             .navigationBarHidden(true)
             .navigationBarBackButtonHidden(true)
         }
@@ -211,7 +212,7 @@ struct LoginView: View {
                         .frame(width: 25, height: 25)
                         .clipShape(Circle())
                     Spacer()
-                    Text("Sign in with Google")
+                    Text(TexterifyManager.localisedString(key: .loginView(.signInWithGoogle)))
                         .font(.ssButton)
                         .foregroundColor(colorScheme == .light ? .black : .ssWhite)
                     Spacer()
@@ -243,7 +244,7 @@ struct LoginView: View {
                         .resizable()
                         .frame(width: 25, height: 25)
                     Spacer()
-                    Text("Sign in with Facebook")
+                    Text(TexterifyManager.localisedString(key: .loginView(.signInWithFacebook)))
                         .font(.ssButton)
                         .foregroundColor(.ssWhite)
                     Spacer()
@@ -275,7 +276,7 @@ struct LoginView: View {
                         .resizable()
                         .frame(width: 25, height: 25)
                     Spacer()
-                    Text("Sign in with GitHub")
+                    Text(TexterifyManager.localisedString(key: .loginView(.signInWithGitHub)))
                         .font(.ssButton)
                         .foregroundColor(.ssWhite)
                     Spacer()

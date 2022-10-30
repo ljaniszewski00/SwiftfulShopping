@@ -161,6 +161,15 @@
         "revision" : "b8230909dedc640294d7324d37f4c91ad3dcf177",
         "version" : "1.20.1"
       }
+    },
+    {
+      "identity" : "texterify-ios",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/texterify/texterify-ios",
+      "state" : {
+        "revision" : "6aab23d123f0cd2453c375629ea71d1ed430aa57",
+        "version" : "0.6.0"
+      }
     }
   ],
   "version" : 2

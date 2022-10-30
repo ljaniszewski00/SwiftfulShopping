@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import texterify_ios_sdk
 
 struct ForgotPasswordView: View {
     @EnvironmentObject private var loginViewModel: LoginViewModel
@@ -20,9 +21,9 @@ struct ForgotPasswordView: View {
     var body: some View {
         VStack {
             VStack(alignment: .leading, spacing: 20) {
-                Text("Forgot your password?")
+                Text(TexterifyManager.localisedString(key: .forgotPasswordView(.navigationTitle)))
                     .font(.ssTitle1)
-                Text("Please, type your e-mail and we will send you a link so that you can reset the password.")
+                Text(TexterifyManager.localisedString(key: .forgotPasswordView(.instructionToTypeEmail)))
                     .font(.ssCallout)
                     .foregroundColor(.ssDarkGray)
             }
@@ -36,7 +37,7 @@ struct ForgotPasswordView: View {
             
             Spacer()
             
-            Button("Send recovery e-mail") {
+            Button(TexterifyManager.localisedString(key: .forgotPasswordView(.sendRecoveryEmail))) {
                 forgotPasswordViewModel.showLoadingModal = true
                 FirebaseAuthManager.client.firebaseSendPasswordReset(email: forgotPasswordViewModel.email) { result in
                     forgotPasswordViewModel.showLoadingModal = false
@@ -53,7 +54,7 @@ struct ForgotPasswordView: View {
             .contentShape(Rectangle())
             .padding(.bottom, 10)
             
-            Button("Cancel") {
+            Button(TexterifyManager.localisedString(key: .common(.cancel))) {
                 dismiss()
             }
             .buttonStyle(CustomButton(textColor: .accentColor, onlyStroke: true))

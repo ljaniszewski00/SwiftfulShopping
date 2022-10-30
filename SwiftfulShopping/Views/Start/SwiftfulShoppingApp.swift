@@ -10,6 +10,7 @@ import FirebaseCore
 import GoogleSignIn
 import FBSDKCoreKit
 import FacebookCore
+import texterify_ios_sdk
 
 @main
 struct SwiftlyShoppingApp: App {
@@ -34,10 +35,16 @@ struct SwiftlyShoppingApp: App {
 class AppDelegate: NSObject, UIApplicationDelegate {
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey : Any]? = nil) -> Bool {
         
-        //Initializing Firebase
+        // Initializing Firebase
         FirebaseApp.configure()
         
         ApplicationDelegate.shared.application(application, didFinishLaunchingWithOptions: launchOptions)
+        
+        // Initializing Texterify
+        let localizer = TexterifyManager(baseUrl: "https://texterify.mydomain.io",
+                                         projectId: "1aaa5a7a-d768-47e8-b873-d741f5ac157a",
+                                         exportConfigId: "e5cd9480-edad-41b7-9576-ca6b66cd0c49")
+        localizer.getUpdatedStrings { _ in }
         
         return true
     }
