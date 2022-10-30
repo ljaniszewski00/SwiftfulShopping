@@ -23,6 +23,11 @@ struct HomeView: View {
     @StateObject var errorManager = ErrorManager.shared
     
     @State var selectedTab: Tab = .explore
+    
+//    // MARK: To add sample data to Firestore
+//    init() {
+//        FirestoreSampleDataManager.client.addAll { _ in }
+//    }
         
     enum Tab: String {
         case explore
@@ -187,15 +192,15 @@ struct HomeView: View {
 //                    }
 //                }
                 
-                homeViewModel.showLoadingModal = true
-                
-                profileViewModel.fetchProfile { _ in
-                    exploreViewModel.onAppear {
-                        cartViewModel.restorePreviousCart()
-                        favoritesViewModel.fetchFavorites()
-                        homeViewModel.showLoadingModal = false
-                    }
-                }
+//                homeViewModel.showLoadingModal = true
+//
+//                profileViewModel.fetchProfile { _ in
+//                    exploreViewModel.onAppear {
+//                        cartViewModel.restorePreviousCart()
+//                        favoritesViewModel.fetchFavorites()
+//                        homeViewModel.showLoadingModal = false
+//                    }
+//                }
             }
             .ignoresSafeArea(edges: .bottom)
             .onChange(of: networkManager.isConnected) { newValue in

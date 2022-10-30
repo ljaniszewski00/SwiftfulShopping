@@ -8,7 +8,7 @@
 import Foundation
 
 struct Profile {
-    var id: String = UUID().uuidString
+    var id: String
     var fullName: String
     var username: String?
     var birthDate: Date?
@@ -20,8 +20,6 @@ struct Profile {
     var defaultShippingMethod: ShippingMethod = .courier
     var defaultPaymentMethod: PaymentMethod = .creditCard
     var creditCard: CreditCard?
-    var userProductsRatings: [String: Int] = [:]
-    var userProductsReviews: [String: String] = [:]
     var imageURL: String?
     var createdWith: SignInMethod?
 }
@@ -33,7 +31,8 @@ extension Profile: CustomStringConvertible {
 }
 
 extension Profile {
-    static let demoProfile = Profile(fullName: "Jan Kowalski",
+    static let demoProfile = Profile(id: "W9UQoichE0UNZfvCnIPxuCBgL283",
+                                     fullName: "Jan Kowalski",
                                      username: "jan.kowalski",
                                      birthDate: Date(),
                                      email: "jan.kowalski@email.com",
@@ -42,10 +41,5 @@ extension Profile {
                                                          Address.otherAddresses[0],
                                                          Address.otherAddresses[1]],
                                      invoiceAddress: Address.demoAddress,
-                                     userProductsRatings: [Product.demoProducts[0].id: 3,
-                                                           Product.demoProducts[1].id: 1,
-                                                           Product.demoProducts[2].id: 5,
-                                                           Product.demoProducts[3].id: 5,
-                                                           Product.demoProducts[4].id: 2],
                                      imageURL: "")
 }

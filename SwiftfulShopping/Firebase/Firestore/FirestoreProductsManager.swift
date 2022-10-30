@@ -43,7 +43,6 @@ class FirestoreProductsManager: ObservableObject {
                         let isNew = data["isNew"] as? Bool ?? false
                         let keywords = data["keywords"] as? [String] ?? []
                         let imagesURLs = data["imagesURLs"] as? [String] ?? []
-                        let productRatingsIDs = data["productRatingsIDs"] as? [String] ?? []
                         
                         return Product(id: id,
                                        name: name,
@@ -56,8 +55,7 @@ class FirestoreProductsManager: ObservableObject {
                                        isRecommended: isRecommended,
                                        isNew: isNew,
                                        keywords: keywords,
-                                       imagesURLs: imagesURLs,
-                                       productRatingsIDs: productRatingsIDs)
+                                       imagesURLs: imagesURLs)
                     }
                     
                     print("Successfully fetched products data")
@@ -221,7 +219,6 @@ class FirestoreProductsManager: ObservableObject {
             "isNew": product.isNew,
             "keywords": product.keywords,
             "imagesURLs": product.imagesURLs,
-            "productRatingsIDs": product.productRatingsIDs,
         ]
         
         self.db.collection(DatabaseCollections.products.rawValue)
@@ -256,6 +253,30 @@ class FirestoreProductsManager: ObservableObject {
                 completion(.failure(error))
             } else {
                 print("Successfully created product's rating data for user identifying with id: \(productRating.authorID) in database")
+                completion(.success)
+            }
+        }
+    }
+    
+    func addDiscount(discount: Discount, completion: @escaping ((VoidResult) -> ())) {
+        let discountDocumentData: [String: Any] = [
+            "id": discount.id,
+            "productID": discount.productID,
+            "discountCode": discount.discountCode,
+            "discountValuePercent": discount.discountValuePercent,
+            "redeemedByUsersIDs": discount.redeemedByUsersIDs,
+            "redemptionNumber": discount.redemptionNumber,
+            "maxRedemptionNumber": discount.maxRedemptionNumber
+        ]
+        
+        self.db.collection(DatabaseCollections.discounts.rawValue)
+            .document(discount.id)
+            .setData(discountDocumentData) { (error) in
+            if let error = error {
+                print("Error creating discount data: \(error.localizedDescription)")
+                completion(.failure(error))
+            } else {
+                print("Successfully created discount data in database")
                 completion(.success)
             }
         }

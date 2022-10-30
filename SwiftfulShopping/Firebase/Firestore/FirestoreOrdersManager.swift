@@ -80,12 +80,12 @@ class FirestoreOrdersManager: ObservableObject {
             "clientID": order.clientID,
             "shoppingCartID": order.shoppingCartID,
             "productsIDs": order.productsIDs,
-            "shippingMethod": order.shippingMethod,
+            "shippingMethod": order.shippingMethod.rawValue,
             "shippingAddressID": order.shippingAddressID,
-            "paymentMethod": order.paymentMethod,
+            "paymentMethod": order.paymentMethod.rawValue,
             "invoice": order.invoice,
             "totalCost": order.totalCost,
-            "status": order.status
+            "status": order.status.rawValue
         ]
         
         self.db.collection(DatabaseCollections.orders.rawValue)

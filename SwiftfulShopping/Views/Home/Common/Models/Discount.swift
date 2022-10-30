@@ -8,7 +8,7 @@
 import Foundation
 
 struct Discount {
-    var id: String = UUID().uuidString
+    var id: String
     var productID: String
     var discountCode: String
     var discountValuePercent: Double
@@ -16,7 +16,11 @@ struct Discount {
     var redemptionNumber: Int = 0
     var maxRedemptionNumber: Int = 1
     
-    init(productID: String, discountCode: String, discountValuePercent: Double) {
+    init(id: String = UUID().uuidString,
+         productID: String,
+         discountCode: String,
+         discountValuePercent: Double) {
+        self.id = id
         self.productID = productID
         self.discountCode = discountCode
         self.discountValuePercent = discountValuePercent
@@ -56,19 +60,24 @@ extension Discount: CustomStringConvertible {
 }
 
 extension Discount {
-    static let demoDiscounts: [Discount] = [Discount(productID: Product.demoProducts[0].id,
+    static let demoDiscounts: [Discount] = [Discount(id: "w2GWLDm8sE2kuNqJhOy0",
+                                                     productID: "LQHU7yJplIXugoPiLucR",
                                                      discountCode: "discount1",
                                                      discountValuePercent: 10),
-                                            Discount(productID: Product.demoProducts[0].id,
+                                            Discount(id: "TGdggTmagHIkhLSv20Gp",
+                                                     productID: "mdQsy0eqYaSiKp6z393S",
                                                      discountCode: "discount2",
                                                      discountValuePercent: 25),
-                                            Discount(productID: Product.demoProducts[0].id,
+                                            Discount(id: "Bo23pbI15tHlqKk6evmC",
+                                                     productID: "BJll5oJjsBoq0tb6Ad8v",
                                                      discountCode: "discount3",
                                                      discountValuePercent: 37),
-                                            Discount(productID: Product.demoProducts[0].id,
+                                            Discount(id: "w3xRszG9xBUhvk8fLye9",
+                                                     productID: "v8yFH9voUUbMvYDXMX4o",
                                                      discountCode: "discount4",
                                                      discountValuePercent: 42),
-                                            Discount(productID: Product.demoProducts[0].id,
+                                            Discount(id: "MSnu1k1Fz0VtV7CDEIwJ",
+                                                     productID: "uMIJzBU5wcwwfUMqsJ2C",
                                                      discountCode: "discount5",
                                                      discountValuePercent: 51)]
 }

@@ -49,8 +49,6 @@ class FirestoreProfileManager: ObservableObject {
                                                 let defaultShipmentAddress = shipmentAddresses.filter { $0.isDefaultAddress }.first ?? shipmentAddresses[0]
                                                 let defaultShippingMethod = data["defaultShippingMethod"] as? String ?? ""
                                                 let defaultPaymentMethod = data["defaultPaymentMethod"] as? String ?? ""
-                                                let userProductsRatings = data["userProductsRatingsIDs"] as? [String: Int] ?? [:]
-                                                let userProductsReviews = data["userProductsReviewsIDs"] as? [String: String] ?? [:]
                                                 let imageURL = data["imageURL"] as? String ?? ""
                                                 let createdWith = data["createdWith"] as? String ?? ""
                                                 
@@ -65,8 +63,6 @@ class FirestoreProfileManager: ObservableObject {
                                                                invoiceAddress: invoiceAddress,
                                                                defaultShippingMethod: ShippingMethod.withLabel(defaultShippingMethod) ?? .courier,
                                                                defaultPaymentMethod: PaymentMethod.withLabel(defaultPaymentMethod) ?? .creditCard,
-                                                               userProductsRatings: userProductsRatings,
-                                                               userProductsReviews: userProductsReviews,
                                                                imageURL: imageURL,
                                                                createdWith: SignInMethod.withLabel(createdWith))
                                                 

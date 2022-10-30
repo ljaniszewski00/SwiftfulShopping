@@ -271,6 +271,7 @@
 		0AD89747289D0C5E00BFDAA1 /* ProfileViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0AD89745289D0C4A00BFDAA1 /* ProfileViewModel.swift */; };
 		0AD89748289D0C5E00BFDAA1 /* ProfileViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0AD89745289D0C4A00BFDAA1 /* ProfileViewModel.swift */; };
 		0AD8976B289D392F00BFDAA1 /* ProductDetailsRatingsSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0AD8976A289D392F00BFDAA1 /* ProductDetailsRatingsSection.swift */; };
+		889EDF39290DA0D100EBFFC1 /* FirestoreSampleDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 889EDF38290DA0D100EBFFC1 /* FirestoreSampleDataManager.swift */; };
 		88A946AF29099F850086A8A1 /* AddToCartButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88A946AE29099F850086A8A1 /* AddToCartButton.swift */; };
 		88D94FCF290B358500F9F995 /* ExpandableText.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88D94FCE290B358500F9F995 /* ExpandableText.swift */; };
 /* End PBXBuildFile section */
@@ -476,6 +477,7 @@
 		0ACD59B5284B74CD00AA9DA0 /* Countries.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Countries.swift; sourceTree = "<group>"; };
 		0AD89745289D0C4A00BFDAA1 /* ProfileViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewModel.swift; sourceTree = "<group>"; };
 		0AD8976A289D392F00BFDAA1 /* ProductDetailsRatingsSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductDetailsRatingsSection.swift; sourceTree = "<group>"; };
+		889EDF38290DA0D100EBFFC1 /* FirestoreSampleDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirestoreSampleDataManager.swift; sourceTree = "<group>"; };
 		88A946AE29099F850086A8A1 /* AddToCartButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddToCartButton.swift; sourceTree = "<group>"; };
 		88D94FCE290B358500F9F995 /* ExpandableText.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExpandableText.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -538,13 +540,6 @@
 				0A2165B328A2C217006842F0 /* DeleteAccountViewModel.swift */,
 			);
 			path = DeleteAccount;
-			sourceTree = "<group>";
-		};
-		0A2373FF288D62630076A5AB /* Objects */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = Objects;
 			sourceTree = "<group>";
 		};
 		0A268B4C2868776E006CF0E2 /* ReturnCreation */ = {
@@ -707,6 +702,7 @@
 				0A383D0B28F75B9000D15B48 /* FirestoreOrdersManager.swift */,
 				0A383D0D28F75BF200D15B48 /* FirestoreReturnsManager.swift */,
 				0A3C7AD329005F470079B290 /* FirestoreCartManager.swift */,
+				889EDF38290DA0D100EBFFC1 /* FirestoreSampleDataManager.swift */,
 			);
 			path = Firestore;
 			sourceTree = "<group>";
@@ -919,7 +915,6 @@
 			children = (
 				0A30460928AAA1DE00F218B3 /* SortingAndFiltering */,
 				0A3149DB28982B46001920D2 /* Views */,
-				0A2373FF288D62630076A5AB /* Objects */,
 				0AB8D98B2864B4CC003DC2E6 /* Models */,
 			);
 			path = Common;
@@ -1460,6 +1455,7 @@
 				0A35556E28A04EF6005993E5 /* AccentColorManager.swift in Sources */,
 				0A3AA90028C51D3700116C7D /* MultiselectionDropdownMenu.swift in Sources */,
 				0A3441BC28A41E44005FFFD5 /* SortingAndFilteringSheetView.swift in Sources */,
+				889EDF39290DA0D100EBFFC1 /* FirestoreSampleDataManager.swift in Sources */,
 				0A27783028C91B7B00BDE2F1 /* ErrorType.swift in Sources */,
 				0A3DE45B2889AAA9008B050B /* ProductColor.swift in Sources */,
 				0A268B43286712C8006CF0E2 /* Date.swift in Sources */,

@@ -38,7 +38,8 @@ extension Address: Equatable, Hashable {
 }
 
 extension Address {
-    static let demoAddress: Address = Address(userID: UUID().uuidString,
+    static let demoAddress: Address = Address(id: "gl4hMHC1ofj4l9WD1eg4",
+                                              userID: "W9UQoichE0UNZfvCnIPxuCBgL283",
                                               fullName: "John Doe 1",
                                               streetName: "Wierzbowskiego",
                                               streetNumber: "13",
@@ -47,7 +48,8 @@ extension Address {
                                               city: "New York",
                                               country: "United States")
     
-    static let otherAddresses: [Address] = [Address(userID: UUID().uuidString,
+    static let otherAddresses: [Address] = [Address(id: "nmrLxxuFRWqOrVDqQfxU",
+                                                    userID: "W9UQoichE0UNZfvCnIPxuCBgL283",
                                                     fullName: "John Doe 2",
                                                     streetName: "Więckowskiego",
                                                     streetNumber: "324",
@@ -55,7 +57,8 @@ extension Address {
                                                     zipCode: "23-123",
                                                     city: "New York",
                                                     country: "United States"),
-                                            Address(userID: UUID().uuidString,
+                                            Address(id: "3HeqC4KBjJYDJHyK3U7z",
+                                                    userID: "W9UQoichE0UNZfvCnIPxuCBgL283",
                                                     fullName: "John Doe 3",
                                                     streetName: "Brzozowa",
                                                     streetNumber: "352",
