@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import texterify_ios_sdk
 
 struct SecondReturnCreationView: View {
     @EnvironmentObject private var tabBarStateManager: TabBarStateManager
@@ -24,39 +25,38 @@ struct SecondReturnCreationView: View {
         ScrollView(.vertical) {
             VStack(alignment: .leading, spacing: 40) {
                 StepsView(stepsNumber: 4, activeStep: 2)
-                
-                Text("Provide bank account data to get your money back")
+                Text(TexterifyManager.localisedString(key: .secondReturnCreationView(.provideBankAccountData)))
                     .font(.ssTitle2)
                 
                 VStack(spacing: 20) {
                     RectangleCustomTextField(
-                        textFieldProperty: "Bank account number",
-                        textFieldFooter: "Provide 26-digits number",
+                        textFieldProperty: TexterifyManager.localisedString(key: .secondReturnCreationView(.bankAccountNumberTextField)),
+                        textFieldFooter: TexterifyManager.localisedString(key: .secondReturnCreationView(.bankAccountNumberTextFieldFooter)),
                         text: $returnCreationViewModel.bankAccountNumber,
                         isFocusedParentView: $isBankAccountTextFieldFocused)
                     
                     RectangleCustomTextField(
-                        textFieldProperty: "Name of bank account owner",
+                        textFieldProperty: TexterifyManager.localisedString(key: .secondReturnCreationView(.bankAccountOwnerNameTextField)),
                         text: $returnCreationViewModel.nameOfBankAccountOwner,
                         isFocusedParentView: $isBankAccountHolderFirstNameTextFieldFocused)
                     
                     RectangleCustomTextField(
-                        textFieldProperty: "Street and house number",
+                        textFieldProperty: TexterifyManager.localisedString(key: .secondReturnCreationView(.streetHouseNumberTextField)),
                         text: $returnCreationViewModel.streetAndHouseNumber,
                         isFocusedParentView: $isBankAccountHolderAddressTextFieldFocused)
                     
                     RectangleCustomTextField(
-                        textFieldProperty: "Postal code",
+                        textFieldProperty: TexterifyManager.localisedString(key: .secondReturnCreationView(.postalCodeTextField)),
                         text: $returnCreationViewModel.postalCode,
                         isFocusedParentView: $isBankAccountHolderZipCodeTextFieldFocused)
                     
                     RectangleCustomTextField(
-                        textFieldProperty: "City",
+                        textFieldProperty: TexterifyManager.localisedString(key: .secondReturnCreationView(.cityTextField)),
                         text: $returnCreationViewModel.city,
                         isFocusedParentView: $isBankAccountHolderCityTextFieldFocused)
                     
                     RectangleCustomTextField(
-                        textFieldProperty: "Country",
+                        textFieldProperty: TexterifyManager.localisedString(key: .secondReturnCreationView(.countryTextField)),
                         text: $returnCreationViewModel.country,
                         isFocusedParentView: $isBankAccountHolderCountryTextFieldFocused)
                 }
@@ -66,7 +66,7 @@ struct SecondReturnCreationView: View {
                         returnCreationViewModel.shouldPresentThirdReturnCreationView = true
                     }
                 } label: {
-                    Text("Continue")
+                    Text(TexterifyManager.localisedString(key: .secondReturnCreationView(.continueButton)))
                         .font(.ssButton)
                 }
                 .buttonStyle(CustomButton())
@@ -75,7 +75,7 @@ struct SecondReturnCreationView: View {
             }
             .padding()
         }
-        .navigationTitle("Create Return")
+        .navigationTitle(TexterifyManager.localisedString(key: .secondReturnCreationView(.navigationTitle)))
         .navigationBarTitleDisplayMode(.inline)
         .navigationBarBackButtonHidden(true)
         .toolbar {

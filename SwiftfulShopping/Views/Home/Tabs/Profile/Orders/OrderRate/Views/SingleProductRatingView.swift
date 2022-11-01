@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import texterify_ios_sdk
 
 struct SingleProductRatingView: View {
     @EnvironmentObject private var tabBarStateManager: TabBarStateManager
@@ -23,7 +24,7 @@ struct SingleProductRatingView: View {
                     BasicProductTile(product: ratingViewModel.activeProduct ?? Product.demoProducts[0])
                     
                     VStack(alignment: .leading, spacing: 15) {
-                        Text("How do you find the product?")
+                        Text(TexterifyManager.localisedString(key: .singleProductRatingView(.howDoYouFindProduct)))
                             .font(.ssTitle2)
                             .fixedSize(horizontal: false, vertical: true)
                             .multilineTextAlignment(.leading)
@@ -45,7 +46,7 @@ struct SingleProductRatingView: View {
                     }
                     
                     VStack(alignment: .leading) {
-                        Text("Please, write a few words about it.")
+                        Text(TexterifyManager.localisedString(key: .singleProductRatingView(.pleaseWriteFewWords)))
                             .font(.ssTitle2)
                             .fixedSize(horizontal: false, vertical: true)
                             .multilineTextAlignment(.leading)
@@ -93,7 +94,7 @@ struct SingleProductRatingView: View {
                             }
                         }
                     } label: {
-                        Text("Add opinion")
+                        Text(TexterifyManager.localisedString(key: .singleProductRatingView(.addRateButton)))
                             .font(.ssButton)
                     }
                     .buttonStyle(CustomButton(textColor: .ssWhite))
@@ -106,7 +107,7 @@ struct SingleProductRatingView: View {
             .modifier(ErrorModal(isPresented: $errorManager.showErrorModal,
                                  customError: errorManager.customError ?? ErrorManager.unknownError))
         }
-        .navigationTitle("Rate the product")
+        .navigationTitle(TexterifyManager.localisedString(key: .singleProductRatingView(.navigationTitle)))
         .navigationBarTitleDisplayMode(.inline)
         .navigationBarBackButtonHidden(true)
         .toolbar {

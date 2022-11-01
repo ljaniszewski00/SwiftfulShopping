@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import texterify_ios_sdk
 
 struct EditPersonalInfoView: View {
     @EnvironmentObject private var tabBarStateManager: TabBarStateManager
@@ -23,12 +24,12 @@ struct EditPersonalInfoView: View {
             VStack(alignment: .center, spacing: 40) {
                 VStack(alignment: .leading, spacing: 20) {
                     RectangleCustomTextField(
-                        textFieldProperty: "First Name",
+                        textFieldProperty: TexterifyManager.localisedString(key: .editPersonalInfoView(.fullNameTextField)),
                         text: $personalInfoViewModel.newFullName,
                         isFocusedParentView: $isFullNameTextFieldFocused)
                     
                     RectangleCustomTextField(
-                        textFieldProperty: "Email Address",
+                        textFieldProperty: TexterifyManager.localisedString(key: .editPersonalInfoView(.emailAddressTextField)),
                         text: $personalInfoViewModel.newEmailAddress,
                         isFocusedParentView: $isEmailAddressTextFieldFocused)
                 }
@@ -50,7 +51,7 @@ struct EditPersonalInfoView: View {
                         }
                     }
                 } label: {
-                    Text("Save")
+                    Text(TexterifyManager.localisedString(key: .editPersonalInfoView(.saveButton)))
                         .font(.ssButton)
                 }
                 .buttonStyle(CustomButton())
@@ -63,7 +64,7 @@ struct EditPersonalInfoView: View {
                                             $personalInfoViewModel.showLoadingModal))
         .modifier(ErrorModal(isPresented: $errorManager.showErrorModal,
                              customError: errorManager.customError ?? ErrorManager.unknownError))
-        .navigationTitle("Edit personal data")
+        .navigationTitle(TexterifyManager.localisedString(key: .editPersonalInfoView(.navigationTitle)))
         .navigationBarBackButtonHidden(true)
         .toolbar {
             ToolbarItem(placement: .navigationBarLeading) {

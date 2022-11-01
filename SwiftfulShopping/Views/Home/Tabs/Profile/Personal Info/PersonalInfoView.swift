@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import texterify_ios_sdk
 
 struct PersonalInfoView: View {
     @EnvironmentObject private var tabBarStateManager: TabBarStateManager
@@ -32,7 +33,7 @@ struct PersonalInfoView: View {
                 HStack {
                     VStack(alignment: .leading, spacing: 40) {
                         VStack(alignment: .leading, spacing: 10) {
-                            Text("First Name")
+                            Text(TexterifyManager.localisedString(key: .personalInfoView(.firstName)))
                                 .font(.ssTitle2)
                             
                             Button {
@@ -57,7 +58,7 @@ struct PersonalInfoView: View {
                         }
                         
                         VStack(alignment: .leading, spacing: 10) {
-                            Text("Email Address")
+                            Text(TexterifyManager.localisedString(key: .personalInfoView(.emailAddress)))
                                 .font(.ssTitle2)
                             
                             Button {
@@ -82,7 +83,7 @@ struct PersonalInfoView: View {
                         }
                         
                         VStack(alignment: .leading, spacing: 10) {
-                            Text("Address")
+                            Text(TexterifyManager.localisedString(key: .personalInfoView(.address)))
                                 .font(.ssTitle2)
                             
                             SelectionDropdownMenu(selection: $personalInfoViewModel.defaultAddress,
@@ -106,7 +107,7 @@ struct PersonalInfoView: View {
                                     shouldPresentAddNewAddressView = true
                                 }
                             } label: {
-                                Text("Add New Address")
+                                Text(TexterifyManager.localisedString(key: .personalInfoView(.addNewAddressButton)))
                                     .font(.ssButton)
                             }
                             .contentShape(Rectangle())
@@ -117,7 +118,7 @@ struct PersonalInfoView: View {
             }
             .padding()
         }
-        .navigationTitle("Personal Information")
+        .navigationTitle(TexterifyManager.localisedString(key: .personalInfoView(.navigationTitle)))
         .navigationBarTitleDisplayMode(.inline)
         .navigationBarBackButtonHidden(true)
         .toolbar {

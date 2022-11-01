@@ -8,5 +8,8 @@
 import Foundation
 
 public enum SingleProductRatingViewLocalizable: String {
-    case cancel = "Common_cancel"
+    case howDoYouFindProduct = "SingleProductRatingView_howDoYouFindProducts"
+    case pleaseWriteFewWords = "SingleProductRatingView_pleaseWriteFewWords"
+    case addRateButton = "SingleProductRatingView_addRateButton"
+    case navigationTitle = "SingleProductRatingView_navigationTitle"
 }

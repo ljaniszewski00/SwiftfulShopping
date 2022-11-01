@@ -8,5 +8,5 @@
 import Foundation
 
 public enum ColorSchemeChangeViewLocalizable: String {
-    case cancel = "Common_cancel"
+    case navigationTitle = "ColorSchemeChangeView_navigationTitle"
 }

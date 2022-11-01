@@ -8,5 +8,10 @@
 import Foundation
 
 public enum ChangePasswordViewLocalizable: String {
-    case cancel = "Common_cancel"
+    case emailTextField = "ChangePasswordView_emailTextField"
+    case oldPasswordTextField = "ChangePasswordView_oldPasswordTextField"
+    case verifyButton = "ChangePasswordView_verifyButton"
+    case newPasswordTextField = "ChangePasswordView_newPasswordTextField"
+    case changePasswordButton = "ChangePasswordView_changePasswordButton"
+    case navigationTitle = "ChangePasswordView_navigationTitle"
 }

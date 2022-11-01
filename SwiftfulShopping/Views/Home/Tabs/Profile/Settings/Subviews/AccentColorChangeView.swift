@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import texterify_ios_sdk
 
 struct AccentColorChangeView: View {
     @EnvironmentObject private var accentColorManager: AccentColorManager
@@ -15,7 +16,7 @@ struct AccentColorChangeView: View {
     var body: some View {
         VStack {
             HStack {
-                Text("Adjust Theme Color")
+                Text(TexterifyManager.localisedString(key: .accentColorChangeView(.adjustThemeColor)))
                     .font(.ssTitle1)
                     .bold()
                     .foregroundColor(.accentColor)
@@ -47,7 +48,7 @@ struct AccentColorChangeView: View {
             
             HStack {
                 ColorPicker(selection: $accentColorManager.ownColor) {
-                    Text("Add Custom")
+                    Text(TexterifyManager.localisedString(key: .accentColorChangeView(.addCustomPickerText)))
                         .font(.ssTitle2)
                 }
                 .onChange(of: accentColorManager.ownColor) { _ in
@@ -74,7 +75,7 @@ struct AccentColorChangeView: View {
             Spacer()
         }
         .padding()
-        .navigationTitle("")
+        .navigationTitle(TexterifyManager.localisedString(key: .accentColorChangeView(.navigationTitle)))
         .navigationBarHidden(false)
         .navigationBarBackButtonHidden(true)
         .toolbar {

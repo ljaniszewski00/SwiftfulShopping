@@ -8,5 +8,7 @@
 import Foundation
 
 public enum AccentColorChangeViewLocalizable: String {
-    case cancel = "Common_cancel"
+    case adjustThemeColor = "AccentColorChangeView_adjustThemeColor"
+    case addCustomPickerText = "AccentColorChangeView_addCustomPickerText"
+    case navigationTitle = "AccentColorChangeView_navigationTitle"
 }

@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import texterify_ios_sdk
 
 struct ThirdReturnCreationView: View {
     @EnvironmentObject private var tabBarStateManager: TabBarStateManager
@@ -19,7 +20,7 @@ struct ThirdReturnCreationView: View {
             StepsView(stepsNumber: 4, activeStep: 3)
             
             VStack(alignment: .leading, spacing: 20) {
-                Text("How do you want to return the product?")
+                Text(TexterifyManager.localisedString(key: .thirdReturnCreationView(.howDoYouWantToReturn)))
                     .font(.ssTitle2)
                 
                 VStack(alignment: .leading, spacing: 15) {
@@ -69,7 +70,7 @@ struct ThirdReturnCreationView: View {
                     }
                 }
             } label: {
-                Text("Create Return")
+                Text(TexterifyManager.localisedString(key: .thirdReturnCreationView(.createReturnButton)))
                     .font(.ssButton)
             }
             .buttonStyle(CustomButton())
@@ -81,7 +82,7 @@ struct ThirdReturnCreationView: View {
                 .isDetailLink(false)
         }
         .padding()
-        .navigationTitle("Create Return")
+        .navigationTitle(TexterifyManager.localisedString(key: .thirdReturnCreationView(.navigationTitle)))
         .navigationBarTitleDisplayMode(.inline)
         .navigationBarBackButtonHidden(true)
         .toolbar {

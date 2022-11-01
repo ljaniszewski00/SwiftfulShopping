@@ -29,9 +29,7 @@ public enum Localizable {
     case orderCreationChangeAddressView(OrderCreationChangeAddressViewLocalizable)
     case cartView(CartViewLocalizable)
     case productRecognizerView(ProductRecognizerViewLocalizable)
-    case cameraView(CameraViewLocalizable)
     case searchView(SearchViewLocalizable)
-    case searchedProductsListView(SearchedProductsListViewLocalizable)
     case profileView(ProfileViewLocalizable)
     case ordersView(OrdersViewLocalizable)
     case orderDetailsView(OrderDetailsViewLocalizable)
@@ -56,7 +54,6 @@ public enum Localizable {
     case colorSchemeChangeView(ColorSchemeChangeViewLocalizable)
     case homeView(HomeViewLocalizable)
     case errors(ErrorsLocalizable)
-    case labelledDivider(LabelledDividerLocalizable)
     case addToCartButton(AddToCartButtonLocalizable)
 }
 
@@ -109,11 +106,7 @@ extension Localizable: LocalizableRawRepresentable {
             return localizable.rawValue
         case let .productRecognizerView(localizable):
             return localizable.rawValue
-        case let .cameraView(localizable):
-            return localizable.rawValue
         case let .searchView(localizable):
-            return localizable.rawValue
-        case let .searchedProductsListView(localizable):
             return localizable.rawValue
         case let .profileView(localizable):
             return localizable.rawValue
@@ -162,8 +155,6 @@ extension Localizable: LocalizableRawRepresentable {
         case let .homeView(localizable):
             return localizable.rawValue
         case let .errors(localizable):
-            return localizable.rawValue
-        case let .labelledDivider(localizable):
             return localizable.rawValue
         case let .addToCartButton(localizable):
             return localizable.rawValue

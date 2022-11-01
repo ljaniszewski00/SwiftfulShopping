@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import texterify_ios_sdk
 
 struct SearchView: View {
     @EnvironmentObject private var tabBarStateManager: TabBarStateManager
@@ -114,10 +115,10 @@ struct SearchView: View {
                                         .frame(width: ScreenBoundsSupplier.shared.getScreenWidth(),
                                                height: ScreenBoundsSupplier.shared.getScreenHeight() * 0.5)
                                         VStack(spacing: 20) {
-                                            Text("No products found!")
+                                            Text(TexterifyManager.localisedString(key: .searchView(.noProductsFound)))
                                                 .font(.ssTitle2)
                                                 .fixedSize(horizontal: false, vertical: true)
-                                            Text("Please try another search key or change filtering method.")
+                                            Text(TexterifyManager.localisedString(key: .searchView(.pleaseTryAnotherSearchKey)))
                                                 .font(.ssCallout)
                                                 .foregroundColor(.ssDarkGray)
                                                 .fixedSize(horizontal: false, vertical: true)
@@ -129,7 +130,7 @@ struct SearchView: View {
                         .id(0)
                         .readingScrollView(from: "scroll", into: $offset)
                         .searchable(text: $exploreViewModel.searchProductsText,
-                                    prompt: "Search For Products")
+                                    prompt: TexterifyManager.localisedString(key: .searchView(.searchForProductsPrompt)))
                         .onSubmit(of: .search) {
                             searchViewModel.addToRecentSearches(searchText: exploreViewModel.searchProductsText)
                         }
@@ -188,7 +189,7 @@ struct SearchView: View {
                                isActive: $searchViewModel.shouldPresentProductDetailsView,
                                label: { EmptyView() })
             }
-            .navigationTitle("Search")
+            .navigationTitle(TexterifyManager.localisedString(key: .searchView(.navigationTitle)))
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
                 ToolbarItem {
@@ -222,9 +223,9 @@ struct SearchView: View {
     func buildTrendingSearchesList() -> some View {
         LazyVStack(alignment: .leading) {
             HStack {
-                Text("Trending Searches")
+                Text(TexterifyManager.localisedString(key: .searchView(.trendingSearchesText)))
                     .font(.ssTitle3)
-                Text("New")
+                Text(TexterifyManager.localisedString(key: .searchView(.newText)))
                     .font(.ssBody)
                     .padding(7)
                     .padding(.horizontal, 7)
@@ -259,7 +260,7 @@ struct SearchView: View {
                         searchViewModel.shouldPresentAllTrendingSearches.toggle()
                     }
                 } label: {
-                    Text(searchViewModel.shouldPresentAllTrendingSearches ? "Hide all" : "See all")
+                    Text(searchViewModel.shouldPresentAllTrendingSearches ? TexterifyManager.localisedString(key: .searchView(.hideAllButton)) : TexterifyManager.localisedString(key: .searchView(.seeAllButton)))
                         .font(.ssButton)
                         .foregroundColor(.accentColor)
                         .padding()
@@ -273,7 +274,7 @@ struct SearchView: View {
     func buildRecentSearchesList() -> some View {
         VStack(alignment: .leading) {
             HStack {
-                Text("Recent Searches")
+                Text(TexterifyManager.localisedString(key: .searchView(.recentSearchesText)))
                     .font(.ssTitle3)
                 Spacer()
                 
@@ -283,7 +284,7 @@ struct SearchView: View {
                         searchViewModel.shouldPresentAllRecentSearches = false
                     }
                 } label: {
-                    Text("Clear all")
+                    Text(TexterifyManager.localisedString(key: .searchView(.clearAllButton)))
                         .font(.ssButton)
                         .foregroundColor(.accentColor)
                         .padding(12)
@@ -313,7 +314,7 @@ struct SearchView: View {
                         searchViewModel.shouldPresentAllRecentSearches.toggle()
                     }
                 } label: {
-                    Text(searchViewModel.shouldPresentAllRecentSearches ? "Hide all" : "See all")
+                    Text(searchViewModel.shouldPresentAllRecentSearches ? TexterifyManager.localisedString(key: .searchView(.hideAllButton)) : TexterifyManager.localisedString(key: .searchView(.seeAllButton)))
                         .padding()
                         .font(.ssButton)
                         .foregroundColor(.accentColor)

@@ -8,5 +8,10 @@
 import Foundation
 
 public enum CompletionReturnCreationViewLocalizable: String {
-    case cancel = "Common_cancel"
+    case youHaveSuccessfullyCreatedReturn = "CompletionReturnCreationView_youHaveSuccessfullyCreatedReturn"
+    case pleaseWaitPatiently = "CompletionReturnCreationView_pleaseWaitPatiently"
+    case returnNumber = "CompletionReturnCreationView_returnNumber"
+    case moneyToBeReturned = "CompletionReturnCreationView_moneyToBeReturned"
+    case closeButton = "CompletionReturnCreationView_closeButton"
+    case navigationTitle = "CompletionReturnCreationView_navigationTitle"
 }

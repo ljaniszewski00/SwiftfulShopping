@@ -6,35 +6,92 @@
 //
 
 import Foundation
+import texterify_ios_sdk
 
 enum ErrorType: String {
-    case networkError = "Network Error"
-    case productRecognizerError = "Product Recognizer Error"
-    case loginError = "Login Error"
-    case registerError = "Register Error"
-    case firstTimeLoginError = "First Time Login Error"
-    case emailPasswordSignInError = "Email and Password Sign In Error"
-    case phoneSignInError = "Phone Sign In Error"
-    case googleSignInError = "Google Sign In Error"
-    case facebookSignInError = "Facebook Sign In Error"
-    case githubSignInError = "Github Sign In Error"
-    case logoutError = "Logout Error"
-    case changeEmailError = "Change Email Error"
-    case changePasswordError = "Change Password Error"
-    case deleteAccountError = "Delete Account Error"
-    case discountApplyError = "Discount Apply Error"
-    case orderCreateError = "Order Create Error"
-    case biometricRecognitionError = "Biometric Recognition Error"
-    case databaseManagerEncodingError = "Database Manager: Encoding Error"
-    case databaseManagerFetchUsersError = "Database Manager: Fetch Users Error"
-    case applyProductRatingError = "Apply Product Rating Error"
-    case returnCreateError = "Return Create Error"
-    case createAddressError = "Create Address Error"
-    case changeDefaultAddressError = "Change Default Address Error"
-    case changeDefaultPaymentMethodError = "Change Default Payment Method Error"
-    case signOutError = "Sign Out Error"
-    case changePhotoError = "Change Photo Error"
-    case dataFetchError = "Data Fetch Error"
+    case networkError
+    case productRecognizerError
+    case loginError
+    case registerError
+    case firstTimeLoginError
+    case emailPasswordSignInError
+    case phoneSignInError
+    case googleSignInError
+    case facebookSignInError
+    case githubSignInError
+    case logoutError
+    case changeEmailError
+    case changePasswordError
+    case deleteAccountError
+    case discountApplyError
+    case orderCreateError
+    case biometricRecognitionError
+    case applyProductRatingError
+    case returnCreateError
+    case createAddressError
+    case changeDefaultAddressError
+    case changeDefaultPaymentMethodError
+    case changePhotoError
+    case dataFetchError
     
-    case unknown = "Unknown Error"
+    case unknown
+    
+    init?(rawValue: String) {
+        return nil
+    }
+    
+    var rawValue: String {
+        switch self {
+        case .networkError:
+            return TexterifyManager.localisedString(key: .errors(.networkError))
+        case .productRecognizerError:
+            return TexterifyManager.localisedString(key: .errors(.productRecognizerError))
+        case .loginError:
+            return TexterifyManager.localisedString(key: .errors(.loginError))
+        case .registerError:
+            return TexterifyManager.localisedString(key: .errors(.registerError))
+        case .firstTimeLoginError:
+            return TexterifyManager.localisedString(key: .errors(.firstTimeLoginError))
+        case .emailPasswordSignInError:
+            return TexterifyManager.localisedString(key: .errors(.emailPasswordSignInError))
+        case .phoneSignInError:
+            return TexterifyManager.localisedString(key: .errors(.phoneSignInError))
+        case .googleSignInError:
+            return TexterifyManager.localisedString(key: .errors(.googleSignInError))
+        case .facebookSignInError:
+            return TexterifyManager.localisedString(key: .errors(.facebookSignInError))
+        case .githubSignInError:
+            return TexterifyManager.localisedString(key: .errors(.githubSignInError))
+        case .logoutError:
+            return TexterifyManager.localisedString(key: .errors(.logoutError))
+        case .changeEmailError:
+            return TexterifyManager.localisedString(key: .errors(.changeEmailError))
+        case .changePasswordError:
+            return TexterifyManager.localisedString(key: .errors(.changePasswordError))
+        case .deleteAccountError:
+            return TexterifyManager.localisedString(key: .errors(.deleteAccountError))
+        case .discountApplyError:
+            return TexterifyManager.localisedString(key: .errors(.discountApplyError))
+        case .orderCreateError:
+            return TexterifyManager.localisedString(key: .errors(.orderCreateError))
+        case .biometricRecognitionError:
+            return TexterifyManager.localisedString(key: .errors(.biometricRecognitionError))
+        case .applyProductRatingError:
+            return TexterifyManager.localisedString(key: .errors(.applyProductRatingError))
+        case .returnCreateError:
+            return TexterifyManager.localisedString(key: .errors(.returnCreateError))
+        case .createAddressError:
+            return TexterifyManager.localisedString(key: .errors(.createAddressError))
+        case .changeDefaultAddressError:
+            return TexterifyManager.localisedString(key: .errors(.changeDefaultAddressError))
+        case .changeDefaultPaymentMethodError:
+            return TexterifyManager.localisedString(key: .errors(.changeDefaultPaymentMethodError))
+        case .changePhotoError:
+            return TexterifyManager.localisedString(key: .errors(.changePhotoError))
+        case .dataFetchError:
+            return TexterifyManager.localisedString(key: .errors(.dataFetchError))
+        case .unknown:
+            return TexterifyManager.localisedString(key: .errors(.unknown))
+        }
+    }
 }

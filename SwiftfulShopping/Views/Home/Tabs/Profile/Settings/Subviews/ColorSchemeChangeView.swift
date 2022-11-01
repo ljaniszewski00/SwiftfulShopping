@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import texterify_ios_sdk
 
 struct ColorSchemeChangeView: View {
     @EnvironmentObject private var settingsViewModel: SettingsViewModel
@@ -32,7 +33,7 @@ struct ColorSchemeChangeView: View {
                 }
             }
         }
-        .navigationTitle("Choose Color Theme")
+        .navigationTitle(TexterifyManager.localisedString(key: .colorSchemeChangeView(.navigationTitle)))
         .navigationBarTitleDisplayMode(.large)
         .navigationBarBackButtonHidden(true)
         .toolbar {

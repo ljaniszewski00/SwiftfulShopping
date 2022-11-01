@@ -8,5 +8,7 @@
 import Foundation
 
 public enum ThirdReturnCreationViewLocalizable: String {
-    case cancel = "Common_cancel"
+    case howDoYouWantToReturn = "ThirdReturnCreationView_howDoYouWantToReturn"
+    case createReturnButton = "ThirdReturnCreationView_createReturnButton"
+    case navigationTitle = "ThirdReturnCreationView_navigationTitle"
 }

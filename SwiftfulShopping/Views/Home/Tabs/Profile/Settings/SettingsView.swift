@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import texterify_ios_sdk
 
 struct SettingsView: View {
     @EnvironmentObject private var accentColorManager: AccentColorManager
@@ -21,9 +22,24 @@ struct SettingsView: View {
     @Environment(\.dismiss) private var dismiss: DismissAction
     
     enum NavigationViewsNames: String, CaseIterable {
-        case changeEmail = "Change Email"
-        case changePassword = "Change Password"
-        case deleteAccount = "Delete Account"
+        case changeEmail
+        case changePassword
+        case deleteAccount
+        
+        init?(rawValue: String) {
+            return nil
+        }
+        
+        var rawValue: String {
+            switch self {
+            case .changeEmail:
+                return TexterifyManager.localisedString(key: .settingsView(.navigationViewNameChangeEmail))
+            case .changePassword:
+                return TexterifyManager.localisedString(key: .settingsView(.navigationViewNameChangePassword))
+            case .deleteAccount:
+                return TexterifyManager.localisedString(key: .settingsView(.navigationViewNameDeleteAccount))
+            }
+        }
         
         static var allCases: [NavigationViewsNames] {
             return [
@@ -35,8 +51,8 @@ struct SettingsView: View {
     }
     
     private var navigationIconsForNames: [NavigationViewsNames: String] = [.changeEmail: "envelope.fill",
-                                                                   .changePassword: "key.fill",
-                                                                   .deleteAccount: "person.badge.minus"]
+                                                                           .changePassword: "key.fill",
+                                                                           .deleteAccount: "person.badge.minus"]
     
     var body: some View {
         List {
@@ -47,7 +63,7 @@ struct SettingsView: View {
                             .font(.title)
                             .foregroundColor(.accentColor)
                             .frame(width: 30)
-                        Text("Notifications")
+                        Text(TexterifyManager.localisedString(key: .settingsView(.notifications)))
                             .font(.ssButton).fontWeight(.regular)
                     }
                 })
@@ -58,7 +74,7 @@ struct SettingsView: View {
                             .font(.title)
                             .foregroundColor(.accentColor)
                             .frame(width: 30)
-                        Text("Biometric Lock")
+                        Text(TexterifyManager.localisedString(key: .settingsView(.biometrickLock)))
                             .font(.ssButton).fontWeight(.regular)
                     }
                 })
@@ -75,7 +91,7 @@ struct SettingsView: View {
                             .font(.title)
                             .foregroundColor(.accentColor)
                             .frame(width: 30)
-                        Text("Change Accent Color")
+                        Text(TexterifyManager.localisedString(key: .settingsView(.changeAccentColor)))
                             .font(.ssButton).fontWeight(.regular)
                     }
                 })
@@ -92,14 +108,14 @@ struct SettingsView: View {
                             .font(.title)
                             .foregroundColor(.accentColor)
                             .frame(width: 30)
-                        Text("Manage Dark Mode")
+                        Text(TexterifyManager.localisedString(key: .settingsView(.manageDarkMode)))
                             .font(.ssButton).fontWeight(.regular)
                     }
                 })
             } header: {
-                Text("App settings")
+                Text(TexterifyManager.localisedString(key: .settingsView(.appSettingsSectionHeader)))
             } footer: {
-                Text("Make shopping as easy as possible by personalizing the app to the maximum")
+                Text(TexterifyManager.localisedString(key: .settingsView(.appSettingsSectionFooter)))
             }
             
             Section {
@@ -115,7 +131,7 @@ struct SettingsView: View {
                             .font(.title)
                             .foregroundColor(.accentColor)
                             .frame(width: 30)
-                        Text("Change Email")
+                        Text(TexterifyManager.localisedString(key: .settingsView(.changeEmail)))
                             .font(.ssButton).fontWeight(.regular)
                     }
                 })
@@ -133,7 +149,7 @@ struct SettingsView: View {
                             .font(.title)
                             .foregroundColor(.accentColor)
                             .frame(width: 30)
-                        Text("Change Password")
+                        Text(TexterifyManager.localisedString(key: .settingsView(.changePassword)))
                             .font(.ssButton).fontWeight(.regular)
                     }
                 })
@@ -154,15 +170,15 @@ struct SettingsView: View {
                             .font(.title)
                             .foregroundColor(.accentColor)
                             .frame(width: 30)
-                        Text("Delete Account")
+                        Text(TexterifyManager.localisedString(key: .settingsView(.deleteAccount)))
                             .font(.ssButton).fontWeight(.regular)
                     }
                 })
                 .disabled(!networkNanager.isConnected)
             } header: {
-                Text("Account actions")
+                Text(TexterifyManager.localisedString(key: .settingsView(.accountActionsSectionHeader)))
             } footer: {
-                Text("Here you can manage your account")
+                Text(TexterifyManager.localisedString(key: .settingsView(.accountActionsSectionFooter)))
             }
             
             Section {
@@ -174,7 +190,7 @@ struct SettingsView: View {
                             .font(.title)
                             .foregroundColor(.accentColor)
                             .frame(width: 30)
-                        Text("Show Onboarding")
+                        Text(TexterifyManager.localisedString(key: .settingsView(.showOnboarding)))
                             .font(.ssButton).fontWeight(.regular)
                     }
                 })
@@ -187,7 +203,7 @@ struct SettingsView: View {
                             .font(.title)
                             .foregroundColor(.accentColor)
                             .frame(width: 30)
-                        Text("Terms and Conditions")
+                        Text(TexterifyManager.localisedString(key: .settingsView(.termsAndConditions)))
                             .font(.ssButton).fontWeight(.regular)
                             .foregroundColor(colorScheme == .light ? .black : .ssWhite)
                     }
@@ -198,7 +214,7 @@ struct SettingsView: View {
                         .font(.title)
                         .foregroundColor(.accentColor)
                         .frame(width: 30)
-                    Text("Follow me on GitHub:")
+                    Text(TexterifyManager.localisedString(key: .settingsView(.followMeOnGithub)))
                         .font(.ssButton).fontWeight(.regular)
                         .fixedSize(horizontal: true, vertical: false)
                     Link("ljaniszewski00", destination: settingsViewModel.authorGitHubURL)
@@ -207,7 +223,7 @@ struct SettingsView: View {
                         .fixedSize(horizontal: false, vertical: true)
                 }
             } header: {
-                Text("Additional")
+                Text(TexterifyManager.localisedString(key: .settingsView(.additionalSectionHeader)))
             }
             
             VStack(alignment: .center, spacing: 10) {
@@ -219,7 +235,7 @@ struct SettingsView: View {
             .listRowInsets(EdgeInsets())
             .background(Color(UIColor.systemGroupedBackground))
         }
-        .navigationTitle("Settings")
+        .navigationTitle(TexterifyManager.localisedString(key: .settingsView(.navigationTitle)))
         .navigationBarTitleDisplayMode(.inline)
         .navigationBarBackButtonHidden(true)
         .toolbar {

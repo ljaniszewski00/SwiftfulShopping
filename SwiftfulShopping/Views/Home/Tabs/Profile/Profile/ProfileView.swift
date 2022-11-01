@@ -7,6 +7,7 @@
 
 import SwiftUI
 import Kingfisher
+import texterify_ios_sdk
 
 struct ProfileView: View {
     @EnvironmentObject private var accentColorManager: AccentColorManager
@@ -24,11 +25,30 @@ struct ProfileView: View {
     @State private var shouldPresentCamera = false
     
     enum NavigationViewsNames: String, CaseIterable {
-        case orders = "Orders"
-        case returns = "Returns"
-        case personalInfo = "Personal Info"
-        case paymentDetails = "Payment Details"
-        case help = "Help"
+        case orders
+        case returns
+        case personalInfo
+        case paymentDetails
+        case help
+        
+        init?(rawValue: String) {
+            return nil
+        }
+        
+        var rawValue: String {
+            switch self {
+            case .orders:
+                return TexterifyManager.localisedString(key: .profileView(.ordersNavigationName))
+            case .returns:
+                return TexterifyManager.localisedString(key: .profileView(.returnsNavigationName))
+            case .personalInfo:
+                return TexterifyManager.localisedString(key: .profileView(.personalInfoNavigationName))
+            case .paymentDetails:
+                return TexterifyManager.localisedString(key: .profileView(.paymentDetailsNavigationName))
+            case .help:
+                return TexterifyManager.localisedString(key: .profileView(.helpNavigationName))
+            }
+        }
         
         static var allCases: [NavigationViewsNames] {
             return [
@@ -42,10 +62,10 @@ struct ProfileView: View {
     }
     
     private var navigationIconsForNames: [NavigationViewsNames: String] = [.orders: "cart.fill",
-                                                                   .returns: "return",
-                                                                   .personalInfo: "person.fill",
-                                                                   .paymentDetails: "creditcard.fill",
-                                                                   .help: "questionmark.circle.fill"]
+                                                                           .returns: "return",
+                                                                           .personalInfo: "person.fill",
+                                                                           .paymentDetails: "creditcard.fill",
+                                                                           .help: "questionmark.circle.fill"]
     
     var body: some View {
         NavigationView {
@@ -56,9 +76,9 @@ struct ProfileView: View {
                 VStack(alignment: .leading) {
                     HStack {
                         VStack(alignment: .leading, spacing: 6) {
-                            Text("Hello, \(profileViewModel.profile?.fullName.components(separatedBy: " ").first! ?? "")!")
+                            Text("\(TexterifyManager.localisedString(key: .profileView(.helloLabel))) \(profileViewModel.profile?.fullName.components(separatedBy: " ").first! ?? "")!")
                                 .font(.ssTitle2)
-                            Text("We are happy to see you again.")
+                            Text(TexterifyManager.localisedString(key: .profileView(.weAreHappyToSeeYouAgain)))
                                 .font(.ssCallout)
                                 .foregroundColor(.ssDarkGray)
                             Spacer()
@@ -71,11 +91,10 @@ struct ProfileView: View {
                                 .clipShape(Circle())
                                 .frame(width: ScreenBoundsSupplier.shared.getScreenWidth() * 0.2)
                             
-                            // TODO: Add NavigationLink
                             Button {
                                 shouldPresentAddActionSheet = true
                             } label: {
-                                Text("Change photo")
+                                Text(TexterifyManager.localisedString(key: .profileView(.changePhotoButton)))
                                     .font(.ssButton)
                             }
                         }
@@ -121,7 +140,7 @@ struct ProfileView: View {
                             } label: {
                                 HStack(spacing: 20) {
                                     Image(systemName: "gearshape.fill")
-                                    Text("Settings")
+                                    Text(TexterifyManager.localisedString(key: .profileView(.settingsButton)))
                                         .font(.ssButton)
                                 }
                             }
@@ -138,15 +157,19 @@ struct ProfileView: View {
                                     case .success:
                                         break
                                     case .failure(let error):
-                                        ErrorManager.shared.generateCustomError(errorType: .signOutError,
+                                        ErrorManager.shared.generateCustomError(errorType: .logoutError,
                                                                                 additionalErrorDescription: error.localizedDescription)
                                     }
                                 }
                             } label: {
-                                Text("Logout")
+                                Text(TexterifyManager.localisedString(key: .profileView(.logoutButton)))
                                     .font(.ssButton)
                             }
-                            .buttonStyle(CustomButton(textColor: .accentColor, onlyStroke: true, strokeColor: .accentColor, imageName: "rectangle.portrait.and.arrow.right", imageColor: .accentColor))
+                            .buttonStyle(CustomButton(textColor: .accentColor,
+                                                      onlyStroke: true,
+                                                      strokeColor: .accentColor,
+                                                      imageName: "rectangle.portrait.and.arrow.right",
+                                                      imageColor: .accentColor))
                             .contentShape(Rectangle())
                             Spacer()
                         }
@@ -186,7 +209,7 @@ struct ProfileView: View {
                                                 $profileViewModel.showLoadingModal))
             .modifier(ErrorModal(isPresented: $errorManager.showErrorModal,
                                  customError: errorManager.customError ?? ErrorManager.unknownError))
-            .navigationTitle("Profile")
+            .navigationTitle(TexterifyManager.localisedString(key: .profileView(.navigationTitle)))
             .navigationBarHidden(true)
             .sheet(isPresented: $shouldPresentImagePicker) {
                 ImagePicker(sourceType: self.shouldPresentCamera ? .camera : .photoLibrary, selectedImage: $profileViewModel.image)
@@ -203,12 +226,16 @@ struct ProfileView: View {
                     }
             }
             .actionSheet(isPresented: $shouldPresentAddActionSheet) {
-                ActionSheet(title: Text("Change Photo"), message: nil, buttons: [
-                    .default(Text("Take Photo"), action: {
+                ActionSheet(title: Text(TexterifyManager.localisedString(key: .profileView(.changePhotoButton))),
+                            message: nil,
+                            buttons: [
+                    .default(Text(TexterifyManager.localisedString(key: .profileView(.changePhotoActionSheetTakePhotoButton))),
+                             action: {
                          self.shouldPresentImagePicker = true
                          self.shouldPresentCamera = true
                      }),
-                    .default(Text("Choose Photo"), action: {
+                    .default(Text(TexterifyManager.localisedString(key: .profileView(.changePhotoActionSheetChoosePhotoButton))),
+                             action: {
                          self.shouldPresentImagePicker = true
                          self.shouldPresentCamera = false
                      }),

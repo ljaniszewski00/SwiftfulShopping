@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import texterify_ios_sdk
 
 struct CompletionReturnCreationView: View {
     @EnvironmentObject private var tabBarStateManager: TabBarStateManager
@@ -19,18 +20,18 @@ struct CompletionReturnCreationView: View {
             
             VStack(alignment: .leading, spacing: 40) {
                 VStack(alignment: .leading, spacing: 10) {
-                    Text("You have successfuly created a return!")
+                    Text(TexterifyManager.localisedString(key: .completionReturnCreationView(.youHaveSuccessfullyCreatedReturn)))
                         .font(.ssTitle1)
                         .fixedSize(horizontal: false, vertical: true)
                         .multilineTextAlignment(.leading)
                     
-                    Text("Please wait patiently for hearing from us soon")
+                    Text(TexterifyManager.localisedString(key: .completionReturnCreationView(.pleaseWaitPatiently)))
                         .font(.ssCallout)
                         .foregroundColor(.ssDarkGray)
                 }
                 
                 VStack(alignment: .leading, spacing: 10) {
-                    Text("Return number")
+                    Text(TexterifyManager.localisedString(key: .completionReturnCreationView(.returnNumber)))
                         .font(.ssTitle2)
                         .fixedSize(horizontal: false, vertical: true)
                         .multilineTextAlignment(.leading)
@@ -42,7 +43,7 @@ struct CompletionReturnCreationView: View {
                 }
                 
                 VStack(alignment: .leading, spacing: 10) {
-                    Text("Money to be returned:")
+                    Text(TexterifyManager.localisedString(key: .completionReturnCreationView(.moneyToBeReturned)))
                         .font(.ssTitle2)
                         .fixedSize(horizontal: false, vertical: true)
                         .multilineTextAlignment(.leading)
@@ -59,13 +60,13 @@ struct CompletionReturnCreationView: View {
                     profileViewModel.shouldPresentReturnCreationView = false
                 }
             } label: {
-                Text("Close")
+                Text(TexterifyManager.localisedString(key: .completionReturnCreationView(.closeButton)))
                     .font(.ssButton)
             }
             .buttonStyle(CustomButton())
         }
         .padding()
-        .navigationTitle("Return created")
+        .navigationTitle(TexterifyManager.localisedString(key: .completionReturnCreationView(.navigationTitle)))
         .navigationBarTitleDisplayMode(.inline)
         .navigationBarBackButtonHidden(true)
     }

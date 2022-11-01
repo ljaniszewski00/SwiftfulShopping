@@ -7,6 +7,7 @@
 
 import SwiftUI
 import AVKit
+import texterify_ios_sdk
 
 struct ProductRecognizerView: View {
     @EnvironmentObject private var exploreViewModel: ExploreViewModel
@@ -42,7 +43,7 @@ struct ProductRecognizerView: View {
                             Button {
                                 searchViewModel.shouldPresentImagePicker = true
                             } label: {
-                                Text("Choose other image")
+                                Text(TexterifyManager.localisedString(key: .productRecognizerView(.chooseOtherImage)))
                                     .font(.ssTitle3)
                             }
                         }
@@ -63,7 +64,7 @@ struct ProductRecognizerView: View {
                                 }
                             }
                         } label: {
-                            Text("Recognize")
+                            Text(TexterifyManager.localisedString(key: .productRecognizerView(.recognizeButton)))
                                 .font(.ssButton)
                         }
                         .buttonStyle(CustomButton())
@@ -80,7 +81,7 @@ struct ProductRecognizerView: View {
                                 }
                             }
                         } label: {
-                            Text(productRecognizer.sourceForImageRecognition == .camera ? "Use Photo Library" : "Use Camera")
+                            Text(productRecognizer.sourceForImageRecognition == .camera ? TexterifyManager.localisedString(key: .productRecognizerView(.usePhotoLibraryButton)) :TexterifyManager.localisedString(key: .productRecognizerView(.useCameraButton)))
                                 .font(.ssButton)
                         }
                         .buttonStyle(CustomButton(textColor: .accentColor, onlyStroke: true))
@@ -95,7 +96,7 @@ struct ProductRecognizerView: View {
                 }
             }
         }
-        .navigationTitle("Recognize Product")
+        .navigationTitle(TexterifyManager.localisedString(key: .productRecognizerView(.navigationTitle)))
         .navigationBarTitleDisplayMode(.inline)
         .navigationBarBackButtonHidden(true)
         .toolbar {
@@ -124,10 +125,10 @@ struct ProductRecognizerView: View {
                         .frame(width: ScreenBoundsSupplier.shared.getScreenWidth(),
                                height: ScreenBoundsSupplier.shared.getScreenHeight() * 0.5)
                         VStack(spacing: 20) {
-                            Text("No products found!")
+                            Text(TexterifyManager.localisedString(key: .productRecognizerView(.noProductsFound)))
                                 .font(.ssTitle2)
                                 .fixedSize(horizontal: false, vertical: true)
-                            Text("Try recognizing the product again by clicking button down below.")
+                            Text(TexterifyManager.localisedString(key: .productRecognizerView(.tryRecognizingTheProductAgain)))
                                 .font(.ssCallout)
                                 .foregroundColor(.ssDarkGray)
                                 .fixedSize(horizontal: false, vertical: true)
@@ -135,10 +136,10 @@ struct ProductRecognizerView: View {
                     }
                 } else {
                     VStack(alignment: .center, spacing: 20) {
-                        Text("Recognition Results")
+                        Text(TexterifyManager.localisedString(key: .productRecognizerView(.recognitionResults)))
                             .font(.ssTitle1)
                         
-                        Text("Choose one of the products listed below if it is what you wanted. Otherwise, try recognizing the product again.")
+                        Text(TexterifyManager.localisedString(key: .productRecognizerView(.chooseOneOfTheProducts)))
                             .font(.ssCallout)
                             .foregroundColor(.ssDarkGray)
                             .fixedSize(horizontal: false, vertical: true)
@@ -168,7 +169,7 @@ struct ProductRecognizerView: View {
                         productRecognizer.shouldPresentSheetWithResults = false
                     }
                 } label: {
-                    Text("Try again")
+                    Text(TexterifyManager.localisedString(key: .productRecognizerView(.tryAgainButton)))
                         .font(.ssButton)
                 }
                 .buttonStyle(CustomButton(textColor: .accentColor, onlyStroke: true))
@@ -213,10 +214,10 @@ struct ProductRecognizerView: View {
                     .animation(.default)
                 
                 VStack(spacing: 15) {
-                    Text("Recognizing Product")
+                    Text(TexterifyManager.localisedString(key: .productRecognizerView(.recognizingProductModalLabel)))
                         .font(.ssTitle3)
                     
-                    Text("Please wait a few seconds...")
+                    Text(TexterifyManager.localisedString(key: .productRecognizerView(.pleaseWaitAFewSecondsModalLabel)))
                         .font(.ssCallout)
                 }
                 .padding(.bottom)

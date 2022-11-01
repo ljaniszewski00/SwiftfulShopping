@@ -8,5 +8,11 @@
 import Foundation
 
 public enum DeleteAccountViewLocalizable: String {
-    case cancel = "Common_cancel"
+    case emailTextField = "DeleteAccountView_emailTextField"
+    case passwordTextField = "DeleteAccountView_passwordTextField"
+    case deleteAccountButton = "DeleteAccountView_deleteAccountButton"
+    case navigationTitle = "DeleteAccountView_navigationTitle"
+    case confirmationSheetTitle = "DeleteAccountView_confirmationSheetTitle"
+    case confirmationSheetMessage = "DeleteAccountView_confirmationSheetMessage"
+    case confirmationSheetConfirmButton = "DeleteAccountView_confirmationSheetConfirmButton"
 }

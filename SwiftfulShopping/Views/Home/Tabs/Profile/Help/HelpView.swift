@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import texterify_ios_sdk
 
 struct HelpView: View {
     @Environment(\.dismiss) var dismiss
@@ -20,17 +21,17 @@ struct HelpView: View {
         ScrollView(.vertical, showsIndicators: false) {
             VStack(alignment: .leading, spacing: 80) {
                 VStack(alignment: .leading, spacing: 30) {
-                    Text("Contact Us")
+                    Text(TexterifyManager.localisedString(key: .helpView(.contactUs)))
                         .font(.ssTitle2)
                     VStack(alignment: .trailing, spacing: 20) {
                         RectangleCustomTextField(
-                            textFieldProperty: "Email Address",
+                            textFieldProperty: TexterifyManager.localisedString(key: .helpView(.emailAddresTextField)),
                             text: $helpViewModel.contactUsEmail,
                             isFocusedParentView: $isContactEmailTextFieldFocused)
                         
                         RectangleCustomTextField(
-                            textFieldProperty: "Phone Number",
-                            textFieldFooter: "Please provide either your email address or phone number",
+                            textFieldProperty: TexterifyManager.localisedString(key: .helpView(.phoneNumberTextField)),
+                            textFieldFooter: TexterifyManager.localisedString(key: .helpView(.phoneNumberTextFieldFooter)),
                             text: $helpViewModel.contactUsPhoneNumber,
                             isFocusedParentView: $isContactPhoneNumberTextFieldFocused)
                         .padding(.bottom)
@@ -40,21 +41,21 @@ struct HelpView: View {
                                 helpViewModel.sendContactRequest()
                             }
                         } label: {
-                            Text("Contact Us")
+                            Text(TexterifyManager.localisedString(key: .helpView(.contactUsButton)))
                                 .font(.ssButton)
                         }
-                        .buttonStyle(RoundedCompletionButtonStyle(actionCompleted: helpViewModel.contactUsButtonClicked, actionCompletedText: "Wait until We contact You"))
+                        .buttonStyle(RoundedCompletionButtonStyle(actionCompleted: helpViewModel.contactUsButtonClicked, actionCompletedText: TexterifyManager.localisedString(key: .helpView(.waitInfo))))
                         .contentShape(Rectangle())
                         .disabled(helpViewModel.contactUsInfoNotValidated)
                     }
                 }
                 
                 VStack(alignment: .leading, spacing: 30) {
-                    Text("Subscribe to Newsletter")
+                    Text(TexterifyManager.localisedString(key: .helpView(.subscribeToNewsletter)))
                         .font(.ssTitle2)
                     VStack(alignment: .trailing, spacing: 20) {
                         RectangleCustomTextField(
-                            textFieldProperty: "Email Address",
+                            textFieldProperty: TexterifyManager.localisedString(key: .helpView(.emailAddressNewsletterTextField)),
                             text: $helpViewModel.newsletterEmail,
                             isFocusedParentView: $isNewsletterEmailTextFieldFocused)
                         .padding(.bottom)
@@ -64,10 +65,10 @@ struct HelpView: View {
                                 helpViewModel.signForNewsletter()
                             }
                         } label: {
-                            Text("Subscribe")
+                            Text(TexterifyManager.localisedString(key: .helpView(.subscribeToNewsletterButton)))
                                 .font(.ssButton)
                         }
-                        .buttonStyle(RoundedCompletionButtonStyle(actionCompleted: helpViewModel.signForNewsletterActionClicked, actionCompletedText: "Subscribed"))
+                        .buttonStyle(RoundedCompletionButtonStyle(actionCompleted: helpViewModel.signForNewsletterActionClicked, actionCompletedText: TexterifyManager.localisedString(key: .helpView(.subscribedToNewsletterCompletedButton))))
                         .contentShape(Rectangle())
                         .disabled(helpViewModel.newsletterEmailNotValidated)
                     }
@@ -77,7 +78,7 @@ struct HelpView: View {
             }
             .padding()
         }
-        .navigationTitle("Help")
+        .navigationTitle(TexterifyManager.localisedString(key: .helpView(.navigationTitle)))
         .navigationBarTitleDisplayMode(.inline)
         .navigationBarBackButtonHidden(true)
         .toolbar {

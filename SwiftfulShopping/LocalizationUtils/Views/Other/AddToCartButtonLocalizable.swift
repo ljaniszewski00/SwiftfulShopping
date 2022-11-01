@@ -8,5 +8,5 @@
 import Foundation
 
 public enum AddToCartButtonLocalizable: String {
-    case cancel = "Common_cancel"
+    case addToCartLabel = "AddToCartButton_addToCartLabel"
 }

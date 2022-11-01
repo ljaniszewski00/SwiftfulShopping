@@ -8,5 +8,5 @@
 import Foundation
 
 public enum OrderRateViewLocalizable: String {
-    case cancel = "Common_cancel"
+    case navigationTitle = "OrderRateView_navigationTitle"
 }

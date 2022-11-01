@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import texterify_ios_sdk
 
 struct ChangeEmailView: View {
     @EnvironmentObject private var settingsViewModel: SettingsViewModel
@@ -22,7 +23,7 @@ struct ChangeEmailView: View {
         ScrollView(.vertical, showsIndicators: false) {
             VStack(spacing: 20) {
                 VStack(spacing: 20) {
-                    CustomTextField(textFieldProperty: "Old Email Address",
+                    CustomTextField(textFieldProperty: TexterifyManager.localisedString(key: .changeEmailView(.oldEmailTextField)),
                                     textFieldImageName: "envelope.fill",
                                     textFieldKeyboardType: .emailAddress,
                                     text: $changeEmailViewModel.oldEmail,
@@ -30,7 +31,7 @@ struct ChangeEmailView: View {
                     .disabled(changeEmailViewModel.showNewEmailTextField)
                     
                     CustomTextField(isSecureField: true,
-                                    textFieldProperty: "Password",
+                                    textFieldProperty: TexterifyManager.localisedString(key: .changeEmailView(.passwordTextField)),
                                     textFieldImageName: "key.fill",
                                     text: $changeEmailViewModel.password,
                                     isFocusedParentView: $isPasswordTextFieldFocused)
@@ -41,7 +42,7 @@ struct ChangeEmailView: View {
                             changeEmailViewModel.verifyCredentials()
                         }
                     } label: {
-                        Text("Verify Credentials")
+                        Text(TexterifyManager.localisedString(key: .changeEmailView(.verifyButton)))
                             .font(.ssButton)
                     }
                     .buttonStyle(CustomButton())
@@ -51,7 +52,7 @@ struct ChangeEmailView: View {
                 
                 if changeEmailViewModel.showNewEmailTextField {
                     VStack(spacing: 0) {
-                        CustomTextField(textFieldProperty: "New Email Address",
+                        CustomTextField(textFieldProperty: TexterifyManager.localisedString(key: .changeEmailView(.newEmailTextField)),
                                         textFieldImageName: "envelope.fill",
                                         textFieldKeyboardType: .emailAddress,
                                         text: $changeEmailViewModel.newEmail,
@@ -63,7 +64,7 @@ struct ChangeEmailView: View {
                                 changeEmailViewModel.changeEmail()
                             }
                         } label: {
-                            Text("Change Email Address")
+                            Text(TexterifyManager.localisedString(key: .changeEmailView(.changeEmailButton)))
                                 .font(.ssButton)
                         }
                         .buttonStyle(CustomButton())
@@ -77,7 +78,7 @@ struct ChangeEmailView: View {
         .modifier(LoadingIndicatorModal(isPresented:
                                                             $changeEmailViewModel.showLoadingModal))
         .modifier(ErrorModal(isPresented: $errorManager.showErrorModal, customError: errorManager.customError ?? ErrorManager.unknownError))
-        .navigationTitle("Change Email")
+        .navigationTitle(TexterifyManager.localisedString(key: .changeEmailView(.navigationTitle)))
         .navigationBarTitleDisplayMode(.large)
         .navigationBarBackButtonHidden(true)
         .toolbar {

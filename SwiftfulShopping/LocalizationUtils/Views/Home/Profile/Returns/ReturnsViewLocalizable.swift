@@ -8,5 +8,7 @@
 import Foundation
 
 public enum ReturnsViewLocalizable: String {
-    case cancel = "Common_cancel"
+    case products = "ReturnsView_products"
+    case returnStatus = "ReturnsView_returnStatus"
+    case navigationTitle = "ReturnsView_navigationTitle"
 }

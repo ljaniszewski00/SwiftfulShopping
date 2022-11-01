@@ -8,5 +8,9 @@
 import Foundation
 
 public enum PersonalInfoViewLocalizable: String {
-    case cancel = "Common_cancel"
+    case firstName = "PersonalInfoView_firstName"
+    case emailAddress = "PersonalInfoView_emailAddress"
+    case address = "PersonalInfoView_address"
+    case addNewAddressButton = "PersonalInfoView_addNewAddressButton"
+    case navigationTitle = "PersonalInfoView_navigationTitle"
 }

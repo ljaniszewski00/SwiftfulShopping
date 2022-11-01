@@ -8,5 +8,7 @@
 import Foundation
 
 public enum OrdersViewLocalizable: String {
-    case cancel = "Common_cancel"
+    case products = "OrdersView_products"
+    case orderStatus = "OrdersView_orderStatus"
+    case navigationTitle = "OrdersView_navigationTitle"
 }

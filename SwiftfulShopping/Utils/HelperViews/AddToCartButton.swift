@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import texterify_ios_sdk
 
 struct AddToCartButton: View {
     let onAdd: () -> Void
@@ -26,7 +27,7 @@ struct AddToCartButton: View {
                            shouldPlay: $shouldPresentAddAnimation)
                 .frame(minWidth: 50, maxHeight: 40)
                 
-                Text("Add to Cart")
+                Text(TexterifyManager.localisedString(key: .addToCartButton(.addToCartLabel)))
                     .font(.ssButton)
                     .foregroundColor(.ssWhite)
                     .padding(.all, 10)

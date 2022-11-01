@@ -6,37 +6,60 @@
 //
 
 import Foundation
+import texterify_ios_sdk
 
 final class ErrorManager: ObservableObject {
-    private static let errorDescriptionSuffix: String = "Please try again later."
-
     private let errorsDescriptions: [ErrorType: String] = [
-        .networkError: "No internet connection. Some functions will be unavailable.",
-        .productRecognizerError: "Error occured while recognizing your product. \(errorDescriptionSuffix)",
-        .loginError: "Error occured while trying to log in. \(errorDescriptionSuffix)",
-        .registerError: "Error occured while trying to register. \(errorDescriptionSuffix)",
-        .firstTimeLoginError: "Error occured while trying to log in for the first time. \(errorDescriptionSuffix)",
-        .emailPasswordSignInError: "Error occured while trying to log in with email and password. \(errorDescriptionSuffix)",
-        .phoneSignInError: "Error occured while trying to log in with phone number. \(errorDescriptionSuffix)",
-        .googleSignInError: "Error occured while trying to log in via Google. \(errorDescriptionSuffix)",
-        .facebookSignInError: "Error occured while trying to log in via Facebook. \(errorDescriptionSuffix)",
-        .githubSignInError: "Error occured while trying to log in via GitHub. \(errorDescriptionSuffix)",
-        .discountApplyError: "Error applying discount code. \(errorDescriptionSuffix)",
-        .orderCreateError: "Error creating your order. \(errorDescriptionSuffix)",
-        .biometricRecognitionError: "Error authenticating using biometry. Please try again.",
-        .changeEmailError: "Error occured while trying to change the email. \(errorDescriptionSuffix)",
-        .changePasswordError: "Error occured while trying to change the password. \(errorDescriptionSuffix)",
-        .deleteAccountError: "Error occured while trying delete the account. \(errorDescriptionSuffix)",
-        .databaseManagerEncodingError: "Error encoding requestes data. \(errorDescriptionSuffix)",
-        .applyProductRatingError: "Error adding new rating. \(errorDescriptionSuffix)",
-        .returnCreateError: "Error creating your return. \(errorDescriptionSuffix)",
-        .createAddressError: "Error creating address. \(errorDescriptionSuffix)",
-        .changeDefaultAddressError: "Error changing default address. \(errorDescriptionSuffix)",
-        .changeDefaultPaymentMethodError: "Error changing default payment method. \(errorDescriptionSuffix)",
-        .signOutError: "Error signing out. \(errorDescriptionSuffix)",
-        .changePhotoError: "Error changing photo. \(errorDescriptionSuffix)",
-        .dataFetchError: "Error fetching data. \(errorDescriptionSuffix)",
-        .unknown: ""
+        .networkError:
+            TexterifyManager.localisedString(key: .errors(.networkErrorDescription)),
+        .productRecognizerError:
+            TexterifyManager.localisedString(key: .errors(.productRecognizerErrorDescription)),
+        .loginError:
+            TexterifyManager.localisedString(key: .errors(.loginErrorDescription)),
+        .registerError:
+            TexterifyManager.localisedString(key: .errors(.registerErrorDescription)),
+        .firstTimeLoginError:
+            TexterifyManager.localisedString(key: .errors(.firstTimeLoginErrorDescription)),
+        .emailPasswordSignInError:
+            TexterifyManager.localisedString(key: .errors(.emailPasswordSignInErrorDescription)),
+        .phoneSignInError:
+            TexterifyManager.localisedString(key: .errors(.phoneSignInErrorDescription)),
+        .googleSignInError:
+            TexterifyManager.localisedString(key: .errors(.googleSignInErrorDescription)),
+        .facebookSignInError:
+            TexterifyManager.localisedString(key: .errors(.facebookSignInErrorDescription)),
+        .githubSignInError:
+            TexterifyManager.localisedString(key: .errors(.githubSignInErrorDescription)),
+        .logoutError:
+            TexterifyManager.localisedString(key: .errors(.logoutErrorDescription)),
+        .changeEmailError:
+            TexterifyManager.localisedString(key: .errors(.changeEmailErrorDescription)),
+        .changePasswordError:
+            TexterifyManager.localisedString(key: .errors(.changePasswordErrorDescription)),
+        .deleteAccountError:
+            TexterifyManager.localisedString(key: .errors(.deleteAccountErrorDescription)),
+        .discountApplyError:
+            TexterifyManager.localisedString(key: .errors(.discountApplyErrorDescription)),
+        .orderCreateError:
+            TexterifyManager.localisedString(key: .errors(.orderCreateErrorDescription)),
+        .biometricRecognitionError:
+            TexterifyManager.localisedString(key: .errors(.biometricRecognitionErrorDescription)),
+        .applyProductRatingError:
+            TexterifyManager.localisedString(key: .errors(.applyProductRatingErrorDescription)),
+        .returnCreateError:
+            TexterifyManager.localisedString(key: .errors(.returnCreateErrorDescription)),
+        .createAddressError:
+            TexterifyManager.localisedString(key: .errors(.createAddressErrorDescription)),
+        .changeDefaultAddressError:
+            TexterifyManager.localisedString(key: .errors(.changeDefaultAddressErrorDescription)),
+        .changeDefaultPaymentMethodError:
+            TexterifyManager.localisedString(key: .errors(.changeDefaultPaymentMethodErrorDescription)),
+        .changePhotoError:
+            TexterifyManager.localisedString(key: .errors(.changePhotoErrorDescription)),
+        .dataFetchError:
+            TexterifyManager.localisedString(key: .errors(.dataFetchErrorDescription)),
+        .unknown:
+            TexterifyManager.localisedString(key: .errors(.unknownDescription))
     ]
     
     @Published var showErrorModal: Bool = false

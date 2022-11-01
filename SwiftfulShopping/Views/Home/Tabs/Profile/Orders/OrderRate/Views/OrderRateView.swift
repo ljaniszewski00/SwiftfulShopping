@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import texterify_ios_sdk
 
 struct OrderRateView: View {
     @EnvironmentObject private var tabBarStateManager: TabBarStateManager
@@ -32,7 +33,7 @@ struct OrderRateView: View {
                            isActive: $ratingViewModel.shouldPresentSingleProductRatingPage) { EmptyView() }
                 .isDetailLink(false)
         }
-        .navigationTitle("Rate products")
+        .navigationTitle(TexterifyManager.localisedString(key: .orderRateView(.navigationTitle)))
         .navigationBarTitleDisplayMode(.inline)
         .navigationBarBackButtonHidden(true)
         .toolbar {

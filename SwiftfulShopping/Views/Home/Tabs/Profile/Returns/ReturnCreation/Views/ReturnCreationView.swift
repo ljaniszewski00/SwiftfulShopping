@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import texterify_ios_sdk
 
 struct ReturnCreationView: View {
     @EnvironmentObject private var tabBarStateManager: TabBarStateManager
@@ -23,7 +24,7 @@ struct ReturnCreationView: View {
                 StepsView(stepsNumber: 4, activeStep: 1)
                 
                 VStack(alignment: .leading, spacing: 10) {
-                    Text("Order ID")
+                    Text(TexterifyManager.localisedString(key: .returnCreationView(.orderID)))
                         .font(.ssTitle2)
                     Text(returnCreationViewModel.orderForReturn?.id ?? "")
                         .font(.ssTitle3)
@@ -31,7 +32,7 @@ struct ReturnCreationView: View {
                 }
                 
                 VStack(alignment: .leading, spacing: 20) {
-                    Text("Choose products you want to return:")
+                    Text(TexterifyManager.localisedString(key: .returnCreationView(.chooseProducts)))
                         .font(.ssTitle2)
                         .fixedSize(horizontal: false, vertical: true)
                         .multilineTextAlignment(.leading)
@@ -63,7 +64,7 @@ struct ReturnCreationView: View {
                 }
                 
                 HStack {
-                    Text("Selected Products:")
+                    Text(TexterifyManager.localisedString(key: .returnCreationView(.selectedProducts)))
                         .font(.ssTitle2)
                     Text("\(returnCreationViewModel.productsForReturn.count)")
                         .font(.ssTitle2)
@@ -75,7 +76,7 @@ struct ReturnCreationView: View {
                         returnCreationViewModel.shouldPresentSecondReturnCreationView = true
                     }
                 } label: {
-                    Text("Continue")
+                    Text(TexterifyManager.localisedString(key: .returnCreationView(.continueButton)))
                         .font(.ssButton)
                 }
                 .buttonStyle(CustomButton())
@@ -85,7 +86,7 @@ struct ReturnCreationView: View {
             .padding()
             .padding(.bottom, tabBarStateManager.tabBarSize.height * 0.6)
         }
-        .navigationTitle("Create Return")
+        .navigationTitle(TexterifyManager.localisedString(key: .returnCreationView(.navigationTitle)))
         .navigationBarTitleDisplayMode(.inline)
         .navigationBarBackButtonHidden(true)
         .toolbar {

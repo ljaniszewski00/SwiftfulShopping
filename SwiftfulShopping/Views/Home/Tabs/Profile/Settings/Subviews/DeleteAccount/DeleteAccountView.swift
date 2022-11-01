@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import texterify_ios_sdk
 
 struct DeleteAccountView: View {
     @EnvironmentObject private var settingsViewModel: SettingsViewModel
@@ -22,7 +23,7 @@ struct DeleteAccountView: View {
         ScrollView(.vertical, showsIndicators: false) {
             VStack(spacing: 20) {
                 VStack(spacing: 20) {
-                    CustomTextField(textFieldProperty: "Old Email Address",
+                    CustomTextField(textFieldProperty: TexterifyManager.localisedString(key: .deleteAccountView(.emailTextField)),
                                     textFieldImageName: "envelope.fill",
                                     textFieldKeyboardType: .emailAddress,
                                     text: $deleteAccountViewModel.email,

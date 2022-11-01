@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import texterify_ios_sdk
 
 struct OrderDetailsView: View {
     @EnvironmentObject private var tabBarStateManager: TabBarStateManager
@@ -24,7 +25,7 @@ struct OrderDetailsView: View {
             ScrollView(.vertical, showsIndicators: false) {
                 VStack(alignment: .leading, spacing: 30) {
                     VStack(alignment: .leading, spacing: 10) {
-                        Text("Order Date")
+                        Text(TexterifyManager.localisedString(key: .orderDetailsView(.orderDate)))
                             .font(.ssTitle2)
                             .foregroundColor(colorScheme == .light ? .black : .ssWhite)
                         
@@ -34,7 +35,7 @@ struct OrderDetailsView: View {
                     }
                     
                     VStack(alignment: .leading, spacing: 10) {
-                        Text("Customer Info")
+                        Text(TexterifyManager.localisedString(key: .orderDetailsView(.customerInfo)))
                             .font(.ssTitle2)
                             .foregroundColor(colorScheme == .light ? .black : .ssWhite)
                         
@@ -45,7 +46,7 @@ struct OrderDetailsView: View {
                     }
                     
                     VStack(alignment: .leading, spacing: 10) {
-                        Text("Address Info")
+                        Text(TexterifyManager.localisedString(key: .orderDetailsView(.addressInfo)))
                             .font(.ssTitle2)
                             .foregroundColor(colorScheme == .light ? .black : .ssWhite)
                         
@@ -56,7 +57,7 @@ struct OrderDetailsView: View {
                     }
                     
                     VStack(alignment: .leading, spacing: 10) {
-                        Text("Status")
+                        Text(TexterifyManager.localisedString(key: .orderDetailsView(.status)))
                             .font(.ssTitle2)
                             .foregroundColor(colorScheme == .light ? .black : .ssWhite)
                             
@@ -71,7 +72,7 @@ struct OrderDetailsView: View {
                             showProductsList.toggle()
                         }, label: {
                             HStack(spacing: 20) {
-                                Text("Products (\(orderProductsList.count))")
+                                Text("\(TexterifyManager.localisedString(key: .orderDetailsView(.products))) (\(orderProductsList.count)")
                                     .font(.ssTitle2)
                                     .foregroundColor(colorScheme == .light ? .black : .ssWhite)
                                 Image(systemName: showProductsList ? "chevron.up" : "chevron.down")
@@ -89,7 +90,7 @@ struct OrderDetailsView: View {
                     }
                     
                     HStack {
-                        Text("Total Price")
+                        Text(TexterifyManager.localisedString(key: .orderDetailsView(.totalPrice)))
                             .font(.ssTitle2)
                             .foregroundColor(colorScheme == .light ? .black : .ssWhite)
                         
@@ -111,7 +112,7 @@ struct OrderDetailsView: View {
                         profileViewModel.shouldPresentReturnCreationView = true
                     }
                 } label: {
-                    Text("Return products")
+                    Text(TexterifyManager.localisedString(key: .orderDetailsView(.returnProductsButton)))
                         .font(.ssButton)
                 }
                 .buttonStyle(CustomButton())
@@ -122,7 +123,7 @@ struct OrderDetailsView: View {
                         profileViewModel.shouldPresentOrderRateView = true
                     }
                 } label: {
-                    Text("Rate the order")
+                    Text(TexterifyManager.localisedString(key: .orderDetailsView(.rateOrderButton)))
                         .font(.ssButton)
                 }
                 .buttonStyle(CustomButton(textColor: .accentColor, onlyStroke: true))
@@ -144,7 +145,7 @@ struct OrderDetailsView: View {
             
         }
         .padding(.bottom, tabBarStateManager.tabBarSize.height * 0.6)
-        .navigationTitle("Order No. \(order.id)")
+        .navigationTitle("\(TexterifyManager.localisedString(key: .orderDetailsView(.navigationTitle))) \(order.id)")
         .navigationBarTitleDisplayMode(.inline)
         .navigationBarBackButtonHidden(true)
         .toolbar {

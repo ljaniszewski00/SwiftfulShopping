@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import texterify_ios_sdk
 
 struct ReturnsView: View {
     @EnvironmentObject private var tabBarStateManager: TabBarStateManager
@@ -40,7 +41,7 @@ struct ReturnsView: View {
                                 
                                 VStack(alignment: .leading) {
                                     HStack {
-                                        Text("Products:")
+                                        Text(TexterifyManager.localisedString(key: .returnsView(.products)))
                                             .font(.ssCallout)
                                         Text("\(returnsViewModel.getReturnProductsFor(returnObject: userReturn).count)")
                                             .font(.ssTitle3)
@@ -48,7 +49,7 @@ struct ReturnsView: View {
                                     }
                                         
                                     HStack {
-                                        Text("Return Status:")
+                                        Text(TexterifyManager.localisedString(key: .returnsView(.returnStatus)))
                                             .font(.ssCallout)
                                         Text(userReturn.status.rawValue)
                                             .font(.ssTitle3)
@@ -67,7 +68,7 @@ struct ReturnsView: View {
             }
         }
         .listStyle(.grouped)
-        .navigationTitle("Returns")
+        .navigationTitle(TexterifyManager.localisedString(key: .returnsView(.navigationTitle)))
         .navigationBarTitleDisplayMode(.inline)
         .navigationBarBackButtonHidden(true)
         .toolbar {

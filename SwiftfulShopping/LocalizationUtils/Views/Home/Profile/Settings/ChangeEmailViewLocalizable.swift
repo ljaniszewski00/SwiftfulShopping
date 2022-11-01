@@ -8,5 +8,10 @@
 import Foundation
 
 public enum ChangeEmailViewLocalizable: String {
-    case cancel = "Common_cancel"
+    case oldEmailTextField = "ChangeEmailView_oldEmailTextField"
+    case passwordTextField = "ChangeEmailView_passwordTextField"
+    case verifyButton = "ChangeEmailView_verifyButton"
+    case newEmailTextField = "ChangeEmailView_newEmailTextField"
+    case changeEmailButton = "ChangeEmailView_changeEmailButton"
+    case navigationTitle = "ChangeEmailView_navigationTitle"
 }

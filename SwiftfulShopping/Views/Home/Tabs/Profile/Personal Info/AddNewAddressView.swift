@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import texterify_ios_sdk
 
 struct AddNewAddressView: View {
     @EnvironmentObject private var tabBarStateManager: TabBarStateManager
@@ -29,7 +30,7 @@ struct AddNewAddressView: View {
                 VStack(alignment: .leading, spacing: 40) {
                     VStack(alignment: .leading, spacing: 20) {
                         RectangleCustomTextField(
-                            textFieldProperty: "Street Name",
+                            textFieldProperty: TexterifyManager.localisedString(key: .addNewAddressView(.streetNameTextField)),
                             text: $personalInfoViewModel.newStreetName,
                             isFocusedParentView: $isStreetNameTextFieldFocused)
                         
@@ -45,7 +46,7 @@ struct AddNewAddressView: View {
                             isFocusedParentView: $isApartmentNumberTextFieldFocused)
                         
                         RectangleCustomTextField(
-                            textFieldProperty: "Postal code",
+                            textFieldProperty: "Postal Code",
                             text: $personalInfoViewModel.newZipCode,
                             isFocusedParentView: $isZipCodeTextFieldFocused)
                         

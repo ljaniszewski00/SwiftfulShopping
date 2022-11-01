@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import texterify_ios_sdk
 
 struct ReturnDetailsView: View {
     @EnvironmentObject private var tabBarStateManager: TabBarStateManager
@@ -23,7 +24,7 @@ struct ReturnDetailsView: View {
         ScrollView(.vertical, showsIndicators: false) {
             VStack(alignment: .leading, spacing: 30) {
                 VStack(alignment: .leading, spacing: 10) {
-                    Text("Return Date")
+                    Text(TexterifyManager.localisedString(key: .returnDetailsView(.returnDate)))
                         .font(.ssTitle2)
                         .foregroundColor(colorScheme == .light ? .black : .ssWhite)
                     
@@ -33,7 +34,7 @@ struct ReturnDetailsView: View {
                 }
                 
                 VStack(alignment: .leading, spacing: 10) {
-                    Text("Status")
+                    Text(TexterifyManager.localisedString(key: .returnDetailsView(.status)))
                         .font(.ssTitle2)
                         .foregroundColor(colorScheme == .light ? .black : .ssWhite)
                         
@@ -47,7 +48,7 @@ struct ReturnDetailsView: View {
                         showProductsList.toggle()
                     }, label: {
                         HStack(spacing: 20) {
-                            Text("Products (\(returnProductsList.count))")
+                            Text("\(TexterifyManager.localisedString(key: .returnDetailsView(.products))) (\(returnProductsList.count))")
                                 .font(.ssTitle2)
                                 .foregroundColor(colorScheme == .light ? .black : .ssWhite)
                             
@@ -65,12 +66,12 @@ struct ReturnDetailsView: View {
                     }
                 }
                 HStack {
-                    Text("Total return price")
+                    Text(TexterifyManager.localisedString(key: .returnDetailsView(.totalReturnPrice)))
                         .font(.ssTitle2)
                         .foregroundColor(colorScheme == .light ? .black : .ssWhite)
                     
                     Spacer()
-                        
+                    
                     Text("$\(userReturn.returnPrice, specifier: "%.2f")")
                         .font(.ssTitle3)
                         .foregroundColor(.accentColor)
@@ -79,7 +80,7 @@ struct ReturnDetailsView: View {
             .padding()
             .padding(.bottom, tabBarStateManager.tabBarSize.height * 0.6)
         }
-        .navigationTitle("Return No. \(userReturn.id)")
+        .navigationTitle("\(TexterifyManager.localisedString(key: .returnDetailsView(.navigationTitle))) \(userReturn.id)")
         .navigationBarTitleDisplayMode(.inline)
         .navigationBarBackButtonHidden(true)
         .toolbar {

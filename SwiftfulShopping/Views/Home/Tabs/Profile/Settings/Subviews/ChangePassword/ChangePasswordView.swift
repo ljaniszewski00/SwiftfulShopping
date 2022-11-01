@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import texterify_ios_sdk
 
 struct ChangePasswordView: View {
     @EnvironmentObject private var settingsViewModel: SettingsViewModel
@@ -22,7 +23,7 @@ struct ChangePasswordView: View {
         ScrollView(.vertical, showsIndicators: false) {
             VStack(spacing: 20) {
                 VStack(spacing: 20) {
-                    CustomTextField(textFieldProperty: "Email Address",
+                    CustomTextField(textFieldProperty: TexterifyManager.localisedString(key: .changePasswordView(.emailTextField)),
                                     textFieldImageName: "envelope.fill",
                                     textFieldKeyboardType: .emailAddress,
                                     text: $changePasswordViewModel.email,
@@ -30,7 +31,7 @@ struct ChangePasswordView: View {
                     .disabled(changePasswordViewModel.showNewPasswordTextField)
                     
                     CustomTextField(isSecureField: true,
-                                    textFieldProperty: "Old Password",
+                                    textFieldProperty: TexterifyManager.localisedString(key: .changePasswordView(.oldPasswordTextField)),
                                     textFieldImageName: "key.fill",
                                     text: $changePasswordViewModel.oldPassword,
                                     isFocusedParentView: $isOldPasswordTextFieldFocused)
@@ -41,7 +42,7 @@ struct ChangePasswordView: View {
                             changePasswordViewModel.verifyCredentials()
                         }
                     } label: {
-                        Text("Verify Credentials")
+                        Text(TexterifyManager.localisedString(key: .changePasswordView(.verifyButton)))
                             .font(.ssButton)
                     }
                     .buttonStyle(CustomButton())
@@ -52,7 +53,7 @@ struct ChangePasswordView: View {
                 if changePasswordViewModel.showNewPasswordTextField {
                     VStack(spacing: 0) {
                         CustomTextField(isSecureField: true,
-                                        textFieldProperty: "New Password",
+                                        textFieldProperty: TexterifyManager.localisedString(key: .changePasswordView(.newPasswordTextField)),
                                         textFieldImageName: "key.fill",
                                         text: $changePasswordViewModel.newPassword,
                                         isFocusedParentView: $isNewPasswordTextFieldFocused)
@@ -63,7 +64,7 @@ struct ChangePasswordView: View {
                                 changePasswordViewModel.changePassword()
                             }
                         } label: {
-                            Text("Change Password")
+                            Text(TexterifyManager.localisedString(key: .changePasswordView(.changePasswordButton)))
                                 .font(.ssButton)
                         }
                         .buttonStyle(CustomButton())
@@ -77,7 +78,7 @@ struct ChangePasswordView: View {
         .modifier(LoadingIndicatorModal(isPresented:
                                                             $changePasswordViewModel.showLoadingModal))
         .modifier(ErrorModal(isPresented: $errorManager.showErrorModal, customError: errorManager.customError ?? ErrorManager.unknownError))
-        .navigationTitle("Change Password")
+        .navigationTitle(TexterifyManager.localisedString(key: .changePasswordView(.navigationTitle)))
         .navigationBarTitleDisplayMode(.large)
         .navigationBarBackButtonHidden(true)
         .toolbar {

@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import texterify_ios_sdk
 
 struct PaymentDetailsView: View {
     @EnvironmentObject private var tabBarStateManager: TabBarStateManager
@@ -22,7 +23,7 @@ struct PaymentDetailsView: View {
     var body: some View {
         ScrollView(.vertical, showsIndicators: false) {
             VStack(alignment: .leading, spacing: 25) {
-                Text("Choose default payment method:")
+                Text(TexterifyManager.localisedString(key: .paymentDetailsView(.chooseDefaultPaymentMethod)))
                     .font(.ssTitle1)
                     .fixedSize(horizontal: false, vertical: true)
                 
@@ -82,7 +83,7 @@ struct PaymentDetailsView: View {
                                             $paymentDetailsViewModel.showLoadingModal))
         .modifier(ErrorModal(isPresented: $errorManager.showErrorModal,
                              customError: errorManager.customError ?? ErrorManager.unknownError))
-        .navigationTitle("Payment Details")
+        .navigationTitle(TexterifyManager.localisedString(key: .paymentDetailsView(.navigationTitle)))
         .navigationBarTitleDisplayMode(.inline)
         .navigationBarBackButtonHidden(true)
         .toolbar {
@@ -135,7 +136,7 @@ struct PaymentDetailsView: View {
                 HStack {
                     
                     VStack(alignment: .leading) {
-                        Text("CARD HOLDER")
+                        Text(TexterifyManager.localisedString(key: .paymentDetailsView(.cardHolder)))
                             .font(.ssCaption1)
                             .foregroundColor(Color.ssGray)
                         Text(paymentDetailsViewModel.cardHolderName)
@@ -147,7 +148,7 @@ struct PaymentDetailsView: View {
                     Spacer()
                     
                     VStack(alignment: .leading) {
-                        Text("EXPIRES")
+                        Text(TexterifyManager.localisedString(key: .paymentDetailsView(.expires)))
                             .font(.ssCaption1)
                             .foregroundColor(Color.ssGray)
                         Text(paymentDetailsViewModel.validThruDate)
@@ -169,7 +170,7 @@ struct PaymentDetailsView: View {
                     paymentDetailsViewModel.editingCardData.toggle()
                 }
             } label: {
-                Text(paymentDetailsViewModel.editingCardData ? "Save" : "Edit Card Data")
+                Text(paymentDetailsViewModel.editingCardData ? TexterifyManager.localisedString(key: .paymentDetailsView(.editCardDataSave)) : TexterifyManager.localisedString(key: .paymentDetailsView(.editCardDataEditData)))
                     .font(.ssButton)
             }
             .buttonStyle(CustomButton())
@@ -182,19 +183,19 @@ struct PaymentDetailsView: View {
             if paymentDetailsViewModel.editingCardData {
                 VStack(alignment: .leading, spacing: 15) {
                     RectangleCustomTextField(
-                        textFieldProperty: "Card Number",
+                        textFieldProperty: TexterifyManager.localisedString(key: .paymentDetailsView(.cardNumberTextField)),
                         textFieldKeyboardType: .numberPad,
                         text: $paymentDetailsViewModel.cardNumber,
                         isFocusedParentView: $isCardNumberTextFieldFocused)
                     
                     RectangleCustomTextField(
-                        textFieldProperty: "Card Holder Name",
+                        textFieldProperty: TexterifyManager.localisedString(key: .paymentDetailsView(.cardHolderNameTextField)),
                         text: $paymentDetailsViewModel.cardHolderName,
                         isFocusedParentView: $isCardHolderNameTextFieldFocused)
                     .padding(.bottom, 10)
                     
                     VStack(alignment: .leading) {
-                        Text("Valid Thru")
+                        Text(TexterifyManager.localisedString(key: .paymentDetailsView(.validThruLabel)))
                             .font(.ssTitle3)
                             .foregroundColor(.accentColor)
                         

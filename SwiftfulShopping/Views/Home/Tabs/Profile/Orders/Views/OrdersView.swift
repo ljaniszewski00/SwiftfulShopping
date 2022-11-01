@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import texterify_ios_sdk
 
 struct OrdersView: View {
     @EnvironmentObject private var tabBarStateManager: TabBarStateManager
@@ -39,7 +40,7 @@ struct OrdersView: View {
                                 
                                 VStack(alignment: .leading) {
                                     HStack {
-                                        Text("Products:")
+                                        Text(TexterifyManager.localisedString(key: .ordersView(.products)))
                                             .font(.ssCallout)
                                         Text("\(ordersViewModel.getOrderProductsFor(order: order).count)")
                                             .font(.ssTitle3)
@@ -47,7 +48,7 @@ struct OrdersView: View {
                                     }
                                         
                                     HStack {
-                                        Text("Order Status:")
+                                        Text(TexterifyManager.localisedString(key: .ordersView(.orderStatus)))
                                             .font(.ssCallout)
                                         Text(order.status.rawValue)
                                             .font(.ssTitle3)
@@ -66,7 +67,7 @@ struct OrdersView: View {
             }
         }
         .listStyle(.grouped)
-        .navigationTitle("Orders")
+        .navigationTitle(TexterifyManager.localisedString(key: .ordersView(.navigationTitle)))
         .navigationBarTitleDisplayMode(.inline)
         .navigationBarBackButtonHidden(true)
         .toolbar {
