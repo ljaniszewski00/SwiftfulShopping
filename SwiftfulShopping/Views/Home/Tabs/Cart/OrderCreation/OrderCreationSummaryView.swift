@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import texterify_ios_sdk
 
 struct OrderCreationSummaryView: View {
     @EnvironmentObject private var tabBarStateManager: TabBarStateManager
@@ -30,10 +31,10 @@ struct OrderCreationSummaryView: View {
             ScrollView(.vertical, showsIndicators: false) {
                 VStack(alignment: .leading, spacing: 30) {
                     VStack(alignment: .leading, spacing: 5) {
-                        Text("Consignee Data")
+                        Text(TexterifyManager.localisedString(key: .orderCreationSummaryView(.consigneeData)))
                             .font(.ssTitle2)
                         
-                        Text("This will be the delivery addres for package")
+                        Text(TexterifyManager.localisedString(key: .orderCreationSummaryView(.thisWillBeTheDeliveryAddress)))
                             .font(.ssCallout)
                             .foregroundColor(.ssDarkGray)
                             .padding(.bottom, 15)
@@ -47,7 +48,7 @@ struct OrderCreationSummaryView: View {
                     }
                     
                     VStack(alignment: .leading, spacing: 15) {
-                        Text("Shipping Method")
+                        Text(TexterifyManager.localisedString(key: .orderCreationSummaryView(.shippingMethod)))
                             .font(.ssTitle2)
                         
                         Text(orderCreationViewModel.choosenShippingMethod?.rawValue ?? "")
@@ -56,7 +57,7 @@ struct OrderCreationSummaryView: View {
                     }
                     
                     VStack(alignment: .leading, spacing: 15) {
-                        Text("Payment Method")
+                        Text(TexterifyManager.localisedString(key: .orderCreationSummaryView(.paymentMethod)))
                             .font(.ssTitle2)
                         
                         Text(orderCreationViewModel.choosenPaymentMethod?.rawValue ?? "")
@@ -65,7 +66,7 @@ struct OrderCreationSummaryView: View {
                     }
                     
                     VStack(alignment: .leading) {
-                        Text("Would you like to receive invoice?")
+                        Text(TexterifyManager.localisedString(key: .orderCreationSummaryView(.wouldYouLikeToReceiveInvoice)))
                             .font(.ssTitle2)
                         
                         SingleSelectionToggle(selection: $orderCreationViewModel.toReceiveInvoice)
@@ -73,7 +74,7 @@ struct OrderCreationSummaryView: View {
                     }
                     
                     VStack(alignment: .leading, spacing: 10) {
-                        Text("Products")
+                        Text(TexterifyManager.localisedString(key: .orderCreationSummaryView(.products)))
                             .font(.ssTitle2)
                         
                         ForEach(Array(cartViewModel.productsForCart.keys).sorted { $0.id > $1.id}, id: \.self) { product in
@@ -84,7 +85,7 @@ struct OrderCreationSummaryView: View {
                     
                     VStack(alignment: .leading, spacing: 10) {
                         HStack {
-                            Text("Products in cart:")
+                            Text(TexterifyManager.localisedString(key: .orderCreationSummaryView(.productsInCart)))
                                 .font(.ssCallout)
                                 .foregroundColor(.ssDarkGray)
                             
@@ -94,7 +95,7 @@ struct OrderCreationSummaryView: View {
                         }
                         
                         HStack {
-                            Text("Total cost:")
+                            Text(TexterifyManager.localisedString(key: .orderCreationSummaryView(.totalCost)))
                                 .font(.ssCallout)
                                 .foregroundColor(.ssDarkGray)
                             
@@ -104,11 +105,11 @@ struct OrderCreationSummaryView: View {
                         }
                         
                         VStack(alignment: .leading, spacing: 15) {
-                            Text("Do you have coupon code?")
+                            Text(TexterifyManager.localisedString(key: .orderCreationSummaryView(.doYouHaveCouponCode)))
                                 .font(.ssTitle2)
                             
                             HStack(alignment: .bottom) {
-                                RectangleCustomTextField(textFieldProperty: "Coupon code",
+                                RectangleCustomTextField(textFieldProperty: TexterifyManager.localisedString(key: .orderCreationSummaryView(.couponCodeTextField)),
                                                          text: $orderCreationViewModel.discountCode,
                                                          isFocusedParentView:
                                                             $isCouponTextFieldFocused)
@@ -116,11 +117,11 @@ struct OrderCreationSummaryView: View {
                                 Button {
                                     let success = cartViewModel.applyDiscount(discountCode: orderCreationViewModel.discountCode)
                                     if !success {
-                                        errorManager.generateCustomError(errorType: .discountApplyError, additionalErrorDescription: "The discount code You entered is either invalid or it does not apply to selected products.")
+                                        errorManager.generateCustomError(errorType: .discountApplyError, additionalErrorDescription: TexterifyManager.localisedString(key: .orderCreationSummaryView(.applyDiscountErrorDescription)))
                                     }
                                     orderCreationViewModel.applyDiscount()
                                 } label: {
-                                    Text("Apply")
+                                    Text(TexterifyManager.localisedString(key: .orderCreationSummaryView(.applyCouponCodeButton)))
                                         .font(.ssButton)
                                 }
                                 .buttonStyle(CustomButton())
@@ -153,7 +154,7 @@ struct OrderCreationSummaryView: View {
                         }
                         
                         HStack {
-                            Text("Total cost with discounts:")
+                            Text(TexterifyManager.localisedString(key: .orderCreationSummaryView(.totalCostWithDiscounts)))
                                 .font(.ssCallout)
                                 .foregroundColor(.ssDarkGray)
                             
@@ -187,7 +188,7 @@ struct OrderCreationSummaryView: View {
                     }
                 }
             } label: {
-                Text("Complete")
+                Text(TexterifyManager.localisedString(key: .orderCreationSummaryView(.completeButton)))
                     .font(.ssButton)
             }
             .buttonStyle(CustomButton())
@@ -205,7 +206,7 @@ struct OrderCreationSummaryView: View {
                            label: { EmptyView() })
             .isDetailLink(false)
         }
-        .navigationTitle("Order Summary")
+        .navigationTitle(TexterifyManager.localisedString(key: .orderCreationSummaryView(.navigationTitle)))
         .navigationBarTitleDisplayMode(.inline)
         .navigationBarBackButtonHidden(true)
         .toolbar {

@@ -33,12 +33,7 @@ enum ErrorType: String {
     case changeDefaultPaymentMethodError
     case changePhotoError
     case dataFetchError
-    
-    case unknown
-    
-    init?(rawValue: String) {
-        return nil
-    }
+    case unknownError
     
     var rawValue: String {
         switch self {
@@ -90,8 +85,8 @@ enum ErrorType: String {
             return TexterifyManager.localisedString(key: .errors(.changePhotoError))
         case .dataFetchError:
             return TexterifyManager.localisedString(key: .errors(.dataFetchError))
-        case .unknown:
-            return TexterifyManager.localisedString(key: .errors(.unknown))
+        case .unknownError:
+            return TexterifyManager.localisedString(key: .errors(.unknownError))
         }
     }
 }

@@ -8,6 +8,8 @@
 import Foundation
 
 public enum LoginViewLocalizable: String {
+    case emailTextField = "LoginView_emailTextField"
+    case passwordTextField = "LoginView_passwordTextField"
     case forgotPassword = "LoginView_forgotPassword"
     case dontHaveAnAccount = "LoginView_dontHaveAnAccount"
     case loginButton = "LoginView_loginButton"

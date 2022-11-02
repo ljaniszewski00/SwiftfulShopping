@@ -58,8 +58,8 @@ final class ErrorManager: ObservableObject {
             TexterifyManager.localisedString(key: .errors(.changePhotoErrorDescription)),
         .dataFetchError:
             TexterifyManager.localisedString(key: .errors(.dataFetchErrorDescription)),
-        .unknown:
-            TexterifyManager.localisedString(key: .errors(.unknownDescription))
+        .unknownError:
+            TexterifyManager.localisedString(key: .errors(.unknownErrorDescription))
     ]
     
     @Published var showErrorModal: Bool = false
@@ -85,5 +85,5 @@ final class ErrorManager: ObservableObject {
 }
 
 extension ErrorManager {
-    static let unknownError: CustomError = CustomError(errorType: .unknown)
+    static let unknownError: CustomError = CustomError(errorType: .unknownError)
 }

@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import texterify_ios_sdk
 
 struct SortingAndFilteringSheetView: View {
     @EnvironmentObject private var exploreViewModel: ExploreViewModel
@@ -28,7 +29,7 @@ struct SortingAndFilteringSheetView: View {
                     VStack(alignment: .leading, spacing: 0) {
                         VStack {
                             HStack {
-                                Text("Sort By")
+                                Text(TexterifyManager.localisedString(key: .sortingAndFilteringSheetView(.sortBy)))
                                     .font(.ssTitle1)
                                 Spacer()
                                 Button {
@@ -81,7 +82,7 @@ struct SortingAndFilteringSheetView: View {
                     VStack(alignment: .leading, spacing: 0) {
                         VStack {
                             HStack {
-                                Text("Filter By")
+                                Text(TexterifyManager.localisedString(key: .sortingAndFilteringSheetView(.filterBy)))
                                     .font(.ssTitle1)
                                 Spacer()
                                 Button {
@@ -120,7 +121,7 @@ struct SortingAndFilteringSheetView: View {
                     Button {
                         sortingAndFilteringViewModel.restoreDefaults(originalProductsArray: exploreViewModel.productsFromRepository, currentProductsArray: &exploreViewModel.changingProductsToBeDisplayed)
                     } label: {
-                        Text("Restore Defaults")
+                        Text(TexterifyManager.localisedString(key: .sortingAndFilteringSheetView(.restoreDefaultsButton)))
                             .font(.ssButton)
                     }
                     .buttonStyle(CustomButton(textColor: .accentColor, onlyStroke: true))
@@ -142,7 +143,7 @@ struct SortingAndFilteringSheetView: View {
                         dismiss()
                     }
                 } label: {
-                    Text("Apply")
+                    Text(TexterifyManager.localisedString(key: .sortingAndFilteringSheetView(.applyButton)))
                         .font(.ssButton)
                 }
                 .padding()
@@ -152,7 +153,7 @@ struct SortingAndFilteringSheetView: View {
                 .zIndex(1)
             }
         }
-        .navigationTitle("Sorting and Filtering")
+        .navigationTitle(TexterifyManager.localisedString(key: .sortingAndFilteringSheetView(.navigationTitle)))
         .navigationBarTitleDisplayMode(.inline)
         .onDisappear {
             if !sortingAndFilteringViewModel.filteringApplied {
@@ -165,7 +166,7 @@ struct SortingAndFilteringSheetView: View {
     func buildCompanyFilteringSection() -> some View {
         VStack {
             HStack {
-                Text("Company")
+                Text(TexterifyManager.localisedString(key: .sortingAndFilteringSheetView(.company)))
                     .font(.ssTitle2)
                 Spacer()
                 Button {
@@ -209,7 +210,7 @@ struct SortingAndFilteringSheetView: View {
     func buildCategoryFilteringSection() -> some View {
         VStack {
             HStack {
-                Text("Category")
+                Text(TexterifyManager.localisedString(key: .sortingAndFilteringSheetView(.category)))
                     .font(.ssTitle2)
                 Spacer()
                 Button {
@@ -253,7 +254,7 @@ struct SortingAndFilteringSheetView: View {
     func buildPriceFilteringSection() -> some View {
         VStack {
             HStack {
-                Text("Price")
+                Text(TexterifyManager.localisedString(key: .sortingAndFilteringSheetView(.price)))
                     .font(.ssTitle2)
                 Spacer()
                 Button {
@@ -269,14 +270,14 @@ struct SortingAndFilteringSheetView: View {
                 Divider()
                 
                 HStack {
-                    RectangleCustomTextField(textFieldProperty: "From",
+                    RectangleCustomTextField(textFieldProperty: TexterifyManager.localisedString(key: .sortingAndFilteringSheetView(.fromTextField)),
                                              textFieldKeyboardType: .decimalPad,
                                              text: $sortingAndFilteringViewModel.lowestPriceFilter,
                                              isFocusedParentView: $isLowestPriceTextFieldFocused)
                     
                     Divider()
                     
-                    RectangleCustomTextField(textFieldProperty: "To",
+                    RectangleCustomTextField(textFieldProperty: TexterifyManager.localisedString(key: .sortingAndFilteringSheetView(.toTextField)),
                                              textFieldKeyboardType: .decimalPad,
                                              text: $sortingAndFilteringViewModel.highestPriceFilter,
                                              isFocusedParentView: $isHighestPriceTextFieldFocused)
@@ -290,7 +291,7 @@ struct SortingAndFilteringSheetView: View {
     func buildRatingFilteringSection() -> some View {
         VStack {
             HStack {
-                Text("Rating")
+                Text(TexterifyManager.localisedString(key: .sortingAndFilteringSheetView(.rating)))
                     .font(.ssTitle2)
                 Spacer()
                 Button {
@@ -307,7 +308,7 @@ struct SortingAndFilteringSheetView: View {
                 
                 HStack {
                     VStack(alignment: .leading, spacing: 10) {
-                        Text("From")
+                        Text(TexterifyManager.localisedString(key: .sortingAndFilteringSheetView(.fromRatingLabel)))
                             .font(.system(size: 16, weight: .bold, design: .rounded))
                             .foregroundColor(.accentColor)
                         HStack {
@@ -334,7 +335,7 @@ struct SortingAndFilteringSheetView: View {
                     Spacer()
                     
                     VStack(alignment: .leading, spacing: 10) {
-                        Text("To")
+                        Text(TexterifyManager.localisedString(key: .sortingAndFilteringSheetView(.toRatingLabel)))
                             .font(.system(size: 16, weight: .bold, design: .rounded))
                             .foregroundColor(.accentColor)
                         HStack {

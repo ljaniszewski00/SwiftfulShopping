@@ -8,5 +8,11 @@
 import Foundation
 
 public enum CartViewLocalizable: String {
-    case cancel = "Common_cancel"
+    case yourCartIsEmpty = "CartView_yourCartIsEmpty"
+    case ifYouAddAnyProducts = "CartView_ifYouAddAnyProducts"
+    case productsInCart = "CartView_productsInCart"
+    case totalCost = "CartView_totalCost"
+    case checkout = "CartView_checkout"
+    case navigationTitle = "CartView_navigationTitle"
+    case toolbarButtonCleanCart = "CartView_toolbarButtonCleanCart"
 }

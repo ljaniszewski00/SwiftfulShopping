@@ -8,5 +8,5 @@
 import Foundation
 
 public enum ListProductCardTileViewLocalizable: String {
-    case cancel = "Common_cancel"
+    case ratings = "ListProductCardTileView_ratings"
 }

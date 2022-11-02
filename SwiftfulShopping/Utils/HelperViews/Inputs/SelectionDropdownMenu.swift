@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import texterify_ios_sdk
 
 struct SelectionDropdownMenu: View {
     @Environment(\.colorScheme) var colorScheme
@@ -88,7 +89,7 @@ struct SelectionDropdownMenu: View {
         ScrollView(.vertical) {
             VStack(spacing: 0) {
                 if includeSearchField {
-                    RectangleCustomTextField(textFieldProperty: "Search",
+                    RectangleCustomTextField(textFieldProperty: TexterifyManager.localisedString(key: .common(.search)),
                                              text: $searchText,
                                              isFocusedParentView: $isSearchTextFieldFocused)
                         .padding()

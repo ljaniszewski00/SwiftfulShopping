@@ -8,6 +8,8 @@
 import Foundation
 
 public enum ErrorsLocalizable: String {
+    
+    // MARK: Errors Headers
     case networkError = "Errors_networkError"
     case productRecognizerError = "Errors_productRecognizerError"
     case loginError = "Errors_loginError"
@@ -32,9 +34,9 @@ public enum ErrorsLocalizable: String {
     case changeDefaultPaymentMethodError = "Errors_changeDefaultPaymentMethodError"
     case changePhotoError = "Errors_changePhotoError"
     case dataFetchError = "Errors_dataFetchError"
+    case unknownError = "Errors_unknownError"
     
-    case unknown = "Errors_unknown"
-    
+    //MARK: Errors Descriptions
     case networkErrorDescription = "Errors_networkErrorDescription"
     case productRecognizerErrorDescription = "Errors_productRecognizerErrorDescription"
     case loginErrorDescription = "Errors_loginErrorDescription"
@@ -59,6 +61,5 @@ public enum ErrorsLocalizable: String {
     case changeDefaultPaymentMethodErrorDescription = "Errors_changeDefaultPaymentMethodErrorDescription"
     case changePhotoErrorDescription = "Errors_changePhotoErrorDescription"
     case dataFetchErrorDescription = "Errors_dataFetchErrorDescription"
-    
-    case unknownDescription = "Errors_unknownDescription"
+    case unknownErrorDescription = "Errors_unknownErrorDescription"
 }

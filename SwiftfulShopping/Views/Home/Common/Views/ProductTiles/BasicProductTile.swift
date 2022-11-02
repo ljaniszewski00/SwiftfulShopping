@@ -7,6 +7,7 @@
 
 import SwiftUI
 import Kingfisher
+import texterify_ios_sdk
 
 struct BasicProductTile: View {
     @EnvironmentObject private var ratingViewModel: RatingViewModel
@@ -67,7 +68,7 @@ struct BasicProductTile: View {
                             ratingViewModel.shouldPresentSingleProductRatingPage = true
                         }
                     } label: {
-                        Text("Rate product")
+                        Text(TexterifyManager.localisedString(key: .basicProductTile(.rateProductButton)))
                             .fontWeight(.bold)
                             .foregroundColor(.ssWhite)
                             .padding(.all, 12)

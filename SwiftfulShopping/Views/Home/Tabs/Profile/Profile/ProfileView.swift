@@ -178,24 +178,24 @@ struct ProfileView: View {
                     .padding(.top, 90)
                     
                     NavigationLink(destination: OrdersView(),
-                                   tag: "Orders",
+                                   tag: TexterifyManager.localisedString(key: .profileView(.ordersNavigationName)),
                                    selection: $selection) { EmptyView() }
                         .isDetailLink(false)
                     
                     NavigationLink(destination: ReturnsView(),
-                                   tag: "Returns",
+                                   tag: TexterifyManager.localisedString(key: .profileView(.returnsNavigationName)),
                                    selection: $selection) { EmptyView() }
                     
                     NavigationLink(destination: PersonalInfoView(),
-                                   tag: "Personal Info",
+                                   tag: TexterifyManager.localisedString(key: .profileView(.personalInfoNavigationName)),
                                    selection: $selection) { EmptyView() }
                     
                     NavigationLink(destination: PaymentDetailsView(),
-                                   tag: "Payment Details",
+                                   tag: TexterifyManager.localisedString(key: .profileView(.paymentDetailsNavigationName)),
                                    selection: $selection) { EmptyView() }
                     
                     NavigationLink(destination: HelpView(),
-                                   tag: "Help",
+                                   tag: TexterifyManager.localisedString(key: .profileView(.helpNavigationName)),
                                    selection: $selection) { EmptyView() }
                     
                     NavigationLink(destination: SettingsView(),

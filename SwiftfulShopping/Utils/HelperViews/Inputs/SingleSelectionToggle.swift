@@ -6,14 +6,15 @@
 //
 
 import SwiftUI
+import texterify_ios_sdk
 
 struct SingleSelectionToggle: View {
     @Environment(\.colorScheme) var colorScheme
     
     @Binding var selection: Bool
     
-    var firstLabel: String = "Yes"
-    var secondLabel: String = "No"
+    var firstLabel: String = TexterifyManager.localisedString(key: .common(.yes))
+    var secondLabel: String = TexterifyManager.localisedString(key: .common(.no))
     
     var body: some View {
         VStack(alignment: .leading) {

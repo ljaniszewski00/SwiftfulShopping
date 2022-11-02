@@ -8,5 +8,12 @@
 import Foundation
 
 public enum OrderCreationShipmentPaymentViewLocalizable: String {
-    case cancel = "Common_cancel"
+    case consigneeData = "OrderCreationShipmentPaymentView_consigneeData"
+    case thisWillBeTheDeliveryAddress = "OrderCreationShipmentPaymentView_thisWillBeTheDeliveryAddress"
+    case changeAddress = "OrderCreationShipmentPaymentView_changeAddress"
+    case chooseDeliveryMethod = "OrderCreationShipmentPaymentView_chooseDeliveryMethod"
+    case choosePaymentMethod = "OrderCreationShipmentPaymentView_choosePaymentMethod"
+    case wouldYouLikeToReceiveInvoice = "OrderCreationShipmentPaymentView_wouldYouLikeToReceiveInvoice"
+    case summary = "OrderCreationShipmentPaymentView_summary"
+    case navigationTitle = "OrderCreationShipmentPaymentView_navigationTitle"
 }

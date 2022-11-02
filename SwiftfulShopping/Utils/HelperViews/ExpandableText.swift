@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import texterify_ios_sdk
 
 struct ExpandableText: View {
     @State private var expanded: Bool = false
@@ -19,7 +20,7 @@ struct ExpandableText: View {
         if !truncated {
             return ""
         } else {
-            return self.expanded ? " Hide" : " ... Show All"
+            return self.expanded ? TexterifyManager.localisedString(key: .expandableText(.hide)) : TexterifyManager.localisedString(key: .expandableText(.showAll))
         }
     }
     

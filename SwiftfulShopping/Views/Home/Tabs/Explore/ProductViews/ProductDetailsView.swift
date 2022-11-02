@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import texterify_ios_sdk
 
 struct ProductDetailsView: View {
     @EnvironmentObject private var tabBarStateManager: TabBarStateManager
@@ -88,14 +89,10 @@ struct ProductDetailsView: View {
                     productDetailsViewModel.increaseProductQuantity()
                 })
                 
-                Button {
+                AddToCartButton {
                     UIImpactFeedbackGenerator(style: .medium).impactOccurred()
                     cartViewModel.addProductToCart(product: product, quantity: productDetailsViewModel.productQuantityToBasket)
-                } label: {
-                    Text("Add to basket")
-                        .font(.ssButton)
                 }
-                .buttonStyle(CustomButton())
                 .padding(.leading)
             }
             .padding()
@@ -107,6 +104,7 @@ struct ProductDetailsView: View {
             }
         }
         .navigationBarTitle("")
+        .navigationBarTitleDisplayMode(.inline)
         .navigationBarHidden(false)
         .navigationBarBackButtonHidden(true)
         .toolbar {

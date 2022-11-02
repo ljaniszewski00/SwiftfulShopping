@@ -7,6 +7,7 @@
 
 import SwiftUI
 import Kingfisher
+import texterify_ios_sdk
 
 struct ExploreView: View {
     @EnvironmentObject private var tabBarStateManager: TabBarStateManager
@@ -50,7 +51,7 @@ struct ExploreView: View {
                                     exploreViewModel.productsForSource = .all
                                     exploreViewModel.shouldPresentAllProducts = true
                                 } label: {
-                                    Text("All Products")
+                                    Text(TexterifyManager.localisedString(key: .exploreView(.allProductsButton)))
                                 }
                                 .buttonStyle(CustomButton())
                                 .padding()
@@ -112,7 +113,7 @@ struct ExploreView: View {
                     }
                 }
             }
-            .navigationTitle("Explore")
+            .navigationTitle(TexterifyManager.localisedString(key: .exploreView(.navigationTitle)))
             .toolbar {
                 ToolbarItem(placement: .navigationBarLeading) {
                     Text("SwiftfulShopping")
@@ -141,7 +142,7 @@ struct ExploreView: View {
     func buildCategoriesList() -> some View {
         VStack(alignment: .leading, spacing: 15) {
             VStack(alignment: .leading, spacing: 0) {
-                Text("Categories")
+                Text(TexterifyManager.localisedString(key: .exploreView(.categoriesLabel)))
                     .font(.ssTitle2)
                     .foregroundColor(.black)
                     .padding([.leading, .top])
@@ -232,7 +233,7 @@ struct ExploreView: View {
     @ViewBuilder
     func buildNewestProductsList() -> some View {
         VStack(alignment: .leading, spacing: 0) {
-            Text("Newest")
+            Text(TexterifyManager.localisedString(key: .exploreView(.newestLabel)))
                 .font(.ssTitle2)
                 .foregroundColor(colorScheme == .light ? .black : .ssWhite)
                 .padding([.leading, .top])
@@ -246,7 +247,7 @@ struct ExploreView: View {
                     exploreViewModel.productsForSource = .newest
                     exploreViewModel.shouldPresentAllNewProducts = true
                 } label: {
-                    Text("See all newest")
+                    Text(TexterifyManager.localisedString(key: .exploreView(.seeAllNewestButton)))
                         .font(.ssButton)
                         .foregroundColor(.accentColor)
                 }
@@ -262,7 +263,7 @@ struct ExploreView: View {
     @ViewBuilder
     func buildCompaniesGrid() -> some View {
         VStack(alignment: .leading, spacing: 25) {
-            Text("Companies")
+            Text(TexterifyManager.localisedString(key: .exploreView(.companiesLabel)))
                 .font(.ssTitle2)
                 .foregroundColor(.black)
                 .padding([.leading, .top])
@@ -308,7 +309,7 @@ struct ExploreView: View {
     @ViewBuilder
     func buildRecommendedProductsList() -> some View {
         VStack(alignment: .leading, spacing: 0) {
-            Text("Recommended")
+            Text(TexterifyManager.localisedString(key: .exploreView(.recommendedLabel)))
                 .font(.ssTitle2)
                 .foregroundColor(colorScheme == .light ? .black : .ssWhite)
                 .padding([.leading, .top])
@@ -322,7 +323,7 @@ struct ExploreView: View {
                     exploreViewModel.productsForSource = .recommended
                     exploreViewModel.shouldPresentAllRecommendedProducts = true
                 } label: {
-                    Text("See all recommended")
+                    Text(TexterifyManager.localisedString(key: .exploreView(.seeAllRecommendedButton)))
                         .font(.ssButton)
                         .foregroundColor(.accentColor)
                 }

@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import texterify_ios_sdk
 
 struct CartView: View {
     @EnvironmentObject private var tabBarStateManager: TabBarStateManager
@@ -29,9 +30,9 @@ struct CartView: View {
                             .frame(width: ScreenBoundsSupplier.shared.getScreenWidth() * 0.5,
                                    height: ScreenBoundsSupplier.shared.getScreenHeight() * 0.25)
                         VStack(spacing: 20) {
-                            Text("Your cart is empty")
+                            Text(TexterifyManager.localisedString(key: .cartView(.yourCartIsEmpty)))
                                 .font(.ssTitle2)
-                            Text("If you add any products to your cart in products explorer they will be displayed here")
+                            Text(TexterifyManager.localisedString(key: .cartView(.ifYouAddAnyProducts)))
                                 .font(.ssCallout)
                                 .foregroundColor(.ssDarkGray)
                                 .fixedSize(horizontal: false, vertical: true)
@@ -59,7 +60,7 @@ struct CartView: View {
                         HStack {
                             VStack(alignment: .leading) {
                                 HStack {
-                                    Text("Products in cart:")
+                                    Text(TexterifyManager.localisedString(key: .cartView(.productsInCart)))
                                         .font(.ssCallout)
                                         .foregroundColor(.ssDarkGray)
                                     
@@ -69,7 +70,7 @@ struct CartView: View {
                                 }
                                 
                                 HStack {
-                                    Text("Total cost:")
+                                    Text(TexterifyManager.localisedString(key: .cartView(.totalCost)))
                                         .font(.ssCallout)
                                         .foregroundColor(.ssDarkGray)
                                     
@@ -83,7 +84,7 @@ struct CartView: View {
                             Button {
                                 cartViewModel.shouldPresentCheckoutFirstView = true
                             } label: {
-                                Text("Checkout")
+                                Text(TexterifyManager.localisedString(key: .cartView(.checkout)))
                                     .font(.ssButton)
                             }
                             .buttonStyle(CustomButton())
@@ -111,14 +112,14 @@ struct CartView: View {
                     }
                 }
             }
-            .navigationTitle("Cart")
+            .navigationTitle(TexterifyManager.localisedString(key: .cartView(.navigationTitle)))
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
                 ToolbarItem(placement: .navigationBarTrailing) {
                     Button {
                         cartViewModel.removeAllProductsFromCart()
                     } label: {
-                        Text("Clean cart")
+                        Text(TexterifyManager.localisedString(key: .cartView(.toolbarButtonCleanCart)))
                             .font(.ssButton)
                     }
                     .disabled(cartViewModel.cartIsEmpty)

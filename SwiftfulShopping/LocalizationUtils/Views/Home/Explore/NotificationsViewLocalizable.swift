@@ -8,5 +8,6 @@
 import Foundation
 
 public enum NotificationsViewLocalizable: String {
-    case cancel = "Common_cancel"
+    case thisPageIsUnderConstruction = "NotificationsView_thisPageIsUnderConstruction"
+    case navigationTitle = "NotificationsView_navigationTitle"
 }

@@ -8,5 +8,6 @@
 import Foundation
 
 public enum ProductDetailsRatingsSectionLocalizable: String {
-    case cancel = "Common_cancel"
+    case productRating = "ProductDetailsRatingsSection_productRating"
+    case comments = "ProductDetailsRatingsSection_comments"
 }

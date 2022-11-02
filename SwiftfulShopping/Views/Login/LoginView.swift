@@ -52,14 +52,14 @@ struct LoginView: View {
                         VStack(spacing: 40) {
                             VStack(spacing: 15) {
                                 VStack(spacing: 20) {
-                                    CustomTextField(textFieldProperty: "e-mail",
+                                    CustomTextField(textFieldProperty: TexterifyManager.localisedString(key: .loginView(.emailTextField)),
                                                     textFieldImageName: "envelope",
                                                     textFieldSignsLimit: 0,
                                                     text: $loginViewModel.email,
                                                     isFocusedParentView: $isEmailTextFieldFocused)
                                     
                                     CustomTextField(isSecureField: true,
-                                                    textFieldProperty: "password",
+                                                    textFieldProperty: TexterifyManager.localisedString(key: .loginView(.passwordTextField)),
                                                     textFieldImageName: "lock",
                                                     text: $loginViewModel.password,
                                                     isFocusedParentView: $isPasswordTextFieldFocused)

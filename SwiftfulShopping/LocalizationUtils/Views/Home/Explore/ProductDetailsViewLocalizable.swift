@@ -8,5 +8,5 @@
 import Foundation
 
 public enum ProductDetailsViewLocalizable: String {
-    case cancel = "Common_cancel"
+    case navigationTitle = "ProductDetailsView_navigationTitle"
 }

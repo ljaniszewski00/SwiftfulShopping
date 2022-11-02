@@ -8,5 +8,5 @@
 import Foundation
 
 public enum BasicProductTileLocalizable: String {
-    case cancel = "Common_cancel"
+    case rateProductButton = "BasicProductTile_rateProductButton"
 }

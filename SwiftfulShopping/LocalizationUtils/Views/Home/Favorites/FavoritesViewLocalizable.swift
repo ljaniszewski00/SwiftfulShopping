@@ -8,5 +8,5 @@
 import Foundation
 
 public enum FavoritesViewLocalizable: String {
-    case cancel = "Common_cancel"
+    case navigationTitle = "FavoritesView_navigationTitle"
 }

@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import texterify_ios_sdk
 
 struct CustomDatePicker: View {
     @Environment(\.colorScheme) var colorScheme
@@ -390,7 +391,7 @@ struct CustomDatePicker: View {
                         } label: {
                             ZStack {
                                 RoundedRectangle(cornerRadius: 5)
-                                Text("Pick Today")
+                                Text(TexterifyManager.localisedString(key: .customDatePicker(.pickTodayButton)))
                                     .font(.system(size: 18, weight: .semibold, design: .rounded))
                                     .foregroundColor(colorScheme == .light ? .black : .ssWhite)
                             }

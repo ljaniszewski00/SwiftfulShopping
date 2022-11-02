@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import texterify_ios_sdk
 
 struct ProductDetailsRatingsSection: View {
     @Environment(\.colorScheme) private var colorScheme: ColorScheme
@@ -31,7 +32,7 @@ struct ProductDetailsRatingsSection: View {
         ScrollView {
             VStack(alignment: .leading, spacing: 40) {
                 VStack(alignment: .leading) {
-                    Text("Product Rating")
+                    Text(TexterifyManager.localisedString(key: .productDetailsRatingsSection(.productRating)))
                         .font(.ssTitle2)
 
                     HStack(spacing: 30) {
@@ -106,7 +107,7 @@ struct ProductDetailsRatingsSection: View {
                         ratingsSectionExpanded.toggle()
                     }, label: {
                         HStack {
-                            Text("Comments (\(productReviewsNumber))")
+                            Text("\(TexterifyManager.localisedString(key: .productDetailsRatingsSection(.comments))) (\(productReviewsNumber))")
                                 .font(.ssTitle3)
                                 .foregroundColor(colorScheme == .light ? .black : .ssWhite)
                         }

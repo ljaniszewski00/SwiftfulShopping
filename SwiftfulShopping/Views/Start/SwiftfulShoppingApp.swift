@@ -41,7 +41,7 @@ class AppDelegate: NSObject, UIApplicationDelegate {
         ApplicationDelegate.shared.application(application, didFinishLaunchingWithOptions: launchOptions)
         
         // Initializing Texterify
-        let localizer = TexterifyManager(baseUrl: "https://texterify.mydomain.io",
+        let localizer = TexterifyManager(baseUrl: "https://app.texterify.com",
                                          projectId: "1aaa5a7a-d768-47e8-b873-d741f5ac157a",
                                          exportConfigId: "e5cd9480-edad-41b7-9576-ca6b66cd0c49")
         localizer.getUpdatedStrings { _ in }

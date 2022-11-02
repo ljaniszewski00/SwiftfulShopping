@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import texterify_ios_sdk
 
 struct HomeView: View {
     @EnvironmentObject private var accentColorManager: AccentColorManager
@@ -45,11 +46,11 @@ struct HomeView: View {
     }
     
     private var tabItems = [
-        TabItem(text: "Explore", icon: "house", tab: .explore),
-        TabItem(text: "Favorites", icon: "star", tab: .favorites),
-        TabItem(text: "Cart", icon: "cart", tab: .cart),
-        TabItem(text: "Search", icon: "magnifyingglass", tab: .search),
-        TabItem(text: "Profile", icon: "person", tab: .profile)
+        TabItem(text: TexterifyManager.localisedString(key: .homeView(.exploreTabName)), icon: "house", tab: .explore),
+        TabItem(text: TexterifyManager.localisedString(key: .homeView(.favoritesTabName)), icon: "star", tab: .favorites),
+        TabItem(text: TexterifyManager.localisedString(key: .homeView(.cartTabName)), icon: "cart", tab: .cart),
+        TabItem(text: TexterifyManager.localisedString(key: .homeView(.searchTabName)), icon: "magnifyingglass", tab: .search),
+        TabItem(text: TexterifyManager.localisedString(key: .homeView(.profileTabName)), icon: "person", tab: .profile)
     ]
     
     var body: some View {

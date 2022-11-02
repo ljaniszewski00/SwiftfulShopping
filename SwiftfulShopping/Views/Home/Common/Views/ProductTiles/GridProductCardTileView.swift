@@ -7,6 +7,7 @@
 
 import SwiftUI
 import Kingfisher
+import texterify_ios_sdk
 
 struct GridProductCardTileView: View {
     @EnvironmentObject private var cartViewModel: CartViewModel
@@ -97,7 +98,7 @@ struct GridProductCardTileView: View {
                             }
                         }
                         
-                        Text("\(ratingsNumber) ratings")
+                        Text("\(ratingsNumber) \(TexterifyManager.localisedString(key: .gridProductCardTileView(.ratings)))")
                             .font(.ssCallout)
                             .foregroundColor(.ssDarkGray)
                     }

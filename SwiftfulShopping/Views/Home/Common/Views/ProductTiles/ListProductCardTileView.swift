@@ -7,6 +7,7 @@
 
 import SwiftUI
 import Kingfisher
+import texterify_ios_sdk
 
 struct ListProductCardTileView: View {
     @EnvironmentObject private var cartViewModel: CartViewModel
@@ -117,7 +118,7 @@ struct ListProductCardTileView: View {
                         }
                     }
                     
-                    Text("\(ratingsNumber) ratings")
+                    Text("\(ratingsNumber) \(TexterifyManager.localisedString(key: .listProductCardTileView(.ratings)))")
                         .font(.ssCaption1)
                         .foregroundColor(.ssDarkGray)
                 }

@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import texterify_ios_sdk
 
 struct OrderCreationShipmentPaymentView: View {
     @EnvironmentObject private var tabBarStateManager: TabBarStateManager
@@ -27,10 +28,10 @@ struct OrderCreationShipmentPaymentView: View {
             ScrollView(.vertical) {
                 VStack(alignment: .leading, spacing: 30) {
                     VStack(alignment: .leading, spacing: 5) {
-                        Text("Consignee Data")
+                        Text(TexterifyManager.localisedString(key: .orderCreationShipmentPaymentView(.consigneeData)))
                             .font(.ssTitle2)
                         
-                        Text("This will be the delivery addres for package")
+                        Text(TexterifyManager.localisedString(key: .orderCreationShipmentPaymentView(.thisWillBeTheDeliveryAddress)))
                             .font(.ssCallout)
                             .foregroundColor(.ssDarkGray)
                             .padding(.bottom, 15)
@@ -50,14 +51,14 @@ struct OrderCreationShipmentPaymentView: View {
                                     orderCreationViewModel.shouldPresentOrderCreationAddressChangeView = true
                                 }
                             } label: {
-                                Text("Change address")
+                                Text(TexterifyManager.localisedString(key: .orderCreationShipmentPaymentView(.changeAddress)))
                                     .font(.ssButton)
                             }
                         }
                     }
                     
                     VStack(alignment: .leading, spacing: 20) {
-                        Text("Choose delivery method")
+                        Text(TexterifyManager.localisedString(key: .orderCreationShipmentPaymentView(.chooseDeliveryMethod)))
                             .font(.ssTitle2)
                         
                         VStack(alignment: .leading, spacing: 15) {
@@ -89,7 +90,7 @@ struct OrderCreationShipmentPaymentView: View {
                     }
                     
                     VStack(alignment: .leading, spacing: 20) {
-                        Text("Choose payment method:")
+                        Text(TexterifyManager.localisedString(key: .orderCreationShipmentPaymentView(.choosePaymentMethod)))
                             .font(.ssTitle2)
                         
                         VStack(alignment: .leading, spacing: 15) {
@@ -121,7 +122,7 @@ struct OrderCreationShipmentPaymentView: View {
                     }
                     
                     VStack(alignment: .leading) {
-                        Text("Would you like to receive invoice?")
+                        Text(TexterifyManager.localisedString(key: .orderCreationShipmentPaymentView(.wouldYouLikeToReceiveInvoice)))
                             .font(.ssTitle2)
                         
                         SingleSelectionToggle(selection: $orderCreationViewModel.toReceiveInvoice)
@@ -133,7 +134,7 @@ struct OrderCreationShipmentPaymentView: View {
             Button {
                 orderCreationViewModel.shouldPresentOrderCreationSummaryView = true
             } label: {
-                Text("Summary")
+                Text(TexterifyManager.localisedString(key: .orderCreationShipmentPaymentView(.summary)))
                     .font(.ssButton)
             }
             .buttonStyle(CustomButton())
@@ -158,7 +159,7 @@ struct OrderCreationShipmentPaymentView: View {
                            label: { EmptyView() })
             .isDetailLink(false)
         }
-        .navigationTitle("Shipment and Payment")
+        .navigationTitle(TexterifyManager.localisedString(key: .orderCreationShipmentPaymentView(.navigationTitle)))
         .navigationBarTitleDisplayMode(.inline)
         .navigationBarBackButtonHidden(true)
         .toolbar {

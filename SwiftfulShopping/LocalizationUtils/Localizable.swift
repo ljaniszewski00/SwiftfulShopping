@@ -12,14 +12,12 @@ public enum Localizable {
     case firstTimeLoginView(FirstTimeLoginViewLocalizable)
     case registerView(RegisterViewLocalizable)
     case secondRegisterView(SecondRegisterViewLocalizable)
-    case sortingAndFilteringSheetView(SortingAndFilteringViewLocalizable)
+    case sortingAndFilteringSheetView(SortingAndFilteringSheetViewLocalizable)
     case listProductCardTileView(ListProductCardTileViewLocalizable)
     case gridProductCardTileView(GridProductCardTileViewLocalizable)
-    case productTileForCartView(ProductTileForCartViewLocalizable)
     case basicProductTile(BasicProductTileLocalizable)
     case productDetailsView(ProductDetailsViewLocalizable)
     case productDetailsRatingsSection(ProductDetailsRatingsSectionLocalizable)
-    case productsListView(ProductsListViewLocalizable)
     case exploreView(ExploreViewLocalizable)
     case notificationsView(NotificationsViewLocalizable)
     case favoritesView(FavoritesViewLocalizable)
@@ -52,9 +50,11 @@ public enum Localizable {
     case deleteAccountView(DeleteAccountViewLocalizable)
     case accentColorChangeView(AccentColorChangeViewLocalizable)
     case colorSchemeChangeView(ColorSchemeChangeViewLocalizable)
-    case homeView(HomeViewLocalizable)
     case errors(ErrorsLocalizable)
     case addToCartButton(AddToCartButtonLocalizable)
+    case customDatePicker(CustomDatePickerLocalizable)
+    case homeView(HomeViewLocalizable)
+    case expandableText(ExpandableTextLocalizable)
 }
 
 extension Localizable: LocalizableRawRepresentable {
@@ -78,15 +78,11 @@ extension Localizable: LocalizableRawRepresentable {
             return localizable.rawValue
         case let .gridProductCardTileView(localizable):
             return localizable.rawValue
-        case let .productTileForCartView(localizable):
-            return localizable.rawValue
         case let .basicProductTile(localizable):
             return localizable.rawValue
         case let .productDetailsView(localizable):
             return localizable.rawValue
         case let .productDetailsRatingsSection(localizable):
-            return localizable.rawValue
-        case let .productsListView(localizable):
             return localizable.rawValue
         case let .exploreView(localizable):
             return localizable.rawValue
@@ -152,11 +148,15 @@ extension Localizable: LocalizableRawRepresentable {
             return localizable.rawValue
         case let .colorSchemeChangeView(localizable):
             return localizable.rawValue
-        case let .homeView(localizable):
-            return localizable.rawValue
         case let .errors(localizable):
             return localizable.rawValue
         case let .addToCartButton(localizable):
+            return localizable.rawValue
+        case let .customDatePicker(localizable):
+            return localizable.rawValue
+        case let .homeView(localizable):
+            return localizable.rawValue
+        case let .expandableText(localizable):
             return localizable.rawValue
         }
     }

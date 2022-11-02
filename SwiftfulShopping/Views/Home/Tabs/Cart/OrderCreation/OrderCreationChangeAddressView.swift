@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import texterify_ios_sdk
 
 struct OrderCreationChangeAddressView: View {
     @EnvironmentObject private var profileViewModel: ProfileViewModel
@@ -28,11 +29,11 @@ struct OrderCreationChangeAddressView: View {
             VStack(alignment: .leading, spacing: 40) {
                 VStack(alignment: .center, spacing: 20) {
                     VStack(alignment: .leading, spacing: 20) {
-                        Text("Choose from existing")
+                        Text(TexterifyManager.localisedString(key: .orderCreationChangeAddressView(.chooseFromExisting)))
                             .font(.ssTitle2)
                         
                         VStack(alignment: .leading, spacing: 10) {
-                            Text("Address")
+                            Text(TexterifyManager.localisedString(key: .orderCreationChangeAddressView(.address)))
                                 .font(.ssCallout)
                                 .foregroundColor(.accentColor)
                             
@@ -47,7 +48,7 @@ struct OrderCreationChangeAddressView: View {
                             dismiss()
                         }
                     } label: {
-                        Text("Save")
+                        Text(TexterifyManager.localisedString(key: .orderCreationChangeAddressView(.save)))
                             .font(.ssButton)
                     }
                     .buttonStyle(CustomButton())
@@ -56,45 +57,45 @@ struct OrderCreationChangeAddressView: View {
                 
                 VStack(alignment: .center, spacing: 20) {
                     VStack(alignment: .leading, spacing: 20) {
-                        Text("Create new one")
+                        Text(TexterifyManager.localisedString(key: .orderCreationChangeAddressView(.createNewOne)))
                             .font(.ssTitle2)
                         
                         VStack(alignment: .leading, spacing: 20) {
                             RectangleCustomTextField(
-                                textFieldProperty: "Street Name",
+                                textFieldProperty: TexterifyManager.localisedString(key: .orderCreationChangeAddressView(.streetName)),
                                 text: $orderCreationViewModel.newStreetName,
                                 isFocusedParentView: $isStreetNameTextFieldFocused)
                             
                             RectangleCustomTextField(
-                                textFieldProperty: "Street Number",
+                                textFieldProperty: TexterifyManager.localisedString(key: .orderCreationChangeAddressView(.streetNumber)),
                                 text: $orderCreationViewModel.newStreetNumber,
                                 isFocusedParentView: $isStreetNumberTextFieldFocused)
                             
                             RectangleCustomTextField(
-                                textFieldProperty: "Apartment Number",
-                                textFieldFooter: "This field is optional",
+                                textFieldProperty: TexterifyManager.localisedString(key: .orderCreationChangeAddressView(.apartmentNumber)),
+                                textFieldFooter: TexterifyManager.localisedString(key: .orderCreationChangeAddressView(.apartmentNumberThisFieldIsOptional)),
                                 text: $orderCreationViewModel.newApartmentNumber,
                                 isFocusedParentView: $isApartmentNumberTextFieldFocused)
                             
                             RectangleCustomTextField(
-                                textFieldProperty: "Postal code",
+                                textFieldProperty: TexterifyManager.localisedString(key: .orderCreationChangeAddressView(.postalCode)),
                                 text: $orderCreationViewModel.newZipCode,
                                 isFocusedParentView: $isZipCodeTextFieldFocused)
                             
                             RectangleCustomTextField(
-                                textFieldProperty: "City",
+                                textFieldProperty: TexterifyManager.localisedString(key: .orderCreationChangeAddressView(.city)),
                                 text: $orderCreationViewModel.newCity,
                                 isFocusedParentView: $isCityTextFieldFocused)
                             
                             RectangleCustomTextField(
-                                textFieldProperty: "Country",
+                                textFieldProperty: TexterifyManager.localisedString(key: .orderCreationChangeAddressView(.country)),
                                 text: $orderCreationViewModel.newCountry,
                                 isFocusedParentView: $isCountryTextFieldFocused)
                         }
                         .padding(.bottom, 15)
                         
                         VStack(alignment: .leading, spacing: 15) {
-                            Text("Would you like to save this address?")
+                            Text(TexterifyManager.localisedString(key: .orderCreationChangeAddressView(.wouldYouLikeToSaveThisAddress)))
                                 .font(.ssTitle3)
                             
                             SingleSelectionToggle(selection: $orderCreationViewModel.addressToBeSaved)
@@ -102,7 +103,7 @@ struct OrderCreationChangeAddressView: View {
                         
                         if orderCreationViewModel.addressToBeSaved {
                             VStack(alignment: .leading, spacing: 15) {
-                                Text("Would you like this address to be default?")
+                                Text(TexterifyManager.localisedString(key: .orderCreationChangeAddressView(.wouldYouLikeAddressDefault)))
                                     .font(.ssTitle3)
                                 
                                 SingleSelectionToggle(selection: $orderCreationViewModel.addressToBeDefault)
@@ -127,7 +128,7 @@ struct OrderCreationChangeAddressView: View {
                             }
                         }
                     } label: {
-                        Text("Add new address")
+                        Text(TexterifyManager.localisedString(key: .orderCreationChangeAddressView(.addNewAddressButton)))
                             .font(.ssButton)
                     }
                     .buttonStyle(CustomButton())
@@ -137,7 +138,7 @@ struct OrderCreationChangeAddressView: View {
             }
             .padding()
         }
-        .navigationTitle("Change delivery address")
+        .navigationTitle(TexterifyManager.localisedString(key: .orderCreationChangeAddressView(.navigationTitle)))
         .navigationBarTitleDisplayMode(.inline)
         .navigationBarBackButtonHidden(true)
         .toolbar {

@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import texterify_ios_sdk
 
 struct FavoritesView: View {
     @EnvironmentObject private var tabBarStateManager: TabBarStateManager
@@ -35,7 +36,7 @@ struct FavoritesView: View {
                     }
                     .padding(.bottom, 70)
                 }
-                .navigationTitle("Favorites")
+                .navigationTitle(TexterifyManager.localisedString(key: .favoritesView(.navigationTitle)))
                 .navigationBarTitleDisplayMode(.inline)
                 
                 NavigationLink(destination: ProductDetailsView(product: favoritesViewModel.choosenProduct ?? Product.demoProducts[0],

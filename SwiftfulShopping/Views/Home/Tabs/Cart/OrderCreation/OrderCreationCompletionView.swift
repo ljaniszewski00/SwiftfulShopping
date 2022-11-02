@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import texterify_ios_sdk
 
 struct OrderCreationCompletionView: View {
     @EnvironmentObject private var tabBarStateManager: TabBarStateManager
@@ -26,10 +27,10 @@ struct OrderCreationCompletionView: View {
                     
                     VStack(alignment: .leading, spacing: 0) {
                         VStack(alignment: .leading, spacing: 10) {
-                            Text("You have successfuly placed your order!")
+                            Text(TexterifyManager.localisedString(key: .orderCreationCompletionView(.youHaveSuccessfullyPlacedYourOrder)))
                                 .font(.ssTitle2)
                             
-                            Text("Please wait patiently for it to be delivered")
+                            Text(TexterifyManager.localisedString(key: .orderCreationCompletionView(.pleaseWaitPatiently)))
                                 .font(.ssCallout)
                                 .foregroundColor(.ssDarkGray)
                         }
@@ -44,7 +45,7 @@ struct OrderCreationCompletionView: View {
                         
                         VStack(alignment: .leading, spacing: 30) {
                             VStack(alignment: .leading, spacing: 10) {
-                                Text("Order number:")
+                                Text(TexterifyManager.localisedString(key: .orderCreationCompletionView(.orderNumber)))
                                     .font(.ssTitle3)
                                 Text(orderCreationViewModel.createdOrder?.id ?? "")
                                     .font(.ssCallout)
@@ -54,7 +55,7 @@ struct OrderCreationCompletionView: View {
                             }
                             
                             VStack(alignment: .leading, spacing: 10) {
-                                Text("Expected delivery date:")
+                                Text(TexterifyManager.localisedString(key: .orderCreationCompletionView(.expectedDeliveryDate)))
                                     .font(.ssTitle3)
                                 Text(orderCreationViewModel.createdOrder?.estimatedDeliveryDate.dateString() ?? "")
                                     .font(.ssCallout)
@@ -73,7 +74,7 @@ struct OrderCreationCompletionView: View {
                             cartViewModel.shouldPresentCheckoutFirstView = false
                         }
                     } label: {
-                        Text("Go back to cart")
+                        Text(TexterifyManager.localisedString(key: .orderCreationCompletionView(.goBackToCart)))
                             .font(.ssButton)
                     }
                     .buttonStyle(CustomButton())
@@ -81,7 +82,7 @@ struct OrderCreationCompletionView: View {
                 .padding()
                 .frame(minHeight: geometry.size.height)
             }
-            .navigationTitle("Order placed")
+            .navigationTitle(TexterifyManager.localisedString(key: .orderCreationCompletionView(.navigationTitle)))
             .navigationBarTitleDisplayMode(.inline)
             .navigationBarBackButtonHidden(true)
         }

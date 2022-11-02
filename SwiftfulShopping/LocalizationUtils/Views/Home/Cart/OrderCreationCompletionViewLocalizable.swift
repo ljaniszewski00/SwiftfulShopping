@@ -8,5 +8,10 @@
 import Foundation
 
 public enum OrderCreationCompletionViewLocalizable: String {
-    case cancel = "Common_cancel"
+    case youHaveSuccessfullyPlacedYourOrder = "OrderCreationCompletionView_youHaveSuccessfullyPlacedYourOrder"
+    case pleaseWaitPatiently = "OrderCreationCompletionView_pleaseWaitPatiently"
+    case orderNumber = "OrderCreationCompletionView_orderNumber"
+    case expectedDeliveryDate = "OrderCreationCompletionView_expectedDeliveryDate"
+    case goBackToCart = "OrderCreationCompletionView_goBackToCart"
+    case navigationTitle = "OrderCreationCompletionView_navigationTitle"
 }
