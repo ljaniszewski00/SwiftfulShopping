@@ -6,11 +6,23 @@
 //
 
 import Foundation
+import texterify_ios_sdk
 
 enum PaymentMethod: String, Codable {
-    case cash = "Cash"
-    case creditCard = "Credit Card"
-    case applePay = "Apple Pay"
+    case cash
+    case creditCard
+    case applePay
+    
+    var rawValue: String {
+        switch self {
+        case .cash:
+            return TexterifyManager.localisedString(key: .paymentMethod(.cash))
+        case .creditCard:
+            return TexterifyManager.localisedString(key: .paymentMethod(.creditCard))
+        case .applePay:
+            return TexterifyManager.localisedString(key: .paymentMethod(.applePay))
+        }
+    }
 }
 
 extension PaymentMethod: CaseIterable {

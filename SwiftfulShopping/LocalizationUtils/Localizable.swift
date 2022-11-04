@@ -55,6 +55,16 @@ public enum Localizable {
     case customDatePicker(CustomDatePickerLocalizable)
     case homeView(HomeViewLocalizable)
     case expandableText(ExpandableTextLocalizable)
+    case countries(CountriesLocalizable)
+    case shippingMethod(ShippingMethodLocalizable)
+    case paymentMethod(PaymentMethodLocalizable)
+    case category(CategoryLocalizable)
+    case exploreViewTabs(ExploreViewTabsLocalizable)
+    case orderStatus(OrderStatusLocalizable)
+    case sortingMethods(SortingMethodsLocalizable)
+    case filteringMethods(FilteringMethodsLocalizable)
+    case productsListSource(ProductsListSourceLocalizable)
+    case returnStatus(ReturnStatusLocalizable)
 }
 
 extension Localizable: LocalizableRawRepresentable {
@@ -157,6 +167,26 @@ extension Localizable: LocalizableRawRepresentable {
         case let .homeView(localizable):
             return localizable.rawValue
         case let .expandableText(localizable):
+            return localizable.rawValue
+        case let .countries(localizable):
+            return localizable.rawValue
+        case let .shippingMethod(localizable):
+            return localizable.rawValue
+        case let .paymentMethod(localizable):
+            return localizable.rawValue
+        case let .category(localizable):
+            return localizable.rawValue
+        case let .exploreViewTabs(localizable):
+            return localizable.rawValue
+        case let .orderStatus(localizable):
+            return localizable.rawValue
+        case let .sortingMethods(localizable):
+            return localizable.rawValue
+        case let .filteringMethods(localizable):
+            return localizable.rawValue
+        case let .productsListSource(localizable):
+            return localizable.rawValue
+        case let .returnStatus(localizable):
             return localizable.rawValue
         }
     }

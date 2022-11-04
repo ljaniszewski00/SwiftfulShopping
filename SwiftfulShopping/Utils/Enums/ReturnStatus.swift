@@ -6,13 +6,29 @@
 //
 
 import Foundation
+import texterify_ios_sdk
 
 enum ReturnStatus: String {
-    case reported = "Reported"
-    case sent = "Sent"
-    case delivered = "Delivered"
-    case moneyReturned = "Money returned"
-    case closed = "Closed"
+    case reported
+    case sent
+    case delivered
+    case moneyReturned
+    case closed
+    
+    var rawValue: String {
+        switch self {
+        case .reported:
+            return TexterifyManager.localisedString(key: .returnStatus(.reported))
+        case .sent:
+            return TexterifyManager.localisedString(key: .returnStatus(.sent))
+        case .delivered:
+            return TexterifyManager.localisedString(key: .returnStatus(.delivered))
+        case .moneyReturned:
+            return TexterifyManager.localisedString(key: .returnStatus(.moneyReturned))
+        case .closed:
+            return TexterifyManager.localisedString(key: .returnStatus(.closed))
+        }
+    }
 }
 
 extension ReturnStatus: CaseIterable {

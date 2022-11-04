@@ -6,11 +6,23 @@
 //
 
 import Foundation
+import texterify_ios_sdk
 
 enum ShippingMethod: String, Codable {
-    case pickup = "Pickup"
-    case parcel = "Parcel Locker"
-    case courier = "Courier"
+    case pickup
+    case parcel
+    case courier
+    
+    var rawValue: String {
+        switch self {
+        case .pickup:
+            return TexterifyManager.localisedString(key: .shippingMethod(.pickup))
+        case .parcel:
+            return TexterifyManager.localisedString(key: .shippingMethod(.parcel))
+        case .courier:
+            return TexterifyManager.localisedString(key: .shippingMethod(.courier))
+        }
+    }
 }
 
 extension ShippingMethod: CaseIterable {
