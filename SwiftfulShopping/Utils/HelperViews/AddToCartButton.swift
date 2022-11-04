@@ -20,23 +20,30 @@ struct AddToCartButton: View {
                 onAdd()
             }
         } label: {
-            HStack(spacing: -10) {
-                LottieView(name: "add_to_cart",
-                           loopMode: .playOnce,
-                           contentMode: .scaleAspectFit,
-                           shouldPlay: $shouldPresentAddAnimation)
-                .frame(minWidth: 50, maxHeight: 40)
-                
+            HStack(spacing: 15) {
+                Image(systemName: shouldPresentAddAnimation ? "checkmark.circle.fill" : "cart")
+                    .resizable()
+                    .aspectRatio(contentMode: .fit)
+                    .frame(width: 25, height: 25)
+                    .foregroundColor(.ssWhite)
                 Text(TexterifyManager.localisedString(key: .addToCartButton(.addToCartLabel)))
                     .font(.ssButton)
                     .foregroundColor(.ssWhite)
-                    .padding(.all, 10)
             }
-            .padding(.vertical, 5)
+            .padding(.all, 12)
+            .padding(.horizontal, 5)
             .background {
                 RoundedRectangle(cornerRadius: 5)
             }
-            .fixedSize(horizontal: true, vertical: false)
+        }
+        .onChange(of: shouldPresentAddAnimation) { newValue in
+            if newValue {
+                DispatchQueue.main.asyncAfter(deadline: .now() + 1.5) {
+                    withAnimation {
+                        shouldPresentAddAnimation = false
+                    }
+                }
+            }
         }
     }
 }

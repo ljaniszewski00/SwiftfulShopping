@@ -10,7 +10,7 @@
 "AddNewAddressView_streetNameTextField" = "Nazwa Ulicy";
 "AddNewAddressView_streetNumberTextField" = "Numer Ulicy";
 "AddNewAddressView_useAsDefaultAddress" = "Użyć jako adresu domyślnego?";
-"AddToCartButton_addToCartLabel" = "Dodaj do koszyka";
+"AddToCartButton_addToCartLabel" = "Dodaj";
 "BasicProductTile_rateProductButton" = "Oceń produkt";
 "CartView_checkout" = "Kasa";
 "CartView_ifYouAddAnyProducts" = "Jeśli dodasz jakieś produkty do koszyka, zostaną one wyświetlone tutaj";
@@ -429,4 +429,4 @@
 "ThirdReturnCreationView_createReturnButton" = "Utwórz Zwrot";
 "ThirdReturnCreationView_howDoYouWantToReturn" = "W jaki sposób chcesz zwrócić produkt?";
 "ThirdReturnCreationView_navigationTitle" = "Utwórz Zwrot";
-"texterify_timestamp" = "2022-11-04T13:50:17Z";
+"texterify_timestamp" = "2022-11-04T16:02:40Z";
