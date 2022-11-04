@@ -9,6 +9,7 @@
 "AddNewAddressView_postalCodeTextField" = "Postal Code";
 "AddNewAddressView_streetNameTextField" = "Street Name";
 "AddNewAddressView_streetNumberTextField" = "Street Number";
+"AddNewAddressView_thisFieldIsOptional" = "This field is optional";
 "AddNewAddressView_useAsDefaultAddress" = "Use as default address?";
 "AddToCartButton_addToCartLabel" = "Add";
 "BasicProductTile_rateProductButton" = "Rate product";
@@ -155,7 +156,7 @@
 "FirstTimeLoginView_streetNameTextField" = "Street Name";
 "FirstTimeLoginView_streetNumberError" = "Street number should contain only numbers.";
 "FirstTimeLoginView_streetNumberTextField" = "Street Number";
-"FirstTimeLoginView_thisFieldIsOptionalLabel" = "This field is optional.";
+"FirstTimeLoginView_thisFieldIsOptionalLabel" = "This field is optional";
 "FirstTimeLoginView_zipCodeError" = "Zip Code should contain only 5 digits and be formatted like XXXXX.";
 "FirstTimeLoginView_zipCodeTextField" = "Zip Code";
 "ForgotPasswordView_instructionToTypeEmail" = "Please, type your e-mail and we will send you a link so that you can reset the password.";
@@ -429,4 +430,4 @@
 "ThirdReturnCreationView_createReturnButton" = "Create Return";
 "ThirdReturnCreationView_howDoYouWantToReturn" = "How do you want to return the product?";
 "ThirdReturnCreationView_navigationTitle" = "Create Return";
-"texterify_timestamp" = "2022-11-04T16:02:36Z";
+"texterify_timestamp" = "2022-11-04T16:13:19Z";

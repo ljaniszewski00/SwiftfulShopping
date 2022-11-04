@@ -11,6 +11,7 @@ public enum AddNewAddressViewLocalizable: String {
     case streetNameTextField = "AddNewAddressView_streetNameTextField"
     case streetNumberTextField = "AddNewAddressView_streetNumberTextField"
     case apartmentNumberTextField = "AddNewAddressView_apartmentNumberTextField"
+    case thisFieldIsOptional = "AddNewAddressView_thisFieldIsOptional"
     case postalCodeTextField = "AddNewAddressView_postalCodeTextField"
     case cityTextField = "AddNewAddressView_cityTextField"
     case countryTextField = "AddNewAddressView_countryTextField"

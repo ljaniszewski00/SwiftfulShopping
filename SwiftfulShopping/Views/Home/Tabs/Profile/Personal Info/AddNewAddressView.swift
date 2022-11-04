@@ -35,34 +35,38 @@ struct AddNewAddressView: View {
                             isFocusedParentView: $isStreetNameTextFieldFocused)
                         
                         RectangleCustomTextField(
-                            textFieldProperty: "Street Number",
+                            textFieldProperty: TexterifyManager.localisedString(key: .addNewAddressView(.streetNumberTextField)),
                             text: $personalInfoViewModel.newStreetNumber,
                             isFocusedParentView: $isStreetNumberTextFieldFocused)
                         
                         RectangleCustomTextField(
-                            textFieldProperty: "Apartment Number",
-                            textFieldFooter: "This field is optional",
+                            textFieldProperty: TexterifyManager.localisedString(key: .addNewAddressView(.apartmentNumberTextField)),
+                            textFieldFooter: TexterifyManager.localisedString(key: .addNewAddressView(.thisFieldIsOptional)),
                             text: $personalInfoViewModel.newApartmentNumber,
                             isFocusedParentView: $isApartmentNumberTextFieldFocused)
                         
                         RectangleCustomTextField(
-                            textFieldProperty: "Postal Code",
+                            textFieldProperty: TexterifyManager.localisedString(key: .addNewAddressView(.postalCodeTextField)),
                             text: $personalInfoViewModel.newZipCode,
                             isFocusedParentView: $isZipCodeTextFieldFocused)
                         
                         RectangleCustomTextField(
-                            textFieldProperty: "City",
+                            textFieldProperty: TexterifyManager.localisedString(key: .addNewAddressView(.cityTextField)),
                             text: $personalInfoViewModel.newCity,
                             isFocusedParentView: $isCityTextFieldFocused)
                         
-                        RectangleCustomTextField(
-                            textFieldProperty: "Country",
-                            text: $personalInfoViewModel.newCountry,
-                            isFocusedParentView: $isCountryTextFieldFocused)
+                        VStack(alignment: .leading, spacing: 10) {
+                            Text(TexterifyManager.localisedString(key: .addNewAddressView(.countryTextField)))
+                                .font(.ssTitle3)
+                                .foregroundColor(.accentColor)
+                            
+                            SelectionDropdownMenu(selection: $personalInfoViewModel.newCountry,
+                                                  dataWithImagesToChoose: personalInfoViewModel.countries)
+                        }
                     }
                     
                     VStack(alignment: .leading, spacing: 10) {
-                        Text("Use as default address?")
+                        Text(TexterifyManager.localisedString(key: .addNewAddressView(.useAsDefaultAddress)))
                             .font(.ssTitle2)
                             .fixedSize(horizontal: false, vertical: true)
                             .foregroundColor(.accentColor)
@@ -87,7 +91,7 @@ struct AddNewAddressView: View {
                         }
                     }
                 } label: {
-                    Text("Add new address")
+                    Text(TexterifyManager.localisedString(key: .addNewAddressView(.addNewAddressButton)))
                         .font(.ssButton)
                 }
                 .buttonStyle(CustomButton())
@@ -100,7 +104,7 @@ struct AddNewAddressView: View {
                                             $personalInfoViewModel.showLoadingModal))
         .modifier(ErrorModal(isPresented: $errorManager.showErrorModal,
                              customError: errorManager.customError ?? ErrorManager.unknownError))
-        .navigationTitle("Add new address")
+        .navigationTitle(TexterifyManager.localisedString(key: .addNewAddressView(.navigationTitle)))
         .navigationBarBackButtonHidden(true)
         .toolbar {
             ToolbarItem(placement: .navigationBarLeading) {

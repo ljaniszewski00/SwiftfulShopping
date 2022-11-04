@@ -9,6 +9,7 @@
 "AddNewAddressView_postalCodeTextField" = "Kod pocztowy";
 "AddNewAddressView_streetNameTextField" = "Nazwa Ulicy";
 "AddNewAddressView_streetNumberTextField" = "Numer Ulicy";
+"AddNewAddressView_thisFieldIsOptional" = "To pole jest opcjonalne";
 "AddNewAddressView_useAsDefaultAddress" = "Użyć jako adresu domyślnego?";
 "AddToCartButton_addToCartLabel" = "Dodaj";
 "BasicProductTile_rateProductButton" = "Oceń produkt";
@@ -155,7 +156,7 @@
 "FirstTimeLoginView_streetNameTextField" = "Nazwa Ulicy";
 "FirstTimeLoginView_streetNumberError" = "Numer ulicy powinien zawierać tylko cyfry.";
 "FirstTimeLoginView_streetNumberTextField" = "Numer Ulicy";
-"FirstTimeLoginView_thisFieldIsOptionalLabel" = "To pole jest opcjonalne.";
+"FirstTimeLoginView_thisFieldIsOptionalLabel" = "To pole jest opcjonalne";
 "FirstTimeLoginView_zipCodeError" = "Kod pocztowy powinien zawierać tylko 5 cyfr i być sformatowany jak XXXXX.";
 "FirstTimeLoginView_zipCodeTextField" = "Kod Pocztowy";
 "ForgotPasswordView_instructionToTypeEmail" = "Wpisz swój e-mail, a my wyślemy Ci link, dzięki któremu będziesz mógł zresetować hasło.";
@@ -429,4 +430,4 @@
 "ThirdReturnCreationView_createReturnButton" = "Utwórz Zwrot";
 "ThirdReturnCreationView_howDoYouWantToReturn" = "W jaki sposób chcesz zwrócić produkt?";
 "ThirdReturnCreationView_navigationTitle" = "Utwórz Zwrot";
-"texterify_timestamp" = "2022-11-04T16:02:40Z";
+"texterify_timestamp" = "2022-11-04T16:13:22Z";

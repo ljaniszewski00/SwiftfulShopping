@@ -24,6 +24,14 @@ class PersonalInfoViewModel: ObservableObject {
     
     @Published var showLoadingModal: Bool = false
     
+    let countries: [String: String?] = ["Czech": "czech",
+                                        "England": "england",
+                                        "France": "france",
+                                        "Germany": "germany",
+                                        "Poland": "poland",
+                                        "Spain": "spain",
+                                        "United States": "united"]
+    
     func setupAddresses(defaultProfileAddress: Address, profileAddresses: [Address]) {
         defaultAddress = defaultProfileAddress.description
         for profileAddress in profileAddresses {

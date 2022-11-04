@@ -9,6 +9,7 @@
 "AddNewAddressView_postalCodeTextField" = "";
 "AddNewAddressView_streetNameTextField" = "";
 "AddNewAddressView_streetNumberTextField" = "";
+"AddNewAddressView_thisFieldIsOptional" = "";
 "AddNewAddressView_useAsDefaultAddress" = "";
 "AddToCartButton_addToCartLabel" = "";
 "BasicProductTile_rateProductButton" = "";
@@ -429,4 +430,4 @@
 "ThirdReturnCreationView_createReturnButton" = "";
 "ThirdReturnCreationView_howDoYouWantToReturn" = "";
 "ThirdReturnCreationView_navigationTitle" = "";
-"texterify_timestamp" = "2022-11-04T16:02:38Z";
+"texterify_timestamp" = "2022-11-04T16:13:21Z";
