@@ -16,15 +16,15 @@ struct ProductDetailsRatingsSection: View {
     var product: Product
     var productRatings: [ProductRating]
     
-    var productAverageRating: Double {
+    var averageRating: Double {
         if productRatings.isEmpty {
             return 0
         } else {
-            return Double((productRatings.map { $0.rating }.reduce(0, +)) / productRatings.count)
+            return Double(productRatings.reduce(0, { $0 + $1.rating })) / Double(productRatings.count)
         }
     }
     
-    var productReviewsNumber: Int {
+    var reviewsNumber: Int {
         productRatings.filter { $0.review != nil }.count
     }
     
@@ -37,11 +37,11 @@ struct ProductDetailsRatingsSection: View {
 
                     HStack(spacing: 30) {
                         VStack(alignment: .center, spacing: 10) {
-                            Text("\(productAverageRating, specifier: "%.2f") / 5")
+                            Text("\(averageRating, specifier: "%.2f") / 5")
                                 .font(.system(size: 26, weight: .bold))
                             HStack {
-                                if productAverageRating != 0 {
-                                    ForEach(1...Int(round(productAverageRating)), id: \.self) { _ in
+                                if averageRating != 0 {
+                                    ForEach(1...Int(floor(averageRating)), id: \.self) { _ in
                                         Image(systemName: "star.fill")
                                             .resizable()
                                             .frame(width: 20, height: 20)
@@ -49,7 +49,7 @@ struct ProductDetailsRatingsSection: View {
                                     }
                                 }
 
-                                ForEach(Int(round(productAverageRating))..<5, id: \.self) { _ in
+                                ForEach(Int(floor(averageRating))..<5, id: \.self) { _ in
                                     Image(systemName: "star")
                                         .resizable()
                                         .frame(width: 20, height: 20)
@@ -81,7 +81,7 @@ struct ProductDetailsRatingsSection: View {
                                             .frame(width: 130, height: 7)
                                         RoundedRectangle(cornerRadius: 10)
                                             .foregroundColor(.accentColor)
-                                            .frame(width: (130 / CGFloat(productRatings.count)),
+                                            .frame(width: productRatings.filter { $0.rating == number }.count == 0 ? 0 : CGFloat((130 / productRatings.count) * (productRatings.filter { $0.rating == number }.count)),
                                                    height: 7)
                                     }
                                 }
@@ -107,7 +107,7 @@ struct ProductDetailsRatingsSection: View {
                         ratingsSectionExpanded.toggle()
                     }, label: {
                         HStack {
-                            Text("\(TexterifyManager.localisedString(key: .productDetailsRatingsSection(.comments))) (\(productReviewsNumber))")
+                            Text("\(TexterifyManager.localisedString(key: .productDetailsRatingsSection(.comments))) (\(reviewsNumber))")
                                 .font(.ssTitle3)
                                 .foregroundColor(colorScheme == .light ? .black : .ssWhite)
                         }

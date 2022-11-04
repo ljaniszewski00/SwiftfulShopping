@@ -22,7 +22,7 @@ struct GridProductCardTileView: View {
         if productRatings.isEmpty {
             return 0
         } else {
-            return Double((productRatings.map { $0.rating }.reduce(0, +)) / productRatings.count)
+            return Double(productRatings.reduce(0, { $0 + $1.rating })) / Double(productRatings.count)
         }
     }
     
@@ -82,7 +82,7 @@ struct GridProductCardTileView: View {
                     VStack(alignment: .trailing, spacing: 10) {
                         HStack {
                             if averageRating != 0 {
-                                ForEach(1...Int(round(averageRating)), id: \.self) { _ in
+                                ForEach(1...Int(floor(averageRating)), id: \.self) { _ in
                                     Image(systemName: "star.fill")
                                         .resizable()
                                         .frame(width: 20, height: 20)
@@ -90,7 +90,7 @@ struct GridProductCardTileView: View {
                                 }
                             }
                             
-                            ForEach(Int(round(averageRating))..<5, id: \.self) { _ in
+                            ForEach(Int(floor(averageRating))..<5, id: \.self) { _ in
                                 Image(systemName: "star")
                                     .resizable()
                                     .frame(width: 20, height: 20)

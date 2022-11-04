@@ -30,7 +30,7 @@ struct ProductsListView: View {
         VStack(spacing: 15) {
             buildFilterDisplayMethodPane()
             
-            ScrollView(.vertical) {
+            ScrollView(.vertical, showsIndicators: false) {
                 ForEach(exploreViewModel.changingProductsToBeDisplayed, id: \.id) { product in
                     Button {
                         withAnimation(.interactiveSpring(response: 0.6, dampingFraction: 0.7, blendDuration: 0.7)) {
