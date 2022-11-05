@@ -35,8 +35,8 @@ struct ExploreView: View {
         NavigationView {
             ScrollViewReader { scrollViewReader in
                 ZStack(alignment: .bottomTrailing) {
-                    ScrollView(.vertical, showsIndicators: true) {
-                        VStack(alignment: .center) {
+                    ScrollView(.vertical, showsIndicators: false) {
+                        LazyVStack(alignment: .center) {
                             buildCategoriesList()
                             
                             if !exploreViewModel.shouldPresentAllCategoryProducts {
@@ -117,7 +117,8 @@ struct ExploreView: View {
             .toolbar {
                 ToolbarItem(placement: .navigationBarLeading) {
                     Text("SwiftfulShopping")
-                        .font(.ssTitle3).fontWeight(.bold)
+                        .font(.ssTitle3)
+                        .fontWeight(.bold)
                         .foregroundColor(.accentColor)
                 }
                 
@@ -155,7 +156,7 @@ struct ExploreView: View {
                 
                 VStack(alignment: .leading, spacing: 5) {
                     ScrollView(.horizontal, showsIndicators: false) {
-                        HStack {
+                        LazyHStack {
                             ForEach(Category.allCases, id: \.self) { category in
                                 Button {
                                     if exploreViewModel.choosenCategory == category &&

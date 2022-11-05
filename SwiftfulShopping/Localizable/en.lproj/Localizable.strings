@@ -12,13 +12,16 @@
 "AddNewAddressView_thisFieldIsOptional" = "This field is optional";
 "AddNewAddressView_useAsDefaultAddress" = "Use as default address?";
 "AddToCartButton_addToCartLabel" = "Add";
+"Appearance_dark" = "Dark";
+"Appearance_light" = "Light";
+"Appearance_system" = "System";
 "BasicProductTile_rateProductButton" = "Rate product";
 "CartView_checkout" = "Checkout";
 "CartView_ifYouAddAnyProducts" = "If you add any products to your cart they will be displayed here";
 "CartView_navigationTitle" = "Cart";
-"CartView_productsInCart" = "Products in cart:";
+"CartView_productsInCart" = "Products:";
 "CartView_toolbarButtonCleanCart" = "Clean Cart";
-"CartView_totalCost" = "Total cost:";
+"CartView_totalCost" = "Cost:";
 "CartView_yourCartIsEmpty" = "Your cart is empty";
 "Category_accessories" = "Accessories";
 "Category_computers" = "Computers";
@@ -92,6 +95,8 @@
 "Errors_deleteAccountErrorDescription" = "Error occured while trying delete the account. Please try again later.";
 "Errors_discountApplyError" = "Discount Apply Error";
 "Errors_discountApplyErrorDescription" = "Error applying discount code. Please try again later.";
+"Errors_editPersonalInfoError" = "Edit Personal Info Error";
+"Errors_editPersonalInfoErrorDescription" = "Error occured while trying to update personal info. Please try again later.";
 "Errors_emailPasswordSignInError" = "Email and Password Sign In Error";
 "Errors_emailPasswordSignInErrorDescription" = "Error occured while trying to log in with email and password. Please try again later.";
 "Errors_facebookSignInError" = "Facebook Sign In Error";
@@ -381,6 +386,7 @@
 "SecondReturnCreationView_postalCodeTextField" = "Postal code";
 "SecondReturnCreationView_provideBankAccountData" = "Provide bank account data on which you want your money back";
 "SecondReturnCreationView_streetHouseNumberTextField" = "Street and house number";
+"SelectionDropdownMenu_tapToChoose" = "Tap to choose";
 "SettingsView_accountActionsSectionFooter" = "Here you can manage your account";
 "SettingsView_accountActionsSectionHeader" = "Account Actions";
 "SettingsView_additionalSectionHeader" = "Additional";
@@ -430,4 +436,4 @@
 "ThirdReturnCreationView_createReturnButton" = "Create Return";
 "ThirdReturnCreationView_howDoYouWantToReturn" = "How do you want to return the product?";
 "ThirdReturnCreationView_navigationTitle" = "Create Return";
-"texterify_timestamp" = "2022-11-04T16:13:19Z";
+"texterify_timestamp" = "2022-11-05T17:31:32Z";

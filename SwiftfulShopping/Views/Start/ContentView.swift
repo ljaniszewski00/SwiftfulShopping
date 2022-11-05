@@ -44,7 +44,7 @@ struct ContentView: View {
                 .modifier(ErrorModal(isPresented: $errorManager.showErrorModal,
                                      customError: errorManager.customError ?? ErrorManager.unknownError))
                 .onAppear {
-                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) {
                         contentViewModel.authenticate()
                     }
                 }

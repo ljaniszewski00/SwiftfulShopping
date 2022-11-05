@@ -12,13 +12,16 @@
 "AddNewAddressView_thisFieldIsOptional" = "To pole jest opcjonalne";
 "AddNewAddressView_useAsDefaultAddress" = "Użyć jako adresu domyślnego?";
 "AddToCartButton_addToCartLabel" = "Dodaj";
+"Appearance_dark" = "Ciemny";
+"Appearance_light" = "Jasny";
+"Appearance_system" = "Systemowy";
 "BasicProductTile_rateProductButton" = "Oceń produkt";
 "CartView_checkout" = "Kasa";
 "CartView_ifYouAddAnyProducts" = "Jeśli dodasz jakieś produkty do koszyka, zostaną one wyświetlone tutaj";
 "CartView_navigationTitle" = "Koszyk";
-"CartView_productsInCart" = "Produkty w koszyku:";
+"CartView_productsInCart" = "Produkty:";
 "CartView_toolbarButtonCleanCart" = "Wyczyść koszyk";
-"CartView_totalCost" = "Koszt całkowity:";
+"CartView_totalCost" = "Koszt:";
 "CartView_yourCartIsEmpty" = "Twój koszyk jest pusty";
 "Category_accessories" = "Akcesoria";
 "Category_computers" = "Komputery";
@@ -92,6 +95,8 @@
 "Errors_deleteAccountErrorDescription" = "Wystąpił błąd podczas próby usunięcia konta. Proszę spróbować ponownie później.";
 "Errors_discountApplyError" = "Błąd zastosowania rabatu";
 "Errors_discountApplyErrorDescription" = "Błąd przy stosowaniu kodu rabatowego. Proszę spróbować ponownie później.";
+"Errors_editPersonalInfoError" = "Błąd Edycji Danych Osobowych";
+"Errors_editPersonalInfoErrorDescription" = "Wystąpił błąd podczas próby aktualizacji danych osobowych. Proszę spróbować ponownie później.";
 "Errors_emailPasswordSignInError" = "Błąd rejestracji adresu e-mail i hasła";
 "Errors_emailPasswordSignInErrorDescription" = "Wystąpił błąd podczas próby zalogowania się przy użyciu adresu e-mail i hasła. Proszę spróbować ponownie później.";
 "Errors_facebookSignInError" = "Błąd logowania na Facebooku";
@@ -381,6 +386,7 @@
 "SecondReturnCreationView_postalCodeTextField" = "Kod Pocztowy";
 "SecondReturnCreationView_provideBankAccountData" = "Podaj dane konta bankowego, na które chcesz otrzymać zwrot";
 "SecondReturnCreationView_streetHouseNumberTextField" = "Ulica i numer domu";
+"SelectionDropdownMenu_tapToChoose" = "Kliknij by wybrać";
 "SettingsView_accountActionsSectionFooter" = "Tutaj możesz zarządzać swoim kontem";
 "SettingsView_accountActionsSectionHeader" = "Zarządzanie Kontem";
 "SettingsView_additionalSectionHeader" = "Dodatkowe";
@@ -430,4 +436,4 @@
 "ThirdReturnCreationView_createReturnButton" = "Utwórz Zwrot";
 "ThirdReturnCreationView_howDoYouWantToReturn" = "W jaki sposób chcesz zwrócić produkt?";
 "ThirdReturnCreationView_navigationTitle" = "Utwórz Zwrot";
-"texterify_timestamp" = "2022-11-04T16:13:22Z";
+"texterify_timestamp" = "2022-11-05T17:31:35Z";

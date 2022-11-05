@@ -12,6 +12,9 @@
 "AddNewAddressView_thisFieldIsOptional" = "";
 "AddNewAddressView_useAsDefaultAddress" = "";
 "AddToCartButton_addToCartLabel" = "";
+"Appearance_dark" = "";
+"Appearance_light" = "";
+"Appearance_system" = "";
 "BasicProductTile_rateProductButton" = "";
 "CartView_checkout" = "";
 "CartView_ifYouAddAnyProducts" = "";
@@ -92,6 +95,8 @@
 "Errors_deleteAccountErrorDescription" = "";
 "Errors_discountApplyError" = "";
 "Errors_discountApplyErrorDescription" = "";
+"Errors_editPersonalInfoError" = "";
+"Errors_editPersonalInfoErrorDescription" = "";
 "Errors_emailPasswordSignInError" = "";
 "Errors_emailPasswordSignInErrorDescription" = "";
 "Errors_facebookSignInError" = "";
@@ -381,6 +386,7 @@
 "SecondReturnCreationView_postalCodeTextField" = "";
 "SecondReturnCreationView_provideBankAccountData" = "";
 "SecondReturnCreationView_streetHouseNumberTextField" = "";
+"SelectionDropdownMenu_tapToChoose" = "";
 "SettingsView_accountActionsSectionFooter" = "";
 "SettingsView_accountActionsSectionHeader" = "";
 "SettingsView_additionalSectionHeader" = "";
@@ -430,4 +436,4 @@
 "ThirdReturnCreationView_createReturnButton" = "";
 "ThirdReturnCreationView_howDoYouWantToReturn" = "";
 "ThirdReturnCreationView_navigationTitle" = "";
-"texterify_timestamp" = "2022-11-04T16:13:18Z";
+"texterify_timestamp" = "2022-11-05T17:31:31Z";

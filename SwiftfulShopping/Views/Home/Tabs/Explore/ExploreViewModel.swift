@@ -66,18 +66,13 @@ class ExploreViewModel: ObservableObject {
     
     var productsCategoriesWithImageURL: [Category: String?] {
         var productsCategoriesWithImageURL: [Category: String?] = [:]
+        
         for category in productsCategories {
             productsCategoriesWithImageURL[category] = productsFromRepository
                                                             .filter { $0.category == category }
                                                             .map { $0.imagesURLs.first }
                                                             .compactMap { $0 }
                                                             .first
-        }
-        
-        for (key, value) in productsCategoriesWithImageURL {
-            if value == nil {
-                productsCategoriesWithImageURL[key]
-            }
         }
         
         return productsCategoriesWithImageURL
