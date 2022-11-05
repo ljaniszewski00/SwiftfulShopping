@@ -18,7 +18,7 @@ struct ProductsListView: View {
     private var navigationTitle: String {
         switch exploreViewModel.productsForSource {
         case .category:
-            return "Explore"
+            return exploreViewModel.choosenCategory?.rawValue ?? ""
         case .company:
             return exploreViewModel.choosenCompany ?? ""
         default:

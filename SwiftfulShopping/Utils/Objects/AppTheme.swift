@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import texterify_ios_sdk
 
 class AppThemeViewModel: ObservableObject {
     @AppStorage("appThemeSetting") var appThemeSetting = Appearance.system
@@ -24,7 +25,19 @@ enum Appearance: String, CaseIterable, Identifiable  {
     case system
     case light
     case dark
+    
     var id: String { self.rawValue }
+    
+    var rawValue: String {
+        switch self {
+        case .system:
+            return TexterifyManager.localisedString(key: .appearanceLocalizable(.system))
+        case .light:
+            return TexterifyManager.localisedString(key: .appearanceLocalizable(.light))
+        case .dark:
+            return TexterifyManager.localisedString(key: .appearanceLocalizable(.dark))
+        }
+    }
 }
 
 struct ThemeSettingsView: View{

@@ -30,7 +30,7 @@ struct DeleteAccountView: View {
                                     isFocusedParentView: $isEmailTextFieldFocused)
                     
                     CustomTextField(isSecureField: true,
-                                    textFieldProperty: "Password",
+                                    textFieldProperty: TexterifyManager.localisedString(key: .deleteAccountView(.passwordTextField)),
                                     textFieldImageName: "key.fill",
                                     text: $deleteAccountViewModel.password,
                                     isFocusedParentView: $isPasswordTextFieldFocused)
@@ -40,7 +40,7 @@ struct DeleteAccountView: View {
                             deleteAccountViewModel.shouldPresentActionSheet = true
                         }
                     } label: {
-                        Text("Delete Account")
+                        Text(TexterifyManager.localisedString(key: .deleteAccountView(.deleteAccountButton)))
                             .font(.ssButton)
                     }
                     .buttonStyle(CustomButton())
@@ -52,7 +52,7 @@ struct DeleteAccountView: View {
         .modifier(LoadingIndicatorModal(isPresented:
                                                             $deleteAccountViewModel.showLoadingModal))
         .modifier(ErrorModal(isPresented: $errorManager.showErrorModal, customError: errorManager.customError ?? ErrorManager.unknownError))
-        .navigationTitle("Delete Account")
+        .navigationTitle(TexterifyManager.localisedString(key: .deleteAccountView(.navigationTitle)))
         .navigationBarTitleDisplayMode(.large)
         .navigationBarBackButtonHidden(true)
         .toolbar {
@@ -68,12 +68,15 @@ struct DeleteAccountView: View {
             }
         }
         .actionSheet(isPresented: $deleteAccountViewModel.shouldPresentActionSheet) {
-            ActionSheet(title: Text("Are you sure?"), message: Text("All your data will be lost!"), buttons: [
-                .destructive(Text("Delete Account"), action: {
+            ActionSheet(title: Text(TexterifyManager.localisedString(key: .deleteAccountView(.confirmationSheetTitle))),
+                        message: Text(TexterifyManager.localisedString(key: .deleteAccountView(.confirmationSheetMessage))), buttons: [
+                .destructive(Text(TexterifyManager.localisedString(key: .deleteAccountView(.confirmationSheetConfirmButton))), action: {
+                    deleteAccountViewModel.showLoadingModal = true
                     deleteAccountViewModel.deleteAccount { result in
+                        deleteAccountViewModel.showLoadingModal = false
                         switch result {
                         case .success:
-                            break
+                            dismiss()
                         case .failure(let error):
                             errorManager.generateCustomError(errorType: .deleteAccountError,
                                                              additionalErrorDescription: error.localizedDescription)

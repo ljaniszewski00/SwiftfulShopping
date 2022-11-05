@@ -198,7 +198,7 @@ struct ExploreView: View {
                                         
                                         Text(category.rawValue)
                                             .font(.ssButton)
-                                            .foregroundColor(category == exploreViewModel.choosenCategory ? .black : .ssDarkGray)
+                                            .foregroundColor(category == exploreViewModel.choosenCategory ? (colorScheme == .dark ? .ssWhite : .black) : .ssDarkGray)
                                     }
                                     .padding(.vertical)
                                 }

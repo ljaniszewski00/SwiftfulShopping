@@ -22,7 +22,6 @@ struct ContentView: View {
                 HomeView()
                     .environmentObject(firebaseAuthManager)
                     .environmentObject(accentColorManager)
-                    .transition(.slide)
             } else {
                 VStack(spacing: 10) {
                     if colorScheme == .light {

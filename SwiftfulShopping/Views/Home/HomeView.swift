@@ -121,9 +121,7 @@ struct HomeView: View {
                             Spacer()
                             
                             Button {
-                                withAnimation(.spring(response: 0.3, dampingFraction: 0.7)) {
-                                    selectedTab = tabItem.tab
-                                }
+                                selectedTab = tabItem.tab
                             } label: {
                                 VStack(spacing: 8) {
                                     Image(systemName: tabItem.icon)

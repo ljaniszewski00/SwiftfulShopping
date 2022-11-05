@@ -272,8 +272,8 @@ class FirestoreProfileManager: ObservableObject {
                 if let error = error {
                     completion(.failure(error))
                 } else {
-                    dispatchGroup.enter()
                     for document in querySnapshot!.documents {
+                        dispatchGroup.enter()
                         if document.documentID == shipmentAddressToBeMadeDefaultAddress.id {
                             document.reference.updateData(dataToUpdateForOneDocument)
                         } else {
