@@ -140,15 +140,15 @@ struct HomeView: View {
                                 .if(tabItem.tab == .cart && cartViewModel.cartAllProductsQuantityCount > 0) {
                                     $0
                                         .overlay(
-                                            ZStack {
-                                                Circle()
-                                                    .frame(width: 20, height: 20)
-                                                    .foregroundColor(.red)
-                                                Text(String(cartViewModel.cartAllProductsQuantityCount))
-                                                    .font(.ssCallout)
-                                                    .foregroundColor(.ssWhite)
-                                            }
-                                            .offset(x: 22, y: -27)
+                                            Text(String(cartViewModel.cartAllProductsQuantityCount))
+                                                .font(.ssCallout)
+                                                .foregroundColor(.ssWhite)
+                                                .padding(.all, cartViewModel.cartAllProductsQuantityCount >= 10 ? 3 : 6)
+                                                .background {
+                                                    Circle()
+                                                        .foregroundColor(.red)
+                                                }
+                                                .offset(x: 22, y: -27)
                                         )
                                 }
                             }
