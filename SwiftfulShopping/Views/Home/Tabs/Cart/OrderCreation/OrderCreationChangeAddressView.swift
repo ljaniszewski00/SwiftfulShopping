@@ -87,10 +87,14 @@ struct OrderCreationChangeAddressView: View {
                                 text: $orderCreationViewModel.newCity,
                                 isFocusedParentView: $isCityTextFieldFocused)
                             
-                            RectangleCustomTextField(
-                                textFieldProperty: TexterifyManager.localisedString(key: .orderCreationChangeAddressView(.country)),
-                                text: $orderCreationViewModel.newCountry,
-                                isFocusedParentView: $isCountryTextFieldFocused)
+                            VStack(alignment: .leading, spacing: 10) {
+                                Text(TexterifyManager.localisedString(key: .secondRegisterView(.countryLabel)))
+                                    .font(.ssTitle3)
+                                    .foregroundColor(.accentColor)
+                                
+                                SelectionDropdownMenu(selection: $orderCreationViewModel.newCountry,
+                                                      dataWithImagesToChoose: SelectionDropdownMenu.countries)
+                            }
                         }
                         .padding(.bottom, 15)
                         
