@@ -21,13 +21,13 @@ struct SplashScreenView: View {
             } else {
                 VStack {
                     if colorScheme == .light {
-                        Image("SwiftfulShoppingLogo - horizontal (gray)")
+                        Image(AssetsNames.logoHorizontalGray)
                             .resizable()
                             .aspectRatio(contentMode: .fill)
                             .frame(width: ScreenBoundsSupplier.shared.getScreenWidth(),
                                    height: ScreenBoundsSupplier.shared.getScreenHeight() * 0.2)
                     } else if colorScheme == .dark {
-                        Image("SwiftfulShoppingLogo - horizontal (white)")
+                        Image(AssetsNames.logoHorizontalWhite)
                             .resizable()
                             .aspectRatio(contentMode: .fill)
                             .frame(width: ScreenBoundsSupplier.shared.getScreenWidth(),
@@ -36,7 +36,7 @@ struct SplashScreenView: View {
                     
                     Spacer()
                     
-                    LottieView(name: "cartSplashScreen",
+                    LottieView(name: LottieAssetsNames.cartSplashScreen,
                                loopMode: .loop,
                                contentMode: .scaleAspectFill)
                     
@@ -47,9 +47,10 @@ struct SplashScreenView: View {
                         .ignoresSafeArea()
                 }
                 .onAppear {
-                    DispatchQueue.main.asyncAfter(deadline: .now() + 2.5) {
-                        splashScreenViewModel.shouldPresentContentView = true
-                    }
+//                    DispatchQueue.main.asyncAfter(deadline: .now() + 2.5) {
+//                        splashScreenViewModel.shouldPresentContentView = true
+//                    }
+                    splashScreenViewModel.shouldPresentContentView = true
                 }
             }
         }

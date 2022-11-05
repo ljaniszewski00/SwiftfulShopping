@@ -30,7 +30,7 @@ struct ProductDetailsView: View {
                 VStack(alignment: .center, spacing: 30) {
                     Group {
                         if productDetailsViewModel.fetchingProductImages {
-                            Image("product_placeholder_image")
+                            Image(AssetsNames.productPlaceholder)
                                 .resizable()
                                 .scaledToFit()
                                 .frame(height: 400, alignment: .center)

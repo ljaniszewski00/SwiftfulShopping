@@ -26,7 +26,7 @@ struct CartView: View {
             Group {
                 if cartViewModel.cartIsEmpty {
                     VStack(spacing: 40) {
-                        LottieView(name: "empty_cart", loopMode: .playOnce, contentMode: .scaleAspectFit)
+                        LottieView(name: LottieAssetsNames.emptyCart, loopMode: .playOnce, contentMode: .scaleAspectFit)
                             .frame(width: ScreenBoundsSupplier.shared.getScreenWidth() * 0.5,
                                    height: ScreenBoundsSupplier.shared.getScreenHeight() * 0.25)
                         VStack(spacing: 20) {

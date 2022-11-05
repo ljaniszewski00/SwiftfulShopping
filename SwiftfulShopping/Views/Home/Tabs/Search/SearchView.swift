@@ -109,7 +109,7 @@ struct SearchView: View {
                                 
                                 if !exploreViewModel.searchProductsText.isEmpty && exploreViewModel.changingProductsToBeDisplayed.isEmpty {
                                     VStack {
-                                        LottieView(name: "searchNoResults",
+                                        LottieView(name: LottieAssetsNames.searchNoResults,
                                                    loopMode: .loop,
                                                    contentMode: .scaleAspectFill)
                                         .frame(width: ScreenBoundsSupplier.shared.getScreenWidth(),

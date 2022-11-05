@@ -23,13 +23,13 @@ struct SelectionDropdownMenu: View {
         self.includeSearchField = includeSearchField
     }
     
-    static let countries: [String: String?] = [TexterifyManager.localisedString(key: .countries(.czech)): "czech",
-                                               TexterifyManager.localisedString(key: .countries(.england)): "england",
-                                               TexterifyManager.localisedString(key: .countries(.france)): "france",
-                                               TexterifyManager.localisedString(key: .countries(.germany)): "germany",
-                                               TexterifyManager.localisedString(key: .countries(.poland)): "poland",
-                                               TexterifyManager.localisedString(key: .countries(.spain)): "spain",
-                                               TexterifyManager.localisedString(key: .countries(.unitedStates)): "united"]
+    static let countries: [String: String?] = [TexterifyManager.localisedString(key: .countries(.czech)): AssetsNames.czechFlag,
+                                               TexterifyManager.localisedString(key: .countries(.england)): AssetsNames.englandFlag,
+                                               TexterifyManager.localisedString(key: .countries(.france)): AssetsNames.franceFlag,
+                                               TexterifyManager.localisedString(key: .countries(.germany)): AssetsNames.germanyFlag,
+                                               TexterifyManager.localisedString(key: .countries(.poland)): AssetsNames.polandFlag,
+                                               TexterifyManager.localisedString(key: .countries(.spain)): AssetsNames.spainFlag,
+                                               TexterifyManager.localisedString(key: .countries(.unitedStates)): AssetsNames.czechFlag]
     
     var elementsNames: [String] {
         if searchText.isEmpty {

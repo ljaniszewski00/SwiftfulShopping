@@ -175,7 +175,7 @@ struct ExploreView: View {
                                                     .frame(width: 40, height: 40)
                                                     
                                             } else {
-                                                Image("product_placeholder_image")
+                                                Image(AssetsNames.productPlaceholder)
                                                     .resizable()
                                                     .aspectRatio(contentMode: .fill)
                                                     .frame(width: 40, height: 40)

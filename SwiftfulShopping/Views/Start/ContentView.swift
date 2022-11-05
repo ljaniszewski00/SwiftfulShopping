@@ -25,13 +25,13 @@ struct ContentView: View {
             } else {
                 VStack(spacing: 10) {
                     if colorScheme == .light {
-                        Image("SwiftfulShoppingLogo - vertical (gray)")
+                        Image(AssetsNames.logoVerticalGray)
                             .resizable()
                             .aspectRatio(contentMode: .fill)
                             .frame(width: ScreenBoundsSupplier.shared.getScreenWidth(),
                                    height: ScreenBoundsSupplier.shared.getScreenHeight() * 0.2)
                     } else if colorScheme == .dark {
-                        Image("SwiftfulShoppingLogo - vertical (white)")
+                        Image(AssetsNames.logoVerticalWhite)
                             .resizable()
                             .aspectRatio(contentMode: .fill)
                             .frame(width: ScreenBoundsSupplier.shared.getScreenWidth(),

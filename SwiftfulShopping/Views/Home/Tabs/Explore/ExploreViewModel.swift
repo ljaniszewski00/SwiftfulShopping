@@ -175,7 +175,7 @@ class ExploreViewModel: ObservableObject {
                     dispatchGroup.leave()
                 }
             } else {
-                self.categoriesWithImages[category] = UIImage(named: "product_placeholder_image")
+                self.categoriesWithImages[category] = UIImage(named: AssetsNames.productPlaceholder)
                 dispatchGroup.leave()
             }
         }

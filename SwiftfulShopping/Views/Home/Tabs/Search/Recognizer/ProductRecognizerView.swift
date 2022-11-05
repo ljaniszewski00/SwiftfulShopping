@@ -119,7 +119,7 @@ struct ProductRecognizerView: View {
             VStack(alignment: .center, spacing: 20) {
                 if exploreViewModel.getProductsListFor(recognitionResults: productRecognizer.getFormattedResults()).isEmpty {
                     VStack {
-                        LottieView(name: "searchNoResults",
+                        LottieView(name: LottieAssetsNames.searchNoResults,
                                    loopMode: .loop,
                                    contentMode: .scaleAspectFill)
                         .frame(width: ScreenBoundsSupplier.shared.getScreenWidth(),
@@ -206,7 +206,7 @@ struct ProductRecognizerView: View {
                 .ignoresSafeArea()
             
             VStack {
-                LottieView(name: "recognizingObjects",
+                LottieView(name: LottieAssetsNames.recognizingObjects,
                            loopMode: .loop,
                            contentMode: .scaleAspectFill)
                     .zIndex(1)

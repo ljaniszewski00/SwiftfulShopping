@@ -37,7 +37,7 @@ struct OrderCreationCompletionView: View {
                         
                         HStack {
                             Spacer()
-                            LottieView(name: "successful_order_creation", loopMode: .playOnce, contentMode: .scaleAspectFill)
+                            LottieView(name: LottieAssetsNames.successfulOrderCreation, loopMode: .playOnce, contentMode: .scaleAspectFill)
                                 .frame(width: ScreenBoundsSupplier.shared.getScreenWidth() * 0.5,
                                        height: ScreenBoundsSupplier.shared.getScreenHeight() * 0.25)
                             Spacer()

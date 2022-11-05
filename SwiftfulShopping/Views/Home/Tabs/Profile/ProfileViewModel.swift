@@ -12,8 +12,8 @@ class ProfileViewModel: ObservableObject {
     @Published var userOrders: [Order] = []
     @Published var userReturns: [Return] = []
     
-    @Published var oldImage: UIImage = UIImage(named: "blank_profile_image")!
-    @Published var image: UIImage = UIImage(named: "blank_profile_image")!
+    @Published var oldImage: UIImage = UIImage(named: AssetsNames.blankProfile)!
+    @Published var image: UIImage = UIImage(named: AssetsNames.blankProfile)!
     
     @Published var shouldPresentOrderRateView: Bool = false
     @Published var shouldPresentReturnCreationView: Bool = false

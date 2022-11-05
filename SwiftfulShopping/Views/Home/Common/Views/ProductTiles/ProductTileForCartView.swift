@@ -22,7 +22,7 @@ struct ProductTileForCartView: View {
             
             KFImage(URL(string: product.imagesURLs.first ?? URLConstants.emptyProductPhoto)!)
                 .placeholder {
-                    Image("product_placeholder_image")
+                    Image(AssetsNames.productPlaceholder)
                         .resizable()
                         .aspectRatio(contentMode: .fit)
                         .clipShape(RoundedRectangle(cornerRadius: 15))

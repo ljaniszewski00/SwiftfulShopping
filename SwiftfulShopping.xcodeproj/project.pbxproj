@@ -329,6 +329,8 @@
 		88DC09E8291332CA002F41C3 /* ExpandableTextLocalizable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88DC09E7291332CA002F41C3 /* ExpandableTextLocalizable.swift */; };
 		88DEDD462916839F003EFA44 /* SelectionDropdownMenuLocalizable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88DEDD452916839F003EFA44 /* SelectionDropdownMenuLocalizable.swift */; };
 		88DEDD48291690C4003EFA44 /* AppearanceLocalizable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88DEDD47291690C4003EFA44 /* AppearanceLocalizable.swift */; };
+		88DEDD4A29171BBD003EFA44 /* AssetsNames.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88DEDD4929171BBD003EFA44 /* AssetsNames.swift */; };
+		88DEDD4C29171DAC003EFA44 /* LottieAssetsNames.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88DEDD4B29171DAC003EFA44 /* LottieAssetsNames.swift */; };
 		88EFAA142915467D00A30481 /* CountriesLocalizable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88EFAA132915467D00A30481 /* CountriesLocalizable.swift */; };
 		88EFAA162915469300A30481 /* ShippingMethodLocalizable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88EFAA152915469300A30481 /* ShippingMethodLocalizable.swift */; };
 		88EFAA182915469A00A30481 /* PaymentMethodLocalizable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88EFAA172915469A00A30481 /* PaymentMethodLocalizable.swift */; };
@@ -604,6 +606,8 @@
 		88DC09E7291332CA002F41C3 /* ExpandableTextLocalizable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExpandableTextLocalizable.swift; sourceTree = "<group>"; };
 		88DEDD452916839F003EFA44 /* SelectionDropdownMenuLocalizable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectionDropdownMenuLocalizable.swift; sourceTree = "<group>"; };
 		88DEDD47291690C4003EFA44 /* AppearanceLocalizable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppearanceLocalizable.swift; sourceTree = "<group>"; };
+		88DEDD4929171BBD003EFA44 /* AssetsNames.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AssetsNames.swift; sourceTree = "<group>"; };
+		88DEDD4B29171DAC003EFA44 /* LottieAssetsNames.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LottieAssetsNames.swift; sourceTree = "<group>"; };
 		88EFAA132915467D00A30481 /* CountriesLocalizable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CountriesLocalizable.swift; sourceTree = "<group>"; };
 		88EFAA152915469300A30481 /* ShippingMethodLocalizable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShippingMethodLocalizable.swift; sourceTree = "<group>"; };
 		88EFAA172915469A00A30481 /* PaymentMethodLocalizable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaymentMethodLocalizable.swift; sourceTree = "<group>"; };
@@ -811,6 +815,8 @@
 			isa = PBXGroup;
 			children = (
 				0A3643CC29054D5F000966AF /* URLConstants.swift */,
+				88DEDD4929171BBD003EFA44 /* AssetsNames.swift */,
+				88DEDD4B29171DAC003EFA44 /* LottieAssetsNames.swift */,
 			);
 			path = Constants;
 			sourceTree = "<group>";
@@ -1932,6 +1938,7 @@
 				0A2FE0AB28A16D5B00E8D30E /* CustomError.swift in Sources */,
 				889EDFAF290F2AE900EBFFC1 /* EditPersonalInfoViewLocalizable.swift in Sources */,
 				0A56D89B285F26180009680C /* FavoritesView.swift in Sources */,
+				88DEDD4A29171BBD003EFA44 /* AssetsNames.swift in Sources */,
 				0ACD59B1284B73AE00AA9DA0 /* Address.swift in Sources */,
 				0A5A7CFD2896AC3400736B07 /* OrderRateView.swift in Sources */,
 				0A5A7CEC289543AD00736B07 /* OrderCreationViewModel.swift in Sources */,
@@ -1950,6 +1957,7 @@
 				0A2FE0A528A15B7C00E8D30E /* NetworkManager.swift in Sources */,
 				0A30460D28AAB02600F218B3 /* FilteringMethods.swift in Sources */,
 				0A268B4728671924006CF0E2 /* OrderDetailsView.swift in Sources */,
+				88DEDD4C29171DAC003EFA44 /* LottieAssetsNames.swift in Sources */,
 				889EDFBD290F2B1000EBFFC1 /* AccentColorChangeViewLocalizable.swift in Sources */,
 				889EDF97290F2A9A00EBFFC1 /* OrdersViewLocalizable.swift in Sources */,
 				889EDF77290F2A1D00EBFFC1 /* ProductDetailsViewLocalizable.swift in Sources */,

@@ -76,17 +76,17 @@ struct ImagesCarouselView_Previews: PreviewProvider {
     static var previews: some View {
         GeometryReader { geometry in
             ImagesCarouselView(numberOfImages: 3) {
-                Image("product_placeholder_image")
+                Image(AssetsNames.productPlaceholder)
                     .resizable()
                     .scaledToFill()
                     .frame(width: geometry.size.width, height: geometry.size.height)
                     .clipped()
-                Image("product_placeholder_image")
+                Image(AssetsNames.productPlaceholder)
                     .resizable()
                     .scaledToFill()
                     .frame(width: geometry.size.width, height: geometry.size.height)
                     .clipped()
-                Image("product_placeholder_image")
+                Image(AssetsNames.productPlaceholder)
                     .resizable()
                     .scaledToFill()
                     .frame(width: geometry.size.width, height: geometry.size.height)

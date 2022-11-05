@@ -14,7 +14,7 @@ struct NotificationsView: View {
     
     var body: some View {
         VStack {
-            LottieView(name: "maintenance",
+            LottieView(name: LottieAssetsNames.maintenance,
                        loopMode: .loop,
                        contentMode: .scaleAspectFit)
             .frame(width: ScreenBoundsSupplier.shared.getScreenWidth() * 0.8,

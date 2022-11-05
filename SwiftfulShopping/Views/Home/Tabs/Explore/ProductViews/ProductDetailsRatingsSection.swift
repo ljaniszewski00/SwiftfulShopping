@@ -120,7 +120,7 @@ struct ProductDetailsRatingsSection: View {
                                 if let productReview = productRating.review {
                                     VStack(alignment: .leading, spacing: 20) {
                                         HStack(spacing: 20) {
-                                            Image("blank_profile_image")
+                                            Image(AssetsNames.blankProfile)
                                                 .resizable()
                                                 .aspectRatio(contentMode: .fill)
                                                 .clipShape(Circle())
@@ -149,6 +149,8 @@ struct ProductDetailsRatingsSection: View {
                                                         .fixedSize(horizontal: true, vertical: false)
                                                 }
                                             }
+                                            
+                                            Spacer()
                                         }
 
                                         Text(productReview)

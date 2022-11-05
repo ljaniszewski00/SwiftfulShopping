@@ -60,7 +60,7 @@ struct PaymentDetailsView: View {
                                         .font(.ssTitle3)
                                         .foregroundColor(colorScheme == .light ? .black : .ssWhite)
                                     if paymentMethod == .applePay {
-                                        Image("apple_pay_logo")
+                                        Image(AssetsNames.applePayLogo)
                                             .resizable()
                                     }
                                 }
@@ -119,7 +119,7 @@ struct PaymentDetailsView: View {
                         .font(.ssTitle3)
                         .foregroundColor(.ssWhite)
                     Spacer()
-                    Image("card_chip")
+                    Image(AssetsNames.cardChip)
                         .resizable()
                         .frame(width: 40, height: 30)
                 }

@@ -38,7 +38,7 @@ struct ListProductCardTileView: View {
         HStack(alignment: .center) {
             KFImage(URL(string: product.imagesURLs.first ?? URLConstants.emptyProductPhoto)!)
                 .placeholder {
-                    Image("product_placeholder_image")
+                    Image(AssetsNames.productPlaceholder)
                         .resizable()
                         .aspectRatio(contentMode: .fit)
                         .clipShape(RoundedRectangle(cornerRadius: 15))

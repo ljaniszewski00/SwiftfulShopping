@@ -73,4 +73,6 @@ extension Color {
     
     static let errorModalStroke: Color = Color(hex: "#FC676B")
     static let errorModalInside: Color = Color(hex: "#FCCACF")
+    
+    static let facebookLoginButtonBackground: Color = Color(hex: "#1977F2")
 }

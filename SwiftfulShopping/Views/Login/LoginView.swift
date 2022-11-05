@@ -34,13 +34,13 @@ struct LoginView: View {
                 ScrollView(.vertical, showsIndicators: false) {
                     VStack(spacing: 0) {
                         if colorScheme == .light {
-                            Image("SwiftfulShoppingLogo - horizontal (gray)")
+                            Image(AssetsNames.logoHorizontalGray)
                                 .resizable()
                                 .aspectRatio(contentMode: .fill)
                                 .frame(width: ScreenBoundsSupplier.shared.getScreenWidth(),
                                        height: ScreenBoundsSupplier.shared.getScreenHeight() * 0.2)
                         } else if colorScheme == .dark {
-                            Image("SwiftfulShoppingLogo - horizontal (white)")
+                            Image(AssetsNames.logoHorizontalWhite)
                                 .resizable()
                                 .aspectRatio(contentMode: .fill)
                                 .frame(width: ScreenBoundsSupplier.shared.getScreenWidth(),
@@ -207,7 +207,7 @@ struct LoginView: View {
                     .stroke()
                     .foregroundColor(.ssDarkGray)
                 HStack {
-                    Image(uiImage: UIImage(named: "google_logo")!)
+                    Image(uiImage: UIImage(named: AssetsNames.googleLogo)!)
                         .resizable()
                         .frame(width: 25, height: 25)
                         .clipShape(Circle())
@@ -238,9 +238,9 @@ struct LoginView: View {
         } label: {
             ZStack {
                 RoundedRectangle(cornerRadius: 5)
-                    .foregroundColor(Color(hex: "#1977F2"))
+                    .foregroundColor(.facebookLoginButtonBackground)
                 HStack {
-                    Image(uiImage: UIImage(named: "facebook_logo")!)
+                    Image(uiImage: UIImage(named: AssetsNames.facebookLogo)!)
                         .resizable()
                         .frame(width: 25, height: 25)
                     Spacer()
@@ -272,7 +272,7 @@ struct LoginView: View {
                 RoundedRectangle(cornerRadius: 5)
                     .foregroundColor(.black)
                 HStack {
-                    Image(uiImage: UIImage(named: "github_logo")!)
+                    Image(uiImage: UIImage(named: AssetsNames.githubLogo)!)
                         .resizable()
                         .frame(width: 25, height: 25)
                     Spacer()
