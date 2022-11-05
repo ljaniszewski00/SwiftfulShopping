@@ -89,6 +89,8 @@ struct ProductDetailsView: View {
                     productDetailsViewModel.increaseProductQuantity()
                 })
                 
+                Spacer()
+                
                 AddToCartButton {
                     UIImpactFeedbackGenerator(style: .medium).impactOccurred()
                     cartViewModel.addProductToCart(product: product, quantity: productDetailsViewModel.productQuantityToBasket)

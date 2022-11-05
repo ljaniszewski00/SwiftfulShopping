@@ -6,6 +6,8 @@
 //
 
 import Foundation
+import UIKit
+import Kingfisher
 
 class ExploreViewModel: ObservableObject {
     @Published var errorManager = ErrorManager.shared
@@ -13,6 +15,8 @@ class ExploreViewModel: ObservableObject {
     @Published var productsFromRepository: [Product] = []
     @Published var productsToBeDisplayed: [Product] = []
     @Published var ratingsFromRepository: [ProductRating] = []
+    
+    @Published var categoriesWithImages: [Category: UIImage] = [:]
     
     @Published var productsForTab: TabsWithProducts = .exploreView
     
@@ -40,7 +44,9 @@ class ExploreViewModel: ObservableObject {
     func fetchData(completion: @escaping (() -> ())) {
         fetchProducts { [weak self] in
             self?.fetchRatings {
-                completion()
+                self?.getCategoriesImages {
+                    completion()
+                }
             }
         }
     }
@@ -62,20 +68,6 @@ class ExploreViewModel: ObservableObject {
             }
             completion()
         }
-    }
-    
-    var productsCategoriesWithImageURL: [Category: String?] {
-        var productsCategoriesWithImageURL: [Category: String?] = [:]
-        
-        for category in productsCategories {
-            productsCategoriesWithImageURL[category] = productsFromRepository
-                                                            .filter { $0.category == category }
-                                                            .map { $0.imagesURLs.first }
-                                                            .compactMap { $0 }
-                                                            .first
-        }
-        
-        return productsCategoriesWithImageURL
     }
     
     var productsWithRatings: [Product: [ProductRating]] {
@@ -157,6 +149,39 @@ class ExploreViewModel: ObservableObject {
                     return Array(filteredProducts.prefix(filteredProductsCount))
                 }
             }
+        }
+    }
+    
+    func getCategoriesImages(completion: @escaping (() -> ())) {
+        let dispatchGroup = DispatchGroup()
+        
+        for category in productsCategories {
+            dispatchGroup.enter()
+            let categoryImageURLString = productsFromRepository
+                                            .filter { $0.category == category }
+                                            .map { $0.imagesURLs.first }
+                                            .compactMap { $0 }
+                                            .first
+            
+            if let categoryImageURLString = categoryImageURLString, let url = URL(string: categoryImageURLString) {
+                
+                KingfisherManager.shared.retrieveImage(with: url, options: [.lowDataMode(.network(url))]) { [weak self] result in
+                    switch result {
+                    case .success(let value):
+                        self?.categoriesWithImages[category] = value.image
+                    case .failure(_):
+                        break
+                    }
+                    dispatchGroup.leave()
+                }
+            } else {
+                self.categoriesWithImages[category] = UIImage(named: "product_placeholder_image")
+                dispatchGroup.leave()
+            }
+        }
+        
+        dispatchGroup.notify(queue: .main) {
+            completion()
         }
     }
     

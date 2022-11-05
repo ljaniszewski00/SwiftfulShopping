@@ -36,7 +36,7 @@ struct ExploreView: View {
             ScrollViewReader { scrollViewReader in
                 ZStack(alignment: .bottomTrailing) {
                     ScrollView(.vertical, showsIndicators: false) {
-                        LazyVStack(alignment: .center) {
+                        VStack(alignment: .center) {
                             buildCategoriesList()
                             
                             if !exploreViewModel.shouldPresentAllCategoryProducts {
@@ -99,10 +99,7 @@ struct ExploreView: View {
                                 .background {
                                     Circle()
                                         .foregroundColor(.accentColor)
-                                        .shadow(color: .black,
-                                                radius: 5,
-                                                x: 3,
-                                                y: 3)
+                                        .shadow(color: .black, radius: 5, x: 3, y: 3)
                                 }
                         }
                         .padding()
@@ -156,7 +153,7 @@ struct ExploreView: View {
                 
                 VStack(alignment: .leading, spacing: 5) {
                     ScrollView(.horizontal, showsIndicators: false) {
-                        LazyHStack {
+                        HStack {
                             ForEach(Category.allCases, id: \.self) { category in
                                 Button {
                                     if exploreViewModel.choosenCategory == category &&
@@ -170,31 +167,26 @@ struct ExploreView: View {
                                     }
                                 } label: {
                                     VStack(spacing: 15) {
-                                        if let categoryImageURLString = exploreViewModel.productsCategoriesWithImageURL[category], let categoryImageURLString = categoryImageURLString {
-                                            KFImage(URL(string: categoryImageURLString)!)
-                                                .placeholder {
-                                                    Image("product_placeholder_image")
-                                                        .resizable()
-                                                        .aspectRatio(contentMode: .fill)
-                                                        .frame(width: 40, height: 40)
-                                                }
-                                                .retry(maxCount: 3, interval: .seconds(3))
-                                                .cancelOnDisappear(true)
-                                                .resizable()
-                                                .aspectRatio(contentMode: .fill)
-                                                .frame(width: 40, height: 40)
-                                                .if(exploreViewModel.shouldPresentAllCategoryProducts) {
+                                        Group {
+                                            if let uiImage = exploreViewModel.categoriesWithImages[category] {
+                                                Image(uiImage: uiImage)
+                                                    .resizable()
+                                                    .aspectRatio(contentMode: .fill)
+                                                    .frame(width: 40, height: 40)
+                                                    
+                                            } else {
+                                                Image("product_placeholder_image")
+                                                    .resizable()
+                                                    .aspectRatio(contentMode: .fill)
+                                                    .frame(width: 40, height: 40)
+                                            }
+                                        }
+                                        .if(exploreViewModel.shouldPresentAllCategoryProducts) {
+                                            $0
+                                                .if(category != exploreViewModel.choosenCategory) {
                                                     $0
-                                                        .if(category != exploreViewModel.choosenCategory) {
-                                                            $0
-                                                                .opacity(0.6)
-                                                        }
+                                                        .opacity(0.6)
                                                 }
-                                        } else {
-                                            Image("product_placeholder_image")
-                                                .resizable()
-                                                .aspectRatio(contentMode: .fill)
-                                                .frame(width: 40, height: 40)
                                         }
                                         
                                         Text(category.rawValue)
