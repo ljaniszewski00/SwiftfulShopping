@@ -12,15 +12,29 @@ class ChangePasswordViewModel: ObservableObject {
     @Published var oldPassword: String = ""
     @Published var newPassword: String = ""
     
-    @Published var showNewPasswordTextField: Bool = false
-    
     @Published var showLoadingModal: Bool = false
+    @Published var successfullyChanged: Bool = false
     
-    func verifyCredentials() {
-        showNewPasswordTextField = true
+    var inputsInvalid: Bool {
+        email.isEmpty ||
+        oldPassword.isEmpty ||
+        newPassword.isEmpty
     }
     
-    func changePassword() {
-        
+    func changePassword(completion: @escaping ((VoidResult) -> ())) {
+        showLoadingModal = true
+        FirebaseAuthManager.client.changePassword(emailAddress: email,
+                                                  oldPassword: oldPassword,
+                                                  newPassword: newPassword) { [weak self] result in
+            switch result {
+            case .success:
+                self?.successfullyChanged = true
+            case .failure(_):
+                break
+            }
+            
+            self?.showLoadingModal = false
+            completion(result)
+        }
     }
 }

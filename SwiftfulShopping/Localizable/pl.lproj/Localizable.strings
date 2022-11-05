@@ -31,12 +31,14 @@
 "Category_tablets" = "Tablety";
 "Category_watches" = "Zegarki";
 "ChangeEmailView_changeEmailButton" = "Zmień e-mail";
+"ChangeEmailView_changeEmailButtonSuccessText" = "Pomyślnie zmieniono adres e-mail!";
 "ChangeEmailView_navigationTitle" = "Zmień e-mail";
 "ChangeEmailView_newEmailTextField" = "Nowy adres e-mail";
 "ChangeEmailView_oldEmailTextField" = "Stary adres e-mail";
 "ChangeEmailView_passwordTextField" = "Hasło";
 "ChangeEmailView_verifyButton" = "Zweryfikuj dane uwierzytelniające";
 "ChangePasswordView_changePasswordButton" = "Zmiana hasła";
+"ChangePasswordView_changePasswordButtonSuccessText" = "Pomyślnie zmieniono hasło!";
 "ChangePasswordView_emailTextField" = "Adres e-mail";
 "ChangePasswordView_navigationTitle" = "Zmiana hasła";
 "ChangePasswordView_newPasswordTextField" = "Nowe hasło";
@@ -436,4 +438,4 @@
 "ThirdReturnCreationView_createReturnButton" = "Utwórz Zwrot";
 "ThirdReturnCreationView_howDoYouWantToReturn" = "W jaki sposób chcesz zwrócić produkt?";
 "ThirdReturnCreationView_navigationTitle" = "Utwórz Zwrot";
-"texterify_timestamp" = "2022-11-05T17:31:35Z";
+"texterify_timestamp" = "2022-11-05T23:37:22Z";

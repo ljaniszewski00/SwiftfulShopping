@@ -60,8 +60,6 @@ struct EditPersonalInfoView: View {
         }
         .modifier(LoadingIndicatorModal(isPresented:
                                             $personalInfoViewModel.showLoadingModal))
-        .modifier(ErrorModal(isPresented: $errorManager.showErrorModal,
-                             customError: errorManager.customError ?? ErrorManager.unknownError))
         .navigationTitle(TexterifyManager.localisedString(key: .editPersonalInfoView(.navigationTitle)))
         .navigationBarBackButtonHidden(true)
         .toolbar {

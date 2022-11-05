@@ -31,16 +31,18 @@ struct PaymentDetailsView: View {
                     ForEach(PaymentMethod.allCases, id: \.self) { paymentMethod in
                         HStack(spacing: 10) {
                             Button(action: {
-                                paymentDetailsViewModel.showLoadingModal = true
-                                profileViewModel.changeDefaultPaymentMethod(newDefaultPaymentMethod: paymentMethod) { result in
-                                    paymentDetailsViewModel.showLoadingModal = false
-                                    switch result {
-                                    case .success:
-                                        break
-                                    case .failure(let error):
-                                        errorManager.generateCustomError(errorType:
-                                                .changeDefaultPaymentMethodError,
-                                                                         additionalErrorDescription: error.localizedDescription)
+                                if profileViewModel.profile?.defaultPaymentMethod != paymentMethod {
+                                    paymentDetailsViewModel.showLoadingModal = true
+                                    profileViewModel.changeDefaultPaymentMethod(newDefaultPaymentMethod: paymentMethod) { result in
+                                        paymentDetailsViewModel.showLoadingModal = false
+                                        switch result {
+                                        case .success:
+                                            break
+                                        case .failure(let error):
+                                            errorManager.generateCustomError(errorType:
+                                                    .changeDefaultPaymentMethodError,
+                                                                             additionalErrorDescription: error.localizedDescription)
+                                        }
                                     }
                                 }
                             }, label: {
@@ -81,8 +83,6 @@ struct PaymentDetailsView: View {
         }
         .modifier(LoadingIndicatorModal(isPresented:
                                             $paymentDetailsViewModel.showLoadingModal))
-        .modifier(ErrorModal(isPresented: $errorManager.showErrorModal,
-                             customError: errorManager.customError ?? ErrorManager.unknownError))
         .navigationTitle(TexterifyManager.localisedString(key: .paymentDetailsView(.navigationTitle)))
         .navigationBarTitleDisplayMode(.inline)
         .navigationBarBackButtonHidden(true)

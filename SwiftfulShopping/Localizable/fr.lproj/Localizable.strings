@@ -31,12 +31,14 @@
 "Category_tablets" = "";
 "Category_watches" = "";
 "ChangeEmailView_changeEmailButton" = "";
+"ChangeEmailView_changeEmailButtonSuccessText" = "";
 "ChangeEmailView_navigationTitle" = "";
 "ChangeEmailView_newEmailTextField" = "";
 "ChangeEmailView_oldEmailTextField" = "";
 "ChangeEmailView_passwordTextField" = "";
 "ChangeEmailView_verifyButton" = "";
 "ChangePasswordView_changePasswordButton" = "";
+"ChangePasswordView_changePasswordButtonSuccessText" = "";
 "ChangePasswordView_emailTextField" = "";
 "ChangePasswordView_navigationTitle" = "";
 "ChangePasswordView_newPasswordTextField" = "";
@@ -436,4 +438,4 @@
 "ThirdReturnCreationView_createReturnButton" = "";
 "ThirdReturnCreationView_howDoYouWantToReturn" = "";
 "ThirdReturnCreationView_navigationTitle" = "";
-"texterify_timestamp" = "2022-11-05T17:31:33Z";
+"texterify_timestamp" = "2022-11-05T23:37:20Z";

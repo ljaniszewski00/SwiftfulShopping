@@ -31,12 +31,14 @@
 "Category_tablets" = "Tablets";
 "Category_watches" = "Watches";
 "ChangeEmailView_changeEmailButton" = "Change Email Address";
+"ChangeEmailView_changeEmailButtonSuccessText" = "Successfully changed e-mail address!";
 "ChangeEmailView_navigationTitle" = "Change Email";
 "ChangeEmailView_newEmailTextField" = "New Email Address";
 "ChangeEmailView_oldEmailTextField" = "Old Email Address";
 "ChangeEmailView_passwordTextField" = "Password";
 "ChangeEmailView_verifyButton" = "Verify Credentials";
 "ChangePasswordView_changePasswordButton" = "Change Password";
+"ChangePasswordView_changePasswordButtonSuccessText" = "Successfully changed password!";
 "ChangePasswordView_emailTextField" = "Email Address";
 "ChangePasswordView_navigationTitle" = "Change Password";
 "ChangePasswordView_newPasswordTextField" = "New Password";
@@ -436,4 +438,4 @@
 "ThirdReturnCreationView_createReturnButton" = "Create Return";
 "ThirdReturnCreationView_howDoYouWantToReturn" = "How do you want to return the product?";
 "ThirdReturnCreationView_navigationTitle" = "Create Return";
-"texterify_timestamp" = "2022-11-05T17:31:32Z";
+"texterify_timestamp" = "2022-11-05T23:37:19Z";

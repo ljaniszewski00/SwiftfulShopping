@@ -31,7 +31,7 @@ class FirestoreProfileManager: ObservableObject {
                             if let invoiceAddress = invoiceAddress {
                                 self?.db.collection(DatabaseCollections.profiles.rawValue)
                                     .whereField("id", isEqualTo: userID)
-                                    .getDocuments { (querySnapshot, error) in
+                                    .addSnapshotListener { (querySnapshot, error) in
                                         if let error = error {
                                             print("Error fetching profile data: \(error.localizedDescription)")
                                             completion(.failure(error))
@@ -87,7 +87,7 @@ class FirestoreProfileManager: ObservableObject {
     func getShipmentAddressesFor(userID: String, completion: @escaping ((Result<[Address]?, Error>) -> ())) {
         self.db.collection(DatabaseCollections.shipmentAddresses.rawValue)
             .whereField("userID", isEqualTo: userID)
-            .getDocuments { (querySnapshot, error) in
+            .addSnapshotListener { (querySnapshot, error) in
                 if let error = error {
                     print("Error fetching shipment addresses data: \(error.localizedDescription)")
                     completion(.failure(error))
@@ -127,7 +127,7 @@ class FirestoreProfileManager: ObservableObject {
     func getInvoiceAddressFor(userID: String, completion: @escaping ((Result<Address?, Error>) -> ())) {
         self.db.collection(DatabaseCollections.invoiceAddresses.rawValue)
             .whereField("userID", isEqualTo: userID)
-            .getDocuments { querySnapshot, error in
+            .addSnapshotListener { querySnapshot, error in
                 if let error = error {
                     print("Error fetching invoice addresses data: \(error.localizedDescription)")
                     completion(.failure(error))

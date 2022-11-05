@@ -51,7 +51,6 @@ struct DeleteAccountView: View {
         }
         .modifier(LoadingIndicatorModal(isPresented:
                                                             $deleteAccountViewModel.showLoadingModal))
-        .modifier(ErrorModal(isPresented: $errorManager.showErrorModal, customError: errorManager.customError ?? ErrorManager.unknownError))
         .navigationTitle(TexterifyManager.localisedString(key: .deleteAccountView(.navigationTitle)))
         .navigationBarTitleDisplayMode(.large)
         .navigationBarBackButtonHidden(true)

@@ -29,7 +29,7 @@ struct SelectionDropdownMenu: View {
                                                TexterifyManager.localisedString(key: .countries(.germany)): AssetsNames.germanyFlag,
                                                TexterifyManager.localisedString(key: .countries(.poland)): AssetsNames.polandFlag,
                                                TexterifyManager.localisedString(key: .countries(.spain)): AssetsNames.spainFlag,
-                                               TexterifyManager.localisedString(key: .countries(.unitedStates)): AssetsNames.czechFlag]
+                                               TexterifyManager.localisedString(key: .countries(.unitedStates)): AssetsNames.unitedFlag]
     
     var elementsNames: [String] {
         if searchText.isEmpty {

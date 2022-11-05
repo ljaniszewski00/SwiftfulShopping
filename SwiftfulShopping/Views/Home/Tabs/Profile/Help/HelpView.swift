@@ -44,7 +44,8 @@ struct HelpView: View {
                             Text(TexterifyManager.localisedString(key: .helpView(.contactUsButton)))
                                 .font(.ssButton)
                         }
-                        .buttonStyle(RoundedCompletionButtonStyle(actionCompleted: helpViewModel.contactUsButtonClicked, actionCompletedText: TexterifyManager.localisedString(key: .helpView(.waitInfo))))
+                        .buttonStyle(RoundedCompletionButtonStyle(actionCompleted: helpViewModel.contactUsButtonClicked,
+                                                                  actionCompletedText: TexterifyManager.localisedString(key: .helpView(.waitInfo))))
                         .contentShape(Rectangle())
                         .disabled(helpViewModel.contactUsInfoNotValidated)
                     }
@@ -68,7 +69,8 @@ struct HelpView: View {
                             Text(TexterifyManager.localisedString(key: .helpView(.subscribeToNewsletterButton)))
                                 .font(.ssButton)
                         }
-                        .buttonStyle(RoundedCompletionButtonStyle(actionCompleted: helpViewModel.signForNewsletterActionClicked, actionCompletedText: TexterifyManager.localisedString(key: .helpView(.subscribedToNewsletterCompletedButton))))
+                        .buttonStyle(RoundedCompletionButtonStyle(actionCompleted: helpViewModel.signForNewsletterActionClicked,
+                                                                  actionCompletedText: TexterifyManager.localisedString(key: .helpView(.subscribedToNewsletterCompletedButton))))
                         .contentShape(Rectangle())
                         .disabled(helpViewModel.newsletterEmailNotValidated)
                     }

@@ -191,23 +191,20 @@ struct HomeView: View {
     }
     
     func onAppear(completion: @escaping (() -> ())) {
-        exploreViewModel.fetchData {
-            completion()
+        profileViewModel.fetchData { result in
+            switch result {
+            case .success:
+                exploreViewModel.fetchData {
+                    cartViewModel.onAppear()
+                    favoritesViewModel.fetchFavorites()
+                    completion()
+                }
+            case .failure(let error):
+                errorManager.generateCustomError(errorType: .dataFetchError,
+                                                 additionalErrorDescription: error.localizedDescription)
+                completion()
+            }
         }
-//        profileViewModel.fetchData { result in
-//            switch result {
-//            case .success:
-//                exploreViewModel.fetchData {
-//                    cartViewModel.onAppear()
-//                    favoritesViewModel.fetchFavorites()
-//                    completion()
-//                }
-//            case .failure(let error):
-//                errorManager.generateCustomError(errorType: .dataFetchError,
-//                                                 additionalErrorDescription: error.localizedDescription)
-//                completion()
-//            }
-//        }
     }
 }
 

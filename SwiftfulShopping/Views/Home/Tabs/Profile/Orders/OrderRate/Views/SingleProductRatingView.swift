@@ -104,8 +104,6 @@ struct SingleProductRatingView: View {
             }
             .modifier(LoadingIndicatorModal(isPresented:
                                                 $ratingViewModel.showLoadingModal))
-            .modifier(ErrorModal(isPresented: $errorManager.showErrorModal,
-                                 customError: errorManager.customError ?? ErrorManager.unknownError))
         }
         .navigationTitle(TexterifyManager.localisedString(key: .singleProductRatingView(.navigationTitle)))
         .navigationBarTitleDisplayMode(.inline)

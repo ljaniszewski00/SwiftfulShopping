@@ -22,62 +22,54 @@ struct ChangeEmailView: View {
     var body: some View {
         ScrollView(.vertical, showsIndicators: false) {
             VStack(spacing: 20) {
-                VStack(spacing: 20) {
+                VStack(alignment: .trailing, spacing: 20) {
                     CustomTextField(textFieldProperty: TexterifyManager.localisedString(key: .changeEmailView(.oldEmailTextField)),
                                     textFieldImageName: "envelope.fill",
                                     textFieldKeyboardType: .emailAddress,
                                     text: $changeEmailViewModel.oldEmail,
                                     isFocusedParentView: $isOldEmailTextFieldFocused)
-                    .disabled(changeEmailViewModel.showNewEmailTextField)
                     
                     CustomTextField(isSecureField: true,
                                     textFieldProperty: TexterifyManager.localisedString(key: .changeEmailView(.passwordTextField)),
                                     textFieldImageName: "key.fill",
                                     text: $changeEmailViewModel.password,
                                     isFocusedParentView: $isPasswordTextFieldFocused)
-                    .disabled(changeEmailViewModel.showNewEmailTextField)
+                    
+                    CustomTextField(textFieldProperty: TexterifyManager.localisedString(key: .changeEmailView(.newEmailTextField)),
+                                    textFieldImageName: "envelope.fill",
+                                    textFieldKeyboardType: .emailAddress,
+                                    text: $changeEmailViewModel.newEmail,
+                                    isFocusedParentView: $isNewEmailTextFieldFocused)
+                    .padding(.bottom)
                     
                     Button {
                         withAnimation {
-                            changeEmailViewModel.verifyCredentials()
+                            changeEmailViewModel.changeEmail { result in
+                                switch result {
+                                case .success:
+                                    DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
+                                        dismiss()
+                                    }
+                                case .failure(let error):
+                                    errorManager.generateCustomError(errorType: .changeEmailError,
+                                                                     additionalErrorDescription: error.localizedDescription)
+                                }
+                            }
                         }
                     } label: {
-                        Text(TexterifyManager.localisedString(key: .changeEmailView(.verifyButton)))
+                        Text(TexterifyManager.localisedString(key: .changeEmailView(.changeEmailButton)))
                             .font(.ssButton)
                     }
-                    .buttonStyle(CustomButton())
-                    .padding(.bottom, 30)
-                    .disabled(changeEmailViewModel.showNewEmailTextField)
-                }
-                
-                if changeEmailViewModel.showNewEmailTextField {
-                    VStack(spacing: 0) {
-                        CustomTextField(textFieldProperty: TexterifyManager.localisedString(key: .changeEmailView(.newEmailTextField)),
-                                        textFieldImageName: "envelope.fill",
-                                        textFieldKeyboardType: .emailAddress,
-                                        text: $changeEmailViewModel.newEmail,
-                                        isFocusedParentView: $isNewEmailTextFieldFocused)
-                        .padding(.bottom)
-                        
-                        Button {
-                            withAnimation {
-                                changeEmailViewModel.changeEmail()
-                            }
-                        } label: {
-                            Text(TexterifyManager.localisedString(key: .changeEmailView(.changeEmailButton)))
-                                .font(.ssButton)
-                        }
-                        .buttonStyle(CustomButton())
-                    }
+                    .buttonStyle(RoundedCompletionButtonStyle(actionCompleted: changeEmailViewModel.successfullyChanged,
+                                                              actionCompletedText: TexterifyManager.localisedString(key: .changeEmailView(.changeEmailButtonSuccessText))))
+                    .disabled(changeEmailViewModel.inputsInvalid)
                 }
                 
                 Spacer()
             }
             .padding()
         }
-        .modifier(LoadingIndicatorModal(isPresented:
-                                                            $changeEmailViewModel.showLoadingModal))
-        .modifier(ErrorModal(isPresented: $errorManager.showErrorModal, customError: errorManager.customError ?? ErrorManager.unknownError))
+        .modifier(LoadingIndicatorModal(isPresented: $changeEmailViewModel.showLoadingModal))
         .navigationTitle(TexterifyManager.localisedString(key: .changeEmailView(.navigationTitle)))
         .navigationBarTitleDisplayMode(.large)
         .navigationBarBackButtonHidden(true)

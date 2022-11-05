@@ -22,53 +22,47 @@ struct ChangePasswordView: View {
     var body: some View {
         ScrollView(.vertical, showsIndicators: false) {
             VStack(spacing: 20) {
-                VStack(spacing: 20) {
+                VStack(alignment: .trailing, spacing: 20) {
                     CustomTextField(textFieldProperty: TexterifyManager.localisedString(key: .changePasswordView(.emailTextField)),
                                     textFieldImageName: "envelope.fill",
                                     textFieldKeyboardType: .emailAddress,
                                     text: $changePasswordViewModel.email,
                                     isFocusedParentView: $isEmailTextFieldFocused)
-                    .disabled(changePasswordViewModel.showNewPasswordTextField)
                     
                     CustomTextField(isSecureField: true,
                                     textFieldProperty: TexterifyManager.localisedString(key: .changePasswordView(.oldPasswordTextField)),
                                     textFieldImageName: "key.fill",
                                     text: $changePasswordViewModel.oldPassword,
                                     isFocusedParentView: $isOldPasswordTextFieldFocused)
-                    .disabled(changePasswordViewModel.showNewPasswordTextField)
+                    
+                    CustomTextField(isSecureField: true,
+                                    textFieldProperty: TexterifyManager.localisedString(key: .changePasswordView(.newPasswordTextField)),
+                                    textFieldImageName: "key.fill",
+                                    text: $changePasswordViewModel.newPassword,
+                                    isFocusedParentView: $isNewPasswordTextFieldFocused)
+                    .padding(.bottom)
                     
                     Button {
                         withAnimation {
-                            changePasswordViewModel.verifyCredentials()
+                            changePasswordViewModel.changePassword { result in
+                                switch result {
+                                case .success:
+                                    DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
+                                        dismiss()
+                                    }
+                                case .failure(let error):
+                                    errorManager.generateCustomError(errorType: .changePasswordError,
+                                                                     additionalErrorDescription: error.localizedDescription)
+                                }
+                            }
                         }
                     } label: {
-                        Text(TexterifyManager.localisedString(key: .changePasswordView(.verifyButton)))
+                        Text(TexterifyManager.localisedString(key: .changePasswordView(.changePasswordButton)))
                             .font(.ssButton)
                     }
-                    .buttonStyle(CustomButton())
-                    .padding(.bottom, 30)
-                    .disabled(changePasswordViewModel.showNewPasswordTextField)
-                }
-                
-                if changePasswordViewModel.showNewPasswordTextField {
-                    VStack(spacing: 0) {
-                        CustomTextField(isSecureField: true,
-                                        textFieldProperty: TexterifyManager.localisedString(key: .changePasswordView(.newPasswordTextField)),
-                                        textFieldImageName: "key.fill",
-                                        text: $changePasswordViewModel.newPassword,
-                                        isFocusedParentView: $isNewPasswordTextFieldFocused)
-                        .padding(.bottom)
-                        
-                        Button {
-                            withAnimation {
-                                changePasswordViewModel.changePassword()
-                            }
-                        } label: {
-                            Text(TexterifyManager.localisedString(key: .changePasswordView(.changePasswordButton)))
-                                .font(.ssButton)
-                        }
-                        .buttonStyle(CustomButton())
-                    }
+                    .buttonStyle(RoundedCompletionButtonStyle(actionCompleted: changePasswordViewModel.successfullyChanged,
+                                                              actionCompletedText: TexterifyManager.localisedString(key: .changePasswordView(.changePasswordButtonSuccessText))))
+                    .disabled(changePasswordViewModel.inputsInvalid)
                 }
                 
                 Spacer()
@@ -77,7 +71,6 @@ struct ChangePasswordView: View {
         }
         .modifier(LoadingIndicatorModal(isPresented:
                                                             $changePasswordViewModel.showLoadingModal))
-        .modifier(ErrorModal(isPresented: $errorManager.showErrorModal, customError: errorManager.customError ?? ErrorManager.unknownError))
         .navigationTitle(TexterifyManager.localisedString(key: .changePasswordView(.navigationTitle)))
         .navigationBarTitleDisplayMode(.large)
         .navigationBarBackButtonHidden(true)
