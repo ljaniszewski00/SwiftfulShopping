@@ -72,7 +72,7 @@ struct OrderDetailsView: View {
                             showProductsList.toggle()
                         }, label: {
                             HStack(spacing: 20) {
-                                Text("\(TexterifyManager.localisedString(key: .orderDetailsView(.products))) (\(orderProductsList.count)")
+                                Text("\(TexterifyManager.localisedString(key: .orderDetailsView(.products))) (\(orderProductsList.count))")
                                     .font(.ssTitle2)
                                     .foregroundColor(colorScheme == .light ? .black : .ssWhite)
                                 Image(systemName: showProductsList ? "chevron.up" : "chevron.down")

@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import texterify_ios_sdk
 
 class FirstTimeLoginViewModel: ObservableObject {
     @Published var fullName: String = ""
@@ -27,14 +28,6 @@ class FirstTimeLoginViewModel: ObservableObject {
     @Published var countryInvoice: String = Countries.poland.rawValue
     
     @Published var showLoadingModal: Bool = false
-    
-    let countries: [String: String?] = ["Czech": "czech",
-                                        "England": "england",
-                                        "France": "france",
-                                        "Germany": "germany",
-                                        "Poland": "poland",
-                                        "Spain": "spain",
-                                        "United States": "united"]
     
     func getAddressDataFromLocation(addressData: [String: String]) {
         if !addressData.isEmpty {

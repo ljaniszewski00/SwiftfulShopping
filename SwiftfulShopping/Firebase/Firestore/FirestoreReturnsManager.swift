@@ -81,8 +81,8 @@ class FirestoreReturnsManager: ObservableObject {
             "orderID": returnObject.orderID,
             "productsIDs": returnObject.productsIDs,
             "returnPrice": returnObject.returnPrice,
-            "returnMethod": returnObject.returnMethod.rawValue,
-            "status": returnObject.status.rawValue,
+            "returnMethod": returnObject.returnMethod.decodeValue,
+            "status": returnObject.status.decodeValue,
             "bankAccountNumber": returnObject.bankAccountNumber,
             "bankAccountOwnerName": returnObject.bankAccountOwnerName,
             "bankAccountOwnerStreetAndHouseNumber": returnObject.bankAccountOwnerStreetAndHouseNumber,
@@ -109,7 +109,7 @@ class FirestoreReturnsManager: ObservableObject {
     
     func updateReturnStatus(returnObject: Return, newStatus: ReturnStatus, completion: @escaping ((VoidResult) -> ())) {
         let updateData: [String: Any] = [
-            "status": newStatus.rawValue
+            "status": newStatus.decodeValue
         ]
         
         self.db.collection(DatabaseCollections.returns.rawValue)
@@ -120,7 +120,7 @@ class FirestoreReturnsManager: ObservableObject {
                     completion(.failure(error))
                 } else {
                     documentSnapshot?.reference.updateData(updateData)
-                    print("Successfully changed status of return \(returnObject.id) from \(returnObject.status.rawValue) to \(newStatus.rawValue)")
+                    print("Successfully changed status of return \(returnObject.id) from \(returnObject.status.decodeValue) to \(newStatus.decodeValue)")
                     completion(.success)
                 }
             }

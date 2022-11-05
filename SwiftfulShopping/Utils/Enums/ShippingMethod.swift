@@ -23,6 +23,17 @@ enum ShippingMethod: String, Codable {
             return TexterifyManager.localisedString(key: .shippingMethod(.courier))
         }
     }
+    
+    var decodeValue: String {
+        switch self {
+        case .pickup:
+            return "Pickup"
+        case .parcel:
+            return "Parcel"
+        case .courier:
+            return "Courier"
+        }
+    }
 }
 
 extension ShippingMethod: CaseIterable {
@@ -33,6 +44,6 @@ extension ShippingMethod: CaseIterable {
 
 extension ShippingMethod {
     static func withLabel(_ label: String) -> ShippingMethod? {
-        return self.allCases.first { "\($0.rawValue)" == label }
+        return self.allCases.first { "\($0.decodeValue)" == label }
     }
 }

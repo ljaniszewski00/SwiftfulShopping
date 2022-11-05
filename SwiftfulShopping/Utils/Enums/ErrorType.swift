@@ -33,6 +33,7 @@ enum ErrorType: String {
     case changeDefaultPaymentMethodError
     case changePhotoError
     case dataFetchError
+    case editPersonalInfoError
     case unknownError
     
     var rawValue: String {
@@ -85,6 +86,8 @@ enum ErrorType: String {
             return TexterifyManager.localisedString(key: .errors(.changePhotoError))
         case .dataFetchError:
             return TexterifyManager.localisedString(key: .errors(.dataFetchError))
+        case .editPersonalInfoError:
+            return TexterifyManager.localisedString(key: .errors(.editPersonalInfoError))
         case .unknownError:
             return TexterifyManager.localisedString(key: .errors(.unknownError))
         }

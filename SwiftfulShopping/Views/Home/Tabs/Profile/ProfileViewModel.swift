@@ -188,7 +188,7 @@ class ProfileViewModel: ObservableObject {
     func changeDefaultPaymentMethod(newDefaultPaymentMethod: PaymentMethod, completion: @escaping ((VoidResult) -> ())) {
         if let profile = profile {
             FirestoreProfileManager.client.changeDefaultPaymentMethod(userID: profile.id,
-                                                                      newDefaultPaymentMethod: newDefaultPaymentMethod.rawValue) { result in
+                                                                      newDefaultPaymentMethod: newDefaultPaymentMethod.decodeValue) { result in
                 completion(result)
             }
         }

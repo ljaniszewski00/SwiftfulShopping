@@ -69,16 +69,16 @@ class FirestoreAuthenticationManager: ObservableObject {
             "username": profile.username ?? "",
             "birthDate": profile.birthDate ?? "",
             "email": profile.email ?? "",
-            "country": profile.country.rawValue,
+            "country": profile.country.decodeValue,
             "defaultShipmentAddressID": profile.defaultShipmentAddress.id,
             "shipmentAddressesIDs": [profile.defaultShipmentAddress.id],
             "invoiceAddressID": profile.invoiceAddress.id,
-            "defaultShippingMethod": ShippingMethod.courier.rawValue,
-            "defaultPaymentMethod": PaymentMethod.creditCard.rawValue,
+            "defaultShippingMethod": ShippingMethod.courier.decodeValue,
+            "defaultPaymentMethod": PaymentMethod.creditCard.decodeValue,
             "userProductsRatingsIDs": [],
             "userProductsReviewsIDs": [],
             "imageURL": "",
-            "createdWith": profile.createdWith?.rawValue ?? ""
+            "createdWith": profile.createdWith?.decodeValue ?? ""
         ]
         
         self.db.collection(DatabaseCollections.profiles.rawValue)

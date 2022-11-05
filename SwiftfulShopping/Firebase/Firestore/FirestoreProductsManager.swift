@@ -211,7 +211,7 @@ class FirestoreProductsManager: ObservableObject {
             "name": product.name,
             "company": product.company,
             "productDescription": product.productDescription,
-            "category": product.category.rawValue,
+            "category": product.category.decodeValue,
             "price": product.price,
             "unitsSold": product.unitsSold,
             "introducedForSale": product.introducedForSale,

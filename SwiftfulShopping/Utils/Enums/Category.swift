@@ -35,6 +35,25 @@ enum Category: String, CaseIterable {
             return TexterifyManager.localisedString(key: .category(.other))
         }
     }
+    
+    var decodeValue: String {
+        switch self {
+        case .computers:
+            return "Computers"
+        case .phones:
+            return "Phones"
+        case .tablets:
+            return "Tablets"
+        case .laptops:
+            return "Laptops"
+        case .watches:
+            return "Watches"
+        case .accessories:
+            return "Accessories"
+        case .other:
+            return "Other"
+        }
+    }
 }
 
 extension Category {
@@ -45,6 +64,6 @@ extension Category {
 
 extension Category {
     static func withLabel(_ label: String) -> Category? {
-        return self.allCases.first { "\($0.rawValue)" == label }
+        return self.allCases.first { "\($0.decodeValue)" == label }
     }
 }

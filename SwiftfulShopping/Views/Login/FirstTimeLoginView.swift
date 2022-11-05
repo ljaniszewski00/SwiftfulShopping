@@ -201,7 +201,7 @@ struct FirstTimeLoginView: View {
                     .foregroundColor(.accentColor)
                 
                 SelectionDropdownMenu(selection: $firstTimeLoginViewModel.country,
-                                      dataWithImagesToChoose: firstTimeLoginViewModel.countries)
+                                      dataWithImagesToChoose: SelectionDropdownMenu.countries)
             }
         }
     }
@@ -288,7 +288,7 @@ struct FirstTimeLoginView: View {
                             .foregroundColor(.accentColor)
                         
                         SelectionDropdownMenu(selection: $firstTimeLoginViewModel.countryInvoice,
-                                              dataWithImagesToChoose: firstTimeLoginViewModel.countries)
+                                              dataWithImagesToChoose: SelectionDropdownMenu.countries)
                     }
                 }
             }

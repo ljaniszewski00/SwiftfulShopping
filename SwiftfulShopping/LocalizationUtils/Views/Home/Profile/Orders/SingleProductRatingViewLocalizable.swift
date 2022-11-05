@@ -8,7 +8,7 @@
 import Foundation
 
 public enum SingleProductRatingViewLocalizable: String {
-    case howDoYouFindProduct = "SingleProductRatingView_howDoYouFindProducts"
+    case howDoYouFindProduct = "SingleProductRatingView_howDoYouFindProduct"
     case pleaseWriteFewWords = "SingleProductRatingView_pleaseWriteFewWords"
     case addRateButton = "SingleProductRatingView_addRateButton"
     case navigationTitle = "SingleProductRatingView_navigationTitle"

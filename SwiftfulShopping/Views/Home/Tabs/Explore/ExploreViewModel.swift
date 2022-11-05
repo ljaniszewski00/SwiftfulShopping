@@ -74,6 +74,12 @@ class ExploreViewModel: ObservableObject {
                                                             .first
         }
         
+        for (key, value) in productsCategoriesWithImageURL {
+            if value == nil {
+                productsCategoriesWithImageURL[key]
+            }
+        }
+        
         return productsCategoriesWithImageURL
     }
     
@@ -87,7 +93,7 @@ class ExploreViewModel: ObservableObject {
         productsFromRepository
             .map { $0.category }
             .uniqued()
-            .sorted { $0.rawValue > $1.rawValue }
+            .sorted { $0.decodeValue > $1.decodeValue }
     }
     
     private var categoryProducts: [Product] {

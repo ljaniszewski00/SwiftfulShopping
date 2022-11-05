@@ -61,7 +61,7 @@ struct AddNewAddressView: View {
                                 .foregroundColor(.accentColor)
                             
                             SelectionDropdownMenu(selection: $personalInfoViewModel.newCountry,
-                                                  dataWithImagesToChoose: personalInfoViewModel.countries)
+                                                  dataWithImagesToChoose: SelectionDropdownMenu.countries)
                         }
                     }
                     

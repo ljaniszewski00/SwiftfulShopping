@@ -36,17 +36,15 @@ struct EditPersonalInfoView: View {
                 
                 Button {
                     withAnimation {
-                        if let newAddress = personalInfoViewModel.createNewAddress() {
-                            personalInfoViewModel.showLoadingModal = true
-                            profileViewModel.addNewAddress(address: newAddress, toBeDefault: personalInfoViewModel.toBeDefaultAddress) { result in
-                                personalInfoViewModel.showLoadingModal = false
-                                switch result {
-                                case .success:
-                                    dismiss()
-                                case .failure(let error):
-                                    errorManager.generateCustomError(errorType: .createAddressError,
-                                                                     additionalErrorDescription: error.localizedDescription)
-                                }
+                        personalInfoViewModel.showLoadingModal = true
+                        personalInfoViewModel.updatePersonalData(profileID: profileViewModel.profile?.id) { result in
+                            personalInfoViewModel.showLoadingModal = false
+                            switch result {
+                            case .success:
+                                dismiss()
+                            case .failure(let error):
+                                errorManager.generateCustomError(errorType: .editPersonalInfoError,
+                                                                       additionalErrorDescription: error.localizedDescription)
                             }
                         }
                     }

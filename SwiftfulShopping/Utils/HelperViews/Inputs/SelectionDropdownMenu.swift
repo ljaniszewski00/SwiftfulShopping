@@ -23,11 +23,19 @@ struct SelectionDropdownMenu: View {
         self.includeSearchField = includeSearchField
     }
     
+    static let countries: [String: String?] = [TexterifyManager.localisedString(key: .countries(.czech)): "czech",
+                                               TexterifyManager.localisedString(key: .countries(.england)): "england",
+                                               TexterifyManager.localisedString(key: .countries(.france)): "france",
+                                               TexterifyManager.localisedString(key: .countries(.germany)): "germany",
+                                               TexterifyManager.localisedString(key: .countries(.poland)): "poland",
+                                               TexterifyManager.localisedString(key: .countries(.spain)): "spain",
+                                               TexterifyManager.localisedString(key: .countries(.unitedStates)): "united"]
+    
     var elementsNames: [String] {
         if searchText.isEmpty {
-            return Array(dataWithImagesToChoose.keys).sorted(by: >)
+            return Array(dataWithImagesToChoose.keys).sorted(by: <)
         } else {
-            return Array(dataWithImagesToChoose.keys).sorted(by: >).filter {
+            return Array(dataWithImagesToChoose.keys).sorted(by: <).filter {
                 $0.lowercased().contains(searchText.lowercased())
             }
         }
@@ -57,7 +65,9 @@ struct SelectionDropdownMenu: View {
     
     @ViewBuilder func buildSelectedElementRow() -> some View {
         Button {
-            isExpanded.toggle()
+            if dataWithImagesToChoose.count > 1 {
+                isExpanded.toggle()
+            }
         } label: {
             HStack {
                 HStack(spacing: 20) {
@@ -66,9 +76,9 @@ struct SelectionDropdownMenu: View {
                             Image(imageName)
                         }
                     }
-                    Text(selection)
+                    Text(selection.isEmpty ? TexterifyManager.localisedString(key: .selectionDropdownMenu(.tapToChoose)) : selection)
                         .font(.system(size: 18, weight: .semibold, design: .rounded))
-                        .foregroundColor(colorScheme == .light ? .black : .ssWhite)
+                        .foregroundColor(selection.isEmpty ? .ssDarkGray : (colorScheme == .light ? .black : .ssWhite))
                         .fixedSize(horizontal: false, vertical: true)
                         .multilineTextAlignment(.leading)
                 }

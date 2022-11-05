@@ -23,6 +23,17 @@ enum PaymentMethod: String, Codable {
             return TexterifyManager.localisedString(key: .paymentMethod(.applePay))
         }
     }
+    
+    var decodeValue: String {
+        switch self {
+        case .cash:
+            return "Cash"
+        case .creditCard:
+            return "Credit Card"
+        case .applePay:
+            return "Apple Pay"
+        }
+    }
 }
 
 extension PaymentMethod: CaseIterable {
@@ -33,6 +44,6 @@ extension PaymentMethod: CaseIterable {
 
 extension PaymentMethod {
     static func withLabel(_ label: String) -> PaymentMethod? {
-        return self.allCases.first { "\($0.rawValue)" == label }
+        return self.allCases.first { "\($0.decodeValue)" == label }
     }
 }

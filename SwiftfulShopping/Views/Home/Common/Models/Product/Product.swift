@@ -44,9 +44,9 @@ struct Product {
         self.isRecommended = isRecommended
         self.isNew = isNew
         if keywords.isEmpty {
-            self.keywords = [name, company, category.rawValue]
+            self.keywords = [name, company, category.decodeValue]
         } else {
-            self.keywords = keywords + [name, company, category.rawValue]
+            self.keywords = keywords + [name, company, category.decodeValue]
         }
         self.imagesURLs = imagesURLs
     }

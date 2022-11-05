@@ -80,12 +80,12 @@ class FirestoreOrdersManager: ObservableObject {
             "clientID": order.clientID,
             "shoppingCartID": order.shoppingCartID,
             "productsIDs": order.productsIDs,
-            "shippingMethod": order.shippingMethod.rawValue,
+            "shippingMethod": order.shippingMethod.decodeValue,
             "shippingAddressID": order.shippingAddressID,
-            "paymentMethod": order.paymentMethod.rawValue,
+            "paymentMethod": order.paymentMethod.decodeValue,
             "invoice": order.invoice,
             "totalCost": order.totalCost,
-            "status": order.status.rawValue
+            "status": order.status.decodeValue
         ]
         
         self.db.collection(DatabaseCollections.orders.rawValue)
@@ -106,7 +106,7 @@ class FirestoreOrdersManager: ObservableObject {
     
     func updateOrderStatus(order: Order, newStatus: OrderStatus, completion: @escaping ((VoidResult) -> ())) {
         let updateData: [String: Any] = [
-            "status": newStatus.rawValue
+            "status": newStatus.decodeValue
         ]
         
         self.db.collection(DatabaseCollections.orders.rawValue)
@@ -117,7 +117,7 @@ class FirestoreOrdersManager: ObservableObject {
                     completion(.failure(error))
                 } else {
                     documentSnapshot?.reference.updateData(updateData)
-                    print("Successfully changed status of order \(order.id) from \(order.status.rawValue) to \(newStatus.rawValue)")
+                    print("Successfully changed status of order \(order.id) from \(order.status.decodeValue) to \(newStatus.decodeValue)")
                     completion(.success)
                 }
             }

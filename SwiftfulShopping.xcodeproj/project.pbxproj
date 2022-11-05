@@ -327,6 +327,7 @@
 		88DC09E429132E8B002F41C3 /* CustomDatePickerLocalizable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88DC09E329132E8B002F41C3 /* CustomDatePickerLocalizable.swift */; };
 		88DC09E6291330AA002F41C3 /* HomeViewLocalizable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88DC09E5291330AA002F41C3 /* HomeViewLocalizable.swift */; };
 		88DC09E8291332CA002F41C3 /* ExpandableTextLocalizable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88DC09E7291332CA002F41C3 /* ExpandableTextLocalizable.swift */; };
+		88DEDD462916839F003EFA44 /* SelectionDropdownMenuLocalizable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88DEDD452916839F003EFA44 /* SelectionDropdownMenuLocalizable.swift */; };
 		88EFAA142915467D00A30481 /* CountriesLocalizable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88EFAA132915467D00A30481 /* CountriesLocalizable.swift */; };
 		88EFAA162915469300A30481 /* ShippingMethodLocalizable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88EFAA152915469300A30481 /* ShippingMethodLocalizable.swift */; };
 		88EFAA182915469A00A30481 /* PaymentMethodLocalizable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88EFAA172915469A00A30481 /* PaymentMethodLocalizable.swift */; };
@@ -600,6 +601,7 @@
 		88DC09E329132E8B002F41C3 /* CustomDatePickerLocalizable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomDatePickerLocalizable.swift; sourceTree = "<group>"; };
 		88DC09E5291330AA002F41C3 /* HomeViewLocalizable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewLocalizable.swift; sourceTree = "<group>"; };
 		88DC09E7291332CA002F41C3 /* ExpandableTextLocalizable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExpandableTextLocalizable.swift; sourceTree = "<group>"; };
+		88DEDD452916839F003EFA44 /* SelectionDropdownMenuLocalizable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectionDropdownMenuLocalizable.swift; sourceTree = "<group>"; };
 		88EFAA132915467D00A30481 /* CountriesLocalizable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CountriesLocalizable.swift; sourceTree = "<group>"; };
 		88EFAA152915469300A30481 /* ShippingMethodLocalizable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShippingMethodLocalizable.swift; sourceTree = "<group>"; };
 		88EFAA172915469A00A30481 /* PaymentMethodLocalizable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaymentMethodLocalizable.swift; sourceTree = "<group>"; };
@@ -1488,6 +1490,7 @@
 				889EDFC7290F2B5000EBFFC1 /* AddToCartButtonLocalizable.swift */,
 				88DC09E329132E8B002F41C3 /* CustomDatePickerLocalizable.swift */,
 				88DC09E7291332CA002F41C3 /* ExpandableTextLocalizable.swift */,
+				88DEDD452916839F003EFA44 /* SelectionDropdownMenuLocalizable.swift */,
 			);
 			path = Other;
 			sourceTree = "<group>";
@@ -1828,6 +1831,7 @@
 				0A3B08E228AD292C00A54385 /* Resnet50.mlmodel in Sources */,
 				0ACD58E2284A6F6600AA9DA0 /* CheckmarkToggleStyle.swift in Sources */,
 				889EDF9B290F2AA500EBFFC1 /* OrderRateViewLocalizable.swift in Sources */,
+				88DEDD462916839F003EFA44 /* SelectionDropdownMenuLocalizable.swift in Sources */,
 				0A3C7AE9290167C50079B290 /* ReturnsViewModel.swift in Sources */,
 				0A3C7ADF290165660079B290 /* OrdersViewModel.swift in Sources */,
 				889EDF5A290F1D1000EBFFC1 /* ForgotPasswordViewLocalizable.swift in Sources */,

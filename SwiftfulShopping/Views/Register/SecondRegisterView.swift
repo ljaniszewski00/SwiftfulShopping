@@ -198,7 +198,7 @@ struct SecondRegisterView: View {
                     .foregroundColor(.accentColor)
                 
                 SelectionDropdownMenu(selection: $registerViewModel.country,
-                                      dataWithImagesToChoose: registerViewModel.countries)
+                                      dataWithImagesToChoose: SelectionDropdownMenu.countries)
             }
         }
     }
@@ -285,7 +285,7 @@ struct SecondRegisterView: View {
                             .foregroundColor(.accentColor)
                         
                         SelectionDropdownMenu(selection: $registerViewModel.countryInvoice,
-                                              dataWithImagesToChoose: registerViewModel.countries)
+                                              dataWithImagesToChoose: SelectionDropdownMenu.countries)
                     }
                 }
             }

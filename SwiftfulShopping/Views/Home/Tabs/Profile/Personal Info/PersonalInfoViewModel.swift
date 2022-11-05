@@ -24,14 +24,6 @@ class PersonalInfoViewModel: ObservableObject {
     
     @Published var showLoadingModal: Bool = false
     
-    let countries: [String: String?] = ["Czech": "czech",
-                                        "England": "england",
-                                        "France": "france",
-                                        "Germany": "germany",
-                                        "Poland": "poland",
-                                        "Spain": "spain",
-                                        "United States": "united"]
-    
     func setupAddresses(defaultProfileAddress: Address, profileAddresses: [Address]) {
         defaultAddress = defaultProfileAddress.description
         for profileAddress in profileAddresses {
@@ -56,5 +48,19 @@ class PersonalInfoViewModel: ObservableObject {
         }
         
         return Address(userID: user.uid, fullName: newFullName, streetName: newStreetName, streetNumber: newStreetNumber, apartmentNumber: newApartmentNumber, zipCode: newZipCode, city: newCity, country: newCountry)
+    }
+    
+    func updatePersonalData(profileID: String?, completion: @escaping ((VoidResult) -> ())) {
+        if let profileID = profileID {
+            let dataToUpdate: [String: Any] = [
+                "fullName": newFullName,
+                "email": newEmailAddress
+            ]
+            
+            FirestoreProfileManager.client.updateProfileData(profileID: profileID,
+                                                             profileDataToUpdate: dataToUpdate) { result in
+                completion(result)
+            }
+        }
     }
 }

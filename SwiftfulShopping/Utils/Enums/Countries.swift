@@ -43,10 +43,29 @@ enum Countries: String, CaseIterable {
             return TexterifyManager.localisedString(key: .countries(.unitedStates))
         }
     }
+    
+    var decodeValue: String {
+        switch self {
+        case .czech:
+            return "Czech"
+        case .england:
+            return "England"
+        case .france:
+            return "France"
+        case .germany:
+            return "Germany"
+        case .poland:
+            return "Poland"
+        case .spain:
+            return "Spain"
+        case .unitedStates:
+            return "United States"
+        }
+    }
 }
 
 extension Countries {
     static func withLabel(_ label: String) -> Countries? {
-        return self.allCases.first { "\($0.rawValue)" == label }
+        return self.allCases.first { "\($0.decodeValue)" == label }
     }
 }

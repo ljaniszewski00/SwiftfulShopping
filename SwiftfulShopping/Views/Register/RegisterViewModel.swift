@@ -41,14 +41,6 @@ class RegisterViewModel: ObservableObject {
     
     @Published var showLoadingModal: Bool = false
     
-    let countries: [String: String?] = ["Czech": "czech",
-                                        "England": "england",
-                                        "France": "france",
-                                        "Germany": "germany",
-                                        "Poland": "poland",
-                                        "Spain": "spain",
-                                        "United States": "united"]
-    
     func onFirstRegisterViewAppear() {
         FirestoreAuthenticationManager.client.listenToUsersUsernamesAndEmails { result in
             switch result {

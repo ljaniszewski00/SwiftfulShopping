@@ -38,6 +38,27 @@ enum OrderStatus: String {
             return TexterifyManager.localisedString(key: .orderStatus(.returned))
         }
     }
+    
+    var decodeValue: String {
+        switch self {
+        case .placed:
+            return "Placed"
+        case .payed:
+            return "Payed"
+        case .picked:
+            return "Picked"
+        case .readyToBeSend:
+            return "Ready To Be Send"
+        case .sent:
+            return "Sent"
+        case .delivered:
+            return "Delivered"
+        case .closed:
+            return "Closed"
+        case .returned:
+            return "Returned"
+        }
+    }
 }
 
 extension OrderStatus: CaseIterable {
@@ -48,6 +69,6 @@ extension OrderStatus: CaseIterable {
 
 extension OrderStatus {
     static func withLabel(_ label: String) -> OrderStatus? {
-        return self.allCases.first { "\($0.rawValue)" == label }
+        return self.allCases.first { "\($0.decodeValue)" == label }
     }
 }

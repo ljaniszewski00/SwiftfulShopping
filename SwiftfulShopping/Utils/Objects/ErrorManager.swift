@@ -58,6 +58,8 @@ final class ErrorManager: ObservableObject {
             TexterifyManager.localisedString(key: .errors(.changePhotoErrorDescription)),
         .dataFetchError:
             TexterifyManager.localisedString(key: .errors(.dataFetchErrorDescription)),
+        .editPersonalInfoError:
+            TexterifyManager.localisedString(key: .errors(.editPersonalInfoErrorDescription)),
         .unknownError:
             TexterifyManager.localisedString(key: .errors(.unknownErrorDescription))
     ]

@@ -29,6 +29,21 @@ enum ReturnStatus: String {
             return TexterifyManager.localisedString(key: .returnStatus(.closed))
         }
     }
+    
+    var decodeValue: String {
+        switch self {
+        case .reported:
+            return "Reported"
+        case .sent:
+            return "Sent"
+        case .delivered:
+            return "Delivered"
+        case .moneyReturned:
+            return "Money Returned"
+        case .closed:
+            return "Closed"
+        }
+    }
 }
 
 extension ReturnStatus: CaseIterable {
@@ -39,6 +54,6 @@ extension ReturnStatus: CaseIterable {
 
 extension ReturnStatus {
     static func withLabel(_ label: String) -> ReturnStatus? {
-        return self.allCases.first { "\($0.rawValue)" == label }
+        return self.allCases.first { "\($0.decodeValue)" == label }
     }
 }

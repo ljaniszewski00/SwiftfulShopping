@@ -79,7 +79,8 @@ struct CartView: View {
                                         .foregroundColor(.accentColor)
                                 }
                             }
-                            .padding(.trailing, 40)
+                            
+                            Spacer()
                             
                             Button {
                                 cartViewModel.shouldPresentCheckoutFirstView = true
@@ -89,6 +90,7 @@ struct CartView: View {
                             }
                             .buttonStyle(CustomButton())
                             .disabled(cartViewModel.cartIsEmpty)
+                            .frame(width: 150)
                         }
                         .padding(.horizontal)
                         .padding(.bottom, 80)

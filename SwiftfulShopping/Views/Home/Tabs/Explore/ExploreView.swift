@@ -189,6 +189,11 @@ struct ExploreView: View {
                                                                 .opacity(0.6)
                                                         }
                                                 }
+                                        } else {
+                                            Image("product_placeholder_image")
+                                                .resizable()
+                                                .aspectRatio(contentMode: .fill)
+                                                .frame(width: 40, height: 40)
                                         }
                                         
                                         Text(category.rawValue)

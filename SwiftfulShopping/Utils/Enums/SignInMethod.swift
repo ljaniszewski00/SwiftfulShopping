@@ -12,6 +12,19 @@ enum SignInMethod: String {
     case google = "Google"
     case facebook = "Facebook"
     case github = "Github"
+    
+    var decodeValue: String {
+        switch self {
+        case .emailPassword:
+            return "Email and Password"
+        case .google:
+            return "Google"
+        case .facebook:
+            return "Facebook"
+        case .github:
+            return "GitHub"
+        }
+    }
 }
 
 extension SignInMethod {
@@ -22,6 +35,6 @@ extension SignInMethod {
 
 extension SignInMethod {
     static func withLabel(_ label: String) -> SignInMethod? {
-        return self.allCases.first { "\($0.rawValue)" == label }
+        return self.allCases.first { "\($0.decodeValue)" == label }
     }
 }
