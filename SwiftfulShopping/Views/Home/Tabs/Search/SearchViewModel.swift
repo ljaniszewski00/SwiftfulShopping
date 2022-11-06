@@ -46,12 +46,18 @@ class SearchViewModel: ObservableObject {
     }
     
     func onAppear() {
-        fetchTrendingSearches()
+        fetchTrendingSearches {}
         fetchRecentSearches()
     }
     
-    func fetchTrendingSearches() {
-        self.trendingSearchesFullList = ["iPhone", "iPad", "MacBook", "Apple Watch", "Home Pod", "Apple VR", "Apple Car"]
+    func fetchTrendingSearches(completion: @escaping (() -> ())) {
+        ProductsRepository.shared.fetchTrendingSearches { [weak self] trendingSearches in
+            if let trendingSearches = trendingSearches {
+                self?.trendingSearchesFullList = trendingSearches
+            } else {
+                self?.trendingSearchesFullList = []
+            }
+        }
     }
     
     func fetchRecentSearches() {

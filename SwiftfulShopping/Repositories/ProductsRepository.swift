@@ -26,6 +26,17 @@ class ProductsRepository: ObservableObject {
             }
         }
     }
+    
+    func fetchTrendingSearches(completion: @escaping (([String]?) -> ())) {
+        FirestoreProductsManager.client.getTrendingSearches { result in
+            switch result {
+            case .success(let searches):
+                completion(searches)
+            case .failure(_):
+                completion([])
+            }
+        }
+    }
 }
 
 extension ProductsRepository: NSCopying {

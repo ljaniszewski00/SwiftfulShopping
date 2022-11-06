@@ -202,6 +202,25 @@ class FirestoreProductsManager: ObservableObject {
             }
     }
     
+    func getTrendingSearches(completion: @escaping ((Result<[String]?, Error>) -> ())) {
+        db.collection(DatabaseCollections.trendingSearches.rawValue)
+            .getDocuments { querySnapshot, error in
+                if let error = error {
+                    print("Error fetching trending searches: \(error.localizedDescription)")
+                    completion(.failure(error))
+                } else {
+                    let trendingSearches = querySnapshot!.documents.map { (queryDocumentSnapshot) -> String in
+                        let data = queryDocumentSnapshot.data()
+
+                        return data["searchValue"] as? String ?? ""
+                    }
+                    
+                    print("Successfully fetched trending searches")
+                    completion(.success(trendingSearches))
+                }
+            }
+    }
+    
     
     // MARK: INSERT DATABASE OPERATIONS
     

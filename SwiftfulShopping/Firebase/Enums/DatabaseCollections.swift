@@ -25,4 +25,5 @@ enum DatabaseCollections: String {
     case discounts = "Discounts"
     case products = "Products"
     case productsRatings = "Products Ratings"
+    case trendingSearches = "Trending Searches"
 }
