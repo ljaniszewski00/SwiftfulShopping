@@ -78,10 +78,10 @@ struct ProductDetailsRatingsSection: View {
                                     ZStack(alignment: .leading) {
                                         RoundedRectangle(cornerRadius: 10)
                                             .foregroundColor(.ssGray)
-                                            .frame(width: 130, height: 7)
+                                            .frame(width: 100, height: 7)
                                         RoundedRectangle(cornerRadius: 10)
                                             .foregroundColor(.accentColor)
-                                            .frame(width: productRatings.filter { $0.rating == number }.count == 0 ? 0 : CGFloat((130 / productRatings.count) * (productRatings.filter { $0.rating == number }.count)),
+                                            .frame(width: productRatings.filter { $0.rating == number }.count == 0 ? 0 : CGFloat((100 / productRatings.count) * (productRatings.filter { $0.rating == number }.count)),
                                                    height: 7)
                                     }
                                 }
@@ -89,7 +89,7 @@ struct ProductDetailsRatingsSection: View {
 
                             VStack(spacing: 5) {
                                 ForEach(Array(1...5).reversed(), id: \.self) { number in
-                                    Text("\(productRatings.filter { $0.rating == number }.count)")
+                                    Text("\(((Double(productRatings.filter { $0.rating == number }.count) / Double(productRatings.count)) * 100), specifier: "%0.f")%")
                                         .font(.ssCallout)
                                         .foregroundColor(.ssDarkGray)
                                 }
