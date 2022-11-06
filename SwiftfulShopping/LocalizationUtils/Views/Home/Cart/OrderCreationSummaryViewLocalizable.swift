@@ -21,6 +21,8 @@ public enum OrderCreationSummaryViewLocalizable: String {
     case applyDiscountErrorDescription = "OrderCreationSummaryView_applyDiscountErrorDescription"
     case applyCouponCodeButton = "OrderCreationSummaryView_applyCouponCodeButton"
     case totalCostWithDiscounts = "OrderCreationSummaryView_totalCostWithDiscounts"
-    case completeButton = "OrderCreationSummaryView_completeButton"
+    case submitPayButton = "OrderCreationSummaryView_submitPayButton"
     case navigationTitle = "OrderCreationSummaryView_navigationTitle"
+    case paymentProcessingModalTitle = "OrderCreationSummaryView_paymentProcessingModalTitle"
+    case paymentProcessingModalDescription = "OrderCreationSummaryView_paymentProcessingModalDescription"
 }

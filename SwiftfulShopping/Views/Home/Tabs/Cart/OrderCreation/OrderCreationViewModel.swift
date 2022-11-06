@@ -19,6 +19,9 @@ class OrderCreationViewModel: ObservableObject {
     @Published var shouldPresentOrderCreationSummaryView: Bool = false
     @Published var shouldPresentOrderCreationCompletionView: Bool = false
     
+    @Published var showLoadingModal: Bool = false
+    @Published var shouldPresentPaymentProcessingModal: Bool = false
+    
     @Published var newStreetName: String = ""
     @Published var newStreetNumber: String = ""
     @Published var newApartmentNumber: String = ""
@@ -80,7 +83,7 @@ class OrderCreationViewModel: ObservableObject {
                      totalCost: Double,
                      totalCostWithAppliedDiscounts: Double,
                      shippingAddress: Address,
-                     completion: @escaping ((VoidResult) -> ())) {
+                     completion: @escaping ((Result<String, Error>) -> ())) {
         let productsIDsWithQuantity = Dictionary(uniqueKeysWithValues: productsWithQuantity.map { key, value in
             (key.id, value)
         })
@@ -108,24 +111,37 @@ class OrderCreationViewModel: ObservableObject {
                           totalCost: totalCostWithAppliedDiscounts,
                           status: .placed)
         
+        self.showLoadingModal = true
         FirestoreOrdersManager.client.createUserOrder(order: order) { [weak self] result in
             switch result {
             case .success:
                 self?.createdOrder = order
                 
-                FirestoreCartsManager.client.createUserCart(cart: cart) { _ in
+                FirestoreCartsManager.client.createUserCart(cart: cart) { [weak self] _ in
                     if !appliedDiscounts.isEmpty {
                         FirestoreProductsManager.client.redeemDiscounts(userID: client.id,
-                                                                        discounts: appliedDiscounts) {
-                            completion(.success)
+                                                                        discounts: appliedDiscounts) { [weak self] in
+                            self?.showLoadingModal = false
+                            completion(.success(order.id))
                         }
                     } else {
-                        completion(.success)
+                        self?.showLoadingModal = false
+                        completion(.success(order.id))
                     }
                 }
             case .failure(let error):
+                self?.showLoadingModal = false
                 completion(.failure(error))
             }
+        }
+    }
+    
+    func payForOrder(orderID: String, completion: @escaping ((VoidResult) -> ())) {
+        //MARK: Mock method for payments handling
+        self.shouldPresentPaymentProcessingModal = true
+        DispatchQueue.main.asyncAfter(deadline: .now() + 3) { [weak self] in
+            self?.shouldPresentPaymentProcessingModal = false
+            completion(.success)
         }
     }
 }

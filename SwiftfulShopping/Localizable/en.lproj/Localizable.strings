@@ -232,15 +232,17 @@
 "OrderCreationShipmentPaymentView_wouldYouLikeToReceiveInvoice" = "Would you like to receive invoice?";
 "OrderCreationSummaryView_applyCouponCodeButton" = "Apply";
 "OrderCreationSummaryView_applyDiscountErrorDescription" = "The discount code You entered is either invalid or it does not apply to selected products.";
-"OrderCreationSummaryView_completeButton" = "Complete";
 "OrderCreationSummaryView_consigneeData" = "Consignee Data";
 "OrderCreationSummaryView_couponCodeTextField" = "Coupon Code";
 "OrderCreationSummaryView_doYouHaveCouponCode" = "Do you have coupon code?";
 "OrderCreationSummaryView_navigationTitle" = "Order Summary";
 "OrderCreationSummaryView_paymentMethod" = "Payment Method";
+"OrderCreationSummaryView_paymentProcessingModalDescription" = "Please wait while we process your payment";
+"OrderCreationSummaryView_paymentProcessingModalTitle" = "Payment Processing";
 "OrderCreationSummaryView_products" = "Products";
 "OrderCreationSummaryView_productsInCart" = "Products in cart:";
 "OrderCreationSummaryView_shippingMethod" = "Shipping Method";
+"OrderCreationSummaryView_submitPayButton" = "Submit the order and pay";
 "OrderCreationSummaryView_thisWillBeTheDeliveryAddress" = "This will be the delivery addres for package";
 "OrderCreationSummaryView_totalCost" = "Total cost:";
 "OrderCreationSummaryView_totalCostWithDiscounts" = "Total cost with discounts:";
@@ -438,4 +440,4 @@
 "ThirdReturnCreationView_createReturnButton" = "Create Return";
 "ThirdReturnCreationView_howDoYouWantToReturn" = "How do you want to return the product?";
 "ThirdReturnCreationView_navigationTitle" = "Create Return";
-"texterify_timestamp" = "2022-11-05T23:37:19Z";
+"texterify_timestamp" = "2022-11-06T21:46:10Z";

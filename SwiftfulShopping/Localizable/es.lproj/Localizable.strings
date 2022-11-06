@@ -232,15 +232,17 @@
 "OrderCreationShipmentPaymentView_wouldYouLikeToReceiveInvoice" = "";
 "OrderCreationSummaryView_applyCouponCodeButton" = "";
 "OrderCreationSummaryView_applyDiscountErrorDescription" = "";
-"OrderCreationSummaryView_completeButton" = "";
 "OrderCreationSummaryView_consigneeData" = "";
 "OrderCreationSummaryView_couponCodeTextField" = "";
 "OrderCreationSummaryView_doYouHaveCouponCode" = "";
 "OrderCreationSummaryView_navigationTitle" = "";
 "OrderCreationSummaryView_paymentMethod" = "";
+"OrderCreationSummaryView_paymentProcessingModalDescription" = "";
+"OrderCreationSummaryView_paymentProcessingModalTitle" = "";
 "OrderCreationSummaryView_products" = "";
 "OrderCreationSummaryView_productsInCart" = "";
 "OrderCreationSummaryView_shippingMethod" = "";
+"OrderCreationSummaryView_submitPayButton" = "";
 "OrderCreationSummaryView_thisWillBeTheDeliveryAddress" = "";
 "OrderCreationSummaryView_totalCost" = "";
 "OrderCreationSummaryView_totalCostWithDiscounts" = "";
@@ -438,4 +440,4 @@
 "ThirdReturnCreationView_createReturnButton" = "";
 "ThirdReturnCreationView_howDoYouWantToReturn" = "";
 "ThirdReturnCreationView_navigationTitle" = "";
-"texterify_timestamp" = "2022-11-05T23:37:23Z";
+"texterify_timestamp" = "2022-11-06T21:46:17Z";

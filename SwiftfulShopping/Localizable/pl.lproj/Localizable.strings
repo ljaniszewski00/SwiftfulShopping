@@ -232,15 +232,17 @@
 "OrderCreationShipmentPaymentView_wouldYouLikeToReceiveInvoice" = "Czy chcesz otrzymać fakturę?";
 "OrderCreationSummaryView_applyCouponCodeButton" = "Zastosuj";
 "OrderCreationSummaryView_applyDiscountErrorDescription" = "Wprowadzony przez Ciebie kod rabatowy jest nieważny lub nie dotyczy wybranych produktów.";
-"OrderCreationSummaryView_completeButton" = "Zakończ";
 "OrderCreationSummaryView_consigneeData" = "Dane Odbiorcy";
 "OrderCreationSummaryView_couponCodeTextField" = "Kod Rabatowy";
 "OrderCreationSummaryView_doYouHaveCouponCode" = "Masz kod rabatowy?";
 "OrderCreationSummaryView_navigationTitle" = "Podsumowanie Zamówienia";
 "OrderCreationSummaryView_paymentMethod" = "Sposób Płatności";
+"OrderCreationSummaryView_paymentProcessingModalDescription" = "Proszę czekać na przetworzenie płatności";
+"OrderCreationSummaryView_paymentProcessingModalTitle" = "Przetwarzanie Płatności";
 "OrderCreationSummaryView_products" = "Produkty";
 "OrderCreationSummaryView_productsInCart" = "Produkty w koszyku:";
 "OrderCreationSummaryView_shippingMethod" = "Sposób Wysyłki";
+"OrderCreationSummaryView_submitPayButton" = "Złóż zamówienie i zapłać";
 "OrderCreationSummaryView_thisWillBeTheDeliveryAddress" = "To będzie adres dostawy dla paczki";
 "OrderCreationSummaryView_totalCost" = "Koszt całkowity:";
 "OrderCreationSummaryView_totalCostWithDiscounts" = "Koszt całkowity z uwzględnieniem rabatów:";
@@ -438,4 +440,4 @@
 "ThirdReturnCreationView_createReturnButton" = "Utwórz Zwrot";
 "ThirdReturnCreationView_howDoYouWantToReturn" = "W jaki sposób chcesz zwrócić produkt?";
 "ThirdReturnCreationView_navigationTitle" = "Utwórz Zwrot";
-"texterify_timestamp" = "2022-11-05T23:37:22Z";
+"texterify_timestamp" = "2022-11-06T21:46:15Z";

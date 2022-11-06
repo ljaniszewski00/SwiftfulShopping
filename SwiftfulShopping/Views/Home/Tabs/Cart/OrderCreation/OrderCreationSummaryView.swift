@@ -177,10 +177,12 @@ struct OrderCreationSummaryView: View {
                                                        appliedDiscounts: cartViewModel.sortedAppliedDiscounts,
                                                        totalCost: cartViewModel.cartTotalCost,
                                                        totalCostWithAppliedDiscounts: cartViewModel.cartTotalCostWithAppliedDiscounts,
-                                                      shippingAddress: desiredAddress) { result in
+                                                       shippingAddress: desiredAddress) { result in
                         switch result {
-                        case .success:
-                            orderCreationViewModel.shouldPresentOrderCreationCompletionView = true
+                        case .success(let orderID):
+                            orderCreationViewModel.payForOrder(orderID: orderID) { _ in
+                                orderCreationViewModel.shouldPresentOrderCreationCompletionView = true
+                            }
                         case .failure(let error):
                             errorManager.generateCustomError(errorType: .orderCreateError,
                                                              additionalErrorDescription: error.localizedDescription)
@@ -188,7 +190,7 @@ struct OrderCreationSummaryView: View {
                     }
                 }
             } label: {
-                Text(TexterifyManager.localisedString(key: .orderCreationSummaryView(.completeButton)))
+                Text(TexterifyManager.localisedString(key: .orderCreationSummaryView(.submitPayButton)))
                     .font(.ssButton)
             }
             .buttonStyle(CustomButton())
@@ -206,6 +208,8 @@ struct OrderCreationSummaryView: View {
                            label: { EmptyView() })
             .isDetailLink(false)
         }
+        .modifier(LoadingIndicatorModal(isPresented:
+                                            $orderCreationViewModel.showLoadingModal))
         .navigationTitle(TexterifyManager.localisedString(key: .orderCreationSummaryView(.navigationTitle)))
         .navigationBarTitleDisplayMode(.inline)
         .navigationBarBackButtonHidden(true)
@@ -220,6 +224,55 @@ struct OrderCreationSummaryView: View {
                         .foregroundColor(.accentColor)
                 }
             }
+        }
+        .if(orderCreationViewModel.shouldPresentPaymentProcessingModal) {
+            $0
+                .allowsHitTesting(false)
+                .blur(radius: 3)
+                .overlay(buildPaymentProcessingModal())
+        }
+    }
+    
+    private let timer = Timer.publish(every: 1, on: .main, in: .common).autoconnect()
+    @State private var timeElapsed: Double = 0
+    
+    @ViewBuilder
+    func buildPaymentProcessingModal() -> some View {
+        VStack(alignment: .center, spacing: 40) {
+            VStack(alignment: .leading, spacing: 10) {
+                Text(TexterifyManager.localisedString(key: .orderCreationSummaryView(.paymentProcessingModalTitle)))
+                    .font(.ssTitle2)
+                Text(TexterifyManager.localisedString(key: .orderCreationSummaryView(.paymentProcessingModalDescription)))
+                    .font(.ssTitle3)
+                    .foregroundColor(.ssDarkGray)
+            }
+            
+            if #available(iOS 16, *) {
+                ProgressView(value: timeElapsed, total: 3)
+            } else {
+                ProgressView()
+                    .progressViewStyle(.circular)
+                    .scaleEffect(1.5)
+            }
+        }
+        .padding()
+        .padding(.vertical, 5)
+        .background(
+            .ultraThinMaterial,
+            in: RoundedRectangle(cornerRadius: 4)
+        )
+        .padding()
+        .transition(.move(edge: .bottom))
+        .animation(.default.speed(1))
+        .onAppear {
+            DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
+                withAnimation {
+                    orderCreationViewModel.shouldPresentPaymentProcessingModal = false
+                }
+            }
+        }
+        .onReceive(timer) { _ in
+            timeElapsed += 1
         }
     }
 }
