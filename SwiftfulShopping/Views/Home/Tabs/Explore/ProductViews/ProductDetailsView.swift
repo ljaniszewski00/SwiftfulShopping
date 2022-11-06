@@ -16,16 +16,19 @@ struct ProductDetailsView: View {
     @EnvironmentObject private var cartViewModel: CartViewModel
     @EnvironmentObject private var searchViewModel: SearchViewModel
     
+    @Environment(\.dismiss) var dismiss
+    @Environment(\.colorScheme) var colorScheme
+    
     @StateObject private var productDetailsViewModel: ProductDetailsViewModel = ProductDetailsViewModel()
     @StateObject private var networkNanager = NetworkManager.shared
     
-    @Environment(\.dismiss) var dismiss
+    @State private var expandAddToCart: Bool = false
     
     var product: Product
     var productRatings: [ProductRating]
     
     var body: some View {
-        VStack(spacing: 0) {
+        ZStack(alignment: .bottomTrailing) {
             ScrollView(.vertical, showsIndicators: false) {
                 VStack(alignment: .center, spacing: 30) {
                     Group {
@@ -80,30 +83,8 @@ struct ProductDetailsView: View {
                 }
             }
             
-            HStack {
-                QuantityInput(quantity: productDetailsViewModel.productQuantityToBasket,
-                              minusAction: {
-                    productDetailsViewModel.decreaseProductQuantity()
-                },
-                              plusAction: {
-                    productDetailsViewModel.increaseProductQuantity()
-                })
-                
-                Spacer()
-                
-                AddToCartButton {
-                    UIImpactFeedbackGenerator(style: .medium).impactOccurred()
-                    cartViewModel.addProductToCart(product: product, quantity: productDetailsViewModel.productQuantityToBasket)
-                }
-                .padding(.leading)
-            }
-            .padding()
-            .background {
-                RoundedRectangle(cornerRadius: 15)
-                    .foregroundColor(Color(uiColor: .secondarySystemBackground)
-                        )
-                    .ignoresSafeArea()
-            }
+            buildAddToCartPane()
+                .zIndex(1)
         }
         .navigationBarTitle("")
         .navigationBarTitleDisplayMode(.inline)
@@ -144,6 +125,80 @@ struct ProductDetailsView: View {
         .onAppear {
             productDetailsViewModel.fetchProductImages(productImagesURLs: product.imagesURLs)
         }
+    }
+    
+    @ViewBuilder
+    func buildAddToCartPane() -> some View {
+        HStack(alignment: .center) {
+            if expandAddToCart {
+                HStack(spacing: 0) {
+                    Button {
+                        UIImpactFeedbackGenerator(style: .light).impactOccurred()
+                        productDetailsViewModel.decreaseProductQuantity()
+                    } label: {
+                        ZStack {
+                            Circle()
+                            Image(systemName: "minus")
+                                .foregroundColor(.ssWhite)
+                        }
+                    }
+                    
+                    Text(String(productDetailsViewModel.productQuantityToBasket))
+                        .font(.ssButton)
+                        .foregroundColor(.ssWhite)
+                        .fixedSize(horizontal: true, vertical: false)
+                        .frame(width: 60)
+                    
+                    Button {
+                        UIImpactFeedbackGenerator(style: .light).impactOccurred()
+                        productDetailsViewModel.increaseProductQuantity()
+                    } label: {
+                        ZStack {
+                            Circle()
+                            Image(systemName: "plus")
+                                .foregroundColor(.ssWhite)
+                        }
+                    }
+                }
+                .background {
+                    Capsule()
+                        .foregroundColor(.accentColor)
+                        .shadow(color: .black, radius: 5, x: 3, y: 3)
+                }
+                .animation(.default)
+                .transition(.move(edge: .trailing))
+                .onSwiped(.right) {
+                    withAnimation {
+                        expandAddToCart = false
+                    }
+                }
+                .frame(height: 50)
+            }
+            
+            Button {
+                withAnimation {
+                    expandAddToCart = true
+                    if expandAddToCart {
+                        UIImpactFeedbackGenerator(style: .medium).impactOccurred()
+                        cartViewModel.addProductToCart(product: product, quantity: productDetailsViewModel.productQuantityToBasket)
+                    }
+                }
+            } label: {
+                ZStack {
+                    Circle()
+                        .foregroundColor(.accentColor)
+                        .shadow(color: .black, radius: 5, x: 3, y: 3)
+                    
+                    Image(systemName: "cart")
+                        .resizable()
+                        .frame(width: 25, height: 25)
+                        .foregroundColor(.ssWhite)
+                        .padding()
+                }
+            }
+            .frame(height: 50)
+        }
+        .padding(.trailing)
     }
 }
 
