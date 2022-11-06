@@ -165,7 +165,8 @@ class ExploreViewModel: ObservableObject {
             
             if let categoryImageURLString = categoryImageURLString, let url = URL(string: categoryImageURLString) {
                 
-                KingfisherManager.shared.retrieveImage(with: url, options: [.lowDataMode(.network(url))]) { [weak self] result in
+                KingfisherManager.shared.retrieveImage(with: url,
+                                                       options: [.lowDataMode(.network(url))]) { [weak self] result in
                     switch result {
                     case .success(let value):
                         self?.categoriesWithImages[category] = value.image
@@ -182,6 +183,20 @@ class ExploreViewModel: ObservableObject {
         
         dispatchGroup.notify(queue: .main) {
             completion()
+        }
+    }
+    
+    func getImageForProduct(productImageURLString: String?, completion: @escaping ((UIImage?) -> ())) {
+        if let productImageURLString = productImageURLString, let productImageURL = URL(string: productImageURLString)  {
+            KingfisherManager.shared.retrieveImage(with: productImageURL,
+                                                   options: [.lowDataMode(.network(productImageURL))]) { result in
+                switch result {
+                case .success(let value):
+                    completion(value.image)
+                case .failure(_):
+                    completion(nil)
+                }
+            }
         }
     }
     
