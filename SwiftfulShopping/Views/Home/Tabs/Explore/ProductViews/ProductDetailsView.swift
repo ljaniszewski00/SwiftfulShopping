@@ -177,11 +177,11 @@ struct ProductDetailsView: View {
             
             Button {
                 withAnimation {
-                    expandAddToCart = true
                     if expandAddToCart {
                         UIImpactFeedbackGenerator(style: .medium).impactOccurred()
                         cartViewModel.addProductToCart(product: product, quantity: productDetailsViewModel.productQuantityToBasket)
                     }
+                    expandAddToCart = true
                 }
             } label: {
                 ZStack {
@@ -197,6 +197,8 @@ struct ProductDetailsView: View {
                 }
             }
             .frame(height: 50)
+            .animation(.default)
+            .transition(.move(edge: .trailing))
         }
         .padding(.trailing)
     }
