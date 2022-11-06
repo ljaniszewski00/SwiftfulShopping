@@ -15,9 +15,8 @@ struct SearchView: View {
     @EnvironmentObject private var favoritesViewModel: FavoritesViewModel
     @EnvironmentObject private var cartViewModel: CartViewModel
     @EnvironmentObject private var sortingAndFilteringViewModel: SortingAndFilteringViewModel
+    @EnvironmentObject private var searchViewModel: SearchViewModel
     @Environment(\.colorScheme) var colorScheme: ColorScheme
-    
-    @StateObject private var searchViewModel: SearchViewModel = SearchViewModel()
     
     @AppStorage("productsListDisplayMethod") var displayMethod: ProductDisplayMethod = .list
     
@@ -131,6 +130,11 @@ struct SearchView: View {
                         .readingScrollView(from: "scroll", into: $offset)
                         .searchable(text: $exploreViewModel.searchProductsText,
                                     prompt: TexterifyManager.localisedString(key: .searchView(.searchForProductsPrompt)))
+                        .onChange(of: exploreViewModel.searchProductsText) { newValue in
+                            if !newValue.isEmpty {
+                                exploreViewModel.getProductsToBeDisplayedBySearch()
+                            }
+                        }
                         .onSubmit(of: .search) {
                             searchViewModel.addToRecentSearches(searchText: exploreViewModel.searchProductsText)
                         }
@@ -214,9 +218,6 @@ struct SearchView: View {
         .environmentObject(cartViewModel)
         .environmentObject(searchViewModel)
         .environmentObject(sortingAndFilteringViewModel)
-        .onAppear {
-            searchViewModel.onAppear()
-        }
     }
     
     @ViewBuilder
@@ -333,6 +334,7 @@ struct SearchView_Previews: PreviewProvider {
         let favoritesViewModel = FavoritesViewModel()
         let cartViewModel = CartViewModel()
         let sortingAndFilteringViewModel = SortingAndFilteringViewModel()
+        let searchViewModel = SearchViewModel()
         ForEach(ColorScheme.allCases, id: \.self) { colorScheme in
             ForEach(["iPhone 13 Pro Max", "iPhone 8"], id: \.self) { deviceName in
                 SearchView()
@@ -342,6 +344,7 @@ struct SearchView_Previews: PreviewProvider {
                     .environmentObject(favoritesViewModel)
                     .environmentObject(cartViewModel)
                     .environmentObject(sortingAndFilteringViewModel)
+                    .environmentObject(searchViewModel)
                     .preferredColorScheme(colorScheme)
                     .previewDevice(PreviewDevice(rawValue: deviceName))
                     .previewDisplayName("\(deviceName) portrait")

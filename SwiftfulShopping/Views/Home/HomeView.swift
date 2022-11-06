@@ -18,6 +18,7 @@ struct HomeView: View {
     @StateObject private var cartViewModel = CartViewModel()
     @StateObject private var favoritesViewModel = FavoritesViewModel()
     @StateObject private var sortingAndFilteringViewModel = SortingAndFilteringViewModel()
+    @StateObject private var searchViewModel = SearchViewModel()
     
     @StateObject var firebaseAuthManager = FirebaseAuthManager.client
     @StateObject var networkManager = NetworkManager.shared
@@ -98,6 +99,7 @@ struct HomeView: View {
                             .environmentObject(favoritesViewModel)
                             .environmentObject(cartViewModel)
                             .environmentObject(sortingAndFilteringViewModel)
+                            .environmentObject(searchViewModel)
                             .onAppear {
                                 exploreViewModel.productsForTab = .searchView
                             }
@@ -196,6 +198,7 @@ struct HomeView: View {
             case .success:
                 exploreViewModel.fetchData {
                     cartViewModel.onAppear()
+                    searchViewModel.onAppear()
                     favoritesViewModel.fetchFavorites()
                     completion()
                 }

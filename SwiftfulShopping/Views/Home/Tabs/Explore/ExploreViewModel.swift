@@ -16,6 +16,8 @@ class ExploreViewModel: ObservableObject {
     @Published var productsToBeDisplayed: [Product] = []
     @Published var ratingsFromRepository: [ProductRating] = []
     
+    @Published var productsToBeDisplayedBySearch: [Product] = []
+    
     @Published var categoriesWithImages: [Category: UIImage] = [:]
     
     @Published var productsForTab: TabsWithProducts = .exploreView
@@ -215,19 +217,26 @@ class ExploreViewModel: ObservableObject {
         }
     }
     
-    private var productsToBeDisplayedBySearch: [Product] {
-        var products: Set<Product> = []
-        
-        for productFromRepository in productsFromRepository {
-            for keyword in productFromRepository.keywords {
-                if keyword.lowercased().contains(searchProductsText.lowercased()) {
-                    products.insert(productFromRepository)
-                    break
+    func getProductsToBeDisplayedBySearch() {
+        DispatchQueue.global(qos: .userInteractive).async { [weak self] in
+            let results = self?.productsFromRepository
+                            .lazy
+                            .filter {
+                                $0.keywords
+                                    .map { $0.lowercased() }
+                                    .compactMap { $0 }
+                                    .uniqued()
+                                    .contains { $0.contains(self?.searchProductsText.lowercased() ?? "") }
+                            }
+            
+            if let results = results {
+                DispatchQueue.main.async { [weak self] in
+                    self?.productsToBeDisplayedBySearch = results.compactMap({ product in
+                        return product
+                    })
                 }
             }
         }
-        
-        return Array(products).sorted { $0.name < $1.name }
     }
     
     func changeFocusedProductFor(product: Product) {
