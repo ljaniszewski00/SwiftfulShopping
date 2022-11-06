@@ -311,12 +311,14 @@ struct CustomDatePicker: View {
             dateString += String(firstDatePickedMonthNumber)
         }
         
-        dateString += "-"
-        
-        if firstDatePickedDayNumber < 10 {
-            dateString += "0\(String(firstDatePickedDayNumber))"
-        } else {
-            dateString += String(firstDatePickedDayNumber)
+        if includeDayPicking {
+            dateString += "-"
+            
+            if firstDatePickedDayNumber < 10 {
+                dateString += "0\(String(firstDatePickedDayNumber))"
+            } else {
+                dateString += String(firstDatePickedDayNumber)
+            }
         }
         
         return dateString
@@ -335,12 +337,14 @@ struct CustomDatePicker: View {
             dateString += String(secondDatePickedMonthNumber)
         }
         
-        dateString += "-"
-        
-        if secondDatePickedDayNumber < 10 {
-            dateString += "0\(String(secondDatePickedDayNumber))"
-        } else {
-            dateString += String(secondDatePickedDayNumber)
+        if includeDayPicking {
+            dateString += "-"
+            
+            if secondDatePickedDayNumber < 10 {
+                dateString += "0\(String(secondDatePickedDayNumber))"
+            } else {
+                dateString += String(secondDatePickedDayNumber)
+            }
         }
         
         return dateString

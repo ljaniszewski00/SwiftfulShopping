@@ -52,7 +52,7 @@ extension Color {
 }
 
 extension Color {
-    static let ssDefaultAccentColor: Color = Color(hex: "#4EAC91")
+    static let ssDefaultAccentColor: Color = Color(hex: "#O")
     
     static let ssWhite: Color = Color(hex: "#FFFFFF")
     static let ssBlue: Color = Color(hex: "#058AD7")

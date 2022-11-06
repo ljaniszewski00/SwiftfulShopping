@@ -58,15 +58,21 @@ struct PaymentDetailsView: View {
                                             .frame(width: 25)
                                     }
                                     
-                                    Text(paymentMethod.rawValue)
-                                        .font(.ssTitle3)
-                                        .foregroundColor(colorScheme == .light ? .black : .ssWhite)
-                                    if paymentMethod == .applePay {
-                                        Image(AssetsNames.applePayLogo)
-                                            .resizable()
+                                    HStack(spacing: 0) {
+                                        Text(paymentMethod.rawValue)
+                                            .font(.ssTitle3)
+                                            .foregroundColor(colorScheme == .light ? .black : .ssWhite)
+                                        if paymentMethod == .applePay {
+                                            Image(AssetsNames.applePayLogo)
+                                                .resizable()
+                                                .aspectRatio(contentMode: .fit)
+                                        }
                                     }
                                 }
                             })
+                            .frame(height: 40)
+                            
+                            Spacer()
                         }
                         
                         if paymentMethod == .creditCard && profileViewModel.profile?.defaultPaymentMethod == .creditCard {
@@ -159,10 +165,14 @@ struct PaymentDetailsView: View {
             }
             .frame(width: ScreenBoundsSupplier.shared.getScreenWidth() * 0.85, height: 210)
             .padding()
-            .background(LinearGradient(gradient: Gradient(colors: [Color(hex: "#6BC3AA"),
-                                                                   Color(hex: "#A5DFBC")]),
-                                       startPoint: .topLeading,
-                                       endPoint: .bottomTrailing))
+//            .background(LinearGradient(gradient: Gradient(colors: [Color(hex: "#6BC3AA"),
+//                                                                   Color(hex: "#A5DFBC")]),
+//                                       startPoint: .topLeading,
+//                                       endPoint: .bottomTrailing))
+            .background {
+                Image(AssetsNames.cardImageName)
+                    .resizable()
+            }
             .cornerRadius(15)
             
             Button {

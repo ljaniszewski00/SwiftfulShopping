@@ -10,13 +10,10 @@ import Kingfisher
 import texterify_ios_sdk
 
 struct ListProductCardTileView: View {
-    @EnvironmentObject private var exploreViewModel: ExploreViewModel
     @EnvironmentObject private var cartViewModel: CartViewModel
     @EnvironmentObject private var favoritesViewModel: FavoritesViewModel
     
     @Environment(\.colorScheme) var colorScheme
-    
-    @State private var productImage: UIImage?
     
     var product: Product
     var productRatings: [ProductRating]
@@ -39,17 +36,8 @@ struct ListProductCardTileView: View {
     
     var body: some View {
         HStack(alignment: .center) {
-            Group {
-                if let productImage = productImage {
-                    Image(uiImage: productImage)
-                        .resizable()
-                        .aspectRatio(contentMode: .fit)
-                        .clipShape(RoundedRectangle(cornerRadius: 15))
-                        .frame(width:
-                                ScreenBoundsSupplier.shared.getScreenWidth() * 0.45,
-                               height:
-                                ScreenBoundsSupplier.shared.getScreenHeight() * 0.2)
-                } else {
+            KFImage(URL(string: product.imagesURLs.first ?? URLConstants.emptyProductPhoto)!)
+                .placeholder {
                     Image(AssetsNames.productPlaceholder)
                         .resizable()
                         .aspectRatio(contentMode: .fit)
@@ -59,9 +47,17 @@ struct ListProductCardTileView: View {
                                height:
                                 ScreenBoundsSupplier.shared.getScreenHeight() * 0.2)
                 }
-            }
-            .padding(.trailing)
-            .layoutPriority(1)
+                .retry(maxCount: 3, interval: .seconds(3))
+                .cancelOnDisappear(true)
+                .resizable()
+                .aspectRatio(contentMode: .fit)
+                .clipShape(RoundedRectangle(cornerRadius: 15))
+                .frame(width:
+                        ScreenBoundsSupplier.shared.getScreenWidth() * 0.45,
+                       height:
+                        ScreenBoundsSupplier.shared.getScreenHeight() * 0.2)
+                .padding(.trailing)
+                .layoutPriority(1)
 
             VStack(alignment: .leading, spacing: 10) {
                 HStack(alignment: .top) {
@@ -136,24 +132,17 @@ struct ListProductCardTileView: View {
         }
         .padding()
         .background(.ultraThinMaterial, in: RoundedRectangle(cornerRadius: 15, style: .continuous))
-        .onAppear {
-            exploreViewModel.getImageForProduct(productImageURLString: product.imagesURLs.first) { image in
-                self.productImage = image
-            }
-        }
     }
 }
 
 struct ListProductCardTileView_Previews: PreviewProvider {
     static var previews: some View {
-        let exploreViewModel = ExploreViewModel()
         let cartViewModel = CartViewModel()
         let favoritesViewModel = FavoritesViewModel()
         ForEach(ColorScheme.allCases, id: \.self) { colorScheme in
             ForEach(["iPhone 13 Pro Max", "iPhone 8"], id: \.self) { deviceName in
                 ListProductCardTileView(product: Product.demoProducts[2],
                                         productRatings: [ProductRating.demoProductsRatings[0]])
-                    .environmentObject(exploreViewModel)
                     .environmentObject(cartViewModel)
                     .environmentObject(favoritesViewModel)
                     .preferredColorScheme(colorScheme)

@@ -29,4 +29,5 @@ struct AssetsNames {
     static let facebookLogo: String = "facebook_logo"
     static let githubLogo: String = "github_logo"
     static let googleLogo: String = "google_logo"
+    static let cardImageName: String = "blurry-gradient-haikei"
 }
