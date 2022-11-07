@@ -66,7 +66,8 @@ public enum Localizable {
     case productsListSource(ProductsListSourceLocalizable)
     case returnStatus(ReturnStatusLocalizable)
     case selectionDropdownMenu(SelectionDropdownMenuLocalizable)
-    case appearanceLocalizable(AppearanceLocalizable)
+    case appearance(AppearanceLocalizable)
+    case specificationKeys(SpecificationKeysLocalizable)
 }
 
 extension Localizable: LocalizableRawRepresentable {
@@ -192,7 +193,9 @@ extension Localizable: LocalizableRawRepresentable {
             return localizable.rawValue
         case let .selectionDropdownMenu(localizable):
             return localizable.rawValue
-        case let .appearanceLocalizable(localizable):
+        case let .appearance(localizable):
+            return localizable.rawValue
+        case let .specificationKeys(localizable):
             return localizable.rawValue
         }
     }

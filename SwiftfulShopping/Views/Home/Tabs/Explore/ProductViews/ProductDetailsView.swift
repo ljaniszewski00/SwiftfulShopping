@@ -69,12 +69,18 @@ struct ProductDetailsView: View {
                     
                     VStack(alignment: .leading, spacing: 30) {
                         VStack(alignment: .leading, spacing: 10) {
+                            Text("Description")
+                                .font(.ssTitle2)
+                            
                             HStack {
                                 ExpandableText(product.productDescription, lineLimit: 3)
             
                                 Spacer()
                             }
                         }
+                        
+                        Text("Specification")
+                            .font(.ssTitle2)
                         
                         ProductDetailsRatingsSection(product: product,
                                                      productRatings: productRatings)

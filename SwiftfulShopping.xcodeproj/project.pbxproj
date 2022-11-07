@@ -331,6 +331,9 @@
 		88DEDD48291690C4003EFA44 /* AppearanceLocalizable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88DEDD47291690C4003EFA44 /* AppearanceLocalizable.swift */; };
 		88DEDD4A29171BBD003EFA44 /* AssetsNames.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88DEDD4929171BBD003EFA44 /* AssetsNames.swift */; };
 		88DEDD4C29171DAC003EFA44 /* LottieAssetsNames.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88DEDD4B29171DAC003EFA44 /* LottieAssetsNames.swift */; };
+		88EFA68F2919733700399C11 /* LanguagesIdentifiers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88EFA68E2919733700399C11 /* LanguagesIdentifiers.swift */; };
+		88EFA691291976D100399C11 /* SpecificationKeys.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88EFA690291976D100399C11 /* SpecificationKeys.swift */; };
+		88EFA6932919780D00399C11 /* SpecificationKeysLocalizable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88EFA6922919780D00399C11 /* SpecificationKeysLocalizable.swift */; };
 		88EFAA142915467D00A30481 /* CountriesLocalizable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88EFAA132915467D00A30481 /* CountriesLocalizable.swift */; };
 		88EFAA162915469300A30481 /* ShippingMethodLocalizable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88EFAA152915469300A30481 /* ShippingMethodLocalizable.swift */; };
 		88EFAA182915469A00A30481 /* PaymentMethodLocalizable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88EFAA172915469A00A30481 /* PaymentMethodLocalizable.swift */; };
@@ -608,6 +611,9 @@
 		88DEDD47291690C4003EFA44 /* AppearanceLocalizable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppearanceLocalizable.swift; sourceTree = "<group>"; };
 		88DEDD4929171BBD003EFA44 /* AssetsNames.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AssetsNames.swift; sourceTree = "<group>"; };
 		88DEDD4B29171DAC003EFA44 /* LottieAssetsNames.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LottieAssetsNames.swift; sourceTree = "<group>"; };
+		88EFA68E2919733700399C11 /* LanguagesIdentifiers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LanguagesIdentifiers.swift; sourceTree = "<group>"; };
+		88EFA690291976D100399C11 /* SpecificationKeys.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpecificationKeys.swift; sourceTree = "<group>"; };
+		88EFA6922919780D00399C11 /* SpecificationKeysLocalizable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpecificationKeysLocalizable.swift; sourceTree = "<group>"; };
 		88EFAA132915467D00A30481 /* CountriesLocalizable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CountriesLocalizable.swift; sourceTree = "<group>"; };
 		88EFAA152915469300A30481 /* ShippingMethodLocalizable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShippingMethodLocalizable.swift; sourceTree = "<group>"; };
 		88EFAA172915469A00A30481 /* PaymentMethodLocalizable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaymentMethodLocalizable.swift; sourceTree = "<group>"; };
@@ -1359,6 +1365,8 @@
 				0A83216228D91D96008234C2 /* SignInMethod.swift */,
 				0A383D0F28F7672C00D15B48 /* ReturnStatus.swift */,
 				0A3C7AD729006B710079B290 /* VoidResult.swift */,
+				88EFA68E2919733700399C11 /* LanguagesIdentifiers.swift */,
+				88EFA690291976D100399C11 /* SpecificationKeys.swift */,
 			);
 			path = Enums;
 			sourceTree = "<group>";
@@ -1596,6 +1604,7 @@
 				88EFAA23291546D400A30481 /* ProductsListSourceLocalizable.swift */,
 				88EFAA25291546E500A30481 /* ReturnStatusLocalizable.swift */,
 				88DEDD47291690C4003EFA44 /* AppearanceLocalizable.swift */,
+				88EFA6922919780D00399C11 /* SpecificationKeysLocalizable.swift */,
 			);
 			path = Enums;
 			sourceTree = "<group>";
@@ -1909,6 +1918,7 @@
 				0A5A7CFA2896A47C00736B07 /* CompletionReturnCreationView.swift in Sources */,
 				0A3245F1288B16670046043D /* ProductDisplayMethod.swift in Sources */,
 				0ACD5900284A6F6600AA9DA0 /* LabelledDivider.swift in Sources */,
+				88EFA691291976D100399C11 /* SpecificationKeys.swift in Sources */,
 				889EDF6F290F29E700EBFFC1 /* ListProductCardTileViewLocalizable.swift in Sources */,
 				889EDF95290F2A9200EBFFC1 /* ProfileViewLocalizable.swift in Sources */,
 				0ACD58FA284A6F6600AA9DA0 /* Color.swift in Sources */,
@@ -1959,6 +1969,7 @@
 				0A268B4728671924006CF0E2 /* OrderDetailsView.swift in Sources */,
 				88DEDD4C29171DAC003EFA44 /* LottieAssetsNames.swift in Sources */,
 				889EDFBD290F2B1000EBFFC1 /* AccentColorChangeViewLocalizable.swift in Sources */,
+				88EFA6932919780D00399C11 /* SpecificationKeysLocalizable.swift in Sources */,
 				889EDF97290F2A9A00EBFFC1 /* OrdersViewLocalizable.swift in Sources */,
 				889EDF77290F2A1D00EBFFC1 /* ProductDetailsViewLocalizable.swift in Sources */,
 				0A383D0828F75B7100D15B48 /* FirestoreProfileManager.swift in Sources */,
@@ -1992,6 +2003,7 @@
 				0A2EB51928B38AA5009E6E8F /* CustomDatePicker.swift in Sources */,
 				0A3C7AD829006B710079B290 /* VoidResult.swift in Sources */,
 				0A2FE0BC28A1C02200E8D30E /* ContentViewModel.swift in Sources */,
+				88EFA68F2919733700399C11 /* LanguagesIdentifiers.swift in Sources */,
 				889EDF55290F0E8500EBFFC1 /* LoginViewLocalizable.swift in Sources */,
 				0A83216328D91D96008234C2 /* SignInMethod.swift in Sources */,
 				0A2D5FB728BA2BC300E76D71 /* SelectionDropdownMenu.swift in Sources */,

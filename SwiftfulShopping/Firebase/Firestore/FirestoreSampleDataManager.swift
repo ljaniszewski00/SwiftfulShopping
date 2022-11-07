@@ -51,6 +51,19 @@ class FirestoreSampleDataManager: ObservableObject {
         }
     }
     
+    func addSpecificationForExistingProducts(completion: @escaping ((VoidResult) -> ())) {
+        let group = DispatchGroup()
+        
+        for product in Product.demoProducts {
+            group.enter()
+            FirestoreProductsManager.client.addSpecificationForExistingProduct(productID: product.id, specification: product.specification) { _ in group.leave() }
+        }
+        
+        group.notify(queue: .main) {
+            completion(.success)
+        }
+    }
+    
     // MARK: Add sample Products
     func addRatings(completion: @escaping ((VoidResult) -> ())) {
         let group = DispatchGroup()

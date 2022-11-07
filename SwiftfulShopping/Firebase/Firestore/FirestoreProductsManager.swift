@@ -277,6 +277,10 @@ class FirestoreProductsManager: ObservableObject {
         }
     }
     
+    func addSpecificationForExistingProduct(productID: String, specification: ProductSpecification, completion: @escaping ((VoidResult) -> ())) {
+        
+    }
+    
     func addDiscount(discount: Discount, completion: @escaping ((VoidResult) -> ())) {
         let discountDocumentData: [String: Any] = [
             "id": discount.id,
