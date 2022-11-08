@@ -21,13 +21,18 @@ class FirestoreProductsManager: ObservableObject {
     // MARK: SELECT DATABASE OPERATIONS
     
     func getProducts(completion: @escaping ((Result<[Product]?, Error>) -> ())) {
+        let languageCode = Locale.current.languageCode
+        
         db.collection(DatabaseCollections.products.rawValue)
             .addSnapshotListener { querySnapshot, error in
                 if let error = error {
                     print("Error fetching products data: \(error.localizedDescription)")
                     completion(.failure(error))
                 } else {
-                    let products = querySnapshot!.documents.map { (queryDocumentSnapshot) -> Product in
+                    var dispatchGroup: DispatchGroup = DispatchGroup()
+                    var products: [Product] = []
+                    for queryDocumentSnapshot in querySnapshot!.documents {
+                        dispatchGroup.enter()
                         
                         let data = queryDocumentSnapshot.data()
 
@@ -44,22 +49,82 @@ class FirestoreProductsManager: ObservableObject {
                         let keywords = data["keywords"] as? [String] ?? []
                         let imagesURLs = data["imagesURLs"] as? [String] ?? []
                         
-                        return Product(id: id,
-                                       name: name,
-                                       company: company,
-                                       productDescription: productDescription,
-                                       category: Category.withLabel(category) ?? .other,
-                                       price: price,
-                                       unitsSold: unitsSold,
-                                       introducedForSale: introducedForSale,
-                                       isRecommended: isRecommended,
-                                       isNew: isNew,
-                                       keywords: keywords,
-                                       imagesURLs: imagesURLs)
+                        if let languageCode = languageCode {
+                            self.db
+                                .collection(DatabaseCollections.products.rawValue)
+                                .document(queryDocumentSnapshot.documentID)
+                                .collection(DatabaseCollections.productSpecification.rawValue)
+                                .document(languageCode)
+                                .getDocument { documentSnapshot, error in
+                                    if let error = error {
+                                        print("Error fetching product specification: \(error.localizedDescription)")
+                                        dispatchGroup.leave()
+                                    } else {
+                                        guard let specificationData = documentSnapshot?.data() else {
+                                            dispatchGroup.leave()
+                                            return
+                                        }
+                                        
+                                        let productSpecification: ProductSpecification = [languageCode: [SpecificationKeys.processor: specificationData[SpecificationKeys.processor.decodeValue] as? String ?? "",
+                                                                                                       SpecificationKeys.ramMemory: specificationData[SpecificationKeys.ramMemory.decodeValue] as? String ?? "",
+                                                                                                       SpecificationKeys.massStorage: specificationData[SpecificationKeys.massStorage.decodeValue] as? String ?? "",
+                                                                                                       SpecificationKeys.displayType: specificationData[SpecificationKeys.displayType.decodeValue] as? String ?? "",
+                                                                                                       SpecificationKeys.displaySize: specificationData[SpecificationKeys.displaySize.decodeValue] as? String ?? "",
+                                                                                                       SpecificationKeys.displayResolution: specificationData[SpecificationKeys.displayResolution.decodeValue] as? String ?? "",
+                                                                                                       SpecificationKeys.pixelDensity: specificationData[SpecificationKeys.pixelDensity.decodeValue] as? String ?? "",
+                                                                                                       SpecificationKeys.refreshRate: specificationData[SpecificationKeys.refreshRate.decodeValue] as? String ?? "",
+                                                                                                       SpecificationKeys.displayBrightness: specificationData[SpecificationKeys.displayBrightness.decodeValue] as? String ?? "",
+                                                                                                       SpecificationKeys.cameraPhotoResolutionFront: specificationData[SpecificationKeys.cameraPhotoResolutionFront.decodeValue] as? String ?? "",
+                                                                                                       SpecificationKeys.cameraPhotoResolutionBack: specificationData[SpecificationKeys.cameraPhotoResolutionBack.decodeValue] as? String ?? "",
+                                                                                                       SpecificationKeys.cameraZoomBack: specificationData[SpecificationKeys.cameraZoomBack.decodeValue] as? String ?? "",
+                                                                                                       SpecificationKeys.cameraVideoResolutionBack: specificationData[SpecificationKeys.cameraVideoResolutionBack.decodeValue] as? String ?? "",
+                                                                                                       SpecificationKeys.connectivity: specificationData[SpecificationKeys.connectivity.decodeValue] as? String ?? "",
+                                                                                                       SpecificationKeys.inputs: specificationData[SpecificationKeys.inputs.decodeValue] as? String ?? "",
+                                                                                                       SpecificationKeys.fingerprintReader: specificationData[SpecificationKeys.fingerprintReader.decodeValue] as? String ?? "",
+                                                                                                       SpecificationKeys.faceReader: specificationData[SpecificationKeys.faceReader.decodeValue] as? String ?? "",
+                                                                                                       SpecificationKeys.operatingSystem: specificationData[SpecificationKeys.operatingSystem.decodeValue] as? String ?? "",
+                                                                                                       SpecificationKeys.weight: specificationData[SpecificationKeys.weight.decodeValue] as? String ?? "",
+                                                                                                       SpecificationKeys.additionalInfo: specificationData[SpecificationKeys.additionalInfo.decodeValue] as? String ?? ""]]
+                                        
+                                        products.append(Product(id: id,
+                                                                name: name,
+                                                                company: company,
+                                                                productDescription: productDescription,
+                                                                category: Category.withLabel(category) ?? .other,
+                                                                price: price,
+                                                                specification: productSpecification,
+                                                                unitsSold: unitsSold,
+                                                                introducedForSale: introducedForSale,
+                                                                isRecommended: isRecommended,
+                                                                isNew: isNew,
+                                                                keywords: keywords,
+                                                                imagesURLs: imagesURLs))
+                                        dispatchGroup.leave()
+                                    }
+                                }
+                        } else {
+                            products.append(Product(id: id,
+                                                    name: name,
+                                                    company: company,
+                                                    productDescription: productDescription,
+                                                    category: Category.withLabel(category) ?? .other,
+                                                    price: price,
+                                                    specification: [:],
+                                                    unitsSold: unitsSold,
+                                                    introducedForSale: introducedForSale,
+                                                    isRecommended: isRecommended,
+                                                    isNew: isNew,
+                                                    keywords: keywords,
+                                                    imagesURLs: imagesURLs))
+                            
+                            dispatchGroup.leave()
+                        }
                     }
                     
-                    print("Successfully fetched products data")
-                    completion(.success(products))
+                    dispatchGroup.notify(queue: .main) {
+                        print("Successfully fetched products data")
+                        completion(.success(products))
+                    }
                 }
             }
     }

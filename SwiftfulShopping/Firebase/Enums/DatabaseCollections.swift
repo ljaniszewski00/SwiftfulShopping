@@ -24,6 +24,7 @@ enum DatabaseCollections: String {
     // MARK: For FirestoreProductsManager
     case discounts = "Discounts"
     case products = "Products"
+    case productSpecification = "Specification"
     case productsRatings = "Products Ratings"
     case trendingSearches = "Trending Searches"
 }

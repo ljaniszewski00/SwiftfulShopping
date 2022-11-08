@@ -31,11 +31,11 @@ enum Appearance: String, CaseIterable, Identifiable  {
     var rawValue: String {
         switch self {
         case .system:
-            return TexterifyManager.localisedString(key: .appearanceLocalizable(.system))
+            return TexterifyManager.localisedString(key: .appearance(.system))
         case .light:
-            return TexterifyManager.localisedString(key: .appearanceLocalizable(.light))
+            return TexterifyManager.localisedString(key: .appearance(.light))
         case .dark:
-            return TexterifyManager.localisedString(key: .appearanceLocalizable(.dark))
+            return TexterifyManager.localisedString(key: .appearance(.dark))
         }
     }
 }
