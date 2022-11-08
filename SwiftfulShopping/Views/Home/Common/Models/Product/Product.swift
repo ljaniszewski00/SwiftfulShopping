@@ -502,7 +502,7 @@ extension Product {
                                                                                                          SpecificationKeys.fingerprintReader: "No",
                                                                                                          SpecificationKeys.faceReader: "No",
                                                                                                          SpecificationKeys.operatingSystem: "",
-                                                                                                         SpecificationKeys.weight: "",
+                                                                                                         SpecificationKeys.weight: "5.4 g (single pod), 45.6 g (etui)",
                                                                                                          SpecificationKeys.additionalInfo: ""],
                                                                   
                                                                   LanguageIdentifiers.polish.rawValue: [SpecificationKeys.processor: "",
@@ -523,7 +523,7 @@ extension Product {
                                                                                                         SpecificationKeys.fingerprintReader: "Nie",
                                                                                                         SpecificationKeys.faceReader: "Nie",
                                                                                                         SpecificationKeys.operatingSystem: "",
-                                                                                                        SpecificationKeys.weight: "",
+                                                                                                        SpecificationKeys.weight: "5.4 g (jedna słuchawka), 45.6 g (etui)",
                                                                                                         SpecificationKeys.additionalInfo: ""]],
                                                   unitsSold: 100,
                                                   imagesURLs: ["https://www.freepnglogos.com/uploads/airpods-png/airpods-apple-news-articles-stories-trends-for-today-14.png",

@@ -22,10 +22,19 @@ struct ProductDetailsView: View {
     @StateObject private var productDetailsViewModel: ProductDetailsViewModel = ProductDetailsViewModel()
     @StateObject private var networkNanager = NetworkManager.shared
     
+    @State private var showSpecification: Bool = true
     @State private var expandAddToCart: Bool = false
     
     var product: Product
     var productRatings: [ProductRating]
+    
+    var productSpecificationKeys: [String]? {
+        if let productSpecification = exploreViewModel.getProductSpecificationForProductDetails(product: product) {
+            return Array(productSpecification.keys).sorted { $0 < $1 }
+        } else {
+            return nil
+        }
+    }
     
     var body: some View {
         ZStack(alignment: .bottomTrailing) {
@@ -67,9 +76,9 @@ struct ProductDetailsView: View {
                             .foregroundColor(.accentColor)
                     }
                     
-                    VStack(alignment: .leading, spacing: 30) {
+                    VStack(alignment: .leading, spacing: 40) {
                         VStack(alignment: .leading, spacing: 10) {
-                            Text("Description")
+                            Text(TexterifyManager.localisedString(key: .productDetailsView(.description)))
                                 .font(.ssTitle2)
                             
                             HStack {
@@ -79,8 +88,40 @@ struct ProductDetailsView: View {
                             }
                         }
                         
-                        Text("Specification")
-                            .font(.ssTitle2)
+                        VStack(alignment: .leading, spacing: 25) {
+                            HStack {
+                                Text(TexterifyManager.localisedString(key: .productDetailsView(.specification)))
+                                    .font(.ssTitle2)
+                                Button {
+                                    showSpecification.toggle()
+                                } label: {
+                                    Image(systemName: showSpecification ? "chevron.up" : "chevron.down")
+                                }
+                            }
+                            
+                            if showSpecification {
+                                if let productSpecificationKeys = productSpecificationKeys, let productSpecification = exploreViewModel.getProductSpecificationForProductDetails(product: product) {
+                                    VStack(alignment: .leading, spacing: 20) {
+                                        ForEach(productSpecificationKeys) { specificationKey in
+                                            if let productSpecificationValue = productSpecification[specificationKey] {
+                                                if !productSpecificationValue.isEmpty {
+                                                    VStack(alignment: .leading) {
+                                                        HStack() {
+                                                            Text("\(specificationKey):")
+                                                                .font(.ssCallout)
+                                                                .foregroundColor(.ssDarkGray)
+                                                            Text(productSpecification[specificationKey] ?? "")
+                                                                .font(.ssCallout)
+                                                        }
+                                                        Divider()
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
                         
                         ProductDetailsRatingsSection(product: product,
                                                      productRatings: productRatings)
@@ -105,6 +146,24 @@ struct ProductDetailsView: View {
                         .resizable()
                         .frame(width: 30, height: 30)
                         .foregroundColor(.accentColor)
+                }
+            }
+            
+            ToolbarItem(placement: .navigationBarTrailing) {
+                if exploreViewModel.productsToBeCompared.contains(product) {
+                    Button {
+                        exploreViewModel.removeProductToBeCompared(product: product)
+                    } label: {
+                        Image(systemName: "scalemass.fill")
+                            .frame(width: 28, height: 25)
+                    }
+                } else {
+                    Button {
+                        exploreViewModel.addProductToBeCompared(product: product)
+                    } label: {
+                        Image(systemName: "scalemass")
+                            .frame(width: 28, height: 25)
+                    }
                 }
             }
             

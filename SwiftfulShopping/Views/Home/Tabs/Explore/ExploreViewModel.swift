@@ -18,6 +18,8 @@ class ExploreViewModel: ObservableObject {
     
     @Published var productsToBeDisplayedBySearch: [Product] = []
     
+    @Published var productsToBeCompared: [Product] = []
+    
     @Published var categoriesWithImages: [Category: UIImage] = [:]
     
     @Published var productsForTab: TabsWithProducts = .exploreView
@@ -239,6 +241,14 @@ class ExploreViewModel: ObservableObject {
         }
     }
     
+    func getProductSpecificationForProductDetails(product: Product) -> [String: String]? {
+        if let languageCode = Locale.current.languageCode, let productSpecification = product.specification[languageCode] {
+            return Dictionary(uniqueKeysWithValues: productSpecification.map { (key, value) in (key.rawValue, value) })
+        } else {
+            return nil
+        }
+    }
+    
     func changeFocusedProductFor(product: Product) {
         choosenProduct = product
         shouldPresentProductDetailsView = true
@@ -262,5 +272,38 @@ class ExploreViewModel: ObservableObject {
         }
         
         return Array(products).sorted { $0.name < $1.name }
+    }
+    
+    var productsToBeComparedCategory: Category? {
+        productsToBeCompared.first?.category
+    }
+    
+    func addProductToBeCompared(product: Product) {
+        /// Product can be added to comparison array if:
+        /// - it is not present in comparison array
+        /// - it has the same category as other products in array
+        /// - comparison array already contains less than 5 products
+        
+        if productsToBeCompared.isEmpty {
+            productsToBeCompared.append(product)
+        } else {
+            if let productsToBeComparedCategory = productsToBeComparedCategory {
+                if product.category == productsToBeComparedCategory &&
+                    productsToBeCompared.count < 5 &&
+                    !productsToBeCompared.contains(product) {
+                    productsToBeCompared.append(product)
+                }
+            }
+        }
+    }
+    
+    func removeProductToBeCompared(product: Product) {
+        if let productIndex = productsToBeCompared.firstIndex(of: product) {
+            productsToBeCompared.remove(at: productIndex)
+        }
+    }
+    
+    func removeAllProductsFromComparison() {
+        productsToBeCompared.removeAll()
     }
 }

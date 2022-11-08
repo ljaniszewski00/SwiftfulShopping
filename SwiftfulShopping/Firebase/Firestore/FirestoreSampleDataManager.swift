@@ -56,7 +56,7 @@ class FirestoreSampleDataManager: ObservableObject {
         
         for product in Product.demoProducts {
             group.enter()
-            FirestoreProductsManager.client.addSpecificationForExistingProduct(productID: product.id, specification: product.specification) { _ in group.leave() }
+            FirestoreProductsManager.client.addSpecificationForExistingProduct(productID: product.id, productSpecification: product.specification) { _ in group.leave() }
         }
         
         group.notify(queue: .main) {

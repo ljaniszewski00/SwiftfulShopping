@@ -1,0 +1,12 @@
+{
+  "data" : [
+    {
+      "filename" : "scale.json",
+      "idiom" : "universal"
+    }
+  ],
+  "info" : {
+    "author" : "xcode",
+    "version" : 1
+  }
+}

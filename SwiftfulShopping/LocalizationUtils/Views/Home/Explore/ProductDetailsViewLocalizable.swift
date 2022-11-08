@@ -8,5 +8,7 @@
 import Foundation
 
 public enum ProductDetailsViewLocalizable: String {
+    case description = "ProductDetailsView_description"
+    case specification = "ProductDetailsView_specification"
     case navigationTitle = "ProductDetailsView_navigationTitle"
 }

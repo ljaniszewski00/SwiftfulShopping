@@ -202,7 +202,8 @@ struct SearchView: View {
                             searchViewModel.shouldPresentProductRecognizerView = true
                         }
                     } label: {
-                        Image(systemName: "camera")
+                        Image(systemName: "camera.viewfinder")
+                            .resizable()
                     }
                 }
             }

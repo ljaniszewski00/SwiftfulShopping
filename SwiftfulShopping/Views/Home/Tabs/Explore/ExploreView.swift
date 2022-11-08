@@ -120,6 +120,25 @@ struct ExploreView: View {
                 }
                 
                 ToolbarItem(placement: .navigationBarTrailing) {
+                    NavigationLink(destination: ProductsSpecificationsComparisonView()) {
+                        ZStack(alignment: .topTrailing) {
+                            Image(systemName: "scalemass")
+                            if exploreViewModel.productsToBeCompared.count > 0 {
+                                Text(String(exploreViewModel.productsToBeCompared.count))
+                                    .font(.ssCallout)
+                                    .foregroundColor(.ssWhite)
+                                    .padding(.all, 5)
+                                    .background {
+                                        Circle()
+                                            .foregroundColor(.accentColor)
+                                    }
+                                    .offset(x: 12, y: -10)
+                            }
+                        }
+                    }
+                }
+                
+                ToolbarItem(placement: .navigationBarTrailing) {
                     NavigationLink(destination: NotificationsView()) {
                         Image(systemName: "bell")
                     }

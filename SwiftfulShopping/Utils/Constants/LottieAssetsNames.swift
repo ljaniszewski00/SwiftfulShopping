@@ -17,4 +17,5 @@ struct LottieAssetsNames {
     static let search: String = "search"
     static let searchNoResults: String = "searchNoResults"
     static let cartSplashScreen: String = "cartSplashScreen"
+    static let scale: String = "scale"
 }

@@ -307,13 +307,16 @@ class FirestoreProductsManager: ObservableObject {
         
         self.db.collection(DatabaseCollections.products.rawValue)
             .document(product.id)
-            .setData(productDocumentData) { (error) in
+            .setData(productDocumentData) { [weak self] error in
             if let error = error {
                 print("Error creating product's data: \(error.localizedDescription)")
                 completion(.failure(error))
             } else {
                 print("Successfully created product's data in database")
-                completion(.success)
+                
+                self?.addSpecificationForExistingProduct(productID: product.id, productSpecification: product.specification) { result in
+                    completion(result)
+                }
             }
         }
     }
@@ -342,8 +345,31 @@ class FirestoreProductsManager: ObservableObject {
         }
     }
     
-    func addSpecificationForExistingProduct(productID: String, specification: ProductSpecification, completion: @escaping ((VoidResult) -> ())) {
+    func addSpecificationForExistingProduct(productID: String, productSpecification: ProductSpecification, completion: @escaping ((VoidResult) -> ())) {
+        let group = DispatchGroup()
         
+        for specification in productSpecification {
+            group.enter()
+            let productSpecificationDocumentData = Dictionary(uniqueKeysWithValues: specification.value.map { (key, value) in (key.decodeValue, value)})
+            
+            self.db.collection(DatabaseCollections.products.rawValue)
+                .document(productID)
+                .collection(DatabaseCollections.productSpecification.rawValue)
+                .document(specification.key)
+                .setData(productSpecificationDocumentData) { error in
+                    if let error = error {
+                        print("Error setting product's specification data for language \(specification.key): \(error.localizedDescription)")
+                        group.leave()
+                    } else {
+                        print("Successfully set product's specification data for language \(specification.key)")
+                        group.leave()
+                    }
+                }
+        }
+        
+        group.notify(queue: .main) {
+            completion(.success)
+        }
     }
     
     func addDiscount(discount: Discount, completion: @escaping ((VoidResult) -> ())) {
