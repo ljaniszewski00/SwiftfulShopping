@@ -75,6 +75,8 @@
 "EditPersonalInfoView_fullNameTextField" = "Imię i nazwisko";
 "EditPersonalInfoView_navigationTitle" = "Edycja danych osobowych";
 "EditPersonalInfoView_saveButton" = "Zapisz";
+"Errors_addProductToComparison" = "Błąd dodawania produktu do porównania";
+"Errors_addProductToComparisonDescription" = "Wystąpił błąd podczas dodawania produktu do porównania. Nie możesz porównywać więcej niż 5 produktów i muszą być one z tej samej kategorii.";
 "Errors_applyProductRatingError" = "Błąd dodawania nowej oceny. Proszę spróbować ponownie później.";
 "Errors_applyProductRatingErrorDescription" = "Błąd pobierania danych. Proszę spróbować ponownie później.";
 "Errors_biometricRecognitionError" = "Błąd rozpoznania biometrycznego";
@@ -307,6 +309,11 @@
 "ProductsListSource_company" = "Produkty dla Firmy";
 "ProductsListSource_newest" = "Najnowsze Produkty";
 "ProductsListSource_recommended" = "Polecane Produkty";
+"ProductsSpecificationComparisonView_differencesButton" = "Różnice";
+"ProductsSpecificationComparisonView_emptyComparisonInfo" = "Dodaj produkty do porównania by wyświetlić tu porównanie ich parametrów technicznych";
+"ProductsSpecificationComparisonView_navigationTitle" = "Porównaj";
+"ProductsSpecificationComparisonView_noInfoAboutSpecification" = "Brak Informacji";
+"ProductsSpecificationComparisonView_removeAllFromComparisonButton" = "Wyczyść Wszystkie";
 "ProfileView_changePhotoActionSheetChoosePhotoButton" = "Wybierz Zdjęcie";
 "ProfileView_changePhotoActionSheetTakePhotoButton" = "Zrób Zdjęcie";
 "ProfileView_changePhotoActionSheetTitle" = "Zmień Zdjęcie";
@@ -462,4 +469,4 @@
 "ThirdReturnCreationView_createReturnButton" = "Utwórz Zwrot";
 "ThirdReturnCreationView_howDoYouWantToReturn" = "W jaki sposób chcesz zwrócić produkt?";
 "ThirdReturnCreationView_navigationTitle" = "Utwórz Zwrot";
-"texterify_timestamp" = "2022-11-08T21:03:33Z";
+"texterify_timestamp" = "2022-11-09T17:54:42Z";

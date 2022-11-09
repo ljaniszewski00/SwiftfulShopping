@@ -60,6 +60,8 @@ final class ErrorManager: ObservableObject {
             TexterifyManager.localisedString(key: .errors(.dataFetchErrorDescription)),
         .editPersonalInfoError:
             TexterifyManager.localisedString(key: .errors(.editPersonalInfoErrorDescription)),
+        .addProductToComparison:
+            TexterifyManager.localisedString(key: .errors(.addProductToComparisonDescription)),
         .unknownError:
             TexterifyManager.localisedString(key: .errors(.unknownErrorDescription))
     ]

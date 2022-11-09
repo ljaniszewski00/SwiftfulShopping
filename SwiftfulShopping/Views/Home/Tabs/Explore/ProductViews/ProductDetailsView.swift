@@ -19,6 +19,8 @@ struct ProductDetailsView: View {
     @Environment(\.dismiss) var dismiss
     @Environment(\.colorScheme) var colorScheme
     
+    @StateObject var errorManager = ErrorManager.shared
+    
     @StateObject private var productDetailsViewModel: ProductDetailsViewModel = ProductDetailsViewModel()
     @StateObject private var networkNanager = NetworkManager.shared
     
@@ -133,6 +135,8 @@ struct ProductDetailsView: View {
             buildAddToCartPane()
                 .zIndex(1)
         }
+        .modifier(ErrorModal(isPresented: $errorManager.showErrorModal,
+                             customError: errorManager.customError ?? ErrorManager.unknownError))
         .navigationBarTitle("")
         .navigationBarTitleDisplayMode(.inline)
         .navigationBarHidden(false)
@@ -159,7 +163,10 @@ struct ProductDetailsView: View {
                     }
                 } else {
                     Button {
-                        exploreViewModel.addProductToBeCompared(product: product)
+                        let added: Bool = exploreViewModel.addProductToBeCompared(product: product)
+                        if !added {
+                            errorManager.generateCustomError(errorType: .addProductToComparison)
+                        }
                     } label: {
                         Image(systemName: "scalemass")
                             .frame(width: 28, height: 25)

@@ -278,7 +278,7 @@ class ExploreViewModel: ObservableObject {
         productsToBeCompared.first?.category
     }
     
-    func addProductToBeCompared(product: Product) {
+    func addProductToBeCompared(product: Product) -> Bool {
         /// Product can be added to comparison array if:
         /// - it is not present in comparison array
         /// - it has the same category as other products in array
@@ -286,14 +286,18 @@ class ExploreViewModel: ObservableObject {
         
         if productsToBeCompared.isEmpty {
             productsToBeCompared.append(product)
+            return true
         } else {
             if let productsToBeComparedCategory = productsToBeComparedCategory {
                 if product.category == productsToBeComparedCategory &&
                     productsToBeCompared.count < 5 &&
                     !productsToBeCompared.contains(product) {
                     productsToBeCompared.append(product)
+                    return true
                 }
             }
+            
+            return false
         }
     }
     

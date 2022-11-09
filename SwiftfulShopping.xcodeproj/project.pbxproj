@@ -271,6 +271,7 @@
 		0AD89747289D0C5E00BFDAA1 /* ProfileViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0AD89745289D0C4A00BFDAA1 /* ProfileViewModel.swift */; };
 		0AD89748289D0C5E00BFDAA1 /* ProfileViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0AD89745289D0C4A00BFDAA1 /* ProfileViewModel.swift */; };
 		0AD8976B289D392F00BFDAA1 /* ProductDetailsRatingsSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0AD8976A289D392F00BFDAA1 /* ProductDetailsRatingsSection.swift */; };
+		882F47E1291C1D6800BF670A /* ProductsSpecificationComparisonViewLocalizable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 882F47E0291C1D6800BF670A /* ProductsSpecificationComparisonViewLocalizable.swift */; };
 		889EDF39290DA0D100EBFFC1 /* FirestoreSampleDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 889EDF38290DA0D100EBFFC1 /* FirestoreSampleDataManager.swift */; };
 		889EDF3E290EF94200EBFFC1 /* texterify-ios-sdk in Frameworks */ = {isa = PBXBuildFile; productRef = 889EDF3D290EF94200EBFFC1 /* texterify-ios-sdk */; };
 		889EDF48290F029E00EBFFC1 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 889EDF4A290F029E00EBFFC1 /* Localizable.strings */; };
@@ -548,6 +549,7 @@
 		0ACD59B5284B74CD00AA9DA0 /* Countries.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Countries.swift; sourceTree = "<group>"; };
 		0AD89745289D0C4A00BFDAA1 /* ProfileViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewModel.swift; sourceTree = "<group>"; };
 		0AD8976A289D392F00BFDAA1 /* ProductDetailsRatingsSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductDetailsRatingsSection.swift; sourceTree = "<group>"; };
+		882F47E0291C1D6800BF670A /* ProductsSpecificationComparisonViewLocalizable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductsSpecificationComparisonViewLocalizable.swift; sourceTree = "<group>"; };
 		889EDF38290DA0D100EBFFC1 /* FirestoreSampleDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirestoreSampleDataManager.swift; sourceTree = "<group>"; };
 		889EDF49290F029E00EBFFC1 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
 		889EDF4B290F02FF00EBFFC1 /* pl */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = pl; path = pl.lproj/Localizable.strings; sourceTree = "<group>"; };
@@ -1456,6 +1458,7 @@
 				889EDF78290F2A2400EBFFC1 /* ProductDetailsRatingsSectionLocalizable.swift */,
 				889EDF7C290F2A3800EBFFC1 /* ExploreViewLocalizable.swift */,
 				889EDF7E290F2A4300EBFFC1 /* NotificationsViewLocalizable.swift */,
+				882F47E0291C1D6800BF670A /* ProductsSpecificationComparisonViewLocalizable.swift */,
 			);
 			path = Explore;
 			sourceTree = "<group>";
@@ -1876,6 +1879,7 @@
 				889EDF52290F0C0000EBFFC1 /* TexterifyManager.swift in Sources */,
 				0A30460328A96B9A00F218B3 /* UIApplication.swift in Sources */,
 				0A3149E528982DFC001920D2 /* SingleProductRatingView.swift in Sources */,
+				882F47E1291C1D6800BF670A /* ProductsSpecificationComparisonViewLocalizable.swift in Sources */,
 				0A268B5328687FA9006CF0E2 /* ReturnCreationViewModel.swift in Sources */,
 				0ACD591B284A6F6600AA9DA0 /* LoginView.swift in Sources */,
 				0A453B8D2851DFE600870EA9 /* ExploreViewModel.swift in Sources */,

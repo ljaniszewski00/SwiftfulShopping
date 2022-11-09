@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import texterify_ios_sdk
 
 struct ProductsSpecificationsComparisonView: View {
     @EnvironmentObject private var exploreViewModel: ExploreViewModel
@@ -21,7 +22,7 @@ struct ProductsSpecificationsComparisonView: View {
                                loopMode: .loop,
                                contentMode: .scaleAspectFill)
                         .frame(width: 200, height: 200)
-                    Text("Add products to comparison to see their spefications compared here")
+                    Text(TexterifyManager.localisedString(key: .productsSpecificationComparisonView(.emptyComparisonInfo)))
                         .font(.ssTitle2)
                         .padding(.horizontal)
                     Spacer()
@@ -38,7 +39,7 @@ struct ProductsSpecificationsComparisonView: View {
                         } label: {
                             HStack {
                                 Image(systemName: "square.and.line.vertical.and.square.filled")
-                                Text("Differences")
+                                Text(TexterifyManager.localisedString(key: .productsSpecificationComparisonView(.differencesButton)))
                             }
                         }
                         .disabled(exploreViewModel.productsToBeCompared.count < 2)
@@ -67,15 +68,25 @@ struct ProductsSpecificationsComparisonView: View {
                                                 VStack(alignment: .leading, spacing: 20) {
                                                     ForEach(productSpecificationKeys, id: \.self) { specificationKey in
                                                         VStack(alignment: .leading) {
-                                                            VStack(alignment: .leading) {
+                                                            VStack(alignment: .leading, spacing: 13) {
                                                                 Text(specificationKey)
                                                                     .font(.ssCallout)
                                                                     .foregroundColor(.ssDarkGray)
-                                                                Text(productSpecification[specificationKey] == nil ? "" : formatProductSpecificationValue(specificationValue: productSpecification[specificationKey]!))
-                                                                    .font(.ssCallout)
-                                                                    .foregroundColor(showDifferences ? (keysWithDifferentValuesForProducts.contains(specificationKey) ? .red : (colorScheme == .light ? .black : .ssWhite)) : (colorScheme == .light ? .black : .ssWhite))
-                                                                    .fixedSize(horizontal: false, vertical: true)
-                                                                    .frame(height: 100)
+                                                                Group {
+                                                                    if let productSpecificationValue = productSpecification[specificationKey] {
+                                                                        if !productSpecificationValue.isEmpty {
+                                                                            Text(formatProductSpecificationValue(specificationValue: productSpecificationValue))
+                                                                        } else {
+                                                                            Text(TexterifyManager.localisedString(key: .productsSpecificationComparisonView(.noInformation)))
+                                                                        }
+                                                                    } else {
+                                                                        Text(TexterifyManager.localisedString(key: .productsSpecificationComparisonView(.noInformation)))
+                                                                    }
+                                                                }
+                                                                .font(.ssCallout)
+                                                                .foregroundColor(showDifferences ? (keysWithDifferentValuesForProducts.contains(specificationKey) ? .red : (colorScheme == .light ? .black : .ssWhite)) : (colorScheme == .light ? .black : .ssWhite))
+                                                                .fixedSize(horizontal: false, vertical: true)
+                                                                .frame(height: 100, alignment: .top)
                                                             }
                                                             Divider()
                                                         }
@@ -97,15 +108,16 @@ struct ProductsSpecificationsComparisonView: View {
             }
         }
         .padding()
-        .navigationTitle("Compare")
+        .navigationTitle(TexterifyManager.localisedString(key: .productsSpecificationComparisonView(.navigationTitle)))
         .navigationBarTitleDisplayMode(.inline)
         .toolbar {
             ToolbarItem(placement: .navigationBarTrailing) {
                 Button {
                     exploreViewModel.removeAllProductsFromComparison()
                 } label: {
-                    Text("Remove All")
+                    Text(TexterifyManager.localisedString(key: .productsSpecificationComparisonView(.removeAllFromComparisonButton)))
                 }
+                .disabled(exploreViewModel.productsToBeCompared.isEmpty)
             }
         }
     }

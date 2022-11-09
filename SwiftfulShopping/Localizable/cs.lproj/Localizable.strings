@@ -75,6 +75,8 @@
 "EditPersonalInfoView_fullNameTextField" = "";
 "EditPersonalInfoView_navigationTitle" = "";
 "EditPersonalInfoView_saveButton" = "";
+"Errors_addProductToComparison" = "";
+"Errors_addProductToComparisonDescription" = "";
 "Errors_applyProductRatingError" = "";
 "Errors_applyProductRatingErrorDescription" = "";
 "Errors_biometricRecognitionError" = "";
@@ -307,6 +309,11 @@
 "ProductsListSource_company" = "";
 "ProductsListSource_newest" = "";
 "ProductsListSource_recommended" = "";
+"ProductsSpecificationComparisonView_differencesButton" = "";
+"ProductsSpecificationComparisonView_emptyComparisonInfo" = "";
+"ProductsSpecificationComparisonView_navigationTitle" = "";
+"ProductsSpecificationComparisonView_noInfoAboutSpecification" = "";
+"ProductsSpecificationComparisonView_removeAllFromComparisonButton" = "";
 "ProfileView_changePhotoActionSheetChoosePhotoButton" = "";
 "ProfileView_changePhotoActionSheetTakePhotoButton" = "";
 "ProfileView_changePhotoActionSheetTitle" = "";
@@ -462,4 +469,4 @@
 "ThirdReturnCreationView_createReturnButton" = "";
 "ThirdReturnCreationView_howDoYouWantToReturn" = "";
 "ThirdReturnCreationView_navigationTitle" = "";
-"texterify_timestamp" = "2022-11-08T21:03:28Z";
+"texterify_timestamp" = "2022-11-09T17:54:38Z";
