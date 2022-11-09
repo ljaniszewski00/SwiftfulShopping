@@ -144,7 +144,6 @@ struct ExploreView: View {
                     }
                 }
             }
-            .modifier(ErrorModal(isPresented: $errorManager.showErrorModal, customError: errorManager.customError ?? ErrorManager.unknownError))
         }
         .navigationViewStyle(.stack)
         .environmentObject(tabBarStateManager)

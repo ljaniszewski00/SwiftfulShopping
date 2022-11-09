@@ -18,6 +18,7 @@ struct CartView: View {
     @Environment(\.colorScheme) var colorScheme
     
     @StateObject private var networkNanager = NetworkManager.shared
+    @StateObject var errorManager = ErrorManager.shared
     
     @State private var productClicked: Bool = false
     
@@ -53,8 +54,34 @@ struct CartView: View {
                                             cartViewModel.changeFocusedProductFor(product: product)
                                         }
                                     }
+                                    .swipeActions {
+                                        Button(role: .destructive) {
+                                            cartViewModel.removeProductFromCart(product: product)
+                                        } label: {
+                                            Image(systemName: "trash.fill")
+                                                .frame(width: 28, height: 25)
+                                        }
+                                        
+                                        if exploreViewModel.productsToBeCompared.contains(product) {
+                                            Button {
+                                                exploreViewModel.removeProductToBeCompared(product: product)
+                                            } label: {
+                                                Image(systemName: "scalemass.fill")
+                                                    .frame(width: 28, height: 25)
+                                            }
+                                        } else {
+                                            Button {
+                                                let added: Bool = exploreViewModel.addProductToBeCompared(product: product)
+                                                if !added {
+                                                    errorManager.generateCustomError(errorType: .addProductToComparison)
+                                                }
+                                            } label: {
+                                                Image(systemName: "scalemass")
+                                                    .frame(width: 28, height: 25)
+                                            }
+                                        }
+                                    }
                             }
-                            .onDelete(perform: cartViewModel.removeProducts)
                         }
                         
                         HStack {
