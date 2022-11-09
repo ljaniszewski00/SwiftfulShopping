@@ -33,27 +33,15 @@ struct ProductsSpecificationsComparisonView: View {
                         Text(exploreViewModel.productsToBeComparedCategory?.rawValue ?? "")
                             .font(.ssTitle3)
                         Spacer()
-                        if showDifferences {
-                            Button {
-                                showDifferences = false
-                            } label: {
-                                HStack {
-                                    Image(systemName: "square.and.line.vertical.and.square.filled")
-                                    Text("Hide differences")
-                                }
+                        Button {
+                            showDifferences.toggle()
+                        } label: {
+                            HStack {
+                                Image(systemName: "square.and.line.vertical.and.square.filled")
+                                Text("Differences")
                             }
-                            .disabled(exploreViewModel.productsToBeCompared.count < 2)
-                        } else {
-                            Button {
-                                showDifferences = true
-                            } label: {
-                                HStack {
-                                    Image(systemName: "square.and.line.vertical.and.square.filled")
-                                    Text("Show differences")
-                                }
-                            }
-                            .disabled(exploreViewModel.productsToBeCompared.count < 2)
                         }
+                        .disabled(exploreViewModel.productsToBeCompared.count < 2)
                     }
                     Divider()
                     ScrollView(.horizontal, showsIndicators: false) {
