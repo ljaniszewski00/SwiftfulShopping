@@ -152,8 +152,9 @@ struct SelectionDropdown_Previews: PreviewProvider {
         var dataWithImagesToChoose: [String: String?] = [:]
         for country in Countries.allCases {
             if country.rawValue.contains(" ") {
-                let countrySubstring = country.rawValue.components(separatedBy: " ")[0]
-                dataWithImagesToChoose[country.rawValue] = countrySubstring.lowercased()
+                if let countrySubstring = country.rawValue.components(separatedBy: " ").first {
+                    dataWithImagesToChoose[country.rawValue] = countrySubstring.lowercased()
+                }
             } else {
                 dataWithImagesToChoose[country.rawValue] = country.rawValue.lowercased()
             }
