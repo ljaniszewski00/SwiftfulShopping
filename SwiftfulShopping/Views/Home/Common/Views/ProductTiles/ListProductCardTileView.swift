@@ -72,10 +72,13 @@ struct ListProductCardTileView: View {
                             .fixedSize(horizontal: false, vertical: true)
                             .foregroundColor(colorScheme == .light ? .black : .ssWhite)
                         
-                        Text("$\(product.price, specifier: "%.2f")")
-                            .font(.ssCallout)
-                            .foregroundColor(.accentColor)
-                            .padding(.bottom, 5)
+                        if let price = product.price,
+                           let formattedPrice = LocaleManager.client.formatPrice(price: price) {
+                            Text(formattedPrice)
+                                .font(.ssCallout)
+                                .foregroundColor(.accentColor)
+                                .padding(.bottom, 5)
+                        }
                     }
                     
                     Spacer()

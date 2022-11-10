@@ -64,7 +64,9 @@ class CartViewModel: ObservableObject {
     var cartTotalCost: Double {
         var totalCost: Double = 0
         _ = productsForCart.map { product, quantity in
-            totalCost += product.price * Double(quantity)
+            if let price = product.price {
+                totalCost += price * Double(quantity)
+            }
         }
 
         return totalCost

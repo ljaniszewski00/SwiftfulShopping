@@ -21,7 +21,7 @@ class FirestoreProductsManager: ObservableObject {
     // MARK: SELECT DATABASE OPERATIONS
     
     func getProducts(completion: @escaping ((Result<[Product]?, Error>) -> ())) {
-        let languageCode = Locale.current.languageCode
+        let languageCode = LocaleManager.client.clientLanguageCode
         
         db.collection(DatabaseCollections.products.rawValue)
             .addSnapshotListener { querySnapshot, error in
@@ -41,7 +41,7 @@ class FirestoreProductsManager: ObservableObject {
                         let company = data["company"] as? String ?? ""
                         let productDescription = data["productDescription"] as? String ?? ""
                         let category = data["category"] as? String ?? ""
-                        let price = data["price"] as? Double ?? 0.0
+                        let priceForCurrency = data["priceForCurrency"] as? [String: Double] ?? [:]
                         let unitsSold = data["unitsSold"] as? Int ?? 0
                         let introducedForSale = data["introducedForSale"] as? Date ?? Date()
                         let isRecommended = data["isRecommended"] as? Bool ?? false
@@ -91,7 +91,7 @@ class FirestoreProductsManager: ObservableObject {
                                                                 company: company,
                                                                 productDescription: productDescription,
                                                                 category: Category.withLabel(category) ?? .other,
-                                                                price: price,
+                                                                priceForCurrency: priceForCurrency,
                                                                 specification: productSpecification,
                                                                 unitsSold: unitsSold,
                                                                 introducedForSale: introducedForSale,
@@ -108,7 +108,7 @@ class FirestoreProductsManager: ObservableObject {
                                                     company: company,
                                                     productDescription: productDescription,
                                                     category: Category.withLabel(category) ?? .other,
-                                                    price: price,
+                                                    priceForCurrency: priceForCurrency,
                                                     specification: [:],
                                                     unitsSold: unitsSold,
                                                     introducedForSale: introducedForSale,
@@ -296,7 +296,7 @@ class FirestoreProductsManager: ObservableObject {
             "company": product.company,
             "productDescription": product.productDescription,
             "category": product.category.decodeValue,
-            "price": product.price,
+            "priceForCurrency": product.priceForCurrency,
             "unitsSold": product.unitsSold,
             "introducedForSale": product.introducedForSale,
             "isRecommended": product.isRecommended,
@@ -398,6 +398,24 @@ class FirestoreProductsManager: ObservableObject {
     
     
     // MARK: UPDATE DATABASE OPERATIONS
+    
+    func editProductSoldUnitsNumber(productID: String, unitsSold: Int, completion: @escaping ((VoidResult) -> ())) {
+        let updateData: [String: Any] = [
+            "unitsSold": FieldValue.increment(Double(unitsSold))
+        ]
+        
+        self.db.collection(DatabaseCollections.products.rawValue)
+            .document(productID)
+            .updateData(updateData) { (error) in
+                if let error = error {
+                    print("Error editing product sold units number: \(error.localizedDescription)")
+                    completion(.failure(error))
+                } else {
+                    print("Successfully edited product sold units number")
+                    completion(.success)
+                }
+            }
+    }
     
     func redeemDiscount(userID: String, discount: Discount, completion: @escaping ((VoidResult) -> ())) {
         let updateData: [String: Any] = [

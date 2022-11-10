@@ -26,7 +26,7 @@ struct HomeView: View {
     
     @State var selectedTab: Tab = .explore
     
-//    // MARK: To add sample data to Firestore
+    // MARK: To add sample data to Firestore
 //    init() {
 //        FirestoreSampleDataManager.client.addAll { _ in }
 //    }

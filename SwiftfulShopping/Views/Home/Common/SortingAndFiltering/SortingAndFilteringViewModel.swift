@@ -88,9 +88,9 @@ class SortingAndFilteringViewModel: ObservableObject {
         
         switch sortingMethod {
         case .priceAscending:
-            productsArray = productsArray.sorted(by: { $0.price < $1.price })
+            productsArray = productsArray.sorted(by: { guard let firstPrice = $0.price, let secondPrice = $1.price else { return true }; return firstPrice < secondPrice })
         case .priceDescending:
-            productsArray = productsArray.sorted(by: { $0.price > $1.price })
+            productsArray = productsArray.sorted(by: { guard let firstPrice = $0.price, let secondPrice = $1.price else { return true }; return firstPrice > secondPrice })
         case .popularity:
             productsArray = productsArray.sorted(by: { $0.unitsSold > $1.unitsSold })
         case .ratingAscending:
@@ -147,14 +147,10 @@ class SortingAndFilteringViewModel: ObservableObject {
                 }
             case .price:
                 if let doubleLowestPriceFilter = Double(lowestPriceFilter) {
-                    productsArray = productsArray.filter {
-                        $0.price >= doubleLowestPriceFilter
-                    }
+                    productsArray = productsArray.filter { guard let price = $0.price else { return true }; return price >= doubleLowestPriceFilter }
                 }
                 if let doubleHighestPriceFilter = Double(highestPriceFilter) {
-                    productsArray = productsArray.filter {
-                        $0.price <= doubleHighestPriceFilter
-                    }
+                    productsArray = productsArray.filter { guard let price = $0.price else { return true }; return price <= doubleHighestPriceFilter }
                 }
             case .rating:
                 var productsAverageRatings: [Product: Double] = [:]

@@ -72,9 +72,12 @@ struct GridProductCardTileView: View {
                             .fixedSize(horizontal: false, vertical: true)
                             .foregroundColor(colorScheme == .light ? .black : .ssWhite)
                         
-                        Text("$\(product.price, specifier: "%.2f")")
-                            .font(.ssTitle3)
-                            .foregroundColor(.accentColor)
+                        if let price = product.price,
+                           let formattedPrice = LocaleManager.client.formatPrice(price: price) {
+                            Text(formattedPrice)
+                                .font(.ssTitle3)
+                                .foregroundColor(.accentColor)
+                        }
                     }
                     
                     Spacer()

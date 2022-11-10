@@ -52,8 +52,10 @@ class ReturnCreationViewModel: ObservableObject {
                       orderID: String,
                       completion: @escaping ((VoidResult) -> ())) {
         var returnPrice: Double = 0
-        for productsForReturn in productsForReturn {
-            returnPrice += productsForReturn.price
+        for productForReturn in productsForReturn {
+            if let price = productForReturn.price {
+                returnPrice += price
+            }
         }
         
         let createdReturn = Return(clientID: clientID,

@@ -71,11 +71,16 @@ struct ProductDetailsView: View {
                         Text(product.company)
                             .font(.ssTitle3)
                             .foregroundColor(.ssDarkGray)
+                        
                         Text(product.name)
                             .font(.ssTitle1)
-                        Text("$\(product.price, specifier: "%.2f")")
-                            .font(.ssTitle2)
-                            .foregroundColor(.accentColor)
+                        
+                        if let price = product.price,
+                           let formattedPrice = LocaleManager.client.formatPrice(price: price) {
+                            Text(formattedPrice)
+                                .font(.ssTitle2)
+                                .foregroundColor(.accentColor)
+                        }
                     }
                     
                     VStack(alignment: .leading, spacing: 40) {
