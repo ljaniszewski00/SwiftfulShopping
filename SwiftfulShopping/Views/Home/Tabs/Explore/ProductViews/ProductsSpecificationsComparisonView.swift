@@ -84,7 +84,7 @@ struct ProductsSpecificationsComparisonView: View {
                                                                     }
                                                                 }
                                                                 .font(.ssCallout)
-                                                                .foregroundColor(showDifferences ? (keysWithDifferentValuesForProducts.contains(specificationKey) ? .red : (colorScheme == .light ? .black : .ssWhite)) : (colorScheme == .light ? .black : .ssWhite))
+                                                                .foregroundColor(showDifferences ? (getKeysWithDifferentValuesForProducts().contains(specificationKey) ? .red : (colorScheme == .light ? .black : .ssWhite)) : (colorScheme == .light ? .black : .ssWhite))
                                                                 .fixedSize(horizontal: false, vertical: true)
                                                                 .frame(height: 100, alignment: .top)
                                                             }
@@ -122,7 +122,7 @@ struct ProductsSpecificationsComparisonView: View {
         }
     }
     
-    private var keysWithDifferentValuesForProducts: [String] {
+    private func getKeysWithDifferentValuesForProducts() -> [String] {
         var keysWithDifferences: Set<String> = []
         for productToCompare in exploreViewModel.productsToBeCompared {
             if let specificationToCompare = exploreViewModel.getProductSpecificationForProductDetails(product: productToCompare) {

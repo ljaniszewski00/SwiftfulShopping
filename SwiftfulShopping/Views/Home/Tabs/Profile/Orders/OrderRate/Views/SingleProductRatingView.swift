@@ -21,7 +21,9 @@ struct SingleProductRatingView: View {
         VStack(alignment: .leading) {
             ScrollView(.vertical) {
                 VStack(alignment: .center, spacing: 20) {
-                    BasicProductTile(product: ratingViewModel.activeProduct ?? Product.demoProducts[0])
+                    if let activeProduct = ratingViewModel.activeProduct {
+                        BasicProductTile(product: activeProduct)
+                    }
                     
                     VStack(alignment: .leading, spacing: 15) {
                         Text(TexterifyManager.localisedString(key: .singleProductRatingView(.howDoYouFindProduct)))

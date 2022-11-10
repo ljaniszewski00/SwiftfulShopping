@@ -44,12 +44,8 @@ class LocationManager: NSObject, ObservableObject, CLLocationManagerDelegate {
                 if let error = error {
                     print("reverse geodcode fail: \(error.localizedDescription)")
                     group.leave()
-                }
-                
-                if let placemarks = placemarks {
-                    if placemarks.count > 0 {
-                        let placemark = placemarks[0]
-                        
+                } else {
+                    if let placemarks = placemarks, let placemark = placemarks.first {
                         DispatchQueue.main.async {
                             if let city = placemark.locality {
                                 addressData["city"] = city
@@ -72,8 +68,6 @@ class LocationManager: NSObject, ObservableObject, CLLocationManagerDelegate {
                     } else {
                         group.leave()
                     }
-                } else {
-                    group.leave()
                 }
             }
             
