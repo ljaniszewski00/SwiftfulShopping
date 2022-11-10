@@ -67,6 +67,11 @@ struct OrdersView: View {
             }
         }
         .listStyle(.grouped)
+        .refreshable {
+            profileViewModel.fetchUserOrders {
+                ordersViewModel.userOrders = profileViewModel.userOrders
+            }
+        }
         .navigationTitle(TexterifyManager.localisedString(key: .ordersView(.navigationTitle)))
         .navigationBarTitleDisplayMode(.inline)
         .navigationBarBackButtonHidden(true)

@@ -201,6 +201,18 @@
 "LoginView_signInWithFacebook" = "Zaloguj się z Facebook";
 "LoginView_signInWithGitHub" = "Zaloguj się z GitHub";
 "LoginView_signInWithGoogle" = "Zaloguj się z Google";
+"Months_april" = "Kwieceń";
+"Months_august" = "Sierpień";
+"Months_december" = "Grudzień";
+"Months_february" = "Luty";
+"Months_january" = "Styczeń";
+"Months_july" = "Lipiec";
+"Months_june" = "Czerwiec";
+"Months_march" = "Marzec";
+"Months_may" = "Maj";
+"Months_november" = "Listopad";
+"Months_october" = "Październik";
+"Months_september" = "Wrzesień";
 "NotificationsView_navigationTitle" = "Powiadomienia";
 "NotificationsView_thisPageIsUnderConstruction" = "Ta strona jest w trakcie przygotowywania";
 "OrderCreationChangeAddressView_addNewAddressButton" = "Dodaj nowy adres";
@@ -469,4 +481,4 @@
 "ThirdReturnCreationView_createReturnButton" = "Utwórz Zwrot";
 "ThirdReturnCreationView_howDoYouWantToReturn" = "W jaki sposób chcesz zwrócić produkt?";
 "ThirdReturnCreationView_navigationTitle" = "Utwórz Zwrot";
-"texterify_timestamp" = "2022-11-09T17:54:42Z";
+"texterify_timestamp" = "2022-11-10T18:52:09Z";

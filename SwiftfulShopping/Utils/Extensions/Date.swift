@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import texterify_ios_sdk
 
 extension Date {
     func get(_ components: Calendar.Component..., calendar: Calendar = Calendar.current) -> DateComponents {
@@ -62,29 +63,29 @@ extension Date {
     static func getMonthNameFor(monthNumber: Int) -> String {
         switch monthNumber {
         case 1:
-            return "January"
+            return TexterifyManager.localisedString(key: .months(.january))
         case 2:
-            return "February"
+            return TexterifyManager.localisedString(key: .months(.february))
         case 3:
-            return "March"
+            return TexterifyManager.localisedString(key: .months(.march))
         case 4:
-            return "April"
+            return TexterifyManager.localisedString(key: .months(.april))
         case 5:
-            return "May"
+            return TexterifyManager.localisedString(key: .months(.may))
         case 6:
-            return "June"
+            return TexterifyManager.localisedString(key: .months(.june))
         case 7:
-            return "July"
+            return TexterifyManager.localisedString(key: .months(.july))
         case 8:
-            return "August"
+            return TexterifyManager.localisedString(key: .months(.august))
         case 9:
-            return "September"
+            return TexterifyManager.localisedString(key: .months(.september))
         case 10:
-            return "October"
+            return TexterifyManager.localisedString(key: .months(.october))
         case 11:
-            return "November"
+            return TexterifyManager.localisedString(key: .months(.november))
         case 12:
-            return "December"
+            return TexterifyManager.localisedString(key: .months(.december))
         default:
             return ""
         }

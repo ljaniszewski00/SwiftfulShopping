@@ -43,11 +43,13 @@ class FirestoreProductsManager: ObservableObject {
                         let category = data["category"] as? String ?? ""
                         let priceForCurrency = data["priceForCurrency"] as? [String: Double] ?? [:]
                         let unitsSold = data["unitsSold"] as? Int ?? 0
-                        let introducedForSale = data["introducedForSale"] as? Date ?? Date()
+                        let introducedForSaleTimestamp = data["introducedForSale"] as? Timestamp
                         let isRecommended = data["isRecommended"] as? Bool ?? false
                         let isNew = data["isNew"] as? Bool ?? false
                         let keywords = data["keywords"] as? [String] ?? []
                         let imagesURLs = data["imagesURLs"] as? [String] ?? []
+                        
+                        let introducedForSale = introducedForSaleTimestamp?.dateValue() ?? Date()
                         
                         if let languageCode = languageCode {
                             self.db
@@ -146,7 +148,9 @@ class FirestoreProductsManager: ObservableObject {
                         let authorFirstName = data["authorFirstName"] as? String ?? ""
                         let rating = data["rating"] as? Int ?? 0
                         let review = data["review"] as? String ?? ""
-                        let date = data["date"] as? Date ?? Date()
+                        let dateTimestamp = data["date"] as? Timestamp
+                        
+                        let date = dateTimestamp?.dateValue() ?? Date()
                         
                         return ProductRating(id: id,
                                              productID: productID,
@@ -181,7 +185,9 @@ class FirestoreProductsManager: ObservableObject {
                         let authorFirstName = data["authorFirstName"] as? String ?? ""
                         let rating = data["rating"] as? Int ?? 0
                         let review = data["review"] as? String ?? ""
-                        let date = data["date"] as? Date ?? Date()
+                        let dateTimestamp = data["date"] as? Timestamp
+                        
+                        let date = dateTimestamp?.dateValue() ?? Date()
                         
                         return ProductRating(id: id,
                                              productID: productID,

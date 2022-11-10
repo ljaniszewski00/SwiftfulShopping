@@ -33,7 +33,7 @@ class FirestoreReturnsManager: ObservableObject {
                         let data = queryDocumentSnapshot.data()
 
                         let id = data["id"] as? String ?? ""
-                        let returnDate = data["returnDate"] as? Date ?? Date()
+                        let returnDateTimestamp = data["returnDate"] as? Timestamp
                         let clientID = data["clientID"] as? String ?? ""
                         let orderID = data["orderID"] as? String ?? ""
                         let productsIDs = data["productsIDs"] as? [String] ?? []
@@ -46,6 +46,8 @@ class FirestoreReturnsManager: ObservableObject {
                         let bankAccountOwnerPostalCode = data["bankAccountOwnerPostalCode"] as? String ?? ""
                         let bankAccountOwnerCity = data["bankAccountOwnerCity"] as? String ?? ""
                         let bankAccountOwnerCountry = data["bankAccountOwnerCountry"] as? String ?? ""
+                        
+                        let returnDate = returnDateTimestamp?.dateValue() ?? Date()
                         
                         return Return(id: id,
                                       returnDate: returnDate,

@@ -33,8 +33,8 @@ class FirestoreOrdersManager: ObservableObject {
                         let data = queryDocumentSnapshot.data()
 
                         let id = data["id"] as? String ?? ""
-                        let orderDate = data["orderDate"] as? Date ?? Date()
-                        let estimatedDeliveryDate = data["estimatedDeliveryDate"] as? Date ?? Date()
+                        let orderDateTimestamp = data["orderDate"] as? Timestamp
+                        let estimatedDeliveryDateTimestamp = data["estimatedDeliveryDate"] as? Timestamp
                         let clientID = data["clientID"] as? String ?? ""
                         let clientDescription = data["clientDescription"] as? String ?? ""
                         let addressDescription = data["addressDescription"] as? String ?? ""
@@ -46,6 +46,9 @@ class FirestoreOrdersManager: ObservableObject {
                         let invoice = data["invoice"] as? Bool ?? false
                         let totalCost = data["totalCost"] as? Double ?? 0.0
                         let status = data["status"] as? String ?? ""
+                        
+                        let orderDate = orderDateTimestamp?.dateValue() ?? Date()
+                        let estimatedDeliveryDate = estimatedDeliveryDateTimestamp?.dateValue() ?? Date()
                         
                         return Order(id: id,
                                      orderDate: orderDate,

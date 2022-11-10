@@ -201,6 +201,18 @@
 "LoginView_signInWithFacebook" = "";
 "LoginView_signInWithGitHub" = "";
 "LoginView_signInWithGoogle" = "";
+"Months_april" = "";
+"Months_august" = "";
+"Months_december" = "";
+"Months_february" = "";
+"Months_january" = "";
+"Months_july" = "";
+"Months_june" = "";
+"Months_march" = "";
+"Months_may" = "";
+"Months_november" = "";
+"Months_october" = "";
+"Months_september" = "";
 "NotificationsView_navigationTitle" = "";
 "NotificationsView_thisPageIsUnderConstruction" = "";
 "OrderCreationChangeAddressView_addNewAddressButton" = "";
@@ -469,4 +481,4 @@
 "ThirdReturnCreationView_createReturnButton" = "";
 "ThirdReturnCreationView_howDoYouWantToReturn" = "";
 "ThirdReturnCreationView_navigationTitle" = "";
-"texterify_timestamp" = "2022-11-09T17:54:40Z";
+"texterify_timestamp" = "2022-11-10T18:52:07Z";

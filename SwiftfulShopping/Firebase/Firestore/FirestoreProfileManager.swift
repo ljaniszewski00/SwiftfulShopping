@@ -43,7 +43,7 @@ class FirestoreProfileManager: ObservableObject {
                                                 let id = data["id"] as? String ?? ""
                                                 let fullName = data["fullName"] as? String ?? ""
                                                 let username = data["username"] as? String ?? ""
-                                                let birthDate = data["birthDate"] as? Date ?? Date()
+                                                let birthDateTimestamp = data["birthDate"] as? Timestamp
                                                 let email = data["email"] as? String ?? ""
                                                 let country = data["country"] as? String ?? ""
                                                 let defaultShipmentAddress = shipmentAddresses.filter { $0.isDefaultAddress }.first ?? shipmentAddresses[0]
@@ -51,6 +51,8 @@ class FirestoreProfileManager: ObservableObject {
                                                 let defaultPaymentMethod = data["defaultPaymentMethod"] as? String ?? ""
                                                 let imageURL = data["imageURL"] as? String ?? ""
                                                 let createdWith = data["createdWith"] as? String ?? ""
+                                                
+                                                let birthDate = birthDateTimestamp?.dateValue() ?? Date()
                                                 
                                                 return Profile(id: id,
                                                                fullName: fullName,
