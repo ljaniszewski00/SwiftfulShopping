@@ -120,6 +120,8 @@ struct SelectionDropdownMenu: View {
                                 Text(elementName)
                                     .font(.system(size: 18, weight: .semibold, design: .rounded))
                                     .foregroundColor(colorScheme == .light ? .black : .ssWhite)
+                                    .fixedSize(horizontal: false, vertical: true)
+                                    .multilineTextAlignment(.leading)
                             }
                             
                             Spacer()
