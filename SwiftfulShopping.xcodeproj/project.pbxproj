@@ -45,7 +45,6 @@
 		0A27E7CC287B091200D033D9 /* EditPersonalInfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A27E7CB287B091200D033D9 /* EditPersonalInfoView.swift */; };
 		0A27E7CE287B4BC800D033D9 /* PaymentDetailsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A27E7CD287B4BC800D033D9 /* PaymentDetailsViewModel.swift */; };
 		0A27E7D0287B4EE800D033D9 /* CreditCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A27E7CF287B4EE800D033D9 /* CreditCard.swift */; };
-		0A27E7D2287B502A00D033D9 /* DetectCardCompany.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A27E7D1287B502A00D033D9 /* DetectCardCompany.swift */; };
 		0A27E7D4287B509300D033D9 /* CardCompany.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A27E7D3287B509300D033D9 /* CardCompany.swift */; };
 		0A2D5FB228BA275F00E76D71 /* SecondRegisterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A2D5FB128BA275F00E76D71 /* SecondRegisterView.swift */; };
 		0A2D5FB428BA2BAB00E76D71 /* RectangleCustomTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A268B56286884A3006CF0E2 /* RectangleCustomTextField.swift */; };
@@ -405,7 +404,6 @@
 		0A27E7CB287B091200D033D9 /* EditPersonalInfoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditPersonalInfoView.swift; sourceTree = "<group>"; };
 		0A27E7CD287B4BC800D033D9 /* PaymentDetailsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaymentDetailsViewModel.swift; sourceTree = "<group>"; };
 		0A27E7CF287B4EE800D033D9 /* CreditCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreditCard.swift; sourceTree = "<group>"; };
-		0A27E7D1287B502A00D033D9 /* DetectCardCompany.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetectCardCompany.swift; sourceTree = "<group>"; };
 		0A27E7D3287B509300D033D9 /* CardCompany.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardCompany.swift; sourceTree = "<group>"; };
 		0A2D5FB128BA275F00E76D71 /* SecondRegisterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SecondRegisterView.swift; sourceTree = "<group>"; };
 		0A2D5FB628BA2BC300E76D71 /* SelectionDropdownMenu.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectionDropdownMenu.swift; sourceTree = "<group>"; };
@@ -1218,7 +1216,6 @@
 			isa = PBXGroup;
 			children = (
 				0A5A7CF32896849D00736B07 /* CalculateEstimatedDeliveryDate.swift */,
-				0A27E7D1287B502A00D033D9 /* DetectCardCompany.swift */,
 			);
 			path = Functions;
 			sourceTree = "<group>";
@@ -2005,7 +2002,6 @@
 				0A27E7C62879C22600D033D9 /* ReturnDetailsView.swift in Sources */,
 				0A2165B428A2C217006842F0 /* DeleteAccountViewModel.swift in Sources */,
 				889EDFC4290F2B4500EBFFC1 /* ErrorsLocalizable.swift in Sources */,
-				0A27E7D2287B502A00D033D9 /* DetectCardCompany.swift in Sources */,
 				0A35557E28A05A43005993E5 /* AccentColorChangeView.swift in Sources */,
 				88E10A81291D4E6500677875 /* LocaleManager.swift in Sources */,
 				88D94FCF290B358500F9F995 /* ExpandableText.swift in Sources */,

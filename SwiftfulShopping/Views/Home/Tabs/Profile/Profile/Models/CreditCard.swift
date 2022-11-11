@@ -9,7 +9,6 @@ import Foundation
 
 struct CreditCard {
     var id: String = UUID().uuidString
-    var company: CardCompany
     var cardNumber: String
     var validThru: String
     var cardholderName: String
@@ -18,14 +17,12 @@ struct CreditCard {
         self.cardNumber = cardNumber
         self.validThru = validThru
         self.cardholderName = cardholderName
-        
-        self.company = detectCardCompany(cardNumber: cardNumber)
     }
 }
 
 extension CreditCard: CustomStringConvertible {
     var description: String {
-        return "\(company.rawValue)\n\(cardNumber)\n\(validThru)\n\(cardholderName)"
+        return "\(cardNumber)\n\(validThru)\n\(cardholderName)"
     }
 }
 

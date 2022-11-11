@@ -105,13 +105,18 @@ struct PaymentDetailsView: View {
             }
         }
         .onAppear {
+            profileViewModel.fetchCreditCard()
             if let profile = profileViewModel.profile, let userCard = profile.creditCard {
                 paymentDetailsViewModel.cardNumber = userCard.cardNumber
                 paymentDetailsViewModel.newDate = Date().getDateFrom(userCard.validThru) ?? Date()
                 paymentDetailsViewModel.cardHolderName = userCard.cardholderName
             } else {
                 paymentDetailsViewModel.initializeDataForNoCard()
-                profileViewModel.addNewCard(card: paymentDetailsViewModel.createNewCard())
+            }
+        }
+        .onChange(of: paymentDetailsViewModel.cardNumber) { newValue in
+            if newValue.count > 16 {
+                paymentDetailsViewModel.cardNumber = String(newValue.prefix(16))
             }
         }
     }
@@ -121,10 +126,15 @@ struct PaymentDetailsView: View {
         VStack(alignment: .center, spacing: 20) {
             VStack(alignment: .leading) {
                 HStack {
-                    Text(paymentDetailsViewModel.cardCompany.rawValue)
-                        .font(.ssTitle3)
-                        .foregroundColor(.ssWhite)
+                    if let cardCompanyImageName = paymentDetailsViewModel.cardCompanyImageName {
+                        Image(cardCompanyImageName)
+                            .resizable()
+                            .scaledToFit()
+                            .frame(width: 60, height: 40)
+                    }
+                    
                     Spacer()
+                    
                     Image(AssetsNames.cardChip)
                         .resizable()
                         .frame(width: 40, height: 30)
@@ -133,7 +143,7 @@ struct PaymentDetailsView: View {
                 
                 Spacer()
                 
-                Text(paymentDetailsViewModel.cardNumber)
+                Text(paymentDetailsViewModel.cardNumber.separate(every: 4, with: " "))
                     .font(.system(size: 26, weight: .bold, design: .rounded))
                     .foregroundColor(Color.ssWhite)
                 
@@ -165,30 +175,41 @@ struct PaymentDetailsView: View {
             }
             .frame(width: ScreenBoundsSupplier.shared.getScreenWidth() * 0.85, height: 210)
             .padding()
-//            .background(LinearGradient(gradient: Gradient(colors: [Color(hex: "#6BC3AA"),
-//                                                                   Color(hex: "#A5DFBC")]),
-//                                       startPoint: .topLeading,
-//                                       endPoint: .bottomTrailing))
             .background {
                 Image(AssetsNames.cardImageName)
                     .resizable()
             }
             .cornerRadius(15)
             
-            Button {
-                withAnimation {
-                    paymentDetailsViewModel.editingCardData.toggle()
+            if paymentDetailsViewModel.editingCardData {
+                Button {
+                    withAnimation {
+                        profileViewModel.editCardData(cardNumber: paymentDetailsViewModel.cardNumber,
+                                                      validThru: paymentDetailsViewModel.validThruDate,
+                                                      cardHolderName: paymentDetailsViewModel.cardHolderName)
+                        paymentDetailsViewModel.editingCardData = false
+                    }
+                } label: {
+                    Text(TexterifyManager.localisedString(key: .paymentDetailsView(.editCardDataSave)))
+                        .font(.ssButton)
                 }
-            } label: {
-                Text(paymentDetailsViewModel.editingCardData ? TexterifyManager.localisedString(key: .paymentDetailsView(.editCardDataSave)) : TexterifyManager.localisedString(key: .paymentDetailsView(.editCardDataEditData)))
-                    .font(.ssButton)
+                .buttonStyle(CustomButton())
+                .contentShape(Rectangle())
+                .disabled(paymentDetailsViewModel.newCardInfoNotValidated)
+            } else {
+                Button {
+                    withAnimation {
+                        paymentDetailsViewModel.editingCardData = true
+                    }
+                } label: {
+                    Text(TexterifyManager.localisedString(key: .paymentDetailsView(.editCardDataEditData)))
+                        .font(.ssButton)
+                }
+                .buttonStyle(CustomButton())
+                .contentShape(Rectangle())
             }
-            .buttonStyle(CustomButton())
-            .contentShape(Rectangle())
-            .if(paymentDetailsViewModel.editingCardData) {
-                $0
-                    .disabled(paymentDetailsViewModel.newCardInfoNotValidated)
-            }
+            
+            
             
             if paymentDetailsViewModel.editingCardData {
                 VStack(alignment: .leading, spacing: 15) {

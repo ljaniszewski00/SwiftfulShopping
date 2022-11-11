@@ -43,6 +43,7 @@ class ProfileViewModel: ObservableObject {
                 switch result {
                 case .success(let profile):
                     self?.profile = profile
+                    self?.fetchCreditCard()
                     if let profileImageURL = profile?.imageURL {
                         if !profileImageURL.isEmpty {
                             FirebaseStorageManager.client.downloadImageFromStorage(userID: user.uid,
@@ -65,6 +66,17 @@ class ProfileViewModel: ObservableObject {
                     completion(.failure(error))
                 }
             }
+        }
+    }
+    
+    func fetchCreditCard() {
+        if let creditCardNumber = UserDefaults.standard.value(forKey: UserDefaultsKeys.creditCardNumber.rawValue) as? String,
+           let creditCardValidThru = UserDefaults.standard.value(forKey: UserDefaultsKeys.creditCardValidThru.rawValue) as? String,
+           let creditCardHolderName = UserDefaults.standard.value(forKey: UserDefaultsKeys.creditCardHolderName.rawValue) as? String {
+            let creditCard = CreditCard(cardNumber: creditCardNumber,
+                                        validThru: creditCardValidThru,
+                                        cardholderName: creditCardHolderName)
+            self.profile?.creditCard = creditCard
         }
     }
     
@@ -169,20 +181,12 @@ class ProfileViewModel: ObservableObject {
         }
     }
 
-    func editCardData(cardNumber: String, validThru: String, cardholderName: String) {
-        if profile != nil {
-            if profile!.creditCard != nil {
-                profile!.creditCard!.cardNumber = cardNumber
-                profile!.creditCard!.validThru = validThru
-                profile!.creditCard!.cardholderName = cardholderName
-            }
-        }
-    }
-
-    func addNewCard(card: CreditCard) {
-        if profile != nil {
-            profile!.creditCard = card
-        }
+    func editCardData(cardNumber: String, validThru: String, cardHolderName: String) {
+        UserDefaults.standard.set(cardNumber, forKey: UserDefaultsKeys.creditCardNumber.rawValue)
+        UserDefaults.standard.set(validThru, forKey: UserDefaultsKeys.creditCardValidThru.rawValue)
+        UserDefaults.standard.set(cardHolderName, forKey: UserDefaultsKeys.creditCardHolderName.rawValue)
+        
+        fetchCreditCard()
     }
 
     func changeDefaultPaymentMethod(newDefaultPaymentMethod: PaymentMethod, completion: @escaping ((VoidResult) -> ())) {

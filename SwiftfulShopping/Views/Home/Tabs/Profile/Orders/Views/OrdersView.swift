@@ -90,11 +90,6 @@ struct OrdersView: View {
         .onAppear {
             ordersViewModel.userOrders = profileViewModel.userOrders
         }
-        .refreshable {
-            profileViewModel.fetchUserOrders {
-                ordersViewModel.userOrders = profileViewModel.userOrders
-            }
-        }
     }
 }
 

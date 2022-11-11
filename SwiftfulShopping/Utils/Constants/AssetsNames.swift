@@ -30,4 +30,9 @@ struct AssetsNames {
     static let githubLogo: String = "github_logo"
     static let googleLogo: String = "google_logo"
     static let cardImageName: String = "blurry-gradient-haikei"
+    static let creditCardVisaWhite: String = "visa_white"
+    static let creditCardVisaBlue: String = "visa_blue"
+    static let creditCardMastercard: String = "mastercard"
+    static let creditCardAmericanExpress: String = "american_express"
+    static let creditCardDiscover: String = "discover"
 }

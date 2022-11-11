@@ -10,4 +10,7 @@ import Foundation
 enum UserDefaultsKeys: String {
     case favorites = "Favorites"
     case cart = "Cart"
+    case creditCardNumber = "Credit Card Number"
+    case creditCardValidThru = "Credit Card Valid Thru"
+    case creditCardHolderName = "Credit Card Holder Name"
 }
