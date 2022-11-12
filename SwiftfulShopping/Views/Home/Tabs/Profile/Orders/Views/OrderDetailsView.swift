@@ -15,10 +15,11 @@ struct OrderDetailsView: View {
     @Environment(\.colorScheme) private var colorScheme: ColorScheme
     @Environment(\.dismiss) private var dismiss: DismissAction
     
+    @StateObject private var orderDetailsViewModel: OrderDetailsViewModel = OrderDetailsViewModel()
+    
     @State private var showProductsList: Bool = true
 
     var order: Order
-    @State var orderProductsList: [Product]
     
     var body: some View {
         VStack {
@@ -72,7 +73,7 @@ struct OrderDetailsView: View {
                             showProductsList.toggle()
                         }, label: {
                             HStack(spacing: 20) {
-                                Text("\(TexterifyManager.localisedString(key: .orderDetailsView(.products))) (\(orderProductsList.count))")
+                                Text("\(TexterifyManager.localisedString(key: .orderDetailsView(.products))) (\(orderDetailsViewModel.orderAllProductsQuantity ?? 0))")
                                     .font(.ssTitle2)
                                     .foregroundColor(colorScheme == .light ? .black : .ssWhite)
                                 Image(systemName: showProductsList ? "chevron.up" : "chevron.down")
@@ -81,9 +82,11 @@ struct OrderDetailsView: View {
                         
                         if showProductsList {
                             VStack(alignment: .center, spacing: 20) {
-                                ForEach(orderProductsList, id: \.self) { product in
-                                    BasicProductTile(product: product)
-                                    Divider()
+                                if let productsWithQuantity = orderDetailsViewModel.orderProductsWithQuantity {
+                                    ForEach(Array(productsWithQuantity.keys).sorted { $0.name < $1.name }, id: \.self) { product in
+                                        BasicProductTile(product: product, productQuantity: productsWithQuantity[product])
+                                        Divider()
+                                    }
                                 }
                             }
                         }
@@ -161,7 +164,7 @@ struct OrderDetailsView: View {
             }
         }
         .onAppear {
-            
+            orderDetailsViewModel.order = order
         }
     }
 }
@@ -172,9 +175,7 @@ struct OrderDetailsView_Previews: PreviewProvider {
         let profileViewModel = ProfileViewModel()
         ForEach(ColorScheme.allCases, id: \.self) { colorScheme in
             ForEach(["iPhone 13 Pro Max", "iPhone 8"], id: \.self) { deviceName in
-                OrderDetailsView(order: Order.demoOrders[0],
-                                 orderProductsList: [Product.demoProducts[0],
-                                                     Product.demoProducts[1]])
+                OrderDetailsView(order: Order.demoOrders[0])
                     .environmentObject(tabBarStateManager)
                     .environmentObject(profileViewModel)
                     .preferredColorScheme(colorScheme)

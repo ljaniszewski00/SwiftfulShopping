@@ -24,6 +24,7 @@ class ReturnCreationViewModel: ObservableObject {
     @Published var shouldPresentCompletionReturnCreationView: Bool = false
     
     @Published var orderForReturn: Order?
+    @Published var productsFromOrder: [Product] = []
     @Published var createdReturn: Return?
     
     var fieldsNotValidated: Bool {
@@ -32,16 +33,14 @@ class ReturnCreationViewModel: ObservableObject {
     
     func getProductsForReturn() {
         if let products = ProductsRepository.shared.products, let orderForReturn = orderForReturn {
-            self.productsForReturn = products.filter { orderForReturn.productsIDs.contains($0.id) }
+            self.productsFromOrder = products.filter { Array(orderForReturn.productsIDsWithQuantity.keys).contains($0.id) }
         }
     }
     
     func manageProductToReturn(product: Product) {
         if productsForReturn.contains(product) {
-            for (index, productForReturn) in productsForReturn.enumerated() {
-                if productForReturn == product {
-                    productsForReturn.remove(at: index)
-                }
+            if let indexToRemove = productsForReturn.firstIndex(of: product) {
+                productsForReturn.remove(at: indexToRemove)
             }
         } else {
             productsForReturn.append(product)

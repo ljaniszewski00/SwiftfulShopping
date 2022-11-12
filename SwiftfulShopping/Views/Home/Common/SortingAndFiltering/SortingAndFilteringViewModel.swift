@@ -190,8 +190,8 @@ class SortingAndFilteringViewModel: ObservableObject {
     
     func manageCompanyFiltersFor(company: String) {
         if companyFiltersToApply.contains(company) {
-            for (index, companyFilter) in companyFiltersToApply.enumerated() where companyFilter == company {
-                companyFiltersToApply.remove(at: index)
+            if let indexToRemove = companyFiltersToApply.firstIndex(of: company) {
+                companyFiltersToApply.remove(at: indexToRemove)
             }
         } else {
             companyFiltersToApply.append(company)
@@ -200,8 +200,8 @@ class SortingAndFilteringViewModel: ObservableObject {
     
     func manageCategoryFiltersFor(category: Category) {
         if categoryFiltersToApply.contains(category) {
-            for (index, categoryFilter) in categoryFiltersToApply.enumerated() where categoryFilter == category {
-                categoryFiltersToApply.remove(at: index)
+            if let indexToRemove = categoryFiltersToApply.firstIndex(of: category) {
+                categoryFiltersToApply.remove(at: indexToRemove)
             }
         } else {
             categoryFiltersToApply.append(category)

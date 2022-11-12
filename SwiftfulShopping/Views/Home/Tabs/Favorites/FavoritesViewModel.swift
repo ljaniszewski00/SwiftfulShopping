@@ -23,30 +23,17 @@ class FavoritesViewModel: ObservableObject {
     }
     
     func addToFavorites(product: Product) {
-        var favoriteProductsIDsFromDefaults = UserDefaults.standard.object(forKey: UserDefaultsKeys.favorites.rawValue) as? [String]
-        if favoriteProductsIDsFromDefaults == nil {
-            UserDefaults.standard.set([product.id], forKey: UserDefaultsKeys.favorites.rawValue)
-        } else {
-            favoriteProductsIDsFromDefaults!.append(product.id)
-            UserDefaults.standard.set(favoriteProductsIDsFromDefaults, forKey: UserDefaultsKeys.favorites.rawValue)
-        }
         favoriteProducts.append(product)
+        UserDefaults.standard.set(favoriteProducts.map { $0.id }, forKey: UserDefaultsKeys.favorites.rawValue)
         fetchFavorites()
     }
     
     func removeFromFavorites(product: Product) {
-        var favoriteProductsIDsFromDefaults = UserDefaults.standard.object(forKey: UserDefaultsKeys.favorites.rawValue) as? [String]
-        for (index, productIDFromDefaults) in favoriteProductsIDsFromDefaults!.enumerated() {
-            if productIDFromDefaults == product.id {
-                favoriteProductsIDsFromDefaults!.remove(at: index)
-                break
-            }
-        }
-        UserDefaults.standard.set(favoriteProductsIDsFromDefaults, forKey: UserDefaultsKeys.favorites.rawValue)
         for (index, favoriteProduct) in favoriteProducts.enumerated() where favoriteProduct.id == product.id {
             favoriteProducts.remove(at: index)
             break
         }
+        UserDefaults.standard.set(favoriteProducts.map { $0.id }, forKey: UserDefaultsKeys.favorites.rawValue)
         fetchFavorites()
     }
     

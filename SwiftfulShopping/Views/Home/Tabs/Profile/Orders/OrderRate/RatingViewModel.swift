@@ -39,26 +39,28 @@ class RatingViewModel: ObservableObject {
     
     func getProductsListForOrderRating(order: Order) -> [Product] {
         if let products = ProductsRepository.shared.products {
-            return products.filter { order.productsIDs.contains($0.id) }.sorted { $0.name < $1.name }
+            return products.filter { Array(order.productsIDsWithQuantity.keys).contains($0.id) }.sorted { $0.name < $1.name }
         } else {
             return []
         }
     }
     
     func applyProductRating(authorID: String, authorFirstName: String, completion: @escaping ((VoidResult) -> ())) {
-        let productRating = ProductRating(id: UUID().uuidString,
-                                          productID: activeProduct?.id ?? "Error",
-                                          authorID: authorID,
-                                          authorFirstName: authorFirstName,
-                                          rating: productRating,
-                                          review: textForRating,
-                                          date: Date())
-        
-        showLoadingModal = true
-        
-        FirestoreProductsManager.client.addProductRating(productRating: productRating) { [weak self] result in
-            self?.showLoadingModal = false
-            completion(result)
+        if let activeProduct = activeProduct {
+            let productRating = ProductRating(id: UUID().uuidString,
+                                              productID: activeProduct.id,
+                                              authorID: authorID,
+                                              authorFirstName: authorFirstName,
+                                              rating: productRating,
+                                              review: textForRating,
+                                              date: Date())
+            
+            showLoadingModal = true
+            
+            FirestoreProductsManager.client.addProductRating(productRating: productRating) { [weak self] result in
+                self?.showLoadingModal = false
+                completion(result)
+            }
         }
     }
 }

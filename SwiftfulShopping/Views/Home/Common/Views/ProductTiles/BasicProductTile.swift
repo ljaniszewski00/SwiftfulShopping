@@ -15,6 +15,7 @@ struct BasicProductTile: View {
     
     var product: Product
     var includeRateButton: Bool = false
+    var productQuantity: Int? = nil
     
     var body: some View {
         HStack(alignment: .top) {
@@ -55,9 +56,17 @@ struct BasicProductTile: View {
                             .foregroundColor(colorScheme == .light ? .black : .ssWhite)
                         
                         if let price = product.price, let formattedPrice = LocaleManager.client.formatPrice(price: price) {
-                            Text(formattedPrice)
-                                .font(.ssCallout)
-                                .foregroundColor(.accentColor)
+                            HStack {
+                                if let productQuantity = productQuantity {
+                                    Text("\(productQuantity)x")
+                                        .font(.ssCallout)
+                                        .foregroundColor(colorScheme == .light ? .black : .ssWhite)
+                                }
+                                
+                                Text(formattedPrice)
+                                    .font(.ssCallout)
+                                    .foregroundColor(.accentColor)
+                            }
                         }
                     }
                 }

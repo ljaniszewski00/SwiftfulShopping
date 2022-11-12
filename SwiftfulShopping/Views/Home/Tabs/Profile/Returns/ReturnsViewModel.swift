@@ -16,20 +16,21 @@ class ReturnsViewModel: ObservableObject {
         for userReturn in userReturns {
             returnsShortDates.append(Date.getMonthNameAndYearFrom(date: userReturn.returnDate))
         }
-        return returnsShortDates.uniqued().sorted { firstDate, secondDate in
-            firstDate.suffix(4) > secondDate.suffix(4)
-        }
+        return returnsShortDates.uniqued()
+            .sorted { $0.suffix(4) > $1.suffix(4) }
     }
     
     func getReturnsFor(date: String) -> [Return] {
-        return userReturns.filter {
-            Date.getMonthNameAndYearFrom(date: $0.returnDate) == date
-        }
+        return userReturns
+            .filter { Date.getMonthNameAndYearFrom(date: $0.returnDate) == date }
+            .sorted { $0.returnDate > $1.returnDate }
     }
     
     func getReturnProductsFor(returnObject: Return) -> [Product] {
         if let products = ProductsRepository.shared.products {
-            return products.filter { returnObject.productsIDs.contains($0.id) }.sorted { $0.name < $1.name }
+            return products
+                .filter { returnObject.productsIDs.contains($0.id) }
+                .sorted { $0.name < $1.name }
         } else {
             return []
         }

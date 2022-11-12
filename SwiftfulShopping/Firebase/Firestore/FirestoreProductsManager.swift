@@ -405,7 +405,19 @@ class FirestoreProductsManager: ObservableObject {
     
     // MARK: UPDATE DATABASE OPERATIONS
     
-    func editProductSoldUnitsNumber(productID: String, unitsSold: Int, completion: @escaping ((VoidResult) -> ())) {
+    func editProductsSoldUnitsNumber(productsIDsWithQuantity: [String: Int], completion: @escaping ((VoidResult) -> ())) {
+        let dispatchGroup: DispatchGroup = DispatchGroup()
+        for (productID, quantity) in productsIDsWithQuantity {
+            dispatchGroup.enter()
+            editProductSoldUnitsNumber(productID: productID, unitsSold: quantity) { _ in dispatchGroup.leave() }
+        }
+        
+        dispatchGroup.notify(queue: .main) {
+            completion(.success)
+        }
+    }
+    
+    private func editProductSoldUnitsNumber(productID: String, unitsSold: Int, completion: @escaping ((VoidResult) -> ())) {
         let updateData: [String: Any] = [
             "unitsSold": FieldValue.increment(Double(unitsSold))
         ]

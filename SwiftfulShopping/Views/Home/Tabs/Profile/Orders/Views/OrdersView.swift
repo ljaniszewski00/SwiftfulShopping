@@ -21,9 +21,8 @@ struct OrdersView: View {
             ForEach(ordersViewModel.datesForOrdersViewListSections, id: \.self) { stringDate in
                 Section {
                     ForEach(ordersViewModel.getOrdersFor(date: stringDate), id: \.self) { order in
-                        NavigationLink(destination: OrderDetailsView(order: order,
-                                                                     orderProductsList: ordersViewModel.getOrderProductsFor(order: order))
-                                                                                            .environmentObject(ordersViewModel)) {
+                        NavigationLink(destination: OrderDetailsView(order: order)
+                                                        .environmentObject(ordersViewModel)) {
                             VStack(alignment: .leading, spacing: 20) {
                                 HStack(spacing: 10) {
                                     Text(order.id)
@@ -42,7 +41,7 @@ struct OrdersView: View {
                                     HStack {
                                         Text(TexterifyManager.localisedString(key: .ordersView(.products)))
                                             .font(.ssCallout)
-                                        Text("\(ordersViewModel.getOrderProductsFor(order: order).count)")
+                                        Text("\(ordersViewModel.getOrderAllProductsQuantity(order: order))")
                                             .font(.ssTitle3)
                                             .foregroundColor(.accentColor)
                                     }
@@ -73,7 +72,7 @@ struct OrdersView: View {
             }
         }
         .navigationTitle(TexterifyManager.localisedString(key: .ordersView(.navigationTitle)))
-        .navigationBarTitleDisplayMode(.inline)
+        .navigationBarTitleDisplayMode(.large)
         .navigationBarBackButtonHidden(true)
         .toolbar {
             ToolbarItem(placement: .navigationBarLeading) {

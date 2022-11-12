@@ -103,7 +103,7 @@ class OrderCreationViewModel: ObservableObject {
                           clientDescription: client.description,
                           addressDescription: shippingAddress.description,
                           shoppingCartID: cart.id,
-                          productsIDs: productsWithQuantity.keys.map { $0.id },
+                          productsIDsWithQuantity: productsIDsWithQuantity,
                           shippingMethod: choosenShippingMethod ?? .pickup,
                           shippingAddressID: shippingAddress.id,
                           paymentMethod: choosenPaymentMethod ?? .applePay,
@@ -116,6 +116,7 @@ class OrderCreationViewModel: ObservableObject {
             switch result {
             case .success:
                 self?.createdOrder = order
+                FirestoreProductsManager.client.editProductsSoldUnitsNumber(productsIDsWithQuantity: productsIDsWithQuantity) { _ in }
                 
                 FirestoreCartsManager.client.createUserCart(cart: cart) { [weak self] _ in
                     if !appliedDiscounts.isEmpty {

@@ -15,7 +15,7 @@ struct Order {
     var clientDescription: String
     var addressDescription: String
     var shoppingCartID: String
-    var productsIDs: [String]
+    var productsIDsWithQuantity: [String: Int]
     var shippingMethod: ShippingMethod
     var shippingAddressID: String
     var paymentMethod: PaymentMethod = .creditCard
@@ -30,7 +30,7 @@ struct Order {
          clientDescription: String,
          addressDescription: String,
          shoppingCartID: String,
-         productsIDs: [String],
+         productsIDsWithQuantity: [String: Int],
          shippingMethod: ShippingMethod,
          shippingAddressID: String,
          paymentMethod: PaymentMethod,
@@ -44,7 +44,7 @@ struct Order {
         self.clientDescription = clientDescription
         self.addressDescription = addressDescription
         self.shoppingCartID = shoppingCartID
-        self.productsIDs = productsIDs
+        self.productsIDsWithQuantity = productsIDsWithQuantity
         self.shippingMethod = shippingMethod
         self.shippingAddressID = shippingAddressID
         self.paymentMethod = paymentMethod
@@ -58,7 +58,7 @@ struct Order {
          clientDescription: String,
          addressDescription: String,
          shoppingCartID: String,
-         productsIDs: [String],
+         productsIDsWithQuantity: [String: Int],
          shippingMethod: ShippingMethod,
          shippingAddressID: String,
          paymentMethod: PaymentMethod = .creditCard,
@@ -68,7 +68,7 @@ struct Order {
         self.clientDescription = clientDescription
         self.addressDescription = addressDescription
         self.shoppingCartID = shoppingCartID
-        self.productsIDs = productsIDs
+        self.productsIDsWithQuantity = productsIDsWithQuantity
         self.shippingMethod = shippingMethod
         self.shippingAddressID = shippingAddressID
         self.paymentMethod = paymentMethod
@@ -100,7 +100,8 @@ extension Order {
                                             clientDescription: Profile.demoProfile.description,
                                             addressDescription: Address.demoAddress.description,
                                             shoppingCartID: "0tw4EIfTZuc9TWohXk6K",
-                                            productsIDs: ["LQHU7yJplIXugoPiLucR", "mdQsy0eqYaSiKp6z393S"],
+                                            productsIDsWithQuantity: ["LQHU7yJplIXugoPiLucR": 1,
+                                                                      "mdQsy0eqYaSiKp6z393S": 2],
                                             shippingMethod: .pickup,
                                             shippingAddressID: "81D3477F-0E53-4DED-B171-2C46FEB733D2"),
                                       Order(id: "qCWd2IGNcfg4x5iPCOt7",
@@ -108,7 +109,10 @@ extension Order {
                                             clientDescription: Profile.demoProfile.description,
                                             addressDescription: Address.demoAddress.description,
                                             shoppingCartID: "yCsFjrUwTYNRCL4ASDxi",
-                                            productsIDs: ["LQHU7yJplIXugoPiLucR", "mdQsy0eqYaSiKp6z393S", "BJll5oJjsBoq0tb6Ad8v", "v8yFH9voUUbMvYDXMX4o"],
+                                            productsIDsWithQuantity: ["LQHU7yJplIXugoPiLucR": 1,
+                                                                      "mdQsy0eqYaSiKp6z393S": 2,
+                                                                      "BJll5oJjsBoq0tb6Ad8v": 3,
+                                                                      "v8yFH9voUUbMvYDXMX4o": 4],
                                             shippingMethod: .pickup,
                                             shippingAddressID: "81D3477F-0E53-4DED-B171-2C46FEB733D2"),
                                       Order(id: "83vfivSP7G0qCZa8M7Np",
@@ -116,7 +120,12 @@ extension Order {
                                             clientDescription: Profile.demoProfile.description,
                                             addressDescription: Address.demoAddress.description,
                                             shoppingCartID: "G1H6F4yf6VIQtA2blgOS",
-                                            productsIDs: ["LQHU7yJplIXugoPiLucR", "mdQsy0eqYaSiKp6z393S", "BJll5oJjsBoq0tb6Ad8v", "v8yFH9voUUbMvYDXMX4o", "uMIJzBU5wcwwfUMqsJ2C", "IpD65nz0vKKgOUAzVDtq"],
+                                            productsIDsWithQuantity: ["LQHU7yJplIXugoPiLucR": 1,
+                                                                      "mdQsy0eqYaSiKp6z393S": 2,
+                                                                      "BJll5oJjsBoq0tb6Ad8v": 3,
+                                                                      "v8yFH9voUUbMvYDXMX4o": 4,
+                                                                      "uMIJzBU5wcwwfUMqsJ2C": 5,
+                                                                      "IpD65nz0vKKgOUAzVDtq": 6],
                                             shippingMethod: .pickup,
                                             shippingAddressID: "81D3477F-0E53-4DED-B171-2C46FEB733D2"),
                                       Order(id: "SHCgKcF7miPTYInES9YF",
@@ -124,7 +133,14 @@ extension Order {
                                             clientDescription: Profile.demoProfile.description,
                                             addressDescription: Address.demoAddress.description,
                                             shoppingCartID: "U1AbH8RJdV8ZG6kI1H05",
-                                            productsIDs: ["LQHU7yJplIXugoPiLucR", "mdQsy0eqYaSiKp6z393S", "BJll5oJjsBoq0tb6Ad8v", "v8yFH9voUUbMvYDXMX4o", "uMIJzBU5wcwwfUMqsJ2C", "IpD65nz0vKKgOUAzVDtq", "qxfRHQx4eQF748wBPN7B", "veArtsZlHvLVmJgB1Eb2"],
+                                            productsIDsWithQuantity: ["LQHU7yJplIXugoPiLucR": 1,
+                                                                      "mdQsy0eqYaSiKp6z393S": 2,
+                                                                      "BJll5oJjsBoq0tb6Ad8v": 3,
+                                                                      "v8yFH9voUUbMvYDXMX4o": 4,
+                                                                      "uMIJzBU5wcwwfUMqsJ2C": 5,
+                                                                      "IpD65nz0vKKgOUAzVDtq": 6,
+                                                                      "qxfRHQx4eQF748wBPN7B": 7,
+                                                                      "veArtsZlHvLVmJgB1Eb2": 8],
                                             shippingMethod: .pickup,
                                             shippingAddressID: "81D3477F-0E53-4DED-B171-2C46FEB733D2")]
 }

@@ -236,7 +236,7 @@ struct SettingsView: View {
             .background(Color(UIColor.systemGroupedBackground))
         }
         .navigationTitle(TexterifyManager.localisedString(key: .settingsView(.navigationTitle)))
-        .navigationBarTitleDisplayMode(.inline)
+        .navigationBarTitleDisplayMode(.large)
         .navigationBarBackButtonHidden(true)
         .toolbar {
             ToolbarItem(placement: .navigationBarLeading) {

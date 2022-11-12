@@ -333,6 +333,7 @@
 		88DEDD4A29171BBD003EFA44 /* AssetsNames.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88DEDD4929171BBD003EFA44 /* AssetsNames.swift */; };
 		88DEDD4C29171DAC003EFA44 /* LottieAssetsNames.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88DEDD4B29171DAC003EFA44 /* LottieAssetsNames.swift */; };
 		88E10A81291D4E6500677875 /* LocaleManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88E10A80291D4E6500677875 /* LocaleManager.swift */; };
+		88E91065291FC4570002559F /* OrderDetailsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88E91064291FC4570002559F /* OrderDetailsViewModel.swift */; };
 		88EA8BAD291B036700267AD6 /* ProductsSpecificationsComparisonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88EA8BAC291B036700267AD6 /* ProductsSpecificationsComparisonView.swift */; };
 		88EFA68F2919733700399C11 /* LanguagesIdentifiers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88EFA68E2919733700399C11 /* LanguagesIdentifiers.swift */; };
 		88EFA691291976D100399C11 /* SpecificationKeys.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88EFA690291976D100399C11 /* SpecificationKeys.swift */; };
@@ -616,6 +617,7 @@
 		88DEDD4929171BBD003EFA44 /* AssetsNames.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AssetsNames.swift; sourceTree = "<group>"; };
 		88DEDD4B29171DAC003EFA44 /* LottieAssetsNames.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LottieAssetsNames.swift; sourceTree = "<group>"; };
 		88E10A80291D4E6500677875 /* LocaleManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocaleManager.swift; sourceTree = "<group>"; };
+		88E91064291FC4570002559F /* OrderDetailsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrderDetailsViewModel.swift; sourceTree = "<group>"; };
 		88EA8BAC291B036700267AD6 /* ProductsSpecificationsComparisonView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductsSpecificationsComparisonView.swift; sourceTree = "<group>"; };
 		88EFA68E2919733700399C11 /* LanguagesIdentifiers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LanguagesIdentifiers.swift; sourceTree = "<group>"; };
 		88EFA690291976D100399C11 /* SpecificationKeys.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpecificationKeys.swift; sourceTree = "<group>"; };
@@ -900,6 +902,7 @@
 			isa = PBXGroup;
 			children = (
 				0A3C7ADE290165660079B290 /* OrdersViewModel.swift */,
+				88E91064291FC4570002559F /* OrderDetailsViewModel.swift */,
 			);
 			path = ViewModel;
 			sourceTree = "<group>";
@@ -1952,6 +1955,7 @@
 				0A237403288D68720076A5AB /* UserDefaultsKeys.swift in Sources */,
 				0ACD58EE284A6F6600AA9DA0 /* LocationManager.swift in Sources */,
 				0A27782E28C9052E00BDE2F1 /* Discount.swift in Sources */,
+				88E91065291FC4570002559F /* OrderDetailsViewModel.swift in Sources */,
 				0A3149E028982BE6001920D2 /* RatingViewModel.swift in Sources */,
 				0A3149DA28982843001920D2 /* BasicProductTile.swift in Sources */,
 				0A56D8B5285F2C9D0009680C /* PaymentDetailsView.swift in Sources */,

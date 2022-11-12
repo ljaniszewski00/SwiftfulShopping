@@ -69,7 +69,7 @@ struct ReturnsView: View {
         }
         .listStyle(.grouped)
         .navigationTitle(TexterifyManager.localisedString(key: .returnsView(.navigationTitle)))
-        .navigationBarTitleDisplayMode(.inline)
+        .navigationBarTitleDisplayMode(.large)
         .navigationBarBackButtonHidden(true)
         .toolbar {
             ToolbarItem(placement: .navigationBarLeading) {

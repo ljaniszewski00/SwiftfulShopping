@@ -36,7 +36,7 @@ struct ReturnCreationView: View {
                         .font(.ssTitle2)
                         .fixedSize(horizontal: false, vertical: true)
                         .multilineTextAlignment(.leading)
-                    ForEach(returnCreationViewModel.productsForReturn, id: \.self) { product in
+                    ForEach(returnCreationViewModel.productsFromOrder, id: \.self) { product in
                         Button {
                             withAnimation {
                                 returnCreationViewModel.manageProductToReturn(product: product)
@@ -44,16 +44,13 @@ struct ReturnCreationView: View {
                         } label: {
                             VStack {
                                 HStack(alignment: .top) {
-                                    if returnCreationViewModel.productsForReturn.contains(product) {
-                                        Circle()
-                                            .foregroundColor(.accentColor)
-                                            .frame(width: 25)
-                                    } else {
-                                        Circle()
-                                            .stroke(lineWidth: 3)
-                                            .foregroundColor(.accentColor)
-                                            .frame(width: 25)
-                                    }
+                                    Circle()
+                                        .if(!returnCreationViewModel.productsForReturn.contains(product)) {
+                                            $0
+                                                .stroke(lineWidth: 3)
+                                        }
+                                        .foregroundColor(.accentColor)
+                                        .frame(width: 25)
                                     BasicProductTile(product: product)
                                 }
                                 
@@ -103,7 +100,7 @@ struct ReturnCreationView: View {
         }
         .onAppear {
             returnCreationViewModel.orderForReturn = order
-            
+            returnCreationViewModel.getProductsForReturn()
         }
         
         NavigationLink(destination: SecondReturnCreationView()
