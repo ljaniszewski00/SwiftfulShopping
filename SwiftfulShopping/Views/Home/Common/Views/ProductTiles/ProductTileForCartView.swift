@@ -76,6 +76,7 @@ struct ProductTileForCartView: View {
                     })
                     .scaledToFit()
                     .frame(height: 30)
+                    .padding(.bottom)
                 }
             }
             

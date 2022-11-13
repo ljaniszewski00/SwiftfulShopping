@@ -134,17 +134,19 @@ class FirestoreProductsManager: ObservableObject {
             }
     }
     
-    func checkProductsAvailability(productsIDs: [String], completion: @escaping ((Result<[String: Bool], Error>) -> ())) {
+    func checkProductsAvailability(productsIDsWithQuantity: [String: Int], completion: @escaping ((Result<[String: Bool], Error>) -> ())) {
         var results: [String: Bool] = [:]
         let dispatchGroup: DispatchGroup = DispatchGroup()
         
-        for productID in productsIDs {
+        for (productID, quantity) in productsIDsWithQuantity {
             dispatchGroup.enter()
-            checkProductAvailability(productID: productID) { result in
+            checkProductAvailability(productID: productID, quantity: quantity) { result in
                 switch result {
                 case .success(let available):
+                    dispatchGroup.leave()
                     results[productID] = available
                 case .failure(let error):
+                    dispatchGroup.leave()
                     completion(.failure(error))
                 }
             }
@@ -155,7 +157,7 @@ class FirestoreProductsManager: ObservableObject {
         }
     }
     
-    private func checkProductAvailability(productID: String, completion: @escaping ((Result<Bool, Error>) -> ())) {
+    private func checkProductAvailability(productID: String, quantity: Int, completion: @escaping ((Result<Bool, Error>) -> ())) {
         db.collection(DatabaseCollections.products.rawValue)
             .document(productID)
             .getDocument { documentSnapshot, error in
@@ -165,7 +167,7 @@ class FirestoreProductsManager: ObservableObject {
                     if let documentSnapshot = documentSnapshot, let data = documentSnapshot.data() {
                         
                         let availability = data["productQuantityAvailable"] as? Int ?? 0
-                        let available = availability > 0
+                        let available = availability > 0 && availability >= quantity
                         
                         completion(.success(available))
                     }

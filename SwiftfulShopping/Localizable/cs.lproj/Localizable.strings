@@ -125,6 +125,8 @@
 "Errors_orderCreateErrorDescription" = "";
 "Errors_phoneSignInError" = "";
 "Errors_phoneSignInErrorDescription" = "";
+"Errors_productNotAvailable" = "";
+"Errors_productNotAvailableDescription" = "";
 "Errors_productRecognizerError" = "";
 "Errors_productRecognizerErrorDescription" = "";
 "Errors_registerError" = "";
@@ -244,7 +246,9 @@
 "OrderCreationShipmentPaymentView_chooseDeliveryMethod" = "";
 "OrderCreationShipmentPaymentView_choosePaymentMethod" = "";
 "OrderCreationShipmentPaymentView_consigneeData" = "";
+"OrderCreationShipmentPaymentView_days" = "";
 "OrderCreationShipmentPaymentView_navigationTitle" = "";
+"OrderCreationShipmentPaymentView_shipmentShouldTake" = "";
 "OrderCreationShipmentPaymentView_summary" = "";
 "OrderCreationShipmentPaymentView_thisWillBeTheDeliveryAddress" = "";
 "OrderCreationShipmentPaymentView_wouldYouLikeToReceiveInvoice" = "";
@@ -489,4 +493,4 @@
 "ThirdReturnCreationView_createReturnButton" = "";
 "ThirdReturnCreationView_howDoYouWantToReturn" = "";
 "ThirdReturnCreationView_navigationTitle" = "";
-"texterify_timestamp" = "2022-11-13T19:06:43Z";
+"texterify_timestamp" = "2022-11-13T20:26:07Z";

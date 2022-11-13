@@ -35,6 +35,7 @@ enum ErrorType: String {
     case dataFetchError
     case editPersonalInfoError
     case addProductToComparison
+    case productNotAvailable
     case unknownError
     
     var rawValue: String {
@@ -91,6 +92,8 @@ enum ErrorType: String {
             return TexterifyManager.localisedString(key: .errors(.editPersonalInfoError))
         case .addProductToComparison:
             return TexterifyManager.localisedString(key: .errors(.addProductToComparison))
+        case .productNotAvailable:
+            return TexterifyManager.localisedString(key: .errors(.productNotAvailable))
         case .unknownError:
             return TexterifyManager.localisedString(key: .errors(.unknownError))
         }

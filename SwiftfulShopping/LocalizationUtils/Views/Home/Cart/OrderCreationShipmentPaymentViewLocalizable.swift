@@ -12,6 +12,8 @@ public enum OrderCreationShipmentPaymentViewLocalizable: String {
     case thisWillBeTheDeliveryAddress = "OrderCreationShipmentPaymentView_thisWillBeTheDeliveryAddress"
     case changeAddress = "OrderCreationShipmentPaymentView_changeAddress"
     case chooseDeliveryMethod = "OrderCreationShipmentPaymentView_chooseDeliveryMethod"
+    case shipmentShouldTake = "OrderCreationShipmentPaymentView_shipmentShouldTake"
+    case days = "OrderCreationShipmentPaymentView_days"
     case choosePaymentMethod = "OrderCreationShipmentPaymentView_choosePaymentMethod"
     case wouldYouLikeToReceiveInvoice = "OrderCreationShipmentPaymentView_wouldYouLikeToReceiveInvoice"
     case summary = "OrderCreationShipmentPaymentView_summary"

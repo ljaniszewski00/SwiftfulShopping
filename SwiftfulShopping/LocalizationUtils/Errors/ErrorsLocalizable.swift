@@ -36,6 +36,7 @@ public enum ErrorsLocalizable: String {
     case dataFetchError = "Errors_dataFetchError"
     case editPersonalInfoError = "Errors_editPersonalInfoError"
     case addProductToComparison = "Errors_addProductToComparison"
+    case productNotAvailable = "Errors_productNotAvailable"
     case unknownError = "Errors_unknownError"
     
     //MARK: Errors Descriptions
@@ -65,5 +66,6 @@ public enum ErrorsLocalizable: String {
     case dataFetchErrorDescription = "Errors_dataFetchErrorDescription"
     case editPersonalInfoErrorDescription = "Errors_editPersonalInfoErrorDescription"
     case addProductToComparisonDescription = "Errors_addProductToComparisonDescription"
+    case productNotAvailableDescription = "Errors_productNotAvailableDescription"
     case unknownErrorDescription = "Errors_unknownErrorDescription"
 }

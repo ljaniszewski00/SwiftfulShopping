@@ -7,9 +7,9 @@
 
 import Foundation
 
-func calculateEstimatedDeliveryDate(orderDate: Date) -> Date {
+func calculateEstimatedDeliveryDate(orderDate: Date, shippingMethod: ShippingMethod) -> Date {
     var dayComponent = DateComponents()
-    dayComponent.day = 2
+    dayComponent.day = (shippingMethod == .parcel ? 2 : 3)
     var estimatedDeliveryDate = Calendar.current.date(byAdding: dayComponent, to: Date())
     
     dayComponent.day = 1

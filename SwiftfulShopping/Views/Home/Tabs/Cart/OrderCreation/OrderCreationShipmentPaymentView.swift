@@ -63,36 +63,43 @@ struct OrderCreationShipmentPaymentView: View {
                         
                         VStack(alignment: .leading, spacing: 15) {
                             ForEach(ShippingMethod.allCases, id: \.self) { shippingMethod in
-                                Button(action: {
-                                    withAnimation {
-                                        orderCreationViewModel.choosenShippingMethod = shippingMethod
-                                    }
-                                }, label: {
-                                    HStack(spacing: 15) {
-                                        if orderCreationViewModel.choosenShippingMethod == shippingMethod {
-                                            Circle()
-                                                .foregroundColor(.accentColor)
-                                                .frame(width: 25)
-                                        } else {
-                                            Circle()
-                                                .stroke(lineWidth: 3)
-                                                .foregroundColor(.accentColor)
-                                                .frame(width: 25)
+                                VStack(alignment: .leading) {
+                                    Button(action: {
+                                        withAnimation {
+                                            orderCreationViewModel.choosenShippingMethod = shippingMethod
                                         }
-                                        
-                                        Text(shippingMethod.rawValue)
-                                            .font(.ssTitle3)
-                                            .foregroundColor(colorScheme == .light ? .black : .ssWhite)
-                                        
-                                        if let currencyCode = LocaleManager.client.clientCurrencyCode,
-                                           let shippingMethodPrices = Order.shippingMethodsPrices[shippingMethod],
-                                           let shippingMethodPrice = shippingMethodPrices[currencyCode],
-                                           let formattedShippingMethodPrice = LocaleManager.client.formatPrice(price: shippingMethodPrice) {
-                                            Text(formattedShippingMethodPrice)
-                                                .font(.ssCallout)
+                                    }, label: {
+                                        HStack(spacing: 15) {
+                                            if orderCreationViewModel.choosenShippingMethod == shippingMethod {
+                                                Circle()
+                                                    .foregroundColor(.accentColor)
+                                                    .frame(width: 25)
+                                            } else {
+                                                Circle()
+                                                    .stroke(lineWidth: 3)
+                                                    .foregroundColor(.accentColor)
+                                                    .frame(width: 25)
+                                            }
+                                            
+                                            Text(shippingMethod.rawValue)
+                                                .font(.ssTitle3)
+                                                .foregroundColor(colorScheme == .light ? .black : .ssWhite)
+                                            
+                                            if let currencyCode = LocaleManager.client.clientCurrencyCode,
+                                               let shippingMethodPrices = Order.shippingMethodsPrices[shippingMethod],
+                                               let shippingMethodPrice = shippingMethodPrices[currencyCode],
+                                               let formattedShippingMethodPrice = LocaleManager.client.formatPrice(price: shippingMethodPrice) {
+                                                Text(formattedShippingMethodPrice)
+                                                    .font(.ssCallout)
+                                            }
                                         }
-                                    }
-                                })
+                                    })
+                                    
+                                    Text("Shipment should take about \(shippingMethod == .parcel ? 2 : 3) days")
+                                        .font(.ssCallout)
+                                        .foregroundColor(.ssDarkGray)
+                                }
+                                .padding(.bottom, 15)
                             }
                         }
                     }

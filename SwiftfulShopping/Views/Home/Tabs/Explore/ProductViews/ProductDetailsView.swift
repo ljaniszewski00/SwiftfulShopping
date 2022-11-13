@@ -119,14 +119,12 @@ struct ProductDetailsView: View {
                                         ForEach(productSpecificationKeys) { specificationKey in
                                             if let productSpecificationValue = productSpecification[specificationKey] {
                                                 if !productSpecificationValue.isEmpty {
-                                                    VStack(alignment: .leading) {
-                                                        HStack() {
-                                                            Text("\(specificationKey):")
-                                                                .font(.ssCallout)
-                                                                .foregroundColor(.ssDarkGray)
-                                                            Text(productSpecification[specificationKey] ?? "")
-                                                                .font(.ssCallout)
-                                                        }
+                                                    VStack(alignment: .leading, spacing: 13) {
+                                                        Text("\(specificationKey):")
+                                                            .font(.ssCallout)
+                                                            .foregroundColor(.ssDarkGray)
+                                                        Text(productSpecification[specificationKey] ?? "")
+                                                            .font(.ssCallout)
                                                         Divider()
                                                     }
                                                 }

@@ -91,7 +91,7 @@ struct Order {
         self.paymentCost = paymentCost
         self.totalCost = totalCost
         
-        self.estimatedDeliveryDate = calculateEstimatedDeliveryDate(orderDate: Date())
+        self.estimatedDeliveryDate = calculateEstimatedDeliveryDate(orderDate: Date(), shippingMethod: shippingMethod)
     }
     
     static let shippingMethodsPrices: [ShippingMethod: [String: Double]] = [
