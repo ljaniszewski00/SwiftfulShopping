@@ -125,12 +125,15 @@ struct ListProductCardTileView: View {
                         .font(.ssCaption1)
                         .foregroundColor(.ssDarkGray)
                 }
-                .padding(.bottom, 15)
+                
+                ProductAvailabilityIndicator(availability: product.availability)
+                    .padding(.vertical, 5)
                 
                 AddToCartButton {
                     cartViewModel.addProductToCart(product: product,
-                                                   quantity: 1)
+                                                   quantity: 1) { _ in }
                 }
+                .disabled(product.availability == .no)
             }
         }
         .padding()

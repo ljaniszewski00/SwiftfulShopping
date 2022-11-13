@@ -104,6 +104,9 @@ struct GridProductCardTileView: View {
                         Text("\(ratingsNumber) \(TexterifyManager.localisedString(key: .gridProductCardTileView(.ratings)))")
                             .font(.ssCallout)
                             .foregroundColor(.ssDarkGray)
+                        
+                        ProductAvailabilityIndicator(availability: product.availability, font: .ssCallout)
+                            .padding(.vertical, 10)
                     }
                 }
                 .padding(.bottom, 30)
@@ -113,8 +116,9 @@ struct GridProductCardTileView: View {
                         Spacer()
                         AddToCartButton {
                             cartViewModel.addProductToCart(product: product,
-                                                           quantity: 1)
+                                                           quantity: 1) { _ in }
                         }
+                        .disabled(product.availability == .no)
                         Spacer()
                     }
                     
@@ -149,7 +153,7 @@ struct GridProductCardTileView_Previews: PreviewProvider {
         let favoritesViewModel = FavoritesViewModel()
         ForEach(ColorScheme.allCases, id: \.self) { colorScheme in
             ForEach(["iPhone 13 Pro Max", "iPhone 8"], id: \.self) { deviceName in
-                GridProductCardTileView(product: Product.demoProducts[1],
+                GridProductCardTileView(product: Product.demoProducts[10],
                                         productRatings: [ProductRating.demoProductsRatings[0]])
                     .environmentObject(cartViewModel)
                     .environmentObject(favoritesViewModel)

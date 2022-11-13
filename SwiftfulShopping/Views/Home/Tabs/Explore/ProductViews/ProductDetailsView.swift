@@ -67,7 +67,7 @@ struct ProductDetailsView: View {
                     }
                     .padding(.horizontal)
 
-                    VStack(alignment: .center, spacing: 15) {
+                    VStack(alignment: .leading, spacing: 15) {
                         Text(product.company)
                             .font(.ssTitle3)
                             .foregroundColor(.ssDarkGray)
@@ -75,13 +75,20 @@ struct ProductDetailsView: View {
                         Text(product.name)
                             .font(.ssTitle1)
                         
-                        if let price = product.price,
-                           let formattedPrice = LocaleManager.client.formatPrice(price: price) {
-                            Text(formattedPrice)
-                                .font(.ssTitle2)
-                                .foregroundColor(.accentColor)
+                        HStack {
+                            if let price = product.price,
+                               let formattedPrice = LocaleManager.client.formatPrice(price: price) {
+                                Text(formattedPrice)
+                                    .font(.ssTitle2)
+                                    .foregroundColor(.accentColor)
+                            }
+                            
+                            Spacer()
+                            
+                            ProductAvailabilityIndicator(availability: product.availability, font: .ssCallout)
                         }
                     }
+                    .padding(.horizontal)
                     
                     VStack(alignment: .leading, spacing: 40) {
                         VStack(alignment: .leading, spacing: 10) {
@@ -133,12 +140,14 @@ struct ProductDetailsView: View {
                         ProductDetailsRatingsSection(product: product,
                                                      productRatings: productRatings)
                     }
-                    .padding()
+                    .padding(.horizontal)
                 }
             }
             
-            buildAddToCartPane()
-                .zIndex(1)
+            if product.availability != .no {
+                buildAddToCartPane()
+                    .zIndex(1)
+            }
         }
         .modifier(ErrorModal(isPresented: $errorManager.showErrorModal,
                              customError: errorManager.customError ?? ErrorManager.unknownError))
@@ -256,7 +265,7 @@ struct ProductDetailsView: View {
                 withAnimation {
                     if expandAddToCart {
                         UIImpactFeedbackGenerator(style: .medium).impactOccurred()
-                        cartViewModel.addProductToCart(product: product, quantity: productDetailsViewModel.productQuantityToBasket)
+                        cartViewModel.addProductToCart(product: product, quantity: productDetailsViewModel.productQuantityToBasket) { _ in }
                     }
                     expandAddToCart = true
                 }

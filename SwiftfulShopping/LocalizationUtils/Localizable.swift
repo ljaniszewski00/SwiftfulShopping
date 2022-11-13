@@ -70,6 +70,7 @@ public enum Localizable {
     case specificationKeys(SpecificationKeysLocalizable)
     case productsSpecificationComparisonView(ProductsSpecificationComparisonViewLocalizable)
     case months(MonthsLocalizable)
+    case availability(AvailabilityLocalizable)
 }
 
 extension Localizable: LocalizableRawRepresentable {
@@ -202,6 +203,8 @@ extension Localizable: LocalizableRawRepresentable {
         case let .productsSpecificationComparisonView(localizable):
             return localizable.rawValue
         case let .months(localizable):
+            return localizable.rawValue
+        case let .availability(localizable):
             return localizable.rawValue
         }
     }

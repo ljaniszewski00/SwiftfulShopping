@@ -27,9 +27,11 @@ struct HomeView: View {
     @State var selectedTab: Tab = .explore
     
     // MARK: To add sample data to Firestore
-//    init() {
+    init() {
 //        FirestoreSampleDataManager.client.addAll { _ in }
-//    }
+//        FirestoreSampleDataManager.client.addOrders { _ in }
+//        FirestoreSampleDataManager.client.addProducts { _ in }
+    }
         
     enum Tab: String {
         case explore

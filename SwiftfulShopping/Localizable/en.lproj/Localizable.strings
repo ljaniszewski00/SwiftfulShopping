@@ -15,6 +15,9 @@
 "Appearance_dark" = "Dark";
 "Appearance_light" = "Light";
 "Appearance_system" = "System";
+"Availability_large" = "Large Availability";
+"Availability_no" = "Not Available";
+"Availability_small" = "Small Availability";
 "BasicProductTile_rateProductButton" = "Review";
 "CartView_checkout" = "Checkout";
 "CartView_ifYouAddAnyProducts" = "If you add any products to your cart they will be displayed here";
@@ -486,4 +489,4 @@
 "ThirdReturnCreationView_createReturnButton" = "Create Return";
 "ThirdReturnCreationView_howDoYouWantToReturn" = "How do you want to return the product?";
 "ThirdReturnCreationView_navigationTitle" = "Create Return";
-"texterify_timestamp" = "2022-11-13T16:22:10Z";
+"texterify_timestamp" = "2022-11-13T19:06:45Z";

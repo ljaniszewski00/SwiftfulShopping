@@ -110,6 +110,7 @@ struct ExploreView: View {
                     }
                 }
             }
+            .modifier(LoadingIndicatorModal(isPresented: $cartViewModel.showLoadingModal))
             .navigationTitle(TexterifyManager.localisedString(key: .exploreView(.navigationTitle)))
             .toolbar {
                 ToolbarItem(placement: .navigationBarLeading) {

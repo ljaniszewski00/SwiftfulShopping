@@ -29,7 +29,7 @@ class FirestoreProductsManager: ObservableObject {
                     print("Error fetching products data: \(error.localizedDescription)")
                     completion(.failure(error))
                 } else {
-                    var dispatchGroup: DispatchGroup = DispatchGroup()
+                    let dispatchGroup: DispatchGroup = DispatchGroup()
                     var products: [Product] = []
                     for queryDocumentSnapshot in querySnapshot!.documents {
                         dispatchGroup.enter()
@@ -47,6 +47,7 @@ class FirestoreProductsManager: ObservableObject {
                         let isRecommended = data["isRecommended"] as? Bool ?? false
                         let isNew = data["isNew"] as? Bool ?? false
                         let keywords = data["keywords"] as? [String] ?? []
+                        let productQuantityAvailable = data["productQuantityAvailable"] as? Int ?? 0
                         let imagesURLs = data["imagesURLs"] as? [String] ?? []
                         
                         let introducedForSale = introducedForSaleTimestamp?.dateValue() ?? Date()
@@ -100,6 +101,7 @@ class FirestoreProductsManager: ObservableObject {
                                                                 isRecommended: isRecommended,
                                                                 isNew: isNew,
                                                                 keywords: keywords,
+                                                                productQuantityAvailable: productQuantityAvailable,
                                                                 imagesURLs: imagesURLs))
                                         dispatchGroup.leave()
                                     }
@@ -117,6 +119,7 @@ class FirestoreProductsManager: ObservableObject {
                                                     isRecommended: isRecommended,
                                                     isNew: isNew,
                                                     keywords: keywords,
+                                                    productQuantityAvailable: productQuantityAvailable,
                                                     imagesURLs: imagesURLs))
                             
                             dispatchGroup.leave()
@@ -126,6 +129,45 @@ class FirestoreProductsManager: ObservableObject {
                     dispatchGroup.notify(queue: .main) {
                         print("Successfully fetched products data")
                         completion(.success(products))
+                    }
+                }
+            }
+    }
+    
+    func checkProductsAvailability(productsIDs: [String], completion: @escaping ((Result<[String: Bool], Error>) -> ())) {
+        var results: [String: Bool] = [:]
+        let dispatchGroup: DispatchGroup = DispatchGroup()
+        
+        for productID in productsIDs {
+            dispatchGroup.enter()
+            checkProductAvailability(productID: productID) { result in
+                switch result {
+                case .success(let available):
+                    results[productID] = available
+                case .failure(let error):
+                    completion(.failure(error))
+                }
+            }
+        }
+        
+        dispatchGroup.notify(queue: .main) {
+            completion(.success(results))
+        }
+    }
+    
+    private func checkProductAvailability(productID: String, completion: @escaping ((Result<Bool, Error>) -> ())) {
+        db.collection(DatabaseCollections.products.rawValue)
+            .document(productID)
+            .getDocument { documentSnapshot, error in
+                if let error = error {
+                    completion(.failure(error))
+                } else {
+                    if let documentSnapshot = documentSnapshot, let data = documentSnapshot.data() {
+                        
+                        let availability = data["productQuantityAvailable"] as? Int ?? 0
+                        let available = availability > 0
+                        
+                        completion(.success(available))
                     }
                 }
             }
@@ -308,6 +350,7 @@ class FirestoreProductsManager: ObservableObject {
             "isRecommended": product.isRecommended,
             "isNew": product.isNew,
             "keywords": product.keywords,
+            "productQuantityAvailable": product.productQuantityAvailable,
             "imagesURLs": product.imagesURLs,
         ]
         
@@ -430,6 +473,37 @@ class FirestoreProductsManager: ObservableObject {
                     completion(.failure(error))
                 } else {
                     print("Successfully edited product sold units number")
+                    completion(.success)
+                }
+            }
+    }
+    
+    func editProductsQuantityAvailable(productsIDsWithQuantitySold: [String: Int], completion: @escaping ((VoidResult) -> ())) {
+        let dispatchGroup: DispatchGroup = DispatchGroup()
+        for (productID, quantity) in productsIDsWithQuantitySold {
+            dispatchGroup.enter()
+            editProductQuantityAvailable(productID: productID, quantitySold: quantity) { _ in dispatchGroup.leave() }
+        }
+        
+        dispatchGroup.notify(queue: .main) {
+            completion(.success)
+        }
+    }
+    
+    private func editProductQuantityAvailable(productID: String, quantitySold: Int, completion: @escaping ((VoidResult) -> ())) {
+        let updateData: [String: Any] = [
+            "productQuantityAvailable": FieldValue.increment(Int64(-quantitySold))
+        ]
+        
+        self.db.collection(DatabaseCollections.products.rawValue)
+            .document(productID)
+            .getDocument { documentSnapshot, error in
+                if let error = error {
+                    print("Error changing product quantity available: \(error.localizedDescription)")
+                    completion(.failure(error))
+                } else {
+                    documentSnapshot?.reference.updateData(updateData)
+                    print("Successfully changed product quantity available")
                     completion(.success)
                 }
             }

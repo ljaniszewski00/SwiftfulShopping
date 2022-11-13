@@ -270,6 +270,9 @@
 		0AD89748289D0C5E00BFDAA1 /* ProfileViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0AD89745289D0C4A00BFDAA1 /* ProfileViewModel.swift */; };
 		0AD8976B289D392F00BFDAA1 /* ProductDetailsRatingsSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0AD8976A289D392F00BFDAA1 /* ProductDetailsRatingsSection.swift */; };
 		88059C52292163CD00231936 /* ReturnDetailsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88059C51292163CD00231936 /* ReturnDetailsViewModel.swift */; };
+		88059C542921727200231936 /* Availability.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88059C532921727200231936 /* Availability.swift */; };
+		88059C562921733A00231936 /* AvailabilityLocalizable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88059C552921733A00231936 /* AvailabilityLocalizable.swift */; };
+		88059C5A2921784400231936 /* ProductAvailabilityIndicator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88059C592921784400231936 /* ProductAvailabilityIndicator.swift */; };
 		882F47E1291C1D6800BF670A /* ProductsSpecificationComparisonViewLocalizable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 882F47E0291C1D6800BF670A /* ProductsSpecificationComparisonViewLocalizable.swift */; };
 		883F3063291D7E1300B5CC96 /* MonthsLocalizable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 883F3062291D7E1300B5CC96 /* MonthsLocalizable.swift */; };
 		889EDF39290DA0D100EBFFC1 /* FirestoreSampleDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 889EDF38290DA0D100EBFFC1 /* FirestoreSampleDataManager.swift */; };
@@ -550,6 +553,9 @@
 		0AD89745289D0C4A00BFDAA1 /* ProfileViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewModel.swift; sourceTree = "<group>"; };
 		0AD8976A289D392F00BFDAA1 /* ProductDetailsRatingsSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductDetailsRatingsSection.swift; sourceTree = "<group>"; };
 		88059C51292163CD00231936 /* ReturnDetailsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReturnDetailsViewModel.swift; sourceTree = "<group>"; };
+		88059C532921727200231936 /* Availability.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Availability.swift; sourceTree = "<group>"; };
+		88059C552921733A00231936 /* AvailabilityLocalizable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AvailabilityLocalizable.swift; sourceTree = "<group>"; };
+		88059C592921784400231936 /* ProductAvailabilityIndicator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductAvailabilityIndicator.swift; sourceTree = "<group>"; };
 		882F47E0291C1D6800BF670A /* ProductsSpecificationComparisonViewLocalizable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductsSpecificationComparisonViewLocalizable.swift; sourceTree = "<group>"; };
 		883F3062291D7E1300B5CC96 /* MonthsLocalizable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MonthsLocalizable.swift; sourceTree = "<group>"; };
 		889EDF38290DA0D100EBFFC1 /* FirestoreSampleDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirestoreSampleDataManager.swift; sourceTree = "<group>"; };
@@ -1235,6 +1241,7 @@
 				0A3643CF29055D17000966AF /* PullToRefresh.swift */,
 				88A946AE29099F850086A8A1 /* AddToCartButton.swift */,
 				88D94FCE290B358500F9F995 /* ExpandableText.swift */,
+				88059C592921784400231936 /* ProductAvailabilityIndicator.swift */,
 			);
 			path = HelperViews;
 			sourceTree = "<group>";
@@ -1376,6 +1383,7 @@
 				0A3C7AD729006B710079B290 /* VoidResult.swift */,
 				88EFA68E2919733700399C11 /* LanguagesIdentifiers.swift */,
 				88EFA690291976D100399C11 /* SpecificationKeys.swift */,
+				88059C532921727200231936 /* Availability.swift */,
 			);
 			path = Enums;
 			sourceTree = "<group>";
@@ -1633,6 +1641,7 @@
 				88EFAA25291546E500A30481 /* ReturnStatusLocalizable.swift */,
 				88DEDD47291690C4003EFA44 /* AppearanceLocalizable.swift */,
 				88EFA6922919780D00399C11 /* SpecificationKeysLocalizable.swift */,
+				88059C552921733A00231936 /* AvailabilityLocalizable.swift */,
 			);
 			path = Enums;
 			sourceTree = "<group>";
@@ -1801,6 +1810,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				88059C542921727200231936 /* Availability.swift in Sources */,
 				0A3D7F5928D1FD7800D51327 /* MobileNetV2.mlmodel in Sources */,
 				889EDF5C290F202A00EBFFC1 /* CommonLocalizable.swift in Sources */,
 				0A383D1028F7672C00D15B48 /* ReturnStatus.swift in Sources */,
@@ -1993,12 +2003,14 @@
 				0A83216128D91A6E008234C2 /* View.swift in Sources */,
 				88EFAA26291546E500A30481 /* ReturnStatusLocalizable.swift in Sources */,
 				889EDF9F290F2AB500EBFFC1 /* ReturnsViewLocalizable.swift in Sources */,
+				88059C562921733A00231936 /* AvailabilityLocalizable.swift in Sources */,
 				0ACD5912284A6F6600AA9DA0 /* ForgotPasswordViewModel.swift in Sources */,
 				0A56D89F285F27A60009680C /* SearchView.swift in Sources */,
 				0A30460128A9608300F218B3 /* AccentColors.swift in Sources */,
 				0A2FE0A528A15B7C00E8D30E /* NetworkManager.swift in Sources */,
 				0A30460D28AAB02600F218B3 /* FilteringMethods.swift in Sources */,
 				0A268B4728671924006CF0E2 /* OrderDetailsView.swift in Sources */,
+				88059C5A2921784400231936 /* ProductAvailabilityIndicator.swift in Sources */,
 				88DEDD4C29171DAC003EFA44 /* LottieAssetsNames.swift in Sources */,
 				889EDFBD290F2B1000EBFFC1 /* AccentColorChangeViewLocalizable.swift in Sources */,
 				88EFA6932919780D00399C11 /* SpecificationKeysLocalizable.swift in Sources */,

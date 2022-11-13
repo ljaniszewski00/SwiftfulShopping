@@ -62,15 +62,17 @@ struct ProductTileForCartView: View {
                             .font(.ssCallout)
                             .foregroundColor(.accentColor)
                     }
+                    
+                    ProductAvailabilityIndicator(availability: product.availability, font: .ssCallout)
                 }
                 
-                if includeButtonsForAmountChange {
+                if includeButtonsForAmountChange && product.availability != .no {
                     QuantityInput(quantity: cartViewModel.getCartProductCount(product: product),
                                   minusAction: {
                         cartViewModel.removeProductFromCart(product: product, quantity: 1)
                     },
                                   plusAction: {
-                        cartViewModel.addProductToCart(product: product, quantity: 1)
+                        cartViewModel.addProductToCart(product: product, quantity: 1) { _ in }
                     })
                     .scaledToFit()
                     .frame(height: 30)

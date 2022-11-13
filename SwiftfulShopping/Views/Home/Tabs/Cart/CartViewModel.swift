@@ -17,6 +17,7 @@ class CartViewModel: ObservableObject {
     @Published var shouldPresentProductDetailsView: Bool = false
     
     @Published var shouldPresentCheckoutFirstView: Bool = false
+    @Published var showLoadingModal: Bool = false
     
     func onAppear() {
         fetchData()
@@ -92,25 +93,46 @@ class CartViewModel: ObservableObject {
         }
     }
     
-    func addProductToCart(product: Product, quantity: Int) {
-        if productsForCart[product] != nil {
-            productsForCart[product]! += quantity
-        } else {
-            productsForCart[product] = quantity
-        }
-        
-        if let cartProductsIDsFromDefaults = UserDefaults.standard.object(forKey: UserDefaultsKeys.cart.rawValue) as? [String: Int] {
-            if cartProductsIDsFromDefaults[product.id] != nil {
-                var cartProductsIDsFromDefaultsTemp: [String: Int] = cartProductsIDsFromDefaults
-                cartProductsIDsFromDefaultsTemp[product.id]! += quantity
-                UserDefaults.standard.set(cartProductsIDsFromDefaultsTemp, forKey: UserDefaultsKeys.cart.rawValue)
-            } else {
-                var cartProductsIDsFromDefaultsTemp: [String: Int] = cartProductsIDsFromDefaults
-                cartProductsIDsFromDefaultsTemp[product.id] = quantity
-                UserDefaults.standard.set(cartProductsIDsFromDefaultsTemp, forKey: UserDefaultsKeys.cart.rawValue)
+    func addProductToCart(product: Product, quantity: Int, completion: @escaping ((VoidResult) -> ())) {
+        showLoadingModal = true
+        FirestoreProductsManager.client.checkProductsAvailability(productsIDs: [product.id]) { [weak self] result in
+            self?.showLoadingModal = false
+            switch result {
+            case .success(let productsAvailability):
+                if let productAvailable = productsAvailability[product.id] {
+                    if productAvailable {
+                        if self?.productsForCart[product] != nil {
+                            if ((self?.productsForCart[product]!)! + quantity) <= product.productQuantityAvailable {
+                                self?.productsForCart[product]! += quantity
+                            } else {
+                                return
+                            }
+                        } else {
+                            if quantity <= product.productQuantityAvailable {
+                                self?.productsForCart[product] = quantity
+                            } else {
+                                return
+                            }
+                        }
+                        
+                        if let cartProductsIDsFromDefaults = UserDefaults.standard.object(forKey: UserDefaultsKeys.cart.rawValue) as? [String: Int] {
+                            if cartProductsIDsFromDefaults[product.id] != nil {
+                                var cartProductsIDsFromDefaultsTemp: [String: Int] = cartProductsIDsFromDefaults
+                                cartProductsIDsFromDefaultsTemp[product.id]! += quantity
+                                UserDefaults.standard.set(cartProductsIDsFromDefaultsTemp, forKey: UserDefaultsKeys.cart.rawValue)
+                            } else {
+                                var cartProductsIDsFromDefaultsTemp: [String: Int] = cartProductsIDsFromDefaults
+                                cartProductsIDsFromDefaultsTemp[product.id] = quantity
+                                UserDefaults.standard.set(cartProductsIDsFromDefaultsTemp, forKey: UserDefaultsKeys.cart.rawValue)
+                            }
+                        } else {
+                            UserDefaults.standard.set([product.id: quantity], forKey: UserDefaultsKeys.cart.rawValue)
+                        }
+                    }
+                }
+            case .failure(let error):
+                completion(.failure(error))
             }
-        } else {
-            UserDefaults.standard.set([product.id: quantity], forKey: UserDefaultsKeys.cart.rawValue)
         }
     }
     

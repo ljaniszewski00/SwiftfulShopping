@@ -176,17 +176,19 @@ class OrderCreationViewModel: ObservableObject {
             switch result {
             case .success:
                 self?.createdOrder = order
-                FirestoreProductsManager.client.editProductsSoldUnitsNumber(productsIDsWithQuantity: productsIDsWithQuantity) { _ in }
-                
-                if !appliedDiscounts.isEmpty {
-                    FirestoreProductsManager.client.redeemDiscounts(userID: client.id,
-                                                                    discounts: appliedDiscounts) { [weak self] in
-                        self?.showLoadingModal = false
-                        completion(.success(order.id))
+                FirestoreProductsManager.client.editProductsSoldUnitsNumber(productsIDsWithQuantity: productsIDsWithQuantity) { _ in
+                    FirestoreProductsManager.client.editProductsSoldUnitsNumber(productsIDsWithQuantity: productsIDsWithQuantity) { _ in
+                        if !appliedDiscounts.isEmpty {
+                            FirestoreProductsManager.client.redeemDiscounts(userID: client.id,
+                                                                            discounts: appliedDiscounts) { [weak self] in
+                                self?.showLoadingModal = false
+                                completion(.success(order.id))
+                            }
+                        } else {
+                            self?.showLoadingModal = false
+                            completion(.success(order.id))
+                        }
                     }
-                } else {
-                    self?.showLoadingModal = false
-                    completion(.success(order.id))
                 }
             case .failure(let error):
                 self?.showLoadingModal = false

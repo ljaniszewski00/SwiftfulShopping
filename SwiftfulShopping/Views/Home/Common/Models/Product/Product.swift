@@ -22,6 +22,8 @@ struct Product {
     var isRecommended: Bool
     var isNew: Bool
     var keywords: [String]
+    var productQuantityAvailable: Int
+    var availability: Availability
     var imagesURLs: [String]
     
     var price: Double?
@@ -38,6 +40,7 @@ struct Product {
          isRecommended: Bool = false,
          isNew: Bool = true,
          keywords: [String] = [],
+         productQuantityAvailable: Int,
          imagesURLs: [String] = [URLConstants.emptyProductPhoto]) {
         self.id = id
         self.name = name
@@ -55,6 +58,19 @@ struct Product {
         } else {
             self.keywords = keywords + [name, company, category.decodeValue]
         }
+        self.productQuantityAvailable = productQuantityAvailable
+        
+        switch productQuantityAvailable {
+        case _ where productQuantityAvailable <= 0:
+            availability = .no
+        case _ where productQuantityAvailable > 0 && productQuantityAvailable < 20:
+            availability = .small
+        case _ where productQuantityAvailable >= 20:
+            availability = .large
+        default:
+            availability = .no
+        }
+        
         self.imagesURLs = imagesURLs
         
         guard let currencyCode = LocaleManager.client.clientCurrencyCode, let price = priceForCurrency[currencyCode] else { return }
@@ -133,6 +149,7 @@ extension Product {
                                                   unitsSold: 220,
                                                   isRecommended: true,
                                                   keywords: ["telephone", "phone", "mobile phone", "iPhone", "mobile device"],
+                                                  productQuantityAvailable: 200,
                                                   imagesURLs: ["https://store.storeimages.cdn-apple.com/4668/as-images.apple.com/is/iphone-13-pro-max-green-select?wid=940&hei=1112&fmt=png-alpha&.v=1644969385495",
                                                                "https://store.storeimages.cdn-apple.com/4668/as-images.apple.com/is/iphone-13-pro-max-silver-select?wid=940&hei=1112&fmt=png-alpha&.v=1645552346280"]),
                                           Product(id: "mdQsy0eqYaSiKp6z393S",
@@ -188,6 +205,7 @@ extension Product {
                                                                                                         SpecificationKeys.additionalInfo: ""]],
                                                   unitsSold: 50,
                                                   isRecommended: true,
+                                                  productQuantityAvailable: 170,
                                                   imagesURLs: ["https://mac-shop.pl/environment/cache/images/500_500_productGfx_14857.webp",
                                                                "https://www.orange.pl/medias/sys_master/root/images/h51/h41/11348699611166/ipad-air-5g-spacegray-front-OraProductZoom.png"]),
                                           Product(id: "BJll5oJjsBoq0tb6Ad8v",
@@ -243,6 +261,7 @@ extension Product {
                                                                                                         SpecificationKeys.additionalInfo: ""]],
                                                   unitsSold: 45,
                                                   isRecommended: true,
+                                                  productQuantityAvailable: 150,
                                                   imagesURLs: ["https://www.orange.pl/medias/sys_master/root/images/hfa/h0a/9792549683230/ipad-pro-11-space-gray-front-OraProductZoom.png",
                                                                "https://toppng.com/uploads/preview/starting-at-ipad-pro-105-11569058975xz9kcmjfqn.png"]),
                                           Product(id: "v8yFH9voUUbMvYDXMX4o",
@@ -297,6 +316,7 @@ extension Product {
                                                                                                         SpecificationKeys.weight: "",
                                                                                                         SpecificationKeys.additionalInfo: ""]],
                                                   unitsSold: 56,
+                                                  productQuantityAvailable: 120,
                                                   imagesURLs: ["https://support.apple.com/library/APPLE/APPLECARE_ALLGEOS/SP825/macbookair.png",
                                                                "https://static.api.plenti.app/file/product/2900"]),
                                           Product(id: "uMIJzBU5wcwwfUMqsJ2C",
@@ -352,6 +372,7 @@ extension Product {
                                                                                                         SpecificationKeys.additionalInfo: ""]],
                                                   unitsSold: 90,
                                                   isRecommended: true,
+                                                  productQuantityAvailable: 100,
                                                   imagesURLs: ["https://w7.pngwing.com/pngs/279/698/png-transparent-macbookpro-apple-material-apple-macbook-pro-computer-product-in-kind.png",
                                                                "https://toppng.com/uploads/preview/macbook-pro-with-touch-bar-11562986819zyl2ty8n0m.png"]),
                                           Product(id: "IpD65nz0vKKgOUAzVDtq",
@@ -406,6 +427,7 @@ extension Product {
                                                                                                         SpecificationKeys.weight: "",
                                                                                                         SpecificationKeys.additionalInfo: ""]],
                                                   unitsSold: 20,
+                                                  productQuantityAvailable: 80,
                                                   imagesURLs: ["https://images.macrumors.com/t/ylfMwnTtxo7SQpK6767ULmfZarY=/1600x1200/smart/article-new/2013/09/imac-m1-blue-isolated-16x9-500k.png",
                                                                "https://upload.wikimedia.org/wikipedia/commons/thumb/4/4c/M1_iMac_vector.svg/1200px-M1_iMac_vector.svg.png"]),
                                           Product(id: "qxfRHQx4eQF748wBPN7B",
@@ -460,6 +482,7 @@ extension Product {
                                                                                                         SpecificationKeys.weight: "",
                                                                                                         SpecificationKeys.additionalInfo: ""]],
                                                   unitsSold: 25,
+                                                  productQuantityAvailable: 60,
                                                   imagesURLs: ["https://imagazine.pl/wp-content/uploads/2019/06/Mac-Pro-2019-mid-and-Pro-Display-XDR-10.png",
                                                                "https://macmedic.com.au/wp-content/uploads/2021/07/MacMedic-Sydney-Mac_Pro_2-up_Screen__USEN.png"]),
                                           Product(id: "veArtsZlHvLVmJgB1Eb2",
@@ -515,6 +538,7 @@ extension Product {
                                                                                                         SpecificationKeys.additionalInfo: "Bezprzewodowa synchronizacja, Integracja z aplikacją mobilną, Bezprzewodowe ładowanie, Dotykowy Digital Crown, Możliwość indywidualnego dostosowania wyglądu tarczy zegarka"]],
                                                   unitsSold: 87,
                                                   isRecommended: true,
+                                                  productQuantityAvailable: 50,
                                                   imagesURLs: ["https://store.storeimages.cdn-apple.com/4668/as-images.apple.com/is/MN2D3_VW_PF+watch-45-alum-starlight-cell-7s_VW_PF_WF_SI?wid=2000&hei=2000&fmt=png-alpha&.v=1645128285436,1631661830000",
                                                        "https://cdn.shopify.com/s/files/1/0613/5683/5009/products/series7-480_grande.png?v=1653135860"]),
                                           Product(id: "7vHPvsjhC2N3DszzpejX",
@@ -570,6 +594,7 @@ extension Product {
                                                                                                         SpecificationKeys.additionalInfo: ""]],
                                                   unitsSold: 64,
                                                   isRecommended: true,
+                                                  productQuantityAvailable: 30,
                                                   imagesURLs: ["https://www.freepnglogos.com/uploads/airpods-png/airpods-apple-news-articles-stories-trends-for-today-14.png",
                                                                "https://i.pinimg.com/originals/cf/8a/5e/cf8a5e66b8641f3b1b11e364e84fb093.png"]),
                                           Product(id: "K3UWdDrCQD6fVJgJk6dX",
@@ -624,6 +649,7 @@ extension Product {
                                                                                                         SpecificationKeys.weight: "5.4 g (jedna słuchawka), 45.6 g (etui)",
                                                                                                         SpecificationKeys.additionalInfo: "Dotykowy panel sterowania, Wskaźnik LED, Wodoszczelność (IPX4), Odbieranie połączeń, Przyspieszeniomierz wykrywający mowę, Sterowanie muzyką, Dwa czujniki optyczne, Sterowanie głosem, Czujnik nacisku, Etui ładujące z funkcją ładowania bezprzewodowego, Automatyczne parowanie, Podwójny układ mikrofonów"]],
                                                   unitsSold: 34,
+                                                  productQuantityAvailable: 20,
                                                   imagesURLs: ["https://www.apple.com/v/airpods-max/e/images/overview/hero__gnfk5g59t0qe_xlarge.png",
                                                                "https://www.apple.com/v/airpods-max/e/images/overview/design_hero_cups__ddp0h9jo76gm_large.png"]),
                                           Product(id: "cKuK5oxw6WaHWaMmxkyW",
@@ -678,6 +704,7 @@ extension Product {
                                                                                                         SpecificationKeys.weight: "425 g",
                                                                                                         SpecificationKeys.additionalInfo: "Przeglądanie zdjęć, Wbudowany mikrofon, Obsługa głosowa, Dostęp do AppStore, Wsparcie dla technologii Dolby Atmos, Wsparcie dla technologii Dolby Vision"]],
                                                   unitsSold: 15,
+                                                  productQuantityAvailable: 0,
                                                   imagesURLs: ["https://w7.pngwing.com/pngs/326/890/png-transparent-apple-tv-4k-apple-tv-4th-generation-4k-resolution-new-autumn-products-television-electronics-media-player-thumbnail.png",
                                                                "https://w7.pngwing.com/pngs/393/564/png-transparent-apple-tv-4th-generation-television-apple-tv-4k-creative-certificate-material-television-electronics-electronic-device-thumbnail.png"])]
 }

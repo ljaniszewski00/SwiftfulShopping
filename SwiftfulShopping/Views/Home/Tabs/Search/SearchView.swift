@@ -193,6 +193,7 @@ struct SearchView: View {
                                isActive: $searchViewModel.shouldPresentProductDetailsView,
                                label: { EmptyView() })
             }
+            .modifier(LoadingIndicatorModal(isPresented: $cartViewModel.showLoadingModal))
             .navigationTitle(TexterifyManager.localisedString(key: .searchView(.navigationTitle)))
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
