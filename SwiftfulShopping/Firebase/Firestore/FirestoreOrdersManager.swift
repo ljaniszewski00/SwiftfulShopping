@@ -38,12 +38,15 @@ class FirestoreOrdersManager: ObservableObject {
                         let clientID = data["clientID"] as? String ?? ""
                         let clientDescription = data["clientDescription"] as? String ?? ""
                         let addressDescription = data["addressDescription"] as? String ?? ""
-                        let shoppingCartID = data["shoppingCartID"] as? String ?? ""
                         let productsIDsWithQuantity = data["productsIDsWithQuantity"] as? [String: Int] ?? [:]
                         let shippingMethod = data["shippingMethod"] as? String ?? ""
                         let shippingAddressID = data["shippingAddressID"] as? String ?? ""
                         let paymentMethod = data["paymentMethod"] as? String ?? ""
                         let invoice = data["invoice"] as? Bool ?? false
+                        let productsCost = data["productsCost"] as? Double ?? 0.0
+                        let appliedDiscountsCodesWithValue = data["appliedDiscountsCodesWithValue"] as? [String: Double] ?? [:]
+                        let shippingCost = data["shippingCost"] as? Double ?? 0.0
+                        let paymentCost = data["paymentCost"] as? Double ?? 0.0
                         let totalCost = data["totalCost"] as? Double ?? 0.0
                         let status = data["status"] as? String ?? ""
                         
@@ -56,12 +59,15 @@ class FirestoreOrdersManager: ObservableObject {
                                      clientID: clientID,
                                      clientDescription: clientDescription,
                                      addressDescription: addressDescription,
-                                     shoppingCartID: shoppingCartID,
                                      productsIDsWithQuantity: productsIDsWithQuantity,
                                      shippingMethod: ShippingMethod.withLabel(shippingMethod) ?? .courier,
                                      shippingAddressID: shippingAddressID,
                                      paymentMethod: PaymentMethod.withLabel(paymentMethod) ?? .creditCard,
                                      invoice: invoice,
+                                     productsCost: productsCost,
+                                     appliedDiscountsCodesWithValue: appliedDiscountsCodesWithValue,
+                                     shippingCost: shippingCost,
+                                     paymentCost: paymentCost,
                                      totalCost: totalCost,
                                      status: OrderStatus.withLabel(status) ?? .placed)
                     }
@@ -81,12 +87,15 @@ class FirestoreOrdersManager: ObservableObject {
             "orderDate": order.orderDate,
             "estimatedDeliveryDate": order.estimatedDeliveryDate,
             "clientID": order.clientID,
-            "shoppingCartID": order.shoppingCartID,
             "productsIDsWithQuantity": order.productsIDsWithQuantity,
             "shippingMethod": order.shippingMethod.decodeValue,
             "shippingAddressID": order.shippingAddressID,
             "paymentMethod": order.paymentMethod.decodeValue,
             "invoice": order.invoice,
+            "productsCost": order.productsCost,
+            "appliedDiscountsCodesWithValue": order.appliedDiscountsCodesWithValue,
+            "shippingCost": order.shippingCost,
+            "paymentCost": order.paymentCost,
             "totalCost": order.totalCost,
             "status": order.status.decodeValue
         ]

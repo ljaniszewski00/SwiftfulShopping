@@ -46,6 +46,7 @@
 "ChangePasswordView_verifyButton" = "";
 "ColorSchemeChangeView_navigationTitle" = "";
 "Common_cancel" = "";
+"Common_commingSoon" = "";
 "Common_next" = "";
 "Common_no" = "";
 "Common_search" = "";
@@ -251,11 +252,13 @@
 "OrderCreationSummaryView_doYouHaveCouponCode" = "";
 "OrderCreationSummaryView_navigationTitle" = "";
 "OrderCreationSummaryView_paymentMethod" = "";
+"OrderCreationSummaryView_paymentMethodPrice" = "";
 "OrderCreationSummaryView_paymentProcessingModalDescription" = "";
 "OrderCreationSummaryView_paymentProcessingModalTitle" = "";
 "OrderCreationSummaryView_products" = "";
 "OrderCreationSummaryView_productsInCart" = "";
 "OrderCreationSummaryView_shippingMethod" = "";
+"OrderCreationSummaryView_shippingMethodPrice" = "";
 "OrderCreationSummaryView_submitPayButton" = "";
 "OrderCreationSummaryView_thisWillBeTheDeliveryAddress" = "";
 "OrderCreationSummaryView_totalCost" = "";
@@ -265,9 +268,11 @@
 "OrderDetailsView_customerInfo" = "";
 "OrderDetailsView_navigationTitle" = "";
 "OrderDetailsView_orderDate" = "";
+"OrderDetailsView_paymentMethodPrice" = "";
 "OrderDetailsView_products" = "";
 "OrderDetailsView_rateOrderButton" = "";
 "OrderDetailsView_returnProductsButton" = "";
+"OrderDetailsView_shippingMethodPrice" = "";
 "OrderDetailsView_status" = "";
 "OrderDetailsView_totalPrice" = "";
 "OrderRateView_navigationTitle" = "";
@@ -481,4 +486,4 @@
 "ThirdReturnCreationView_createReturnButton" = "";
 "ThirdReturnCreationView_howDoYouWantToReturn" = "";
 "ThirdReturnCreationView_navigationTitle" = "";
-"texterify_timestamp" = "2022-11-10T18:52:08Z";
+"texterify_timestamp" = "2022-11-13T16:22:13Z";

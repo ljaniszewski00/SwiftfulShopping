@@ -13,4 +13,5 @@ public enum CommonLocalizable: String {
     case search = "Common_search"
     case yes = "Common_yes"
     case no = "Common_no"
+    case commingSoon = "Common_commingSoon"
 }

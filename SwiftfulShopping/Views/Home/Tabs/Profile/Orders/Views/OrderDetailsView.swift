@@ -92,6 +92,53 @@ struct OrderDetailsView: View {
                         }
                     }
                     
+                    if !order.appliedDiscountsCodesWithValue.isEmpty {
+                        VStack {
+                            ForEach(Array(order.appliedDiscountsCodesWithValue.keys), id: \.self) { discountCode in
+                                if let discountValue = order.appliedDiscountsCodesWithValue[discountCode] {
+                                    HStack {
+                                        Text(discountCode)
+                                            .font(.ssCallout)
+                                            .foregroundColor(.ssDarkGray)
+                                        
+                                        Spacer()
+                                        
+                                        Text("-\(discountValue, specifier: "%.2f")%")
+                                            .font(.ssCallout)
+                                            .foregroundColor(.accentColor)
+                                    }
+                                }
+                            }
+                        }
+                    }
+                    
+                    VStack {
+                        HStack {
+                            Text(TexterifyManager.localisedString(key: .orderDetailsView(.shippingMethodPrice)))
+                                .font(.ssCallout)
+                                .foregroundColor(.ssDarkGray)
+                            
+                            Spacer()
+                            
+                            Text("\(order.shippingCost, specifier: "%.2f")")
+                                .font(.ssTitle3)
+                                .foregroundColor(.accentColor)
+                        }
+                        
+                        HStack {
+                            Text(TexterifyManager.localisedString(key: .orderDetailsView(.paymentMethodPrice)))
+                                .font(.ssCallout)
+                                .foregroundColor(.ssDarkGray)
+                            
+                            Spacer()
+                            
+                            Text("\(order.paymentCost, specifier: "%.2f")")
+                                .font(.ssTitle3)
+                                .foregroundColor(.accentColor)
+                        }
+                    }
+                    .padding(.top)
+                    
                     HStack {
                         Text(TexterifyManager.localisedString(key: .orderDetailsView(.totalPrice)))
                             .font(.ssTitle2)
@@ -173,11 +220,13 @@ struct OrderDetailsView_Previews: PreviewProvider {
     static var previews: some View {
         let tabBarStateManager = TabBarStateManager()
         let profileViewModel = ProfileViewModel()
+        let ordersViewModel = OrdersViewModel()
         ForEach(ColorScheme.allCases, id: \.self) { colorScheme in
             ForEach(["iPhone 13 Pro Max", "iPhone 8"], id: \.self) { deviceName in
                 OrderDetailsView(order: Order.demoOrders[0])
                     .environmentObject(tabBarStateManager)
                     .environmentObject(profileViewModel)
+                    .environmentObject(ordersViewModel)
                     .preferredColorScheme(colorScheme)
                     .previewDevice(PreviewDevice(rawValue: deviceName))
                     .previewDisplayName("\(deviceName) portrait")

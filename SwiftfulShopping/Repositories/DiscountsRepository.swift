@@ -8,7 +8,7 @@
 import Foundation
 
 class DiscountsRepository: ObservableObject {
-    @Published var discounts: [Discount]?
+    @Published var discounts: [Discount] = []
     
     static var shared: DiscountsRepository = {
         DiscountsRepository()
@@ -18,8 +18,11 @@ class DiscountsRepository: ObservableObject {
         FirestoreProductsManager.client.getDiscounts { [weak self] result in
             switch result {
             case .success(let discounts):
-                self?.discounts = discounts
-                completion(discounts)
+                if let discounts = discounts {
+                    self?.discounts = discounts
+                    completion(discounts)
+                }
+                completion([])
             case .failure(let error):
                 print("Error fetching discounts from repository: \(error.localizedDescription)")
                 completion([])

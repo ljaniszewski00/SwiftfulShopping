@@ -14,8 +14,8 @@ struct Cart {
     var cartName: String = "Default"
     var productsIDsWithQuantity: [String: Int] = [:]
     var appliedDiscountsIDs: [String] = []
+    var productsCost: Double = 0.0
     var totalCost: Double = 0.0
-    var totalCostWithAppliedDiscounts: Double = 0.0
     
     init(clientID: String, orderID: String) {
         self.clientID = clientID
@@ -28,16 +28,16 @@ struct Cart {
          cartName: String,
          productsIDsWithQuantity: [String: Int],
          appliedDiscountsIDs: [String],
-         totalCost: Double,
-         totalCostWithAppliedDiscounts: Double) {
+         productsCost: Double,
+         totalCost: Double) {
         self.id = id
         self.clientID = clientID
         self.orderID = orderID
         self.cartName = cartName
         self.productsIDsWithQuantity = productsIDsWithQuantity
         self.appliedDiscountsIDs = appliedDiscountsIDs
+        self.productsCost = productsCost
         self.totalCost = totalCost
-        self.totalCostWithAppliedDiscounts = totalCostWithAppliedDiscounts
     }
 }
 
@@ -53,7 +53,7 @@ extension Cart: Equatable, Hashable {
 
 extension Cart: CustomStringConvertible {
     var description: String {
-        "\(id)\nClientID: \(clientID)\nOrderID: \(orderID)\nCart Name: \(cartName)\nProductsIDsWithQuantity: \(productsIDsWithQuantity)\nAppliedDiscountsIDs: \(appliedDiscountsIDs)\nTotalCost: \(totalCost)\nTotalCostWithAppliedDiscounts: \(totalCostWithAppliedDiscounts)"
+        "\(id)\nClientID: \(clientID)\nOrderID: \(orderID)\nCart Name: \(cartName)\nProductsIDsWithQuantity: \(productsIDsWithQuantity)\nAppliedDiscountsIDs: \(appliedDiscountsIDs)\nProductsCost: \(productsCost)\nTotalCost: \(totalCost)"
     }
 }
 
@@ -64,8 +64,8 @@ extension Cart {
                                  cartName: "Cart for order NO. 3DJOQ3Y0ydl2nrQn83qT",
                                  productsIDsWithQuantity: Order.demoOrders[0].productsIDsWithQuantity,
                                  appliedDiscountsIDs: [Discount.demoDiscounts.filter { $0.productID == Array(Order.demoOrders[0].productsIDsWithQuantity.keys)[0] }.first?.id ?? ""],
-                                 totalCost: Product.demoProducts.filter { Array(Order.demoOrders[0].productsIDsWithQuantity.keys).contains($0.id) }.map { $0.price ?? 0 }.reduce(0, +),
-                                 totalCostWithAppliedDiscounts: Product.demoProducts.filter { Array(Order.demoOrders[0].productsIDsWithQuantity.keys).contains($0.id) }.map { $0.price ?? 0 }.reduce(0, +)),
+                                 productsCost: Product.demoProducts.filter { Array(Order.demoOrders[0].productsIDsWithQuantity.keys).contains($0.id) }.map { $0.price ?? 0 }.reduce(0, +),
+                                 totalCost: Product.demoProducts.filter { Array(Order.demoOrders[0].productsIDsWithQuantity.keys).contains($0.id) }.map { $0.price ?? 0 }.reduce(0, +)),
                             
                             Cart(id: "yCsFjrUwTYNRCL4ASDxi",
                                  clientID: "W9UQoichE0UNZfvCnIPxuCBgL283",
@@ -73,8 +73,8 @@ extension Cart {
                                  cartName: "Cart for order NO. qCWd2IGNcfg4x5iPCOt7",
                                  productsIDsWithQuantity: Order.demoOrders[1].productsIDsWithQuantity,
                                  appliedDiscountsIDs: [Discount.demoDiscounts.filter { $0.productID == Array(Order.demoOrders[1].productsIDsWithQuantity.keys)[0] }.first?.id ?? ""],
-                                 totalCost: Product.demoProducts.filter { Array(Order.demoOrders[0].productsIDsWithQuantity.keys).contains($0.id) }.map { $0.price ?? 0 }.reduce(0, +),
-                                 totalCostWithAppliedDiscounts: Product.demoProducts.filter { Array(Order.demoOrders[1].productsIDsWithQuantity.keys).contains($0.id) }.map { $0.price ?? 0 }.reduce(0, +)),
+                                 productsCost: Product.demoProducts.filter { Array(Order.demoOrders[0].productsIDsWithQuantity.keys).contains($0.id) }.map { $0.price ?? 0 }.reduce(0, +),
+                                 totalCost: Product.demoProducts.filter { Array(Order.demoOrders[1].productsIDsWithQuantity.keys).contains($0.id) }.map { $0.price ?? 0 }.reduce(0, +)),
                             
                             Cart(id: "G1H6F4yf6VIQtA2blgOS",
                                  clientID: "W9UQoichE0UNZfvCnIPxuCBgL283",
@@ -82,8 +82,8 @@ extension Cart {
                                  cartName: "Cart for order NO. 83vfivSP7G0qCZa8M7Np",
                                  productsIDsWithQuantity: Order.demoOrders[2].productsIDsWithQuantity,
                                  appliedDiscountsIDs: [Discount.demoDiscounts.filter { $0.productID == Array(Order.demoOrders[2].productsIDsWithQuantity.keys)[0] }.first?.id ?? ""],
-                                 totalCost: Product.demoProducts.filter { Array(Order.demoOrders[0].productsIDsWithQuantity.keys).contains($0.id) }.map { $0.price ?? 0 }.reduce(0, +),
-                                 totalCostWithAppliedDiscounts: Product.demoProducts.filter { Array(Order.demoOrders[2].productsIDsWithQuantity.keys).contains($0.id) }.map { $0.price ?? 0 }.reduce(0, +)),
+                                 productsCost: Product.demoProducts.filter { Array(Order.demoOrders[0].productsIDsWithQuantity.keys).contains($0.id) }.map { $0.price ?? 0 }.reduce(0, +),
+                                 totalCost: Product.demoProducts.filter { Array(Order.demoOrders[2].productsIDsWithQuantity.keys).contains($0.id) }.map { $0.price ?? 0 }.reduce(0, +)),
                             
                             Cart(id: "U1AbH8RJdV8ZG6kI1H05",
                                  clientID: "W9UQoichE0UNZfvCnIPxuCBgL283",
@@ -91,6 +91,6 @@ extension Cart {
                                  cartName: "Cart for order NO. SHCgKcF7miPTYInES9YF",
                                  productsIDsWithQuantity: Order.demoOrders[3].productsIDsWithQuantity,
                                  appliedDiscountsIDs: [Discount.demoDiscounts.filter { $0.productID == Array(Order.demoOrders[3].productsIDsWithQuantity.keys)[0] }.first?.id ?? ""],
-                                 totalCost: Product.demoProducts.filter { Array(Order.demoOrders[0].productsIDsWithQuantity.keys).contains($0.id) }.map { $0.price ?? 0 }.reduce(0, +),
-                                 totalCostWithAppliedDiscounts: Product.demoProducts.filter { Array(Order.demoOrders[3].productsIDsWithQuantity.keys).contains($0.id) }.map { $0.price ?? 0 }.reduce(0, +))]
+                                 productsCost: Product.demoProducts.filter { Array(Order.demoOrders[0].productsIDsWithQuantity.keys).contains($0.id) }.map { $0.price ?? 0 }.reduce(0, +),
+                                 totalCost: Product.demoProducts.filter { Array(Order.demoOrders[3].productsIDsWithQuantity.keys).contains($0.id) }.map { $0.price ?? 0 }.reduce(0, +))]
 }

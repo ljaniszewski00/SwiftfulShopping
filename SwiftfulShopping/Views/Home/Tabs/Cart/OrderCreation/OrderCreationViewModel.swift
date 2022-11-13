@@ -35,6 +35,54 @@ class OrderCreationViewModel: ObservableObject {
     
     @Published var createdOrder: Order?
     
+    private var paymentMethodForShippingMethod: [ShippingMethod: [PaymentMethod]] = [
+        .courier: [.creditCard, .applePay],
+        .parcel: [.creditCard, .applePay]
+    ]
+    
+    var shippingPrice: Double? {
+        if let currencyCode = LocaleManager.client.clientCurrencyCode,
+           let choosenShippingMethod = choosenShippingMethod,
+           let shippingMethodPrices = Order.shippingMethodsPrices[choosenShippingMethod],
+           let shippingMethodPrice = shippingMethodPrices[currencyCode] {
+            return shippingMethodPrice
+        }
+        return nil
+    }
+    
+    var formattedShippingPrice: String? {
+        if let shippingPrice = shippingPrice,
+           let formattedShippingMethodPrice = LocaleManager.client.formatPrice(price: shippingPrice) {
+            return formattedShippingMethodPrice
+        }
+        return nil
+    }
+    
+    var paymentPrice: Double? {
+        if let currencyCode = LocaleManager.client.clientCurrencyCode,
+           let choosenPaymentMethod = choosenPaymentMethod,
+           let paymentMethodPrices = Order.paymentMethodPrices[choosenPaymentMethod],
+           let paymentMethodPrice = paymentMethodPrices[currencyCode] {
+            return paymentMethodPrice
+        }
+        return nil
+    }
+        
+    var formattedPaymentPrice: String? {
+        if let paymentPrice = paymentPrice,
+           let formattedPaymentMethodPrice = LocaleManager.client.formatPrice(price: paymentPrice) {
+            return formattedPaymentMethodPrice
+        }
+        return nil
+    }
+    
+    var shippingPaymentPrice: Double? {
+        if let shippingPrice = shippingPrice, let paymentPrice = paymentPrice {
+            return shippingPrice + paymentPrice
+        }
+        return nil
+    }
+    
     var newAddressFieldsNotValidated: Bool {
         newStreetName.isEmpty || newStreetNumber.isEmpty || newZipCode.isEmpty || newCity.isEmpty || newCountry.isEmpty
     }
@@ -80,7 +128,7 @@ class OrderCreationViewModel: ObservableObject {
     func createOrder(client: Profile,
                      productsWithQuantity: [Product: Int],
                      appliedDiscounts: [Discount],
-                     totalCost: Double,
+                     productsCost: Double,
                      totalCostWithAppliedDiscounts: Double,
                      shippingAddress: Address,
                      completion: @escaping ((Result<String, Error>) -> ())) {
@@ -88,27 +136,39 @@ class OrderCreationViewModel: ObservableObject {
             (key.id, value)
         })
         
-        let cart = Cart(clientID: client.id,
-                        orderID: UUID().uuidString,
-                        cartName: "Default",
-                        productsIDsWithQuantity: productsIDsWithQuantity,
-                        appliedDiscountsIDs: appliedDiscounts.map { $0.id },
-                        totalCost: totalCost,
-                        totalCostWithAppliedDiscounts: totalCostWithAppliedDiscounts)
+        guard let currencyCode = LocaleManager.client.clientCurrencyCode else { return }
         
-        let order = Order(id: cart.orderID,
+        guard let choosenShippingMethod = choosenShippingMethod,
+              let shippingMethodPrices = Order.shippingMethodsPrices[choosenShippingMethod],
+              let shippingMethodPrice = shippingMethodPrices[currencyCode] else { return }
+        
+        guard let choosenPaymentMethod = choosenPaymentMethod,
+              let paymentMethodPrices = Order.paymentMethodPrices[choosenPaymentMethod],
+              let paymentMethodPrice = paymentMethodPrices[currencyCode] else { return }
+        
+        let totalCost: Double = totalCostWithAppliedDiscounts + shippingMethodPrice + paymentMethodPrice
+        
+        var appliedDiscountsCodesWithValues: [String: Double] = [:]
+        for appliedDiscount in appliedDiscounts {
+            appliedDiscountsCodesWithValues[appliedDiscount.discountCode] = appliedDiscount.discountValuePercent
+        }
+        
+        let order = Order(id: UUID().uuidString,
                           orderDate: Date(),
                           estimatedDeliveryDate: calculateEstimatedDeliveryDate(orderDate: Date()),
                           clientID: client.id,
                           clientDescription: client.description,
                           addressDescription: shippingAddress.description,
-                          shoppingCartID: cart.id,
                           productsIDsWithQuantity: productsIDsWithQuantity,
-                          shippingMethod: choosenShippingMethod ?? .pickup,
+                          shippingMethod: choosenShippingMethod,
                           shippingAddressID: shippingAddress.id,
-                          paymentMethod: choosenPaymentMethod ?? .applePay,
+                          paymentMethod: choosenPaymentMethod,
                           invoice: toReceiveInvoice,
-                          totalCost: totalCostWithAppliedDiscounts,
+                          productsCost: productsCost,
+                          appliedDiscountsCodesWithValue: appliedDiscountsCodesWithValues,
+                          shippingCost: shippingPrice ?? 0,
+                          paymentCost: paymentPrice ?? 0,
+                          totalCost: totalCost,
                           status: .placed)
         
         self.showLoadingModal = true
@@ -118,17 +178,15 @@ class OrderCreationViewModel: ObservableObject {
                 self?.createdOrder = order
                 FirestoreProductsManager.client.editProductsSoldUnitsNumber(productsIDsWithQuantity: productsIDsWithQuantity) { _ in }
                 
-                FirestoreCartsManager.client.createUserCart(cart: cart) { [weak self] _ in
-                    if !appliedDiscounts.isEmpty {
-                        FirestoreProductsManager.client.redeemDiscounts(userID: client.id,
-                                                                        discounts: appliedDiscounts) { [weak self] in
-                            self?.showLoadingModal = false
-                            completion(.success(order.id))
-                        }
-                    } else {
+                if !appliedDiscounts.isEmpty {
+                    FirestoreProductsManager.client.redeemDiscounts(userID: client.id,
+                                                                    discounts: appliedDiscounts) { [weak self] in
                         self?.showLoadingModal = false
                         completion(.success(order.id))
                     }
+                } else {
+                    self?.showLoadingModal = false
+                    completion(.success(order.id))
                 }
             case .failure(let error):
                 self?.showLoadingModal = false

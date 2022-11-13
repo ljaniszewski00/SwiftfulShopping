@@ -21,65 +21,68 @@ struct ReturnDetailsView: View {
     @State var returnProductsList: [Product]
     
     var body: some View {
-        ScrollView(.vertical, showsIndicators: false) {
-            VStack(alignment: .leading, spacing: 30) {
-                VStack(alignment: .leading, spacing: 10) {
-                    Text(TexterifyManager.localisedString(key: .returnDetailsView(.returnDate)))
-                        .font(.ssTitle2)
-                        .foregroundColor(colorScheme == .light ? .black : .ssWhite)
-                    
-                    Text(Date.getDayMonthYearFrom(date: userReturn.returnDate))
-                        .font(.ssTitle3)
-                        .foregroundColor(.accentColor)
-                }
-                
-                VStack(alignment: .leading, spacing: 10) {
-                    Text(TexterifyManager.localisedString(key: .returnDetailsView(.status)))
-                        .font(.ssTitle2)
-                        .foregroundColor(colorScheme == .light ? .black : .ssWhite)
+        VStack {
+            ScrollView(.vertical, showsIndicators: false) {
+                VStack(alignment: .leading, spacing: 30) {
+                    VStack(alignment: .leading, spacing: 10) {
+                        Text(TexterifyManager.localisedString(key: .returnDetailsView(.returnDate)))
+                            .font(.ssTitle2)
+                            .foregroundColor(colorScheme == .light ? .black : .ssWhite)
                         
-                    Text(userReturn.status.rawValue)
-                        .font(.ssTitle3)
-                        .foregroundColor(.accentColor)
-                }
-                
-                VStack(alignment: .leading, spacing: 0) {
-                    Button(action: {
-                        showProductsList.toggle()
-                    }, label: {
-                        HStack(spacing: 20) {
-                            Text("\(TexterifyManager.localisedString(key: .returnDetailsView(.products))) (\(returnProductsList.count))")
-                                .font(.ssTitle2)
-                                .foregroundColor(colorScheme == .light ? .black : .ssWhite)
-                            
-                            Image(systemName: showProductsList ? "chevron.up" : "chevron.down")
-                        }
-                    })
+                        Text(Date.getDayMonthYearFrom(date: userReturn.returnDate))
+                            .font(.ssTitle3)
+                            .foregroundColor(.accentColor)
+                    }
                     
-                    if showProductsList {
-                        VStack(alignment: .center, spacing: 20) {
-                            ForEach(returnProductsList, id: \.self) { product in
-                                BasicProductTile(product: product)
-                                Divider()
+                    VStack(alignment: .leading, spacing: 10) {
+                        Text(TexterifyManager.localisedString(key: .returnDetailsView(.status)))
+                            .font(.ssTitle2)
+                            .foregroundColor(colorScheme == .light ? .black : .ssWhite)
+                            
+                        Text(userReturn.status.rawValue)
+                            .font(.ssTitle3)
+                            .foregroundColor(.accentColor)
+                    }
+                    
+                    VStack(alignment: .leading, spacing: 0) {
+                        Button(action: {
+                            showProductsList.toggle()
+                        }, label: {
+                            HStack(spacing: 20) {
+                                Text("\(TexterifyManager.localisedString(key: .returnDetailsView(.products))) (\(returnProductsList.count))")
+                                    .font(.ssTitle2)
+                                    .foregroundColor(colorScheme == .light ? .black : .ssWhite)
+                                
+                                Image(systemName: showProductsList ? "chevron.up" : "chevron.down")
+                            }
+                        })
+                        
+                        if showProductsList {
+                            VStack(alignment: .center, spacing: 20) {
+                                ForEach(returnProductsList, id: \.self) { product in
+                                    BasicProductTile(product: product)
+                                    Divider()
+                                }
                             }
                         }
                     }
-                }
-                HStack {
-                    Text(TexterifyManager.localisedString(key: .returnDetailsView(.totalReturnPrice)))
-                        .font(.ssTitle2)
-                        .foregroundColor(colorScheme == .light ? .black : .ssWhite)
                     
-                    Spacer()
-                    
-                    Text("$\(userReturn.returnPrice, specifier: "%.2f")")
-                        .font(.ssTitle3)
-                        .foregroundColor(.accentColor)
+                    HStack {
+                        Text(TexterifyManager.localisedString(key: .returnDetailsView(.totalReturnPrice)))
+                            .font(.ssTitle2)
+                            .foregroundColor(colorScheme == .light ? .black : .ssWhite)
+                        
+                        Spacer()
+                        
+                        Text("$\(userReturn.returnPrice, specifier: "%.2f")")
+                            .font(.ssTitle3)
+                            .foregroundColor(.accentColor)
+                    }
                 }
+                .padding()
             }
-            .padding()
-            .padding(.bottom, tabBarStateManager.tabBarSize.height * 0.6)
         }
+        .padding(.bottom, tabBarStateManager.tabBarSize.height * 0.6)
         .navigationTitle("\(TexterifyManager.localisedString(key: .returnDetailsView(.navigationTitle))) \(userReturn.id)")
         .navigationBarTitleDisplayMode(.inline)
         .navigationBarBackButtonHidden(true)
@@ -105,6 +108,7 @@ struct ReturnDetailsView_Previews: PreviewProvider {
     static var previews: some View {
         let tabBarStateManager = TabBarStateManager()
         let profileViewModel = ProfileViewModel()
+        let returnsViewModel = ReturnsViewModel()
         ForEach(ColorScheme.allCases, id: \.self) { colorScheme in
             ForEach(["iPhone 13 Pro Max", "iPhone 8"], id: \.self) { deviceName in
                 ReturnDetailsView(userReturn: Return.demoReturns[0],
@@ -112,6 +116,7 @@ struct ReturnDetailsView_Previews: PreviewProvider {
                                                        Product.demoProducts[1]])
                     .environmentObject(tabBarStateManager)
                     .environmentObject(profileViewModel)
+                    .environmentObject(returnsViewModel)
                     .preferredColorScheme(colorScheme)
                     .previewDevice(PreviewDevice(rawValue: deviceName))
                     .previewDisplayName("\(deviceName) portrait")

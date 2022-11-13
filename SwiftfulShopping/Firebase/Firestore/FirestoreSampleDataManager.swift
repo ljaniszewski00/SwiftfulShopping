@@ -26,10 +26,8 @@ class FirestoreSampleDataManager: ObservableObject {
             self?.addRatings { [weak self] _ in
                 self?.addOrders { [weak self] _ in
                     self?.addReturns { [weak self] _ in
-                        self?.addCarts { [weak self] _ in
-                            self?.addDiscounts { _ in
-                                completion(.success)
-                            }
+                        self?.addDiscounts { _ in
+                            completion(.success)
                         }
                     }
                 }
@@ -99,20 +97,6 @@ class FirestoreSampleDataManager: ObservableObject {
         for returnObject in Return.demoReturns {
             group.enter()
             FirestoreReturnsManager.client.createUserReturn(returnObject: returnObject) { _ in group.leave() }
-        }
-        
-        group.notify(queue: .main) {
-            completion(.success)
-        }
-    }
-    
-    // MARK: Add sample Carts
-    func addCarts(completion: @escaping ((VoidResult) -> ())) {
-        let group = DispatchGroup()
-
-        for cart in Cart.demoCarts {
-            group.enter()
-            FirestoreCartsManager.client.createUserCart(cart: cart) { _ in group.leave() }
         }
         
         group.notify(queue: .main) {

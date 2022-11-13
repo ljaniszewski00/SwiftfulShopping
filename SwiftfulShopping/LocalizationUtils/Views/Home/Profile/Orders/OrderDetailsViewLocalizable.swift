@@ -13,6 +13,8 @@ public enum OrderDetailsViewLocalizable: String {
     case addressInfo = "OrderDetailsView_addressInfo"
     case status = "OrderDetailsView_status"
     case products = "OrderDetailsView_products"
+    case shippingMethodPrice = "OrderDetailsView_shippingMethodPrice"
+    case paymentMethodPrice = "OrderDetailsView_paymentMethodPrice"
     case totalPrice = "OrderDetailsView_totalPrice"
     case returnProductsButton = "OrderDetailsView_returnProductsButton"
     case rateOrderButton = "OrderDetailsView_rateOrderButton"

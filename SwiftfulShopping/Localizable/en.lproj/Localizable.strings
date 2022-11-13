@@ -15,7 +15,7 @@
 "Appearance_dark" = "Dark";
 "Appearance_light" = "Light";
 "Appearance_system" = "System";
-"BasicProductTile_rateProductButton" = "Rate product";
+"BasicProductTile_rateProductButton" = "Review";
 "CartView_checkout" = "Checkout";
 "CartView_ifYouAddAnyProducts" = "If you add any products to your cart they will be displayed here";
 "CartView_navigationTitle" = "Cart";
@@ -46,6 +46,7 @@
 "ChangePasswordView_verifyButton" = "Verify Credentials";
 "ColorSchemeChangeView_navigationTitle" = "Change Color Scheme";
 "Common_cancel" = "Cancel";
+"Common_commingSoon" = "Comming Soon";
 "Common_next" = "Next";
 "Common_no" = "No";
 "Common_search" = "Search";
@@ -251,11 +252,13 @@
 "OrderCreationSummaryView_doYouHaveCouponCode" = "Do you have coupon code?";
 "OrderCreationSummaryView_navigationTitle" = "Order Summary";
 "OrderCreationSummaryView_paymentMethod" = "Payment Method";
+"OrderCreationSummaryView_paymentMethodPrice" = "Payment method price:";
 "OrderCreationSummaryView_paymentProcessingModalDescription" = "Please wait while we process your payment";
 "OrderCreationSummaryView_paymentProcessingModalTitle" = "Payment Processing";
 "OrderCreationSummaryView_products" = "Products";
 "OrderCreationSummaryView_productsInCart" = "Products in cart:";
 "OrderCreationSummaryView_shippingMethod" = "Shipping Method";
+"OrderCreationSummaryView_shippingMethodPrice" = "Shipping method cost:";
 "OrderCreationSummaryView_submitPayButton" = "Submit the order and pay";
 "OrderCreationSummaryView_thisWillBeTheDeliveryAddress" = "This will be the delivery addres for package";
 "OrderCreationSummaryView_totalCost" = "Total cost:";
@@ -265,9 +268,11 @@
 "OrderDetailsView_customerInfo" = "Customer Info";
 "OrderDetailsView_navigationTitle" = "Zamówienie numer:";
 "OrderDetailsView_orderDate" = "Order Date";
+"OrderDetailsView_paymentMethodPrice" = "Payment method cost:";
 "OrderDetailsView_products" = "Products";
 "OrderDetailsView_rateOrderButton" = "Rate the order";
 "OrderDetailsView_returnProductsButton" = "Return products";
+"OrderDetailsView_shippingMethodPrice" = "Shipping method cost:";
 "OrderDetailsView_status" = "Status";
 "OrderDetailsView_totalPrice" = "Total Price";
 "OrderRateView_navigationTitle" = "Rate Products";
@@ -481,4 +486,4 @@
 "ThirdReturnCreationView_createReturnButton" = "Create Return";
 "ThirdReturnCreationView_howDoYouWantToReturn" = "How do you want to return the product?";
 "ThirdReturnCreationView_navigationTitle" = "Create Return";
-"texterify_timestamp" = "2022-11-10T18:52:06Z";
+"texterify_timestamp" = "2022-11-13T16:22:10Z";

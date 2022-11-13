@@ -51,18 +51,34 @@ struct OrderCreationSummaryView: View {
                         Text(TexterifyManager.localisedString(key: .orderCreationSummaryView(.shippingMethod)))
                             .font(.ssTitle2)
                         
-                        Text(orderCreationViewModel.choosenShippingMethod?.rawValue ?? "")
-                            .font(.ssTitle3)
-                            .foregroundColor(.accentColor)
+                        HStack {
+                            Text(orderCreationViewModel.choosenShippingMethod?.rawValue ?? "")
+                                .font(.ssTitle3)
+                                .foregroundColor(.accentColor)
+                            
+                            if let formattedShippingMethodPrice = orderCreationViewModel.formattedShippingPrice {
+                                Text(formattedShippingMethodPrice)
+                                    .font(.ssCallout)
+                                    .foregroundColor(.ssDarkGray)
+                            }
+                        }
                     }
                     
                     VStack(alignment: .leading, spacing: 15) {
                         Text(TexterifyManager.localisedString(key: .orderCreationSummaryView(.paymentMethod)))
                             .font(.ssTitle2)
                         
-                        Text(orderCreationViewModel.choosenPaymentMethod?.rawValue ?? "")
-                            .font(.ssTitle3)
-                            .foregroundColor(.accentColor)
+                        HStack {
+                            Text(orderCreationViewModel.choosenPaymentMethod?.rawValue ?? "")
+                                .font(.ssTitle3)
+                                .foregroundColor(.accentColor)
+                            
+                            if let formattedPaymentMethodPrice = orderCreationViewModel.formattedPaymentPrice {
+                                Text(formattedPaymentMethodPrice)
+                                    .font(.ssCallout)
+                                    .foregroundColor(.ssDarkGray)
+                            }
+                        }
                     }
                     
                     VStack(alignment: .leading) {
@@ -74,12 +90,12 @@ struct OrderCreationSummaryView: View {
                     }
                     
                     VStack(alignment: .leading, spacing: 10) {
-                        Text(TexterifyManager.localisedString(key: .orderCreationSummaryView(.products)))
+                        Text("\(TexterifyManager.localisedString(key: .orderCreationSummaryView(.products))) (\(cartViewModel.cartAllProductsQuantityCount))")
                             .font(.ssTitle2)
                         
                         ForEach(Array(cartViewModel.productsForCart.keys).sorted { $0.id > $1.id}, id: \.self) { product in
-                            ProductTileForCartView(product: product, includeButtonsForAmountChange: false)
-                                .padding()
+                            BasicProductTile(product: product, productQuantity: cartViewModel.productsForCart[product])
+                            Divider()
                         }
                     }
                     
@@ -160,9 +176,12 @@ struct OrderCreationSummaryView: View {
                             
                             Spacer()
                             
-                            Text("$\(cartViewModel.cartTotalCostWithAppliedDiscounts, specifier: "%.2f")")
-                                .font(.ssTitle3)
-                                .foregroundColor(.accentColor)
+                            if let totalCartPrice = cartViewModel.cartTotalCostWithAppliedDiscounts,
+                               let shippingPaymentPrice = orderCreationViewModel.shippingPaymentPrice {
+                                Text(LocaleManager.client.formatPrice(price: totalCartPrice + shippingPaymentPrice) ?? "")
+                                    .font(.ssTitle3)
+                                    .foregroundColor(.accentColor)
+                            }
                         }
                         .padding(.top, 10)
                     }
@@ -175,7 +194,7 @@ struct OrderCreationSummaryView: View {
                     orderCreationViewModel.createOrder(client: profile,
                                                        productsWithQuantity: cartViewModel.productsForCart,
                                                        appliedDiscounts: cartViewModel.sortedAppliedDiscounts,
-                                                       totalCost: cartViewModel.cartTotalCost,
+                                                       productsCost: cartViewModel.cartTotalCost,
                                                        totalCostWithAppliedDiscounts: cartViewModel.cartTotalCostWithAppliedDiscounts,
                                                        shippingAddress: desiredAddress) { result in
                         switch result {

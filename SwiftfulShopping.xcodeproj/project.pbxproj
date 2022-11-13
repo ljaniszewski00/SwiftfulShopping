@@ -130,7 +130,6 @@
 		0A3B08E828AD921C00A54385 /* CameraView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A3B08E728AD921C00A54385 /* CameraView.swift */; };
 		0A3B08EB28AD95F300A54385 /* ProductRecognizer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A3B08EA28AD95F300A54385 /* ProductRecognizer.swift */; };
 		0A3B08ED28AD972C00A54385 /* SourceForImageRecognition.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A3B08EC28AD972C00A54385 /* SourceForImageRecognition.swift */; };
-		0A3C7AD429005F470079B290 /* FirestoreCartsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A3C7AD329005F470079B290 /* FirestoreCartsManager.swift */; };
 		0A3C7AD629006B360079B290 /* Result.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A3C7AD529006B360079B290 /* Result.swift */; };
 		0A3C7AD829006B710079B290 /* VoidResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A3C7AD729006B710079B290 /* VoidResult.swift */; };
 		0A3C7ADA290137230079B290 /* RatingsRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A3C7AD9290137230079B290 /* RatingsRepository.swift */; };
@@ -459,7 +458,6 @@
 		0A3B08E728AD921C00A54385 /* CameraView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CameraView.swift; sourceTree = "<group>"; };
 		0A3B08EA28AD95F300A54385 /* ProductRecognizer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductRecognizer.swift; sourceTree = "<group>"; };
 		0A3B08EC28AD972C00A54385 /* SourceForImageRecognition.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SourceForImageRecognition.swift; sourceTree = "<group>"; };
-		0A3C7AD329005F470079B290 /* FirestoreCartsManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirestoreCartsManager.swift; sourceTree = "<group>"; };
 		0A3C7AD529006B360079B290 /* Result.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Result.swift; sourceTree = "<group>"; };
 		0A3C7AD729006B710079B290 /* VoidResult.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VoidResult.swift; sourceTree = "<group>"; };
 		0A3C7AD9290137230079B290 /* RatingsRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RatingsRepository.swift; sourceTree = "<group>"; };
@@ -856,7 +854,6 @@
 				0A383D0928F75B8500D15B48 /* FirestoreProductsManager.swift */,
 				0A383D0B28F75B9000D15B48 /* FirestoreOrdersManager.swift */,
 				0A383D0D28F75BF200D15B48 /* FirestoreReturnsManager.swift */,
-				0A3C7AD329005F470079B290 /* FirestoreCartsManager.swift */,
 				889EDF38290DA0D100EBFFC1 /* FirestoreSampleDataManager.swift */,
 			);
 			path = Firestore;
@@ -1875,7 +1872,6 @@
 				0A3C7ADF290165660079B290 /* OrdersViewModel.swift in Sources */,
 				889EDF5A290F1D1000EBFFC1 /* ForgotPasswordViewLocalizable.swift in Sources */,
 				88EFAA182915469A00A30481 /* PaymentMethodLocalizable.swift in Sources */,
-				0A3C7AD429005F470079B290 /* FirestoreCartsManager.swift in Sources */,
 				889EDFBB290F2B0B00EBFFC1 /* DeleteAccountViewLocalizable.swift in Sources */,
 				889EDFAB290F2ADC00EBFFC1 /* PersonalInfoViewLocalizable.swift in Sources */,
 				0A237401288D62730076A5AB /* ProductsRepository.swift in Sources */,

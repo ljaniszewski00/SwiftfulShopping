@@ -83,6 +83,14 @@ struct OrderCreationShipmentPaymentView: View {
                                         Text(shippingMethod.rawValue)
                                             .font(.ssTitle3)
                                             .foregroundColor(colorScheme == .light ? .black : .ssWhite)
+                                        
+                                        if let currencyCode = LocaleManager.client.clientCurrencyCode,
+                                           let shippingMethodPrices = Order.shippingMethodsPrices[shippingMethod],
+                                           let shippingMethodPrice = shippingMethodPrices[currencyCode],
+                                           let formattedShippingMethodPrice = LocaleManager.client.formatPrice(price: shippingMethodPrice) {
+                                            Text(formattedShippingMethodPrice)
+                                                .font(.ssCallout)
+                                        }
                                     }
                                 })
                             }
@@ -108,15 +116,40 @@ struct OrderCreationShipmentPaymentView: View {
                                         } else {
                                             Circle()
                                                 .stroke(lineWidth: 3)
-                                                .foregroundColor(.accentColor)
+                                                .foregroundColor(paymentMethod == .cash ? .ssDarkGray : .accentColor)
                                                 .frame(width: 25)
                                         }
                                         
                                         Text(paymentMethod.rawValue)
                                             .font(.ssTitle3)
-                                            .foregroundColor(colorScheme == .light ? .black : .ssWhite)
+                                            .foregroundColor(paymentMethod == .cash ? .ssDarkGray : (colorScheme == .light ? .black : .ssWhite))
+                                        
+                                        if paymentMethod != .cash {
+                                            if let currencyCode = LocaleManager.client.clientCurrencyCode,
+                                               let paymentMethodPrices = Order.paymentMethodPrices[paymentMethod],
+                                               let paymentMethodPrice = paymentMethodPrices[currencyCode],
+                                               let formattedPaymentMethodPrice = LocaleManager.client.formatPrice(price: paymentMethodPrice) {
+                                                Text(formattedPaymentMethodPrice)
+                                                    .font(.ssCallout)
+                                            }
+                                        }
+                                        
+                                        if paymentMethod == .cash {
+                                            Text(TexterifyManager.localisedString(key: .common(.commingSoon)))
+                                                .font(.ssCallout)
+                                                .padding(5)
+                                                .background {
+                                                    RoundedRectangle(cornerRadius: 4)
+                                                        .stroke()
+                                                        .foregroundColor(.accentColor)
+                                                }
+                                        }
                                     }
                                 })
+                                .if(paymentMethod == .cash) {
+                                    $0
+                                        .allowsHitTesting(false)
+                                }
                             }
                         }
                     }

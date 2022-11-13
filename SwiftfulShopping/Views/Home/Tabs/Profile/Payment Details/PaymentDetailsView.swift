@@ -54,23 +54,39 @@ struct PaymentDetailsView: View {
                                     } else {
                                         Circle()
                                             .stroke(lineWidth: 3)
-                                            .foregroundColor(.accentColor)
+                                            .foregroundColor(paymentMethod == .cash ? .ssDarkGray : .accentColor)
                                             .frame(width: 25)
                                     }
                                     
                                     HStack(spacing: 0) {
                                         Text(paymentMethod.rawValue)
                                             .font(.ssTitle3)
-                                            .foregroundColor(colorScheme == .light ? .black : .ssWhite)
+                                            .foregroundColor(paymentMethod == .cash ? .ssDarkGray : (colorScheme == .light ? .black : .ssWhite))
+                                        
                                         if paymentMethod == .applePay {
                                             Image(AssetsNames.applePayLogo)
                                                 .resizable()
                                                 .aspectRatio(contentMode: .fit)
                                         }
                                     }
+                                    
+                                    if paymentMethod == .cash {
+                                        Text(TexterifyManager.localisedString(key: .common(.commingSoon)))
+                                            .font(.ssCallout)
+                                            .padding(5)
+                                            .background {
+                                                RoundedRectangle(cornerRadius: 4)
+                                                    .stroke()
+                                                    .foregroundColor(.accentColor)
+                                            }
+                                    }
                                 }
                             })
                             .frame(height: 40)
+                            .if(paymentMethod == .cash) {
+                                $0
+                                    .allowsHitTesting(false)
+                            }
                             
                             Spacer()
                         }

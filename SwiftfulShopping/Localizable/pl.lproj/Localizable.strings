@@ -15,7 +15,7 @@
 "Appearance_dark" = "Ciemny";
 "Appearance_light" = "Jasny";
 "Appearance_system" = "Systemowy";
-"BasicProductTile_rateProductButton" = "Oceń produkt";
+"BasicProductTile_rateProductButton" = "Oceń";
 "CartView_checkout" = "Kasa";
 "CartView_ifYouAddAnyProducts" = "Jeśli dodasz jakieś produkty do koszyka, zostaną one wyświetlone tutaj";
 "CartView_navigationTitle" = "Koszyk";
@@ -46,6 +46,7 @@
 "ChangePasswordView_verifyButton" = "Zweryfikuj dane uwierzytelniające";
 "ColorSchemeChangeView_navigationTitle" = "Zmiana schematu kolorów";
 "Common_cancel" = "Anuluj";
+"Common_commingSoon" = "Wkrótce";
 "Common_next" = "Dalej";
 "Common_no" = "Nie";
 "Common_search" = "Wyszukaj";
@@ -251,11 +252,13 @@
 "OrderCreationSummaryView_doYouHaveCouponCode" = "Masz kod rabatowy?";
 "OrderCreationSummaryView_navigationTitle" = "Podsumowanie Zamówienia";
 "OrderCreationSummaryView_paymentMethod" = "Sposób Płatności";
+"OrderCreationSummaryView_paymentMethodPrice" = "Koszt sposobu płatności:";
 "OrderCreationSummaryView_paymentProcessingModalDescription" = "Proszę czekać na przetworzenie płatności";
 "OrderCreationSummaryView_paymentProcessingModalTitle" = "Przetwarzanie Płatności";
 "OrderCreationSummaryView_products" = "Produkty";
 "OrderCreationSummaryView_productsInCart" = "Produkty w koszyku:";
 "OrderCreationSummaryView_shippingMethod" = "Sposób Wysyłki";
+"OrderCreationSummaryView_shippingMethodPrice" = "Koszt sposobu wysyłki:";
 "OrderCreationSummaryView_submitPayButton" = "Złóż zamówienie i zapłać";
 "OrderCreationSummaryView_thisWillBeTheDeliveryAddress" = "To będzie adres dostawy dla paczki";
 "OrderCreationSummaryView_totalCost" = "Koszt całkowity:";
@@ -265,9 +268,11 @@
 "OrderDetailsView_customerInfo" = "Dane Klienta";
 "OrderDetailsView_navigationTitle" = "Numer zamówienia:";
 "OrderDetailsView_orderDate" = "Data Zamówienia";
+"OrderDetailsView_paymentMethodPrice" = "Koszt sposobu płatności:";
 "OrderDetailsView_products" = "Produkty";
 "OrderDetailsView_rateOrderButton" = "Oceń zamówienie";
 "OrderDetailsView_returnProductsButton" = "Zwróć produkty";
+"OrderDetailsView_shippingMethodPrice" = "Koszt sposobu wysyłki:";
 "OrderDetailsView_status" = "Status";
 "OrderDetailsView_totalPrice" = "Kwota Całkowita";
 "OrderRateView_navigationTitle" = "Oceń Produkty";
@@ -481,4 +486,4 @@
 "ThirdReturnCreationView_createReturnButton" = "Utwórz Zwrot";
 "ThirdReturnCreationView_howDoYouWantToReturn" = "W jaki sposób chcesz zwrócić produkt?";
 "ThirdReturnCreationView_navigationTitle" = "Utwórz Zwrot";
-"texterify_timestamp" = "2022-11-10T18:52:09Z";
+"texterify_timestamp" = "2022-11-13T16:22:14Z";

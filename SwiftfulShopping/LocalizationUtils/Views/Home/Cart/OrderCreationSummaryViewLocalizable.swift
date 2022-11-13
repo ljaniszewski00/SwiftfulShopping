@@ -25,4 +25,6 @@ public enum OrderCreationSummaryViewLocalizable: String {
     case navigationTitle = "OrderCreationSummaryView_navigationTitle"
     case paymentProcessingModalTitle = "OrderCreationSummaryView_paymentProcessingModalTitle"
     case paymentProcessingModalDescription = "OrderCreationSummaryView_paymentProcessingModalDescription"
+    case shippingMethodPrice = "OrderCreationSummaryView_shippingMethodPrice"
+    case paymentMethodPrice = "OrderCreationSummaryView_paymentMethodPrice"
 }
