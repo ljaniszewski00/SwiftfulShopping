@@ -269,6 +269,7 @@
 		0AD89747289D0C5E00BFDAA1 /* ProfileViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0AD89745289D0C4A00BFDAA1 /* ProfileViewModel.swift */; };
 		0AD89748289D0C5E00BFDAA1 /* ProfileViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0AD89745289D0C4A00BFDAA1 /* ProfileViewModel.swift */; };
 		0AD8976B289D392F00BFDAA1 /* ProductDetailsRatingsSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0AD8976A289D392F00BFDAA1 /* ProductDetailsRatingsSection.swift */; };
+		88059C52292163CD00231936 /* ReturnDetailsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88059C51292163CD00231936 /* ReturnDetailsViewModel.swift */; };
 		882F47E1291C1D6800BF670A /* ProductsSpecificationComparisonViewLocalizable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 882F47E0291C1D6800BF670A /* ProductsSpecificationComparisonViewLocalizable.swift */; };
 		883F3063291D7E1300B5CC96 /* MonthsLocalizable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 883F3062291D7E1300B5CC96 /* MonthsLocalizable.swift */; };
 		889EDF39290DA0D100EBFFC1 /* FirestoreSampleDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 889EDF38290DA0D100EBFFC1 /* FirestoreSampleDataManager.swift */; };
@@ -548,6 +549,7 @@
 		0ACD59B5284B74CD00AA9DA0 /* Countries.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Countries.swift; sourceTree = "<group>"; };
 		0AD89745289D0C4A00BFDAA1 /* ProfileViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewModel.swift; sourceTree = "<group>"; };
 		0AD8976A289D392F00BFDAA1 /* ProductDetailsRatingsSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductDetailsRatingsSection.swift; sourceTree = "<group>"; };
+		88059C51292163CD00231936 /* ReturnDetailsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReturnDetailsViewModel.swift; sourceTree = "<group>"; };
 		882F47E0291C1D6800BF670A /* ProductsSpecificationComparisonViewLocalizable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductsSpecificationComparisonViewLocalizable.swift; sourceTree = "<group>"; };
 		883F3062291D7E1300B5CC96 /* MonthsLocalizable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MonthsLocalizable.swift; sourceTree = "<group>"; };
 		889EDF38290DA0D100EBFFC1 /* FirestoreSampleDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirestoreSampleDataManager.swift; sourceTree = "<group>"; };
@@ -956,10 +958,10 @@
 		0A56D8A9285F2BFB0009680C /* Returns */ = {
 			isa = PBXGroup;
 			children = (
+				88059C50292163BE00231936 /* ViewModel */,
 				0A27E7C42879C1CD00D033D9 /* Views */,
 				0A268B4C2868776E006CF0E2 /* ReturnCreation */,
 				0AB8D9832864B25B003DC2E6 /* Models */,
-				0A3C7AE8290167C50079B290 /* ReturnsViewModel.swift */,
 			);
 			path = Returns;
 			sourceTree = "<group>";
@@ -1376,6 +1378,15 @@
 				88EFA690291976D100399C11 /* SpecificationKeys.swift */,
 			);
 			path = Enums;
+			sourceTree = "<group>";
+		};
+		88059C50292163BE00231936 /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+				0A3C7AE8290167C50079B290 /* ReturnsViewModel.swift */,
+				88059C51292163CD00231936 /* ReturnDetailsViewModel.swift */,
+			);
+			path = ViewModel;
 			sourceTree = "<group>";
 		};
 		883F3061291D7E0800B5CC96 /* Date */ = {
@@ -1801,6 +1812,7 @@
 				0A3245F3288B18FE0046043D /* ListProductCardTileView.swift in Sources */,
 				0A3B08E428AD4D1C00A54385 /* CameraViewModel.swift in Sources */,
 				0A5A7CF62896878800736B07 /* OrderStatus.swift in Sources */,
+				88059C52292163CD00231936 /* ReturnDetailsViewModel.swift in Sources */,
 				889EDF83290F2A5700EBFFC1 /* OrderCreationShipmentPaymentViewLocalizable.swift in Sources */,
 				0A27E7CE287B4BC800D033D9 /* PaymentDetailsViewModel.swift in Sources */,
 				0A35557828A05842005993E5 /* ChangeEmailView.swift in Sources */,

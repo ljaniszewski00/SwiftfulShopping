@@ -15,10 +15,11 @@ struct ReturnDetailsView: View {
     @Environment(\.colorScheme) private var colorScheme: ColorScheme
     @Environment(\.dismiss) private var dismiss: DismissAction
     
+    @StateObject private var returnDetailsViewModel: ReturnDetailsViewModel = ReturnDetailsViewModel()
+    
     @State private var showProductsList: Bool = true
     
     var userReturn: Return
-    @State var returnProductsList: [Product]
     
     var body: some View {
         VStack {
@@ -44,24 +45,31 @@ struct ReturnDetailsView: View {
                             .foregroundColor(.accentColor)
                     }
                     
-                    VStack(alignment: .leading, spacing: 0) {
+                    VStack(alignment: .leading, spacing: 15) {
                         Button(action: {
                             showProductsList.toggle()
                         }, label: {
                             HStack(spacing: 20) {
-                                Text("\(TexterifyManager.localisedString(key: .returnDetailsView(.products))) (\(returnProductsList.count))")
-                                    .font(.ssTitle2)
-                                    .foregroundColor(colorScheme == .light ? .black : .ssWhite)
+                                if let returnAllProductsQuantity = returnDetailsViewModel.returnAllProductsQuantity {
+                                    Text("\(TexterifyManager.localisedString(key: .returnDetailsView(.products))) (\(returnAllProductsQuantity))")
+                                        .font(.ssTitle2)
+                                        .foregroundColor(colorScheme == .light ? .black : .ssWhite)
+                                }
                                 
                                 Image(systemName: showProductsList ? "chevron.up" : "chevron.down")
                             }
                         })
                         
                         if showProductsList {
-                            VStack(alignment: .center, spacing: 20) {
-                                ForEach(returnProductsList, id: \.self) { product in
-                                    BasicProductTile(product: product)
-                                    Divider()
+                            if let returnProductsWithQuantity = returnDetailsViewModel.returnProductsWithQuantity {
+                                VStack(alignment: .center, spacing: 20) {
+                                    ForEach(Array(returnProductsWithQuantity.keys).sorted { $0.name < $1.name },
+                                            id: \.self) { product in
+                                        if let productQuantity = userReturn.productsIDsWithQuantity[product.id] {
+                                            BasicProductTile(product: product, productQuantity: productQuantity)
+                                            Divider()
+                                        }
+                                    }
                                 }
                             }
                         }
@@ -74,7 +82,7 @@ struct ReturnDetailsView: View {
                         
                         Spacer()
                         
-                        Text("$\(userReturn.returnPrice, specifier: "%.2f")")
+                        Text(LocaleManager.client.formatPrice(price: userReturn.returnPrice) ?? "")
                             .font(.ssTitle3)
                             .foregroundColor(.accentColor)
                     }
@@ -99,7 +107,7 @@ struct ReturnDetailsView: View {
             }
         }
         .onAppear {
-            returnProductsList = returnsViewModel.getReturnProductsFor(returnObject: userReturn)
+            returnDetailsViewModel.userReturn = userReturn
         }
     }
 }
@@ -111,9 +119,7 @@ struct ReturnDetailsView_Previews: PreviewProvider {
         let returnsViewModel = ReturnsViewModel()
         ForEach(ColorScheme.allCases, id: \.self) { colorScheme in
             ForEach(["iPhone 13 Pro Max", "iPhone 8"], id: \.self) { deviceName in
-                ReturnDetailsView(userReturn: Return.demoReturns[0],
-                                  returnProductsList: [Product.demoProducts[0],
-                                                       Product.demoProducts[1]])
+                ReturnDetailsView(userReturn: Return.demoReturns[0])
                     .environmentObject(tabBarStateManager)
                     .environmentObject(profileViewModel)
                     .environmentObject(returnsViewModel)

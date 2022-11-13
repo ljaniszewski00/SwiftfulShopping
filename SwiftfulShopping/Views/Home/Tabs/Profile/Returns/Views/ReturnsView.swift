@@ -21,10 +21,8 @@ struct ReturnsView: View {
             ForEach(returnsViewModel.datesForReturnsViewListSections, id: \.self) { stringDate in
                 Section {
                     ForEach(returnsViewModel.getReturnsFor(date: stringDate), id: \.self) { userReturn in
-                        NavigationLink(destination: ReturnDetailsView(userReturn: userReturn,
-                                                                      returnProductsList:
-                                                                        returnsViewModel.getReturnProductsFor(returnObject: userReturn))
-                                                                            .environmentObject(returnsViewModel)) {
+                        NavigationLink(destination: ReturnDetailsView(userReturn: userReturn)
+                                                        .environmentObject(returnsViewModel)) {
                             VStack(alignment: .leading, spacing: 20) {
                                 HStack(spacing: 10) {
                                     Text(userReturn.id)
@@ -43,7 +41,7 @@ struct ReturnsView: View {
                                     HStack {
                                         Text(TexterifyManager.localisedString(key: .returnsView(.products)))
                                             .font(.ssCallout)
-                                        Text("\(returnsViewModel.getReturnProductsFor(returnObject: userReturn).count)")
+                                        Text("\(returnsViewModel.getReturnAllProductsQuantity(userReturn: userReturn))")
                                             .font(.ssTitle3)
                                             .foregroundColor(.accentColor)
                                     }

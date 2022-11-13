@@ -31,31 +31,47 @@ struct ReturnCreationView: View {
                         .foregroundColor(.accentColor)
                 }
                 
-                VStack(alignment: .leading, spacing: 20) {
-                    Text(TexterifyManager.localisedString(key: .returnCreationView(.chooseProducts)))
-                        .font(.ssTitle2)
-                        .fixedSize(horizontal: false, vertical: true)
-                        .multilineTextAlignment(.leading)
-                    ForEach(returnCreationViewModel.productsFromOrder, id: \.self) { product in
-                        Button {
-                            withAnimation {
-                                returnCreationViewModel.manageProductToReturn(product: product)
-                            }
-                        } label: {
-                            VStack {
-                                HStack(alignment: .top) {
-                                    Circle()
-                                        .if(!returnCreationViewModel.productsForReturn.contains(product)) {
-                                            $0
-                                                .stroke(lineWidth: 3)
+                if let returnProductsWithQuantity = returnCreationViewModel.returnProductsWithQuantity {
+                    VStack(alignment: .leading, spacing: 20) {
+                        Text(TexterifyManager.localisedString(key: .returnCreationView(.chooseProducts)))
+                            .font(.ssTitle2)
+                            .fixedSize(horizontal: false, vertical: true)
+                            .multilineTextAlignment(.leading)
+                        ForEach(Array(returnProductsWithQuantity.keys).sorted { $0.name < $1.name },
+                                id: \.self) { product in
+                            VStack(alignment: .trailing) {
+                                Button {
+                                    withAnimation {
+                                        returnCreationViewModel.manageProductToReturn(product: product)
+                                    }
+                                } label: {
+                                    VStack {
+                                        HStack(alignment: .top) {
+                                            Circle()
+                                                .if(!Array(returnCreationViewModel.productsForReturn.keys).contains(product)) {
+                                                    $0
+                                                        .stroke(lineWidth: 3)
+                                                }
+                                                .foregroundColor(.accentColor)
+                                                .frame(width: 25)
+                                            if let productQuantity = returnProductsWithQuantity[product] {
+                                                BasicProductTile(product: product, productQuantity: productQuantity)
+                                            }
                                         }
-                                        .foregroundColor(.accentColor)
-                                        .frame(width: 25)
-                                    BasicProductTile(product: product)
+                                    }
                                 }
                                 
-                                Divider()
+                                if let productQuantity = returnCreationViewModel.productsForReturn[product] {
+                                    QuantityInput(quantity: productQuantity) {
+                                        returnCreationViewModel.decreaseProductToReturnQuantity(product: product)
+                                    } plusAction: {
+                                        returnCreationViewModel.increaseProductToReturnQuantity(product: product)
+                                    }
+                                    .scaledToFit()
+                                }
                             }
+                            
+                            Divider()
                         }
                     }
                 }
@@ -63,7 +79,7 @@ struct ReturnCreationView: View {
                 HStack {
                     Text(TexterifyManager.localisedString(key: .returnCreationView(.selectedProducts)))
                         .font(.ssTitle2)
-                    Text("\(returnCreationViewModel.productsForReturn.count)")
+                    Text("\(returnCreationViewModel.returnAllProductsQuantity)")
                         .font(.ssTitle2)
                         .foregroundColor(.accentColor)
                 }
@@ -100,7 +116,6 @@ struct ReturnCreationView: View {
         }
         .onAppear {
             returnCreationViewModel.orderForReturn = order
-            returnCreationViewModel.getProductsForReturn()
         }
         
         NavigationLink(destination: SecondReturnCreationView()

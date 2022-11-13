@@ -26,13 +26,19 @@ class ReturnsViewModel: ObservableObject {
             .sorted { $0.returnDate > $1.returnDate }
     }
     
-    func getReturnProductsFor(returnObject: Return) -> [Product] {
+    func getReturnProductsWithQuantityFor(userReturn: Return) -> [Product: Int] {
+        var productsWithQuantity: [Product: Int] = [:]
         if let products = ProductsRepository.shared.products {
-            return products
-                .filter { Array(returnObject.productsIDsWithQuantity.keys).contains($0.id) }
-                .sorted { $0.name < $1.name }
-        } else {
-            return []
+            for (productID, quantity) in userReturn.productsIDsWithQuantity {
+                if let product = products.filter({ $0.id == productID }).first {
+                    productsWithQuantity[product] = quantity
+                }
+            }
         }
+        return productsWithQuantity
+    }
+    
+    func getReturnAllProductsQuantity(userReturn: Return) -> Int {
+        getReturnProductsWithQuantityFor(userReturn: userReturn).values.reduce(0, +)
     }
 }

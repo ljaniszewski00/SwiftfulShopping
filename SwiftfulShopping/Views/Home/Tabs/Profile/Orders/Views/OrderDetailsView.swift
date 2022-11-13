@@ -68,7 +68,7 @@ struct OrderDetailsView: View {
                     }
                     .padding(.bottom, 10)
                     
-                    VStack(alignment: .leading, spacing: 0) {
+                    VStack(alignment: .leading, spacing: 15) {
                         Button(action: {
                             showProductsList.toggle()
                         }, label: {
@@ -81,9 +81,10 @@ struct OrderDetailsView: View {
                         })
                         
                         if showProductsList {
-                            VStack(alignment: .center, spacing: 20) {
-                                if let productsWithQuantity = orderDetailsViewModel.orderProductsWithQuantity {
-                                    ForEach(Array(productsWithQuantity.keys).sorted { $0.name < $1.name }, id: \.self) { product in
+                            if let productsWithQuantity = orderDetailsViewModel.orderProductsWithQuantity {
+                                VStack(alignment: .center, spacing: 20) {
+                                    ForEach(Array(productsWithQuantity.keys).sorted { $0.name < $1.name },
+                                            id: \.self) { product in
                                         BasicProductTile(product: product, productQuantity: productsWithQuantity[product])
                                         Divider()
                                     }

@@ -24,7 +24,6 @@ class ReturnCreationViewModel: ObservableObject {
     @Published var shouldPresentCompletionReturnCreationView: Bool = false
     
     @Published var orderForReturn: Order?
-    @Published var productsFromOrder: [Product] = []
     @Published var createdReturn: Return?
     
     var fieldsNotValidated: Bool {
@@ -41,10 +40,24 @@ class ReturnCreationViewModel: ObservableObject {
         return returnPrice
     }
     
-    func getProductsForReturn() {
-        if let products = ProductsRepository.shared.products, let orderForReturn = orderForReturn {
-            self.productsFromOrder = products.filter { Array(orderForReturn.productsIDsWithQuantity.keys).contains($0.id) }
+    var returnProductsWithQuantity: [Product: Int]? {
+        if let orderForReturn = orderForReturn {
+            var productsWithQuantity: [Product: Int] = [:]
+            if let products = ProductsRepository.shared.products {
+                for (productID, quantity) in orderForReturn.productsIDsWithQuantity {
+                    if let product = products.filter({ $0.id == productID }).first {
+                        productsWithQuantity[product] = quantity
+                    }
+                }
+            }
+            return productsWithQuantity
+        } else {
+            return nil
         }
+    }
+
+    var returnAllProductsQuantity: Int {
+        productsForReturn.values.reduce(0, +)
     }
     
     func manageProductToReturn(product: Product) {
@@ -56,8 +69,12 @@ class ReturnCreationViewModel: ObservableObject {
     }
     
     func increaseProductToReturnQuantity(product: Product) {
-        if productsForReturn[product] != nil {
-            productsForReturn[product]! += 1
+        if let productToReturnQuantity = productsForReturn[product],
+            let productsWithQuantityFromOrder = returnProductsWithQuantity,
+            let productQuantityFromOrder = productsWithQuantityFromOrder[product] {
+            if productToReturnQuantity < productQuantityFromOrder {
+                productsForReturn[product]! += 1
+            }
         }
     }
     
