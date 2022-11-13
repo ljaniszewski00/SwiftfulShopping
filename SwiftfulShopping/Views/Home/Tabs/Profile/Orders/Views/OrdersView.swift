@@ -33,7 +33,7 @@ struct OrdersView: View {
                                         .foregroundColor(.accentColor)
                                 }
                                 
-                                Text("$\(order.totalCost, specifier: "%.2f")")
+                                Text(LocaleManager.client.formatPrice(price: order.totalCost) ?? "")
                                     .font(.ssTitle3)
                                     .foregroundColor(.accentColor)
                                 

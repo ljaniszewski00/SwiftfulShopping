@@ -12,7 +12,7 @@ struct Return {
     var returnDate: Date = Date()
     var clientID: String
     var orderID: String
-    var productsIDs: [String]
+    var productsIDsWithQuantity: [String: Int]
     var returnPrice: Double
     var returnMethod: ShippingMethod
     var status: ReturnStatus = .reported
@@ -46,7 +46,7 @@ extension Return {
                                                returnDate: Date(),
                                                clientID: "W9UQoichE0UNZfvCnIPxuCBgL283",
                                                orderID: "3DJOQ3Y0ydl2nrQn83qT",
-                                               productsIDs: ["LQHU7yJplIXugoPiLucR"],
+                                               productsIDsWithQuantity: ["LQHU7yJplIXugoPiLucR": 1],
                                                returnPrice: 799.99,
                                                returnMethod: Order.demoOrders[0].shippingMethod,
                                                status: .reported),
@@ -54,7 +54,7 @@ extension Return {
                                                returnDate: Date(),
                                                clientID: "W9UQoichE0UNZfvCnIPxuCBgL283",
                                                orderID: "qCWd2IGNcfg4x5iPCOt7",
-                                               productsIDs: ["LQHU7yJplIXugoPiLucR", "mdQsy0eqYaSiKp6z393S"],
+                                               productsIDsWithQuantity: ["LQHU7yJplIXugoPiLucR": 1, "mdQsy0eqYaSiKp6z393S": 2],
                                                returnPrice: 1399.98,
                                                returnMethod: Order.demoOrders[1].shippingMethod,
                                                status: .reported),
@@ -62,7 +62,7 @@ extension Return {
                                                returnDate: Date(),
                                                clientID: "W9UQoichE0UNZfvCnIPxuCBgL283",
                                                orderID: "83vfivSP7G0qCZa8M7Np",
-                                               productsIDs: ["LQHU7yJplIXugoPiLucR", "mdQsy0eqYaSiKp6z393S", "BJll5oJjsBoq0tb6Ad8v"],
+                                               productsIDsWithQuantity: ["LQHU7yJplIXugoPiLucR": 1, "mdQsy0eqYaSiKp6z393S": 2, "BJll5oJjsBoq0tb6Ad8v": 3],
                                                returnPrice: 2299.97,
                                                returnMethod: Order.demoOrders[2].shippingMethod,
                                                status: .reported),
@@ -70,7 +70,7 @@ extension Return {
                                                returnDate: Date(),
                                                clientID: "W9UQoichE0UNZfvCnIPxuCBgL283",
                                                orderID: "SHCgKcF7miPTYInES9YF",
-                                               productsIDs: ["LQHU7yJplIXugoPiLucR", "mdQsy0eqYaSiKp6z393S", "BJll5oJjsBoq0tb6Ad8v", "v8yFH9voUUbMvYDXMX4o"],
+                                               productsIDsWithQuantity: ["LQHU7yJplIXugoPiLucR": 1, "mdQsy0eqYaSiKp6z393S": 2, "BJll5oJjsBoq0tb6Ad8v": 3, "v8yFH9voUUbMvYDXMX4o": 4],
                                                returnPrice: 3299.96,
                                                returnMethod: Order.demoOrders[3].shippingMethod,
                                                status: .reported)]

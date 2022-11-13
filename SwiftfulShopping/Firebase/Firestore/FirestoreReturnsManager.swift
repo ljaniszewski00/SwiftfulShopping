@@ -36,7 +36,7 @@ class FirestoreReturnsManager: ObservableObject {
                         let returnDateTimestamp = data["returnDate"] as? Timestamp
                         let clientID = data["clientID"] as? String ?? ""
                         let orderID = data["orderID"] as? String ?? ""
-                        let productsIDs = data["productsIDs"] as? [String] ?? []
+                        let productsIDsWithQuantity = data["productsIDsWithQuantity"] as? [String: Int] ?? [:]
                         let returnPrice = data["returnPrice"] as? Double ?? 0.0
                         let returnMethod = data["returnMethod"] as? String ?? ""
                         let status = data["status"] as? String ?? ""
@@ -53,7 +53,7 @@ class FirestoreReturnsManager: ObservableObject {
                                       returnDate: returnDate,
                                       clientID: clientID,
                                       orderID: orderID,
-                                      productsIDs: productsIDs,
+                                      productsIDsWithQuantity: productsIDsWithQuantity,
                                       returnPrice: returnPrice,
                                       returnMethod: ShippingMethod.withLabel(returnMethod) ?? .courier,
                                       status: ReturnStatus.withLabel(status) ?? .reported,
@@ -81,7 +81,7 @@ class FirestoreReturnsManager: ObservableObject {
             "returnDate": returnObject.returnDate,
             "clientID": returnObject.clientID,
             "orderID": returnObject.orderID,
-            "productsIDs": returnObject.productsIDs,
+            "productsIDsWithQuantity": returnObject.productsIDsWithQuantity,
             "returnPrice": returnObject.returnPrice,
             "returnMethod": returnObject.returnMethod.decodeValue,
             "status": returnObject.status.decodeValue,

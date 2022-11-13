@@ -120,7 +120,7 @@ struct OrderDetailsView: View {
                             
                             Spacer()
                             
-                            Text("\(order.shippingCost, specifier: "%.2f")")
+                            Text(LocaleManager.client.formatPrice(price: order.shippingCost) ?? "")
                                 .font(.ssTitle3)
                                 .foregroundColor(.accentColor)
                         }
@@ -132,7 +132,7 @@ struct OrderDetailsView: View {
                             
                             Spacer()
                             
-                            Text("\(order.paymentCost, specifier: "%.2f")")
+                            Text(LocaleManager.client.formatPrice(price: order.paymentCost) ?? "")
                                 .font(.ssTitle3)
                                 .foregroundColor(.accentColor)
                         }
@@ -146,7 +146,7 @@ struct OrderDetailsView: View {
                         
                         Spacer()
                             
-                        Text("$\(order.totalCost, specifier: "%.2f")")
+                        Text(LocaleManager.client.formatPrice(price: order.totalCost) ?? "")
                             .font(.ssTitle3)
                             .foregroundColor(.accentColor)
                     }

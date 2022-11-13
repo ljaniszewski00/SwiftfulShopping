@@ -8,7 +8,7 @@
 import Foundation
 
 class ReturnCreationViewModel: ObservableObject {
-    @Published var productsForReturn: [Product] = []
+    @Published var productsForReturn: [Product: Int] = [:]
     
     @Published var bankAccountNumber: String = ""
     @Published var nameOfBankAccountOwner: String = ""
@@ -31,6 +31,16 @@ class ReturnCreationViewModel: ObservableObject {
         bankAccountNumber.isEmpty || nameOfBankAccountOwner.isEmpty || streetAndHouseNumber.isEmpty || postalCode.isEmpty || city.isEmpty || country.isEmpty
     }
     
+    var returnPrice: Double {
+        var returnPrice: Double = 0
+        for (product, quantity) in productsForReturn {
+            if let price = product.price {
+                returnPrice += price * Double(quantity)
+            }
+        }
+        return returnPrice
+    }
+    
     func getProductsForReturn() {
         if let products = ProductsRepository.shared.products, let orderForReturn = orderForReturn {
             self.productsFromOrder = products.filter { Array(orderForReturn.productsIDsWithQuantity.keys).contains($0.id) }
@@ -38,28 +48,38 @@ class ReturnCreationViewModel: ObservableObject {
     }
     
     func manageProductToReturn(product: Product) {
-        if productsForReturn.contains(product) {
-            if let indexToRemove = productsForReturn.firstIndex(of: product) {
-                productsForReturn.remove(at: indexToRemove)
-            }
+        if productsForReturn.keys.contains(product) {
+            _ = productsForReturn.removeValue(forKey: product)
         } else {
-            productsForReturn.append(product)
+            productsForReturn[product] = 1
+        }
+    }
+    
+    func increaseProductToReturnQuantity(product: Product) {
+        if productsForReturn[product] != nil {
+            productsForReturn[product]! += 1
+        }
+    }
+    
+    func decreaseProductToReturnQuantity(product: Product) {
+        if productsForReturn[product] != nil {
+            if productsForReturn[product] == 1 {
+                manageProductToReturn(product: product)
+            } else {
+                productsForReturn[product]! -= 1
+            }
         }
     }
     
     func createReturn(clientID: String,
                       orderID: String,
                       completion: @escaping ((VoidResult) -> ())) {
-        var returnPrice: Double = 0
-        for productForReturn in productsForReturn {
-            if let price = productForReturn.price {
-                returnPrice += price
-            }
-        }
+        
+        let productsIDsWithQuantity: [String: Int] = Dictionary(uniqueKeysWithValues: productsForReturn.map { (key, value) in (key.id, value)})
         
         let createdReturn = Return(clientID: clientID,
                                          orderID: orderID,
-                                         productsIDs: productsForReturn.map { $0.id },
+                                         productsIDsWithQuantity: productsIDsWithQuantity,
                                          returnPrice: returnPrice,
                                          returnMethod: shippingMethod,
                                          bankAccountNumber: bankAccountNumber,

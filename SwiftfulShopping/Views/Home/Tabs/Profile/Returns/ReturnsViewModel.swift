@@ -29,7 +29,7 @@ class ReturnsViewModel: ObservableObject {
     func getReturnProductsFor(returnObject: Return) -> [Product] {
         if let products = ProductsRepository.shared.products {
             return products
-                .filter { returnObject.productsIDs.contains($0.id) }
+                .filter { Array(returnObject.productsIDsWithQuantity.keys).contains($0.id) }
                 .sorted { $0.name < $1.name }
         } else {
             return []

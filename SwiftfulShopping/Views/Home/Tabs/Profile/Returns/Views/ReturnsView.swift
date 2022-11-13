@@ -35,7 +35,7 @@ struct ReturnsView: View {
                                         .foregroundColor(.accentColor)
                                 }
                                 
-                                Text("$\(userReturn.returnPrice, specifier: "%.2f")")
+                                Text(LocaleManager.client.formatPrice(price: userReturn.returnPrice) ?? "")
                                     .font(.ssTitle3)
                                     .foregroundColor(.accentColor)
                                 
