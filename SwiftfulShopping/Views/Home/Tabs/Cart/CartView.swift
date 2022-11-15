@@ -109,15 +109,7 @@ struct CartView: View {
                             
                             Spacer()
                             
-                            Button {
-                                cartViewModel.shouldPresentCheckoutFirstView = true
-                            } label: {
-                                Text(TexterifyManager.localisedString(key: .cartView(.checkout)))
-                                    .font(.ssButton)
-                            }
-                            .buttonStyle(CustomButton())
-                            .disabled(cartViewModel.cartIsEmpty)
-                            .frame(width: 150)
+                            checkoutButton
                         }
                         .padding(.horizontal)
                         .padding(.bottom, 80)
@@ -141,6 +133,8 @@ struct CartView: View {
                     }
                 }
             }
+            .modifier(LoadingIndicatorModal(isPresented:
+                                                $cartViewModel.showLoadingModal))
             .navigationTitle(TexterifyManager.localisedString(key: .cartView(.navigationTitle)))
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
@@ -164,6 +158,32 @@ struct CartView: View {
         .environmentObject(profileViewModel)
         .environmentObject(favoritesViewModel)
         .environmentObject(cartViewModel)
+    }
+    
+    var checkoutButton: some View {
+        Button {
+            cartViewModel.checkProductAvailability(productsWithQuantity: cartViewModel.productsForCart) { result in
+                switch result {
+                case .success(let notAvailableProductsIDs):
+                    if notAvailableProductsIDs.isEmpty {
+                        cartViewModel.shouldPresentCheckoutFirstView = true
+                    } else {
+                        let notAvailableProductsNames: String = cartViewModel.getNamesOfProductsNotAvailableForError(productsIDs: notAvailableProductsIDs)
+                        errorManager.generateCustomError(errorType: .productNotAvailable,
+                                                         additionalErrorDescription: notAvailableProductsNames)
+                    }
+                    
+                case .failure(let error):
+                    errorManager.generateCustomError(errorType: .productNotAvailable, additionalErrorDescription: error.localizedDescription)
+                }
+            }
+        } label: {
+            Text(TexterifyManager.localisedString(key: .cartView(.checkout)))
+                .font(.ssButton)
+        }
+        .buttonStyle(CustomButton())
+        .disabled(cartViewModel.cartIsEmpty)
+        .frame(width: 150)
     }
 }
 

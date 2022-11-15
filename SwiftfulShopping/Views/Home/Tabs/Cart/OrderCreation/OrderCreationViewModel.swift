@@ -137,76 +137,59 @@ class OrderCreationViewModel: ObservableObject {
         })
         
         showLoadingModal = true
-        FirestoreProductsManager.client.checkProductsAvailability(productsIDsWithQuantity: productsIDsWithQuantity) { [weak self] result in
+        
+        guard let currencyCode = LocaleManager.client.clientCurrencyCode else { return }
+        
+        guard let choosenShippingMethod = choosenShippingMethod,
+              let shippingMethodPrices = Order.shippingMethodsPrices[choosenShippingMethod],
+              let shippingMethodPrice = shippingMethodPrices[currencyCode] else { return }
+        
+        guard let choosenPaymentMethod = choosenPaymentMethod,
+              let paymentMethodPrices = Order.paymentMethodPrices[choosenPaymentMethod],
+              let paymentMethodPrice = paymentMethodPrices[currencyCode] else { return }
+        
+        let totalCost: Double = totalCostWithAppliedDiscounts + shippingMethodPrice + paymentMethodPrice
+        
+        var appliedDiscountsCodesWithValues: [String: Double] = [:]
+        for appliedDiscount in appliedDiscounts {
+            appliedDiscountsCodesWithValues[appliedDiscount.discountCode] = appliedDiscount.discountValuePercent
+        }
+        
+        let order = Order(id: UUID().uuidString,
+                          orderDate: Date(),
+                          estimatedDeliveryDate: calculateEstimatedDeliveryDate(orderDate: Date(), shippingMethod: choosenShippingMethod),
+                          clientID: client.id,
+                          clientDescription: client.description,
+                          addressDescription: shippingAddress.description,
+                          productsIDsWithQuantity: productsIDsWithQuantity,
+                          shippingMethod: choosenShippingMethod,
+                          shippingAddressID: shippingAddress.id,
+                          paymentMethod: choosenPaymentMethod,
+                          invoice: toReceiveInvoice,
+                          productsCost: productsCost,
+                          appliedDiscountsCodesWithValue: appliedDiscountsCodesWithValues,
+                          shippingCost: shippingPrice ?? 0,
+                          paymentCost: paymentPrice ?? 0,
+                          totalCost: totalCost,
+                          status: .placed)
+        
+        FirestoreOrdersManager.client.createUserOrder(order: order) { [weak self] result in
             switch result {
-            case .success(let productsAvailability):
-                
-                let productsNotAvailable: [Product?] = Array(productsAvailability.filter { !$0.value }.keys).map { productID in
-                    guard let product = Array(productsWithQuantity.keys).first(where: { $0.id == productID }) else { return nil }
-                    return product
-                }
-                
-                if productsNotAvailable.isEmpty {
-                    guard let currencyCode = LocaleManager.client.clientCurrencyCode else { return }
-                    
-                    guard let choosenShippingMethod = self?.choosenShippingMethod,
-                          let shippingMethodPrices = Order.shippingMethodsPrices[choosenShippingMethod],
-                          let shippingMethodPrice = shippingMethodPrices[currencyCode] else { return }
-                    
-                    guard let choosenPaymentMethod = self?.choosenPaymentMethod,
-                          let paymentMethodPrices = Order.paymentMethodPrices[choosenPaymentMethod],
-                          let paymentMethodPrice = paymentMethodPrices[currencyCode] else { return }
-                    
-                    let totalCost: Double = totalCostWithAppliedDiscounts + shippingMethodPrice + paymentMethodPrice
-                    
-                    var appliedDiscountsCodesWithValues: [String: Double] = [:]
-                    for appliedDiscount in appliedDiscounts {
-                        appliedDiscountsCodesWithValues[appliedDiscount.discountCode] = appliedDiscount.discountValuePercent
-                    }
-                    
-                    let order = Order(id: UUID().uuidString,
-                                      orderDate: Date(),
-                                      estimatedDeliveryDate: calculateEstimatedDeliveryDate(orderDate: Date(), shippingMethod: choosenShippingMethod),
-                                      clientID: client.id,
-                                      clientDescription: client.description,
-                                      addressDescription: shippingAddress.description,
-                                      productsIDsWithQuantity: productsIDsWithQuantity,
-                                      shippingMethod: choosenShippingMethod,
-                                      shippingAddressID: shippingAddress.id,
-                                      paymentMethod: choosenPaymentMethod,
-                                      invoice: self?.toReceiveInvoice ?? true,
-                                      productsCost: productsCost,
-                                      appliedDiscountsCodesWithValue: appliedDiscountsCodesWithValues,
-                                      shippingCost: self?.shippingPrice ?? 0,
-                                      paymentCost: self?.paymentPrice ?? 0,
-                                      totalCost: totalCost,
-                                      status: .placed)
-                    
-                    FirestoreOrdersManager.client.createUserOrder(order: order) { [weak self] result in
-                        switch result {
-                        case .success:
-                            self?.createdOrder = order
-                            FirestoreProductsManager.client.editProductsSoldUnitsNumber(productsIDsWithQuantity: productsIDsWithQuantity) { _ in
-                                FirestoreProductsManager.client.editProductsQuantityAvailable(productsIDsWithQuantitySold: productsIDsWithQuantity) { _ in
-                                    if !appliedDiscounts.isEmpty {
-                                        FirestoreProductsManager.client.redeemDiscounts(userID: client.id,
-                                                                                        discounts: appliedDiscounts) { [weak self] in
-                                            self?.showLoadingModal = false
-                                            completion(.success(order.id))
-                                        }
-                                    } else {
-                                        self?.showLoadingModal = false
-                                        completion(.success(order.id))
-                                    }
-                                }
+            case .success:
+                self?.createdOrder = order
+                FirestoreProductsManager.client.editProductsSoldUnitsNumber(productsIDsWithQuantity: productsIDsWithQuantity) { _ in
+                    FirestoreProductsManager.client.editProductsQuantityAvailable(productsIDsWithQuantitySold: productsIDsWithQuantity) { _ in
+                        if !appliedDiscounts.isEmpty {
+                            FirestoreProductsManager.client.redeemDiscounts(userID: client.id,
+                                                                            discounts: appliedDiscounts) { [weak self] in
+                                self?.showLoadingModal = false
+                                completion(.success(order.id))
                             }
-                        case .failure(let error):
+                        } else {
                             self?.showLoadingModal = false
-                            completion(.failure(error))
+                            completion(.success(order.id))
                         }
                     }
-                } else {
-                    self?.showLoadingModal = false
                 }
             case .failure(let error):
                 self?.showLoadingModal = false

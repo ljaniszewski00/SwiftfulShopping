@@ -125,8 +125,8 @@
 "Errors_orderCreateErrorDescription" = "Error creating your order. Please try again later.";
 "Errors_phoneSignInError" = "Phone Sign In Error";
 "Errors_phoneSignInErrorDescription" = "Error occured while trying to log in with phone number. Please try again later.";
-"Errors_productNotAvailable" = "Product not available";
-"Errors_productNotAvailableDescription" = "Product you are trying to buy is not available at the moment. Please try again later to see if it is available.";
+"Errors_productNotAvailable" = "Products not available";
+"Errors_productNotAvailableDescription" = "At least one of the product you are trying to buy is not available at the moment. Please try again later.";
 "Errors_productRecognizerError" = "Product Recognizer Error";
 "Errors_productRecognizerErrorDescription" = "Error occured while recognizing your product. Please try again later.";
 "Errors_registerError" = "Registration Error";
@@ -493,4 +493,4 @@
 "ThirdReturnCreationView_createReturnButton" = "Create Return";
 "ThirdReturnCreationView_howDoYouWantToReturn" = "How do you want to return the product?";
 "ThirdReturnCreationView_navigationTitle" = "Create Return";
-"texterify_timestamp" = "2022-11-13T20:26:08Z";
+"texterify_timestamp" = "2022-11-15T16:39:28Z";

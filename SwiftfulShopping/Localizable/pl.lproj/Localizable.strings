@@ -125,8 +125,8 @@
 "Errors_orderCreateErrorDescription" = "Błąd przy tworzeniu zamówienia. Proszę spróbować ponownie później.";
 "Errors_phoneSignInError" = "Błąd logowania poprzez numer telefonu";
 "Errors_phoneSignInErrorDescription" = "Wystąpił błąd podczas próby zalogowania się za pomocą numeru telefonu. Proszę spróbować ponownie później.";
-"Errors_productNotAvailable" = "Produkt niedostępny";
-"Errors_productNotAvailableDescription" = "Produkt, który próbujesz zakupić jest obecnie niedostępny. Spróbuj ponownie później by sprawdzić czy już będzie dostępny.";
+"Errors_productNotAvailable" = "Produkty niedostępne";
+"Errors_productNotAvailableDescription" = "Co najmniej jeden z produktów, które próbujesz zakupić jest obecnie niedostępny. Spróbuj ponownie później.";
 "Errors_productRecognizerError" = "Błąd rozpoznawania produktu";
 "Errors_productRecognizerErrorDescription" = "Wystąpił błąd podczas rozpoznawania produktu. Prosimy spróbować ponownie później.";
 "Errors_registerError" = "Błąd rejestracji";
@@ -493,4 +493,4 @@
 "ThirdReturnCreationView_createReturnButton" = "Utwórz Zwrot";
 "ThirdReturnCreationView_howDoYouWantToReturn" = "W jaki sposób chcesz zwrócić produkt?";
 "ThirdReturnCreationView_navigationTitle" = "Utwórz Zwrot";
-"texterify_timestamp" = "2022-11-13T20:26:11Z";
+"texterify_timestamp" = "2022-11-15T16:39:31Z";

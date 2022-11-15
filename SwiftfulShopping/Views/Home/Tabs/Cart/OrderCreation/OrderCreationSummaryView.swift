@@ -189,31 +189,7 @@ struct OrderCreationSummaryView: View {
                 .padding()
             }
             
-            Button {
-                if let desiredAddress = profileViewModel.getAddressFor(addressDescription: orderCreationViewModel.defaultAddress), let profile = profileViewModel.profile {
-                    orderCreationViewModel.createOrder(client: profile,
-                                                       productsWithQuantity: cartViewModel.productsForCart,
-                                                       appliedDiscounts: cartViewModel.sortedAppliedDiscounts,
-                                                       productsCost: cartViewModel.cartTotalCost,
-                                                       totalCostWithAppliedDiscounts: cartViewModel.cartTotalCostWithAppliedDiscounts,
-                                                       shippingAddress: desiredAddress) { result in
-                        switch result {
-                        case .success(let orderID):
-                            orderCreationViewModel.payForOrder(orderID: orderID) { _ in
-                                orderCreationViewModel.shouldPresentOrderCreationCompletionView = true
-                            }
-                        case .failure(let error):
-                            errorManager.generateCustomError(errorType: .orderCreateError,
-                                                             additionalErrorDescription: error.localizedDescription)
-                        }
-                    }
-                }
-            } label: {
-                Text(TexterifyManager.localisedString(key: .orderCreationSummaryView(.submitPayButton)))
-                    .font(.ssButton)
-            }
-            .buttonStyle(CustomButton())
-            .padding()
+            completeOrderButton
             
             NavigationLink(destination: OrderCreationCompletionView()
                                             .environmentObject(orderCreationViewModel)
@@ -229,6 +205,8 @@ struct OrderCreationSummaryView: View {
         }
         .modifier(LoadingIndicatorModal(isPresented:
                                             $orderCreationViewModel.showLoadingModal))
+        .modifier(LoadingIndicatorModal(isPresented:
+                                            $cartViewModel.showLoadingModal))
         .navigationTitle(TexterifyManager.localisedString(key: .orderCreationSummaryView(.navigationTitle)))
         .navigationBarTitleDisplayMode(.inline)
         .navigationBarBackButtonHidden(true)
@@ -254,6 +232,47 @@ struct OrderCreationSummaryView: View {
     
     private let timer = Timer.publish(every: 1, on: .main, in: .common).autoconnect()
     @State private var timeElapsed: Double = 0
+    
+    var completeOrderButton: some View {
+        Button {
+            if let desiredAddress = profileViewModel.getAddressFor(addressDescription: orderCreationViewModel.defaultAddress), let profile = profileViewModel.profile {
+                cartViewModel.checkProductAvailability(productsWithQuantity: cartViewModel.productsForCart) { result in
+                    switch result {
+                    case .success(let notAvailableProductsIDs):
+                        if notAvailableProductsIDs.isEmpty {
+                            orderCreationViewModel.createOrder(client: profile,
+                                                               productsWithQuantity: cartViewModel.productsForCart,
+                                                               appliedDiscounts: cartViewModel.sortedAppliedDiscounts,
+                                                               productsCost: cartViewModel.cartTotalCost,
+                                                               totalCostWithAppliedDiscounts: cartViewModel.cartTotalCostWithAppliedDiscounts,
+                                                               shippingAddress: desiredAddress) { result in
+                                switch result {
+                                case .success(let orderID):
+                                    orderCreationViewModel.payForOrder(orderID: orderID) { _ in
+                                        orderCreationViewModel.shouldPresentOrderCreationCompletionView = true
+                                    }
+                                case .failure(let error):
+                                    errorManager.generateCustomError(errorType: .orderCreateError,
+                                                                     additionalErrorDescription: error.localizedDescription)
+                                }
+                            }
+                        } else {
+                            errorManager.generateCustomError(errorType: .productNotAvailable,
+                                                             additionalErrorDescription: cartViewModel.getNamesOfProductsNotAvailableForError(productsIDs: notAvailableProductsIDs))
+                        }
+                        
+                    case .failure(let error):
+                        errorManager.generateCustomError(errorType: .productNotAvailable, additionalErrorDescription: error.localizedDescription)
+                    }
+                }
+            }
+        } label: {
+            Text(TexterifyManager.localisedString(key: .orderCreationSummaryView(.submitPayButton)))
+                .font(.ssButton)
+        }
+        .buttonStyle(CustomButton())
+        .padding()
+    }
     
     @ViewBuilder
     func buildPaymentProcessingModal() -> some View {

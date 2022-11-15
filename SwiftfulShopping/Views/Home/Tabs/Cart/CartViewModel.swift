@@ -178,4 +178,32 @@ class CartViewModel: ObservableObject {
     func removeDiscount(discount: Discount) {
         appliedDiscounts.remove(discount)
     }
+    
+    func getNamesOfProductsNotAvailableForError(productsIDs: [String]) -> String {
+        if let productsFromRepository = ProductsRepository.shared.products {
+            return productsFromRepository
+                .filter { productsIDs.contains($0.id) }
+                .map { $0.name }
+                .joined(separator: "/n")
+        } else {
+            return ""
+        }
+    }
+    
+    func checkProductAvailability(productsWithQuantity: [Product: Int], completion: @escaping ((Result<[String], Error>) -> ())) {
+        showLoadingModal = true
+        let productsIDsWithQuantity = Dictionary(uniqueKeysWithValues: productsWithQuantity.map { key, value in
+            (key.id, value)
+        })
+        
+        FirestoreProductsManager.client.checkProductsAvailability(productsIDsWithQuantity: productsIDsWithQuantity) { [weak self] result in
+            self?.showLoadingModal = false
+            switch result {
+            case .success(let productsAvailability):
+                completion(.success(Array(productsAvailability.filter { !$0.value }.keys)))
+            case .failure(let error):
+                completion(.failure(error))
+            }
+        }
+    }
 }
