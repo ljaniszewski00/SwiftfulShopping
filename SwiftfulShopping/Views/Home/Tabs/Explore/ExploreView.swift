@@ -61,8 +61,7 @@ struct ExploreView: View {
                                            isActive: $exploreViewModel.shouldPresentAllProducts,
                                            label: { EmptyView() })
                             
-                            NavigationLink(destination: ProductDetailsView(product: exploreViewModel.choosenProduct ??
-                                                                           Product.demoProducts[0],
+                            NavigationLink(destination: ProductDetailsView(product: exploreViewModel.choosenProduct ?? Product.demoProducts[0],
                                                                            productRatings: exploreViewModel.getRatingsFor(product: exploreViewModel.choosenProduct ?? Product.demoProducts[0]))
                                                             .onAppear {
                                                                 tabBarStateManager.hideTabBar()
@@ -235,6 +234,7 @@ struct ExploreView: View {
             ForEach(products, id: \.id) { product in
                 Button {
                     withAnimation(.interactiveSpring(response: 0.6, dampingFraction: 0.7, blendDuration: 0.7)) {
+                        exploreViewModel.shouldPresentProductDetailsView = true
                         exploreViewModel.changeFocusedProductFor(product: product)
                     }
                 } label: {

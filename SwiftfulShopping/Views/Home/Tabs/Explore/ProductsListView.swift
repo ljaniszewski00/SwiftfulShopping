@@ -8,6 +8,7 @@
 import SwiftUI
 
 struct ProductsListView: View {
+    @EnvironmentObject private var tabBarStateManager: TabBarStateManager
     @EnvironmentObject private var exploreViewModel: ExploreViewModel
     @EnvironmentObject private var sortingAndFilteringViewModel: SortingAndFilteringViewModel
     @Environment(\.dismiss) private var dismiss: DismissAction
@@ -34,6 +35,7 @@ struct ProductsListView: View {
                 ForEach(exploreViewModel.changingProductsToBeDisplayed, id: \.id) { product in
                     Button {
                         withAnimation(.interactiveSpring(response: 0.6, dampingFraction: 0.7, blendDuration: 0.7)) {
+                            exploreViewModel.shouldPresentProductDetailsViewFromProductsListView = true
                             exploreViewModel.changeFocusedProductFor(product: product)
                         }
                     } label: {
@@ -47,6 +49,20 @@ struct ProductsListView: View {
                     }
                     .buttonStyle(ScaledButtonStyle())
                 }
+            }
+            
+            if let choosenProduct = exploreViewModel.choosenProduct,
+               let productsRatings = exploreViewModel.getRatingsFor(product: choosenProduct) {
+                NavigationLink(destination: ProductDetailsView(product: choosenProduct,
+                                                               productRatings: productsRatings)
+                                                .onAppear {
+                                                    tabBarStateManager.hideTabBar()
+                                                }
+                                                .onDisappear {
+                                                    tabBarStateManager.showTabBar()
+                                                },
+                               isActive: $exploreViewModel.shouldPresentProductDetailsViewFromProductsListView,
+                               label: { EmptyView() })
             }
         }
         .padding()
@@ -134,11 +150,13 @@ struct ProductsListView: View {
 
 struct ProductsListView_Previews: PreviewProvider {
     static var previews: some View {
+        let tabBarStateManager = TabBarStateManager()
         let exploreViewModel = ExploreViewModel()
         let sortingAndFilteringViewModel = SortingAndFilteringViewModel()
         ForEach(ColorScheme.allCases, id: \.self) { colorScheme in
             ForEach(["iPhone 13 Pro Max", "iPhone 8"], id: \.self) { deviceName in
                 ProductsListView()
+                    .environmentObject(tabBarStateManager)
                     .environmentObject(exploreViewModel)
                     .environmentObject(sortingAndFilteringViewModel)
                     .preferredColorScheme(colorScheme)

@@ -35,6 +35,7 @@ class ExploreViewModel: ObservableObject {
     
     @Published var choosenProduct: Product?
     @Published var shouldPresentProductDetailsView: Bool = false
+    @Published var shouldPresentProductDetailsViewFromProductsListView: Bool = false
     
     @Published var showLoadingModal: Bool = false
     
@@ -251,7 +252,6 @@ class ExploreViewModel: ObservableObject {
     
     func changeFocusedProductFor(product: Product) {
         choosenProduct = product
-        shouldPresentProductDetailsView = true
     }
     
     func restoreOriginalProductsArray() {
