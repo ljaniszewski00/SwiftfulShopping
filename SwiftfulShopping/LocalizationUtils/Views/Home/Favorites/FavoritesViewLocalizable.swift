@@ -8,5 +8,7 @@
 import Foundation
 
 public enum FavoritesViewLocalizable: String {
+    case youHaveNotAddedAnythingYet = "FavoritesViewLocalizable_youHaveNotAddedAnythingYet"
+    case clickLabel = "FavoritesViewLocalizable_clickButtonToAdd"
     case navigationTitle = "FavoritesView_navigationTitle"
 }

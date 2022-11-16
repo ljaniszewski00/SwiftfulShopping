@@ -93,7 +93,7 @@ class CartViewModel: ObservableObject {
         }
     }
     
-    func addProductToCart(product: Product, quantity: Int, completion: @escaping ((VoidResult) -> ())) {
+    func addProductToCart(product: Product, quantity: Int) {
         if productsForCart[product] != nil {
             if ((productsForCart[product]!) + quantity) <= product.productQuantityAvailable {
                 productsForCart[product]! += quantity

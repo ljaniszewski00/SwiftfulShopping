@@ -17,14 +17,16 @@ struct ProductsSpecificationsComparisonView: View {
     var body: some View {
         VStack {
             if exploreViewModel.productsToBeCompared.isEmpty {
-                VStack(spacing: 20) {
+                VStack(spacing: 15) {
                     LottieView(name: LottieAssetsNames.scale,
                                loopMode: .loop,
                                contentMode: .scaleAspectFill)
                         .frame(width: 200, height: 200)
-                    Text(TexterifyManager.localisedString(key: .productsSpecificationComparisonView(.emptyComparisonInfo)))
+                    Text(TexterifyManager.localisedString(key: .productsSpecificationComparisonView(.emptyComparisonTitle)))
                         .font(.ssTitle2)
-                        .padding(.horizontal)
+                    Text(getClickButtonText())
+                        .font(.ssCallout)
+                        .foregroundColor(.ssDarkGray)
                     Spacer()
                 }
                 .padding(.top, 100)
@@ -122,6 +124,16 @@ struct ProductsSpecificationsComparisonView: View {
         }
     }
     
+    private func getClickButtonText() -> String {
+        var clickButtonText = TexterifyManager.localisedString(key: .productsSpecificationComparisonView(.emptyComparisonInfo))
+        let substring = " "
+        
+        let indices = getIndexesOfOcurrencesOf(substring, in: clickButtonText)
+        
+        clickButtonText.insert(contentsOf: " ⚖", at: indices[1])
+        return clickButtonText
+    }
+    
     private func getKeysWithDifferentValuesForProducts() -> [String] {
         var keysWithDifferences: Set<String> = []
         for productToCompare in exploreViewModel.productsToBeCompared {
@@ -172,10 +184,10 @@ struct ProductsSpecificationsComparisonView_Previews: PreviewProvider {
                     .preferredColorScheme(colorScheme)
                     .previewDevice(PreviewDevice(rawValue: deviceName))
                     .previewDisplayName("\(deviceName) portrait")
-                    .onAppear {
-                        exploreViewModel.productsToBeCompared = [Product.demoProducts[6],
-                                                                 Product.demoProducts[7]]
-                    }
+//                    .onAppear {
+//                        exploreViewModel.productsToBeCompared = [Product.demoProducts[6],
+//                                                                 Product.demoProducts[7]]
+//                    }
             }
         }
     }

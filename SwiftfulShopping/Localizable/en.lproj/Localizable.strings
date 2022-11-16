@@ -126,7 +126,7 @@
 "Errors_phoneSignInError" = "Phone Sign In Error";
 "Errors_phoneSignInErrorDescription" = "Error occured while trying to log in with phone number. Please try again later.";
 "Errors_productNotAvailable" = "Products not available";
-"Errors_productNotAvailableDescription" = "At least one of the product you are trying to buy is not available at the moment. Please try again later.";
+"Errors_productNotAvailableDescription" = "At least one of the product you are trying to buy is not available at the moment in selected quantity. Please try again later.";
 "Errors_productRecognizerError" = "Product Recognizer Error";
 "Errors_productRecognizerErrorDescription" = "Error occured while recognizing your product. Please try again later.";
 "Errors_registerError" = "Registration Error";
@@ -150,6 +150,8 @@
 "ExploreViewTabs_trending" = "Trending";
 "ExploreViewTabs_weRecommend" = "We recommend";
 "FavoritesView_navigationTitle" = "Favorites";
+"FavoritesViewLocalizable_clickButtonToAdd" = "Click button on product's card to add it to you favorites. It will be displayed here.";
+"FavoritesViewLocalizable_youHaveNotAddedAnythingYet" = "You have no favorite products yet";
 "FilteringMethods_category" = "Category";
 "FilteringMethods_company" = "Company";
 "FilteringMethods_price" = "Price";
@@ -334,7 +336,8 @@
 "ProductsListSource_newest" = "Newest Products";
 "ProductsListSource_recommended" = "Recommended Products";
 "ProductsSpecificationComparisonView_differencesButton" = "Differences";
-"ProductsSpecificationComparisonView_emptyComparisonInfo" = "Add products to comparison to see their spefications compared here";
+"ProductsSpecificationComparisonView_emptyComparisonInfo" = "Click button on product's card to add for comparison. It will be displayed here.";
+"ProductsSpecificationComparisonView_emptyComparisonTitle" = "No products selected to be compared";
 "ProductsSpecificationComparisonView_navigationTitle" = "Compare";
 "ProductsSpecificationComparisonView_noInfoAboutSpecification" = "No Information";
 "ProductsSpecificationComparisonView_removeAllFromComparisonButton" = "Remove All";
@@ -493,4 +496,4 @@
 "ThirdReturnCreationView_createReturnButton" = "Create Return";
 "ThirdReturnCreationView_howDoYouWantToReturn" = "How do you want to return the product?";
 "ThirdReturnCreationView_navigationTitle" = "Create Return";
-"texterify_timestamp" = "2022-11-15T16:39:28Z";
+"texterify_timestamp" = "2022-11-16T13:46:14Z";

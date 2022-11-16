@@ -131,7 +131,7 @@ struct ListProductCardTileView: View {
                 
                 AddToCartButton {
                     cartViewModel.addProductToCart(product: product,
-                                                   quantity: 1) { _ in }
+                                                   quantity: 1)
                 }
                 .disabled(product.availability == .no)
             }

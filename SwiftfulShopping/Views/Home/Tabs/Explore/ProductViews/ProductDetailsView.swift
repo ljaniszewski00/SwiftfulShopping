@@ -263,7 +263,8 @@ struct ProductDetailsView: View {
                 withAnimation {
                     if expandAddToCart {
                         UIImpactFeedbackGenerator(style: .medium).impactOccurred()
-                        cartViewModel.addProductToCart(product: product, quantity: productDetailsViewModel.productQuantityToBasket) { _ in }
+                        cartViewModel.addProductToCart(product: product,
+                                                       quantity: productDetailsViewModel.productQuantityToBasket)
                     }
                     expandAddToCart = true
                 }

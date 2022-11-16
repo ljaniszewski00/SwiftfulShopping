@@ -8,6 +8,7 @@
 import Foundation
 
 public enum ProductsSpecificationComparisonViewLocalizable: String {
+    case emptyComparisonTitle = "ProductsSpecificationComparisonView_emptyComparisonTitle"
     case emptyComparisonInfo = "ProductsSpecificationComparisonView_emptyComparisonInfo"
     case differencesButton = "ProductsSpecificationComparisonView_differencesButton"
     case noInformation = "ProductsSpecificationComparisonView_noInfoAboutSpecification"

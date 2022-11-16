@@ -72,7 +72,8 @@ struct ProductTileForCartView: View {
                         cartViewModel.removeProductFromCart(product: product, quantity: 1)
                     },
                                   plusAction: {
-                        cartViewModel.addProductToCart(product: product, quantity: 1) { _ in }
+                        cartViewModel.addProductToCart(product: product,
+                                                       quantity: 1)
                     })
                     .scaledToFit()
                     .frame(height: 30)

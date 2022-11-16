@@ -20,36 +20,51 @@ struct FavoritesView: View {
     var body: some View {
         NavigationView {
             VStack {
-                ScrollView(.vertical, showsIndicators: false) {
-                    VStack {
-                        ForEach(favoritesViewModel.favoriteProducts, id: \.self) { product in
-                            Button {
-                                withAnimation(.interactiveSpring(response: 0.6, dampingFraction: 0.7, blendDuration: 0.7)) {
-                                    favoritesViewModel.changeFocusedProductFor(product: product)
-                                }
-                            } label: {
-                                ListProductCardTileView(product: product,
-                                                        productRatings: exploreViewModel.getRatingsFor(product: product))
-                            }
-                            .buttonStyle(ScaledButtonStyle())
-                        }
+                if favoritesViewModel.favoriteProducts.isEmpty {
+                    VStack(spacing: 15) {
+                        Spacer()
+                        Text(TexterifyManager.localisedString(key: .favoritesView(.youHaveNotAddedAnythingYet)))
+                            .font(.ssTitle2)
+                        Text(getClickButtonText())
+                            .font(.ssCallout)
+                            .foregroundColor(.ssDarkGray)
+                        Spacer()
                     }
-                    .padding(.bottom, 70)
+                } else {
+                    VStack {
+                        ScrollView(.vertical, showsIndicators: false) {
+                            VStack {
+                                ForEach(favoritesViewModel.favoriteProducts, id: \.self) { product in
+                                    Button {
+                                        withAnimation(.interactiveSpring(response: 0.6, dampingFraction: 0.7, blendDuration: 0.7)) {
+                                            favoritesViewModel.changeFocusedProductFor(product: product)
+                                        }
+                                    } label: {
+                                        ListProductCardTileView(product: product,
+                                                                productRatings: exploreViewModel.getRatingsFor(product: product))
+                                    }
+                                    .buttonStyle(ScaledButtonStyle())
+                                }
+                            }
+                            .padding(.bottom, 70)
+                        }
+                        
+                        NavigationLink(destination: ProductDetailsView(product: favoritesViewModel.choosenProduct ?? Product.demoProducts[0],
+                                                                       productRatings: exploreViewModel.getRatingsFor(product: favoritesViewModel.choosenProduct ?? Product.demoProducts[0]))
+                                                        .onAppear {
+                                                            tabBarStateManager.hideTabBar()
+                                                        }
+                                                        .onDisappear {
+                                                            tabBarStateManager.showTabBar()
+                                                        },
+                                       isActive: $favoritesViewModel.shouldPresentProductDetailsView,
+                                       label: { EmptyView() })
+                    }
                 }
-                .navigationTitle(TexterifyManager.localisedString(key: .favoritesView(.navigationTitle)))
-                .navigationBarTitleDisplayMode(.inline)
-                
-                NavigationLink(destination: ProductDetailsView(product: favoritesViewModel.choosenProduct ?? Product.demoProducts[0],
-                                                               productRatings: exploreViewModel.getRatingsFor(product: favoritesViewModel.choosenProduct ?? Product.demoProducts[0]))
-                                                .onAppear {
-                                                    tabBarStateManager.hideTabBar()
-                                                }
-                                                .onDisappear {
-                                                    tabBarStateManager.showTabBar()
-                                                },
-                               isActive: $favoritesViewModel.shouldPresentProductDetailsView,
-                               label: { EmptyView() })
             }
+            .padding()
+            .navigationTitle(TexterifyManager.localisedString(key: .favoritesView(.navigationTitle)))
+            .navigationBarTitleDisplayMode(.inline)
         }
         .navigationViewStyle(.stack)
         .environmentObject(tabBarStateManager)
@@ -57,6 +72,16 @@ struct FavoritesView: View {
         .environmentObject(profileViewModel)
         .environmentObject(favoritesViewModel)
         .environmentObject(cartViewModel)
+    }
+    
+    private func getClickButtonText() -> String {
+        var clickButtonText = TexterifyManager.localisedString(key: .favoritesView(.clickLabel))
+        let substring = " "
+        
+        let indices = getIndexesOfOcurrencesOf(substring, in: clickButtonText)
+        
+        clickButtonText.insert(contentsOf: " ♡", at: indices[1])
+        return clickButtonText
     }
 }
 
@@ -79,7 +104,7 @@ struct FavoritesView_Previews: PreviewProvider {
                     .previewDevice(PreviewDevice(rawValue: deviceName))
                     .previewDisplayName("\(deviceName) portrait")
                     .onAppear {
-                        favoritesViewModel.favoriteProducts = Product.demoProducts
+//                        favoritesViewModel.favoriteProducts = Product.demoProducts
                     }
             }
         }
