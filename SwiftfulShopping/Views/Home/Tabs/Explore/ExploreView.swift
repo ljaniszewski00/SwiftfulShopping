@@ -255,7 +255,7 @@ struct ExploreView: View {
                 .foregroundColor(colorScheme == .light ? .black : .ssWhite)
                 .padding([.leading, .top])
             
-            prepareProductsListFor(products: exploreViewModel.newestProducts)
+            prepareProductsListFor(products: exploreViewModel.firstNewestProducts)
             
             HStack {
                 Spacer()
@@ -331,7 +331,7 @@ struct ExploreView: View {
                 .foregroundColor(colorScheme == .light ? .black : .ssWhite)
                 .padding([.leading, .top])
             
-            prepareProductsListFor(products: exploreViewModel.recommendedProducts)
+            prepareProductsListFor(products: exploreViewModel.firstRecommendedProducts)
             
             HStack {
                 Spacer()

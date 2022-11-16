@@ -96,25 +96,25 @@ class ExploreViewModel: ObservableObject {
         }
     }
     
-    var newestProducts: [Product] {
-        let filteredProducts = productsFromRepository.filter {
-            $0.isNew
-        }
+    var firstNewestProducts: [Product] {
+        let filteredProducts = productsFromRepository
+            .filter { $0.isNew }
         
-        if shouldPresentAllNewProducts {
-            return filteredProducts
-        } else {
-            let filteredProductsCount = filteredProducts.count
-            if filteredProductsCount <= 0 {
-                return []
-            } else {
-                if filteredProductsCount > 3 {
-                    return Array(filteredProducts.prefix(3))
-                } else {
-                    return Array(filteredProducts.prefix(filteredProductsCount))
-                }
-            }
+        let filteredProductsCount = filteredProducts.count
+        
+        switch filteredProductsCount {
+        case _ where filteredProductsCount > 0 && filteredProductsCount <= 3:
+            return Array(filteredProducts.prefix(filteredProductsCount))
+        case _ where filteredProductsCount > 3:
+            return Array(filteredProducts.prefix(3))
+        default:
+            return []
         }
+    }
+    
+    var allNewestProducts: [Product] {
+        return productsFromRepository
+            .filter { $0.isNew }
     }
     
     var productsCompanies: [String] {
@@ -135,25 +135,25 @@ class ExploreViewModel: ObservableObject {
         }
     }
     
-    var recommendedProducts: [Product] {
-        let filteredProducts = productsFromRepository.filter {
-            $0.isRecommended
-        }
+    var firstRecommendedProducts: [Product] {
+        let filteredProducts = productsFromRepository
+            .filter { $0.isRecommended }
         
-        if shouldPresentAllRecommendedProducts {
-            return filteredProducts
-        } else {
-            let filteredProductsCount = filteredProducts.count
-            if filteredProductsCount <= 0 {
-                return []
-            } else {
-                if filteredProductsCount > 3 {
-                    return Array(filteredProducts.prefix(3))
-                } else {
-                    return Array(filteredProducts.prefix(filteredProductsCount))
-                }
-            }
+        let filteredProductsCount = filteredProducts.count
+        
+        switch filteredProductsCount {
+        case _ where filteredProductsCount > 0 && filteredProductsCount <= 3:
+            return Array(filteredProducts.prefix(filteredProductsCount))
+        case _ where filteredProductsCount > 3:
+            return Array(filteredProducts.prefix(3))
+        default:
+            return []
         }
+    }
+    
+    var allRecommendedProducts: [Product] {
+        return productsFromRepository
+            .filter { $0.isRecommended }
     }
     
     func getCategoriesImages(completion: @escaping (() -> ())) {
@@ -201,11 +201,11 @@ class ExploreViewModel: ObservableObject {
                 case .category:
                     return categoryProducts.sorted { $0.name < $1.name }
                 case .newest:
-                    return newestProducts.sorted { $0.name < $1.name }
+                    return allNewestProducts.sorted { $0.name < $1.name }
                 case .company:
                     return companyProducts.sorted { $0.name < $1.name }
                 case .recommended:
-                    return recommendedProducts.sorted { $0.name < $1.name }
+                    return allRecommendedProducts.sorted { $0.name < $1.name }
                 case .all:
                     return productsToBeDisplayed.sorted { $0.name < $1.name }
                 }
