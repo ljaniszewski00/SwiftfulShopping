@@ -8,8 +8,10 @@
 import SwiftUI
 import AVKit
 import texterify_ios_sdk
+import Introspect
 
 struct ProductRecognizerView: View {
+    @EnvironmentObject private var tabBarStateManager: TabBarStateManager
     @EnvironmentObject private var exploreViewModel: ExploreViewModel
     @EnvironmentObject private var searchViewModel: SearchViewModel
     
@@ -116,66 +118,88 @@ struct ProductRecognizerView: View {
                 cameraViewModel.startCapturing()
             }
         }) {
-            VStack(alignment: .center, spacing: 20) {
-                if exploreViewModel.getProductsListFor(recognitionResults: productRecognizer.getFormattedResults()).isEmpty {
-                    VStack {
-                        LottieView(name: LottieAssetsNames.searchNoResults,
-                                   loopMode: .loop,
-                                   contentMode: .scaleAspectFill)
-                        .frame(width: ScreenBoundsSupplier.shared.getScreenWidth(),
-                               height: ScreenBoundsSupplier.shared.getScreenHeight() * 0.5)
-                        VStack(spacing: 20) {
-                            Text(TexterifyManager.localisedString(key: .productRecognizerView(.noProductsFound)))
-                                .font(.ssTitle2)
-                                .fixedSize(horizontal: false, vertical: true)
-                            Text(TexterifyManager.localisedString(key: .productRecognizerView(.tryRecognizingTheProductAgain)))
-                                .font(.ssCallout)
-                                .foregroundColor(.ssDarkGray)
-                                .fixedSize(horizontal: false, vertical: true)
+            NavigationView {
+                VStack(alignment: .center, spacing: 20) {
+                    if exploreViewModel.getProductsListFor(recognitionResults: productRecognizer.getFormattedResults()).isEmpty {
+                        VStack {
+                            LottieView(name: LottieAssetsNames.searchNoResults,
+                                       loopMode: .loop,
+                                       contentMode: .scaleAspectFill)
+                            .frame(width: ScreenBoundsSupplier.shared.getScreenWidth(),
+                                   height: ScreenBoundsSupplier.shared.getScreenHeight() * 0.5)
+                            VStack(spacing: 20) {
+                                Text(TexterifyManager.localisedString(key: .productRecognizerView(.noProductsFound)))
+                                    .font(.ssTitle2)
+                                    .fixedSize(horizontal: false, vertical: true)
+                                Text(TexterifyManager.localisedString(key: .productRecognizerView(.tryRecognizingTheProductAgain)))
+                                    .font(.ssCallout)
+                                    .foregroundColor(.ssDarkGray)
+                                    .fixedSize(horizontal: false, vertical: true)
+                            }
                         }
-                    }
-                } else {
-                    VStack(alignment: .center, spacing: 20) {
-                        Text(TexterifyManager.localisedString(key: .productRecognizerView(.recognitionResults)))
-                            .font(.ssTitle1)
-                        
-                        Text(TexterifyManager.localisedString(key: .productRecognizerView(.chooseOneOfTheProducts)))
-                            .font(.ssCallout)
-                            .foregroundColor(.ssDarkGray)
-                            .fixedSize(horizontal: false, vertical: true)
-                    }
-                    
-                    List {
-                        ForEach(exploreViewModel.getProductsListFor(recognitionResults: productRecognizer.getFormattedResults()), id: \.self) { product in
-                            Button {
-                                DispatchQueue.main.async {
-                                    searchViewModel.choosenProduct = product
-                                    productRecognizer.shouldPresentSheetWithResults = false
-                                    searchViewModel.shouldPresentProductRecognizerView = false
-                                    searchViewModel.shouldPresentProductDetailsView = true
+                    } else {
+                        ScrollView(.vertical, showsIndicators: false) {
+                            VStack(alignment: .center, spacing: 20) {
+                                Text(TexterifyManager.localisedString(key: .productRecognizerView(.recognitionResults)))
+                                    .font(.ssTitle1)
+                                
+                                Text(TexterifyManager.localisedString(key: .productRecognizerView(.chooseOneOfTheProducts)))
+                                    .font(.ssCallout)
+                                    .foregroundColor(.ssDarkGray)
+                                    .fixedSize(horizontal: false, vertical: true)
+                            }
+                            
+                            VStack(spacing: 0) {
+                                ForEach(exploreViewModel.getProductsListFor(recognitionResults: productRecognizer.getFormattedResults()), id: \.self) { product in
+                                    Button {
+                                        searchViewModel.choosenProduct = product
+                                        searchViewModel.shouldPresentProductDetailsViewAfterRecognition = true
+                                    } label: {
+                                        VStack(spacing: 0) {
+                                            ZStack {
+                                                Rectangle()
+                                                    .foregroundColor(Color(UIColor.secondarySystemGroupedBackground))
+                                                
+                                                VStack {
+                                                    HStack {
+                                                        BasicProductTile(product: product, includeRateButton: false)
+                                                        Image(systemName: "chevron.right")
+                                                    }
+                                                    
+                                                    Divider()
+                                                }
+                                            }
+                                        }
+                                    }
                                 }
-                            } label: {
-                                BasicProductTile(product: product, includeRateButton: false)
                             }
                         }
                     }
-                    .listStyle(.grouped)
-                }
-                
-                Spacer()
-                
-                Button {
-                    withAnimation {
-                        productRecognizer.shouldPresentSheetWithResults = false
+                    
+                    Spacer()
+                    
+                    Button {
+                        withAnimation {
+                            productRecognizer.shouldPresentSheetWithResults = false
+                        }
+                    } label: {
+                        Text(TexterifyManager.localisedString(key: .productRecognizerView(.tryAgainButton)))
+                            .font(.ssButton)
                     }
-                } label: {
-                    Text(TexterifyManager.localisedString(key: .productRecognizerView(.tryAgainButton)))
-                        .font(.ssButton)
+                    .buttonStyle(CustomButton(textColor: .accentColor, onlyStroke: true))
+                    
+                    NavigationLink(destination: ProductDetailsView(product: searchViewModel.choosenProduct ?? Product.demoProducts[0],
+                                                                   productRatings: exploreViewModel.getRatingsFor(product: searchViewModel.choosenProduct ?? Product.demoProducts[0]))
+                                                    .onAppear {
+                                                        tabBarStateManager.hideTabBar()
+                                                    },
+                                   isActive: $searchViewModel.shouldPresentProductDetailsViewAfterRecognition,
+                                   label: { EmptyView() })
                 }
-                .buttonStyle(CustomButton(textColor: .accentColor, onlyStroke: true))
+                .padding()
+                .padding(.top)
             }
-            .padding()
-            .padding(.top)
+            .navigationViewStyle(.stack)
         }
         .sheet(isPresented: $searchViewModel.shouldPresentImagePicker) {
             ImagePicker(sourceType: .photoLibrary,
@@ -219,6 +243,7 @@ struct ProductRecognizerView: View {
                     
                     Text(TexterifyManager.localisedString(key: .productRecognizerView(.pleaseWaitAFewSecondsModalLabel)))
                         .font(.ssCallout)
+                        .foregroundColor(.ssDarkGray)
                 }
                 .padding(.bottom)
             }
@@ -237,11 +262,13 @@ struct ProductRecognizerView: View {
 
 struct ProductIdentifierView_Previews: PreviewProvider {
     static var previews: some View {
+        let tabBarStateManager = TabBarStateManager()
         let exploreViewModel = ExploreViewModel()
         let searchViewModel = SearchViewModel()
         ForEach(ColorScheme.allCases, id: \.self) { colorScheme in
             ForEach(["iPhone 13 Pro Max", "iPhone 8"], id: \.self) { deviceName in
                 ProductRecognizerView()
+                    .environmentObject(tabBarStateManager)
                     .environmentObject(exploreViewModel)
                     .environmentObject(searchViewModel)
                     .preferredColorScheme(colorScheme)

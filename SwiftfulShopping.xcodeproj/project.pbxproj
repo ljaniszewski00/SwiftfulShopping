@@ -332,6 +332,7 @@
 		88DC09E6291330AA002F41C3 /* HomeViewLocalizable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88DC09E5291330AA002F41C3 /* HomeViewLocalizable.swift */; };
 		88DC09E8291332CA002F41C3 /* ExpandableTextLocalizable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88DC09E7291332CA002F41C3 /* ExpandableTextLocalizable.swift */; };
 		88DDE86E292542A200F60448 /* getIndexesOfOccurencesOfSubstringInString.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88DDE86D292542A200F60448 /* getIndexesOfOccurencesOfSubstringInString.swift */; };
+		88DDE87129259F7D00F60448 /* Introspect in Frameworks */ = {isa = PBXBuildFile; productRef = 88DDE87029259F7D00F60448 /* Introspect */; };
 		88DEDD462916839F003EFA44 /* SelectionDropdownMenuLocalizable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88DEDD452916839F003EFA44 /* SelectionDropdownMenuLocalizable.swift */; };
 		88DEDD48291690C4003EFA44 /* AppearanceLocalizable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88DEDD47291690C4003EFA44 /* AppearanceLocalizable.swift */; };
 		88DEDD4A29171BBD003EFA44 /* AssetsNames.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88DEDD4929171BBD003EFA44 /* AssetsNames.swift */; };
@@ -654,6 +655,7 @@
 				0A49CEB028EE03820064D3DD /* FirebaseFirestoreSwift in Frameworks */,
 				0A2FE0B028A1B9E700E8D30E /* Lottie in Frameworks */,
 				0A49CEB228EE03820064D3DD /* FirebaseStorage in Frameworks */,
+				88DDE87129259F7D00F60448 /* Introspect in Frameworks */,
 				0A1C61A628DA1CCA00BF4ED3 /* FacebookLogin in Frameworks */,
 				0A21490228D9060900748128 /* GoogleSignInSwift in Frameworks */,
 			);
@@ -1683,6 +1685,7 @@
 				0A49CEAF28EE03820064D3DD /* FirebaseFirestoreSwift */,
 				0A49CEB128EE03820064D3DD /* FirebaseStorage */,
 				889EDF3D290EF94200EBFFC1 /* texterify-ios-sdk */,
+				88DDE87029259F7D00F60448 /* Introspect */,
 			);
 			productName = SwiftfulShopping;
 			productReference = 0ACD5893284A6E9200AA9DA0 /* SwiftfulShopping.app */;
@@ -1768,6 +1771,7 @@
 				0A1C61A428DA1CCA00BF4ED3 /* XCRemoteSwiftPackageReference "facebook-ios-sdk" */,
 				0A49CEAA28EE03820064D3DD /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
 				889EDF3C290EF94200EBFFC1 /* XCRemoteSwiftPackageReference "texterify-ios" */,
+				88DDE86F29259F7D00F60448 /* XCRemoteSwiftPackageReference "SwiftUI-Introspect" */,
 			);
 			productRefGroup = 0ACD5894284A6E9200AA9DA0 /* Products */;
 			projectDirPath = "";
@@ -2550,6 +2554,14 @@
 				minimumVersion = 0.0.6;
 			};
 		};
+		88DDE86F29259F7D00F60448 /* XCRemoteSwiftPackageReference "SwiftUI-Introspect" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/siteline/SwiftUI-Introspect.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 0.1.4;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -2597,6 +2609,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 889EDF3C290EF94200EBFFC1 /* XCRemoteSwiftPackageReference "texterify-ios" */;
 			productName = "texterify-ios-sdk";
+		};
+		88DDE87029259F7D00F60448 /* Introspect */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 88DDE86F29259F7D00F60448 /* XCRemoteSwiftPackageReference "SwiftUI-Introspect" */;
+			productName = Introspect;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};

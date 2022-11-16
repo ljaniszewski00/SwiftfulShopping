@@ -10,6 +10,7 @@ import SwiftUI
 class SearchViewModel: ObservableObject {
     @Published var choosenProduct: Product?
     @Published var shouldPresentProductDetailsView: Bool = false
+    @Published var shouldPresentProductDetailsViewAfterRecognition: Bool = false
     
     @Published var shouldPresentProductRecognizerView: Bool = false
     

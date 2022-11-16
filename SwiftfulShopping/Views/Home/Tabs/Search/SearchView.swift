@@ -184,6 +184,7 @@ struct SearchView: View {
                                                 },
                                isActive: $searchViewModel.shouldPresentProductRecognizerView,
                                label: { EmptyView() })
+                .isDetailLink(false)
                 
                 NavigationLink(destination: ProductDetailsView(product: searchViewModel.choosenProduct ?? Product.demoProducts[0],
                                                                productRatings: exploreViewModel.getRatingsFor(product: searchViewModel.choosenProduct ?? Product.demoProducts[0]))
