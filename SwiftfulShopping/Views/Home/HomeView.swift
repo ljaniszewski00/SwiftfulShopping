@@ -24,7 +24,8 @@ struct HomeView: View {
     @StateObject var networkManager = NetworkManager.shared
     @StateObject var errorManager = ErrorManager.shared
     
-    @State var selectedTab: Tab = .explore
+    @State private var selection: String = TexterifyManager.localisedString(key: .homeView(.exploreTabName))
+    @State private var tabSelection: TabBarItem = .explore
     
     // MARK: To add sample data to Firestore
     init() {
@@ -32,147 +33,74 @@ struct HomeView: View {
 //        FirestoreSampleDataManager.client.addOrders { _ in }
 //        FirestoreSampleDataManager.client.addProducts { _ in }
     }
-        
-    enum Tab: String {
-        case explore
-        case favorites
-        case cart
-        case search
-        case profile
-    }
-    
-    struct TabItem: Identifiable {
-        var id = UUID()
-        var text: String = ""
-        var icon: String
-        var tab: Tab
-    }
-    
-    private var tabItems = [
-        TabItem(text: TexterifyManager.localisedString(key: .homeView(.exploreTabName)), icon: "house", tab: .explore),
-        TabItem(text: TexterifyManager.localisedString(key: .homeView(.favoritesTabName)), icon: "star", tab: .favorites),
-        TabItem(text: TexterifyManager.localisedString(key: .homeView(.cartTabName)), icon: "cart", tab: .cart),
-        TabItem(text: TexterifyManager.localisedString(key: .homeView(.searchTabName)), icon: "magnifyingglass", tab: .search),
-        TabItem(text: TexterifyManager.localisedString(key: .homeView(.profileTabName)), icon: "person", tab: .profile)
-    ]
     
     var body: some View {
         if firebaseAuthManager.isLogged {
-            ZStack(alignment: .bottom) {
-                Group {
-                    switch selectedTab {
-                    case .explore:
-                        ExploreView()
-                            .environmentObject(firebaseAuthManager)
-                            .environmentObject(tabBarStateManager)
-                            .environmentObject(exploreViewModel)
-                            .environmentObject(profileViewModel)
-                            .environmentObject(cartViewModel)
-                            .environmentObject(favoritesViewModel)
-                            .environmentObject(sortingAndFilteringViewModel)
-                            .onAppear {
-                                exploreViewModel.productsForTab = .exploreView
-                            }
-                            .onDisappear {
-                                sortingAndFilteringViewModel.restoreDefaults(originalProductsArray: exploreViewModel.productsFromRepository, currentProductsArray: &exploreViewModel.changingProductsToBeDisplayed)
-                            }
-                    case .favorites:
-                        FavoritesView()
-                            .environmentObject(firebaseAuthManager)
-                            .environmentObject(tabBarStateManager)
-                            .environmentObject(exploreViewModel)
-                            .environmentObject(profileViewModel)
-                            .environmentObject(cartViewModel)
-                            .environmentObject(favoritesViewModel)
-                    case .cart:
-                        CartView()
-                            .environmentObject(firebaseAuthManager)
-                            .environmentObject(tabBarStateManager)
-                            .environmentObject(exploreViewModel)
-                            .environmentObject(profileViewModel)
-                            .environmentObject(favoritesViewModel)
-                            .environmentObject(cartViewModel)
-                    case .search:
-                        SearchView()
-                            .environmentObject(firebaseAuthManager)
-                            .environmentObject(tabBarStateManager)
-                            .environmentObject(exploreViewModel)
-                            .environmentObject(profileViewModel)
-                            .environmentObject(favoritesViewModel)
-                            .environmentObject(cartViewModel)
-                            .environmentObject(sortingAndFilteringViewModel)
-                            .environmentObject(searchViewModel)
-                            .onAppear {
-                                exploreViewModel.productsForTab = .searchView
-                            }
-                            .onDisappear {
-                                sortingAndFilteringViewModel.restoreDefaults(originalProductsArray: exploreViewModel.productsFromRepository, currentProductsArray: &exploreViewModel.changingProductsToBeDisplayed)
-                            }
-                    case .profile:
-                        ProfileView()
-                            .environmentObject(firebaseAuthManager)
-                            .environmentObject(accentColorManager)
-                            .environmentObject(tabBarStateManager)
-                            .environmentObject(profileViewModel)
+            CustomTabBarContainerView(selection: $tabSelection) {
+                ExploreView()
+                    .environmentObject(firebaseAuthManager)
+                    .environmentObject(tabBarStateManager)
+                    .environmentObject(exploreViewModel)
+                    .environmentObject(profileViewModel)
+                    .environmentObject(cartViewModel)
+                    .environmentObject(favoritesViewModel)
+                    .environmentObject(sortingAndFilteringViewModel)
+                    .onAppear {
+                        exploreViewModel.productsForTab = .exploreView
                     }
-                }
+                    .onDisappear {
+                        sortingAndFilteringViewModel.restoreDefaults(originalProductsArray: exploreViewModel.productsFromRepository, currentProductsArray: &exploreViewModel.changingProductsToBeDisplayed)
+                    }
+                    .tabBarItem(tab: .explore,
+                                selection: $tabSelection)
                 
-                if !tabBarStateManager.isHidden {
-                    HStack {
-                        Spacer()
-                        
-                        ForEach(tabItems) { tabItem in
-                            Spacer()
-                            
-                            Button {
-                                selectedTab = tabItem.tab
-                            } label: {
-                                VStack(spacing: 8) {
-                                    Image(systemName: tabItem.icon)
-                                        .resizable()
-                                        .symbolVariant(.fill)
-                                        .font(.body.bold())
-                                        .frame(width: 25, height: 25)
-                                    Text(tabItem.text)
-                                        .font(.caption)
-                                        .lineLimit(1)
-                                }
-                                .frame(maxWidth: .infinity)
-                                .foregroundColor(selectedTab == tabItem.tab ? .accentColor : Color(uiColor: .systemGray))
-                                .if(tabItem.tab == .cart && cartViewModel.cartAllProductsQuantityCount > 0) {
-                                    $0
-                                        .overlay(
-                                            Text(String(cartViewModel.cartAllProductsQuantityCount))
-                                                .font(.ssCallout)
-                                                .foregroundColor(.ssWhite)
-                                                .padding(.all, cartViewModel.cartAllProductsQuantityCount >= 10 ? 3 : 6)
-                                                .background {
-                                                    Circle()
-                                                        .foregroundColor(.red)
-                                                }
-                                                .offset(x: 22, y: -27)
-                                        )
-                                }
-                            }
-                            .foregroundStyle(selectedTab == tabItem.tab ? .primary : .secondary)
-                            
-                            Spacer()
-                        }
-                        
-                        Spacer()
+                FavoritesView()
+                    .environmentObject(firebaseAuthManager)
+                    .environmentObject(tabBarStateManager)
+                    .environmentObject(exploreViewModel)
+                    .environmentObject(profileViewModel)
+                    .environmentObject(cartViewModel)
+                    .environmentObject(favoritesViewModel)
+                    .tabBarItem(tab: .favorites,
+                                selection: $tabSelection)
+                
+                CartView()
+                    .environmentObject(firebaseAuthManager)
+                    .environmentObject(tabBarStateManager)
+                    .environmentObject(exploreViewModel)
+                    .environmentObject(profileViewModel)
+                    .environmentObject(favoritesViewModel)
+                    .environmentObject(cartViewModel)
+                    .tabBarItem(tab: .cart,
+                                selection: $tabSelection)
+                
+                SearchView()
+                    .environmentObject(firebaseAuthManager)
+                    .environmentObject(tabBarStateManager)
+                    .environmentObject(exploreViewModel)
+                    .environmentObject(profileViewModel)
+                    .environmentObject(favoritesViewModel)
+                    .environmentObject(cartViewModel)
+                    .environmentObject(sortingAndFilteringViewModel)
+                    .environmentObject(searchViewModel)
+                    .onAppear {
+                        exploreViewModel.productsForTab = .searchView
                     }
-                    .padding(.horizontal, 7)
-                    .padding(.bottom, 10)
-                    .frame(height: 100, alignment: .center)
-                    .background(.ultraThinMaterial, in: RoundedRectangle(cornerRadius: 40, style: .continuous))
-                    .measureSize(size: $tabBarStateManager.tabBarSize)
-                    .navigationBarTitle("")
-                    .navigationBarTitleDisplayMode(.inline)
-                    .transition(.move(edge: .bottom))
-                    .animation(.default)
-                    .zIndex(1)
-                }
+                    .onDisappear {
+                        sortingAndFilteringViewModel.restoreDefaults(originalProductsArray: exploreViewModel.productsFromRepository, currentProductsArray: &exploreViewModel.changingProductsToBeDisplayed)
+                    }
+                    .tabBarItem(tab: .search,
+                                selection: $tabSelection)
+                
+                ProfileView()
+                    .environmentObject(firebaseAuthManager)
+                    .environmentObject(accentColorManager)
+                    .environmentObject(tabBarStateManager)
+                    .environmentObject(profileViewModel)
+                    .tabBarItem(tab: .profile,
+                                selection: $tabSelection)
             }
+            .environmentObject(tabBarStateManager)
             .modifier(ErrorModal(isPresented: $errorManager.showErrorModal,
                                  customError: errorManager.customError ?? ErrorManager.unknownError))
             .modifier(LoadingIndicatorModal(isPresented: $homeViewModel.showLoadingModal))
