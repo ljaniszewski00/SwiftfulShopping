@@ -9,18 +9,14 @@ import Foundation
 import FirebaseStorage
 import UIKit
 
-class FirebaseStorageManager: ObservableObject {
-    private let storageRef = Storage.storage().reference()
-    
-    static var client: FirebaseStorageManager = {
-        FirebaseStorageManager()
-    }()
+struct FirebaseStorageManager {
+    static let storageRef = Storage.storage().reference()
     
     private init() {}
     
-    func uploadImageToStorage(image: UIImage,
-                              userID: String,
-                              completion: @escaping ((Result<String?, Error>) -> ())) {
+    static func uploadImageToStorage(image: UIImage,
+                                     userID: String,
+                                     completion: @escaping ((Result<String?, Error>) -> ())) {
         let imageUUID = UUID().uuidString
         let userImagesStorageRef = storageRef.child("profileImages/\(userID)/\(imageUUID)")
         
@@ -42,9 +38,9 @@ class FirebaseStorageManager: ObservableObject {
         }
     }
     
-    func deleteImageFromStorage(userID: String,
-                                imageURL: String,
-                                completion: @escaping ((VoidResult) -> ())) {
+    static func deleteImageFromStorage(userID: String,
+                                       imageURL: String,
+                                       completion: @escaping ((VoidResult) -> ())) {
         let userImagesStorageRef = storageRef.child("profileImages/\(userID)/\(imageURL)")
 
         userImagesStorageRef.delete() { (error) in
@@ -58,9 +54,9 @@ class FirebaseStorageManager: ObservableObject {
         }
     }
     
-    func getDownloadURLForImage(userID: String,
-                                imageURL: String,
-                                completion: @escaping ((Result<URL?, Error>) -> ())) {
+    static func getDownloadURLForImage(userID: String,
+                                       imageURL: String,
+                                       completion: @escaping ((Result<URL?, Error>) -> ())) {
         let path = "profileImages/\(userID)/\(imageURL)"
         let userImagesStorageRef = storageRef.child(path)
         
@@ -74,9 +70,9 @@ class FirebaseStorageManager: ObservableObject {
         }
     }
     
-    func downloadImageFromStorage(userID: String,
-                                  imageURL: String,
-                                  completion: @escaping ((Result<UIImage?, Error>) -> ())) {
+    static func downloadImageFromStorage(userID: String,
+                                         imageURL: String,
+                                         completion: @escaping ((Result<UIImage?, Error>) -> ())) {
         let userImagesStorageRef = storageRef.child("profileImages/\(userID)/\(imageURL)")
         
         userImagesStorageRef.getData(maxSize: 1 * 100 * 1024 * 1024) { (data, error) in
@@ -89,11 +85,5 @@ class FirebaseStorageManager: ObservableObject {
                 }
             }
         }
-    }
-}
-
-extension FirebaseStorageManager: NSCopying {
-    func copy(with zone: NSZone? = nil) -> Any {
-        return self
     }
 }

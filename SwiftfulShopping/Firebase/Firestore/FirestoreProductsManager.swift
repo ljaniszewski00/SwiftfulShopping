@@ -8,19 +8,15 @@
 import Foundation
 import Firebase
 
-class FirestoreProductsManager: ObservableObject {
-    private let db = Firestore.firestore()
-    
-    static var client: FirestoreProductsManager = {
-        FirestoreProductsManager()
-    }()
+struct FirestoreProductsManager {
+    static let db = Firestore.firestore()
     
     private init() {}
     
     
     // MARK: SELECT DATABASE OPERATIONS
     
-    func getProducts(completion: @escaping ((Result<[Product]?, Error>) -> ())) {
+    static func getProducts(completion: @escaping ((Result<[Product]?, Error>) -> ())) {
         let languageCode = LocaleManager.client.clientLanguageCode
         
         db.collection(DatabaseCollections.products.rawValue)
@@ -134,7 +130,7 @@ class FirestoreProductsManager: ObservableObject {
             }
     }
     
-    func checkProductsAvailability(productsIDsWithQuantity: [String: Int], completion: @escaping ((Result<[String: Bool], Error>) -> ())) {
+    static func checkProductsAvailability(productsIDsWithQuantity: [String: Int], completion: @escaping ((Result<[String: Bool], Error>) -> ())) {
         var results: [String: Bool] = [:]
         let dispatchGroup: DispatchGroup = DispatchGroup()
         
@@ -157,7 +153,7 @@ class FirestoreProductsManager: ObservableObject {
         }
     }
     
-    private func checkProductAvailability(productID: String, quantity: Int, completion: @escaping ((Result<Bool, Error>) -> ())) {
+    static func checkProductAvailability(productID: String, quantity: Int, completion: @escaping ((Result<Bool, Error>) -> ())) {
         db.collection(DatabaseCollections.products.rawValue)
             .document(productID)
             .getDocument { documentSnapshot, error in
@@ -175,7 +171,7 @@ class FirestoreProductsManager: ObservableObject {
             }
     }
     
-    func getRatings(completion: @escaping ((Result<[ProductRating]?, Error>) -> ())) {
+    static func getRatings(completion: @escaping ((Result<[ProductRating]?, Error>) -> ())) {
         db.collection(DatabaseCollections.productsRatings.rawValue)
             .addSnapshotListener { querySnapshot, error in
                 if let error = error {
@@ -211,7 +207,7 @@ class FirestoreProductsManager: ObservableObject {
             }
     }
     
-    func getProductRatings(productID: String, completion: @escaping ((Result<[ProductRating]?, Error>) -> ())) {
+    static func getProductRatings(productID: String, completion: @escaping ((Result<[ProductRating]?, Error>) -> ())) {
         db.collection(DatabaseCollections.productsRatings.rawValue)
             .whereField("productID", isEqualTo: productID)
             .addSnapshotListener { querySnapshot, error in
@@ -248,7 +244,7 @@ class FirestoreProductsManager: ObservableObject {
             }
     }
     
-    func getDiscounts(completion: @escaping ((Result<[Discount]?, Error>) -> ())) {
+    static func getDiscounts(completion: @escaping ((Result<[Discount]?, Error>) -> ())) {
         db.collection(DatabaseCollections.discounts.rawValue)
             .getDocuments { querySnapshot, error in
                 if let error = error {
@@ -282,7 +278,7 @@ class FirestoreProductsManager: ObservableObject {
             }
     }
     
-    func getDiscountsFor(productID: String, completion: @escaping ((Result<[Discount]?, Error>) -> ())) {
+    static func getDiscountsFor(productID: String, completion: @escaping ((Result<[Discount]?, Error>) -> ())) {
         db.collection(DatabaseCollections.discounts.rawValue)
             .whereField("productID", isEqualTo: productID)
             .getDocuments { querySnapshot, error in
@@ -317,7 +313,7 @@ class FirestoreProductsManager: ObservableObject {
             }
     }
     
-    func getTrendingSearches(completion: @escaping ((Result<[String]?, Error>) -> ())) {
+    static func getTrendingSearches(completion: @escaping ((Result<[String]?, Error>) -> ())) {
         db.collection(DatabaseCollections.trendingSearches.rawValue)
             .getDocuments { querySnapshot, error in
                 if let error = error {
@@ -339,7 +335,7 @@ class FirestoreProductsManager: ObservableObject {
     
     // MARK: INSERT DATABASE OPERATIONS
     
-    func addProduct(product: Product, completion: @escaping ((VoidResult) -> ())) {
+    static func addProduct(product: Product, completion: @escaping ((VoidResult) -> ())) {
         let productDocumentData: [String: Any] = [
             "id": product.id,
             "name": product.name,
@@ -358,21 +354,21 @@ class FirestoreProductsManager: ObservableObject {
         
         self.db.collection(DatabaseCollections.products.rawValue)
             .document(product.id)
-            .setData(productDocumentData) { [weak self] error in
+            .setData(productDocumentData) { error in
             if let error = error {
                 print("Error creating product's data: \(error.localizedDescription)")
                 completion(.failure(error))
             } else {
                 print("Successfully created product's data in database")
                 
-                self?.addSpecificationForExistingProduct(productID: product.id, productSpecification: product.specification) { result in
+                addSpecificationForExistingProduct(productID: product.id, productSpecification: product.specification) { result in
                     completion(result)
                 }
             }
         }
     }
     
-    func addProductRating(productRating: ProductRating, completion: @escaping ((VoidResult) -> ())) {
+    static func addProductRating(productRating: ProductRating, completion: @escaping ((VoidResult) -> ())) {
         let productRatingDocumentData: [String: Any] = [
             "id": productRating.id,
             "productID": productRating.productID,
@@ -396,7 +392,7 @@ class FirestoreProductsManager: ObservableObject {
         }
     }
     
-    func addSpecificationForExistingProduct(productID: String, productSpecification: ProductSpecification, completion: @escaping ((VoidResult) -> ())) {
+    static func addSpecificationForExistingProduct(productID: String, productSpecification: ProductSpecification, completion: @escaping ((VoidResult) -> ())) {
         let group = DispatchGroup()
         
         for specification in productSpecification {
@@ -423,7 +419,7 @@ class FirestoreProductsManager: ObservableObject {
         }
     }
     
-    func addDiscount(discount: Discount, completion: @escaping ((VoidResult) -> ())) {
+    static func addDiscount(discount: Discount, completion: @escaping ((VoidResult) -> ())) {
         let discountDocumentData: [String: Any] = [
             "id": discount.id,
             "productID": discount.productID,
@@ -450,7 +446,7 @@ class FirestoreProductsManager: ObservableObject {
     
     // MARK: UPDATE DATABASE OPERATIONS
     
-    func editProductsSoldUnitsNumber(productsIDsWithQuantity: [String: Int], completion: @escaping ((VoidResult) -> ())) {
+    static func editProductsSoldUnitsNumber(productsIDsWithQuantity: [String: Int], completion: @escaping ((VoidResult) -> ())) {
         let dispatchGroup: DispatchGroup = DispatchGroup()
         for (productID, quantity) in productsIDsWithQuantity {
             dispatchGroup.enter()
@@ -462,7 +458,7 @@ class FirestoreProductsManager: ObservableObject {
         }
     }
     
-    private func editProductSoldUnitsNumber(productID: String, unitsSold: Int, completion: @escaping ((VoidResult) -> ())) {
+    static func editProductSoldUnitsNumber(productID: String, unitsSold: Int, completion: @escaping ((VoidResult) -> ())) {
         let updateData: [String: Any] = [
             "unitsSold": FieldValue.increment(Double(unitsSold))
         ]
@@ -480,7 +476,7 @@ class FirestoreProductsManager: ObservableObject {
             }
     }
     
-    func editProductsQuantityAvailable(productsIDsWithQuantitySold: [String: Int], completion: @escaping ((VoidResult) -> ())) {
+    static func editProductsQuantityAvailable(productsIDsWithQuantitySold: [String: Int], completion: @escaping ((VoidResult) -> ())) {
         let dispatchGroup: DispatchGroup = DispatchGroup()
         for (productID, quantity) in productsIDsWithQuantitySold {
             dispatchGroup.enter()
@@ -492,7 +488,7 @@ class FirestoreProductsManager: ObservableObject {
         }
     }
     
-    private func editProductQuantityAvailable(productID: String, quantitySold: Int, completion: @escaping ((VoidResult) -> ())) {
+    static func editProductQuantityAvailable(productID: String, quantitySold: Int, completion: @escaping ((VoidResult) -> ())) {
         let updateData: [String: Any] = [
             "productQuantityAvailable": FieldValue.increment(Int64(-quantitySold))
         ]
@@ -511,7 +507,7 @@ class FirestoreProductsManager: ObservableObject {
             }
     }
     
-    func redeemDiscount(userID: String, discount: Discount, completion: @escaping ((VoidResult) -> ())) {
+    static func redeemDiscount(userID: String, discount: Discount, completion: @escaping ((VoidResult) -> ())) {
         let updateData: [String: Any] = [
             "redeemedByUsersIDs": FieldValue.arrayUnion([userID]),
             "redemptionNumber": FieldValue.increment(Int64(1))
@@ -531,7 +527,7 @@ class FirestoreProductsManager: ObservableObject {
             }
     }
     
-    func redeemDiscounts(userID: String, discounts: [Discount], completion: @escaping (() -> ())) {
+    static func redeemDiscounts(userID: String, discounts: [Discount], completion: @escaping (() -> ())) {
         let group = DispatchGroup()
         
         for discount in discounts {
@@ -558,11 +554,5 @@ class FirestoreProductsManager: ObservableObject {
         group.notify(queue: .main) {
             completion()
         }
-    }
-}
-
-extension FirestoreProductsManager: NSCopying {
-    func copy(with zone: NSZone? = nil) -> Any {
-        return self
     }
 }

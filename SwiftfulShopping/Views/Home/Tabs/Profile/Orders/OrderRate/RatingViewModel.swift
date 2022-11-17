@@ -57,7 +57,7 @@ class RatingViewModel: ObservableObject {
             
             showLoadingModal = true
             
-            FirestoreProductsManager.client.addProductRating(productRating: productRating) { [weak self] result in
+            FirestoreProductsManager.addProductRating(productRating: productRating) { [weak self] result in
                 self?.showLoadingModal = false
                 completion(result)
             }

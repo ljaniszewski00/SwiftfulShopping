@@ -39,14 +39,14 @@ class ProfileViewModel: ObservableObject {
     
     func fetchProfile(completion: @escaping ((VoidResult) -> ())) {
         if let user = FirebaseAuthManager.client.user {
-            FirestoreProfileManager.client.getUserProfile(userID: user.uid) { [weak self] result in
+            FirestoreProfileManager.getUserProfile(userID: user.uid) { [weak self] result in
                 switch result {
                 case .success(let profile):
                     self?.profile = profile
                     self?.fetchCreditCard()
                     if let profileImageURL = profile?.imageURL {
                         if !profileImageURL.isEmpty {
-                            FirebaseStorageManager.client.downloadImageFromStorage(userID: user.uid,
+                            FirebaseStorageManager.downloadImageFromStorage(userID: user.uid,
                                                                                    imageURL: profileImageURL) { [weak self] result in
                                 switch result {
                                 case .success(let image):
@@ -105,15 +105,15 @@ class ProfileViewModel: ObservableObject {
             if let profile = self.profile {
                 if let profileImageURL = profile.imageURL {
                     if !profileImageURL.isEmpty {
-                        FirebaseStorageManager.client.deleteImageFromStorage(userID: profile.id,
+                        FirebaseStorageManager.deleteImageFromStorage(userID: profile.id,
                                                                              imageURL: profileImageURL) { _ in }
                     }
-                    FirebaseStorageManager.client.uploadImageToStorage(image: self.image,
+                    FirebaseStorageManager.uploadImageToStorage(image: self.image,
                                                                        userID: profile.id) { [weak self] result in
                         switch result {
                         case .success(let imageUUID):
                             if let imageUUID = imageUUID {
-                                FirestoreProfileManager.client.updateProfileImageURL(profileID: profile.id,
+                                FirestoreProfileManager.updateProfileImageURL(profileID: profile.id,
                                                                                      imageURL: imageUUID) { result in
                                     switch result {
                                     case .success:
@@ -138,7 +138,7 @@ class ProfileViewModel: ObservableObject {
         if let profile = profile {
             for address in profile.shipmentAddresses {
                 if address.description == addressDescription {
-                    FirestoreProfileManager.client.makeAddressDefaultShippingAddress(userID: profile.id,
+                    FirestoreProfileManager.makeAddressDefaultShippingAddress(userID: profile.id,
                                                                                      shipmentAddressToBeMadeDefaultAddress: address) { result in
                         completion(result)
                     }
@@ -168,7 +168,7 @@ class ProfileViewModel: ObservableObject {
                 "email": emailAddress
             ]
             
-            FirestoreProfileManager.client.updateProfileData(profileID: profile.id,
+            FirestoreProfileManager.updateProfileData(profileID: profile.id,
                                                              profileDataToUpdate: profileDataToUpdate) { result in
                 completion(result)
             }
@@ -176,7 +176,7 @@ class ProfileViewModel: ObservableObject {
     }
 
     func addNewAddress(address: Address, toBeDefault: Bool = false, completion: @escaping ((VoidResult) -> ())) {
-        FirestoreAuthenticationManager.client.createShipmentAddress(shipmentAddress: address) { result in
+        FirestoreAuthenticationManager.createShipmentAddress(shipmentAddress: address) { result in
             completion(result)
         }
     }
@@ -191,7 +191,7 @@ class ProfileViewModel: ObservableObject {
 
     func changeDefaultPaymentMethod(newDefaultPaymentMethod: PaymentMethod, completion: @escaping ((VoidResult) -> ())) {
         if let profile = profile {
-            FirestoreProfileManager.client.changeDefaultPaymentMethod(userID: profile.id,
+            FirestoreProfileManager.changeDefaultPaymentMethod(userID: profile.id,
                                                                       newDefaultPaymentMethod: newDefaultPaymentMethod.decodeValue) { result in
                 completion(result)
             }
@@ -207,7 +207,7 @@ class ProfileViewModel: ObservableObject {
                                               rating: rating,
                                               review: review)
             
-            FirestoreProductsManager.client.addProductRating(productRating: productRating) { result in
+            FirestoreProductsManager.addProductRating(productRating: productRating) { result in
                 completion(result)
             }
         }

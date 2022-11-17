@@ -29,7 +29,7 @@ class CartViewModel: ObservableObject {
     }
     
     func fetchDiscounts(completion: @escaping (() -> ())) {
-        FirestoreProductsManager.client.getDiscounts { [weak self] result in
+        FirestoreProductsManager.getDiscounts { [weak self] result in
             switch result {
             case .success(let discounts):
                 self?.availableDiscounts = discounts ?? []
@@ -196,7 +196,7 @@ class CartViewModel: ObservableObject {
             (key.id, value)
         })
         
-        FirestoreProductsManager.client.checkProductsAvailability(productsIDsWithQuantity: productsIDsWithQuantity) { [weak self] result in
+        FirestoreProductsManager.checkProductsAvailability(productsIDsWithQuantity: productsIDsWithQuantity) { [weak self] result in
             self?.showLoadingModal = false
             switch result {
             case .success(let productsAvailability):

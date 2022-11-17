@@ -57,8 +57,8 @@ class PersonalInfoViewModel: ObservableObject {
                 "email": newEmailAddress
             ]
             
-            FirestoreProfileManager.client.updateProfileData(profileID: profileID,
-                                                             profileDataToUpdate: dataToUpdate) { result in
+            FirestoreProfileManager.updateProfileData(profileID: profileID,
+                                                      profileDataToUpdate: dataToUpdate) { result in
                 completion(result)
             }
         }

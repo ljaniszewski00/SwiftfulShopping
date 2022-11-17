@@ -8,28 +8,24 @@
 import Foundation
 import Firebase
 
-class FirestoreProfileManager: ObservableObject {
-    private let db = Firestore.firestore()
-    
-    static var client: FirestoreProfileManager = {
-        FirestoreProfileManager()
-    }()
+struct FirestoreProfileManager {
+    static private let db = Firestore.firestore()
     
     private init() {}
     
     
     // MARK: SELECT DATABASE OPERATIONS
     
-    func getUserProfile(userID: String, completion: @escaping ((Result<Profile?, Error>) -> ())) {
-        getShipmentAddressesFor(userID: userID) { [weak self] getShipmentAddressesResult in
+    static func getUserProfile(userID: String, completion: @escaping ((Result<Profile?, Error>) -> ())) {
+        getShipmentAddressesFor(userID: userID) { getShipmentAddressesResult in
             switch getShipmentAddressesResult {
             case .success(let shipmentAddresses):
                 if let shipmentAddresses = shipmentAddresses {
-                    self?.getInvoiceAddressFor(userID: userID) { [weak self] getInvoiceAddressResult in
+                    getInvoiceAddressFor(userID: userID) { getInvoiceAddressResult in
                         switch getInvoiceAddressResult {
                         case .success(let invoiceAddress):
                             if let invoiceAddress = invoiceAddress {
-                                self?.db.collection(DatabaseCollections.profiles.rawValue)
+                                db.collection(DatabaseCollections.profiles.rawValue)
                                     .whereField("id", isEqualTo: userID)
                                     .addSnapshotListener { (querySnapshot, error) in
                                         if let error = error {
@@ -86,7 +82,7 @@ class FirestoreProfileManager: ObservableObject {
         }
     }
     
-    func getShipmentAddressesFor(userID: String, completion: @escaping ((Result<[Address]?, Error>) -> ())) {
+    static func getShipmentAddressesFor(userID: String, completion: @escaping ((Result<[Address]?, Error>) -> ())) {
         self.db.collection(DatabaseCollections.shipmentAddresses.rawValue)
             .whereField("userID", isEqualTo: userID)
             .addSnapshotListener { (querySnapshot, error) in
@@ -126,7 +122,7 @@ class FirestoreProfileManager: ObservableObject {
             }
     }
     
-    func getInvoiceAddressFor(userID: String, completion: @escaping ((Result<Address?, Error>) -> ())) {
+    static func getInvoiceAddressFor(userID: String, completion: @escaping ((Result<Address?, Error>) -> ())) {
         self.db.collection(DatabaseCollections.invoiceAddresses.rawValue)
             .whereField("userID", isEqualTo: userID)
             .addSnapshotListener { querySnapshot, error in
@@ -169,7 +165,7 @@ class FirestoreProfileManager: ObservableObject {
     
     // MARK: UPDATE DATABASE OPERATIONS
     
-    func updateProfileData(profileID: String, profileDataToUpdate: [String: Any], completion: @escaping ((VoidResult) -> ())) {
+    static func updateProfileData(profileID: String, profileDataToUpdate: [String: Any], completion: @escaping ((VoidResult) -> ())) {
         self.db.collection(DatabaseCollections.profiles.rawValue)
             .document(profileID)
             .getDocument { documentSnapshot, error in
@@ -184,7 +180,7 @@ class FirestoreProfileManager: ObservableObject {
             }
     }
     
-    func updateProfileImageURL(profileID: String, imageURL: String, completion: @escaping ((VoidResult) -> ())) {
+    static func updateProfileImageURL(profileID: String, imageURL: String, completion: @escaping ((VoidResult) -> ())) {
         self.db.collection(DatabaseCollections.profiles.rawValue)
             .document(profileID)
             .getDocument { documentSnapshot, error in
@@ -203,7 +199,7 @@ class FirestoreProfileManager: ObservableObject {
             }
     }
     
-    func updateEmail(newEmail: String, profile: Profile, completion: @escaping ((VoidResult) -> ())) {
+    static func updateEmail(newEmail: String, profile: Profile, completion: @escaping ((VoidResult) -> ())) {
         self.db.collection(DatabaseCollections.profiles.rawValue)
             .document(profile.id)
             .getDocument { documentSnapshot, error in
@@ -222,7 +218,7 @@ class FirestoreProfileManager: ObservableObject {
             }
     }
     
-    func makeAddressInvoiceAddress(shipmentAddressToBeMadeInvoiceAddress: Address, completion: @escaping ((VoidResult) -> ())) {
+    static func makeAddressInvoiceAddress(shipmentAddressToBeMadeInvoiceAddress: Address, completion: @escaping ((VoidResult) -> ())) {
         self.db.collection(DatabaseCollections.invoiceAddresses.rawValue)
             .whereField("userID", isEqualTo: shipmentAddressToBeMadeInvoiceAddress.userID)
             .getDocuments { querySnapshot, error in
@@ -255,7 +251,7 @@ class FirestoreProfileManager: ObservableObject {
             }
     }
     
-    func makeAddressDefaultShippingAddress(userID: String,
+    static func makeAddressDefaultShippingAddress(userID: String,
                                            shipmentAddressToBeMadeDefaultAddress: Address,
                                            completion: @escaping ((VoidResult) -> ())) {
         let dataToUpdateForAllDocuments: [String: Any] = [
@@ -291,7 +287,7 @@ class FirestoreProfileManager: ObservableObject {
             }
     }
     
-    func changeDefaultPaymentMethod(userID: String,
+    static func changeDefaultPaymentMethod(userID: String,
                                     newDefaultPaymentMethod: String,
                                     completion: @escaping ((VoidResult) -> ())) {
         let dataToUpdate: [String: Any] = [
@@ -312,7 +308,7 @@ class FirestoreProfileManager: ObservableObject {
     
     // MARK: DELETE DATABASE OPERATIONS
     
-    func deleteProfile(profile: Profile, completion: @escaping ((VoidResult) -> ())) {
+    static func deleteProfile(profile: Profile, completion: @escaping ((VoidResult) -> ())) {
         self.db.collection(DatabaseCollections.profiles.rawValue)
             .document(profile.id)
             .getDocument { documentSnapshot, error in
@@ -327,7 +323,7 @@ class FirestoreProfileManager: ObservableObject {
             }
     }
     
-    func deleteShipmentAddress(shipmentAddress: Address, completion: @escaping ((VoidResult) -> ())) {
+    static func deleteShipmentAddress(shipmentAddress: Address, completion: @escaping ((VoidResult) -> ())) {
         self.db.collection(DatabaseCollections.shipmentAddresses.rawValue)
             .document(shipmentAddress.id)
             .getDocument { documentSnapshot, error in
@@ -342,7 +338,7 @@ class FirestoreProfileManager: ObservableObject {
             }
     }
     
-    func deleteInvoiceAddress(invoiceAddress: Address, completion: @escaping ((VoidResult) -> ())) {
+    static func deleteInvoiceAddress(invoiceAddress: Address, completion: @escaping ((VoidResult) -> ())) {
         self.db.collection(DatabaseCollections.invoiceAddresses.rawValue)
             .document(invoiceAddress.id)
             .getDocument { documentSnapshot, error in
@@ -355,11 +351,5 @@ class FirestoreProfileManager: ObservableObject {
                     completion(.success)
                 }
             }
-    }
-}
-
-extension FirestoreProfileManager: NSCopying {
-    func copy(with zone: NSZone? = nil) -> Any {
-        return self
     }
 }

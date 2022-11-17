@@ -15,7 +15,7 @@ class DiscountsRepository: ObservableObject {
     }()
     
     func fetchDiscounts(completion: @escaping (([Discount]?) -> ())) {
-        FirestoreProductsManager.client.getDiscounts { [weak self] result in
+        FirestoreProductsManager.getDiscounts { [weak self] result in
             switch result {
             case .success(let discounts):
                 if let discounts = discounts {
@@ -31,7 +31,7 @@ class DiscountsRepository: ObservableObject {
     }
     
     func getDiscountsFor(productID: String, completion: @escaping ((Result<[Discount]?, Error>) -> ())) {
-        FirestoreProductsManager.client.getDiscountsFor(productID: productID) { result in
+        FirestoreProductsManager.getDiscountsFor(productID: productID) { result in
             switch result {
             case .success(let discounts):
                 completion(.success(discounts))

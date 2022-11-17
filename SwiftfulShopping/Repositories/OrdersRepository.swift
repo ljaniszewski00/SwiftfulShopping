@@ -15,7 +15,7 @@ class OrdersRepository: ObservableObject {
     }()
     
     func fetchUserOrders(userID: String, completion: @escaping (([Order]?) -> ())) {
-        FirestoreOrdersManager.client.getUserOrders(userID: userID) { [weak self] result in
+        FirestoreOrdersManager.getUserOrders(userID: userID) { [weak self] result in
             switch result {
             case .success(let userOrders):
                 self?.userOrders = userOrders

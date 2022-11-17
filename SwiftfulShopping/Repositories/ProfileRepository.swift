@@ -15,7 +15,7 @@ class ProfileRepository: ObservableObject {
     }()
     
     func fetchProfile(userID: String, completion: @escaping ((Profile?) -> ())) {
-        FirestoreProfileManager.client.getUserProfile(userID: userID) { [weak self] result in
+        FirestoreProfileManager.getUserProfile(userID: userID) { [weak self] result in
             switch result {
             case .success(let profile):
                 self?.profile = profile

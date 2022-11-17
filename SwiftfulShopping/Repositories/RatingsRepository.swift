@@ -15,7 +15,7 @@ class RatingsRepository: ObservableObject {
     }()
     
     func fetchRatings(completion: @escaping (([ProductRating]?) -> ())) {
-        FirestoreProductsManager.client.getRatings { [weak self] result in
+        FirestoreProductsManager.getRatings { [weak self] result in
             switch result {
             case .success(let ratings):
                 self?.ratings = ratings
@@ -28,7 +28,7 @@ class RatingsRepository: ObservableObject {
     }
     
     func getRatingsFor(productID: String, completion: @escaping ((Result<[ProductRating]?, Error>) -> ())) {
-        FirestoreProductsManager.client.getProductRatings(productID: productID) { result in
+        FirestoreProductsManager.getProductRatings(productID: productID) { result in
             switch result {
             case .success(let rating):
                 completion(.success(rating))

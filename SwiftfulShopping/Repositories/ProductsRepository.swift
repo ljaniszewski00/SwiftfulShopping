@@ -15,7 +15,7 @@ class ProductsRepository: ObservableObject {
     }()
     
     func fetchProducts(completion: @escaping (([Product]?) -> ())) {
-        FirestoreProductsManager.client.getProducts { [weak self] result in
+        FirestoreProductsManager.getProducts { [weak self] result in
             switch result {
             case .success(let products):
                 self?.products = products
@@ -28,7 +28,7 @@ class ProductsRepository: ObservableObject {
     }
     
     func fetchTrendingSearches(completion: @escaping (([String]?) -> ())) {
-        FirestoreProductsManager.client.getTrendingSearches { result in
+        FirestoreProductsManager.getTrendingSearches { result in
             switch result {
             case .success(let searches):
                 completion(searches)

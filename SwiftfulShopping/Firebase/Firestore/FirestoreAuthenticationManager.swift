@@ -8,19 +8,15 @@
 import Foundation
 import Firebase
 
-class FirestoreAuthenticationManager: ObservableObject {
-    private let db = Firestore.firestore()
-    
-    static var client: FirestoreAuthenticationManager = {
-        FirestoreAuthenticationManager()
-    }()
+struct FirestoreAuthenticationManager {
+    static let db = Firestore.firestore()
     
     private init() {}
     
     
     // MARK: SELECT DATABASE OPERATIONS
     
-    func getUsersUIDs(completion: @escaping ((Result<[String]?, Error>) -> ())) {
+    static func getUsersUIDs(completion: @escaping ((Result<[String]?, Error>) -> ())) {
         self.db.collection(DatabaseCollections.profiles.rawValue)
             .getDocuments { querySnapshot, error in
                 if let error = error {
@@ -35,7 +31,7 @@ class FirestoreAuthenticationManager: ObservableObject {
             }
     }
     
-    func listenToUsersUsernamesAndEmails(completion: @escaping ((Result<([String]?, [String]?), Error>)) -> Void) {
+    static func listenToUsersUsernamesAndEmails(completion: @escaping ((Result<([String]?, [String]?), Error>)) -> Void) {
         self.db.collection(DatabaseCollections.profiles.rawValue)
             .addSnapshotListener { querySnapshot, error in
                 if let error = error {
@@ -55,14 +51,14 @@ class FirestoreAuthenticationManager: ObservableObject {
             }
     }
     
-    func cancelListening(listener: ListenerRegistration) {
+    static func cancelListening(listener: ListenerRegistration) {
         listener.remove()
     }
     
     
     // MARK: INSERT DATABASE OPERATIONS
     
-    func createProfile(profile: Profile, completion: @escaping ((VoidResult) -> ())) {
+    static func createProfile(profile: Profile, completion: @escaping ((VoidResult) -> ())) {
         let profileDocumentData: [String: Any] = [
             "id": profile.id,
             "fullName": profile.fullName,
@@ -94,7 +90,7 @@ class FirestoreAuthenticationManager: ObservableObject {
         }
     }
     
-    func createShipmentAddress(shipmentAddress: Address, completion: @escaping ((VoidResult) -> ())) {
+    static func createShipmentAddress(shipmentAddress: Address, completion: @escaping ((VoidResult) -> ())) {
         let shipmentAddressDocumentData: [String: Any] = [
             "id": shipmentAddress.id,
             "userID": shipmentAddress.userID,
@@ -121,7 +117,7 @@ class FirestoreAuthenticationManager: ObservableObject {
         }
     }
     
-    func createInvoiceAddress(invoiceAddress: Address, completion: @escaping ((VoidResult) -> ())) {
+    static func createInvoiceAddress(invoiceAddress: Address, completion: @escaping ((VoidResult) -> ())) {
         let invoiceAddressDocumentData: [String: Any] = [
             "id": invoiceAddress.id,
             "userID": invoiceAddress.userID,
@@ -145,11 +141,5 @@ class FirestoreAuthenticationManager: ObservableObject {
                 completion(.success)
             }
         }
-    }
-}
-
-extension FirestoreAuthenticationManager: NSCopying {
-    func copy(with zone: NSZone? = nil) -> Any {
-        return self
     }
 }

@@ -201,7 +201,7 @@ class FirstTimeLoginViewModel: ObservableObject {
                                       city: city,
                                       country: country,
                                       isDefaultAddress: true)
-        FirestoreAuthenticationManager.client.createShipmentAddress(shipmentAddress: shipmentAddress) { [weak self] result in
+        FirestoreAuthenticationManager.createShipmentAddress(shipmentAddress: shipmentAddress) { [weak self] result in
             switch result {
             case .success:
                 let invoiceAddress: Address?
@@ -230,7 +230,7 @@ class FirstTimeLoginViewModel: ObservableObject {
                     }
                 }
                 
-                FirestoreAuthenticationManager.client.createInvoiceAddress(invoiceAddress: invoiceAddress!) { [weak self] result in
+                FirestoreAuthenticationManager.createInvoiceAddress(invoiceAddress: invoiceAddress!) { [weak self] result in
                     switch result {
                     case .success:
                         let profile = Profile(id: user.uid,
@@ -239,7 +239,7 @@ class FirstTimeLoginViewModel: ObservableObject {
                                               defaultShipmentAddress: shipmentAddress,
                                               invoiceAddress: invoiceAddress!,
                                               createdWith: FirebaseAuthManager.client.loggedWith)
-                        FirestoreAuthenticationManager.client.createProfile(profile: profile) { result in
+                        FirestoreAuthenticationManager.createProfile(profile: profile) { result in
                             switch result {
                             case .success:
                                 completion(.success)

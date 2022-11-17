@@ -18,7 +18,7 @@ class LoginViewModel: ObservableObject {
     @Published var showFirstTimeLoginView: Bool = false
     
     func checkIfUserLoggingFirstTime(completion: @escaping ((Result<Bool, Error>) -> ())) {
-        FirestoreAuthenticationManager.client.getUsersUIDs() { result in
+        FirestoreAuthenticationManager.getUsersUIDs() { result in
             switch result {
             case .success(let usersUIDs):
                 if let usersUIDs = usersUIDs, let user = FirebaseAuthManager.client.user {

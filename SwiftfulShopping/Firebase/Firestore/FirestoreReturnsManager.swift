@@ -8,19 +8,15 @@
 import Foundation
 import Firebase
 
-class FirestoreReturnsManager: ObservableObject {
-    private let db = Firestore.firestore()
-    
-    static var client: FirestoreReturnsManager = {
-        FirestoreReturnsManager()
-    }()
+struct FirestoreReturnsManager {
+    static let db = Firestore.firestore()
     
     private init() {}
     
     
     // MARK: SELECT DATABASE OPERATIONS
     
-    func getUserReturns(userID: String, completion: @escaping ((Result<[Return]?, Error>) -> ())) {
+    static func getUserReturns(userID: String, completion: @escaping ((Result<[Return]?, Error>) -> ())) {
         db.collection(DatabaseCollections.returns.rawValue)
             .whereField("clientID", isEqualTo: userID)
             .getDocuments { (querySnapshot, error) in
@@ -75,7 +71,7 @@ class FirestoreReturnsManager: ObservableObject {
     
     // MARK: INSERT DATABASE OPERATIONS
     
-    func createUserReturn(returnObject: Return, completion: @escaping ((VoidResult) -> ())) {
+    static func createUserReturn(returnObject: Return, completion: @escaping ((VoidResult) -> ())) {
         let profileDocumentData: [String: Any] = [
             "id": returnObject.id,
             "returnDate": returnObject.returnDate,
@@ -109,7 +105,7 @@ class FirestoreReturnsManager: ObservableObject {
     
     // MARK: UPDATE DATABASE OPERATIONS
     
-    func updateReturnStatus(returnObject: Return, newStatus: ReturnStatus, completion: @escaping ((VoidResult) -> ())) {
+    static func updateReturnStatus(returnObject: Return, newStatus: ReturnStatus, completion: @escaping ((VoidResult) -> ())) {
         let updateData: [String: Any] = [
             "status": newStatus.decodeValue
         ]
@@ -126,11 +122,5 @@ class FirestoreReturnsManager: ObservableObject {
                     completion(.success)
                 }
             }
-    }
-}
-
-extension FirestoreReturnsManager: NSCopying {
-    func copy(with zone: NSZone? = nil) -> Any {
-        return self
     }
 }

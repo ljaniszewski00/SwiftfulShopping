@@ -173,14 +173,14 @@ class OrderCreationViewModel: ObservableObject {
                           totalCost: totalCost,
                           status: .placed)
         
-        FirestoreOrdersManager.client.createUserOrder(order: order) { [weak self] result in
+        FirestoreOrdersManager.createUserOrder(order: order) { [weak self] result in
             switch result {
             case .success:
                 self?.createdOrder = order
-                FirestoreProductsManager.client.editProductsSoldUnitsNumber(productsIDsWithQuantity: productsIDsWithQuantity) { _ in
-                    FirestoreProductsManager.client.editProductsQuantityAvailable(productsIDsWithQuantitySold: productsIDsWithQuantity) { _ in
+                FirestoreProductsManager.editProductsSoldUnitsNumber(productsIDsWithQuantity: productsIDsWithQuantity) { _ in
+                    FirestoreProductsManager.editProductsQuantityAvailable(productsIDsWithQuantitySold: productsIDsWithQuantity) { _ in
                         if !appliedDiscounts.isEmpty {
-                            FirestoreProductsManager.client.redeemDiscounts(userID: client.id,
+                            FirestoreProductsManager.redeemDiscounts(userID: client.id,
                                                                             discounts: appliedDiscounts) { [weak self] in
                                 self?.showLoadingModal = false
                                 completion(.success(order.id))

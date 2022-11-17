@@ -106,7 +106,7 @@ class ReturnCreationViewModel: ObservableObject {
                                          bankAccountOwnerCity: city,
                                          bankAccountOwnerCountry: country)
         
-        FirestoreReturnsManager.client.createUserReturn(returnObject: createdReturn) { result in
+        FirestoreReturnsManager.createUserReturn(returnObject: createdReturn) { result in
             switch result {
             case .success:
                 self.createdReturn = createdReturn

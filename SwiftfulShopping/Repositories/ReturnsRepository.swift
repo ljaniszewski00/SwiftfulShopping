@@ -17,7 +17,7 @@ class ReturnsRepository: ObservableObject {
     private init() {}
     
     func fetchUserReturns(userID: String, completion: @escaping (([Return]?) -> ())) {
-        FirestoreReturnsManager.client.getUserReturns(userID: userID) { [weak self] result in
+        FirestoreReturnsManager.getUserReturns(userID: userID) { [weak self] result in
             switch result {
             case .success(let userReturns):
                 self?.userReturns = userReturns

@@ -42,7 +42,7 @@ class RegisterViewModel: ObservableObject {
     @Published var showLoadingModal: Bool = false
     
     func onFirstRegisterViewAppear() {
-        FirestoreAuthenticationManager.client.listenToUsersUsernamesAndEmails { result in
+        FirestoreAuthenticationManager.listenToUsersUsernamesAndEmails { result in
             switch result {
             case .success(let (usersUsernames, usersEmails)):
                 self.usersUsernames = usersUsernames
@@ -322,7 +322,7 @@ class RegisterViewModel: ObservableObject {
                                       city: city,
                                       country: country,
                                       isDefaultAddress: true)
-        FirestoreAuthenticationManager.client.createShipmentAddress(shipmentAddress: shipmentAddress) { [weak self] result in
+        FirestoreAuthenticationManager.createShipmentAddress(shipmentAddress: shipmentAddress) { [weak self] result in
             switch result {
             case .success:
                 let invoiceAddress: Address?
@@ -351,7 +351,7 @@ class RegisterViewModel: ObservableObject {
                     }
                 }
                 
-                FirestoreAuthenticationManager.client.createInvoiceAddress(invoiceAddress: invoiceAddress!) { [weak self] result in
+                FirestoreAuthenticationManager.createInvoiceAddress(invoiceAddress: invoiceAddress!) { [weak self] result in
                     switch result {
                     case .success:
                         if let fullName = self?.fullName,
@@ -368,7 +368,7 @@ class RegisterViewModel: ObservableObject {
                                                   invoiceAddress: invoiceAddress!,
                                                   createdWith: FirebaseAuthManager.client.loggedWith)
                             
-                            FirestoreAuthenticationManager.client.createProfile(profile: profile) { result in
+                            FirestoreAuthenticationManager.createProfile(profile: profile) { result in
                                 switch result {
                                 case .success:
                                     completion(.success)
