@@ -230,7 +230,7 @@ struct ExploreView: View {
     
     @ViewBuilder
     func prepareProductsListFor(products: [Product]) -> some View {
-        VStack {
+        LazyVStack {
             ForEach(products, id: \.id) { product in
                 Button {
                     withAnimation(.interactiveSpring(response: 0.6, dampingFraction: 0.7, blendDuration: 0.7)) {

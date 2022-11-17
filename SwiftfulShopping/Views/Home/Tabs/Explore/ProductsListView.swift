@@ -32,22 +32,24 @@ struct ProductsListView: View {
             buildFilterDisplayMethodPane()
             
             ScrollView(.vertical, showsIndicators: false) {
-                ForEach(exploreViewModel.changingProductsToBeDisplayed, id: \.id) { product in
-                    Button {
-                        withAnimation(.interactiveSpring(response: 0.6, dampingFraction: 0.7, blendDuration: 0.7)) {
-                            exploreViewModel.shouldPresentProductDetailsViewFromProductsListView = true
-                            exploreViewModel.changeFocusedProductFor(product: product)
+                LazyVStack {
+                    ForEach(exploreViewModel.changingProductsToBeDisplayed, id: \.id) { product in
+                        Button {
+                            withAnimation(.interactiveSpring(response: 0.6, dampingFraction: 0.7, blendDuration: 0.7)) {
+                                exploreViewModel.shouldPresentProductDetailsViewFromProductsListView = true
+                                exploreViewModel.changeFocusedProductFor(product: product)
+                            }
+                        } label: {
+                            if displayMethod == .list {
+                                ListProductCardTileView(product: product,
+                                                        productRatings: exploreViewModel.getRatingsFor(product: product))
+                            } else {
+                                GridProductCardTileView(product: product,
+                                                        productRatings: exploreViewModel.getRatingsFor(product: product))
+                            }
                         }
-                    } label: {
-                        if displayMethod == .list {
-                            ListProductCardTileView(product: product,
-                                                    productRatings: exploreViewModel.getRatingsFor(product: product))
-                        } else {
-                            GridProductCardTileView(product: product,
-                                                    productRatings: exploreViewModel.getRatingsFor(product: product))
-                        }
+                        .buttonStyle(ScaledButtonStyle())
                     }
-                    .buttonStyle(ScaledButtonStyle())
                 }
             }
             

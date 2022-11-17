@@ -327,6 +327,7 @@
 		889EDFC4290F2B4500EBFFC1 /* ErrorsLocalizable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 889EDFC3290F2B4500EBFFC1 /* ErrorsLocalizable.swift */; };
 		889EDFC8290F2B5000EBFFC1 /* AddToCartButtonLocalizable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 889EDFC7290F2B5000EBFFC1 /* AddToCartButtonLocalizable.swift */; };
 		88A946AF29099F850086A8A1 /* AddToCartButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88A946AE29099F850086A8A1 /* AddToCartButton.swift */; };
+		88D69AE82926A74500F6A305 /* AvailabilityIndicatorLocalizable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88D69AE72926A74500F6A305 /* AvailabilityIndicatorLocalizable.swift */; };
 		88D94FCF290B358500F9F995 /* ExpandableText.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88D94FCE290B358500F9F995 /* ExpandableText.swift */; };
 		88DC09E429132E8B002F41C3 /* CustomDatePickerLocalizable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88DC09E329132E8B002F41C3 /* CustomDatePickerLocalizable.swift */; };
 		88DC09E6291330AA002F41C3 /* HomeViewLocalizable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88DC09E5291330AA002F41C3 /* HomeViewLocalizable.swift */; };
@@ -616,6 +617,7 @@
 		889EDFC3290F2B4500EBFFC1 /* ErrorsLocalizable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ErrorsLocalizable.swift; sourceTree = "<group>"; };
 		889EDFC7290F2B5000EBFFC1 /* AddToCartButtonLocalizable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddToCartButtonLocalizable.swift; sourceTree = "<group>"; };
 		88A946AE29099F850086A8A1 /* AddToCartButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddToCartButton.swift; sourceTree = "<group>"; };
+		88D69AE72926A74500F6A305 /* AvailabilityIndicatorLocalizable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AvailabilityIndicatorLocalizable.swift; sourceTree = "<group>"; };
 		88D94FCE290B358500F9F995 /* ExpandableText.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExpandableText.swift; sourceTree = "<group>"; };
 		88DC09E329132E8B002F41C3 /* CustomDatePickerLocalizable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomDatePickerLocalizable.swift; sourceTree = "<group>"; };
 		88DC09E5291330AA002F41C3 /* HomeViewLocalizable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewLocalizable.swift; sourceTree = "<group>"; };
@@ -1548,6 +1550,7 @@
 				88DC09E329132E8B002F41C3 /* CustomDatePickerLocalizable.swift */,
 				88DC09E7291332CA002F41C3 /* ExpandableTextLocalizable.swift */,
 				88DEDD452916839F003EFA44 /* SelectionDropdownMenuLocalizable.swift */,
+				88D69AE72926A74500F6A305 /* AvailabilityIndicatorLocalizable.swift */,
 			);
 			path = Other;
 			sourceTree = "<group>";
@@ -2060,6 +2063,7 @@
 				0A83216328D91D96008234C2 /* SignInMethod.swift in Sources */,
 				0A2D5FB728BA2BC300E76D71 /* SelectionDropdownMenu.swift in Sources */,
 				0A49CEB628EE04C30064D3DD /* FirebaseStorageManager.swift in Sources */,
+				88D69AE82926A74500F6A305 /* AvailabilityIndicatorLocalizable.swift in Sources */,
 				0A83215F28D91216008234C2 /* FirebaseAuthManager.swift in Sources */,
 				0A3B08E828AD921C00A54385 /* CameraView.swift in Sources */,
 				0ACD58F7284A6F6600AA9DA0 /* Hidden.swift in Sources */,

@@ -85,7 +85,10 @@ struct ProductDetailsView: View {
                             
                             Spacer()
                             
-                            ProductAvailabilityIndicator(availability: product.availability, font: .ssCallout)
+                            ProductAvailabilityIndicator(availability: product.availability,
+                                                         unitsAvailable: product.productQuantityAvailable,
+                                                         font: .ssCallout,
+                                                         showAvailableUnitsText: true)
                         }
                     }
                     .padding(.horizontal)
