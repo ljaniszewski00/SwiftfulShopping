@@ -13,7 +13,6 @@ class CameraViewModel: NSObject, ObservableObject, AVCaptureVideoDataOutputSampl
     
     @Published var captureSession = AVCaptureSession()
     @Published var captureOutput = AVCaptureVideoDataOutput()
-    @Published var capturePreview: AVCaptureVideoPreviewLayer!
     
     func onAppear() {
         checkPermission { [weak self] permissionGranted in

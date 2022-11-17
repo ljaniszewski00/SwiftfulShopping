@@ -22,10 +22,6 @@ struct ProductRecognizerView: View {
     @Environment(\.dismiss) private var dismiss: DismissAction
     @Environment(\.colorScheme) private var colorScheme: ColorScheme
     
-    private let gridColumns = [GridItem(.flexible(), spacing: 0),
-                               GridItem(.flexible(), spacing: 0),
-                               GridItem(.flexible(), spacing: 0)]
-    
     var body: some View {
         ZStack {
             GeometryReader { geometry in

@@ -38,7 +38,7 @@ class ProductRecognizer: ObservableObject {
             }
             let result = prepareRecognitionResults(requests: requests, errorManager: errorManager)
             self.recognitionResult = result
-            print(self.recognitionResult)
+//            print(self.recognitionResult)
             completion()
         }
     }

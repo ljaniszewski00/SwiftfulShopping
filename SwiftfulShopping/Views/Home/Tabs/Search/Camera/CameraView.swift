@@ -15,18 +15,19 @@ struct CameraView: UIViewRepresentable {
     
     func makeUIView(context: Context) -> UIView {
         let view = UIView()
-        
-        cameraViewModel.capturePreview = AVCaptureVideoPreviewLayer(session: cameraViewModel.captureSession)
-        cameraViewModel.capturePreview.frame.size = size
-        
-        cameraViewModel.capturePreview.videoGravity = .resizeAspectFill
-        
-        view.layer.addSublayer(cameraViewModel.capturePreview)
-        
+        view.layer.addSublayer(setupCapturePreview())
         return view
     }
     
     func updateUIView(_ uiView: UIView, context: Context) {
         
+    }
+    
+    private func setupCapturePreview() -> AVCaptureVideoPreviewLayer {
+        let capturePreview = AVCaptureVideoPreviewLayer(session: cameraViewModel.captureSession)
+        capturePreview.frame.size = size
+        capturePreview.videoGravity = .resizeAspectFill
+        print("HERE")
+        return capturePreview
     }
 }
