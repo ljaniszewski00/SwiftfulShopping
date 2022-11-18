@@ -195,7 +195,7 @@ struct OrderDetailsView: View {
                 .isDetailLink(false)
             
         }
-        .padding(.bottom, tabBarStateManager.tabBarSize.height * 0.6)
+        .padding(.bottom, tabBarStateManager.screenBottomPaddingForViews)
         .navigationTitle("\(TexterifyManager.localisedString(key: .orderDetailsView(.navigationTitle))) \(order.id)")
         .navigationBarTitleDisplayMode(.inline)
         .navigationBarBackButtonHidden(true)

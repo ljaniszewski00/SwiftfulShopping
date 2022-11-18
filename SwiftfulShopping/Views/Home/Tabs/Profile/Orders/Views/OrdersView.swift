@@ -65,6 +65,7 @@ struct OrdersView: View {
                 }
             }
         }
+        .padding(.bottom, tabBarStateManager.screenBottomPaddingForViews)
         .listStyle(.grouped)
         .refreshable {
             profileViewModel.fetchUserOrders {

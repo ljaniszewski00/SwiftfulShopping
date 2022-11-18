@@ -71,7 +71,7 @@ struct ExploreView: View {
                         }
                         .id(0)
                         .readingScrollView(from: "scroll", into: $offset)
-                        .padding(.bottom, 70)
+                        .padding(.bottom, tabBarStateManager.screenBottomPaddingForViews)
                     }
                     .coordinateSpace(name: "scroll")
                     .onChange(of: exploreViewModel.scrollProductsListToBeginning) { newValue in

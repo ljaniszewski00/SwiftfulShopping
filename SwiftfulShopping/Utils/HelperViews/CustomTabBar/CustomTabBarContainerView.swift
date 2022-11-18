@@ -28,7 +28,6 @@ struct CustomTabBarContainerView<Content: View>: View {
     var body: some View {
         ZStack(alignment: .bottom) {
             content
-                .padding(.bottom, tabBarStateManager.tabBarSize.height)
                 .ignoresSafeArea()
             
             CustomTabBarView(selection: $selection,
@@ -37,6 +36,9 @@ struct CustomTabBarContainerView<Content: View>: View {
                              shoppingCartProductsNumber: shoppingCartProductsNumber)
             .environmentObject(tabBarStateManager)
             .measureSize(size: $tabBarStateManager.tabBarSize)
+            .onChange(of: tabBarStateManager.tabBarSize) { newSize in
+                tabBarStateManager.changeTabBarValuesFor(tabBarNewSize: newSize)
+            }
         }
         .onPreferenceChange(TabBarItemsPreferenceKey.self) { value in
             self.tabs = value

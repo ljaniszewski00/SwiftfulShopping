@@ -10,6 +10,12 @@ import SwiftUI
 class TabBarStateManager: ObservableObject {
     @Published var isHidden = false
     @Published var tabBarSize: CGSize = .zero
+    var tabBarFirstAppearSet: Bool = false
+    var tabBarActualSize: CGSize = .zero
+    
+    var screenBottomPaddingForViews: CGFloat {
+        tabBarSize.height + 15
+    }
     
     func hideTabBar() {
         isHidden = true
@@ -18,5 +24,16 @@ class TabBarStateManager: ObservableObject {
     
     func showTabBar() {
         isHidden = false
+    }
+    
+    func changeTabBarValuesFor(tabBarNewSize: CGSize) {
+        if tabBarNewSize != .zero {
+            if !tabBarFirstAppearSet {
+                tabBarActualSize = tabBarNewSize
+                tabBarFirstAppearSet = true
+            } else {
+                tabBarSize = tabBarActualSize
+            }
+        }
     }
 }
