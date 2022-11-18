@@ -13,7 +13,6 @@ struct CustomTabBarView: View {
     
     @Binding var selection: TabBarItem
     let tabs: [TabBarItem]
-    @Namespace private var namespace
     @State var localSelection: TabBarItem
     
     var body: some View {
@@ -39,6 +38,9 @@ struct CustomTabBarView: View {
                     localSelection = selection
                 }
             }
+            .animation(.default)
+            .transition(.move(edge: .bottom))
+            .zIndex(1)
         }
     }
 }
@@ -79,16 +81,6 @@ extension CustomTabBarView {
         .foregroundColor(localSelection == tab ? .accentColor : .ssDarkGray)
         .padding(.vertical, 8)
         .frame(maxWidth: .infinity)
-        .background {
-            ZStack {
-                if localSelection == tab {
-                    RoundedRectangle(cornerRadius: 4)
-                        .fill(Color.accentColor.opacity(0.2))
-                        .matchedGeometryEffect(id: "background_rectangle",
-                                               in: namespace)
-                }
-            }
-        }
     }
     
     private func switchToTab(tab: TabBarItem) {

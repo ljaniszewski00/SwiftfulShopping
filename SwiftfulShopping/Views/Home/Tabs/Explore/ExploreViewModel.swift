@@ -47,9 +47,11 @@ class ExploreViewModel: ObservableObject {
     @Published var categoriesTileSize: CGSize = .zero
     
     func fetchData(completion: @escaping (() -> ())) {
+        showLoadingModal = true
         fetchProducts { [weak self] in
             self?.fetchRatings {
                 self?.getCategoriesImages {
+                    self?.showLoadingModal = false
                     completion()
                 }
             }
