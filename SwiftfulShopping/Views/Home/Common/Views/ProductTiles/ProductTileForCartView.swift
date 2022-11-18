@@ -46,7 +46,7 @@ struct ProductTileForCartView: View {
             Spacer()
 
             VStack(alignment: .leading, spacing: 40) {
-                VStack(alignment: .leading, spacing: 10) {
+                LazyVStack(alignment: .leading, spacing: 10) {
                     Text(product.company)
                         .font(.ssCaption1)
                         .foregroundColor(.ssDarkGray)

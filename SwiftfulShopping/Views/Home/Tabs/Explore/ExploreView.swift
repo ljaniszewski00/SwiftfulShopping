@@ -65,9 +65,6 @@ struct ExploreView: View {
                                                                            productRatings: exploreViewModel.getRatingsFor(product: exploreViewModel.choosenProduct ?? Product.demoProducts[0]))
                                                             .onAppear {
                                                                 tabBarStateManager.hideTabBar()
-                                                            }
-                                                            .onDisappear {
-                                                                tabBarStateManager.showTabBar()
                                                             },
                                            isActive: $exploreViewModel.shouldPresentProductDetailsView,
                                            label: { EmptyView() })
@@ -108,6 +105,9 @@ struct ExploreView: View {
                         .zIndex(1)
                     }
                 }
+            }
+            .onAppear {
+                tabBarStateManager.showTabBar()
             }
             .modifier(LoadingIndicatorModal(isPresented: $cartViewModel.showLoadingModal))
             .navigationTitle(TexterifyManager.localisedString(key: .exploreView(.navigationTitle)))

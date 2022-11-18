@@ -178,9 +178,6 @@ struct SearchView: View {
                 NavigationLink(destination: ProductRecognizerView()
                                                 .onAppear {
                                                     tabBarStateManager.hideTabBar()
-                                                }
-                                                .onDisappear {
-                                                    tabBarStateManager.showTabBar()
                                                 },
                                isActive: $searchViewModel.shouldPresentProductRecognizerView,
                                label: { EmptyView() })
@@ -193,6 +190,9 @@ struct SearchView: View {
                                                 },
                                isActive: $searchViewModel.shouldPresentProductDetailsView,
                                label: { EmptyView() })
+            }
+            .onAppear {
+                tabBarStateManager.showTabBar()
             }
             .modifier(LoadingIndicatorModal(isPresented: $cartViewModel.showLoadingModal))
             .navigationTitle(TexterifyManager.localisedString(key: .searchView(.navigationTitle)))

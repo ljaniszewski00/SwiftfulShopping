@@ -59,15 +59,15 @@ struct ProductsListView: View {
                                                                productRatings: productsRatings)
                                                 .onAppear {
                                                     tabBarStateManager.hideTabBar()
-                                                }
-                                                .onDisappear {
-                                                    tabBarStateManager.showTabBar()
                                                 },
                                isActive: $exploreViewModel.shouldPresentProductDetailsViewFromProductsListView,
                                label: { EmptyView() })
             }
         }
         .padding()
+        .onAppear {
+            tabBarStateManager.showTabBar()
+        }
         .sheet(isPresented: $exploreViewModel.presentSortingAndFilteringSheet) {
             SortingAndFilteringSheetView()
         }

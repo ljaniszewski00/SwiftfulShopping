@@ -53,9 +53,6 @@ struct FavoritesView: View {
                                                                        productRatings: exploreViewModel.getRatingsFor(product: favoritesViewModel.choosenProduct ?? Product.demoProducts[0]))
                                                         .onAppear {
                                                             tabBarStateManager.hideTabBar()
-                                                        }
-                                                        .onDisappear {
-                                                            tabBarStateManager.showTabBar()
                                                         },
                                        isActive: $favoritesViewModel.shouldPresentProductDetailsView,
                                        label: { EmptyView() })
@@ -63,6 +60,9 @@ struct FavoritesView: View {
                 }
             }
             .padding()
+            .onAppear {
+                tabBarStateManager.showTabBar()
+            }
             .navigationTitle(TexterifyManager.localisedString(key: .favoritesView(.navigationTitle)))
             .navigationBarTitleDisplayMode(.inline)
         }

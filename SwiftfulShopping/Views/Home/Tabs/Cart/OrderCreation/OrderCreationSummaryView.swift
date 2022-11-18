@@ -195,13 +195,13 @@ struct OrderCreationSummaryView: View {
                                             .environmentObject(orderCreationViewModel)
                                             .onAppear {
                                                 tabBarStateManager.hideTabBar()
-                                            }
-                                            .onDisappear {
-                                                tabBarStateManager.showTabBar()
                                             },
                            isActive: $orderCreationViewModel.shouldPresentOrderCreationCompletionView,
                            label: { EmptyView() })
             .isDetailLink(false)
+        }
+        .onAppear {
+            tabBarStateManager.showTabBar()
         }
         .modifier(LoadingIndicatorModal(isPresented:
                                             $orderCreationViewModel.showLoadingModal))

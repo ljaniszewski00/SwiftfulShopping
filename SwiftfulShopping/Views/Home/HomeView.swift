@@ -36,7 +36,8 @@ struct HomeView: View {
     
     var body: some View {
         if firebaseAuthManager.isLogged {
-            CustomTabBarContainerView(selection: $tabSelection) {
+            CustomTabBarContainerView(selection: $tabSelection,
+                                      shoppingCartProductsNumber: cartViewModel.cartAllProductsQuantityCount) {
                 ExploreView()
                     .environmentObject(firebaseAuthManager)
                     .environmentObject(tabBarStateManager)
@@ -133,9 +134,16 @@ struct HomeView: View {
                     completion()
                 }
             case .failure(let error):
-                errorManager.generateCustomError(errorType: .dataFetchError,
-                                                 additionalErrorDescription: error.localizedDescription)
-                completion()
+                profileViewModel.signOut { result in
+                    switch result {
+                    case .success:
+                        break
+                    case .failure(_):
+                        errorManager.generateCustomError(errorType: .dataFetchError,
+                                                         additionalErrorDescription: error.localizedDescription)
+                    }
+                    completion()
+                }
             }
         }
     }

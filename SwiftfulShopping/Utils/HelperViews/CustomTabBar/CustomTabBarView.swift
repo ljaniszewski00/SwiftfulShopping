@@ -10,10 +10,10 @@ import texterify_ios_sdk
 
 struct CustomTabBarView: View {
     @EnvironmentObject private var tabBarStateManager: TabBarStateManager
-    
     @Binding var selection: TabBarItem
-    let tabs: [TabBarItem]
     @State var localSelection: TabBarItem
+    let tabs: [TabBarItem]
+    var shoppingCartProductsNumber: Int = 0
     
     var body: some View {
         if !tabBarStateManager.isHidden {
@@ -57,8 +57,8 @@ struct CustomTabBarView_Previews: PreviewProvider {
                 VStack {
                     Spacer()
                     CustomTabBarView(selection: .constant(tabs.first!),
-                                     tabs: tabs,
-                                     localSelection: tabs.first!)
+                                     localSelection: tabs.first!,
+                                     tabs: tabs)
                     .environmentObject(tabBarStateManager)
                 }
                 .previewDevice(PreviewDevice(rawValue: deviceName))
@@ -81,6 +81,20 @@ extension CustomTabBarView {
         .foregroundColor(localSelection == tab ? .accentColor : .ssDarkGray)
         .padding(.vertical, 8)
         .frame(maxWidth: .infinity)
+        .if(tab == .cart && shoppingCartProductsNumber > 0) {
+            $0
+                .overlay(
+                    Text(String(shoppingCartProductsNumber))
+                        .font(.ssCaption1)
+                        .foregroundColor(.ssWhite)
+                        .padding(.all, shoppingCartProductsNumber >= 10 ? 2 : 5)
+                        .background {
+                            Circle()
+                                .foregroundColor(.red)
+                        }
+                        .offset(x: 17, y: -22)
+                )
+        }
     }
     
     private func switchToTab(tab: TabBarItem) {
