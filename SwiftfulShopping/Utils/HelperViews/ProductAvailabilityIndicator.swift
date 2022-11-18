@@ -49,7 +49,7 @@ struct ProductAvailabilityIndicator: View {
         VStack(alignment: .leading, spacing: 5) {
             HStack(spacing: 10) {
                 Circle()
-                    .foregroundColor(.green)
+                    .foregroundColor(circleColor)
                     .frame(width: 13)
                 Text(availabilityText)
             }
