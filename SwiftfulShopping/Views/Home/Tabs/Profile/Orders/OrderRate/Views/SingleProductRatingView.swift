@@ -102,7 +102,8 @@ struct SingleProductRatingView: View {
                     .buttonStyle(CustomButton(textColor: .ssWhite))
                     .disabled(ratingViewModel.cannotAddOpinion)
                 }
-                .padding()
+                .padding([.horizontal, .top])
+                .padding(.bottom, tabBarStateManager.screenBottomPaddingForViews)
             }
             .modifier(LoadingIndicatorModal(isPresented:
                                                 $ratingViewModel.showLoadingModal))

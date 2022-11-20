@@ -214,13 +214,10 @@ struct SettingsView: View {
                         .font(.title)
                         .foregroundColor(.accentColor)
                         .frame(width: 30)
-                    Text(TexterifyManager.localisedString(key: .settingsView(.followMeOnGithub)))
-                        .font(.ssButton).fontWeight(.regular)
-                        .fixedSize(horizontal: true, vertical: false)
-                    Link("ljaniszewski00", destination: settingsViewModel.authorGitHubURL)
+                    Link(TexterifyManager.localisedString(key: .settingsView(.followMeOnGithub)),
+                         destination: settingsViewModel.authorGitHubURL)
                         .foregroundColor(.accentColor)
                         .font(.ssCallout)
-                        .fixedSize(horizontal: false, vertical: true)
                 }
             } header: {
                 Text(TexterifyManager.localisedString(key: .settingsView(.additionalSectionHeader)))

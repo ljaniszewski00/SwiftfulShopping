@@ -65,7 +65,8 @@ struct CompletionReturnCreationView: View {
             }
             .buttonStyle(CustomButton())
         }
-        .padding()
+        .padding([.horizontal, .top])
+        .padding(.bottom, tabBarStateManager.screenBottomPaddingForViews)
         .navigationTitle(TexterifyManager.localisedString(key: .completionReturnCreationView(.navigationTitle)))
         .navigationBarTitleDisplayMode(.inline)
         .navigationBarBackButtonHidden(true)

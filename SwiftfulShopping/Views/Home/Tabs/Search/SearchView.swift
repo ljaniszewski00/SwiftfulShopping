@@ -125,6 +125,7 @@ struct SearchView: View {
                                     }
                                 }
                             }
+                            .padding(.bottom, tabBarStateManager.screenBottomPaddingForViews)
                         }
                         .id(0)
                         .readingScrollView(from: "scroll", into: $offset)

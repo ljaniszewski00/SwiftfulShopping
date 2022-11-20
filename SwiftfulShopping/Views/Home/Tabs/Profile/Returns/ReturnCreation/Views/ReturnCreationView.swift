@@ -96,8 +96,8 @@ struct ReturnCreationView: View {
                 .disabled(returnCreationViewModel.productsForReturn.isEmpty)
                 .contentShape(Rectangle())
             }
-            .padding()
-            .padding(.bottom, tabBarStateManager.tabBarSize.height * 0.6)
+            .padding([.horizontal, .top])
+            .padding(.bottom, tabBarStateManager.screenBottomPaddingForViews)
         }
         .navigationTitle(TexterifyManager.localisedString(key: .returnCreationView(.navigationTitle)))
         .navigationBarTitleDisplayMode(.inline)

@@ -98,7 +98,8 @@ struct AddNewAddressView: View {
                 .contentShape(Rectangle())
                 .disabled(personalInfoViewModel.newAddressFieldsNotValidated)
             }
-            .padding()
+            .padding([.horizontal, .top])
+            .padding(.bottom, tabBarStateManager.screenBottomPaddingForViews)
         }
         .modifier(LoadingIndicatorModal(isPresented:
                                             $personalInfoViewModel.showLoadingModal))

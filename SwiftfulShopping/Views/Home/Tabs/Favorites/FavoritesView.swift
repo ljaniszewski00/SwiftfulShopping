@@ -46,7 +46,7 @@ struct FavoritesView: View {
                                     .buttonStyle(ScaledButtonStyle())
                                 }
                             }
-                            .padding(.bottom, 70)
+                            .padding(.bottom, tabBarStateManager.screenBottomPaddingForViews)
                         }
                         
                         NavigationLink(destination: ProductDetailsView(product: favoritesViewModel.choosenProduct ?? Product.demoProducts[0],

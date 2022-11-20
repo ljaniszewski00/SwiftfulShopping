@@ -81,7 +81,8 @@ struct ThirdReturnCreationView: View {
                            isActive: $returnCreationViewModel.shouldPresentCompletionReturnCreationView) { EmptyView() }
                 .isDetailLink(false)
         }
-        .padding()
+        .padding([.horizontal, .top])
+        .padding(.bottom, tabBarStateManager.screenBottomPaddingForViews)
         .navigationTitle(TexterifyManager.localisedString(key: .thirdReturnCreationView(.navigationTitle)))
         .navigationBarTitleDisplayMode(.inline)
         .navigationBarBackButtonHidden(true)

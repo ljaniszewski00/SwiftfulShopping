@@ -112,7 +112,7 @@ struct CartView: View {
                             checkoutButton
                         }
                         .padding(.horizontal)
-                        .padding(.bottom, 80)
+                        .padding(.bottom, tabBarStateManager.screenBottomPaddingForViews)
                         
                         NavigationLink(destination: ProductDetailsView(product: cartViewModel.choosenProduct ??
                                                                        Product.demoProducts[0],

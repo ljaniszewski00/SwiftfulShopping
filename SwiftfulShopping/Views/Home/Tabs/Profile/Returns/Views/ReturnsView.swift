@@ -65,6 +65,7 @@ struct ReturnsView: View {
                 }
             }
         }
+        .padding(.bottom, tabBarStateManager.screenBottomPaddingForViews)
         .listStyle(.grouped)
         .navigationTitle(TexterifyManager.localisedString(key: .returnsView(.navigationTitle)))
         .navigationBarTitleDisplayMode(.large)

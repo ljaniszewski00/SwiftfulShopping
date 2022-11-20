@@ -90,7 +90,7 @@ struct ReturnDetailsView: View {
                 .padding()
             }
         }
-        .padding(.bottom, tabBarStateManager.tabBarSize.height * 0.6)
+        .padding(.bottom, tabBarStateManager.screenBottomPaddingForViews)
         .navigationTitle("\(TexterifyManager.localisedString(key: .returnDetailsView(.navigationTitle))) \(userReturn.id)")
         .navigationBarTitleDisplayMode(.inline)
         .navigationBarBackButtonHidden(true)

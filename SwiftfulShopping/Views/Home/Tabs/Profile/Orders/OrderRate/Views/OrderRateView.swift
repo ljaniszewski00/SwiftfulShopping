@@ -33,8 +33,9 @@ struct OrderRateView: View {
                            isActive: $ratingViewModel.shouldPresentSingleProductRatingPage) { EmptyView() }
                 .isDetailLink(false)
         }
+        .padding(.bottom, tabBarStateManager.screenBottomPaddingForViews)
         .navigationTitle(TexterifyManager.localisedString(key: .orderRateView(.navigationTitle)))
-        .navigationBarTitleDisplayMode(.inline)
+        .navigationBarTitleDisplayMode(.large)
         .navigationBarBackButtonHidden(true)
         .toolbar {
             ToolbarItem(placement: .navigationBarLeading) {

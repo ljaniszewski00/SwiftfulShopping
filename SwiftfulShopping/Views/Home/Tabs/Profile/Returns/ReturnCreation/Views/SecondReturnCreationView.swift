@@ -73,7 +73,8 @@ struct SecondReturnCreationView: View {
                 .contentShape(Rectangle())
                 .disabled(returnCreationViewModel.fieldsNotValidated)
             }
-            .padding()
+            .padding([.horizontal, .top])
+            .padding(.bottom, tabBarStateManager.screenBottomPaddingForViews)
         }
         .navigationTitle(TexterifyManager.localisedString(key: .secondReturnCreationView(.navigationTitle)))
         .navigationBarTitleDisplayMode(.inline)

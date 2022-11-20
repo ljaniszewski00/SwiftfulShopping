@@ -75,7 +75,8 @@ struct AccentColorChangeView: View {
             Spacer()
         }
         .padding()
-        .navigationTitle(TexterifyManager.localisedString(key: .accentColorChangeView(.navigationTitle)))
+        .navigationTitle("")
+        .navigationBarTitleDisplayMode(.inline)
         .navigationBarHidden(false)
         .navigationBarBackButtonHidden(true)
         .toolbar {

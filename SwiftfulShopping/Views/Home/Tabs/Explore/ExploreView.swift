@@ -99,7 +99,7 @@ struct ExploreView: View {
                                 }
                         }
                         .padding()
-                        .padding(.bottom, 60)
+                        .padding(.bottom, tabBarStateManager.screenBottomPaddingForViews)
                         .transition(.move(edge: .trailing))
                         .animation(.default)
                         .zIndex(1)
