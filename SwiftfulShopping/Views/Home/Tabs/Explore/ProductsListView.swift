@@ -14,7 +14,7 @@ struct ProductsListView: View {
     @Environment(\.dismiss) private var dismiss: DismissAction
     @Environment(\.colorScheme) private var colorScheme: ColorScheme
     
-    @AppStorage("productsListDisplayMethod") var displayMethod: ProductDisplayMethod = .list
+    @AppStorage(AppStorageConstants.productsListDisplayMethod) var displayMethod: ProductDisplayMethod = .list
     
     private var navigationTitle: String {
         switch exploreViewModel.productsForSource {

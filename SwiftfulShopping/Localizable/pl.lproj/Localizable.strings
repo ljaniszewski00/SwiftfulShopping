@@ -494,7 +494,8 @@
 "SpecificationKeys_ramMemory" = "Pamięć RAM";
 "SpecificationKeys_refreshRate" = "Odświeżanie Ekranu";
 "SpecificationKeys_weight" = "Waga";
+"ThemeSettingsView_appearance" = "Wygląd";
 "ThirdReturnCreationView_createReturnButton" = "Utwórz Zwrot";
 "ThirdReturnCreationView_howDoYouWantToReturn" = "W jaki sposób chcesz zwrócić produkt?";
 "ThirdReturnCreationView_navigationTitle" = "Utwórz Zwrot";
-"texterify_timestamp" = "2022-11-17T17:32:14Z";
+"texterify_timestamp" = "2022-11-20T12:07:20Z";

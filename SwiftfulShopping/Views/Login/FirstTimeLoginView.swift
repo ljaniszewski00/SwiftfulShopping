@@ -10,7 +10,7 @@ import texterify_ios_sdk
 
 struct FirstTimeLoginView: View {
     @EnvironmentObject private var locationManager: LocationManager
-    @EnvironmentObject private var contentViewModel: ContentViewModel
+    @EnvironmentObject private var startViewModel: StartViewModel
     @EnvironmentObject private var loginViewModel: LoginViewModel
     
     @Environment(\.dismiss) var dismiss
@@ -335,14 +335,14 @@ struct FirstTimeLoginView: View {
 struct FirstTimeLoginView_Previews: PreviewProvider {
     static var previews: some View {
         let locationManager: LocationManager = LocationManager()
-        let contentViewModel: ContentViewModel = ContentViewModel()
+        let startViewModel: StartViewModel = StartViewModel()
         let loginViewModel: LoginViewModel = LoginViewModel()
         
         ForEach(ColorScheme.allCases, id: \.self) { colorScheme in
             ForEach(["iPhone 13 Pro Max", "iPhone 8"], id: \.self) { deviceName in
                 FirstTimeLoginView()
                     .environmentObject(locationManager)
-                    .environmentObject(contentViewModel)
+                    .environmentObject(startViewModel)
                     .environmentObject(loginViewModel)
                     .preferredColorScheme(colorScheme)
                     .previewDevice(PreviewDevice(rawValue: deviceName))

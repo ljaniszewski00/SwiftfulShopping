@@ -1,20 +1,31 @@
 //
-//  ContentViewModel.swift
+//  StartViewModel.swift
 //  SwiftfulShopping
 //
-//  Created by Łukasz Janiszewski on 09/08/2022.
+//  Created by Łukasz Janiszewski on 08/08/2022.
 //
 
 import SwiftUI
 import LocalAuthentication
 
-class ContentViewModel: ObservableObject {
-    @AppStorage("locked") var biometricLock: Bool = false
-    @AppStorage("shouldShowOnboarding") var shouldShowOnboarding: Bool = true
+class StartViewModel: ObservableObject {
+    @AppStorage(AppStorageConstants.locked) var biometricLock: Bool = false
+    @AppStorage(AppStorageConstants.shouldShowOnboarding) var shouldShowOnboarding: Bool = true
+    
     @Published var unlocked: Bool = false
     @Published var authenticationError: Error?
     
+    @Published var dataFetched: Bool = false
+    
     @Published var presentRegisterView: Bool = false
+    
+    var unlockedBiometric: Bool {
+        unlocked || !biometricLock
+    }
+    
+    var canPresentHomeView: Bool {
+        unlockedBiometric && dataFetched
+    }
     
     func authenticate() {
         let context = LAContext()

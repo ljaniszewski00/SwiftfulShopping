@@ -8,10 +8,10 @@
 import SwiftUI
 
 class SettingsViewModel: ObservableObject {
-    @AppStorage("locked") var biometricLock: Bool = false
-    @AppStorage("notifications") var notifications: Bool = true
-    @AppStorage("shouldShowOnboarding") var shouldShowOnboarding: Bool = true
-    @AppStorage("appThemeSetting") var appThemeSetting = Appearance.system
+    @AppStorage(AppStorageConstants.locked) var biometricLock: Bool = false
+    @AppStorage(AppStorageConstants.notifications) var notifications: Bool = true
+    @AppStorage(AppStorageConstants.shouldShowOnboarding) var shouldShowOnboarding: Bool = true
+    @AppStorage(AppStorageConstants.appThemeSetting) var appThemeSetting = Appearance.system
     
     @Published var shouldPresentAccentColorChangeView: Bool = false
     @Published var shouldPresentColorSchemeChangeView: Bool = false

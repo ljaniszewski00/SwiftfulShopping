@@ -494,7 +494,8 @@
 "SpecificationKeys_ramMemory" = "RAM Memory";
 "SpecificationKeys_refreshRate" = "Refresh Rate";
 "SpecificationKeys_weight" = "Weight";
+"ThemeSettingsView_appearance" = "Appearance";
 "ThirdReturnCreationView_createReturnButton" = "Create Return";
 "ThirdReturnCreationView_howDoYouWantToReturn" = "How do you want to return the product?";
 "ThirdReturnCreationView_navigationTitle" = "Create Return";
-"texterify_timestamp" = "2022-11-17T17:32:11Z";
+"texterify_timestamp" = "2022-11-20T12:07:16Z";

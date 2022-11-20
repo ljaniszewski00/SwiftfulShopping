@@ -18,7 +18,7 @@ struct SearchView: View {
     @EnvironmentObject private var searchViewModel: SearchViewModel
     @Environment(\.colorScheme) var colorScheme: ColorScheme
     
-    @AppStorage("productsListDisplayMethod") var displayMethod: ProductDisplayMethod = .list
+    @AppStorage(AppStorageConstants.productsListDisplayMethod) var displayMethod: ProductDisplayMethod = .list
     
     @State var offset: CGPoint = .zero
     

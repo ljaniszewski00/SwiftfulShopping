@@ -10,7 +10,7 @@ import texterify_ios_sdk
 
 struct LoginView: View {
     @EnvironmentObject private var locationManager: LocationManager
-    @EnvironmentObject private var contentViewModel: ContentViewModel
+    @EnvironmentObject private var startViewModel: StartViewModel
     
     @Environment(\.dismiss) var dismiss
     @Environment(\.colorScheme) var colorScheme
@@ -105,7 +105,7 @@ struct LoginView: View {
                                     Text(TexterifyManager.localisedString(key: .loginView(.dontHaveAnAccount)))
                                         .font(.ssBody)
                                     
-                                    NavigationLink(isActive: $contentViewModel.presentRegisterView) {
+                                    NavigationLink(isActive: $startViewModel.presentRegisterView) {
                                         RegisterView()
                                     } label: {
                                         Text(TexterifyManager.localisedString(key: .loginView(.registerHere)))
@@ -156,7 +156,7 @@ struct LoginView: View {
         }
         .navigationViewStyle(.stack)
         .environmentObject(locationManager)
-        .environmentObject(contentViewModel)
+        .environmentObject(startViewModel)
         .environmentObject(loginViewModel)
         .environmentObject(forgotPasswordViewModel)
     }
@@ -307,13 +307,13 @@ struct LoginView: View {
 struct LoginView_Previews: PreviewProvider {
     static var previews: some View {
         let locationManager: LocationManager = LocationManager()
-        let contentViewModel: ContentViewModel = ContentViewModel()
+        let startViewModel: StartViewModel = StartViewModel()
         
         ForEach(ColorScheme.allCases, id: \.self) { colorScheme in
             ForEach(["iPhone 13 Pro Max", "iPhone 8"], id: \.self) { deviceName in
                 LoginView()
                     .environmentObject(locationManager)
-                    .environmentObject(contentViewModel)
+                    .environmentObject(startViewModel)
                     .preferredColorScheme(colorScheme)
                     .previewDevice(PreviewDevice(rawValue: deviceName))
                     .previewDisplayName("\(deviceName) portrait")

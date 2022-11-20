@@ -15,7 +15,7 @@ import texterify_ios_sdk
 @main
 struct SwiftlyShoppingApp: App {
     @UIApplicationDelegateAdaptor(AppDelegate.self) var appDelegate
-    @AppStorage("appThemeSetting") var appThemeSetting = Appearance.system
+    @AppStorage(AppStorageConstants.appThemeSetting) var appThemeSetting = Appearance.system
     
     @StateObject private var accentColorManager = AccentColorManager()
     

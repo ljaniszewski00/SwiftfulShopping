@@ -16,7 +16,7 @@ struct SearchedProductsListView: View {
     @EnvironmentObject private var searchViewModel: SearchViewModel
     @EnvironmentObject private var sortingAndFilteringViewModel: SortingAndFilteringViewModel
     
-    @AppStorage("productsListDisplayMethod") var displayMethod: ProductDisplayMethod = .list
+    @AppStorage(AppStorageConstants.productsListDisplayMethod) var displayMethod: ProductDisplayMethod = .list
     
     var body: some View {
         buildProductsListFor()

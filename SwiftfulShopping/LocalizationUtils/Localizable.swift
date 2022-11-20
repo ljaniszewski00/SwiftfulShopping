@@ -72,6 +72,7 @@ public enum Localizable {
     case months(MonthsLocalizable)
     case availability(AvailabilityLocalizable)
     case availabilityIndicator(AvailabilityIndicatorLocalizable)
+    case themeSettingsView(ThemeSettingsViewLocalizable)
 }
 
 extension Localizable: LocalizableRawRepresentable {
@@ -208,6 +209,8 @@ extension Localizable: LocalizableRawRepresentable {
         case let .availability(localizable):
             return localizable.rawValue
         case let .availabilityIndicator(localizable):
+            return localizable.rawValue
+        case let .themeSettingsView(localizable):
             return localizable.rawValue
         }
     }

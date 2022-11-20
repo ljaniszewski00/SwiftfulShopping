@@ -9,7 +9,7 @@ import SwiftUI
 import texterify_ios_sdk
 
 class AppThemeViewModel: ObservableObject {
-    @AppStorage("appThemeSetting") var appThemeSetting = Appearance.system
+    @AppStorage(AppStorageConstants.appThemeSetting) var appThemeSetting = Appearance.system
 }
 
 struct DarkModeViewModifier: ViewModifier {
@@ -41,11 +41,11 @@ enum Appearance: String, CaseIterable, Identifiable  {
 }
 
 struct ThemeSettingsView: View{
-    @AppStorage("appThemeSetting") var appThemeSetting = Appearance.system
+    @AppStorage(AppStorageConstants.appThemeSetting) var appThemeSetting = Appearance.system
 
     var body: some View {
         HStack {
-            Picker("Appearance", selection: $appThemeSetting) {
+            Picker(TexterifyManager.localisedString(key: .themeSettingsView(.appearance)), selection: $appThemeSetting) {
                 ForEach(Appearance.allCases) {appearance in
                     Text(appearance.rawValue.capitalized)
                         .tag(appearance)
