@@ -161,7 +161,7 @@ struct SplashScreenView_Previews: PreviewProvider {
         
         ForEach(ColorScheme.allCases, id: \.self) { colorScheme in
             ForEach(["iPhone 13 Pro Max", "iPhone 8"], id: \.self) { deviceName in
-                SplashScreenView()
+                StartView()
                     .environmentObject(accentColorManager)
                     .preferredColorScheme(colorScheme)
                     .previewDevice(PreviewDevice(rawValue: deviceName))

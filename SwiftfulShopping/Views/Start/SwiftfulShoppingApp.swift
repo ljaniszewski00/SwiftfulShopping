@@ -21,7 +21,7 @@ struct SwiftlyShoppingApp: App {
     
     var body: some Scene {
         WindowGroup {
-            SplashScreenView()
+            StartView()
                 .accentColor(accentColorManager.ownColorSet ? accentColorManager.ownColor : Color(uiColor: accentColorManager.accentColor.rawValue))
                 .modifier(DarkModeViewModifier())
                 .environmentObject(accentColorManager)
