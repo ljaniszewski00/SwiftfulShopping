@@ -88,7 +88,13 @@ class SortingAndFilteringViewModel: ObservableObject {
         
         switch sortingMethod {
         case .priceAscending:
-            productsArray = productsArray.sorted(by: { guard let firstPrice = $0.price, let secondPrice = $1.price else { return true }; return firstPrice < secondPrice })
+            
+            productsArray = productsArray.sorted(by: {
+                guard let firstPrice = $0.price,
+                        let secondPrice = $1.price else {
+                    print("No")
+                    return true }
+                return firstPrice < secondPrice })
         case .priceDescending:
             productsArray = productsArray.sorted(by: { guard let firstPrice = $0.price, let secondPrice = $1.price else { return true }; return firstPrice > secondPrice })
         case .popularity:
@@ -179,7 +185,8 @@ class SortingAndFilteringViewModel: ObservableObject {
         }
     }
     
-    func applySorting(productsArray: inout [Product]) {
+    func applySorting(sortingMethod: SortingMethods, productsArray: inout [Product]) {
+        self.sortingMethod = sortingMethod
         sortingApplied = true
         sortProducts(productsArray: &productsArray)
     }
@@ -232,17 +239,14 @@ class SortingAndFilteringViewModel: ObservableObject {
         categoryFiltersToApply = categoryFiltersApplied
     }
     
-    func sheetDismissedWithNoFilteringApplied(originalProductsArray: [Product], currentProductsArray: inout [Product]) {
-        if !filteringApplied {
-            restoreLastFilteringValues()
-            
-            restoreDefaults(originalProductsArray: originalProductsArray, currentProductsArray: &currentProductsArray)
-        }
+    func sheetDismissedWithNoFilteringApplied() {
+        restoreLastFilteringValues()
     }
     
     func restoreDefaults(originalProductsArray: [Product], currentProductsArray: inout [Product]) {
         restoreDefaultSortingValues()
         restoreDefaultFilteringValues()
+        
         currentProductsArray = originalProductsArray
     }
 }

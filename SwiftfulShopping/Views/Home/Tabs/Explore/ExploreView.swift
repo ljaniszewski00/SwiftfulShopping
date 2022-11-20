@@ -48,6 +48,7 @@ struct ExploreView: View {
                                 buildRecommendedProductsList()
                                 
                                 Button {
+                                    exploreViewModel.productsForTab = .exploreView
                                     exploreViewModel.productsForSource = .all
                                     exploreViewModel.shouldPresentAllProducts = true
                                 } label: {
@@ -108,6 +109,9 @@ struct ExploreView: View {
             }
             .onAppear {
                 tabBarStateManager.showTabBar()
+            }
+            .onDisappear {
+                sortingAndFilteringViewModel.restoreDefaults(originalProductsArray: exploreViewModel.productsFromRepository, currentProductsArray: &exploreViewModel.changingProductsToBeDisplayed)
             }
             .modifier(LoadingIndicatorModal(isPresented: $cartViewModel.showLoadingModal))
             .navigationTitle(TexterifyManager.localisedString(key: .exploreView(.navigationTitle)))

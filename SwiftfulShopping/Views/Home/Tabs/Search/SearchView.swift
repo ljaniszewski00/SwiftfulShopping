@@ -195,6 +195,9 @@ struct SearchView: View {
             .onAppear {
                 tabBarStateManager.showTabBar()
             }
+            .onDisappear {
+                sortingAndFilteringViewModel.restoreDefaults(originalProductsArray: exploreViewModel.productsFromRepository, currentProductsArray: &exploreViewModel.changingProductsToBeDisplayed)
+            }
             .modifier(LoadingIndicatorModal(isPresented: $cartViewModel.showLoadingModal))
             .navigationTitle(TexterifyManager.localisedString(key: .searchView(.navigationTitle)))
             .navigationBarTitleDisplayMode(.inline)
@@ -209,9 +212,6 @@ struct SearchView: View {
                             .resizable()
                     }
                 }
-            }
-            .onAppear {
-                tabBarStateManager.showTabBar()
             }
         }
         .navigationViewStyle(.stack)

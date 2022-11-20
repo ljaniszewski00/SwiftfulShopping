@@ -30,6 +30,7 @@ struct ProductsListView: View {
     var body: some View {
         VStack(spacing: 15) {
             buildFilterDisplayMethodPane()
+                .padding(.top)
             
             ScrollView(.vertical, showsIndicators: false) {
                 LazyVStack {
@@ -51,6 +52,8 @@ struct ProductsListView: View {
                         .buttonStyle(ScaledButtonStyle())
                     }
                 }
+                .padding([.horizontal, .top])
+                .padding(.bottom, tabBarStateManager.screenBottomPaddingForViews)
             }
             
             if let choosenProduct = exploreViewModel.choosenProduct,
@@ -64,7 +67,6 @@ struct ProductsListView: View {
                                label: { EmptyView() })
             }
         }
-        .padding()
         .onAppear {
             tabBarStateManager.showTabBar()
         }

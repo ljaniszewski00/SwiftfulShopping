@@ -45,12 +45,6 @@ struct HomeView: View {
                 .environmentObject(cartViewModel)
                 .environmentObject(favoritesViewModel)
                 .environmentObject(sortingAndFilteringViewModel)
-                .onAppear {
-                    exploreViewModel.productsForTab = .exploreView
-                }
-                .onDisappear {
-                    sortingAndFilteringViewModel.restoreDefaults(originalProductsArray: exploreViewModel.productsFromRepository, currentProductsArray: &exploreViewModel.changingProductsToBeDisplayed)
-                }
                 .tabBarItem(tab: .explore,
                             selection: $tabSelection)
             
@@ -83,12 +77,6 @@ struct HomeView: View {
                 .environmentObject(cartViewModel)
                 .environmentObject(sortingAndFilteringViewModel)
                 .environmentObject(searchViewModel)
-                .onAppear {
-                    exploreViewModel.productsForTab = .searchView
-                }
-                .onDisappear {
-                    sortingAndFilteringViewModel.restoreDefaults(originalProductsArray: exploreViewModel.productsFromRepository, currentProductsArray: &exploreViewModel.changingProductsToBeDisplayed)
-                }
                 .tabBarItem(tab: .search,
                             selection: $tabSelection)
             
@@ -101,6 +89,7 @@ struct HomeView: View {
                             selection: $tabSelection)
         }
         .environmentObject(tabBarStateManager)
+        .environmentObject(exploreViewModel)
         .modifier(ErrorModal(isPresented: $errorManager.showErrorModal,
                              customError: errorManager.customError ?? ErrorManager.unknownError))
         .modifier(LoadingIndicatorModal(isPresented: $homeViewModel.showLoadingModal))

@@ -48,29 +48,33 @@ struct SortingAndFilteringSheetView: View {
                         if !sortingAndFilteringViewModel.sortingSectionHidden {
                             VStack(alignment: .leading, spacing: 15) {
                                 ForEach(SortingMethods.allCases, id: \.self) { sortingMethod in
-                                    VStack(alignment: .leading, spacing: 5) {
+                                    VStack(alignment: .leading, spacing: 12) {
                                         Button {
-                                            withAnimation {
-                                                sortingAndFilteringViewModel.sortingMethod = sortingMethod
-                                                sortingAndFilteringViewModel.applySorting(productsArray: &exploreViewModel.changingProductsToBeDisplayed)
-                                            }
+                                            sortingAndFilteringViewModel.applySorting(sortingMethod: sortingMethod, productsArray: &exploreViewModel.changingProductsToBeDisplayed)
                                         } label: {
                                             HStack {
                                                 if sortingAndFilteringViewModel.sortingMethod == sortingMethod {
                                                     Image(systemName: "checkmark")
+                                                        .foregroundColor(colorScheme == .light ? .black : .ssWhite)
                                                 }
                                                 Text(sortingMethod.rawValue)
                                                     .foregroundColor(colorScheme == .light ? .black : .ssWhite)
                                                     .font(.ssTitle3)
                                                 Spacer()
                                             }
-                                        }
-                                        
-                                        Divider()
                                             .if(sortingAndFilteringViewModel.sortingMethod == sortingMethod) {
                                                 $0
-                                                    .overlay(Color.accentColor)
+                                                    .padding(10)
+                                                    .background {
+                                                        RoundedRectangle(cornerRadius: 4, style: .continuous)
+                                                            .foregroundColor(.accentColor.opacity(0.8))
+                                                    }
                                             }
+                                        }
+                                        
+                                        if sortingAndFilteringViewModel.sortingMethod != sortingMethod {
+                                            Divider()
+                                        }
                                     }
                                 }
                             }
@@ -86,9 +90,7 @@ struct SortingAndFilteringSheetView: View {
                                     .font(.ssTitle1)
                                 Spacer()
                                 Button {
-                                    withAnimation {
-                                        sortingAndFilteringViewModel.filteringSectionHidden.toggle()
-                                    }
+                                    sortingAndFilteringViewModel.filteringSectionHidden.toggle()
                                 } label: {
                                     Image(systemName: sortingAndFilteringViewModel.filteringSectionHidden ? "chevron.down" : "chevron.up")
                                 }
@@ -157,7 +159,7 @@ struct SortingAndFilteringSheetView: View {
         .navigationBarTitleDisplayMode(.inline)
         .onDisappear {
             if !sortingAndFilteringViewModel.filteringApplied {
-                sortingAndFilteringViewModel.sheetDismissedWithNoFilteringApplied(originalProductsArray: exploreViewModel.productsFromRepository, currentProductsArray: &exploreViewModel.changingProductsToBeDisplayed)
+                sortingAndFilteringViewModel.sheetDismissedWithNoFilteringApplied()
             }
         }
     }
@@ -170,9 +172,7 @@ struct SortingAndFilteringSheetView: View {
                     .font(.ssTitle2)
                 Spacer()
                 Button {
-                    withAnimation {
-                        sortingAndFilteringViewModel.companyFilterSectionHidden.toggle()
-                    }
+                    sortingAndFilteringViewModel.companyFilterSectionHidden.toggle()
                 } label: {
                     Image(systemName: sortingAndFilteringViewModel.companyFilterSectionHidden ? "chevron.down" : "chevron.up")
                 }
@@ -214,9 +214,7 @@ struct SortingAndFilteringSheetView: View {
                     .font(.ssTitle2)
                 Spacer()
                 Button {
-                    withAnimation {
-                        sortingAndFilteringViewModel.categoryFilterSectionHidden.toggle()
-                    }
+                    sortingAndFilteringViewModel.categoryFilterSectionHidden.toggle()
                 } label: {
                     Image(systemName: sortingAndFilteringViewModel.categoryFilterSectionHidden ? "chevron.down" : "chevron.up")
                 }
@@ -258,9 +256,7 @@ struct SortingAndFilteringSheetView: View {
                     .font(.ssTitle2)
                 Spacer()
                 Button {
-                    withAnimation {
-                        sortingAndFilteringViewModel.priceFilterSectionHidden.toggle()
-                    }
+                    sortingAndFilteringViewModel.priceFilterSectionHidden.toggle()
                 } label: {
                     Image(systemName: sortingAndFilteringViewModel.priceFilterSectionHidden ? "chevron.down" : "chevron.up")
                 }
@@ -295,9 +291,7 @@ struct SortingAndFilteringSheetView: View {
                     .font(.ssTitle2)
                 Spacer()
                 Button {
-                    withAnimation {
-                        sortingAndFilteringViewModel.ratingFilterSectionHidden.toggle()
-                    }
+                    sortingAndFilteringViewModel.ratingFilterSectionHidden.toggle()
                 } label: {
                     Image(systemName: sortingAndFilteringViewModel.ratingFilterSectionHidden ? "chevron.down" : "chevron.up")
                 }

@@ -10,6 +10,7 @@ import texterify_ios_sdk
 
 struct CustomTabBarContainerView<Content: View>: View {
     @EnvironmentObject private var tabBarStateManager: TabBarStateManager
+    @EnvironmentObject private var exploreViewModel: ExploreViewModel
     
     var shoppingCartProductsNumber: Int = 0
     
@@ -35,6 +36,7 @@ struct CustomTabBarContainerView<Content: View>: View {
                              tabs: tabs,
                              shoppingCartProductsNumber: shoppingCartProductsNumber)
             .environmentObject(tabBarStateManager)
+            .environmentObject(exploreViewModel)
             .measureSize(size: $tabBarStateManager.tabBarSize)
             .onChange(of: tabBarStateManager.tabBarSize) { newSize in
                 tabBarStateManager.changeTabBarValuesFor(tabBarNewSize: newSize)
@@ -53,6 +55,7 @@ struct CustomTabBarContainerView_Previews: PreviewProvider {
     
     static var previews: some View {
         let tabBarStateManager = TabBarStateManager()
+        let exploreViewModel = ExploreViewModel()
         ForEach(ColorScheme.allCases, id: \.self) { colorScheme in
             ForEach(["iPhone 13 Pro Max", "iPhone 8"], id: \.self) { deviceName in
                 VStack {
@@ -61,6 +64,7 @@ struct CustomTabBarContainerView_Previews: PreviewProvider {
                         Color.red
                     }
                     .environmentObject(tabBarStateManager)
+                    .environmentObject(exploreViewModel)
                 }
                 .previewDevice(PreviewDevice(rawValue: deviceName))
                 .previewDisplayName("\(deviceName) portrait")
