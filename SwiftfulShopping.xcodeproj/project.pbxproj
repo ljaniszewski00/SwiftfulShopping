@@ -629,7 +629,6 @@
 		88DEDD4929171BBD003EFA44 /* AssetsNames.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AssetsNames.swift; sourceTree = "<group>"; };
 		88DEDD4B29171DAC003EFA44 /* LottieAssetsNames.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LottieAssetsNames.swift; sourceTree = "<group>"; };
 		88E10A80291D4E6500677875 /* LocaleManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocaleManager.swift; sourceTree = "<group>"; };
-		88E6CACA292A4D7100FF411A /* HomeView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = HomeView.swift; path = ../../../../../.Trash/HomeView.swift; sourceTree = "<group>"; };
 		88E6CACF292A4DE700FF411A /* AppStorageConstants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppStorageConstants.swift; sourceTree = "<group>"; };
 		88E6CAD1292A4FA300FF411A /* ThemeSettingsViewLocalizable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThemeSettingsViewLocalizable.swift; sourceTree = "<group>"; };
 		88E6CAD3292A510E00FF411A /* HomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeView.swift; sourceTree = "<group>"; };
@@ -1274,7 +1273,6 @@
 			children = (
 				0AB8D98A2864B4C7003DC2E6 /* Common */,
 				0AB8D9892864B3D0003DC2E6 /* Tabs */,
-				88E6CACA292A4D7100FF411A /* HomeView.swift */,
 			);
 			path = Home;
 			sourceTree = "<group>";

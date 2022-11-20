@@ -80,10 +80,7 @@ struct SettingsView: View {
                 })
                 
                 NavigationLink(destination: AccentColorChangeView()
-                                                .environmentObject(settingsViewModel)
-                                                .onAppear {
-                                                    tabBarStateManager.hideTabBar()
-                                                },
+                                                .environmentObject(settingsViewModel),
                                isActive: $settingsViewModel.shouldPresentAccentColorChangeView,
                                label: {
                     HStack(spacing: 20) {
@@ -97,10 +94,7 @@ struct SettingsView: View {
                 })
                 
                 NavigationLink(destination: ColorSchemeChangeView()
-                                                .environmentObject(settingsViewModel)
-                                                .onAppear {
-                                                    tabBarStateManager.hideTabBar()
-                                                },
+                                                .environmentObject(settingsViewModel),
                                isActive: $settingsViewModel.shouldPresentColorSchemeChangeView,
                                label: {
                     HStack(spacing: 20) {
@@ -120,10 +114,7 @@ struct SettingsView: View {
             
             Section {
                 NavigationLink(destination: ChangeEmailView()
-                                                .environmentObject(settingsViewModel)
-                                                .onAppear {
-                                                    tabBarStateManager.hideTabBar()
-                                                },
+                                                .environmentObject(settingsViewModel),
                                isActive: $settingsViewModel.shouldPresentChangeEmailView,
                                label: {
                     HStack(spacing: 20) {
@@ -138,10 +129,7 @@ struct SettingsView: View {
                 .disabled(!networkNanager.isConnected)
                 
                 NavigationLink(destination: ChangePasswordView()
-                                                .environmentObject(settingsViewModel)
-                                                .onAppear {
-                                                    tabBarStateManager.hideTabBar()
-                                                },
+                                                .environmentObject(settingsViewModel),
                                isActive: $settingsViewModel.shouldPresentChangePasswordView,
                                label: {
                     HStack(spacing: 20) {
@@ -156,13 +144,7 @@ struct SettingsView: View {
                 .disabled(!networkNanager.isConnected)
                 
                 NavigationLink(destination: DeleteAccountView()
-                                                .environmentObject(settingsViewModel)
-                                                .onAppear {
-                                                    withAnimation() {
-                                                        tabBarStateManager.hideTabBar()
-                                                    }
-                                                    
-                                                },
+                                                .environmentObject(settingsViewModel),
                                isActive: $settingsViewModel.shouldPresentDeleteAccountView,
                                label: {
                     HStack(spacing: 20) {
