@@ -13,16 +13,12 @@ class ExploreViewModel: ObservableObject {
     @Published var errorManager = ErrorManager.shared
     
     @Published var productsFromRepository: [Product] = []
-    @Published var productsToBeDisplayed: [Product] = []
     @Published var ratingsFromRepository: [ProductRating] = []
-    
-    @Published var productsToBeDisplayedBySearch: [Product] = []
+    @Published var productsBySearch: [Product] = []
     
     @Published var productsToBeCompared: [Product] = []
     
     @Published var categoriesWithImages: [Category: UIImage] = [:]
-    
-    @Published var productsForTab: TabsWithProducts = .exploreView
     
     @Published var shouldPresentAllCategoryProducts: Bool = false
     @Published var choosenCategory: Category?
@@ -31,7 +27,6 @@ class ExploreViewModel: ObservableObject {
     @Published var choosenCompany: String?
     @Published var shouldPresentAllRecommendedProducts: Bool = false
     @Published var shouldPresentAllProducts: Bool = false
-    @Published var productsForSource: ProductsListSource = .all
     
     @Published var choosenProduct: Product?
     @Published var shouldPresentProductDetailsView: Bool = false
@@ -62,7 +57,6 @@ class ExploreViewModel: ObservableObject {
         ProductsRepository.shared.fetchProducts { [weak self] products in
             if let products = products {
                 self?.productsFromRepository = products
-                self?.productsToBeDisplayed = products
             }
             completion()
         }
@@ -90,12 +84,12 @@ class ExploreViewModel: ObservableObject {
             .sorted { $0.decodeValue > $1.decodeValue }
     }
     
-    private var categoryProducts: [Product] {
+    var categoryProducts: [Product] {
         if let choosenCategory = choosenCategory {
-            return productsToBeDisplayed
+            return productsFromRepository
                 .filter { $0.category == choosenCategory }
         } else {
-            return productsToBeDisplayed
+            return productsFromRepository
         }
     }
     
@@ -116,7 +110,7 @@ class ExploreViewModel: ObservableObject {
     }
     
     var allNewestProducts: [Product] {
-        return productsFromRepository
+        productsFromRepository
             .filter { $0.isNew }
     }
     
@@ -128,13 +122,13 @@ class ExploreViewModel: ObservableObject {
         return Array(companies).sorted(by: { $0 > $1 })
     }
     
-    private var companyProducts: [Product] {
+    var companyProducts: [Product] {
         if let choosenCompany = choosenCompany {
-            return productsToBeDisplayed.filter {
+            return productsFromRepository.filter {
                 $0.company.lowercased() == choosenCompany.lowercased()
             }
         } else {
-            return productsToBeDisplayed
+            return productsFromRepository
         }
     }
     
@@ -155,7 +149,7 @@ class ExploreViewModel: ObservableObject {
     }
     
     var allRecommendedProducts: [Product] {
-        return productsFromRepository
+        productsFromRepository
             .filter { $0.isRecommended }
     }
     
@@ -196,31 +190,41 @@ class ExploreViewModel: ObservableObject {
         ratingsFromRepository.filter { $0.productID == product.id }
     }
     
-    var changingProductsToBeDisplayed: [Product] {
-        get {
-            switch productsForTab {
-            case .exploreView:
-                switch productsForSource {
-                case .category:
-                    return categoryProducts.sorted { $0.name < $1.name }
-                case .newest:
-                    return allNewestProducts.sorted { $0.name < $1.name }
-                case .company:
-                    return companyProducts.sorted { $0.name < $1.name }
-                case .recommended:
-                    return allRecommendedProducts.sorted { $0.name < $1.name }
-                case .all:
-                    return productsToBeDisplayed.sorted { $0.name < $1.name }
-                }
-            case .searchView:
-                return productsToBeDisplayedBySearch.sorted { $0.name < $1.name }
-            }
-        }
-        
-        set {
-            productsToBeDisplayed = newValue
-        }
-    }
+//    var changingProductsToBeDisplayed: [Product] {
+//        get {
+//            switch productsForTab {
+//            case .exploreView:
+//                switch productsForSource {
+//                case .category:
+//                    return categoryProducts
+//                        .filter { productsToBeDisplayed.contains($0) }
+//                        .sorted { $0.name < $1.name }
+//                case .newest:
+//                    return allNewestProducts
+//                        .filter { productsToBeDisplayed.contains($0) }
+//                        .sorted { $0.name < $1.name }
+//                case .company:
+//                    return companyProducts
+//                        .filter { productsToBeDisplayed.contains($0) }
+//                        .sorted { $0.name < $1.name }
+//                case .recommended:
+//                    return allRecommendedProducts
+//                        .filter { productsToBeDisplayed.contains($0) }
+//                        .sorted { $0.name < $1.name }
+//                case .all:
+//                    return productsToBeDisplayed
+//                        .filter { productsToBeDisplayed.contains($0) }
+//                        .sorted { $0.name < $1.name }
+//                }
+//            case .searchView:
+//                return productsToBeDisplayedBySearch.sorted { $0.name < $1.name }
+//            }
+//        }
+//
+//        set {
+//            productsToBeDisplayed = newValue
+//        }
+//    }
     
     func getProductsToBeDisplayedBySearch() {
         DispatchQueue.global(qos: .userInteractive).async { [weak self] in
@@ -236,7 +240,7 @@ class ExploreViewModel: ObservableObject {
             
             if let results = results {
                 DispatchQueue.main.async { [weak self] in
-                    self?.productsToBeDisplayedBySearch = results.compactMap({ product in
+                    self?.productsBySearch = results.compactMap({ product in
                         return product
                     })
                 }
@@ -245,7 +249,8 @@ class ExploreViewModel: ObservableObject {
     }
     
     func getProductSpecificationForProductDetails(product: Product) -> [String: String]? {
-        if let languageCode = Locale.current.languageCode, let productSpecification = product.specification[languageCode] {
+        if let languageCode = Locale.current.languageCode,
+            let productSpecification = product.specification[languageCode] {
             return Dictionary(uniqueKeysWithValues: productSpecification.map { (key, value) in (key.rawValue, value) })
         } else {
             return nil
@@ -254,10 +259,6 @@ class ExploreViewModel: ObservableObject {
     
     func changeFocusedProductFor(product: Product) {
         choosenProduct = product
-    }
-    
-    func restoreOriginalProductsArray() {
-        changingProductsToBeDisplayed = productsFromRepository
     }
     
     func getProductsListFor(recognitionResults: [String]) -> [Product] {

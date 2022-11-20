@@ -50,7 +50,7 @@ struct SortingAndFilteringSheetView: View {
                                 ForEach(SortingMethods.allCases, id: \.self) { sortingMethod in
                                     VStack(alignment: .leading, spacing: 12) {
                                         Button {
-                                            sortingAndFilteringViewModel.applySorting(sortingMethod: sortingMethod, productsArray: &exploreViewModel.changingProductsToBeDisplayed)
+                                            sortingAndFilteringViewModel.applySorting(sortingMethod: sortingMethod)
                                         } label: {
                                             HStack {
                                                 if sortingAndFilteringViewModel.sortingMethod == sortingMethod {
@@ -121,7 +121,7 @@ struct SortingAndFilteringSheetView: View {
                     }
                     
                     Button {
-                        sortingAndFilteringViewModel.restoreDefaults(originalProductsArray: exploreViewModel.productsFromRepository, currentProductsArray: &exploreViewModel.changingProductsToBeDisplayed)
+                        sortingAndFilteringViewModel.restoreDefaults()
                     } label: {
                         Text(TexterifyManager.localisedString(key: .sortingAndFilteringSheetView(.restoreDefaultsButton)))
                             .font(.ssButton)
@@ -139,9 +139,9 @@ struct SortingAndFilteringSheetView: View {
             if sortingAndFilteringViewModel.applyFiltersButtonVisible {
                 Button {
                     withAnimation {
-                        exploreViewModel.restoreOriginalProductsArray()
+                        sortingAndFilteringViewModel.restoreOriginalProductsArray()
                         
-                        sortingAndFilteringViewModel.applyFiltering(productsArray: &exploreViewModel.changingProductsToBeDisplayed)
+                        sortingAndFilteringViewModel.applyFiltering()
                         dismiss()
                     }
                 } label: {
@@ -361,7 +361,8 @@ struct SortingAndFilteringSheetView: View {
 struct SortingAndFilteringSheetView_Previews: PreviewProvider {
     static var previews: some View {
         let exploreViewModel = ExploreViewModel()
-        let sortingAndFilteringViewModel = SortingAndFilteringViewModel()
+        let sortingAndFilteringViewModel = SortingAndFilteringViewModel(originalProducts: Product.demoProducts,
+                                                                        modifiedProducts: Product.demoProducts)
         ForEach(ColorScheme.allCases, id: \.self) { colorScheme in
             ForEach(["iPhone 13 Pro Max", "iPhone 8"], id: \.self) { deviceName in
                 SortingAndFilteringSheetView()

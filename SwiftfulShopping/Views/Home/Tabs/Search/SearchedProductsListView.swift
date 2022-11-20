@@ -18,6 +18,12 @@ struct SearchedProductsListView: View {
     
     @AppStorage(AppStorageConstants.productsListDisplayMethod) var displayMethod: ProductDisplayMethod = .list
     
+    @State var displayedProducts: [Product]
+    
+    init(displayedProducts: [Product]) {
+        self._displayedProducts = State(initialValue: displayedProducts)
+    }
+    
     var body: some View {
         buildProductsListFor()
             .padding()
@@ -29,7 +35,7 @@ struct SearchedProductsListView: View {
     @ViewBuilder
     func buildProductsListFor() -> some View {
         VStack {
-            ForEach(exploreViewModel.changingProductsToBeDisplayed, id: \.self) { product in
+            ForEach(displayedProducts, id: \.self) { product in
                 Button {
                     withAnimation(.interactiveSpring(response: 0.6, dampingFraction: 0.7, blendDuration: 0.7)) {
                         searchViewModel.changeFocusedProductFor(product: product)
@@ -46,6 +52,9 @@ struct SearchedProductsListView: View {
                     }
                 }
                 .buttonStyle(ScaledButtonStyle())
+                .onChange(of: sortingAndFilteringViewModel.modifiedProducts) { newValue in
+                    displayedProducts = newValue
+                }
             }
         }
     }
@@ -59,10 +68,11 @@ struct SearchedProductsListView_Previews: PreviewProvider {
         let favoritesViewModel = FavoritesViewModel()
         let cartViewModel = CartViewModel()
         let searchViewModel = SearchViewModel()
-        let sortingAndFilteringViewModel = SortingAndFilteringViewModel()
+        let sortingAndFilteringViewModel = SortingAndFilteringViewModel(originalProducts: Product.demoProducts,
+                                                                        modifiedProducts: Product.demoProducts)
         ForEach(ColorScheme.allCases, id: \.self) { colorScheme in
             ForEach(["iPhone 13 Pro Max", "iPhone 8"], id: \.self) { deviceName in
-                SearchedProductsListView()
+                SearchedProductsListView(displayedProducts: Product.demoProducts)
                     .environmentObject(tabBarStateManager)
                     .environmentObject(exploreViewModel)
                     .environmentObject(profileViewModel)

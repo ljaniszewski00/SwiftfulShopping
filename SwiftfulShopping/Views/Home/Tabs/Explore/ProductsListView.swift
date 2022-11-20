@@ -10,21 +10,21 @@ import SwiftUI
 struct ProductsListView: View {
     @EnvironmentObject private var tabBarStateManager: TabBarStateManager
     @EnvironmentObject private var exploreViewModel: ExploreViewModel
-    @EnvironmentObject private var sortingAndFilteringViewModel: SortingAndFilteringViewModel
     @Environment(\.dismiss) private var dismiss: DismissAction
     @Environment(\.colorScheme) private var colorScheme: ColorScheme
     
     @AppStorage(AppStorageConstants.productsListDisplayMethod) var displayMethod: ProductDisplayMethod = .list
     
-    private var navigationTitle: String {
-        switch exploreViewModel.productsForSource {
-        case .category:
-            return exploreViewModel.choosenCategory?.rawValue ?? ""
-        case .company:
-            return exploreViewModel.choosenCompany ?? ""
-        default:
-            return exploreViewModel.productsForSource.rawValue
-        }
+    @StateObject private var sortingAndFilteringViewModel: SortingAndFilteringViewModel
+    
+    @State var displayedProducts: [Product]
+    var navigationTitle: String
+    
+    init(originalProducts: [Product], displayedProducts: [Product], navigationTitle: String = "") {
+        self._displayedProducts = State(initialValue: displayedProducts)
+        self._sortingAndFilteringViewModel = StateObject(wrappedValue: SortingAndFilteringViewModel(originalProducts: originalProducts,
+                                                                                                    modifiedProducts: displayedProducts))
+        self.navigationTitle = navigationTitle
     }
     
     var body: some View {
@@ -34,7 +34,7 @@ struct ProductsListView: View {
             
             ScrollView(.vertical, showsIndicators: false) {
                 LazyVStack {
-                    ForEach(exploreViewModel.changingProductsToBeDisplayed, id: \.id) { product in
+                    ForEach(displayedProducts, id: \.id) { product in
                         Button {
                             withAnimation(.interactiveSpring(response: 0.6, dampingFraction: 0.7, blendDuration: 0.7)) {
                                 exploreViewModel.shouldPresentProductDetailsViewFromProductsListView = true
@@ -54,24 +54,25 @@ struct ProductsListView: View {
                 }
                 .padding([.horizontal, .top])
                 .padding(.bottom, tabBarStateManager.screenBottomPaddingForViews)
+                .onChange(of: sortingAndFilteringViewModel.modifiedProducts) { newValue in
+                    displayedProducts = newValue
+                }
             }
             
-            if let choosenProduct = exploreViewModel.choosenProduct,
-               let productsRatings = exploreViewModel.getRatingsFor(product: choosenProduct) {
-                NavigationLink(destination: ProductDetailsView(product: choosenProduct,
-                                                               productRatings: productsRatings)
-                                                .onAppear {
-                                                    tabBarStateManager.hideTabBar()
-                                                },
-                               isActive: $exploreViewModel.shouldPresentProductDetailsViewFromProductsListView,
-                               label: { EmptyView() })
-            }
+            NavigationLink(destination: ProductDetailsView(product: exploreViewModel.choosenProduct ?? Product.demoProducts[0],
+                                                           productRatings: exploreViewModel.getRatingsFor(product: exploreViewModel.choosenProduct ?? Product.demoProducts[0]))
+                                            .onAppear {
+                                                tabBarStateManager.hideTabBar()
+                                            },
+                           isActive: $exploreViewModel.shouldPresentProductDetailsViewFromProductsListView,
+                           label: { EmptyView() })
         }
         .onAppear {
             tabBarStateManager.showTabBar()
         }
         .sheet(isPresented: $exploreViewModel.presentSortingAndFilteringSheet) {
             SortingAndFilteringSheetView()
+                .environmentObject(sortingAndFilteringViewModel)
         }
         .navigationTitle(navigationTitle)
         .navigationBarTitleDisplayMode(exploreViewModel.shouldPresentAllCategoryProducts ? .large : .inline)
@@ -156,13 +157,13 @@ struct ProductsListView_Previews: PreviewProvider {
     static var previews: some View {
         let tabBarStateManager = TabBarStateManager()
         let exploreViewModel = ExploreViewModel()
-        let sortingAndFilteringViewModel = SortingAndFilteringViewModel()
         ForEach(ColorScheme.allCases, id: \.self) { colorScheme in
             ForEach(["iPhone 13 Pro Max", "iPhone 8"], id: \.self) { deviceName in
-                ProductsListView()
+                ProductsListView(originalProducts: Product.demoProducts,
+                                 displayedProducts: Product.demoProducts,
+                                 navigationTitle: "")
                     .environmentObject(tabBarStateManager)
                     .environmentObject(exploreViewModel)
-                    .environmentObject(sortingAndFilteringViewModel)
                     .preferredColorScheme(colorScheme)
                     .previewDevice(PreviewDevice(rawValue: deviceName))
                     .previewDisplayName("\(deviceName) portrait")

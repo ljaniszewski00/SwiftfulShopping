@@ -14,11 +14,12 @@ struct SearchView: View {
     @EnvironmentObject private var profileViewModel: ProfileViewModel
     @EnvironmentObject private var favoritesViewModel: FavoritesViewModel
     @EnvironmentObject private var cartViewModel: CartViewModel
-    @EnvironmentObject private var sortingAndFilteringViewModel: SortingAndFilteringViewModel
     @EnvironmentObject private var searchViewModel: SearchViewModel
     @Environment(\.colorScheme) var colorScheme: ColorScheme
     
     @AppStorage(AppStorageConstants.productsListDisplayMethod) var displayMethod: ProductDisplayMethod = .list
+    
+    @StateObject private var sortingAndFilteringViewModel: SortingAndFilteringViewModel = SortingAndFilteringViewModel()
     
     @State var offset: CGPoint = .zero
     
@@ -27,7 +28,7 @@ struct SearchView: View {
                                GridItem(.flexible(), spacing: 0)]
     
     var buttonUpVisible: Bool {
-        if !exploreViewModel.changingProductsToBeDisplayed.isEmpty && !exploreViewModel.searchProductsText.isEmpty {
+        if !exploreViewModel.productsFromRepository.isEmpty && !exploreViewModel.searchProductsText.isEmpty {
             let heightToShow = searchViewModel.productTileSize.height + searchViewModel.filterAndDisplayPaneSize.height
             return offset.y >= heightToShow
         } else {
@@ -45,9 +46,6 @@ struct SearchView: View {
                                 VStack(alignment: .leading, spacing: 20) {
                                     buildTrendingSearchesList()
                                     buildRecentSearchesList()
-                                }
-                                .onAppear {
-                                    sortingAndFilteringViewModel.restoreDefaults(originalProductsArray: exploreViewModel.productsFromRepository, currentProductsArray: &exploreViewModel.changingProductsToBeDisplayed)
                                 }
                             }
                             
@@ -103,10 +101,11 @@ struct SearchView: View {
                                     .padding([.horizontal, .top])
                                     .measureSize(size: $searchViewModel.filterAndDisplayPaneSize)
                                     
-                                    SearchedProductsListView()
+                                    SearchedProductsListView(displayedProducts: sortingAndFilteringViewModel.modifiedProducts)
+                                        .environmentObject(sortingAndFilteringViewModel)
                                 }
                                 
-                                if !exploreViewModel.searchProductsText.isEmpty && exploreViewModel.changingProductsToBeDisplayed.isEmpty {
+                                if !exploreViewModel.searchProductsText.isEmpty && exploreViewModel.productsBySearch.isEmpty {
                                     VStack {
                                         LottieView(name: LottieAssetsNames.searchNoResults,
                                                    loopMode: .loop,
@@ -135,6 +134,10 @@ struct SearchView: View {
                             if !newValue.isEmpty {
                                 exploreViewModel.getProductsToBeDisplayedBySearch()
                             }
+                            
+                            sortingAndFilteringViewModel.restoreDefaults()
+                            sortingAndFilteringViewModel.originalProducts = exploreViewModel.productsBySearch
+                            sortingAndFilteringViewModel.modifiedProducts = exploreViewModel.productsBySearch
                         }
                         .onSubmit(of: .search) {
                             searchViewModel.addToRecentSearches(searchText: exploreViewModel.searchProductsText)
@@ -195,9 +198,6 @@ struct SearchView: View {
             .onAppear {
                 tabBarStateManager.showTabBar()
             }
-            .onDisappear {
-                sortingAndFilteringViewModel.restoreDefaults(originalProductsArray: exploreViewModel.productsFromRepository, currentProductsArray: &exploreViewModel.changingProductsToBeDisplayed)
-            }
             .modifier(LoadingIndicatorModal(isPresented: $cartViewModel.showLoadingModal))
             .navigationTitle(TexterifyManager.localisedString(key: .searchView(.navigationTitle)))
             .navigationBarTitleDisplayMode(.inline)
@@ -221,7 +221,6 @@ struct SearchView: View {
         .environmentObject(favoritesViewModel)
         .environmentObject(cartViewModel)
         .environmentObject(searchViewModel)
-        .environmentObject(sortingAndFilteringViewModel)
     }
     
     @ViewBuilder
@@ -337,7 +336,6 @@ struct SearchView_Previews: PreviewProvider {
         let profileViewModel = ProfileViewModel()
         let favoritesViewModel = FavoritesViewModel()
         let cartViewModel = CartViewModel()
-        let sortingAndFilteringViewModel = SortingAndFilteringViewModel()
         let searchViewModel = SearchViewModel()
         ForEach(ColorScheme.allCases, id: \.self) { colorScheme in
             ForEach(["iPhone 13 Pro Max", "iPhone 8"], id: \.self) { deviceName in
@@ -347,7 +345,6 @@ struct SearchView_Previews: PreviewProvider {
                     .environmentObject(profileViewModel)
                     .environmentObject(favoritesViewModel)
                     .environmentObject(cartViewModel)
-                    .environmentObject(sortingAndFilteringViewModel)
                     .environmentObject(searchViewModel)
                     .preferredColorScheme(colorScheme)
                     .previewDevice(PreviewDevice(rawValue: deviceName))

@@ -8,6 +8,16 @@
 import Foundation
 
 class SortingAndFilteringViewModel: ObservableObject {
+    @Published var originalProducts: [Product] = []
+    @Published var modifiedProducts: [Product] = []
+    
+    init(originalProducts: [Product] = [], modifiedProducts: [Product] = []) {
+        self.originalProducts = originalProducts
+        self.modifiedProducts = modifiedProducts
+    }
+    
+    @Published var presentSortingAndFilteringSheet: Bool = false
+    
     //Sorting
     @Published var sortingApplied: Bool = false
     @Published var sortingMethod: SortingMethods = .popularity
@@ -71,12 +81,12 @@ class SortingAndFilteringViewModel: ObservableObject {
         }
     }
     
-    private func sortProducts(productsArray: inout [Product]) {
+    private func sortProducts() {
         var productsAverageRatings: [Product: Double] = [:]
         var productsRatingsNumber: [Product: Int] = [:]
         var productsReviewsNumber: [Product: Int] = [:]
         
-        for product in productsArray {
+        for product in modifiedProducts {
             if let ratings = RatingsRepository.shared.ratings {
                 let productRatings = ratings.filter { $0.productID == product.id }
                 
@@ -88,37 +98,37 @@ class SortingAndFilteringViewModel: ObservableObject {
         
         switch sortingMethod {
         case .priceAscending:
-            
-            productsArray = productsArray.sorted(by: {
+            modifiedProducts = modifiedProducts.sorted(by: {
                 guard let firstPrice = $0.price,
-                        let secondPrice = $1.price else {
-                    print("No")
-                    return true }
+                        let secondPrice = $1.price else { return true }
                 return firstPrice < secondPrice })
         case .priceDescending:
-            productsArray = productsArray.sorted(by: { guard let firstPrice = $0.price, let secondPrice = $1.price else { return true }; return firstPrice > secondPrice })
+            modifiedProducts = modifiedProducts.sorted(by: {
+                guard let firstPrice = $0.price,
+                        let secondPrice = $1.price else { return true }
+                return firstPrice > secondPrice })
         case .popularity:
-            productsArray = productsArray.sorted(by: { $0.unitsSold > $1.unitsSold })
+            modifiedProducts = modifiedProducts.sorted(by: { $0.unitsSold > $1.unitsSold })
         case .ratingAscending:
-            productsArray = productsArray.sorted(by: {
+            modifiedProducts = modifiedProducts.sorted(by: {
                 productsAverageRatings[$0] ?? 0 < productsAverageRatings[$1] ?? 0
             })
         case .ratingDescending:
-            productsArray = productsArray.sorted(by: {
+            modifiedProducts = modifiedProducts.sorted(by: {
                 productsAverageRatings[$0] ?? 0 > productsAverageRatings[$1] ?? 0
             })
         case .reviewsAscending:
-            productsArray = productsArray.sorted(by: {
+            modifiedProducts = modifiedProducts.sorted(by: {
                 productsReviewsNumber[$0] ?? 0 < productsReviewsNumber[$1] ?? 0
             })
         case .reviewsDescending:
-            productsArray = productsArray.sorted(by: {
+            modifiedProducts = modifiedProducts.sorted(by: {
                 productsReviewsNumber[$0] ?? 0 > productsReviewsNumber[$1] ?? 0
             })
         }
     }
     
-    private func filterProducts(productsArray: inout [Product]) {
+    private func filterProducts() {
         filteringMethodsToApply.removeAll()
         filteringApplied = false
         
@@ -144,24 +154,28 @@ class SortingAndFilteringViewModel: ObservableObject {
         for filteringMethod in filteringMethodsToApply {
             switch filteringMethod {
             case .company:
-                productsArray = productsArray.filter {
+                modifiedProducts = modifiedProducts.filter {
                     companyFiltersToApply.contains($0.company)
                 }
             case .category:
-                productsArray = productsArray.filter {
+                modifiedProducts = modifiedProducts.filter {
                     categoryFiltersToApply.contains($0.category)
                 }
             case .price:
                 if let doubleLowestPriceFilter = Double(lowestPriceFilter) {
-                    productsArray = productsArray.filter { guard let price = $0.price else { return true }; return price >= doubleLowestPriceFilter }
+                    modifiedProducts = modifiedProducts.filter {
+                        guard let price = $0.price else { return true }
+                        return price >= doubleLowestPriceFilter }
                 }
                 if let doubleHighestPriceFilter = Double(highestPriceFilter) {
-                    productsArray = productsArray.filter { guard let price = $0.price else { return true }; return price <= doubleHighestPriceFilter }
+                    modifiedProducts = modifiedProducts.filter {
+                        guard let price = $0.price else { return true }
+                        return price <= doubleHighestPriceFilter }
                 }
             case .rating:
                 var productsAverageRatings: [Product: Double] = [:]
                 
-                for product in productsArray {
+                for product in modifiedProducts {
                     if let ratings = RatingsRepository.shared.ratings {
                         let productRatings = ratings.filter { $0.productID == product.id }
                         
@@ -170,13 +184,13 @@ class SortingAndFilteringViewModel: ObservableObject {
                 }
                 
                 if lowestRatingFilter > 0 {
-                    productsArray = productsArray.filter {
+                    modifiedProducts = modifiedProducts.filter {
                         productsAverageRatings[$0] ?? 0 >= Double(lowestRatingFilter)
                     }
                 }
                 
                 if highestRatingFilter > 0 {
-                    productsArray = productsArray.filter {
+                    modifiedProducts = modifiedProducts.filter {
                         productsAverageRatings[$0] ?? 0 <= Double(highestRatingFilter)
                     }
                 }
@@ -185,14 +199,14 @@ class SortingAndFilteringViewModel: ObservableObject {
         }
     }
     
-    func applySorting(sortingMethod: SortingMethods, productsArray: inout [Product]) {
+    func applySorting(sortingMethod: SortingMethods) {
         self.sortingMethod = sortingMethod
         sortingApplied = true
-        sortProducts(productsArray: &productsArray)
+        sortProducts()
     }
     
-    func applyFiltering(productsArray: inout [Product]) {
-        filterProducts(productsArray: &productsArray)
+    func applyFiltering() {
+        filterProducts()
     }
     
     func manageCompanyFiltersFor(company: String) {
@@ -243,10 +257,13 @@ class SortingAndFilteringViewModel: ObservableObject {
         restoreLastFilteringValues()
     }
     
-    func restoreDefaults(originalProductsArray: [Product], currentProductsArray: inout [Product]) {
+    func restoreOriginalProductsArray() {
+        modifiedProducts = originalProducts
+    }
+    
+    func restoreDefaults() {
         restoreDefaultSortingValues()
         restoreDefaultFilteringValues()
-        
-        currentProductsArray = originalProductsArray
+        restoreOriginalProductsArray()
     }
 }

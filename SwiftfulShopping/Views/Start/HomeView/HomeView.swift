@@ -18,7 +18,6 @@ struct HomeView: View {
     
     @StateObject private var tabBarStateManager = TabBarStateManager()
     @StateObject private var homeViewModel = HomeViewModel()
-    @StateObject private var sortingAndFilteringViewModel = SortingAndFilteringViewModel()
     
     @StateObject var firebaseAuthManager = FirebaseAuthManager.client
     @StateObject var networkManager = NetworkManager.shared
@@ -44,7 +43,6 @@ struct HomeView: View {
                 .environmentObject(profileViewModel)
                 .environmentObject(cartViewModel)
                 .environmentObject(favoritesViewModel)
-                .environmentObject(sortingAndFilteringViewModel)
                 .tabBarItem(tab: .explore,
                             selection: $tabSelection)
             
@@ -75,7 +73,6 @@ struct HomeView: View {
                 .environmentObject(profileViewModel)
                 .environmentObject(favoritesViewModel)
                 .environmentObject(cartViewModel)
-                .environmentObject(sortingAndFilteringViewModel)
                 .environmentObject(searchViewModel)
                 .tabBarItem(tab: .search,
                             selection: $tabSelection)

@@ -15,7 +15,6 @@ struct ExploreView: View {
     @EnvironmentObject private var profileViewModel: ProfileViewModel
     @EnvironmentObject private var favoritesViewModel: FavoritesViewModel
     @EnvironmentObject private var cartViewModel: CartViewModel
-    @EnvironmentObject private var sortingAndFilteringViewModel: SortingAndFilteringViewModel
     
     @Environment(\.colorScheme) private var colorScheme: ColorScheme
     
@@ -24,7 +23,7 @@ struct ExploreView: View {
     @State var offset: CGPoint = .zero
     
     var buttonUpVisible: Bool {
-        if exploreViewModel.changingProductsToBeDisplayed.isEmpty {
+        if exploreViewModel.productsFromRepository.isEmpty {
             return false
         } else {
             return offset.y >= exploreViewModel.categoriesTileSize.height
@@ -48,8 +47,6 @@ struct ExploreView: View {
                                 buildRecommendedProductsList()
                                 
                                 Button {
-                                    exploreViewModel.productsForTab = .exploreView
-                                    exploreViewModel.productsForSource = .all
                                     exploreViewModel.shouldPresentAllProducts = true
                                 } label: {
                                     Text(TexterifyManager.localisedString(key: .exploreView(.allProductsButton)))
@@ -58,7 +55,9 @@ struct ExploreView: View {
                                 .padding()
                             }
                             
-                            NavigationLink(destination: ProductsListView(),
+                            NavigationLink(destination: ProductsListView(originalProducts: exploreViewModel.productsFromRepository,
+                                                                         displayedProducts: exploreViewModel.productsFromRepository,
+                                                                         navigationTitle: TexterifyManager.localisedString(key: .exploreView(.allProductsButton))),
                                            isActive: $exploreViewModel.shouldPresentAllProducts,
                                            label: { EmptyView() })
                             
@@ -110,9 +109,6 @@ struct ExploreView: View {
             .onAppear {
                 tabBarStateManager.showTabBar()
             }
-            .onDisappear {
-                sortingAndFilteringViewModel.restoreDefaults(originalProductsArray: exploreViewModel.productsFromRepository, currentProductsArray: &exploreViewModel.changingProductsToBeDisplayed)
-            }
             .modifier(LoadingIndicatorModal(isPresented: $cartViewModel.showLoadingModal))
             .navigationTitle(TexterifyManager.localisedString(key: .exploreView(.navigationTitle)))
             .toolbar {
@@ -155,7 +151,6 @@ struct ExploreView: View {
         .environmentObject(profileViewModel)
         .environmentObject(favoritesViewModel)
         .environmentObject(cartViewModel)
-        .environmentObject(sortingAndFilteringViewModel)
     }
     
     @ViewBuilder
@@ -183,7 +178,6 @@ struct ExploreView: View {
                                         exploreViewModel.choosenCategory = nil
                                         exploreViewModel.shouldPresentAllCategoryProducts = false
                                     } else {
-                                        exploreViewModel.productsForSource = .category
                                         exploreViewModel.choosenCategory = category
                                         exploreViewModel.shouldPresentAllCategoryProducts = true
                                     }
@@ -227,7 +221,9 @@ struct ExploreView: View {
             .measureSize(size: $exploreViewModel.categoriesTileSize)
             
             if exploreViewModel.shouldPresentAllCategoryProducts {
-                ProductsListView()
+                ProductsListView(originalProducts: exploreViewModel.categoryProducts,
+                                 displayedProducts: exploreViewModel.categoryProducts,
+                                 navigationTitle: exploreViewModel.choosenCategory?.rawValue ?? "")
             }
         }
     }
@@ -265,7 +261,6 @@ struct ExploreView: View {
                 Spacer()
                 
                 Button {
-                    exploreViewModel.productsForSource = .newest
                     exploreViewModel.shouldPresentAllNewProducts = true
                 } label: {
                     Text(TexterifyManager.localisedString(key: .exploreView(.seeAllNewestButton)))
@@ -275,7 +270,9 @@ struct ExploreView: View {
             }
             .padding(.trailing)
             
-            NavigationLink(destination: ProductsListView(),
+            NavigationLink(destination: ProductsListView(originalProducts: exploreViewModel.allNewestProducts,
+                                                         displayedProducts: exploreViewModel.allNewestProducts,
+                                                         navigationTitle: ProductsListSource.newest.rawValue),
                            isActive: $exploreViewModel.shouldPresentAllNewProducts,
                            label: { EmptyView() })
         }
@@ -300,7 +297,6 @@ struct ExploreView: View {
             ], spacing: 20) {
                 ForEach(exploreViewModel.productsCompanies, id: \.self) { company in
                     Button {
-                        exploreViewModel.productsForSource = .company
                         exploreViewModel.choosenCompany = company
                         exploreViewModel.shouldPresentAllCompanyProducts = true
                     } label: {
@@ -320,7 +316,9 @@ struct ExploreView: View {
             }
             .padding(.horizontal)
             
-            NavigationLink(destination: ProductsListView(),
+            NavigationLink(destination: ProductsListView(originalProducts: exploreViewModel.companyProducts,
+                                                         displayedProducts: exploreViewModel.companyProducts,
+                                                         navigationTitle: exploreViewModel.choosenCompany ?? ""),
                            isActive: $exploreViewModel.shouldPresentAllCompanyProducts,
                            label: { EmptyView() })
         }
@@ -341,7 +339,6 @@ struct ExploreView: View {
                 Spacer()
                 
                 Button {
-                    exploreViewModel.productsForSource = .recommended
                     exploreViewModel.shouldPresentAllRecommendedProducts = true
                 } label: {
                     Text(TexterifyManager.localisedString(key: .exploreView(.seeAllRecommendedButton)))
@@ -351,7 +348,9 @@ struct ExploreView: View {
             }
             .padding(.trailing)
             
-            NavigationLink(destination: ProductsListView(),
+            NavigationLink(destination: ProductsListView(originalProducts: exploreViewModel.allRecommendedProducts,
+                                                         displayedProducts: exploreViewModel.allRecommendedProducts,
+                                                         navigationTitle: ProductsListSource.recommended.rawValue),
                            isActive: $exploreViewModel.shouldPresentAllRecommendedProducts,
                            label: { EmptyView() })
         }
@@ -365,7 +364,6 @@ struct ExploreView_Previews: PreviewProvider {
         let profileViewModel = ProfileViewModel()
         let favoritesViewModel = FavoritesViewModel()
         let cartViewModel = CartViewModel()
-        let sortingAndFilteringViewModel = SortingAndFilteringViewModel()
         ForEach(ColorScheme.allCases, id: \.self) { colorScheme in
             ForEach(["iPhone 13 Pro Max", "iPhone 8"], id: \.self) { deviceName in
                 ExploreView()
@@ -374,7 +372,6 @@ struct ExploreView_Previews: PreviewProvider {
                     .environmentObject(profileViewModel)
                     .environmentObject(favoritesViewModel)
                     .environmentObject(cartViewModel)
-                    .environmentObject(sortingAndFilteringViewModel)
                     .preferredColorScheme(colorScheme)
                     .previewDevice(PreviewDevice(rawValue: deviceName))
                     .previewDisplayName("\(deviceName) portrait")

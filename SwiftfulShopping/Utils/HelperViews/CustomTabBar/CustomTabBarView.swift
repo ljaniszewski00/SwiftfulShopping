@@ -10,7 +10,6 @@ import texterify_ios_sdk
 
 struct CustomTabBarView: View {
     @EnvironmentObject private var tabBarStateManager: TabBarStateManager
-    @EnvironmentObject private var exploreViewModel: ExploreViewModel
     
     @Binding var selection: TabBarItem
     @State var localSelection: TabBarItem
@@ -54,7 +53,6 @@ struct CustomTabBarView_Previews: PreviewProvider {
     
     static var previews: some View {
         let tabBarStateManager = TabBarStateManager()
-        let exploreViewModel = ExploreViewModel()
         
         ForEach(ColorScheme.allCases, id: \.self) { colorScheme in
             ForEach(["iPhone 13 Pro Max", "iPhone 8"], id: \.self) { deviceName in
@@ -64,7 +62,6 @@ struct CustomTabBarView_Previews: PreviewProvider {
                                      localSelection: tabs.first!,
                                      tabs: tabs)
                     .environmentObject(tabBarStateManager)
-                    .environmentObject(exploreViewModel)
                 }
                 .previewDevice(PreviewDevice(rawValue: deviceName))
                 .previewDisplayName("\(deviceName) portrait")
@@ -104,10 +101,5 @@ extension CustomTabBarView {
     
     private func switchToTab(tab: TabBarItem) {
         selection = tab
-        if tab == .explore {
-            exploreViewModel.productsForTab = .exploreView
-        } else if tab == .search {
-            exploreViewModel.productsForTab = .searchView
-        }
     }
 }
