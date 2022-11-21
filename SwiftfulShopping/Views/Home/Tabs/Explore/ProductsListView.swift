@@ -17,11 +17,9 @@ struct ProductsListView: View {
     
     @StateObject private var sortingAndFilteringViewModel: SortingAndFilteringViewModel
     
-    @State var displayedProducts: [Product]
     var navigationTitle: String
     
     init(originalProducts: [Product], displayedProducts: [Product], navigationTitle: String = "") {
-        self._displayedProducts = State(initialValue: displayedProducts)
         self._sortingAndFilteringViewModel = StateObject(wrappedValue: SortingAndFilteringViewModel(originalProducts: originalProducts,
                                                                                                     modifiedProducts: displayedProducts))
         self.navigationTitle = navigationTitle
@@ -34,7 +32,7 @@ struct ProductsListView: View {
             
             ScrollView(.vertical, showsIndicators: false) {
                 LazyVStack {
-                    ForEach(displayedProducts, id: \.id) { product in
+                    ForEach(sortingAndFilteringViewModel.modifiedProducts, id: \.id) { product in
                         Button {
                             withAnimation(.interactiveSpring(response: 0.6, dampingFraction: 0.7, blendDuration: 0.7)) {
                                 exploreViewModel.shouldPresentProductDetailsViewFromProductsListView = true
@@ -54,9 +52,6 @@ struct ProductsListView: View {
                 }
                 .padding([.horizontal, .top])
                 .padding(.bottom, tabBarStateManager.screenBottomPaddingForViews)
-                .onChange(of: sortingAndFilteringViewModel.modifiedProducts) { newValue in
-                    displayedProducts = newValue
-                }
             }
             
             NavigationLink(destination: ProductDetailsView(product: exploreViewModel.choosenProduct ?? Product.demoProducts[0],
@@ -114,15 +109,15 @@ struct ProductsListView: View {
                     .if(sortingAndFilteringViewModel.numberOfFiltersApplied > 0) {
                         $0
                             .overlay(
-                                ZStack {
-                                    Circle()
-                                        .frame(width: 17, height: 17)
-                                        .foregroundColor(.red)
-                                    Text(String(sortingAndFilteringViewModel.numberOfFiltersApplied))
-                                        .font(.ssBody)
-                                        .foregroundColor(.ssWhite)
-                                }
-                                .offset(x: 17, y: -17)
+                                Text(String(sortingAndFilteringViewModel.numberOfFiltersApplied))
+                                    .font(.ssCallout)
+                                    .foregroundColor(.ssWhite)
+                                    .padding(.all, 5)
+                                    .background {
+                                        Circle()
+                                            .foregroundColor(.red)
+                                    }
+                                    .offset(x: 17, y: -15)
                             )
                     }
             }

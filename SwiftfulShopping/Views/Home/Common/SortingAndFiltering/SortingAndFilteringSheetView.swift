@@ -139,8 +139,6 @@ struct SortingAndFilteringSheetView: View {
             if sortingAndFilteringViewModel.applyFiltersButtonVisible {
                 Button {
                     withAnimation {
-                        sortingAndFilteringViewModel.restoreOriginalProductsArray()
-                        
                         sortingAndFilteringViewModel.applyFiltering()
                         dismiss()
                     }

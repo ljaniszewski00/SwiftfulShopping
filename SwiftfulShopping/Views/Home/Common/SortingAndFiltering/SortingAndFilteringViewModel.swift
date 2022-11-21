@@ -206,7 +206,12 @@ class SortingAndFilteringViewModel: ObservableObject {
     }
     
     func applyFiltering() {
+        restoreOriginalProductsArray()
         filterProducts()
+        print(companyFiltersApplied)
+        print()
+        print(companyFiltersToApply)
+        print()
     }
     
     func manageCompanyFiltersFor(company: String) {
@@ -228,6 +233,19 @@ class SortingAndFilteringViewModel: ObservableObject {
             categoryFiltersToApply.append(category)
         }
     }
+    
+    func sheetDismissedWithNoFilteringApplied() {
+        restoreLastFilteringValues()
+    }
+    
+    func restoreDefaults() {
+        restoreDefaultSortingValues()
+        restoreDefaultFilteringValues()
+        restoreOriginalProductsArray()
+    }
+    
+    
+    // MARK: PRIVATE
     
     private func restoreDefaultSortingValues() {
         sortingApplied = false
@@ -253,17 +271,7 @@ class SortingAndFilteringViewModel: ObservableObject {
         categoryFiltersToApply = categoryFiltersApplied
     }
     
-    func sheetDismissedWithNoFilteringApplied() {
-        restoreLastFilteringValues()
-    }
-    
-    func restoreOriginalProductsArray() {
+    private func restoreOriginalProductsArray() {
         modifiedProducts = originalProducts
-    }
-    
-    func restoreDefaults() {
-        restoreDefaultSortingValues()
-        restoreDefaultFilteringValues()
-        restoreOriginalProductsArray()
     }
 }

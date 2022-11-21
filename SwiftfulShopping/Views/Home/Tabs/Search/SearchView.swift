@@ -71,7 +71,7 @@ struct SearchView: View {
                                                                     .font(.ssBody)
                                                                     .foregroundColor(.ssWhite)
                                                             }
-                                                            .offset(x: 17, y: -17)
+                                                                .offset(x: 17, y: -17)
                                                         )
                                                 }
                                         }
@@ -101,7 +101,7 @@ struct SearchView: View {
                                     .padding([.horizontal, .top])
                                     .measureSize(size: $searchViewModel.filterAndDisplayPaneSize)
                                     
-                                    SearchedProductsListView(displayedProducts: sortingAndFilteringViewModel.modifiedProducts)
+                                    SearchedProductsListView()
                                         .environmentObject(sortingAndFilteringViewModel)
                                 }
                                 
@@ -134,7 +134,8 @@ struct SearchView: View {
                             if !newValue.isEmpty {
                                 exploreViewModel.getProductsToBeDisplayedBySearch()
                             }
-                            
+                        }
+                        .onChange(of: exploreViewModel.productsBySearch) { newValue in
                             sortingAndFilteringViewModel.restoreDefaults()
                             sortingAndFilteringViewModel.originalProducts = exploreViewModel.productsBySearch
                             sortingAndFilteringViewModel.modifiedProducts = exploreViewModel.productsBySearch
