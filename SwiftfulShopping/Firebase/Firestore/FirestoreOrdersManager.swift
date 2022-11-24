@@ -83,6 +83,8 @@ struct FirestoreOrdersManager {
             "orderDate": order.orderDate,
             "estimatedDeliveryDate": order.estimatedDeliveryDate,
             "clientID": order.clientID,
+            "clientDescription": order.clientDescription,
+            "addressDescription": order.addressDescription,
             "productsIDsWithQuantity": order.productsIDsWithQuantity,
             "shippingMethod": order.shippingMethod.decodeValue,
             "shippingAddressID": order.shippingAddressID,

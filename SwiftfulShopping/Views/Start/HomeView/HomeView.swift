@@ -28,9 +28,9 @@ struct HomeView: View {
     
     // MARK: To add sample data to Firestore
     init() {
-//        FirestoreSampleDataManager.client.addAll { _ in }
-//        FirestoreSampleDataManager.client.addOrders { _ in }
-//        FirestoreSampleDataManager.client.addProducts { _ in }
+//        FirestoreSampleDataManager.addAll { _ in }
+        FirestoreSampleDataManager.addOrders { _ in }
+//        FirestoreSampleDataManager.addProducts { _ in }
     }
     
     var body: some View {
@@ -91,8 +91,8 @@ struct HomeView: View {
                              customError: errorManager.customError ?? ErrorManager.unknownError))
         .modifier(LoadingIndicatorModal(isPresented: $homeViewModel.showLoadingModal))
         .ignoresSafeArea(edges: .bottom)
-        .onChange(of: networkManager.isConnected) { newValue in
-            if !newValue {
+        .onChange(of: networkManager.isConnected) { isConnected in
+            if !isConnected {
                 errorManager.generateCustomError(errorType: .networkError)
             }
         }

@@ -26,7 +26,11 @@ struct Profile {
 
 extension Profile: CustomStringConvertible {
     var description: String {
-        return "\(fullName)\n\(username)\n\(email)"
+        if let username = username, let email = email {
+            return "\(fullName)\n\(username)\n\(email)"
+        } else {
+            return "\(fullName)"
+        }
     }
 }
 
