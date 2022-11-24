@@ -130,26 +130,30 @@ class SortingAndFilteringViewModel: ObservableObject {
     
     private func filterProducts() {
         filteringMethodsToApply.removeAll()
-        filteringApplied = false
         
-        if companyFiltersToApply.isEmpty {
-            companyFiltersToApply = companyFiltersApplied
-        } else {
+        if companyFiltersToApply.isEmpty && filteringApplied {
+            companyFiltersApplied.removeAll()
+        } else if !companyFiltersToApply.isEmpty {
             filteringMethodsToApply.insert(.company)
             companyFiltersApplied = companyFiltersToApply
         }
-        if categoryFiltersToApply.isEmpty {
-            categoryFiltersToApply = categoryFiltersApplied
-        } else {
+        
+        if categoryFiltersToApply.isEmpty && filteringApplied {
+            categoryFiltersApplied.removeAll()
+        } else if !categoryFiltersToApply.isEmpty {
             filteringMethodsToApply.insert(.category)
             categoryFiltersApplied = categoryFiltersToApply
         }
+        
         if !lowestPriceFilter.isEmpty || !highestPriceFilter.isEmpty {
             filteringMethodsToApply.insert(.price)
         }
+        
         if lowestRatingFilter > 0 || highestRatingFilter > 0 {
             filteringMethodsToApply.insert(.rating)
         }
+        
+        filteringApplied = false
         
         for filteringMethod in filteringMethodsToApply {
             switch filteringMethod {
@@ -195,6 +199,7 @@ class SortingAndFilteringViewModel: ObservableObject {
                     }
                 }
             }
+            
             filteringApplied = true
         }
     }
@@ -208,10 +213,7 @@ class SortingAndFilteringViewModel: ObservableObject {
     func applyFiltering() {
         restoreOriginalProductsArray()
         filterProducts()
-        print(companyFiltersApplied)
-        print()
-        print(companyFiltersToApply)
-        print()
+        sortProducts()
     }
     
     func manageCompanyFiltersFor(company: String) {

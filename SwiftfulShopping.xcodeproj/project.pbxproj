@@ -354,6 +354,7 @@
 		88EFAA22291546C900A30481 /* FilteringMethodsLocalizable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88EFAA21291546C900A30481 /* FilteringMethodsLocalizable.swift */; };
 		88EFAA24291546D400A30481 /* ProductsListSourceLocalizable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88EFAA23291546D400A30481 /* ProductsListSourceLocalizable.swift */; };
 		88EFAA26291546E500A30481 /* ReturnStatusLocalizable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88EFAA25291546E500A30481 /* ReturnStatusLocalizable.swift */; };
+		88F2CFF1293017B600798D03 /* Inject in Frameworks */ = {isa = PBXBuildFile; productRef = 88F2CFF0293017B600798D03 /* Inject */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -664,6 +665,7 @@
 				88DDE87129259F7D00F60448 /* Introspect in Frameworks */,
 				0A1C61A628DA1CCA00BF4ED3 /* FacebookLogin in Frameworks */,
 				0A21490228D9060900748128 /* GoogleSignInSwift in Frameworks */,
+				88F2CFF1293017B600798D03 /* Inject in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1713,6 +1715,7 @@
 				0A49CEB128EE03820064D3DD /* FirebaseStorage */,
 				889EDF3D290EF94200EBFFC1 /* texterify-ios-sdk */,
 				88DDE87029259F7D00F60448 /* Introspect */,
+				88F2CFF0293017B600798D03 /* Inject */,
 			);
 			productName = SwiftfulShopping;
 			productReference = 0ACD5893284A6E9200AA9DA0 /* SwiftfulShopping.app */;
@@ -1799,6 +1802,7 @@
 				0A49CEAA28EE03820064D3DD /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
 				889EDF3C290EF94200EBFFC1 /* XCRemoteSwiftPackageReference "texterify-ios" */,
 				88DDE86F29259F7D00F60448 /* XCRemoteSwiftPackageReference "SwiftUI-Introspect" */,
+				88F2CFEF293017B600798D03 /* XCRemoteSwiftPackageReference "Inject" */,
 			);
 			productRefGroup = 0ACD5894284A6E9200AA9DA0 /* Products */;
 			projectDirPath = "";
@@ -2281,6 +2285,10 @@
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
+				OTHER_LDFLAGS = (
+					"-Xlinker",
+					"-interposable",
+				);
 				SDKROOT = iphoneos;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
@@ -2335,6 +2343,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
+				OTHER_LDFLAGS = "";
 				SDKROOT = iphoneos;
 				SWIFT_COMPILATION_MODE = wholemodule;
 				SWIFT_OPTIMIZATION_LEVEL = "-O";
@@ -2590,6 +2599,14 @@
 				minimumVersion = 0.1.4;
 			};
 		};
+		88F2CFEF293017B600798D03 /* XCRemoteSwiftPackageReference "Inject" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/krzysztofzablocki/Inject.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 1.0.0;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -2642,6 +2659,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 88DDE86F29259F7D00F60448 /* XCRemoteSwiftPackageReference "SwiftUI-Introspect" */;
 			productName = Introspect;
+		};
+		88F2CFF0293017B600798D03 /* Inject */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 88F2CFEF293017B600798D03 /* XCRemoteSwiftPackageReference "Inject" */;
+			productName = Inject;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};
