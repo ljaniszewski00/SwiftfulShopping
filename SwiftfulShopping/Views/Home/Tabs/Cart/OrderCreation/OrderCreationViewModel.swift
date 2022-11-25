@@ -17,9 +17,16 @@ class OrderCreationViewModel: ObservableObject {
     
     @Published var shouldPresentOrderCreationAddressChangeView: Bool = false
     @Published var shouldPresentOrderCreationSummaryView: Bool = false
-    @Published var shouldPresentOrderCreationCompletionView: Bool = false
+    @Published var shouldPresentStripePaymentView: Bool = false
+    @Published var shouldPresentOrderCreationCompletionViewNavigationLink: Bool = false
+    
+    var shouldPresentOrderCreationCompletionView: Bool {
+        get { !shouldPresentStripePaymentView && orderPayed }
+        set { shouldPresentOrderCreationCompletionViewNavigationLink = newValue }
+    }
     
     @Published var showLoadingModal: Bool = false
+    @Published var orderPayed: Bool = false
     @Published var shouldPresentPaymentProcessingModal: Bool = false
     
     @Published var newStreetName: String = ""
@@ -200,10 +207,11 @@ class OrderCreationViewModel: ObservableObject {
     
     func payForOrder(orderID: String, completion: @escaping ((VoidResult) -> ())) {
         //MARK: Mock method for payments handling
-        self.shouldPresentPaymentProcessingModal = true
-        DispatchQueue.main.asyncAfter(deadline: .now() + 3) { [weak self] in
-            self?.shouldPresentPaymentProcessingModal = false
-            completion(.success)
-        }
+//        self.shouldPresentPaymentProcessingModal = true
+//        DispatchQueue.main.asyncAfter(deadline: .now() + 3) { [weak self] in
+//            self?.shouldPresentPaymentProcessingModal = false
+//            completion(.success)
+//        }
+        shouldPresentStripePaymentView = true
     }
 }

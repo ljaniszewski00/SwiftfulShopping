@@ -27,9 +27,9 @@
 	<string>9469d0566558ae5e288f78d5b31cbfd0</string>
 	<key>FacebookDisplayName</key>
 	<string>SwiftfulShopping-iOS</string>
-	<key>Supabase key</key>
-	<string>$(SUPABASE_KEY)</string>
-	<key>Supabase project key</key>
-	<string>$(SUPABASE_PROJECT_KEY)</string>
+	<key>StripeAPIKey</key>
+	<string>$(STRIPE_API_KEY)</string>
+	<key>StripeBackendCheckoutURL</key>
+	<string>$(STRIPE_BACKEND_CHECKOUT_URL)</string>
 </dict>
 </plist>

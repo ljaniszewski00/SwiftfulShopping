@@ -25,180 +25,184 @@ struct OrderCreationSummaryView: View {
     
     var body: some View {
         VStack {
-            StepsView(stepsNumber: 4, activeStep: 3)
-                .padding(.vertical)
-            
-            ScrollView(.vertical, showsIndicators: false) {
-                VStack(alignment: .leading, spacing: 30) {
-                    VStack(alignment: .leading, spacing: 5) {
-                        Text(TexterifyManager.localisedString(key: .orderCreationSummaryView(.consigneeData)))
-                            .font(.ssTitle2)
-                        
-                        Text(TexterifyManager.localisedString(key: .orderCreationSummaryView(.thisWillBeTheDeliveryAddress)))
-                            .font(.ssCallout)
-                            .foregroundColor(.ssDarkGray)
-                            .padding(.bottom, 15)
-                        
+            if orderCreationViewModel.shouldPresentStripePaymentView {
+                StripePaymentView()
+            } else {
+                StepsView(stepsNumber: 4, activeStep: 3)
+                    .padding(.vertical)
+                
+                ScrollView(.vertical, showsIndicators: false) {
+                    VStack(alignment: .leading, spacing: 30) {
                         VStack(alignment: .leading, spacing: 5) {
-                            Text(profileViewModel.profile?.fullName ?? "")
-                                .font(.ssTitle3)
-                            Text(orderCreationViewModel.defaultAddress)
-                                .font(.ssCallout).fontWeight(.regular)
-                        }
-                    }
-                    
-                    VStack(alignment: .leading, spacing: 15) {
-                        Text(TexterifyManager.localisedString(key: .orderCreationSummaryView(.shippingMethod)))
-                            .font(.ssTitle2)
-                        
-                        HStack {
-                            Text(orderCreationViewModel.choosenShippingMethod?.rawValue ?? "")
-                                .font(.ssTitle3)
-                                .foregroundColor(.accentColor)
+                            Text(TexterifyManager.localisedString(key: .orderCreationSummaryView(.consigneeData)))
+                                .font(.ssTitle2)
                             
-                            if let formattedShippingMethodPrice = orderCreationViewModel.formattedShippingPrice {
-                                Text(formattedShippingMethodPrice)
-                                    .font(.ssCallout)
-                                    .foregroundColor(.ssDarkGray)
-                            }
-                        }
-                    }
-                    
-                    VStack(alignment: .leading, spacing: 15) {
-                        Text(TexterifyManager.localisedString(key: .orderCreationSummaryView(.paymentMethod)))
-                            .font(.ssTitle2)
-                        
-                        HStack {
-                            Text(orderCreationViewModel.choosenPaymentMethod?.rawValue ?? "")
-                                .font(.ssTitle3)
-                                .foregroundColor(.accentColor)
-                            
-                            if let formattedPaymentMethodPrice = orderCreationViewModel.formattedPaymentPrice {
-                                Text(formattedPaymentMethodPrice)
-                                    .font(.ssCallout)
-                                    .foregroundColor(.ssDarkGray)
-                            }
-                        }
-                    }
-                    
-                    VStack(alignment: .leading) {
-                        Text(TexterifyManager.localisedString(key: .orderCreationSummaryView(.wouldYouLikeToReceiveInvoice)))
-                            .font(.ssTitle2)
-                        
-                        SingleSelectionToggle(selection: $orderCreationViewModel.toReceiveInvoice)
-                            .disabled(true)
-                    }
-                    
-                    VStack(alignment: .leading, spacing: 10) {
-                        Text("\(TexterifyManager.localisedString(key: .orderCreationSummaryView(.products))) (\(cartViewModel.cartAllProductsQuantityCount))")
-                            .font(.ssTitle2)
-                        
-                        ForEach(Array(cartViewModel.productsForCart.keys).sorted { $0.id > $1.id}, id: \.self) { product in
-                            BasicProductTile(product: product, productQuantity: cartViewModel.productsForCart[product])
-                            Divider()
-                        }
-                    }
-                    
-                    VStack(alignment: .leading, spacing: 10) {
-                        HStack {
-                            Text(TexterifyManager.localisedString(key: .orderCreationSummaryView(.productsInCart)))
+                            Text(TexterifyManager.localisedString(key: .orderCreationSummaryView(.thisWillBeTheDeliveryAddress)))
                                 .font(.ssCallout)
                                 .foregroundColor(.ssDarkGray)
+                                .padding(.bottom, 15)
                             
-                            Text("\(cartViewModel.cartAllProductsQuantityCount)")
-                                .font(.ssTitle3)
-                                .foregroundColor(.accentColor)
-                        }
-                        
-                        HStack {
-                            Text(TexterifyManager.localisedString(key: .orderCreationSummaryView(.totalCost)))
-                                .font(.ssCallout)
-                                .foregroundColor(.ssDarkGray)
-                            
-                            Text("$\(cartViewModel.cartTotalCost, specifier: "%.2f")")
-                                .font(.ssTitle3)
-                                .foregroundColor(.accentColor)
+                            VStack(alignment: .leading, spacing: 5) {
+                                Text(profileViewModel.profile?.fullName ?? "")
+                                    .font(.ssTitle3)
+                                Text(orderCreationViewModel.defaultAddress)
+                                    .font(.ssCallout).fontWeight(.regular)
+                            }
                         }
                         
                         VStack(alignment: .leading, spacing: 15) {
-                            Text(TexterifyManager.localisedString(key: .orderCreationSummaryView(.doYouHaveCouponCode)))
+                            Text(TexterifyManager.localisedString(key: .orderCreationSummaryView(.shippingMethod)))
                                 .font(.ssTitle2)
                             
-                            HStack(alignment: .bottom) {
-                                RectangleCustomTextField(textFieldProperty: TexterifyManager.localisedString(key: .orderCreationSummaryView(.couponCodeTextField)),
-                                                         text: $orderCreationViewModel.discountCode,
-                                                         isFocusedParentView:
-                                                            $isCouponTextFieldFocused)
+                            HStack {
+                                Text(orderCreationViewModel.choosenShippingMethod?.rawValue ?? "")
+                                    .font(.ssTitle3)
+                                    .foregroundColor(.accentColor)
                                 
-                                Button {
-                                    let success = cartViewModel.applyDiscount(discountCode: orderCreationViewModel.discountCode)
-                                    if !success {
-                                        errorManager.generateCustomError(errorType: .discountApplyError, additionalErrorDescription: TexterifyManager.localisedString(key: .orderCreationSummaryView(.applyDiscountErrorDescription)))
-                                    }
-                                    orderCreationViewModel.applyDiscount()
-                                } label: {
-                                    Text(TexterifyManager.localisedString(key: .orderCreationSummaryView(.applyCouponCodeButton)))
-                                        .font(.ssButton)
-                                }
-                                .buttonStyle(CustomButton())
-                                .disabled(orderCreationViewModel.discountCode.isEmpty)
-                                .frame(width: ScreenBoundsSupplier.shared.getScreenWidth() * 0.25)
-                            }
-                        }
-                        .padding(.vertical, 15)
-                        
-                        if !cartViewModel.appliedDiscounts.isEmpty {
-                            ForEach(Array(cartViewModel.appliedDiscounts).sorted { $0.discountValuePercent > $1.discountValuePercent }, id: \.self) { appliedDiscount in
-                                HStack {
-                                    Button {
-                                        cartViewModel.removeDiscount(discount: appliedDiscount)
-                                    } label: {
-                                        Image(systemName: "xmark.circle.fill")
-                                    }
-                                    
-                                    Text("\(appliedDiscount.discountCode):")
+                                if let formattedShippingMethodPrice = orderCreationViewModel.formattedShippingPrice {
+                                    Text(formattedShippingMethodPrice)
                                         .font(.ssCallout)
                                         .foregroundColor(.ssDarkGray)
-                                    
-                                    Spacer()
-                                    
-                                    Text("-\(appliedDiscount.discountValuePercent, specifier: "%.2f")%")
-                                        .font(.ssCallout)
-                                        .foregroundColor(.accentColor)
                                 }
                             }
                         }
                         
-                        HStack {
-                            Text(TexterifyManager.localisedString(key: .orderCreationSummaryView(.totalCostWithDiscounts)))
-                                .font(.ssCallout)
-                                .foregroundColor(.ssDarkGray)
+                        VStack(alignment: .leading, spacing: 15) {
+                            Text(TexterifyManager.localisedString(key: .orderCreationSummaryView(.paymentMethod)))
+                                .font(.ssTitle2)
                             
-                            Spacer()
+                            HStack {
+                                Text(orderCreationViewModel.choosenPaymentMethod?.rawValue ?? "")
+                                    .font(.ssTitle3)
+                                    .foregroundColor(.accentColor)
+                                
+                                if let formattedPaymentMethodPrice = orderCreationViewModel.formattedPaymentPrice {
+                                    Text(formattedPaymentMethodPrice)
+                                        .font(.ssCallout)
+                                        .foregroundColor(.ssDarkGray)
+                                }
+                            }
+                        }
+                        
+                        VStack(alignment: .leading) {
+                            Text(TexterifyManager.localisedString(key: .orderCreationSummaryView(.wouldYouLikeToReceiveInvoice)))
+                                .font(.ssTitle2)
                             
-                            if let totalCartPrice = cartViewModel.cartTotalCostWithAppliedDiscounts,
-                               let shippingPaymentPrice = orderCreationViewModel.shippingPaymentPrice {
-                                Text(LocaleManager.client.formatPrice(price: totalCartPrice + shippingPaymentPrice) ?? "")
+                            SingleSelectionToggle(selection: $orderCreationViewModel.toReceiveInvoice)
+                                .disabled(true)
+                        }
+                        
+                        VStack(alignment: .leading, spacing: 10) {
+                            Text("\(TexterifyManager.localisedString(key: .orderCreationSummaryView(.products))) (\(cartViewModel.cartAllProductsQuantityCount))")
+                                .font(.ssTitle2)
+                            
+                            ForEach(Array(cartViewModel.productsForCart.keys).sorted { $0.id > $1.id}, id: \.self) { product in
+                                BasicProductTile(product: product, productQuantity: cartViewModel.productsForCart[product])
+                                Divider()
+                            }
+                        }
+                        
+                        VStack(alignment: .leading, spacing: 10) {
+                            HStack {
+                                Text(TexterifyManager.localisedString(key: .orderCreationSummaryView(.productsInCart)))
+                                    .font(.ssCallout)
+                                    .foregroundColor(.ssDarkGray)
+                                
+                                Text("\(cartViewModel.cartAllProductsQuantityCount)")
                                     .font(.ssTitle3)
                                     .foregroundColor(.accentColor)
                             }
+                            
+                            HStack {
+                                Text(TexterifyManager.localisedString(key: .orderCreationSummaryView(.totalCost)))
+                                    .font(.ssCallout)
+                                    .foregroundColor(.ssDarkGray)
+                                
+                                Text("$\(cartViewModel.cartTotalCost, specifier: "%.2f")")
+                                    .font(.ssTitle3)
+                                    .foregroundColor(.accentColor)
+                            }
+                            
+                            VStack(alignment: .leading, spacing: 15) {
+                                Text(TexterifyManager.localisedString(key: .orderCreationSummaryView(.doYouHaveCouponCode)))
+                                    .font(.ssTitle2)
+                                
+                                HStack(alignment: .bottom) {
+                                    RectangleCustomTextField(textFieldProperty: TexterifyManager.localisedString(key: .orderCreationSummaryView(.couponCodeTextField)),
+                                                             text: $orderCreationViewModel.discountCode,
+                                                             isFocusedParentView:
+                                                                $isCouponTextFieldFocused)
+                                    
+                                    Button {
+                                        let success = cartViewModel.applyDiscount(discountCode: orderCreationViewModel.discountCode)
+                                        if !success {
+                                            errorManager.generateCustomError(errorType: .discountApplyError, additionalErrorDescription: TexterifyManager.localisedString(key: .orderCreationSummaryView(.applyDiscountErrorDescription)))
+                                        }
+                                        orderCreationViewModel.applyDiscount()
+                                    } label: {
+                                        Text(TexterifyManager.localisedString(key: .orderCreationSummaryView(.applyCouponCodeButton)))
+                                            .font(.ssButton)
+                                    }
+                                    .buttonStyle(CustomButton())
+                                    .disabled(orderCreationViewModel.discountCode.isEmpty)
+                                    .frame(width: ScreenBoundsSupplier.shared.getScreenWidth() * 0.25)
+                                }
+                            }
+                            .padding(.vertical, 15)
+                            
+                            if !cartViewModel.appliedDiscounts.isEmpty {
+                                ForEach(Array(cartViewModel.appliedDiscounts).sorted { $0.discountValuePercent > $1.discountValuePercent }, id: \.self) { appliedDiscount in
+                                    HStack {
+                                        Button {
+                                            cartViewModel.removeDiscount(discount: appliedDiscount)
+                                        } label: {
+                                            Image(systemName: "xmark.circle.fill")
+                                        }
+                                        
+                                        Text("\(appliedDiscount.discountCode):")
+                                            .font(.ssCallout)
+                                            .foregroundColor(.ssDarkGray)
+                                        
+                                        Spacer()
+                                        
+                                        Text("-\(appliedDiscount.discountValuePercent, specifier: "%.2f")%")
+                                            .font(.ssCallout)
+                                            .foregroundColor(.accentColor)
+                                    }
+                                }
+                            }
+                            
+                            HStack {
+                                Text(TexterifyManager.localisedString(key: .orderCreationSummaryView(.totalCostWithDiscounts)))
+                                    .font(.ssCallout)
+                                    .foregroundColor(.ssDarkGray)
+                                
+                                Spacer()
+                                
+                                if let totalCartPrice = cartViewModel.cartTotalCostWithAppliedDiscounts,
+                                   let shippingPaymentPrice = orderCreationViewModel.shippingPaymentPrice {
+                                    Text(LocaleManager.client.formatPrice(price: totalCartPrice + shippingPaymentPrice) ?? "")
+                                        .font(.ssTitle3)
+                                        .foregroundColor(.accentColor)
+                                }
+                            }
+                            .padding(.top, 10)
                         }
-                        .padding(.top, 10)
                     }
+                    .padding()
                 }
-                .padding()
+                
+                completeOrderButton
+                
+                NavigationLink(destination: OrderCreationCompletionView()
+                                                .environmentObject(orderCreationViewModel)
+                                                .onAppear {
+                                                    tabBarStateManager.hideTabBar()
+                                                },
+                               isActive: $orderCreationViewModel.shouldPresentOrderCreationCompletionViewNavigationLink,
+                               label: { EmptyView() })
+                .isDetailLink(false)
             }
-            
-            completeOrderButton
-            
-            NavigationLink(destination: OrderCreationCompletionView()
-                                            .environmentObject(orderCreationViewModel)
-                                            .onAppear {
-                                                tabBarStateManager.hideTabBar()
-                                            },
-                           isActive: $orderCreationViewModel.shouldPresentOrderCreationCompletionView,
-                           label: { EmptyView() })
-            .isDetailLink(false)
         }
         .onAppear {
             tabBarStateManager.showTabBar()
@@ -247,10 +251,11 @@ struct OrderCreationSummaryView: View {
                                                                totalCostWithAppliedDiscounts: cartViewModel.cartTotalCostWithAppliedDiscounts,
                                                                shippingAddress: desiredAddress) { result in
                                 switch result {
-                                case .success(let orderID):
-                                    orderCreationViewModel.payForOrder(orderID: orderID) { _ in
-                                        orderCreationViewModel.shouldPresentOrderCreationCompletionView = true
-                                    }
+                                case .success(_):
+                                    orderCreationViewModel.shouldPresentStripePaymentView = true
+//                                    orderCreationViewModel.payForOrder(orderID: orderID) { _ in
+//                                        orderCreationViewModel.shouldPresentOrderCreationCompletionView = true
+//                                    }
                                 case .failure(let error):
                                     errorManager.generateCustomError(errorType: .orderCreateError,
                                                                      additionalErrorDescription: error.localizedDescription)
