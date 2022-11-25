@@ -180,7 +180,7 @@ struct ProductDetailsView: View {
                     Button {
                         let added: Bool = exploreViewModel.addProductToBeCompared(product: product)
                         if !added {
-                            errorManager.generateCustomError(errorType: .addProductToComparison)
+                            errorManager.generateCustomError(errorType: .addProductToComparisonError)
                         }
                     } label: {
                         Image(systemName: "scalemass")

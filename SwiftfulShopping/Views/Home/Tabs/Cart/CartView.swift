@@ -73,7 +73,7 @@ struct CartView: View {
                                             Button {
                                                 let added: Bool = exploreViewModel.addProductToBeCompared(product: product)
                                                 if !added {
-                                                    errorManager.generateCustomError(errorType: .addProductToComparison)
+                                                    errorManager.generateCustomError(errorType: .addProductToComparisonError)
                                                 }
                                             } label: {
                                                 Image(systemName: "scalemass")
@@ -112,7 +112,7 @@ struct CartView: View {
                             checkoutButton
                         }
                         .padding(.horizontal)
-                        .padding(.bottom, tabBarStateManager.screenBottomPaddingForViews)
+                        .padding(.bottom, tabBarStateManager.screenBottomPaddingForViews + 15)
                         
                         NavigationLink(destination: ProductDetailsView(product: cartViewModel.choosenProduct ??
                                                                        Product.demoProducts[0],
@@ -169,12 +169,13 @@ struct CartView: View {
                         cartViewModel.shouldPresentCheckoutFirstView = true
                     } else {
                         let notAvailableProductsNames: String = cartViewModel.getNamesOfProductsNotAvailableForError(productsIDs: notAvailableProductsIDs)
-                        errorManager.generateCustomError(errorType: .productNotAvailable,
+                        errorManager.generateCustomError(errorType: .productNotAvailableError,
                                                          additionalErrorDescription: notAvailableProductsNames)
                     }
                     
                 case .failure(let error):
-                    errorManager.generateCustomError(errorType: .productNotAvailable, additionalErrorDescription: error.localizedDescription)
+                    errorManager.generateCustomError(errorType: .productNotAvailableError,
+                                                     additionalErrorDescription: error.localizedDescription)
                 }
             }
         } label: {

@@ -329,8 +329,8 @@
 		88C4C5C929311C5B00D83B32 /* StripePayments in Frameworks */ = {isa = PBXBuildFile; productRef = 88C4C5C829311C5B00D83B32 /* StripePayments */; };
 		88C4C5CB29311C5B00D83B32 /* StripePaymentsUI in Frameworks */ = {isa = PBXBuildFile; productRef = 88C4C5CA29311C5B00D83B32 /* StripePaymentsUI */; };
 		88C4C5CF2931256C00D83B32 /* StripeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88C4C5CE2931256C00D83B32 /* StripeViewModel.swift */; };
-		88C4C5D32931390200D83B32 /* StripePaymentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88C4C5D22931390200D83B32 /* StripePaymentView.swift */; };
 		88C4C5D52931414800D83B32 /* Stripe.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88C4C5D42931414800D83B32 /* Stripe.swift */; };
+		88C4C5D72931826000D83B32 /* FirestoreStripeManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88C4C5D62931826000D83B32 /* FirestoreStripeManager.swift */; };
 		88D69AE82926A74500F6A305 /* AvailabilityIndicatorLocalizable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88D69AE72926A74500F6A305 /* AvailabilityIndicatorLocalizable.swift */; };
 		88D69AED2926AEC300F6A305 /* CustomTabBarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88D69AEC2926AEC300F6A305 /* CustomTabBarView.swift */; };
 		88D69AF32926B3DF00F6A305 /* CustomTabBarContainerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88D69AF22926B3DF00F6A305 /* CustomTabBarContainerView.swift */; };
@@ -628,8 +628,8 @@
 		88A946AE29099F850086A8A1 /* AddToCartButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddToCartButton.swift; sourceTree = "<group>"; };
 		88C4C5CC2931215900D83B32 /* Config.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Config.xcconfig; sourceTree = "<group>"; };
 		88C4C5CE2931256C00D83B32 /* StripeViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StripeViewModel.swift; sourceTree = "<group>"; };
-		88C4C5D22931390200D83B32 /* StripePaymentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StripePaymentView.swift; sourceTree = "<group>"; };
 		88C4C5D42931414800D83B32 /* Stripe.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Stripe.swift; sourceTree = "<group>"; };
+		88C4C5D62931826000D83B32 /* FirestoreStripeManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirestoreStripeManager.swift; sourceTree = "<group>"; };
 		88D69AE72926A74500F6A305 /* AvailabilityIndicatorLocalizable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AvailabilityIndicatorLocalizable.swift; sourceTree = "<group>"; };
 		88D69AEC2926AEC300F6A305 /* CustomTabBarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomTabBarView.swift; sourceTree = "<group>"; };
 		88D69AF22926B3DF00F6A305 /* CustomTabBarContainerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomTabBarContainerView.swift; sourceTree = "<group>"; };
@@ -900,6 +900,7 @@
 				0A383D0B28F75B9000D15B48 /* FirestoreOrdersManager.swift */,
 				0A383D0D28F75BF200D15B48 /* FirestoreReturnsManager.swift */,
 				889EDF38290DA0D100EBFFC1 /* FirestoreSampleDataManager.swift */,
+				88C4C5D62931826000D83B32 /* FirestoreStripeManager.swift */,
 			);
 			path = Firestore;
 			sourceTree = "<group>";
@@ -1670,7 +1671,6 @@
 			isa = PBXGroup;
 			children = (
 				88C4C5CE2931256C00D83B32 /* StripeViewModel.swift */,
-				88C4C5D22931390200D83B32 /* StripePaymentView.swift */,
 			);
 			path = Stripe;
 			sourceTree = "<group>";
@@ -1912,6 +1912,7 @@
 				0A5A7CEE289546DF00736B07 /* OrderCreationSummaryView.swift in Sources */,
 				0A3C7AE5290165C40079B290 /* ProfileRepository.swift in Sources */,
 				0A27E7C82879CBE200D033D9 /* PersonalInfoViewModel.swift in Sources */,
+				88C4C5D72931826000D83B32 /* FirestoreStripeManager.swift in Sources */,
 				0AB8D98D2864B4DC003DC2E6 /* Product.swift in Sources */,
 				889EDF60290F28ED00EBFFC1 /* FirstTimeLoginViewLocalizable.swift in Sources */,
 				0ACD58FD284A6F6600AA9DA0 /* CustomTextField.swift in Sources */,
@@ -1968,7 +1969,6 @@
 				0ACD5909284A6F6600AA9DA0 /* RegisterViewModel.swift in Sources */,
 				88EFAA22291546C900A30481 /* FilteringMethodsLocalizable.swift in Sources */,
 				88EA8BAD291B036700267AD6 /* ProductsSpecificationsComparisonView.swift in Sources */,
-				88C4C5D32931390200D83B32 /* StripePaymentView.swift in Sources */,
 				0ACD58F4284A6F6600AA9DA0 /* ConditionalViewModifiers.swift in Sources */,
 				0A56D8AF285F2C830009680C /* OrdersView.swift in Sources */,
 				0A3B08E228AD292C00A54385 /* Resnet50.mlmodel in Sources */,

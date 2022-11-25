@@ -60,10 +60,14 @@ final class ErrorManager: ObservableObject {
             TexterifyManager.localisedString(key: .errors(.dataFetchErrorDescription)),
         .editPersonalInfoError:
             TexterifyManager.localisedString(key: .errors(.editPersonalInfoErrorDescription)),
-        .addProductToComparison:
-            TexterifyManager.localisedString(key: .errors(.addProductToComparisonDescription)),
-        .productNotAvailable:
-            TexterifyManager.localisedString(key: .errors(.productNotAvailableDescription)),
+        .addProductToComparisonError:
+            TexterifyManager.localisedString(key: .errors(.addProductToComparisonErrorDescription)),
+        .productNotAvailableError:
+            TexterifyManager.localisedString(key: .errors(.productNotAvailableErrorDescription)),
+        .paymentCanceledError:
+            TexterifyManager.localisedString(key: .errors(.paymentCanceledErrorDescription)),
+        .paymentFailedError:
+            TexterifyManager.localisedString(key: .errors(.paymentFailedErrorDescription)),
         .unknownError:
             TexterifyManager.localisedString(key: .errors(.unknownErrorDescription))
     ]

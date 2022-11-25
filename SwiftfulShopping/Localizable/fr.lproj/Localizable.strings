@@ -80,8 +80,8 @@
 "EditPersonalInfoView_fullNameTextField" = "";
 "EditPersonalInfoView_navigationTitle" = "";
 "EditPersonalInfoView_saveButton" = "";
-"Errors_addProductToComparison" = "";
-"Errors_addProductToComparisonDescription" = "";
+"Errors_addProductToComparisonError" = "";
+"Errors_addProductToComparisonErrorDescription" = "";
 "Errors_applyProductRatingError" = "";
 "Errors_applyProductRatingErrorDescription" = "";
 "Errors_biometricRecognitionError" = "";
@@ -124,10 +124,14 @@
 "Errors_networkErrorDescription" = "";
 "Errors_orderCreateError" = "";
 "Errors_orderCreateErrorDescription" = "";
+"Errors_paymentCanceledError" = "";
+"Errors_paymentCanceledErrorDescription" = "";
+"Errors_paymentFailedError" = "";
+"Errors_paymentFailedErrorDescription" = "";
 "Errors_phoneSignInError" = "";
 "Errors_phoneSignInErrorDescription" = "";
-"Errors_productNotAvailable" = "";
-"Errors_productNotAvailableDescription" = "";
+"Errors_productNotAvailableError" = "";
+"Errors_productNotAvailableErrorDescription" = "";
 "Errors_productRecognizerError" = "";
 "Errors_productRecognizerErrorDescription" = "";
 "Errors_registerError" = "";
@@ -498,4 +502,4 @@
 "ThirdReturnCreationView_createReturnButton" = "";
 "ThirdReturnCreationView_howDoYouWantToReturn" = "";
 "ThirdReturnCreationView_navigationTitle" = "";
-"texterify_timestamp" = "2022-11-20T12:07:17Z";
+"texterify_timestamp" = "2022-11-25T21:52:55Z";

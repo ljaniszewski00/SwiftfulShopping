@@ -80,8 +80,8 @@
 "EditPersonalInfoView_fullNameTextField" = "Full Name";
 "EditPersonalInfoView_navigationTitle" = "Edit personal data";
 "EditPersonalInfoView_saveButton" = "Save";
-"Errors_addProductToComparison" = "Add product to comparison error";
-"Errors_addProductToComparisonDescription" = "Error occured while adding product for comparison. You cannot compare more than 5 products and they all have to be of same category.";
+"Errors_addProductToComparisonError" = "Add product to comparison error";
+"Errors_addProductToComparisonErrorDescription" = "Error occured while adding product for comparison. You cannot compare more than 5 products and they all have to be of same category.";
 "Errors_applyProductRatingError" = "Error adding new rating. Please try again later.";
 "Errors_applyProductRatingErrorDescription" = "Error fetching data. Please try again later.";
 "Errors_biometricRecognitionError" = "Biometric Recognition Error";
@@ -124,10 +124,14 @@
 "Errors_networkErrorDescription" = "No internet connection. Some functions will be unavailable.";
 "Errors_orderCreateError" = "Order Create Error";
 "Errors_orderCreateErrorDescription" = "Error creating your order. Please try again later.";
+"Errors_paymentCanceledError" = "Payment Canceled";
+"Errors_paymentCanceledErrorDescription" = "Payment was canceled. Please try again later.";
+"Errors_paymentFailedError" = "Payment Failed";
+"Errors_paymentFailedErrorDescription" = "Payment failed. Please try again later.";
 "Errors_phoneSignInError" = "Phone Sign In Error";
 "Errors_phoneSignInErrorDescription" = "Error occured while trying to log in with phone number. Please try again later.";
-"Errors_productNotAvailable" = "Products not available";
-"Errors_productNotAvailableDescription" = "At least one of the product you are trying to buy is not available at the moment in selected quantity. Please try again later.";
+"Errors_productNotAvailableError" = "Products not available";
+"Errors_productNotAvailableErrorDescription" = "At least one of the product you are trying to buy is not available at the moment in selected quantity. Please try again later.";
 "Errors_productRecognizerError" = "Product Recognizer Error";
 "Errors_productRecognizerErrorDescription" = "Error occured while recognizing your product. Please try again later.";
 "Errors_registerError" = "Registration Error";
@@ -498,4 +502,4 @@
 "ThirdReturnCreationView_createReturnButton" = "Create Return";
 "ThirdReturnCreationView_howDoYouWantToReturn" = "How do you want to return the product?";
 "ThirdReturnCreationView_navigationTitle" = "Create Return";
-"texterify_timestamp" = "2022-11-20T12:07:16Z";
+"texterify_timestamp" = "2022-11-25T21:52:54Z";

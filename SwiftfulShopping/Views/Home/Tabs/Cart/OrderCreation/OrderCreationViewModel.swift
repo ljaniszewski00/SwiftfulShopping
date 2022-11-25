@@ -17,13 +17,8 @@ class OrderCreationViewModel: ObservableObject {
     
     @Published var shouldPresentOrderCreationAddressChangeView: Bool = false
     @Published var shouldPresentOrderCreationSummaryView: Bool = false
-    @Published var shouldPresentStripePaymentView: Bool = false
-    @Published var shouldPresentOrderCreationCompletionViewNavigationLink: Bool = false
-    
-    var shouldPresentOrderCreationCompletionView: Bool {
-        get { !shouldPresentStripePaymentView && orderPayed }
-        set { shouldPresentOrderCreationCompletionViewNavigationLink = newValue }
-    }
+    @Published var shouldPresentStripePaymentSheet: Bool = false
+    @Published var shouldPresentOrderCreationCompletionView: Bool = false
     
     @Published var showLoadingModal: Bool = false
     @Published var orderPayed: Bool = false
@@ -212,6 +207,5 @@ class OrderCreationViewModel: ObservableObject {
 //            self?.shouldPresentPaymentProcessingModal = false
 //            completion(.success)
 //        }
-        shouldPresentStripePaymentView = true
     }
 }
