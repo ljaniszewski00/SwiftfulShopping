@@ -29,7 +29,7 @@ struct HomeView: View {
     // MARK: To add sample data to Firestore
     init() {
 //        FirestoreSampleDataManager.addAll { _ in }
-        FirestoreSampleDataManager.addOrders { _ in }
+//        FirestoreSampleDataManager.addOrders { _ in }
 //        FirestoreSampleDataManager.addProducts { _ in }
     }
     
