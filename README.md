@@ -17,7 +17,9 @@ iOS fitness app in which user can perform various interval workouts, share their
 
 ## Technologies
 * Swift [SwiftUI + UIKit]    
-* Xcode 13/14  
+* Xcode 13/14
+* [Apple ML](https://developer.apple.com/machine-learning/)
+* [Apple AVKit](https://developer.apple.com/documentation/avkit)
 * [Firebase Auth, Firebase Firestore, Firebase Storage](https://firebase.google.com/)
 * [Texterify](https://texterify.com/)   
 * [Lottie](https://lottiefiles.com/)
