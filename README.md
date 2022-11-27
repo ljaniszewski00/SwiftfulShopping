@@ -72,14 +72,16 @@ Apple iPhone with iOS 15+ installed
 <img src="https://user-images.githubusercontent.com/78795431/204162928-32026212-bb8a-429e-b126-87c1b206e9e0.png" width="321" height="694">
 
 ### Explore
-![ExploreView](https://user-images.githubusercontent.com/78795431/204162943-90e42b1c-71a9-46c9-85af-ac0fa05655fa.png)
-![ExploreView2](https://user-images.githubusercontent.com/78795431/204162946-1efacbee-ae2f-43b9-acbf-ea31fa1a2cc1.png)
-![ExploreView3](https://user-images.githubusercontent.com/78795431/204162948-18206936-2ba0-4a08-8b6a-1ae0a17f26b0.png)
-![ExploreView4](https://user-images.githubusercontent.com/78795431/204162949-eec7a69f-e156-4a30-968b-45a03814f22f.png)
-![ProductDetailsView1](https://user-images.githubusercontent.com/78795431/204162950-957c3fb3-0d4e-4bb4-a389-01ce34ac51d3.png)
-![ProductDetailsView2](https://user-images.githubusercontent.com/78795431/204162951-d0393e5f-d8e2-4a56-bdd5-3c723426a817.png)
-![ProductDetailsView3](https://user-images.githubusercontent.com/78795431/204162953-1ac8da54-88a1-4ab8-801e-ba745c935038.png)
-![ProductComparisonView](https://user-images.githubusercontent.com/78795431/204162955-0c6aca46-3a68-45d6-abc3-fee7d9b81231.png)
+<p float="left">
+  <img src="https://user-images.githubusercontent.com/78795431/204162943-90e42b1c-71a9-46c9-85af-ac0fa05655fa.png" width="20%" />
+  <img src="https://user-images.githubusercontent.com/78795431/204162946-1efacbee-ae2f-43b9-acbf-ea31fa1a2cc1.png" width="20%" />
+  <img src="https://user-images.githubusercontent.com/78795431/204162948-18206936-2ba0-4a08-8b6a-1ae0a17f26b0.png" width="20%" />
+  <img src="https://user-images.githubusercontent.com/78795431/204162949-eec7a69f-e156-4a30-968b-45a03814f22f.png" width="20%" />
+  <img src="https://user-images.githubusercontent.com/78795431/204162950-957c3fb3-0d4e-4bb4-a389-01ce34ac51d3.png" width="20%" />
+  <img src="https://user-images.githubusercontent.com/78795431/204162951-d0393e5f-d8e2-4a56-bdd5-3c723426a817.png" width="20%" />
+  <img src="https://user-images.githubusercontent.com/78795431/204162953-1ac8da54-88a1-4ab8-801e-ba745c935038.png" width="20%" />
+  <img src="https://user-images.githubusercontent.com/78795431/204162955-0c6aca46-3a68-45d6-abc3-fee7d9b81231.png" width="20%" />
+</p>
 
 ### Favorites
 ![FavoritesView](https://user-images.githubusercontent.com/78795431/204162972-7067c2e8-624b-4a89-9b5a-a81d512b0574.png)
