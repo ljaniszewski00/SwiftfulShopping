@@ -13,12 +13,11 @@
 
 
 ## General info
-iOS shopping app with integrated machine learning and artificial intelligence boosting selling processes
-CUstomer can Sign Up in different ways, including e-mail and facebook, google, github accounts
-Project localized both in english and polish languages with possibility of expanding for much more
-Over 20k lines of code and tens of project files with assets
-Focues on maintaining clean code and swift good practices
-
+iOS shopping app with integrated machine learning and artificial intelligence boosting selling processes.  
+Customer can Sign Up in different ways, including e-mail and facebook, google, github accounts.  
+Project localized both in english and polish languages with possibility of expanding for much more.  
+Over 20k lines of code and tens of project files with assets.  
+Focues on maintaining clean code and swift good practices.  
 
 
 ## Technologies
