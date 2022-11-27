@@ -31,6 +31,7 @@ struct HomeView: View {
 //        FirestoreSampleDataManager.addAll { _ in }
 //        FirestoreSampleDataManager.addOrders { _ in }
 //        FirestoreSampleDataManager.addProducts { _ in }
+//        FirestoreSampleDataManager.addRatings { _ in }
     }
     
     var body: some View {
