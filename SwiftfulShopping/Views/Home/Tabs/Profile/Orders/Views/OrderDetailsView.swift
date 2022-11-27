@@ -120,6 +120,7 @@ struct OrderDetailsView: View {
                                 Text(TexterifyManager.localisedString(key: .orderDetailsView(.payButton)))
                             }
                             .buttonStyle(CustomButton())
+                            .frame(width: 160)
                         }
                     }
                     .padding(.bottom, 10)
@@ -302,7 +303,7 @@ struct OrderDetailsView_Previews: PreviewProvider {
         let ordersViewModel = OrdersViewModel()
         ForEach(ColorScheme.allCases, id: \.self) { colorScheme in
             ForEach(["iPhone 13 Pro Max", "iPhone 8"], id: \.self) { deviceName in
-                OrderDetailsView(order: Order.demoOrders[0])
+                OrderDetailsView(order: Order.demoOrders[1])
                     .environmentObject(tabBarStateManager)
                     .environmentObject(profileViewModel)
                     .environmentObject(ordersViewModel)
