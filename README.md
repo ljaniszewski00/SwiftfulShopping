@@ -1,6 +1,6 @@
 # SwiftfulShopping
 
-<img width="500" alt="SwiftfulShopping2" src="https://user-images.githubusercontent.com/78795431/189764523-bb4cbae8-51d5-4d1b-8314-c1d71df03827.png">
+<img width="500" alt="SwiftfulShoppingLogo - vertical (white)" src="https://user-images.githubusercontent.com/78795431/204159533-c98231ff-de27-4bb9-9550-2843a7085e17.png">
 
 ## Table of Content
 * [General Info](#general-info)
