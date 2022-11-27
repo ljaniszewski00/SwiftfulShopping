@@ -17,11 +17,12 @@ class OrderCreationViewModel: ObservableObject {
     
     @Published var shouldPresentOrderCreationAddressChangeView: Bool = false
     @Published var shouldPresentOrderCreationSummaryView: Bool = false
-    @Published var shouldPresentStripePaymentSheet: Bool = false
     @Published var shouldPresentOrderCreationCompletionView: Bool = false
+    @Published var shouldPresentStripePaymentSheet: Bool = false
+    
+    @Published var orderPayed: Bool = false
     
     @Published var showLoadingModal: Bool = false
-    @Published var orderPayed: Bool = false
     @Published var shouldPresentPaymentProcessingModal: Bool = false
     
     @Published var newStreetName: String = ""
@@ -36,6 +37,10 @@ class OrderCreationViewModel: ObservableObject {
     @Published var discountCode: String = ""
     
     @Published var createdOrder: Order?
+    
+    var currencyCode: String? {
+        get { LocaleManager.client.clientCurrencyCode }
+    }
     
     private var paymentMethodForShippingMethod: [ShippingMethod: [PaymentMethod]] = [
         .courier: [.creditCard, .applePay],
@@ -127,6 +132,20 @@ class OrderCreationViewModel: ObservableObject {
         discountCode.removeAll()
     }
     
+    func getOrderTotalCost(totalCostWithAppliedDiscounts: Double) -> Double? {
+        guard let currencyCode = currencyCode else { return nil }
+        
+        guard let choosenShippingMethod = choosenShippingMethod,
+              let shippingMethodPrices = Order.shippingMethodsPrices[choosenShippingMethod],
+              let shippingMethodPrice = shippingMethodPrices[currencyCode] else { return nil }
+        
+        guard let choosenPaymentMethod = choosenPaymentMethod,
+              let paymentMethodPrices = Order.paymentMethodPrices[choosenPaymentMethod],
+              let paymentMethodPrice = paymentMethodPrices[currencyCode] else { return nil }
+        
+        return totalCostWithAppliedDiscounts + shippingMethodPrice + paymentMethodPrice
+    }
+    
     func createOrder(client: Profile,
                      productsWithQuantity: [Product: Int],
                      appliedDiscounts: [Discount],
@@ -140,17 +159,11 @@ class OrderCreationViewModel: ObservableObject {
         
         showLoadingModal = true
         
-        guard let currencyCode = LocaleManager.client.clientCurrencyCode else { return }
-        
         guard let choosenShippingMethod = choosenShippingMethod,
-              let shippingMethodPrices = Order.shippingMethodsPrices[choosenShippingMethod],
-              let shippingMethodPrice = shippingMethodPrices[currencyCode] else { return }
-        
-        guard let choosenPaymentMethod = choosenPaymentMethod,
-              let paymentMethodPrices = Order.paymentMethodPrices[choosenPaymentMethod],
-              let paymentMethodPrice = paymentMethodPrices[currencyCode] else { return }
-        
-        let totalCost: Double = totalCostWithAppliedDiscounts + shippingMethodPrice + paymentMethodPrice
+              let choosenPaymentMethod = choosenPaymentMethod,
+              let totalCost = getOrderTotalCost(totalCostWithAppliedDiscounts: totalCostWithAppliedDiscounts),
+              let shippingPrice = shippingPrice,
+              let paymentPrice = paymentPrice else { return }
         
         var appliedDiscountsCodesWithValues: [String: Double] = [:]
         for appliedDiscount in appliedDiscounts {
@@ -159,7 +172,8 @@ class OrderCreationViewModel: ObservableObject {
         
         let order = Order(id: UUID().uuidString,
                           orderDate: Date(),
-                          estimatedDeliveryDate: calculateEstimatedDeliveryDate(orderDate: Date(), shippingMethod: choosenShippingMethod),
+                          estimatedDeliveryDate: calculateEstimatedDeliveryDate(orderDate: Date(),
+                                                                                shippingMethod: choosenShippingMethod),
                           clientID: client.id,
                           clientDescription: client.description,
                           addressDescription: shippingAddress.description,
@@ -170,9 +184,12 @@ class OrderCreationViewModel: ObservableObject {
                           invoice: toReceiveInvoice,
                           productsCost: productsCost,
                           appliedDiscountsCodesWithValue: appliedDiscountsCodesWithValues,
-                          shippingCost: shippingPrice ?? 0,
-                          paymentCost: paymentPrice ?? 0,
+                          shippingCost: shippingPrice,
+                          paymentCost: paymentPrice,
                           totalCost: totalCost,
+                          currency: "",
+                          payed: false,
+                          paymentID: nil,
                           status: .placed)
         
         FirestoreOrdersManager.createUserOrder(order: order) { [weak self] result in

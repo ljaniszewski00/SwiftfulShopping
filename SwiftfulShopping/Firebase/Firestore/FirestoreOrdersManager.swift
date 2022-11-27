@@ -44,6 +44,9 @@ struct FirestoreOrdersManager {
                         let shippingCost = data["shippingCost"] as? Double ?? 0.0
                         let paymentCost = data["paymentCost"] as? Double ?? 0.0
                         let totalCost = data["totalCost"] as? Double ?? 0.0
+                        let currency = data["currency"] as? String ?? ""
+                        let payed = data["payed"] as? Bool ?? false
+                        let paymentID = data["paymentID"] as? String ?? ""
                         let status = data["status"] as? String ?? ""
                         
                         let orderDate = orderDateTimestamp?.dateValue() ?? Date()
@@ -65,6 +68,9 @@ struct FirestoreOrdersManager {
                                      shippingCost: shippingCost,
                                      paymentCost: paymentCost,
                                      totalCost: totalCost,
+                                     currency: currency,
+                                     payed: payed,
+                                     paymentID: paymentID,
                                      status: OrderStatus.withLabel(status) ?? .placed)
                     }
                     
@@ -128,6 +134,21 @@ struct FirestoreOrdersManager {
                 } else {
                     documentSnapshot?.reference.updateData(updateData)
                     print("Successfully changed status of order \(order.id) from \(order.status.decodeValue) to \(newStatus.decodeValue)")
+                    completion(.success)
+                }
+            }
+    }
+    
+    static func updateOrderDataAfterSuccessfulPayment(orderID: String, updateData: [String: Any], completion: @escaping ((VoidResult) -> ())) {
+        self.db.collection(DatabaseCollections.orders.rawValue)
+            .document(orderID)
+            .getDocument { documentSnapshot, error in
+                if let error = error {
+                    print("Error updating order's data after successful payment: \(error.localizedDescription)")
+                    completion(.failure(error))
+                } else {
+                    documentSnapshot?.reference.updateData(updateData)
+                    print("Successfully updated order \(orderID) data after successful payment")
                     completion(.success)
                 }
             }

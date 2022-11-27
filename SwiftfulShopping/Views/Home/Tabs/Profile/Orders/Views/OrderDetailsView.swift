@@ -16,6 +16,9 @@ struct OrderDetailsView: View {
     @Environment(\.dismiss) private var dismiss: DismissAction
     
     @StateObject private var orderDetailsViewModel: OrderDetailsViewModel = OrderDetailsViewModel()
+    @StateObject private var stripeViewModel: StripeViewModel = StripeViewModel()
+    
+    @StateObject private var errorManager: ErrorManager = ErrorManager.shared
     
     @State private var showProductsList: Bool = true
 
@@ -65,6 +68,59 @@ struct OrderDetailsView: View {
                         Text(order.status.rawValue)
                             .font(.ssTitle3)
                             .foregroundColor(.accentColor)
+                    }
+                    
+                    HStack(alignment: .bottom) {
+                        VStack(alignment: .leading, spacing: 15) {
+                            VStack(alignment: .leading, spacing: 10) {
+                                Text(TexterifyManager.localisedString(key: .orderDetailsView(.paymentStatus)))
+                                    .font(.ssTitle2)
+                                    .foregroundColor(colorScheme == .light ? .black : .ssWhite)
+                                    
+                                Text(order.payed ?
+                                     TexterifyManager.localisedString(key: .ordersView(.paymentStatusPayed)) : TexterifyManager.localisedString(key: .ordersView(.paymentStatusNotPayed)))
+                                    .font(.ssTitle3)
+                                    .foregroundColor(order.payed ? .accentColor : .red)
+                            }
+                            
+                            if order.payed {
+                                if let paymentID = order.paymentID {
+                                    VStack(alignment: .leading, spacing: 10) {
+                                        Text(TexterifyManager.localisedString(key: .orderDetailsView(.paymentID)))
+                                            .font(.ssTitle2)
+                                            .foregroundColor(colorScheme == .light ? .black : .ssWhite)
+                                            
+                                        Text(paymentID)
+                                            .font(.ssTitle3)
+                                            .foregroundColor(.accentColor)
+                                    }
+                                }
+                            }
+                        }
+                        
+                        Spacer()
+                        
+                        if !order.payed {
+                            Button {
+                                guard let profile = profileViewModel.profile,
+                                      let currency = orderDetailsViewModel.currencyCode else { return }
+                                
+                                stripeViewModel.prepareFirebaseForPayment(profileID: profile.id,
+                                                                          amount: order.totalCost,
+                                                                          currency: currency) { result in
+                                    switch result {
+                                    case .success:
+                                        break
+                                    case .failure(let error):
+                                        errorManager.generateCustomError(errorType: .paymentFailedError,
+                                                                         additionalErrorDescription: error.localizedDescription)
+                                    }
+                                }
+                            } label: {
+                                Text(TexterifyManager.localisedString(key: .orderDetailsView(.payButton)))
+                            }
+                            .buttonStyle(CustomButton())
+                        }
                     }
                     .padding(.bottom, 10)
                     
@@ -157,7 +213,7 @@ struct OrderDetailsView: View {
             
             Spacer()
             
-            VStack(spacing: 20) {
+            VStack(spacing: 15) {
                 Button {
                     withAnimation {
                         profileViewModel.shouldPresentReturnCreationView = true
@@ -194,8 +250,30 @@ struct OrderDetailsView: View {
                            isActive: $profileViewModel.shouldPresentReturnCreationView) { EmptyView() }
                 .isDetailLink(false)
             
+            NavigationLink(destination: OrderPaymentView(profileID: profileViewModel.profile?.id ?? "",
+                                                         orderID: order.id )
+                                            .environmentObject(tabBarStateManager)
+                                            .environmentObject(orderDetailsViewModel)
+                                            .environmentObject(stripeViewModel),
+                           isActive: $orderDetailsViewModel.shouldPresentOrderPaymentView) { EmptyView() }
+                .isDetailLink(false)
+            
         }
         .padding(.bottom, tabBarStateManager.screenBottomPaddingForViews)
+        .modifier(LoadingIndicatorModal(isPresented: $orderDetailsViewModel.showLoadingModal))
+        .modifier(LoadingIndicatorModal(isPresented: $stripeViewModel.showLoadingModal))
+        .onChange(of: stripeViewModel.canPresentOrderPaymentView) { canPresentOrderPaymentView in
+            if canPresentOrderPaymentView {
+                orderDetailsViewModel.shouldPresentOrderPaymentView = true
+            }
+        }
+        .onChange(of: stripeViewModel.paymentData) { paymentData in
+            guard let paymentData = paymentData else { return }
+            
+            if !paymentData.isEmpty {
+                stripeViewModel.preparePaymentSheet()
+            }
+        }
         .navigationTitle("\(TexterifyManager.localisedString(key: .orderDetailsView(.navigationTitle))) \(order.id)")
         .navigationBarTitleDisplayMode(.inline)
         .navigationBarBackButtonHidden(true)

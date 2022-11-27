@@ -7,6 +7,7 @@
 
 import SwiftUI
 import texterify_ios_sdk
+import StripePaymentSheet
 
 struct OrderCreationCompletionView: View {
     @EnvironmentObject private var tabBarStateManager: TabBarStateManager
@@ -15,8 +16,11 @@ struct OrderCreationCompletionView: View {
     @EnvironmentObject private var favoritesViewModel: FavoritesViewModel
     @EnvironmentObject private var cartViewModel: CartViewModel
     @EnvironmentObject private var orderCreationViewModel: OrderCreationViewModel
+    @EnvironmentObject private var stripeViewModel: StripeViewModel
     
     @Environment(\.dismiss) private var dismiss: DismissAction
+    
+    @StateObject private var errorManager: ErrorManager = ErrorManager.shared
     
     var body: some View {
         GeometryReader { geometry in
@@ -54,30 +58,57 @@ struct OrderCreationCompletionView: View {
                                     .multilineTextAlignment(.leading)
                             }
                             
-                            VStack(alignment: .leading, spacing: 10) {
-                                Text(TexterifyManager.localisedString(key: .orderCreationCompletionView(.expectedDeliveryDate)))
-                                    .font(.ssTitle3)
-                                Text(orderCreationViewModel.createdOrder?.estimatedDeliveryDate.dateString() ?? "")
-                                    .font(.ssCallout)
-                                    .foregroundColor(.accentColor)
-                                    .fixedSize(horizontal: false, vertical: true)
-                                    .multilineTextAlignment(.leading)
+                            if orderCreationViewModel.orderPayed {
+                                VStack(alignment: .leading, spacing: 10) {
+                                    Text(TexterifyManager.localisedString(key: .orderCreationCompletionView(.expectedDeliveryDate)))
+                                        .font(.ssTitle3)
+                                    Text(orderCreationViewModel.createdOrder?.estimatedDeliveryDate.dateString() ?? "")
+                                        .font(.ssCallout)
+                                        .foregroundColor(.accentColor)
+                                        .fixedSize(horizontal: false, vertical: true)
+                                        .multilineTextAlignment(.leading)
+                                }
+                                .transition(.move(edge: .leading))
+                                .animation(.default)
                             }
                         }
                     }
                     
                     Spacer()
                     
-                    Button {
-                        withAnimation {
-                            cartViewModel.removeAllProductsFromCart()
-                            cartViewModel.shouldPresentCheckoutFirstView = false
+                    VStack(alignment: .leading, spacing: 15) {
+                        Button {
+                            orderCreationViewModel.shouldPresentStripePaymentSheet = true
+                        } label: {
+                            Text(TexterifyManager.localisedString(key: orderCreationViewModel.orderPayed ?
+                                .orderCreationCompletionView(.payButtonPayedLabel) : .orderCreationCompletionView(.payButton)))
                         }
-                    } label: {
-                        Text(TexterifyManager.localisedString(key: .orderCreationCompletionView(.goBackToCart)))
-                            .font(.ssButton)
+                        .buttonStyle(CustomButton())
+                        .disabled(orderCreationViewModel.orderPayed)
+                        
+                        Button {
+                            withAnimation {
+                                cartViewModel.removeAllProductsFromCart()
+                                cartViewModel.shouldPresentCheckoutFirstView = false
+                            }
+                        } label: {
+                            Text(TexterifyManager.localisedString(key: .orderCreationCompletionView(.completeButton)))
+                                .font(.ssButton)
+                        }
+                        .if(orderCreationViewModel.orderPayed) {
+                            $0
+                                .buttonStyle(CustomButton())
+                        }
+                        .if(!orderCreationViewModel.orderPayed) {
+                            $0
+                                .buttonStyle(CustomButton(textColor: .accentColor,
+                                                          onlyStroke: true))
+                        }
+                        
+                        Text(TexterifyManager.localisedString(key: .orderCreationCompletionView(.completeWarning)))
+                            .font(.ssCallout)
+                            .foregroundColor(.ssDarkGray)
                     }
-                    .buttonStyle(CustomButton())
                 }
                 .padding()
                 .frame(minHeight: geometry.size.height)
@@ -85,6 +116,25 @@ struct OrderCreationCompletionView: View {
             .navigationTitle(TexterifyManager.localisedString(key: .orderCreationCompletionView(.navigationTitle)))
             .navigationBarTitleDisplayMode(.inline)
             .navigationBarBackButtonHidden(true)
+            .paymentSheet(isPresented: $orderCreationViewModel.shouldPresentStripePaymentSheet,
+                          paymentSheet: stripeViewModel.paymentSheet!) { result in
+                switch result {
+                case .completed:
+                    orderCreationViewModel.orderPayed = true
+                    guard let profileID = profileViewModel.profile?.id,
+                          let orderID = orderCreationViewModel.createdOrder?.id,
+                          let currency = LocaleManager.client.clientCurrencyCode else { return }
+                    
+                    stripeViewModel.updateOrderDataAfterSuccessfulPayment(profileID: profileID,
+                                                                          orderID: orderID,
+                                                                          currency: currency) { _ in }
+                case .canceled:
+                    errorManager.generateCustomError(errorType: .paymentCanceledError)
+                case .failed(let error):
+                    errorManager.generateCustomError(errorType: .paymentFailedError,
+                                                     additionalErrorDescription: error.localizedDescription)
+                }
+            }
         }
     }
 }
@@ -97,6 +147,7 @@ struct OrderCreationCompletionView_Previews: PreviewProvider {
         let cartViewModel = CartViewModel()
         let favoritesViewModel = FavoritesViewModel()
         let orderCreationViewModel = OrderCreationViewModel()
+        let stripeViewModel = StripeViewModel()
         ForEach(ColorScheme.allCases, id: \.self) { colorScheme in
             ForEach(["iPhone 13 Pro Max", "iPhone 8"], id: \.self) { deviceName in
                 OrderCreationCompletionView()
@@ -106,6 +157,7 @@ struct OrderCreationCompletionView_Previews: PreviewProvider {
                     .environmentObject(cartViewModel)
                     .environmentObject(favoritesViewModel)
                     .environmentObject(orderCreationViewModel)
+                    .environmentObject(stripeViewModel)
                     .preferredColorScheme(colorScheme)
                     .previewDevice(PreviewDevice(rawValue: deviceName))
                     .previewDisplayName("\(deviceName) portrait")

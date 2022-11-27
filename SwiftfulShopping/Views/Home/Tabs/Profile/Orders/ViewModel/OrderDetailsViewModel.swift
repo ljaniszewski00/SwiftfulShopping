@@ -11,6 +11,13 @@ class OrderDetailsViewModel: ObservableObject {
     @Published var order: Order?
     @Published var showLoadingModal: Bool = false
     
+    @Published var shouldPresentOrderPaymentView: Bool = false
+    @Published var shouldPresentStripePaymentSheet: Bool = false
+    
+    var currencyCode: String? {
+        get { LocaleManager.client.clientCurrencyCode }
+    }
+    
     var orderProductsWithQuantity: [Product: Int]? {
         if let order = order {
             var productsWithQuantity: [Product: Int] = [:]

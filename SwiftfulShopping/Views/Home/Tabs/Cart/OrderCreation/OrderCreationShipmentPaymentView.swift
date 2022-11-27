@@ -129,9 +129,9 @@ struct OrderCreationShipmentPaymentView: View {
                                         
                                         Text(paymentMethod.rawValue)
                                             .font(.ssTitle3)
-                                            .foregroundColor(paymentMethod == .cash ? .ssDarkGray : (colorScheme == .light ? .black : .ssWhite))
+                                            .foregroundColor([.cash, .applePay].contains(paymentMethod) ? .ssDarkGray : (colorScheme == .light ? .black : .ssWhite))
                                         
-                                        if paymentMethod != .cash {
+                                        if ![.cash, .applePay].contains(paymentMethod) {
                                             if let currencyCode = LocaleManager.client.clientCurrencyCode,
                                                let paymentMethodPrices = Order.paymentMethodPrices[paymentMethod],
                                                let paymentMethodPrice = paymentMethodPrices[currencyCode],
@@ -141,7 +141,7 @@ struct OrderCreationShipmentPaymentView: View {
                                             }
                                         }
                                         
-                                        if paymentMethod == .cash {
+                                        if [.cash, .applePay].contains(paymentMethod) {
                                             Text(TexterifyManager.localisedString(key: .common(.commingSoon)))
                                                 .font(.ssCallout)
                                                 .padding(5)
@@ -153,7 +153,7 @@ struct OrderCreationShipmentPaymentView: View {
                                         }
                                     }
                                 })
-                                .if(paymentMethod == .cash) {
+                                .if([.cash, .applePay].contains(paymentMethod)) {
                                     $0
                                         .allowsHitTesting(false)
                                 }

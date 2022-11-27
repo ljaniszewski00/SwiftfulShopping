@@ -12,6 +12,9 @@ public enum OrderCreationCompletionViewLocalizable: String {
     case pleaseWaitPatiently = "OrderCreationCompletionView_pleaseWaitPatiently"
     case orderNumber = "OrderCreationCompletionView_orderNumber"
     case expectedDeliveryDate = "OrderCreationCompletionView_expectedDeliveryDate"
-    case goBackToCart = "OrderCreationCompletionView_goBackToCart"
+    case payButton = "OrderCreationCompletionView_payButton"
+    case payButtonPayedLabel = "OrderCreationCompletionView_payButtonPayedLabel"
+    case completeButton = "OrderCreationCompletionView_completeButton"
+    case completeWarning = "OrderCreationCompletionView_completeWarning"
     case navigationTitle = "OrderCreationCompletionView_navigationTitle"
 }

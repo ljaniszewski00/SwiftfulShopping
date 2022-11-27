@@ -1,0 +1,12 @@
+{
+  "data" : [
+    {
+      "filename" : "order_payment.json",
+      "idiom" : "universal"
+    }
+  ],
+  "info" : {
+    "author" : "xcode",
+    "version" : 1
+  }
+}

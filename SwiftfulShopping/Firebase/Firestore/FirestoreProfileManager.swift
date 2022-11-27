@@ -162,6 +162,29 @@ struct FirestoreProfileManager {
             }
     }
     
+    static func getNewestPaymentIDFor(profileID: String, completion: @escaping ((Result<String?, Error>) -> ())) {
+        self.db.collection(DatabaseCollections.profiles.rawValue)
+            .document(profileID)
+            .collection("payments")
+            .order(by: "created", descending: true).limit(to: 1)
+            .getDocuments { querySnapshot, error in
+                if let error = error {
+                    completion(.failure(error))
+                } else {
+                    guard let querySnapshot = querySnapshot else { return }
+                    
+                    let paymentID = querySnapshot.documents.map { (queryDocumentSnapshot) -> String? in
+                        let data = queryDocumentSnapshot.data()
+                        return data["id"] as? String
+                    }
+                    .first
+                    
+                    guard let firstPaymentID = paymentID else { return }
+                    completion(.success(firstPaymentID))
+                }
+            }
+    }
+    
     
     // MARK: UPDATE DATABASE OPERATIONS
     

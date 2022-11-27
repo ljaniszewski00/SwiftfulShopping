@@ -331,6 +331,8 @@
 		88C4C5CF2931256C00D83B32 /* StripeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88C4C5CE2931256C00D83B32 /* StripeViewModel.swift */; };
 		88C4C5D52931414800D83B32 /* Stripe.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88C4C5D42931414800D83B32 /* Stripe.swift */; };
 		88C4C5D72931826000D83B32 /* FirestoreStripeManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88C4C5D62931826000D83B32 /* FirestoreStripeManager.swift */; };
+		88D3235C2933BA4000181D07 /* OrderPaymentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88D3235B2933BA4000181D07 /* OrderPaymentView.swift */; };
+		88D3235E2933C1C100181D07 /* OrderPaymentViewLocalizable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88D3235D2933C1C000181D07 /* OrderPaymentViewLocalizable.swift */; };
 		88D69AE82926A74500F6A305 /* AvailabilityIndicatorLocalizable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88D69AE72926A74500F6A305 /* AvailabilityIndicatorLocalizable.swift */; };
 		88D69AED2926AEC300F6A305 /* CustomTabBarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88D69AEC2926AEC300F6A305 /* CustomTabBarView.swift */; };
 		88D69AF32926B3DF00F6A305 /* CustomTabBarContainerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88D69AF22926B3DF00F6A305 /* CustomTabBarContainerView.swift */; };
@@ -630,6 +632,8 @@
 		88C4C5CE2931256C00D83B32 /* StripeViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StripeViewModel.swift; sourceTree = "<group>"; };
 		88C4C5D42931414800D83B32 /* Stripe.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Stripe.swift; sourceTree = "<group>"; };
 		88C4C5D62931826000D83B32 /* FirestoreStripeManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirestoreStripeManager.swift; sourceTree = "<group>"; };
+		88D3235B2933BA4000181D07 /* OrderPaymentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrderPaymentView.swift; sourceTree = "<group>"; };
+		88D3235D2933C1C000181D07 /* OrderPaymentViewLocalizable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrderPaymentViewLocalizable.swift; sourceTree = "<group>"; };
 		88D69AE72926A74500F6A305 /* AvailabilityIndicatorLocalizable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AvailabilityIndicatorLocalizable.swift; sourceTree = "<group>"; };
 		88D69AEC2926AEC300F6A305 /* CustomTabBarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomTabBarView.swift; sourceTree = "<group>"; };
 		88D69AF22926B3DF00F6A305 /* CustomTabBarContainerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomTabBarContainerView.swift; sourceTree = "<group>"; };
@@ -955,6 +959,7 @@
 			children = (
 				0A56D8AE285F2C830009680C /* OrdersView.swift */,
 				0A268B4628671924006CF0E2 /* OrderDetailsView.swift */,
+				88D3235B2933BA4000181D07 /* OrderPaymentView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -1608,6 +1613,7 @@
 				889EDF98290F2AA000EBFFC1 /* OrderDetailsViewLocalizable.swift */,
 				889EDF9A290F2AA500EBFFC1 /* OrderRateViewLocalizable.swift */,
 				889EDF9C290F2AAF00EBFFC1 /* SingleProductRatingViewLocalizable.swift */,
+				88D3235D2933C1C000181D07 /* OrderPaymentViewLocalizable.swift */,
 			);
 			path = Orders;
 			sourceTree = "<group>";
@@ -1957,6 +1963,7 @@
 				889EDF85290F2A5E00EBFFC1 /* OrderCreationSummaryViewLocalizable.swift in Sources */,
 				889EDFB1290F2AEE00EBFFC1 /* PaymentDetailsViewLocalizable.swift in Sources */,
 				0AD89746289D0C4A00BFDAA1 /* ProfileViewModel.swift in Sources */,
+				88D3235E2933C1C100181D07 /* OrderPaymentViewLocalizable.swift in Sources */,
 				889EDFBF290F2B1800EBFFC1 /* ColorSchemeChangeViewLocalizable.swift in Sources */,
 				88D69AF32926B3DF00F6A305 /* CustomTabBarContainerView.swift in Sources */,
 				0A35557C28A05859005993E5 /* DeleteAccountView.swift in Sources */,
@@ -2146,6 +2153,7 @@
 				0A3B08E828AD921C00A54385 /* CameraView.swift in Sources */,
 				0ACD58F7284A6F6600AA9DA0 /* Hidden.swift in Sources */,
 				0ACD5918284A6F6600AA9DA0 /* LoginViewModel.swift in Sources */,
+				88D3235C2933BA4000181D07 /* OrderPaymentView.swift in Sources */,
 				88D69AF72926BA4200F6A305 /* TabBarItem.swift in Sources */,
 				0A2FE0B228A1BA3100E8D30E /* LottieView.swift in Sources */,
 				0A5A7CF02895476500736B07 /* OrderCreationCompletionView.swift in Sources */,

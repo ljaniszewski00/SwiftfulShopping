@@ -24,6 +24,9 @@ struct Order {
     var shippingCost: Double
     var paymentCost: Double
     var totalCost: Double
+    var currency: String
+    var payed: Bool
+    var paymentID: String?
     var status: OrderStatus = .placed
     
     init(id: String,
@@ -42,6 +45,9 @@ struct Order {
          shippingCost: Double,
          paymentCost: Double,
          totalCost: Double,
+         currency: String,
+         payed: Bool,
+         paymentID: String?,
          status: OrderStatus) {
         self.id = id
         self.orderDate = orderDate
@@ -59,6 +65,9 @@ struct Order {
         self.shippingCost = shippingCost
         self.paymentCost = paymentCost
         self.totalCost = totalCost
+        self.currency = currency
+        self.payed = payed
+        self.paymentID = paymentID
         self.status = status
     }
     
@@ -75,7 +84,10 @@ struct Order {
          appliedDiscountsCodesWithValue: [String: Double],
          shippingCost: Double,
          paymentCost: Double,
-         totalCost: Double) {
+         totalCost: Double,
+         currency: String,
+         payed: Bool,
+         paymentID: String?) {
         self.id = id
         self.clientID = clientID
         self.clientDescription = clientDescription
@@ -90,6 +102,9 @@ struct Order {
         self.shippingCost = shippingCost
         self.paymentCost = paymentCost
         self.totalCost = totalCost
+        self.currency = currency
+        self.payed = payed
+        self.paymentID = paymentID
         
         self.estimatedDeliveryDate = calculateEstimatedDeliveryDate(orderDate: Date(), shippingMethod: shippingMethod)
     }
@@ -156,7 +171,10 @@ extension Order {
                                             appliedDiscountsCodesWithValue: [:],
                                             shippingCost: shippingMethodsPrices[.courier]?["PLN"] ?? 0,
                                             paymentCost: paymentMethodPrices[.creditCard]?["PLN"] ?? 0,
-                                            totalCost: (9220.12 + (shippingMethodsPrices[.courier]?["PLN"] ?? 0) + (paymentMethodPrices[.creditCard]?["PLN"] ?? 0))),
+                                            totalCost: (9220.12 + (shippingMethodsPrices[.courier]?["PLN"] ?? 0) + (paymentMethodPrices[.creditCard]?["PLN"] ?? 0)),
+                                            currency: "PLN",
+                                            payed: true,
+                                            paymentID: ""),
                                       Order(id: "qCWd2IGNcfg4x5iPCOt7",
                                             clientID: "W9UQoichE0UNZfvCnIPxuCBgL283",
                                             clientDescription: Profile.demoProfile.description,
@@ -172,7 +190,10 @@ extension Order {
                                             appliedDiscountsCodesWithValue: [:],
                                             shippingCost: shippingMethodsPrices[.courier]?["PLN"] ?? 0,
                                             paymentCost: paymentMethodPrices[.creditCard]?["PLN"] ?? 0,
-                                            totalCost: (40107.72 + (shippingMethodsPrices[.courier]?["PLN"] ?? 0) + (paymentMethodPrices[.creditCard]?["PLN"] ?? 0))),
+                                            totalCost: (40107.72 + (shippingMethodsPrices[.courier]?["PLN"] ?? 0) + (paymentMethodPrices[.creditCard]?["PLN"] ?? 0)),
+                                            currency: "PLN",
+                                            payed: false,
+                                            paymentID: nil),
                                       Order(id: "83vfivSP7G0qCZa8M7Np",
                                             clientID: "W9UQoichE0UNZfvCnIPxuCBgL283",
                                             clientDescription: Profile.demoProfile.description,
@@ -190,7 +211,10 @@ extension Order {
                                             appliedDiscountsCodesWithValue: [:],
                                             shippingCost: shippingMethodsPrices[.courier]?["PLN"] ?? 0,
                                             paymentCost: paymentMethodPrices[.creditCard]?["PLN"] ?? 0,
-                                            totalCost: (116635.55 + (shippingMethodsPrices[.courier]?["PLN"] ?? 0) + (paymentMethodPrices[.creditCard]?["PLN"] ?? 0))),
+                                            totalCost: (116635.55 + (shippingMethodsPrices[.courier]?["PLN"] ?? 0) + (paymentMethodPrices[.creditCard]?["PLN"] ?? 0)),
+                                            currency: "PLN",
+                                            payed: true,
+                                            paymentID: UUID().uuidString),
                                       Order(id: "SHCgKcF7miPTYInES9YF",
                                             clientID: "W9UQoichE0UNZfvCnIPxuCBgL283",
                                             clientDescription: Profile.demoProfile.description,
@@ -210,5 +234,8 @@ extension Order {
                                             appliedDiscountsCodesWithValue: [:],
                                             shippingCost: shippingMethodsPrices[.courier]?["PLN"] ?? 0,
                                             paymentCost: paymentMethodPrices[.creditCard]?["PLN"] ?? 0,
-                                            totalCost: (218979.95 + (shippingMethodsPrices[.courier]?["PLN"] ?? 0) + (paymentMethodPrices[.creditCard]?["PLN"] ?? 0)))]
+                                            totalCost: (218979.95 + (shippingMethodsPrices[.courier]?["PLN"] ?? 0) + (paymentMethodPrices[.creditCard]?["PLN"] ?? 0)),
+                                            currency: "PLN",
+                                            payed: false,
+                                            paymentID: nil)]
 }

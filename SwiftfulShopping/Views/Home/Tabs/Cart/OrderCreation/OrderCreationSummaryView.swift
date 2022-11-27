@@ -7,7 +7,6 @@
 
 import SwiftUI
 import texterify_ios_sdk
-import StripePaymentSheet
 
 struct OrderCreationSummaryView: View {
     @EnvironmentObject private var tabBarStateManager: TabBarStateManager
@@ -191,10 +190,17 @@ struct OrderCreationSummaryView: View {
                 .padding()
             }
             
-            completeOrderButton
+            VStack(alignment: .leading, spacing: 10) {
+                completeOrderButton
+                Text(TexterifyManager.localisedString(key: .orderCreationSummaryView(.submitWarning)))
+                    .font(.ssCallout)
+                    .foregroundColor(.ssDarkGray)
+            }
+            .padding()
             
             NavigationLink(destination: OrderCreationCompletionView()
                                             .environmentObject(orderCreationViewModel)
+                                            .environmentObject(stripeViewModel)
                                             .onAppear {
                                                 tabBarStateManager.hideTabBar()
                                             },
@@ -202,40 +208,38 @@ struct OrderCreationSummaryView: View {
                            label: { EmptyView() })
             .isDetailLink(false)
         }
-        .onAppear {
-            tabBarStateManager.showTabBar()
-            stripeViewModel.preparePaymentSheet()
-        }
-        .sheet(isPresented: $orderCreationViewModel.shouldPresentStripePaymentSheet, onDismiss: {
-            
-        }, content: {
-            paymentSheet(isPresented: $orderCreationViewModel.shouldPresentStripePaymentSheet,
-                         paymentSheet: stripeViewModel.paymentSheet!) { result in
-                switch result {
-                case .completed:
-                    orderCreationViewModel.shouldPresentOrderCreationCompletionView = true
-                case .canceled:
-                    errorManager.generateCustomError(errorType: .paymentCanceledError)
-                case .failed(let error):
-                    errorManager.generateCustomError(errorType: .paymentFailedError,
-                                                     additionalErrorDescription: error.localizedDescription)
+        .onChange(of: stripeViewModel.paymentData) { paymentData in
+            if let paymentData = paymentData {
+                if !paymentData.isEmpty {
+                    stripeViewModel.preparePaymentSheet()
+
+                    guard let profile = profileViewModel.profile,
+                          let shippingAddress = profileViewModel.getAddressFor(addressDescription: orderCreationViewModel.defaultAddress) else { return }
+
+                    orderCreationViewModel.createOrder(client: profile,
+                                                       productsWithQuantity: cartViewModel.productsForCart,
+                                                       appliedDiscounts: cartViewModel.sortedAppliedDiscounts,
+                                                       productsCost: cartViewModel.cartTotalCost,
+                                                       totalCostWithAppliedDiscounts: cartViewModel.cartTotalCostWithAppliedDiscounts,
+                                                       shippingAddress: shippingAddress) { result in
+                        switch result {
+                        case .success(_):
+                            orderCreationViewModel.shouldPresentOrderCreationCompletionView = true
+                        case .failure(let error):
+                            errorManager.generateCustomError(errorType: .orderCreateError,
+                                                             additionalErrorDescription: error.localizedDescription)
+                        }
+                    }
                 }
             }
-        })
-//        .paymentSheet(isPresented: $orderCreationViewModel.shouldPresentStripePaymentSheet,
-//                      paymentSheet: stripeViewModel.paymentSheet!) { result in
-//            switch result {
-//            case .completed:
-//                orderCreationViewModel.shouldPresentOrderCreationCompletionView = true
-//            case .canceled:
-//                errorManager.generateCustomError(errorType: .paymentCanceledError)
-//            case .failed(let error):
-//                errorManager.generateCustomError(errorType: .paymentFailedError,
-//                                                 additionalErrorDescription: error.localizedDescription)
-//            }
-//        }
+        }
+        .onAppear {
+            tabBarStateManager.showTabBar()
+        }
         .modifier(LoadingIndicatorModal(isPresented:
                                             $orderCreationViewModel.showLoadingModal))
+        .modifier(LoadingIndicatorModal(isPresented:
+                                            $stripeViewModel.showLoadingModal))
         .modifier(LoadingIndicatorModal(isPresented:
                                             $cartViewModel.showLoadingModal))
         .navigationTitle(TexterifyManager.localisedString(key: .orderCreationSummaryView(.navigationTitle)))
@@ -257,26 +261,23 @@ struct OrderCreationSummaryView: View {
     
     var completeOrderButton: some View {
         Button {
-            if let desiredAddress = profileViewModel.getAddressFor(addressDescription: orderCreationViewModel.defaultAddress), let profile = profileViewModel.profile {
+            if let profile = profileViewModel.profile {
                 cartViewModel.checkProductAvailability(productsWithQuantity: cartViewModel.productsForCart) { result in
                     switch result {
                     case .success(let notAvailableProductsIDs):
                         if notAvailableProductsIDs.isEmpty {
-                            orderCreationViewModel.createOrder(client: profile,
-                                                               productsWithQuantity: cartViewModel.productsForCart,
-                                                               appliedDiscounts: cartViewModel.sortedAppliedDiscounts,
-                                                               productsCost: cartViewModel.cartTotalCost,
-                                                               totalCostWithAppliedDiscounts: cartViewModel.cartTotalCostWithAppliedDiscounts,
-                                                               shippingAddress: desiredAddress) { result in
-                                switch result {
-                                case .success(_):
-                                    orderCreationViewModel.shouldPresentStripePaymentSheet = true
-//                                    orderCreationViewModel.payForOrder(orderID: orderID) { _ in
-//                                        orderCreationViewModel.shouldPresentOrderCreationCompletionView = true
-//                                    }
-                                case .failure(let error):
-                                    errorManager.generateCustomError(errorType: .orderCreateError,
-                                                                     additionalErrorDescription: error.localizedDescription)
+                            if let amount = orderCreationViewModel.getOrderTotalCost(totalCostWithAppliedDiscounts: cartViewModel.cartTotalCostWithAppliedDiscounts),
+                               let currency = orderCreationViewModel.currencyCode {
+                                stripeViewModel.prepareFirebaseForPayment(profileID: profile.id,
+                                                                          amount: amount,
+                                                                          currency: currency) { result in
+                                    switch result {
+                                    case .success:
+                                        break
+                                    case .failure(let error):
+                                        errorManager.generateCustomError(errorType: .paymentFailedError,
+                                                                         additionalErrorDescription: error.localizedDescription)
+                                    }
                                 }
                             }
                         } else {
@@ -288,15 +289,13 @@ struct OrderCreationSummaryView: View {
                         errorManager.generateCustomError(errorType: .productNotAvailableError,
                                                          additionalErrorDescription: error.localizedDescription)
                     }
-                }
             }
+        }
         } label: {
-            Text(TexterifyManager.localisedString(key: .orderCreationSummaryView(.submitPayButton)))
+            Text(TexterifyManager.localisedString(key: .orderCreationSummaryView(.submitButton)))
                 .font(.ssButton)
         }
         .buttonStyle(CustomButton())
-        .padding()
-        .disabled(!stripeViewModel.paymentSheetCreated)
     }
 }
 

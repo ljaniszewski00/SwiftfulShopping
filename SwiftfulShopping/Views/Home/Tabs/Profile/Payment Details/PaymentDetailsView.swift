@@ -54,14 +54,14 @@ struct PaymentDetailsView: View {
                                     } else {
                                         Circle()
                                             .stroke(lineWidth: 3)
-                                            .foregroundColor(paymentMethod == .cash ? .ssDarkGray : .accentColor)
+                                            .foregroundColor([.cash, .applePay].contains(paymentMethod) ? .ssDarkGray : .accentColor)
                                             .frame(width: 25)
                                     }
                                     
                                     HStack(spacing: 0) {
                                         Text(paymentMethod.rawValue)
                                             .font(.ssTitle3)
-                                            .foregroundColor(paymentMethod == .cash ? .ssDarkGray : (colorScheme == .light ? .black : .ssWhite))
+                                            .foregroundColor([.cash, .applePay].contains(paymentMethod) ? .ssDarkGray : (colorScheme == .light ? .black : .ssWhite))
                                         
                                         if paymentMethod == .applePay {
                                             Image(AssetsNames.applePayLogo)
@@ -70,7 +70,7 @@ struct PaymentDetailsView: View {
                                         }
                                     }
                                     
-                                    if paymentMethod == .cash {
+                                    if [.cash, .applePay].contains(paymentMethod) {
                                         Text(TexterifyManager.localisedString(key: .common(.commingSoon)))
                                             .font(.ssCallout)
                                             .padding(5)
@@ -83,7 +83,7 @@ struct PaymentDetailsView: View {
                                 }
                             })
                             .frame(height: 40)
-                            .if(paymentMethod == .cash) {
+                            .if([.cash, .applePay].contains(paymentMethod)) {
                                 $0
                                     .allowsHitTesting(false)
                             }

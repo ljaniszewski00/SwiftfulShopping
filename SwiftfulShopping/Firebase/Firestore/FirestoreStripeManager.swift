@@ -16,7 +16,7 @@ struct FirestoreStripeManager {
     
     // MARK: SELECT DATABASE OPERATIONS
     
-    static func listenToStripeCheckoutSession(profileID: String, checkoutSessionDocumentID: String, completion: @escaping ((Result<[String: Any], Error>) -> ())) {
+    static func listenToStripeCheckoutSession(profileID: String, checkoutSessionDocumentID: String, completion: @escaping ((Result<[String: String]?, Error>) -> ())) {
         self.db.collection(DatabaseCollections.profiles.rawValue)
             .document(profileID)
             .collection("checkout_sessions")
@@ -26,11 +26,11 @@ struct FirestoreStripeManager {
                     completion(.failure(error))
                 } else {
                     if let data = documentSnapshot?.data() {
-                        let paymentIntentClientSecret = data["paymentIntentClientSecret"] as? String ?? ""
-                        let ephemeralKeySecret = data["ephemeralKeySecret"] as? String ?? ""
-                        let customer = data["customer"] as? String ?? ""
+                        guard let paymentIntentClientSecret = data["paymentIntentClientSecret"] as? String,
+                              let ephemeralKeySecret = data["ephemeralKeySecret"] as? String,
+                              let customer = data["customer"] as? String else { return }
                         
-                        let checkoutSessionData: [String: Any] = [
+                        let checkoutSessionData: [String: String] = [
                             "paymentIntentClientSecret": paymentIntentClientSecret,
                             "ephemeralKeySecret": ephemeralKeySecret,
                             "customer": customer
@@ -45,7 +45,7 @@ struct FirestoreStripeManager {
 
     // MARK: INSERT DATABASE OPERATIONS
 
-    static func createStripeCheckoutSession(profileID: String, amount: Double, currency: String, completion: @escaping ((Result<String, Error>) -> ())) {
+    static func createStripeCheckoutSession(profileID: String, amount: Int, currency: String, completion: @escaping ((Result<String, Error>) -> ())) {
         let documentData: [String: Any] = [
             "client": "mobile",
             "mode": "payment",

@@ -53,6 +53,15 @@ struct OrdersView: View {
                                             .font(.ssTitle3)
                                             .foregroundColor(.accentColor)
                                     }
+                                    
+                                    HStack {
+                                        Text(TexterifyManager.localisedString(key: .ordersView(.paymentStatus)))
+                                            .font(.ssCallout)
+                                        Text(order.payed ?
+                                             TexterifyManager.localisedString(key: .ordersView(.paymentStatusPayed)) : TexterifyManager.localisedString(key: .ordersView(.paymentStatusNotPayed)))
+                                            .font(.ssTitle3)
+                                            .foregroundColor(order.payed ? .accentColor : .red)
+                                    }
                                 }
                             }
                             .padding(.vertical)
