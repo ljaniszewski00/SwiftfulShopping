@@ -101,6 +101,9 @@ struct FirestoreOrdersManager {
             "shippingCost": order.shippingCost,
             "paymentCost": order.paymentCost,
             "totalCost": order.totalCost,
+            "currency": order.currency,
+            "payed": order.payed,
+            "paymentID": order.paymentID,
             "status": order.status.decodeValue
         ]
         

@@ -60,7 +60,7 @@ struct OrderDetailsView: View {
                             
                     }
                     
-                    VStack(alignment: .leading, spacing: 10) {
+                    VStack(alignment: .leading, spacing: 5) {
                         Text(TexterifyManager.localisedString(key: .orderDetailsView(.status)))
                             .font(.ssTitle2)
                             .foregroundColor(colorScheme == .light ? .black : .ssWhite)
@@ -72,7 +72,7 @@ struct OrderDetailsView: View {
                     
                     HStack(alignment: .bottom) {
                         VStack(alignment: .leading, spacing: 15) {
-                            VStack(alignment: .leading, spacing: 10) {
+                            VStack(alignment: .leading, spacing: 5) {
                                 Text(TexterifyManager.localisedString(key: .orderDetailsView(.paymentStatus)))
                                     .font(.ssTitle2)
                                     .foregroundColor(colorScheme == .light ? .black : .ssWhite)
@@ -85,7 +85,7 @@ struct OrderDetailsView: View {
                             
                             if order.payed {
                                 if let paymentID = order.paymentID {
-                                    VStack(alignment: .leading, spacing: 10) {
+                                    VStack(alignment: .leading, spacing: 5) {
                                         Text(TexterifyManager.localisedString(key: .orderDetailsView(.paymentID)))
                                             .font(.ssTitle2)
                                             .foregroundColor(colorScheme == .light ? .black : .ssWhite)
