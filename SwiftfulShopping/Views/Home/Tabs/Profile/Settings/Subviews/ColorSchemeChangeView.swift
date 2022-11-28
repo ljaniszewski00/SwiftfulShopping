@@ -14,24 +14,27 @@ struct ColorSchemeChangeView: View {
     @Environment(\.colorScheme) private var colorScheme: ColorScheme
     
     var body: some View {
-        List {
-            ForEach(Appearance.allCases, id: \.self) { appearance in
-                Button {
-                    settingsViewModel.appThemeSetting = appearance
-                } label: {
-                    HStack {
-                        Text(appearance.localizedValue.capitalized)
-                            .foregroundColor(colorScheme == .light ? .black : .white)
-                        
-                        Spacer()
-                        
-                        if appearance == settingsViewModel.appThemeSetting {
-                            Image(systemName: "checkmark")
-                                .foregroundColor(.accentColor)
+        VStack {
+            List {
+                ForEach(Appearance.allCases, id: \.self) { appearance in
+                    Button {
+                        settingsViewModel.appThemeSetting = appearance
+                    } label: {
+                        HStack {
+                            Text(appearance.localizedValue.capitalized)
+                                .foregroundColor(colorScheme == .light ? .black : .white)
+                            
+                            Spacer()
+                            
+                            if appearance == settingsViewModel.appThemeSetting {
+                                Image(systemName: "checkmark")
+                                    .foregroundColor(.accentColor)
+                            }
                         }
                     }
                 }
             }
+            .padding(.top, 1)
         }
         .navigationTitle(TexterifyManager.localisedString(key: .colorSchemeChangeView(.navigationTitle)))
         .navigationBarTitleDisplayMode(.large)
