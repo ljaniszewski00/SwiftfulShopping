@@ -26,9 +26,13 @@ enum Appearance: String, CaseIterable, Identifiable  {
     case light
     case dark
     
+    static var allCases: [Appearance] = [
+        .system, .light, .dark
+    ]
+    
     var id: String { self.rawValue }
     
-    var rawValue: String {
+    var localizedValue: String {
         switch self {
         case .system:
             return TexterifyManager.localisedString(key: .appearance(.system))
@@ -38,20 +42,15 @@ enum Appearance: String, CaseIterable, Identifiable  {
             return TexterifyManager.localisedString(key: .appearance(.dark))
         }
     }
-}
-
-struct ThemeSettingsView: View{
-    @AppStorage(AppStorageConstants.appThemeSetting) var appThemeSetting = Appearance.system
-
-    var body: some View {
-        HStack {
-            Picker(TexterifyManager.localisedString(key: .themeSettingsView(.appearance)), selection: $appThemeSetting) {
-                ForEach(Appearance.allCases) {appearance in
-                    Text(appearance.rawValue.capitalized)
-                        .tag(appearance)
-                }
-            }
-            .pickerStyle(SegmentedPickerStyle())
+    
+    var rawValue: String {
+        switch self {
+        case .system:
+            return "system"
+        case .light:
+            return "light"
+        case .dark:
+            return "dark"
         }
     }
 }

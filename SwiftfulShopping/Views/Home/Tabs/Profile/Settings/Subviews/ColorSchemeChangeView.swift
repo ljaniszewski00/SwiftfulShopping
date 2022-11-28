@@ -20,7 +20,7 @@ struct ColorSchemeChangeView: View {
                     settingsViewModel.appThemeSetting = appearance
                 } label: {
                     HStack {
-                        Text(appearance.rawValue.capitalized)
+                        Text(appearance.localizedValue.capitalized)
                             .foregroundColor(colorScheme == .light ? .black : .white)
                         
                         Spacer()
