@@ -69,50 +69,70 @@ Apple iPhone with iOS 15+ installed
 ## Screenshots
 
 ### Login
-<img src="https://user-images.githubusercontent.com/78795431/204162928-32026212-bb8a-429e-b126-87c1b206e9e0.png" width="321" height="694">
 
-### Explore
 <p float="left">
-  <img src="https://user-images.githubusercontent.com/78795431/204162943-90e42b1c-71a9-46c9-85af-ac0fa05655fa.png" width="20%" />
-  <img src="https://user-images.githubusercontent.com/78795431/204162946-1efacbee-ae2f-43b9-acbf-ea31fa1a2cc1.png" width="20%" />
-  <img src="https://user-images.githubusercontent.com/78795431/204162948-18206936-2ba0-4a08-8b6a-1ae0a17f26b0.png" width="20%" />
-  <img src="https://user-images.githubusercontent.com/78795431/204162949-eec7a69f-e156-4a30-968b-45a03814f22f.png" width="20%" />
-  <img src="https://user-images.githubusercontent.com/78795431/204162950-957c3fb3-0d4e-4bb4-a389-01ce34ac51d3.png" width="20%" />
-  <img src="https://user-images.githubusercontent.com/78795431/204162951-d0393e5f-d8e2-4a56-bdd5-3c723426a817.png" width="20%" />
-  <img src="https://user-images.githubusercontent.com/78795431/204162953-1ac8da54-88a1-4ab8-801e-ba745c935038.png" width="20%" />
-  <img src="https://user-images.githubusercontent.com/78795431/204162955-0c6aca46-3a68-45d6-abc3-fee7d9b81231.png" width="20%" />
+  <img src="https://user-images.githubusercontent.com/78795431/204563862-eec39a8f-f261-412d-a1fc-806a44ee4337.PNG" width="20%" />
 </p>
 
+
+### Explore
+
+<p float="left">
+  <img src="https://user-images.githubusercontent.com/78795431/204560604-3f8d697e-f9e5-4141-9140-38531e0f8c46.PNG" width="20%" />
+  <img src="https://user-images.githubusercontent.com/78795431/204560616-7754f156-406e-4775-841b-7546f4ce4a09.PNG" width="20%" />
+  <img src="https://user-images.githubusercontent.com/78795431/204560621-e87b5256-5214-4c7e-99f3-b0badb6c3142.PNG" width="20%" />
+  <img src="https://user-images.githubusercontent.com/78795431/204560626-2f2a5b74-27ce-4f43-a541-1b5265a98ae7.PNG" width="20%" />
+  <img src="https://user-images.githubusercontent.com/78795431/204560632-6fec3a83-e7e4-44b1-929c-fce940dace23.PNG" width="20%" />
+  <img src="https://user-images.githubusercontent.com/78795431/204560636-e473a99d-89c5-4265-bf1d-de2d1edee469.PNG" width="20%" />
+  <img src="https://user-images.githubusercontent.com/78795431/204560643-20482e7c-8b54-4a46-910b-3b0727a3df51.PNG" width="20%" />
+  <img src="https://user-images.githubusercontent.com/78795431/204560647-3b0296f1-862e-4a97-8211-96965e53ec33.PNG" width="20%" />
+</p>
+
+
 ### Favorites
-![FavoritesView](https://user-images.githubusercontent.com/78795431/204162972-7067c2e8-624b-4a89-9b5a-a81d512b0574.png)
+
+<p float="left">
+  <img src="https://user-images.githubusercontent.com/78795431/204561396-3957d5f6-b05d-4cf2-8cb7-88fc030f6fd6.PNG" width="20%" />
+</p>
+
 
 ### Cart & Order Creation
-![CartView](https://user-images.githubusercontent.com/78795431/204162986-246ee433-ac7a-4071-8b14-2b9b357a9dce.png)
-![CartView2](https://user-images.githubusercontent.com/78795431/204162990-4592cb1b-6d10-4238-9145-fab755927b55.png)
-![CartView3](https://user-images.githubusercontent.com/78795431/204162991-c90b3e36-165b-4d49-9b69-b7eb647f802d.png)
-![CartView4](https://user-images.githubusercontent.com/78795431/204162992-8b25d709-b605-4c30-83f4-35630b3c8314.png)
-![CartView5](https://user-images.githubusercontent.com/78795431/204162994-247ead23-e83e-4f49-890c-1598358d0017.png)
-![CartView6](https://user-images.githubusercontent.com/78795431/204162995-b2eb25f9-8c15-4073-a065-11cf8de32eaa.png)
+
+<p float="left">
+  <img src="https://user-images.githubusercontent.com/78795431/204561959-f4382e4c-3289-41d9-93a5-a4d6672774e3.PNG" width="20%" />
+  <img src="https://user-images.githubusercontent.com/78795431/204561966-5cd09003-688e-4e38-aa0b-274f8cb1a033.PNG" width="20%" />
+  <img src="https://user-images.githubusercontent.com/78795431/204561970-4757fa90-e24f-4a5f-94e1-15594d9cd2c1.PNG" width="20%" />
+  <img src="https://user-images.githubusercontent.com/78795431/204561973-dd65d61c-24e8-44f2-89cf-0b46c3d1efba.PNG" width="20%" />
+  <img src="https://user-images.githubusercontent.com/78795431/204561975-5b9e621a-bd42-4973-8129-8fbb9bd4932c.PNG" width="20%" />
+  <img src="https://user-images.githubusercontent.com/78795431/204561978-be042b2a-6a66-4d2d-b1d5-6e121b91b261.PNG" width="20%" />
+</p>
+
 
 ### Search & Product Recognition
-![SearchView](https://user-images.githubusercontent.com/78795431/204162998-754f4266-af27-46e2-b071-5f361d55955b.png)
-![SearchView2](https://user-images.githubusercontent.com/78795431/204162999-db745637-a6cb-4db9-99a5-5b3fc70969b7.png)
-![SearchView3](https://user-images.githubusercontent.com/78795431/204163000-2ec3b0ea-181a-405f-9121-616cb3e6541f.png)
-![ProductRecognizerView](https://user-images.githubusercontent.com/78795431/204163094-fb38995a-91ac-4964-b3b9-6c3467dfb9fa.PNG)
-![ProductRecognizerView2](https://user-images.githubusercontent.com/78795431/204163096-9fc19f3a-73b0-412f-b54c-64538b8782b4.PNG)
+
+<p float="left">
+  <img src="https://user-images.githubusercontent.com/78795431/204562384-2f685fa5-02ef-4b9d-80ed-15888048411b.PNG" width="20%" />
+  <img src="https://user-images.githubusercontent.com/78795431/204562398-535feb31-593b-4ca0-90bb-8bc2b000b8d0.PNG" width="20%" />
+  <img src="https://user-images.githubusercontent.com/78795431/204562415-5b4cd49a-f55e-4d4e-b5e1-1111c60e2b5a.PNG" width="20%" />
+  <img src="https://user-images.githubusercontent.com/78795431/204562421-83c599ad-a5a1-49da-9df6-511109b819bb.PNG" width="20%" />
+  <img src="https://user-images.githubusercontent.com/78795431/204562440-12555347-7c41-4cb5-941a-36bfc5b74981.PNG" width="20%" />
+</p>
+
 
 ### Profile & Settings
-![ProfileView](https://user-images.githubusercontent.com/78795431/204163057-6dccdca7-5364-4562-ae76-c16bbf44eafb.png)
-![OrdersView](https://user-images.githubusercontent.com/78795431/204163061-d901a102-2563-45e4-b2ac-b41c6bf69989.png)
-![OrderDetailsView](https://user-images.githubusercontent.com/78795431/204163062-ba8a1c12-d790-4931-a644-01f59c0e5f13.png)
-![OrderDetailsView2](https://user-images.githubusercontent.com/78795431/204163064-1969ad75-07d6-42cd-a35d-6c230b32342f.png)
-![ReturnCreationView](https://user-images.githubusercontent.com/78795431/204163066-cbcb78a3-34ce-4a8e-a047-0c12772a4dfd.png)
-![SingleProductRateView](https://user-images.githubusercontent.com/78795431/204163068-72924a6a-6cbd-40a8-baef-ca563ea0bb20.png)
-![ReturnDetailsView](https://user-images.githubusercontent.com/78795431/204163069-254516ae-da68-46ac-85e3-0c03299aedbd.png)
-![PersonalInfoView](https://user-images.githubusercontent.com/78795431/204163071-c3574d35-fd83-43be-9dda-3c5b873d27a3.png)
-![PaymentDetailsView](https://user-images.githubusercontent.com/78795431/204163072-c2abfb30-08fb-4efe-8093-f003c7b2c740.png)
-![SettingsView](https://user-images.githubusercontent.com/78795431/204163074-992ab021-91e5-4935-9ef5-d1980669ecfd.png)
 
+<p float="left">
+  <img src="https://user-images.githubusercontent.com/78795431/204562916-5ff3d91a-eb27-4798-b7f8-8435716c5190.PNG" width="20%" />
+  <img src="https://user-images.githubusercontent.com/78795431/204562944-1b91b89d-cd9c-46b9-ae38-ee7e4c9277d3.PNG" width="20%" />
+  <img src="https://user-images.githubusercontent.com/78795431/204562960-939301e8-eedd-464b-8596-cc1bc321b8ca.PNG" width="20%" />
+  <img src="https://user-images.githubusercontent.com/78795431/204562966-5422148e-12df-4ca3-820d-f7472839d179.PNG" width="20%" />
+  <img src="https://user-images.githubusercontent.com/78795431/204562968-77136bf7-f203-419c-bfc3-87c52be280a7.PNG" width="20%" />
+  <img src="https://user-images.githubusercontent.com/78795431/204562971-b233f092-1ce3-4c38-adf1-21ad7ead3df5.PNG" width="20%" />
+  <img src="https://user-images.githubusercontent.com/78795431/204562974-0fb2aeac-ddde-48c6-ae41-ee1043c534af.PNG" width="20%" />
+  <img src="https://user-images.githubusercontent.com/78795431/204562978-6b03e850-df25-490e-86ca-246d850af427.PNG" width="20%" />
+  <img src="https://user-images.githubusercontent.com/78795431/204562982-75bd853d-0baa-4b05-b77c-a88f832b3df7.PNG" width="20%" />
+</p>
 
+   
 ## Preview Video 
 
