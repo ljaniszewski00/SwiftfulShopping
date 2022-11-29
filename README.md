@@ -138,3 +138,5 @@ Apple iPhone with iOS 15+ installed
    
 ## Preview Video 
 
+https://user-images.githubusercontent.com/78795431/204572363-3a2eb82d-a23b-4dde-bdff-71f71a599171.mp4
+
