@@ -25,6 +25,7 @@ Focues on maintaining clean code and swift good practices.
 * Xcode 13/14
 * [Apple ML](https://developer.apple.com/machine-learning/)
 * [Apple AVKit](https://developer.apple.com/documentation/avkit)
+* [Apple CoreLocation](https://developer.apple.com/documentation/corelocation/)
 * [Firebase Auth, Firebase Firestore, Firebase Storage](https://firebase.google.com/)
 * [Texterify](https://texterify.com/)   
 * [Lottie](https://lottiefiles.com/)
@@ -58,6 +59,7 @@ Apple iPhone with iOS 15+ installed
 * Get advantage of various discounts
 * Customize app to the fullest by changing app's main color theme
 * SignUp with different methods such as E-mail Address, Facebook, Google, GitHub accounts
+* Speed up first shopping process with one-click location provider
 * The possibility of changing user's data including e-mail address, password, signing out and deleting user's account
 * Biometric security (FaceID and TouchID)
 * Special offline mode where all network functions are turned off.
