@@ -19,7 +19,7 @@ public enum ErrorsLocalizable: String {
     case phoneSignInError = "Errors_phoneSignInError"
     case googleSignInError = "Errors_googleSignInError"
     case facebookSignInError = "Errors_facebookSignInError"
-    case githubSignInError = "Errors_githubSignInError"
+    case githubSignInError = "Errors_gitHubSignInError"
     case logoutError = "Errors_logoutError"
     case changeEmailError = "Errors_changeEmailError"
     case changePasswordError = "Errors_changePasswordError"
