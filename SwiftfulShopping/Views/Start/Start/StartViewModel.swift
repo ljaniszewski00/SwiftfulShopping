@@ -24,7 +24,7 @@ class StartViewModel: ObservableObject {
     }
     
     var canPresentHomeView: Bool {
-        unlockedBiometric && dataFetched
+        unlockedBiometric && dataFetched && !shouldShowOnboarding
     }
     
     func authenticate() {

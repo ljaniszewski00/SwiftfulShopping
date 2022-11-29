@@ -31,19 +31,23 @@ struct StartView: View {
                 Group {
                     if startViewModel.unlockedBiometric {
                         // User is logged and unlocked biometric
-                        if startViewModel.canPresentHomeView {
-                            // User is logged, unlocked biometric and data has been fetched
-                            HomeView()
-                                .environmentObject(firebaseAuthManager)
-                                .environmentObject(accentColorManager)
-                                .environmentObject(exploreViewModel)
-                                .environmentObject(profileViewModel)
-                                .environmentObject(cartViewModel)
-                                .environmentObject(favoritesViewModel)
-                                .environmentObject(searchViewModel)
+                        if startViewModel.shouldShowOnboarding {
+                            OnboardingView()
                         } else {
-                            // User is logged, unlocked biometric and data has not been fetched
-                            splashScreen
+                            if startViewModel.canPresentHomeView {
+                                // User is logged, unlocked biometric and data has been fetched
+                                HomeView()
+                                    .environmentObject(firebaseAuthManager)
+                                    .environmentObject(accentColorManager)
+                                    .environmentObject(exploreViewModel)
+                                    .environmentObject(profileViewModel)
+                                    .environmentObject(cartViewModel)
+                                    .environmentObject(favoritesViewModel)
+                                    .environmentObject(searchViewModel)
+                            } else {
+                                // User is logged, unlocked biometric and data has not been fetched
+                                splashScreen
+                            }
                         }
                     } else {
                         // User is logged and biometric is not unlocked
