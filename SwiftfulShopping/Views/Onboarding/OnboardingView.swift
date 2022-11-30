@@ -12,31 +12,41 @@ struct OnboardingView: View {
     
     @StateObject private var onboardingViewModel: OnboardingViewModel = OnboardingViewModel()
     
+    @StateObject private var errorManager: ErrorManager = ErrorManager.shared
+    
     var body: some View {
         VStack(spacing: 0) {
             ZStack() {
                 TabView {
-                    ForEach(1...5, id: \.self) { number in
-                        ZStack {
-                            Rectangle()
-                                .foregroundColor(.accentColor)
+                    ForEach(onboardingViewModel.onboardingTilesNumbersRange, id: \.self) { number in
+                        if let photo = onboardingViewModel.onboardingTilesPhotos[number],
+                           let heading = onboardingViewModel.onboardingTilesHeadings[number],
+                           let description = onboardingViewModel.onboardingTilesDescriptions[number] {
+                            Image(uiImage: photo)
+                                .resizable()
+                                .scaledToFill()
                             
-                            VStack(spacing: 15) {
-                                Text("AAA")
-                                    .font(.ssTitle1)
+                            ZStack {
+                                Rectangle()
+                                    .foregroundColor(.accentColor)
                                 
-                                HStack {
-                                    Text("AAA")
-                                        .font(.ssTitle3)
-                                        .multilineTextAlignment(.leading)
+                                VStack(spacing: 15) {
+                                    Text(heading)
+                                        .font(.ssTitle1)
                                     
-                                    Spacer()
+                                    HStack {
+                                        Text(description)
+                                            .font(.ssTitle3)
+                                            .multilineTextAlignment(.leading)
+                                        
+                                        Spacer()
+                                    }
                                 }
+                                .foregroundColor(colorScheme == .light ? .black : .ssWhite)
+                                .padding()
                             }
-                            .foregroundColor(colorScheme == .light ? .black : .ssWhite)
-                            .padding()
+                            .frame(height: ScreenBoundsSupplier.shared.getScreenHeight() * 0.2)
                         }
-                        .frame(height: ScreenBoundsSupplier.shared.getScreenHeight() * 0.2)
                     }
                 }
                 .tabViewStyle(.page)
@@ -52,6 +62,17 @@ struct OnboardingView: View {
             }
             .padding()
             .background(Color(uiColor: .secondarySystemBackground))
+        }
+        .onAppear {
+            onboardingViewModel.getOnboardingTilesPhotos { result in
+                switch result {
+                case .success:
+                    break
+                case .failure(let error):
+                    errorManager.generateCustomError(errorType: .dataFetchError,
+                                                     additionalErrorDescription: error.localizedDescription)
+                }
+            }
         }
     }
     

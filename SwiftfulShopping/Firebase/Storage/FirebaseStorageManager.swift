@@ -86,4 +86,51 @@ struct FirebaseStorageManager {
             }
         }
     }
+    
+    static func getDownloadURLForOnboardingImage(fileName: String,
+                                                 completion: @escaping ((Result<URL?, Error>) -> ())) {
+        let path = "onboardingPhotos/\(fileName)"
+        let userImagesStorageRef = storageRef.child(path)
+        
+        userImagesStorageRef.downloadURL() { url, error in
+            if let error = error {
+                print("Error getting download URL: \(error.localizedDescription)")
+                completion(.failure(error))
+            } else {
+                completion(.success(url))
+            }
+        }
+    }
+    
+    static func downloadOnboardingImagesFromStorage(completion: @escaping ((Result<[UIImage], Error>) -> ())) {
+        
+        var onboardingImages: [UIImage] = []
+        
+        let onboardingPhotosFileNames: [String] = [
+            "1", "2", "3", "4", "5", "6", "7", "8", "9", "10",
+        ]
+        
+        let dispatchGroup: DispatchGroup = DispatchGroup()
+        
+        for fileName in onboardingPhotosFileNames {
+            dispatchGroup.enter()
+            
+            let userImagesStorageRef = storageRef.child("onboardingPhotos/\(fileName)")
+            
+            userImagesStorageRef.getData(maxSize: 1 * 100 * 1024 * 1024) { (data, error) in
+                if let error = error {
+                    print("Error downloading file: ", error.localizedDescription)
+                    completion(.failure(error))
+                } else {
+                    if let data = data, let image = UIImage(data: data) {
+                        onboardingImages.append(image)
+                    }
+                }
+            }
+        }
+        
+        dispatchGroup.notify(queue: .main) {
+            completion(.success(onboardingImages))
+        }
+    }
 }
