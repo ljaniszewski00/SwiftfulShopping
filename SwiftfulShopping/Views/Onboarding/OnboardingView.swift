@@ -6,7 +6,7 @@
 //
 
 import SwiftUI
-import Inject
+import texterify_ios_sdk
 
 struct OnboardingView: View {
     @StateObject private var onboardingViewModel: OnboardingViewModel = OnboardingViewModel()
@@ -34,13 +34,14 @@ struct OnboardingView: View {
                 Button {
                     onboardingViewModel.shouldShowOnboarding = false
                 } label: {
-                    Text("Dismiss")
+                    Text(TexterifyManager.localisedString(key: .onboardingView(.dismissButton)))
                 }
                 .buttonStyle(CustomButton())
             }
             .padding()
             .background(Color(uiColor: .secondarySystemBackground))
         }
+        .modifier(LoadingIndicatorModal(isPresented: $onboardingViewModel.showLoadingModal))
         .onAppear {
             onboardingViewModel.getOnboardingTilesPhotos { result in
                 switch result {
@@ -52,7 +53,6 @@ struct OnboardingView: View {
                 }
             }
         }
-        .enableInjection()
     }
 }
 
@@ -72,26 +72,33 @@ extension OnboardingView {
                     .scaledToFit()
                     .padding(.vertical)
                 
-                ZStack {
+                ZStack(alignment: .top) {
                     Rectangle()
                         .foregroundColor(.accentColor)
                     
                     VStack(spacing: 15) {
-                        Text(heading)
-                            .font(.ssTitle2)
+                        HStack {
+                            Text(heading)
+                                .font(.ssTitle2)
+                            
+                            Spacer()
+                        }
                         
                         HStack {
                             Text(description)
                                 .font(.ssTitle3)
-                                .multilineTextAlignment(.leading)
+                                .fontWeight(.regular)
                             
                             Spacer()
                         }
+                        
+                        Spacer()
                     }
+                    .multilineTextAlignment(.leading)
                     .foregroundColor(colorScheme == .light ? .black : .ssWhite)
                     .padding()
                 }
-                .frame(height: ScreenBoundsSupplier.shared.getScreenHeight() * 0.2)
+                .frame(height: ScreenBoundsSupplier.shared.getScreenHeight() * 0.23)
             }
         }
     }
