@@ -165,7 +165,7 @@ struct SettingsView: View {
                 }
                 
                 Section {
-                    NavigationLink(destination: EmptyView(),
+                    NavigationLink(destination: OnboardingView(),
                                    isActive: $settingsViewModel.shouldShowOnboarding,
                                    label: {
                         HStack(spacing: 20) {

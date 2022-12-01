@@ -87,28 +87,11 @@ struct FirebaseStorageManager {
         }
     }
     
-    static func getDownloadURLForOnboardingImage(fileName: String,
-                                                 completion: @escaping ((Result<URL?, Error>) -> ())) {
-        let path = "onboardingPhotos/\(fileName)"
-        let userImagesStorageRef = storageRef.child(path)
+    static func downloadOnboardingImagesFromStorage(completion: @escaping ((Result<[OnboardingImageModel], Error>) -> ())) {
         
-        userImagesStorageRef.downloadURL() { url, error in
-            if let error = error {
-                print("Error getting download URL: \(error.localizedDescription)")
-                completion(.failure(error))
-            } else {
-                completion(.success(url))
-            }
-        }
-    }
-    
-    static func downloadOnboardingImagesFromStorage(completion: @escaping ((Result<[UIImage], Error>) -> ())) {
+        var onboardingImages: [OnboardingImageModel] = []
         
-        var onboardingImages: [UIImage] = []
-        
-        let onboardingPhotosFileNames: [String] = [
-            "1", "2", "3", "4", "5", "6", "7", "8", "9", "10",
-        ]
+        let onboardingPhotosFileNames: [String] = (0..<10).map { "\($0).PNG" }
         
         let dispatchGroup: DispatchGroup = DispatchGroup()
         
@@ -117,13 +100,20 @@ struct FirebaseStorageManager {
             
             let userImagesStorageRef = storageRef.child("onboardingPhotos/\(fileName)")
             
+            guard let fileNameNumber = fileName.first else {
+                dispatchGroup.leave()
+                return
+            }
+            
             userImagesStorageRef.getData(maxSize: 1 * 100 * 1024 * 1024) { (data, error) in
                 if let error = error {
                     print("Error downloading file: ", error.localizedDescription)
                     completion(.failure(error))
                 } else {
                     if let data = data, let image = UIImage(data: data) {
-                        onboardingImages.append(image)
+                        let onboardingImageModel = OnboardingImageModel(id: String(fileNameNumber), image: image)
+                        onboardingImages.append(onboardingImageModel)
+                        dispatchGroup.leave()
                     }
                 }
             }

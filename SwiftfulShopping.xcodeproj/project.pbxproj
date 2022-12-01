@@ -350,6 +350,8 @@
 		88DEDD48291690C4003EFA44 /* AppearanceLocalizable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88DEDD47291690C4003EFA44 /* AppearanceLocalizable.swift */; };
 		88DEDD4A29171BBD003EFA44 /* AssetsNames.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88DEDD4929171BBD003EFA44 /* AssetsNames.swift */; };
 		88DEDD4C29171DAC003EFA44 /* LottieAssetsNames.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88DEDD4B29171DAC003EFA44 /* LottieAssetsNames.swift */; };
+		88DF5F902938F4E100914951 /* Collection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88DF5F8F2938F4E100914951 /* Collection.swift */; };
+		88DF5F922938F91100914951 /* OnboardingImageModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88DF5F912938F91100914951 /* OnboardingImageModel.swift */; };
 		88E10A81291D4E6500677875 /* LocaleManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88E10A80291D4E6500677875 /* LocaleManager.swift */; };
 		88E6CAD0292A4DE700FF411A /* AppStorageConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88E6CACF292A4DE700FF411A /* AppStorageConstants.swift */; };
 		88E6CAD2292A4FA300FF411A /* ThemeSettingsViewLocalizable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88E6CAD1292A4FA300FF411A /* ThemeSettingsViewLocalizable.swift */; };
@@ -652,6 +654,8 @@
 		88DEDD47291690C4003EFA44 /* AppearanceLocalizable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppearanceLocalizable.swift; sourceTree = "<group>"; };
 		88DEDD4929171BBD003EFA44 /* AssetsNames.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AssetsNames.swift; sourceTree = "<group>"; };
 		88DEDD4B29171DAC003EFA44 /* LottieAssetsNames.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LottieAssetsNames.swift; sourceTree = "<group>"; };
+		88DF5F8F2938F4E100914951 /* Collection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Collection.swift; sourceTree = "<group>"; };
+		88DF5F912938F91100914951 /* OnboardingImageModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingImageModel.swift; sourceTree = "<group>"; };
 		88E10A80291D4E6500677875 /* LocaleManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocaleManager.swift; sourceTree = "<group>"; };
 		88E6CACF292A4DE700FF411A /* AppStorageConstants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppStorageConstants.swift; sourceTree = "<group>"; };
 		88E6CAD1292A4FA300FF411A /* ThemeSettingsViewLocalizable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThemeSettingsViewLocalizable.swift; sourceTree = "<group>"; };
@@ -1265,6 +1269,7 @@
 				0A154B4928BD66A2001E4BE3 /* String.swift */,
 				0A83216028D91A6E008234C2 /* View.swift */,
 				0A3C7AD529006B360079B290 /* Result.swift */,
+				88DF5F8F2938F4E100914951 /* Collection.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -1702,6 +1707,7 @@
 			children = (
 				88DBC9922936B6CF00383653 /* OnboardingView.swift */,
 				88DBC9942936B6DA00383653 /* OnboardingViewModel.swift */,
+				88DF5F912938F91100914951 /* OnboardingImageModel.swift */,
 			);
 			path = Onboarding;
 			sourceTree = "<group>";
@@ -2095,6 +2101,7 @@
 				889EDFA1290F2ABC00EBFFC1 /* ReturnDetailsViewLocalizable.swift in Sources */,
 				889EDFA5290F2ACB00EBFFC1 /* SecondReturnCreationViewLocalizable.swift in Sources */,
 				0A2165B128A2C200006842F0 /* ChangePasswordViewModel.swift in Sources */,
+				88DF5F902938F4E100914951 /* Collection.swift in Sources */,
 				0A5A7CF828968DCB00736B07 /* OrderCreationChangeAddressView.swift in Sources */,
 				0A2FE0AB28A16D5B00E8D30E /* CustomError.swift in Sources */,
 				889EDFAF290F2AE900EBFFC1 /* EditPersonalInfoViewLocalizable.swift in Sources */,
@@ -2133,6 +2140,7 @@
 				0A2165AE28A2C1E0006842F0 /* ChangeEmailViewModel.swift in Sources */,
 				0A30460728AA4F3500F218B3 /* SortingMethods.swift in Sources */,
 				0A2D5FB228BA275F00E76D71 /* SecondRegisterView.swift in Sources */,
+				88DF5F922938F91100914951 /* OnboardingImageModel.swift in Sources */,
 				0ACD5915284A6F6600AA9DA0 /* ForgotPasswordView.swift in Sources */,
 				0A27E7C62879C22600D033D9 /* ReturnDetailsView.swift in Sources */,
 				0A2165B428A2C217006842F0 /* DeleteAccountViewModel.swift in Sources */,

@@ -6,46 +6,24 @@
 //
 
 import SwiftUI
+import Inject
 
 struct OnboardingView: View {
-    @Environment(\.colorScheme) private var colorScheme: ColorScheme
-    
     @StateObject private var onboardingViewModel: OnboardingViewModel = OnboardingViewModel()
     
     @StateObject private var errorManager: ErrorManager = ErrorManager.shared
     
     var body: some View {
         VStack(spacing: 0) {
-            ZStack() {
+            ZStack {
                 TabView {
                     ForEach(onboardingViewModel.onboardingTilesNumbersRange, id: \.self) { number in
-                        if let photo = onboardingViewModel.onboardingTilesPhotos[number],
+                        if let photoModel = onboardingViewModel.onboardingTilesPhotosModels[optional: number],
                            let heading = onboardingViewModel.onboardingTilesHeadings[number],
                            let description = onboardingViewModel.onboardingTilesDescriptions[number] {
-                            Image(uiImage: photo)
-                                .resizable()
-                                .scaledToFill()
-                            
-                            ZStack {
-                                Rectangle()
-                                    .foregroundColor(.accentColor)
-                                
-                                VStack(spacing: 15) {
-                                    Text(heading)
-                                        .font(.ssTitle1)
-                                    
-                                    HStack {
-                                        Text(description)
-                                            .font(.ssTitle3)
-                                            .multilineTextAlignment(.leading)
-                                        
-                                        Spacer()
-                                    }
-                                }
-                                .foregroundColor(colorScheme == .light ? .black : .ssWhite)
-                                .padding()
-                            }
-                            .frame(height: ScreenBoundsSupplier.shared.getScreenHeight() * 0.2)
+                            OnboardingTile(image: photoModel.image,
+                                           heading: heading,
+                                           description: description)
                         }
                     }
                 }
@@ -74,13 +52,50 @@ struct OnboardingView: View {
                 }
             }
         }
+        .enableInjection()
+    }
+}
+
+extension OnboardingView {
+    
+    struct OnboardingTile: View {
+        @Environment(\.colorScheme) private var colorScheme: ColorScheme
+        
+        let image: UIImage
+        let heading: String
+        let description: String
+        
+        var body: some View {
+            VStack {
+                Image(uiImage: image)
+                    .resizable()
+                    .scaledToFit()
+                    .padding(.vertical)
+                
+                ZStack {
+                    Rectangle()
+                        .foregroundColor(.accentColor)
+                    
+                    VStack(spacing: 15) {
+                        Text(heading)
+                            .font(.ssTitle2)
+                        
+                        HStack {
+                            Text(description)
+                                .font(.ssTitle3)
+                                .multilineTextAlignment(.leading)
+                            
+                            Spacer()
+                        }
+                    }
+                    .foregroundColor(colorScheme == .light ? .black : .ssWhite)
+                    .padding()
+                }
+                .frame(height: ScreenBoundsSupplier.shared.getScreenHeight() * 0.2)
+            }
+        }
     }
     
-    @ViewBuilder func buildOnboardingPage(image: UIImage) -> some View {
-        Image(uiImage: image)
-            .resizable()
-            .scaledToFill()
-    }
 }
 
 struct OnboardingView_Previews: PreviewProvider {
