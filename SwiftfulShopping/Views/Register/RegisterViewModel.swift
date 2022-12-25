@@ -142,10 +142,14 @@ class RegisterViewModel: ObservableObject {
     
     var emailTaken: Bool {
         if let usersEmails = usersEmails {
-            return usersEmails.contains(email)
-        } else {
-            return false
+            if !email.isEmpty {
+                if usersEmails.contains(email) {
+                    return true
+                }
+            }
         }
+        
+        return false
     }
     
     var isEmailValid: Bool {

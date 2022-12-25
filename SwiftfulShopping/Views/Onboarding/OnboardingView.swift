@@ -9,6 +9,8 @@ import SwiftUI
 import texterify_ios_sdk
 
 struct OnboardingView: View {
+    @Environment(\.dismiss) private var dismiss: DismissAction
+    
     @StateObject private var onboardingViewModel: OnboardingViewModel = OnboardingViewModel()
     
     @StateObject private var errorManager: ErrorManager = ErrorManager.shared
@@ -33,6 +35,7 @@ struct OnboardingView: View {
             HStack {
                 Button {
                     onboardingViewModel.shouldShowOnboarding = false
+                    dismiss()
                 } label: {
                     Text(TexterifyManager.localisedString(key: .onboardingView(.dismissButton)))
                 }

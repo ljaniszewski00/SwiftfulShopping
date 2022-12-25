@@ -35,7 +35,7 @@ struct FirestoreAuthenticationManager {
         self.db.collection(DatabaseCollections.profiles.rawValue)
             .addSnapshotListener { querySnapshot, error in
                 if let error = error {
-                    print("Error getting documents for users usernames: \(error.localizedDescription)")
+                    print("Error getting documents for users username and email: \(error.localizedDescription)")
                     completion(.failure(error))
                 } else {
                     let usernames = querySnapshot?.documents.map {
@@ -44,7 +44,7 @@ struct FirestoreAuthenticationManager {
                     }
                     let emails = querySnapshot?.documents.map {
                         let data = $0.data()
-                        return data["emails"] as? String ?? ""
+                        return data["email"] as? String ?? ""
                     }
                     completion(.success((usernames, emails)))
                 }
