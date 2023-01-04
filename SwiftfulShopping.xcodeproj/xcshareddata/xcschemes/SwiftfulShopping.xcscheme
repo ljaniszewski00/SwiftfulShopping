@@ -29,22 +29,13 @@
       shouldUseLaunchSchemeArgsEnv = "YES">
       <Testables>
          <TestableReference
-            skipped = "NO">
+            skipped = "NO"
+            parallelizable = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "0ACD58A2284A6E9300AA9DA0"
-               BuildableName = "SwiftfulShoppingTests.xctest"
-               BlueprintName = "SwiftfulShoppingTests"
-               ReferencedContainer = "container:SwiftfulShopping.xcodeproj">
-            </BuildableReference>
-         </TestableReference>
-         <TestableReference
-            skipped = "NO">
-            <BuildableReference
-               BuildableIdentifier = "primary"
-               BlueprintIdentifier = "0ACD58AC284A6E9300AA9DA0"
-               BuildableName = "SwiftfulShoppingUITests.xctest"
-               BlueprintName = "SwiftfulShoppingUITests"
+               BlueprintIdentifier = "88F71217296623AC00D91255"
+               BuildableName = "SwiftfulShoppingUnitTests.xctest"
+               BlueprintName = "SwiftfulShoppingUnitTests"
                ReferencedContainer = "container:SwiftfulShopping.xcodeproj">
             </BuildableReference>
          </TestableReference>

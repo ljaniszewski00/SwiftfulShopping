@@ -47,37 +47,7 @@
 		0A27E7D0287B4EE800D033D9 /* CreditCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A27E7CF287B4EE800D033D9 /* CreditCard.swift */; };
 		0A27E7D4287B509300D033D9 /* CardCompany.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A27E7D3287B509300D033D9 /* CardCompany.swift */; };
 		0A2D5FB228BA275F00E76D71 /* SecondRegisterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A2D5FB128BA275F00E76D71 /* SecondRegisterView.swift */; };
-		0A2D5FB428BA2BAB00E76D71 /* RectangleCustomTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A268B56286884A3006CF0E2 /* RectangleCustomTextField.swift */; };
-		0A2D5FB528BA2BAB00E76D71 /* RectangleCustomTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A268B56286884A3006CF0E2 /* RectangleCustomTextField.swift */; };
 		0A2D5FB728BA2BC300E76D71 /* SelectionDropdownMenu.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A2D5FB628BA2BC300E76D71 /* SelectionDropdownMenu.swift */; };
-		0A2D5FB828BA40F000E76D71 /* OrderStatus.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A5A7CF52896878800736B07 /* OrderStatus.swift */; };
-		0A2D5FB928BA40F000E76D71 /* OrderStatus.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A5A7CF52896878800736B07 /* OrderStatus.swift */; };
-		0A2D5FBA28BA40F000E76D71 /* TabsWithProducts.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A33A07128ABCAAC0013AE92 /* TabsWithProducts.swift */; };
-		0A2D5FBB28BA40F000E76D71 /* TabsWithProducts.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A33A07128ABCAAC0013AE92 /* TabsWithProducts.swift */; };
-		0A2D5FBC28BA40F000E76D71 /* FilteringMethods.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A30460C28AAB02500F218B3 /* FilteringMethods.swift */; };
-		0A2D5FBD28BA40F000E76D71 /* FilteringMethods.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A30460C28AAB02500F218B3 /* FilteringMethods.swift */; };
-		0A2D5FBE28BA40F000E76D71 /* ShippingMethod.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0AB8D98F2864B583003DC2E6 /* ShippingMethod.swift */; };
-		0A2D5FBF28BA40F000E76D71 /* ShippingMethod.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0AB8D98F2864B583003DC2E6 /* ShippingMethod.swift */; };
-		0A2D5FC028BA40F000E76D71 /* CardCompany.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A27E7D3287B509300D033D9 /* CardCompany.swift */; };
-		0A2D5FC128BA40F000E76D71 /* CardCompany.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A27E7D3287B509300D033D9 /* CardCompany.swift */; };
-		0A2D5FC228BA40F000E76D71 /* AccentColors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A30460028A9608300F218B3 /* AccentColors.swift */; };
-		0A2D5FC328BA40F000E76D71 /* AccentColors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A30460028A9608300F218B3 /* AccentColors.swift */; };
-		0A2D5FC628BA40F000E76D71 /* Category.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A3DE45228899F65008B050B /* Category.swift */; };
-		0A2D5FC728BA40F000E76D71 /* Category.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A3DE45228899F65008B050B /* Category.swift */; };
-		0A2D5FC828BA40F000E76D71 /* UserDefaultsKeys.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A237402288D68720076A5AB /* UserDefaultsKeys.swift */; };
-		0A2D5FC928BA40F000E76D71 /* UserDefaultsKeys.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A237402288D68720076A5AB /* UserDefaultsKeys.swift */; };
-		0A2D5FCA28BA40F000E76D71 /* ProductColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A3DE45A2889AAA9008B050B /* ProductColor.swift */; };
-		0A2D5FCB28BA40F000E76D71 /* ProductColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A3DE45A2889AAA9008B050B /* ProductColor.swift */; };
-		0A2D5FCC28BA40F000E76D71 /* ProductDisplayMethod.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A3245F0288B16670046043D /* ProductDisplayMethod.swift */; };
-		0A2D5FCD28BA40F000E76D71 /* ProductDisplayMethod.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A3245F0288B16670046043D /* ProductDisplayMethod.swift */; };
-		0A2D5FCE28BA40F000E76D71 /* SortingMethods.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A30460628AA4F3500F218B3 /* SortingMethods.swift */; };
-		0A2D5FCF28BA40F000E76D71 /* SortingMethods.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A30460628AA4F3500F218B3 /* SortingMethods.swift */; };
-		0A2D5FD028BA40F000E76D71 /* SourceForImageRecognition.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A3B08EC28AD972C00A54385 /* SourceForImageRecognition.swift */; };
-		0A2D5FD128BA40F000E76D71 /* SourceForImageRecognition.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A3B08EC28AD972C00A54385 /* SourceForImageRecognition.swift */; };
-		0A2D5FD228BA40F000E76D71 /* PaymentMethod.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0AB8D9912864DFE3003DC2E6 /* PaymentMethod.swift */; };
-		0A2D5FD328BA40F000E76D71 /* PaymentMethod.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0AB8D9912864DFE3003DC2E6 /* PaymentMethod.swift */; };
-		0A2D5FD428BA40F000E76D71 /* ExploreViewTabs.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A2DECBE288C5FB200D563C9 /* ExploreViewTabs.swift */; };
-		0A2D5FD528BA40F000E76D71 /* ExploreViewTabs.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A2DECBE288C5FB200D563C9 /* ExploreViewTabs.swift */; };
 		0A2D5FD728BA42EB00E76D71 /* SingleSelectionToggle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A2D5FD628BA42EB00E76D71 /* SingleSelectionToggle.swift */; };
 		0A2DECBF288C5FB200D563C9 /* ExploreViewTabs.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A2DECBE288C5FB200D563C9 /* ExploreViewTabs.swift */; };
 		0A2EB51928B38AA5009E6E8F /* CustomDatePicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A2EB51828B38AA5009E6E8F /* CustomDatePicker.swift */; };
@@ -191,76 +161,29 @@
 		0ACD5897284A6E9200AA9DA0 /* SwiftfulShoppingApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0ACD5896284A6E9200AA9DA0 /* SwiftfulShoppingApp.swift */; };
 		0ACD589B284A6E9300AA9DA0 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0ACD589A284A6E9300AA9DA0 /* Assets.xcassets */; };
 		0ACD589E284A6E9300AA9DA0 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0ACD589D284A6E9300AA9DA0 /* Preview Assets.xcassets */; };
-		0ACD58A8284A6E9300AA9DA0 /* SwiftfulShoppingTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0ACD58A7284A6E9300AA9DA0 /* SwiftfulShoppingTests.swift */; };
-		0ACD58B2284A6E9300AA9DA0 /* SwiftfulShoppingUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0ACD58B1284A6E9300AA9DA0 /* SwiftfulShoppingUITests.swift */; };
-		0ACD58B4284A6E9300AA9DA0 /* SwiftfulShoppingUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0ACD58B3284A6E9300AA9DA0 /* SwiftfulShoppingUITestsLaunchTests.swift */; };
 		0ACD58DF284A6F6600AA9DA0 /* CustomButtonStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0ACD58C2284A6F6500AA9DA0 /* CustomButtonStyle.swift */; };
-		0ACD58E0284A6F6600AA9DA0 /* CustomButtonStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0ACD58C2284A6F6500AA9DA0 /* CustomButtonStyle.swift */; };
-		0ACD58E1284A6F6600AA9DA0 /* CustomButtonStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0ACD58C2284A6F6500AA9DA0 /* CustomButtonStyle.swift */; };
 		0ACD58E2284A6F6600AA9DA0 /* CheckmarkToggleStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0ACD58C3284A6F6500AA9DA0 /* CheckmarkToggleStyle.swift */; };
-		0ACD58E3284A6F6600AA9DA0 /* CheckmarkToggleStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0ACD58C3284A6F6500AA9DA0 /* CheckmarkToggleStyle.swift */; };
-		0ACD58E4284A6F6600AA9DA0 /* CheckmarkToggleStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0ACD58C3284A6F6500AA9DA0 /* CheckmarkToggleStyle.swift */; };
 		0ACD58E5284A6F6600AA9DA0 /* LandscapeModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0ACD58C4284A6F6500AA9DA0 /* LandscapeModifier.swift */; };
-		0ACD58E6284A6F6600AA9DA0 /* LandscapeModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0ACD58C4284A6F6500AA9DA0 /* LandscapeModifier.swift */; };
-		0ACD58E7284A6F6600AA9DA0 /* LandscapeModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0ACD58C4284A6F6500AA9DA0 /* LandscapeModifier.swift */; };
 		0ACD58EB284A6F6600AA9DA0 /* TabBarStateManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0ACD58C7284A6F6500AA9DA0 /* TabBarStateManager.swift */; };
-		0ACD58EC284A6F6600AA9DA0 /* TabBarStateManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0ACD58C7284A6F6500AA9DA0 /* TabBarStateManager.swift */; };
-		0ACD58ED284A6F6600AA9DA0 /* TabBarStateManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0ACD58C7284A6F6500AA9DA0 /* TabBarStateManager.swift */; };
 		0ACD58EE284A6F6600AA9DA0 /* LocationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0ACD58C8284A6F6500AA9DA0 /* LocationManager.swift */; };
-		0ACD58EF284A6F6600AA9DA0 /* LocationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0ACD58C8284A6F6500AA9DA0 /* LocationManager.swift */; };
-		0ACD58F0284A6F6600AA9DA0 /* LocationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0ACD58C8284A6F6500AA9DA0 /* LocationManager.swift */; };
 		0ACD58F1284A6F6600AA9DA0 /* ScreenBoundsSupplier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0ACD58C9284A6F6500AA9DA0 /* ScreenBoundsSupplier.swift */; };
-		0ACD58F2284A6F6600AA9DA0 /* ScreenBoundsSupplier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0ACD58C9284A6F6500AA9DA0 /* ScreenBoundsSupplier.swift */; };
-		0ACD58F3284A6F6600AA9DA0 /* ScreenBoundsSupplier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0ACD58C9284A6F6500AA9DA0 /* ScreenBoundsSupplier.swift */; };
 		0ACD58F4284A6F6600AA9DA0 /* ConditionalViewModifiers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0ACD58CB284A6F6500AA9DA0 /* ConditionalViewModifiers.swift */; };
-		0ACD58F5284A6F6600AA9DA0 /* ConditionalViewModifiers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0ACD58CB284A6F6500AA9DA0 /* ConditionalViewModifiers.swift */; };
-		0ACD58F6284A6F6600AA9DA0 /* ConditionalViewModifiers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0ACD58CB284A6F6500AA9DA0 /* ConditionalViewModifiers.swift */; };
 		0ACD58F7284A6F6600AA9DA0 /* Hidden.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0ACD58CC284A6F6500AA9DA0 /* Hidden.swift */; };
-		0ACD58F8284A6F6600AA9DA0 /* Hidden.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0ACD58CC284A6F6500AA9DA0 /* Hidden.swift */; };
-		0ACD58F9284A6F6600AA9DA0 /* Hidden.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0ACD58CC284A6F6500AA9DA0 /* Hidden.swift */; };
 		0ACD58FA284A6F6600AA9DA0 /* Color.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0ACD58CD284A6F6500AA9DA0 /* Color.swift */; };
-		0ACD58FB284A6F6600AA9DA0 /* Color.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0ACD58CD284A6F6500AA9DA0 /* Color.swift */; };
-		0ACD58FC284A6F6600AA9DA0 /* Color.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0ACD58CD284A6F6500AA9DA0 /* Color.swift */; };
 		0ACD58FD284A6F6600AA9DA0 /* CustomTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0ACD58D0284A6F6500AA9DA0 /* CustomTextField.swift */; };
-		0ACD58FE284A6F6600AA9DA0 /* CustomTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0ACD58D0284A6F6500AA9DA0 /* CustomTextField.swift */; };
-		0ACD58FF284A6F6600AA9DA0 /* CustomTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0ACD58D0284A6F6500AA9DA0 /* CustomTextField.swift */; };
 		0ACD5900284A6F6600AA9DA0 /* LabelledDivider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0ACD58D1284A6F6500AA9DA0 /* LabelledDivider.swift */; };
-		0ACD5901284A6F6600AA9DA0 /* LabelledDivider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0ACD58D1284A6F6500AA9DA0 /* LabelledDivider.swift */; };
-		0ACD5902284A6F6600AA9DA0 /* LabelledDivider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0ACD58D1284A6F6500AA9DA0 /* LabelledDivider.swift */; };
 		0ACD5906284A6F6600AA9DA0 /* RegisterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0ACD58D4284A6F6600AA9DA0 /* RegisterView.swift */; };
-		0ACD5907284A6F6600AA9DA0 /* RegisterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0ACD58D4284A6F6600AA9DA0 /* RegisterView.swift */; };
-		0ACD5908284A6F6600AA9DA0 /* RegisterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0ACD58D4284A6F6600AA9DA0 /* RegisterView.swift */; };
 		0ACD5909284A6F6600AA9DA0 /* RegisterViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0ACD58D5284A6F6600AA9DA0 /* RegisterViewModel.swift */; };
-		0ACD590A284A6F6600AA9DA0 /* RegisterViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0ACD58D5284A6F6600AA9DA0 /* RegisterViewModel.swift */; };
-		0ACD590B284A6F6600AA9DA0 /* RegisterViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0ACD58D5284A6F6600AA9DA0 /* RegisterViewModel.swift */; };
 		0ACD590C284A6F6600AA9DA0 /* HomeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0ACD58D7284A6F6600AA9DA0 /* HomeViewModel.swift */; };
 		0ACD5912284A6F6600AA9DA0 /* ForgotPasswordViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0ACD58DA284A6F6600AA9DA0 /* ForgotPasswordViewModel.swift */; };
-		0ACD5913284A6F6600AA9DA0 /* ForgotPasswordViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0ACD58DA284A6F6600AA9DA0 /* ForgotPasswordViewModel.swift */; };
-		0ACD5914284A6F6600AA9DA0 /* ForgotPasswordViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0ACD58DA284A6F6600AA9DA0 /* ForgotPasswordViewModel.swift */; };
 		0ACD5915284A6F6600AA9DA0 /* ForgotPasswordView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0ACD58DB284A6F6600AA9DA0 /* ForgotPasswordView.swift */; };
-		0ACD5916284A6F6600AA9DA0 /* ForgotPasswordView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0ACD58DB284A6F6600AA9DA0 /* ForgotPasswordView.swift */; };
-		0ACD5917284A6F6600AA9DA0 /* ForgotPasswordView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0ACD58DB284A6F6600AA9DA0 /* ForgotPasswordView.swift */; };
 		0ACD5918284A6F6600AA9DA0 /* LoginViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0ACD58DD284A6F6600AA9DA0 /* LoginViewModel.swift */; };
-		0ACD5919284A6F6600AA9DA0 /* LoginViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0ACD58DD284A6F6600AA9DA0 /* LoginViewModel.swift */; };
-		0ACD591A284A6F6600AA9DA0 /* LoginViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0ACD58DD284A6F6600AA9DA0 /* LoginViewModel.swift */; };
 		0ACD591B284A6F6600AA9DA0 /* LoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0ACD58DE284A6F6600AA9DA0 /* LoginView.swift */; };
-		0ACD591C284A6F6600AA9DA0 /* LoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0ACD58DE284A6F6600AA9DA0 /* LoginView.swift */; };
-		0ACD591D284A6F6600AA9DA0 /* LoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0ACD58DE284A6F6600AA9DA0 /* LoginView.swift */; };
 		0ACD599F284B71AF00AA9DA0 /* ProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0ACD599E284B71AF00AA9DA0 /* ProfileView.swift */; };
-		0ACD59A0284B71AF00AA9DA0 /* ProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0ACD599E284B71AF00AA9DA0 /* ProfileView.swift */; };
-		0ACD59A1284B71AF00AA9DA0 /* ProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0ACD599E284B71AF00AA9DA0 /* ProfileView.swift */; };
 		0ACD59AD284B739C00AA9DA0 /* Profile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0ACD59AC284B739C00AA9DA0 /* Profile.swift */; };
-		0ACD59AE284B739C00AA9DA0 /* Profile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0ACD59AC284B739C00AA9DA0 /* Profile.swift */; };
-		0ACD59AF284B739C00AA9DA0 /* Profile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0ACD59AC284B739C00AA9DA0 /* Profile.swift */; };
 		0ACD59B1284B73AE00AA9DA0 /* Address.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0ACD59B0284B73AE00AA9DA0 /* Address.swift */; };
-		0ACD59B2284B73AE00AA9DA0 /* Address.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0ACD59B0284B73AE00AA9DA0 /* Address.swift */; };
-		0ACD59B3284B73AE00AA9DA0 /* Address.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0ACD59B0284B73AE00AA9DA0 /* Address.swift */; };
 		0ACD59B6284B74CD00AA9DA0 /* Countries.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0ACD59B5284B74CD00AA9DA0 /* Countries.swift */; };
-		0ACD59B7284B74CD00AA9DA0 /* Countries.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0ACD59B5284B74CD00AA9DA0 /* Countries.swift */; };
-		0ACD59B8284B74CD00AA9DA0 /* Countries.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0ACD59B5284B74CD00AA9DA0 /* Countries.swift */; };
 		0AD89746289D0C4A00BFDAA1 /* ProfileViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0AD89745289D0C4A00BFDAA1 /* ProfileViewModel.swift */; };
-		0AD89747289D0C5E00BFDAA1 /* ProfileViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0AD89745289D0C4A00BFDAA1 /* ProfileViewModel.swift */; };
-		0AD89748289D0C5E00BFDAA1 /* ProfileViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0AD89745289D0C4A00BFDAA1 /* ProfileViewModel.swift */; };
 		0AD8976B289D392F00BFDAA1 /* ProductDetailsRatingsSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0AD8976A289D392F00BFDAA1 /* ProductDetailsRatingsSection.swift */; };
 		88059C52292163CD00231936 /* ReturnDetailsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88059C51292163CD00231936 /* ReturnDetailsViewModel.swift */; };
 		88059C542921727200231936 /* Availability.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88059C532921727200231936 /* Availability.swift */; };
@@ -373,17 +296,34 @@
 		88EFAA24291546D400A30481 /* ProductsListSourceLocalizable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88EFAA23291546D400A30481 /* ProductsListSourceLocalizable.swift */; };
 		88EFAA26291546E500A30481 /* ReturnStatusLocalizable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88EFAA25291546E500A30481 /* ReturnStatusLocalizable.swift */; };
 		88F2CFF1293017B600798D03 /* Inject in Frameworks */ = {isa = PBXBuildFile; productRef = 88F2CFF0293017B600798D03 /* Inject */; };
+		88F71223296624B300D91255 /* Kingfisher in Frameworks */ = {isa = PBXBuildFile; productRef = 88F71222296624B300D91255 /* Kingfisher */; };
+		88F71225296624B300D91255 /* Lottie in Frameworks */ = {isa = PBXBuildFile; productRef = 88F71224296624B300D91255 /* Lottie */; };
+		88F71227296624B300D91255 /* GoogleSignIn in Frameworks */ = {isa = PBXBuildFile; productRef = 88F71226296624B300D91255 /* GoogleSignIn */; };
+		88F71229296624B300D91255 /* GoogleSignInSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 88F71228296624B300D91255 /* GoogleSignInSwift */; };
+		88F7122B296624B300D91255 /* FacebookCore in Frameworks */ = {isa = PBXBuildFile; productRef = 88F7122A296624B300D91255 /* FacebookCore */; };
+		88F7122D296624B300D91255 /* FacebookGamingServices in Frameworks */ = {isa = PBXBuildFile; productRef = 88F7122C296624B300D91255 /* FacebookGamingServices */; };
+		88F7122F296624B300D91255 /* FacebookLogin in Frameworks */ = {isa = PBXBuildFile; productRef = 88F7122E296624B300D91255 /* FacebookLogin */; };
+		88F71231296624B300D91255 /* FacebookShare in Frameworks */ = {isa = PBXBuildFile; productRef = 88F71230296624B300D91255 /* FacebookShare */; };
+		88F71269296624B300D91255 /* texterify-ios-sdk in Frameworks */ = {isa = PBXBuildFile; productRef = 88F71268296624B300D91255 /* texterify-ios-sdk */; };
+		88F7126B296624B300D91255 /* Introspect in Frameworks */ = {isa = PBXBuildFile; productRef = 88F7126A296624B300D91255 /* Introspect */; };
+		88F7126D296624B300D91255 /* Inject in Frameworks */ = {isa = PBXBuildFile; productRef = 88F7126C296624B300D91255 /* Inject */; };
+		88F7126F296624B300D91255 /* Stripe in Frameworks */ = {isa = PBXBuildFile; productRef = 88F7126E296624B300D91255 /* Stripe */; };
+		88F71271296624B300D91255 /* StripeApplePay in Frameworks */ = {isa = PBXBuildFile; productRef = 88F71270296624B300D91255 /* StripeApplePay */; };
+		88F71273296624B300D91255 /* StripeCardScan in Frameworks */ = {isa = PBXBuildFile; productRef = 88F71272296624B300D91255 /* StripeCardScan */; };
+		88F71275296624B300D91255 /* StripeFinancialConnections in Frameworks */ = {isa = PBXBuildFile; productRef = 88F71274296624B300D91255 /* StripeFinancialConnections */; };
+		88F71277296624B300D91255 /* StripeIdentity in Frameworks */ = {isa = PBXBuildFile; productRef = 88F71276296624B300D91255 /* StripeIdentity */; };
+		88F71279296624B300D91255 /* StripePayments in Frameworks */ = {isa = PBXBuildFile; productRef = 88F71278296624B300D91255 /* StripePayments */; };
+		88F7127B296624B300D91255 /* StripePaymentSheet in Frameworks */ = {isa = PBXBuildFile; productRef = 88F7127A296624B300D91255 /* StripePaymentSheet */; };
+		88F7127D296624B300D91255 /* StripePaymentsUI in Frameworks */ = {isa = PBXBuildFile; productRef = 88F7127C296624B300D91255 /* StripePaymentsUI */; };
+		88F7127F2966267800D91255 /* FirebaseAppCheck in Frameworks */ = {isa = PBXBuildFile; productRef = 88F7127E2966267800D91255 /* FirebaseAppCheck */; };
+		88F712812966268000D91255 /* FirebaseAuth in Frameworks */ = {isa = PBXBuildFile; productRef = 88F712802966268000D91255 /* FirebaseAuth */; };
+		88F712832966269B00D91255 /* FirebaseStorage in Frameworks */ = {isa = PBXBuildFile; productRef = 88F712822966269B00D91255 /* FirebaseStorage */; };
+		88F71285296626B800D91255 /* FirebaseFirestore in Frameworks */ = {isa = PBXBuildFile; productRef = 88F71284296626B800D91255 /* FirebaseFirestore */; };
+		88F7128B29662A0D00D91255 /* FirebaseStorageManagerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88F7128A29662A0D00D91255 /* FirebaseStorageManagerTests.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
-		0ACD58A4284A6E9300AA9DA0 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 0ACD588B284A6E9200AA9DA0 /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = 0ACD5892284A6E9200AA9DA0;
-			remoteInfo = SwiftfulShopping;
-		};
-		0ACD58AE284A6E9300AA9DA0 /* PBXContainerItemProxy */ = {
+		88F7121C296623AC00D91255 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 0ACD588B284A6E9200AA9DA0 /* Project object */;
 			proxyType = 1;
@@ -541,11 +481,6 @@
 		0ACD5896284A6E9200AA9DA0 /* SwiftfulShoppingApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwiftfulShoppingApp.swift; sourceTree = "<group>"; };
 		0ACD589A284A6E9300AA9DA0 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		0ACD589D284A6E9300AA9DA0 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
-		0ACD58A3284A6E9300AA9DA0 /* SwiftfulShoppingTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SwiftfulShoppingTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		0ACD58A7284A6E9300AA9DA0 /* SwiftfulShoppingTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwiftfulShoppingTests.swift; sourceTree = "<group>"; };
-		0ACD58AD284A6E9300AA9DA0 /* SwiftfulShoppingUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SwiftfulShoppingUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		0ACD58B1284A6E9300AA9DA0 /* SwiftfulShoppingUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwiftfulShoppingUITests.swift; sourceTree = "<group>"; };
-		0ACD58B3284A6E9300AA9DA0 /* SwiftfulShoppingUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwiftfulShoppingUITestsLaunchTests.swift; sourceTree = "<group>"; };
 		0ACD58C2284A6F6500AA9DA0 /* CustomButtonStyle.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomButtonStyle.swift; sourceTree = "<group>"; };
 		0ACD58C3284A6F6500AA9DA0 /* CheckmarkToggleStyle.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CheckmarkToggleStyle.swift; sourceTree = "<group>"; };
 		0ACD58C4284A6F6500AA9DA0 /* LandscapeModifier.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LandscapeModifier.swift; sourceTree = "<group>"; };
@@ -677,6 +612,8 @@
 		88EFAA21291546C900A30481 /* FilteringMethodsLocalizable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilteringMethodsLocalizable.swift; sourceTree = "<group>"; };
 		88EFAA23291546D400A30481 /* ProductsListSourceLocalizable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductsListSourceLocalizable.swift; sourceTree = "<group>"; };
 		88EFAA25291546E500A30481 /* ReturnStatusLocalizable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReturnStatusLocalizable.swift; sourceTree = "<group>"; };
+		88F71218296623AC00D91255 /* SwiftfulShoppingUnitTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SwiftfulShoppingUnitTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		88F7128A29662A0D00D91255 /* FirebaseStorageManagerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseStorageManagerTests.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -706,17 +643,33 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		0ACD58A0284A6E9300AA9DA0 /* Frameworks */ = {
+		88F71215296623AC00D91255 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		0ACD58AA284A6E9300AA9DA0 /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
+				88F7127D296624B300D91255 /* StripePaymentsUI in Frameworks */,
+				88F71223296624B300D91255 /* Kingfisher in Frameworks */,
+				88F7122B296624B300D91255 /* FacebookCore in Frameworks */,
+				88F71231296624B300D91255 /* FacebookShare in Frameworks */,
+				88F71277296624B300D91255 /* StripeIdentity in Frameworks */,
+				88F71225296624B300D91255 /* Lottie in Frameworks */,
+				88F7122D296624B300D91255 /* FacebookGamingServices in Frameworks */,
+				88F71227296624B300D91255 /* GoogleSignIn in Frameworks */,
+				88F7127F2966267800D91255 /* FirebaseAppCheck in Frameworks */,
+				88F7122F296624B300D91255 /* FacebookLogin in Frameworks */,
+				88F7126D296624B300D91255 /* Inject in Frameworks */,
+				88F71271296624B300D91255 /* StripeApplePay in Frameworks */,
+				88F7126B296624B300D91255 /* Introspect in Frameworks */,
+				88F7126F296624B300D91255 /* Stripe in Frameworks */,
+				88F71273296624B300D91255 /* StripeCardScan in Frameworks */,
+				88F71285296626B800D91255 /* FirebaseFirestore in Frameworks */,
+				88F71229296624B300D91255 /* GoogleSignInSwift in Frameworks */,
+				88F71275296624B300D91255 /* StripeFinancialConnections in Frameworks */,
+				88F7127B296624B300D91255 /* StripePaymentSheet in Frameworks */,
+				88F71279296624B300D91255 /* StripePayments in Frameworks */,
+				88F712832966269B00D91255 /* FirebaseStorage in Frameworks */,
+				88F712812966268000D91255 /* FirebaseAuth in Frameworks */,
+				88F71269296624B300D91255 /* texterify-ios-sdk in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1149,9 +1102,9 @@
 			isa = PBXGroup;
 			children = (
 				0ACD5895284A6E9200AA9DA0 /* SwiftfulShopping */,
-				0ACD58A6284A6E9300AA9DA0 /* SwiftfulShoppingTests */,
-				0ACD58B0284A6E9300AA9DA0 /* SwiftfulShoppingUITests */,
+				88F71219296623AC00D91255 /* SwiftfulShoppingUnitTests */,
 				0ACD5894284A6E9200AA9DA0 /* Products */,
+				88F71221296624B300D91255 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -1159,8 +1112,7 @@
 			isa = PBXGroup;
 			children = (
 				0ACD5893284A6E9200AA9DA0 /* SwiftfulShopping.app */,
-				0ACD58A3284A6E9300AA9DA0 /* SwiftfulShoppingTests.xctest */,
-				0ACD58AD284A6E9300AA9DA0 /* SwiftfulShoppingUITests.xctest */,
+				88F71218296623AC00D91255 /* SwiftfulShoppingUnitTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -1190,23 +1142,6 @@
 				0ACD589D284A6E9300AA9DA0 /* Preview Assets.xcassets */,
 			);
 			path = "Preview Content";
-			sourceTree = "<group>";
-		};
-		0ACD58A6284A6E9300AA9DA0 /* SwiftfulShoppingTests */ = {
-			isa = PBXGroup;
-			children = (
-				0ACD58A7284A6E9300AA9DA0 /* SwiftfulShoppingTests.swift */,
-			);
-			path = SwiftfulShoppingTests;
-			sourceTree = "<group>";
-		};
-		0ACD58B0284A6E9300AA9DA0 /* SwiftfulShoppingUITests */ = {
-			isa = PBXGroup;
-			children = (
-				0ACD58B1284A6E9300AA9DA0 /* SwiftfulShoppingUITests.swift */,
-				0ACD58B3284A6E9300AA9DA0 /* SwiftfulShoppingUITestsLaunchTests.swift */,
-			);
-			path = SwiftfulShoppingUITests;
 			sourceTree = "<group>";
 		};
 		0ACD58C0284A6F6500AA9DA0 /* Utils */ = {
@@ -1760,6 +1695,53 @@
 			path = Errors;
 			sourceTree = "<group>";
 		};
+		88F71219296623AC00D91255 /* SwiftfulShoppingUnitTests */ = {
+			isa = PBXGroup;
+			children = (
+				88F71286296629DF00D91255 /* Firebase */,
+			);
+			path = SwiftfulShoppingUnitTests;
+			sourceTree = "<group>";
+		};
+		88F71221296624B300D91255 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		88F71286296629DF00D91255 /* Firebase */ = {
+			isa = PBXGroup;
+			children = (
+				88F71289296629F700D91255 /* FirebaseStorageManager */,
+				88F71288296629EE00D91255 /* FirebaseFirestore */,
+				88F71287296629E700D91255 /* FirebaseAuth */,
+			);
+			path = Firebase;
+			sourceTree = "<group>";
+		};
+		88F71287296629E700D91255 /* FirebaseAuth */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = FirebaseAuth;
+			sourceTree = "<group>";
+		};
+		88F71288296629EE00D91255 /* FirebaseFirestore */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = FirebaseFirestore;
+			sourceTree = "<group>";
+		};
+		88F71289296629F700D91255 /* FirebaseStorageManager */ = {
+			isa = PBXGroup;
+			children = (
+				88F7128A29662A0D00D91255 /* FirebaseStorageManagerTests.swift */,
+			);
+			path = FirebaseStorageManager;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -1801,41 +1783,48 @@
 			productReference = 0ACD5893284A6E9200AA9DA0 /* SwiftfulShopping.app */;
 			productType = "com.apple.product-type.application";
 		};
-		0ACD58A2284A6E9300AA9DA0 /* SwiftfulShoppingTests */ = {
+		88F71217296623AC00D91255 /* SwiftfulShoppingUnitTests */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 0ACD58BA284A6E9300AA9DA0 /* Build configuration list for PBXNativeTarget "SwiftfulShoppingTests" */;
+			buildConfigurationList = 88F7121E296623AC00D91255 /* Build configuration list for PBXNativeTarget "SwiftfulShoppingUnitTests" */;
 			buildPhases = (
-				0ACD589F284A6E9300AA9DA0 /* Sources */,
-				0ACD58A0284A6E9300AA9DA0 /* Frameworks */,
-				0ACD58A1284A6E9300AA9DA0 /* Resources */,
+				88F71214296623AC00D91255 /* Sources */,
+				88F71215296623AC00D91255 /* Frameworks */,
+				88F71216296623AC00D91255 /* Resources */,
 			);
 			buildRules = (
 			);
 			dependencies = (
-				0ACD58A5284A6E9300AA9DA0 /* PBXTargetDependency */,
+				88F7121D296623AC00D91255 /* PBXTargetDependency */,
 			);
-			name = SwiftfulShoppingTests;
-			productName = SwiftfulShoppingTests;
-			productReference = 0ACD58A3284A6E9300AA9DA0 /* SwiftfulShoppingTests.xctest */;
+			name = SwiftfulShoppingUnitTests;
+			packageProductDependencies = (
+				88F71222296624B300D91255 /* Kingfisher */,
+				88F71224296624B300D91255 /* Lottie */,
+				88F71226296624B300D91255 /* GoogleSignIn */,
+				88F71228296624B300D91255 /* GoogleSignInSwift */,
+				88F7122A296624B300D91255 /* FacebookCore */,
+				88F7122C296624B300D91255 /* FacebookGamingServices */,
+				88F7122E296624B300D91255 /* FacebookLogin */,
+				88F71230296624B300D91255 /* FacebookShare */,
+				88F71268296624B300D91255 /* texterify-ios-sdk */,
+				88F7126A296624B300D91255 /* Introspect */,
+				88F7126C296624B300D91255 /* Inject */,
+				88F7126E296624B300D91255 /* Stripe */,
+				88F71270296624B300D91255 /* StripeApplePay */,
+				88F71272296624B300D91255 /* StripeCardScan */,
+				88F71274296624B300D91255 /* StripeFinancialConnections */,
+				88F71276296624B300D91255 /* StripeIdentity */,
+				88F71278296624B300D91255 /* StripePayments */,
+				88F7127A296624B300D91255 /* StripePaymentSheet */,
+				88F7127C296624B300D91255 /* StripePaymentsUI */,
+				88F7127E2966267800D91255 /* FirebaseAppCheck */,
+				88F712802966268000D91255 /* FirebaseAuth */,
+				88F712822966269B00D91255 /* FirebaseStorage */,
+				88F71284296626B800D91255 /* FirebaseFirestore */,
+			);
+			productName = SwiftfulShoppingUnitTests;
+			productReference = 88F71218296623AC00D91255 /* SwiftfulShoppingUnitTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
-		};
-		0ACD58AC284A6E9300AA9DA0 /* SwiftfulShoppingUITests */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = 0ACD58BD284A6E9300AA9DA0 /* Build configuration list for PBXNativeTarget "SwiftfulShoppingUITests" */;
-			buildPhases = (
-				0ACD58A9284A6E9300AA9DA0 /* Sources */,
-				0ACD58AA284A6E9300AA9DA0 /* Frameworks */,
-				0ACD58AB284A6E9300AA9DA0 /* Resources */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-				0ACD58AF284A6E9300AA9DA0 /* PBXTargetDependency */,
-			);
-			name = SwiftfulShoppingUITests;
-			productName = SwiftfulShoppingUITests;
-			productReference = 0ACD58AD284A6E9300AA9DA0 /* SwiftfulShoppingUITests.xctest */;
-			productType = "com.apple.product-type.bundle.ui-testing";
 		};
 /* End PBXNativeTarget section */
 
@@ -1844,18 +1833,14 @@
 			isa = PBXProject;
 			attributes = {
 				BuildIndependentTargetsInParallel = 1;
-				LastSwiftUpdateCheck = 1340;
+				LastSwiftUpdateCheck = 1420;
 				LastUpgradeCheck = 1340;
 				TargetAttributes = {
 					0ACD5892284A6E9200AA9DA0 = {
 						CreatedOnToolsVersion = 13.4;
 					};
-					0ACD58A2284A6E9300AA9DA0 = {
-						CreatedOnToolsVersion = 13.4;
-						TestTargetID = 0ACD5892284A6E9200AA9DA0;
-					};
-					0ACD58AC284A6E9300AA9DA0 = {
-						CreatedOnToolsVersion = 13.4;
+					88F71217296623AC00D91255 = {
+						CreatedOnToolsVersion = 14.2;
 						TestTargetID = 0ACD5892284A6E9200AA9DA0;
 					};
 				};
@@ -1890,8 +1875,7 @@
 			projectRoot = "";
 			targets = (
 				0ACD5892284A6E9200AA9DA0 /* SwiftfulShopping */,
-				0ACD58A2284A6E9300AA9DA0 /* SwiftfulShoppingTests */,
-				0ACD58AC284A6E9300AA9DA0 /* SwiftfulShoppingUITests */,
+				88F71217296623AC00D91255 /* SwiftfulShoppingUnitTests */,
 			);
 		};
 /* End PBXProject section */
@@ -1908,14 +1892,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		0ACD58A1284A6E9300AA9DA0 /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		0ACD58AB284A6E9300AA9DA0 /* Resources */ = {
+		88F71216296623AC00D91255 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -2198,109 +2175,21 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		0ACD589F284A6E9300AA9DA0 /* Sources */ = {
+		88F71214296623AC00D91255 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				0ACD5901284A6F6600AA9DA0 /* LabelledDivider.swift in Sources */,
-				0ACD590A284A6F6600AA9DA0 /* RegisterViewModel.swift in Sources */,
-				0ACD59B2284B73AE00AA9DA0 /* Address.swift in Sources */,
-				0A2D5FBC28BA40F000E76D71 /* FilteringMethods.swift in Sources */,
-				0A2D5FC828BA40F000E76D71 /* UserDefaultsKeys.swift in Sources */,
-				0ACD58E6284A6F6600AA9DA0 /* LandscapeModifier.swift in Sources */,
-				0A2D5FD028BA40F000E76D71 /* SourceForImageRecognition.swift in Sources */,
-				0A2D5FC228BA40F000E76D71 /* AccentColors.swift in Sources */,
-				0A2D5FC628BA40F000E76D71 /* Category.swift in Sources */,
-				0ACD58F8284A6F6600AA9DA0 /* Hidden.swift in Sources */,
-				0ACD5913284A6F6600AA9DA0 /* ForgotPasswordViewModel.swift in Sources */,
-				0ACD5907284A6F6600AA9DA0 /* RegisterView.swift in Sources */,
-				0A2D5FCA28BA40F000E76D71 /* ProductColor.swift in Sources */,
-				0ACD5919284A6F6600AA9DA0 /* LoginViewModel.swift in Sources */,
-				0AD89748289D0C5E00BFDAA1 /* ProfileViewModel.swift in Sources */,
-				0ACD58FB284A6F6600AA9DA0 /* Color.swift in Sources */,
-				0A2D5FB828BA40F000E76D71 /* OrderStatus.swift in Sources */,
-				0ACD58E3284A6F6600AA9DA0 /* CheckmarkToggleStyle.swift in Sources */,
-				0ACD5916284A6F6600AA9DA0 /* ForgotPasswordView.swift in Sources */,
-				0A2D5FD228BA40F000E76D71 /* PaymentMethod.swift in Sources */,
-				0A2D5FBA28BA40F000E76D71 /* TabsWithProducts.swift in Sources */,
-				0ACD58E0284A6F6600AA9DA0 /* CustomButtonStyle.swift in Sources */,
-				0ACD58EF284A6F6600AA9DA0 /* LocationManager.swift in Sources */,
-				0ACD58F2284A6F6600AA9DA0 /* ScreenBoundsSupplier.swift in Sources */,
-				0ACD59AE284B739C00AA9DA0 /* Profile.swift in Sources */,
-				0A2D5FB428BA2BAB00E76D71 /* RectangleCustomTextField.swift in Sources */,
-				0ACD591C284A6F6600AA9DA0 /* LoginView.swift in Sources */,
-				0ACD58EC284A6F6600AA9DA0 /* TabBarStateManager.swift in Sources */,
-				0ACD58FE284A6F6600AA9DA0 /* CustomTextField.swift in Sources */,
-				0ACD59B7284B74CD00AA9DA0 /* Countries.swift in Sources */,
-				0A2D5FBE28BA40F000E76D71 /* ShippingMethod.swift in Sources */,
-				0ACD58A8284A6E9300AA9DA0 /* SwiftfulShoppingTests.swift in Sources */,
-				0A2D5FD428BA40F000E76D71 /* ExploreViewTabs.swift in Sources */,
-				0A2D5FC028BA40F000E76D71 /* CardCompany.swift in Sources */,
-				0A2D5FCE28BA40F000E76D71 /* SortingMethods.swift in Sources */,
-				0A2D5FCC28BA40F000E76D71 /* ProductDisplayMethod.swift in Sources */,
-				0ACD59A0284B71AF00AA9DA0 /* ProfileView.swift in Sources */,
-				0ACD58F5284A6F6600AA9DA0 /* ConditionalViewModifiers.swift in Sources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		0ACD58A9284A6E9300AA9DA0 /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				0A2D5FBD28BA40F000E76D71 /* FilteringMethods.swift in Sources */,
-				0A2D5FD328BA40F000E76D71 /* PaymentMethod.swift in Sources */,
-				0A2D5FBB28BA40F000E76D71 /* TabsWithProducts.swift in Sources */,
-				0A2D5FC328BA40F000E76D71 /* AccentColors.swift in Sources */,
-				0ACD58FF284A6F6600AA9DA0 /* CustomTextField.swift in Sources */,
-				0ACD59B8284B74CD00AA9DA0 /* Countries.swift in Sources */,
-				0A2D5FD528BA40F000E76D71 /* ExploreViewTabs.swift in Sources */,
-				0A2D5FB928BA40F000E76D71 /* OrderStatus.swift in Sources */,
-				0AD89747289D0C5E00BFDAA1 /* ProfileViewModel.swift in Sources */,
-				0A2D5FCF28BA40F000E76D71 /* SortingMethods.swift in Sources */,
-				0ACD58E1284A6F6600AA9DA0 /* CustomButtonStyle.swift in Sources */,
-				0ACD59AF284B739C00AA9DA0 /* Profile.swift in Sources */,
-				0ACD58ED284A6F6600AA9DA0 /* TabBarStateManager.swift in Sources */,
-				0A2D5FC928BA40F000E76D71 /* UserDefaultsKeys.swift in Sources */,
-				0ACD590B284A6F6600AA9DA0 /* RegisterViewModel.swift in Sources */,
-				0ACD58F6284A6F6600AA9DA0 /* ConditionalViewModifiers.swift in Sources */,
-				0ACD58E4284A6F6600AA9DA0 /* CheckmarkToggleStyle.swift in Sources */,
-				0ACD58B4284A6E9300AA9DA0 /* SwiftfulShoppingUITestsLaunchTests.swift in Sources */,
-				0ACD591D284A6F6600AA9DA0 /* LoginView.swift in Sources */,
-				0ACD5908284A6F6600AA9DA0 /* RegisterView.swift in Sources */,
-				0ACD5902284A6F6600AA9DA0 /* LabelledDivider.swift in Sources */,
-				0A2D5FBF28BA40F000E76D71 /* ShippingMethod.swift in Sources */,
-				0ACD58FC284A6F6600AA9DA0 /* Color.swift in Sources */,
-				0ACD58F0284A6F6600AA9DA0 /* LocationManager.swift in Sources */,
-				0A2D5FC728BA40F000E76D71 /* Category.swift in Sources */,
-				0A2D5FCB28BA40F000E76D71 /* ProductColor.swift in Sources */,
-				0ACD59B3284B73AE00AA9DA0 /* Address.swift in Sources */,
-				0ACD58F3284A6F6600AA9DA0 /* ScreenBoundsSupplier.swift in Sources */,
-				0ACD58B2284A6E9300AA9DA0 /* SwiftfulShoppingUITests.swift in Sources */,
-				0ACD59A1284B71AF00AA9DA0 /* ProfileView.swift in Sources */,
-				0A2D5FC128BA40F000E76D71 /* CardCompany.swift in Sources */,
-				0ACD58E7284A6F6600AA9DA0 /* LandscapeModifier.swift in Sources */,
-				0ACD5914284A6F6600AA9DA0 /* ForgotPasswordViewModel.swift in Sources */,
-				0ACD5917284A6F6600AA9DA0 /* ForgotPasswordView.swift in Sources */,
-				0ACD58F9284A6F6600AA9DA0 /* Hidden.swift in Sources */,
-				0A2D5FB528BA2BAB00E76D71 /* RectangleCustomTextField.swift in Sources */,
-				0ACD591A284A6F6600AA9DA0 /* LoginViewModel.swift in Sources */,
-				0A2D5FD128BA40F000E76D71 /* SourceForImageRecognition.swift in Sources */,
-				0A2D5FCD28BA40F000E76D71 /* ProductDisplayMethod.swift in Sources */,
+				88F7128B29662A0D00D91255 /* FirebaseStorageManagerTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
-		0ACD58A5284A6E9300AA9DA0 /* PBXTargetDependency */ = {
+		88F7121D296623AC00D91255 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = 0ACD5892284A6E9200AA9DA0 /* SwiftfulShopping */;
-			targetProxy = 0ACD58A4284A6E9300AA9DA0 /* PBXContainerItemProxy */;
-		};
-		0ACD58AF284A6E9300AA9DA0 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = 0ACD5892284A6E9200AA9DA0 /* SwiftfulShopping */;
-			targetProxy = 0ACD58AE284A6E9300AA9DA0 /* PBXContainerItemProxy */;
+			targetProxy = 88F7121C296623AC00D91255 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
@@ -2520,83 +2409,43 @@
 			};
 			name = Release;
 		};
-		0ACD58BB284A6E9300AA9DA0 /* Debug */ = {
+		88F7121F296623AC00D91255 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 88C4C5CC2931215900D83B32 /* Config.xcconfig */;
 			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = T3SR62DCTW;
 				GENERATE_INFOPLIST_FILE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 15.5;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.2;
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = ljaniszewski.SwiftfulShoppingTests;
+				PRODUCT_BUNDLE_IDENTIFIER = ljaniszewski.SwiftfulShoppingUnitTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = NO;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/SwiftfulShopping.app/SwiftfulShopping";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/SwiftfulShopping.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/SwiftfulShopping";
 			};
 			name = Debug;
 		};
-		0ACD58BC284A6E9300AA9DA0 /* Release */ = {
+		88F71220296623AC00D91255 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 88C4C5CC2931215900D83B32 /* Config.xcconfig */;
 			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = T3SR62DCTW;
 				GENERATE_INFOPLIST_FILE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 15.5;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.2;
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = ljaniszewski.SwiftfulShoppingTests;
+				PRODUCT_BUNDLE_IDENTIFIER = ljaniszewski.SwiftfulShoppingUnitTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = NO;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/SwiftfulShopping.app/SwiftfulShopping";
-			};
-			name = Release;
-		};
-		0ACD58BE284A6E9300AA9DA0 /* Debug */ = {
-			isa = XCBuildConfiguration;
-			baseConfigurationReference = 88C4C5CC2931215900D83B32 /* Config.xcconfig */;
-			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
-				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = T3SR62DCTW;
-				GENERATE_INFOPLIST_FILE = YES;
-				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = ljaniszewski.SwiftfulShoppingUITests;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_EMIT_LOC_STRINGS = NO;
-				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
-				TEST_TARGET_NAME = SwiftfulShopping;
-			};
-			name = Debug;
-		};
-		0ACD58BF284A6E9300AA9DA0 /* Release */ = {
-			isa = XCBuildConfiguration;
-			baseConfigurationReference = 88C4C5CC2931215900D83B32 /* Config.xcconfig */;
-			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
-				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = T3SR62DCTW;
-				GENERATE_INFOPLIST_FILE = YES;
-				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = ljaniszewski.SwiftfulShoppingUITests;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_EMIT_LOC_STRINGS = NO;
-				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
-				TEST_TARGET_NAME = SwiftfulShopping;
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/SwiftfulShopping.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/SwiftfulShopping";
 			};
 			name = Release;
 		};
@@ -2621,20 +2470,11 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		0ACD58BA284A6E9300AA9DA0 /* Build configuration list for PBXNativeTarget "SwiftfulShoppingTests" */ = {
+		88F7121E296623AC00D91255 /* Build configuration list for PBXNativeTarget "SwiftfulShoppingUnitTests" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				0ACD58BB284A6E9300AA9DA0 /* Debug */,
-				0ACD58BC284A6E9300AA9DA0 /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
-		0ACD58BD284A6E9300AA9DA0 /* Build configuration list for PBXNativeTarget "SwiftfulShoppingUITests" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				0ACD58BE284A6E9300AA9DA0 /* Debug */,
-				0ACD58BF284A6E9300AA9DA0 /* Release */,
+				88F7121F296623AC00D91255 /* Debug */,
+				88F71220296623AC00D91255 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
@@ -2811,6 +2651,121 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 88F2CFEF293017B600798D03 /* XCRemoteSwiftPackageReference "Inject" */;
 			productName = Inject;
+		};
+		88F71222296624B300D91255 /* Kingfisher */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 0A420AC9289F109500AA4C52 /* XCRemoteSwiftPackageReference "Kingfisher" */;
+			productName = Kingfisher;
+		};
+		88F71224296624B300D91255 /* Lottie */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 0A2FE0AE28A1B9E700E8D30E /* XCRemoteSwiftPackageReference "lottie-ios" */;
+			productName = Lottie;
+		};
+		88F71226296624B300D91255 /* GoogleSignIn */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 0A21490028D9060900748128 /* XCRemoteSwiftPackageReference "GoogleSignIn-iOS" */;
+			productName = GoogleSignIn;
+		};
+		88F71228296624B300D91255 /* GoogleSignInSwift */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 0A21490028D9060900748128 /* XCRemoteSwiftPackageReference "GoogleSignIn-iOS" */;
+			productName = GoogleSignInSwift;
+		};
+		88F7122A296624B300D91255 /* FacebookCore */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 0A1C61A428DA1CCA00BF4ED3 /* XCRemoteSwiftPackageReference "facebook-ios-sdk" */;
+			productName = FacebookCore;
+		};
+		88F7122C296624B300D91255 /* FacebookGamingServices */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 0A1C61A428DA1CCA00BF4ED3 /* XCRemoteSwiftPackageReference "facebook-ios-sdk" */;
+			productName = FacebookGamingServices;
+		};
+		88F7122E296624B300D91255 /* FacebookLogin */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 0A1C61A428DA1CCA00BF4ED3 /* XCRemoteSwiftPackageReference "facebook-ios-sdk" */;
+			productName = FacebookLogin;
+		};
+		88F71230296624B300D91255 /* FacebookShare */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 0A1C61A428DA1CCA00BF4ED3 /* XCRemoteSwiftPackageReference "facebook-ios-sdk" */;
+			productName = FacebookShare;
+		};
+		88F71268296624B300D91255 /* texterify-ios-sdk */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 889EDF3C290EF94200EBFFC1 /* XCRemoteSwiftPackageReference "texterify-ios" */;
+			productName = "texterify-ios-sdk";
+		};
+		88F7126A296624B300D91255 /* Introspect */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 88DDE86F29259F7D00F60448 /* XCRemoteSwiftPackageReference "SwiftUI-Introspect" */;
+			productName = Introspect;
+		};
+		88F7126C296624B300D91255 /* Inject */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 88F2CFEF293017B600798D03 /* XCRemoteSwiftPackageReference "Inject" */;
+			productName = Inject;
+		};
+		88F7126E296624B300D91255 /* Stripe */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 88C4C5BB29311C5B00D83B32 /* XCRemoteSwiftPackageReference "stripe-ios-spm" */;
+			productName = Stripe;
+		};
+		88F71270296624B300D91255 /* StripeApplePay */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 88C4C5BB29311C5B00D83B32 /* XCRemoteSwiftPackageReference "stripe-ios-spm" */;
+			productName = StripeApplePay;
+		};
+		88F71272296624B300D91255 /* StripeCardScan */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 88C4C5BB29311C5B00D83B32 /* XCRemoteSwiftPackageReference "stripe-ios-spm" */;
+			productName = StripeCardScan;
+		};
+		88F71274296624B300D91255 /* StripeFinancialConnections */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 88C4C5BB29311C5B00D83B32 /* XCRemoteSwiftPackageReference "stripe-ios-spm" */;
+			productName = StripeFinancialConnections;
+		};
+		88F71276296624B300D91255 /* StripeIdentity */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 88C4C5BB29311C5B00D83B32 /* XCRemoteSwiftPackageReference "stripe-ios-spm" */;
+			productName = StripeIdentity;
+		};
+		88F71278296624B300D91255 /* StripePayments */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 88C4C5BB29311C5B00D83B32 /* XCRemoteSwiftPackageReference "stripe-ios-spm" */;
+			productName = StripePayments;
+		};
+		88F7127A296624B300D91255 /* StripePaymentSheet */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 88C4C5BB29311C5B00D83B32 /* XCRemoteSwiftPackageReference "stripe-ios-spm" */;
+			productName = StripePaymentSheet;
+		};
+		88F7127C296624B300D91255 /* StripePaymentsUI */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 88C4C5BB29311C5B00D83B32 /* XCRemoteSwiftPackageReference "stripe-ios-spm" */;
+			productName = StripePaymentsUI;
+		};
+		88F7127E2966267800D91255 /* FirebaseAppCheck */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 0A49CEAA28EE03820064D3DD /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseAppCheck;
+		};
+		88F712802966268000D91255 /* FirebaseAuth */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 0A49CEAA28EE03820064D3DD /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseAuth;
+		};
+		88F712822966269B00D91255 /* FirebaseStorage */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 0A49CEAA28EE03820064D3DD /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseStorage;
+		};
+		88F71284296626B800D91255 /* FirebaseFirestore */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 0A49CEAA28EE03820064D3DD /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseFirestore;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};
