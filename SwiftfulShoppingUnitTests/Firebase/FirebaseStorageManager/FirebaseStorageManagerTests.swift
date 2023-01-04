@@ -15,11 +15,12 @@ final class FirebaseStorageManagerTests: XCTestCase {
     
     private var imageName: String = "blank_profile_image"
     private var userID: String = "test_user_id"
+    private var error: Error?
     
     // MARK: Setup
 
     override func setUpWithError() throws {
-        
+        error = nil
     }
 
     override func tearDownWithError() throws {
@@ -43,12 +44,13 @@ final class FirebaseStorageManagerTests: XCTestCase {
                 expectation.fulfill()
                 FirebaseStorageManager.deleteImageFromStorage(userID: userID,
                                                               imageURL: fetchedImageUUID) { _ in }
-            case .failure:
-                XCTFail()
+            case .failure(let errorOccured):
+                error = errorOccured
             }
         }
         
         wait(for: [expectation], timeout: 4)
+        XCTAssertNil(error)
         XCTAssertNotNil(imageUUID)
         XCTAssertFalse(imageUUID!.isEmpty)
     }
@@ -58,18 +60,19 @@ final class FirebaseStorageManagerTests: XCTestCase {
         let expectation: XCTestExpectation = XCTestExpectation(description: "Image should be fetched.")
         
         FirebaseStorageManager.downloadImageFromStorage(userID: "W9UQoichE0UNZfvCnIPxuCBgL283",
-                                                        imageURL: "5F9F3C8F-3CEF-4465-AD22-50034D16875C") { result in
+                                                        imageURL: "5F9F3C8F-3CEF-4465-AD22-50034D16875C") { [self] result in
             switch result {
             case .success(let fetchedImage):
                 guard let fetchedImage = fetchedImage else { return }
                 image = fetchedImage
                 expectation.fulfill()
-            case .failure:
-                XCTFail()
+            case .failure(let errorOccured):
+                error = errorOccured
             }
         }
         
         wait(for: [expectation], timeout: 4)
+        XCTAssertNil(error)
         XCTAssertNotNil(image)
         XCTAssertNotEqual(image?.size, CGSize.zero)
     }
@@ -78,17 +81,18 @@ final class FirebaseStorageManagerTests: XCTestCase {
         var onboardingImageModels: [OnboardingImageModel] = []
         let expectation: XCTestExpectation = XCTestExpectation(description: "onboardingImageModels count should be equal to 10.")
         
-        FirebaseStorageManager.downloadOnboardingImagesFromStorage { result in
+        FirebaseStorageManager.downloadOnboardingImagesFromStorage { [self] result in
             switch result {
             case .success(let fetchedOnboardingImageModels):
                 onboardingImageModels = fetchedOnboardingImageModels
                 expectation.fulfill()
-            case .failure:
-                XCTFail()
+            case .failure(let errorOccured):
+                error = errorOccured
             }
         }
         
         wait(for: [expectation], timeout: 4)
+        XCTAssertNil(error)
         XCTAssertEqual(onboardingImageModels.count, 10)
     }
 }

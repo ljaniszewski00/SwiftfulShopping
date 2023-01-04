@@ -320,6 +320,7 @@
 		88F712832966269B00D91255 /* FirebaseStorage in Frameworks */ = {isa = PBXBuildFile; productRef = 88F712822966269B00D91255 /* FirebaseStorage */; };
 		88F71285296626B800D91255 /* FirebaseFirestore in Frameworks */ = {isa = PBXBuildFile; productRef = 88F71284296626B800D91255 /* FirebaseFirestore */; };
 		88F7128B29662A0D00D91255 /* FirebaseStorageManagerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88F7128A29662A0D00D91255 /* FirebaseStorageManagerTests.swift */; };
+		88F7128D29662DA300D91255 /* FirebaseAuthManagerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88F7128C29662DA300D91255 /* FirebaseAuthManagerTests.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -614,6 +615,7 @@
 		88EFAA25291546E500A30481 /* ReturnStatusLocalizable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReturnStatusLocalizable.swift; sourceTree = "<group>"; };
 		88F71218296623AC00D91255 /* SwiftfulShoppingUnitTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SwiftfulShoppingUnitTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		88F7128A29662A0D00D91255 /* FirebaseStorageManagerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseStorageManagerTests.swift; sourceTree = "<group>"; };
+		88F7128C29662DA300D91255 /* FirebaseAuthManagerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseAuthManagerTests.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -1713,9 +1715,9 @@
 		88F71286296629DF00D91255 /* Firebase */ = {
 			isa = PBXGroup;
 			children = (
-				88F71289296629F700D91255 /* FirebaseStorageManager */,
-				88F71288296629EE00D91255 /* FirebaseFirestore */,
 				88F71287296629E700D91255 /* FirebaseAuth */,
+				88F71288296629EE00D91255 /* FirebaseFirestore */,
+				88F71289296629F700D91255 /* FirebaseStorageManager */,
 			);
 			path = Firebase;
 			sourceTree = "<group>";
@@ -1723,6 +1725,7 @@
 		88F71287296629E700D91255 /* FirebaseAuth */ = {
 			isa = PBXGroup;
 			children = (
+				88F7128C29662DA300D91255 /* FirebaseAuthManagerTests.swift */,
 			);
 			path = FirebaseAuth;
 			sourceTree = "<group>";
@@ -2179,6 +2182,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				88F7128D29662DA300D91255 /* FirebaseAuthManagerTests.swift in Sources */,
 				88F7128B29662A0D00D91255 /* FirebaseStorageManagerTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
