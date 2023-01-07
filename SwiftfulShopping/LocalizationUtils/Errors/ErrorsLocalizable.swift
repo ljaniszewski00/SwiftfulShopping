@@ -9,7 +9,7 @@ import Foundation
 
 public enum ErrorsLocalizable: String {
     
-    // MARK: Errors Headers
+    // MARK: - -  Errors Headers
     case networkError = "Errors_networkError"
     case productRecognizerError = "Errors_productRecognizerError"
     case loginError = "Errors_loginError"

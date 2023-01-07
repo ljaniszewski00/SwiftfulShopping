@@ -162,7 +162,7 @@ struct LoginView: View {
     }
     
     
-    // MARK: Phone Auth to be implemented after getting Apple Developer Account with APNs and Background Refresh
+    // MARK: - -  Phone Auth to be implemented after getting Apple Developer Account with APNs and Background Refresh
     
 //    @ViewBuilder
 //    func buildPhoneLogInButton() -> some View {

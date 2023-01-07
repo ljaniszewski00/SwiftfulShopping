@@ -14,7 +14,7 @@ struct FirestoreStripeManager {
     private init() {}
     
     
-    // MARK: SELECT DATABASE OPERATIONS
+    // MARK: - -  SELECT DATABASE OPERATIONS
     
     static func listenToStripeCheckoutSession(profileID: String, checkoutSessionDocumentID: String, completion: @escaping ((Result<[String: String]?, Error>) -> ())) {
         self.db.collection(DatabaseCollections.profiles.rawValue)
@@ -43,7 +43,7 @@ struct FirestoreStripeManager {
     }
 
 
-    // MARK: INSERT DATABASE OPERATIONS
+    // MARK: - -  INSERT DATABASE OPERATIONS
 
     static func createStripeCheckoutSession(profileID: String, amount: Int, currency: String, completion: @escaping ((Result<String, Error>) -> ())) {
         let documentData: [String: Any] = [

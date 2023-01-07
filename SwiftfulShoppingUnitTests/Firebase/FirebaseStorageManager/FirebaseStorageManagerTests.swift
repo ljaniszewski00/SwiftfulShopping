@@ -11,13 +11,13 @@ import XCTest
 
 final class FirebaseStorageManagerTests: XCTestCase {
     
-    // MARK: Properties
+    // MARK: - Properties
     
     private var imageName: String = "blank_profile_image"
     private var userID: String = "test_user_id"
     private var error: Error?
     
-    // MARK: Setup
+    // MARK: - Setup
 
     override func setUpWithError() throws {
         error = nil
@@ -27,7 +27,7 @@ final class FirebaseStorageManagerTests: XCTestCase {
         
     }
     
-    // MARK: Tests
+    // MARK: - Tests
 
     func test_FirebaseStorageManager_uploadImageToStorage_shouldSucceed_then_deleteImageFromStorage() {
         guard let image = UIImage(named: imageName) else { return }

@@ -9,18 +9,18 @@ import Foundation
 
 enum DatabaseCollections: String {
     
-    // MARK: For FirestoreAuthenticationManager and FirestoreProfileManager
+    // MARK: - -  For FirestoreAuthenticationManager and FirestoreProfileManager
     case profiles = "Profiles"
     case shipmentAddresses = "Shipment Addresses"
     case invoiceAddresses = "Invoice Addresses"
     
-    // MARK: For FirestoreOrdersManager
+    // MARK: - -  For FirestoreOrdersManager
     case orders = "Orders"
     
-    // MARK: For FirestoreReturnsManager
+    // MARK: - -  For FirestoreReturnsManager
     case returns = "Returns"
     
-    // MARK: For FirestoreProductsManager
+    // MARK: - -  For FirestoreProductsManager
     case discounts = "Discounts"
     case products = "Products"
     case productSpecification = "Specification"

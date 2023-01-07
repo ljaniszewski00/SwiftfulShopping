@@ -14,7 +14,7 @@ struct FirestoreReturnsManager {
     private init() {}
     
     
-    // MARK: SELECT DATABASE OPERATIONS
+    // MARK: - -  SELECT DATABASE OPERATIONS
     
     static func getUserReturns(userID: String, completion: @escaping ((Result<[Return]?, Error>) -> ())) {
         db.collection(DatabaseCollections.returns.rawValue)
@@ -69,7 +69,7 @@ struct FirestoreReturnsManager {
     }
     
     
-    // MARK: INSERT DATABASE OPERATIONS
+    // MARK: - -  INSERT DATABASE OPERATIONS
     
     static func createUserReturn(returnObject: Return, completion: @escaping ((VoidResult) -> ())) {
         let profileDocumentData: [String: Any] = [
@@ -103,7 +103,7 @@ struct FirestoreReturnsManager {
     }
     
     
-    // MARK: UPDATE DATABASE OPERATIONS
+    // MARK: - -  UPDATE DATABASE OPERATIONS
     
     static func updateReturnStatus(returnObject: Return, newStatus: ReturnStatus, completion: @escaping ((VoidResult) -> ())) {
         let updateData: [String: Any] = [

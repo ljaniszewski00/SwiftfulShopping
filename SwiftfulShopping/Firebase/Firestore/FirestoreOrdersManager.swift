@@ -14,7 +14,7 @@ struct FirestoreOrdersManager {
     private init() {}
     
     
-    // MARK: SELECT DATABASE OPERATIONS
+    // MARK: - -  SELECT DATABASE OPERATIONS
     
     static func getUserOrders(userID: String, completion: @escaping ((Result<[Order]?, Error>) -> ())) {
         db.collection(DatabaseCollections.orders.rawValue)
@@ -81,7 +81,7 @@ struct FirestoreOrdersManager {
     }
     
     
-    // MARK: INSERT DATABASE OPERATIONS
+    // MARK: - -  INSERT DATABASE OPERATIONS
     
     static func createUserOrder(order: Order, completion: @escaping ((VoidResult) -> ())) {
         let profileDocumentData: [String: Any] = [
@@ -121,7 +121,7 @@ struct FirestoreOrdersManager {
     }
     
     
-    // MARK: UPDATE DATABASE OPERATIONS
+    // MARK: - -  UPDATE DATABASE OPERATIONS
     
     static func updateOrderStatus(order: Order, newStatus: OrderStatus, completion: @escaping ((VoidResult) -> ())) {
         let updateData: [String: Any] = [

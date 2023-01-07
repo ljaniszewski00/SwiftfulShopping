@@ -89,8 +89,8 @@ class FirebaseAuthManager: ObservableObject {
     }
     
     
-    // MARK: Phone Auth to be implemented after getting Apple Developer Account
-    // MARK: Phone SignIn
+    // MARK: - -  Phone Auth to be implemented after getting Apple Developer Account
+    // MARK: - -  Phone SignIn
     
 //    func getPhoneSignInVerificationCode(phoneNumber: String,
 //                                        completion: @escaping ((VoidResult) -> ())) {
@@ -134,7 +134,7 @@ class FirebaseAuthManager: ObservableObject {
 //    }
     
     
-    // MARK: Google SignIn
+    // MARK: - -  Google SignIn
     
     private func getGoogleSignInCredentials(completion: @escaping ((Result<AuthCredential?, Error>) -> ())) {
         guard let clientID = FirebaseApp.app()?.options.clientID else { return }
@@ -180,7 +180,7 @@ class FirebaseAuthManager: ObservableObject {
     }
     
     
-    // MARK: Facebook SignIn
+    // MARK: - -  Facebook SignIn
     
     private func getFacebookSignInCredentials(completion: @escaping ((Result<AuthCredential?, Error>) -> ())) {
         LoginManager().logIn(permissions: ["email"],
@@ -222,7 +222,7 @@ class FirebaseAuthManager: ObservableObject {
     }
     
     
-    // MARK: GitHub SignIn
+    // MARK: - -  GitHub SignIn
     
     private func getGitHubSignInCredentials(completion: @escaping ((Result<AuthCredential?, Error>) -> ())) {
         gitHubProvider.getCredentialWith(nil) { credential, error in
@@ -258,7 +258,7 @@ class FirebaseAuthManager: ObservableObject {
     }
     
     
-    // MARK: Firebase account management
+    // MARK: - -  Firebase account management
     
     func firebaseSignOut(completion: @escaping ((VoidResult) -> ())) {
         do {

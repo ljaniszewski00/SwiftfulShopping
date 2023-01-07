@@ -14,7 +14,7 @@ struct FirestoreProductsManager {
     private init() {}
     
     
-    // MARK: SELECT DATABASE OPERATIONS
+    // MARK: - -  SELECT DATABASE OPERATIONS
     
     static func getProducts(completion: @escaping ((Result<[Product]?, Error>) -> ())) {
         let languageCode = LocaleManager.client.clientLanguageCode
@@ -333,7 +333,7 @@ struct FirestoreProductsManager {
     }
     
     
-    // MARK: INSERT DATABASE OPERATIONS
+    // MARK: - -  INSERT DATABASE OPERATIONS
     
     static func addProduct(product: Product, completion: @escaping ((VoidResult) -> ())) {
         let productDocumentData: [String: Any] = [
@@ -444,7 +444,7 @@ struct FirestoreProductsManager {
     }
     
     
-    // MARK: UPDATE DATABASE OPERATIONS
+    // MARK: - -  UPDATE DATABASE OPERATIONS
     
     static func editProductsSoldUnitsNumber(productsIDsWithQuantity: [String: Int], completion: @escaping ((VoidResult) -> ())) {
         let dispatchGroup: DispatchGroup = DispatchGroup()

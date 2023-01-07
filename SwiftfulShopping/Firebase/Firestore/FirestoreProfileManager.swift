@@ -14,7 +14,7 @@ struct FirestoreProfileManager {
     private init() {}
     
     
-    // MARK: SELECT DATABASE OPERATIONS
+    // MARK: - -  SELECT DATABASE OPERATIONS
     
     static func getUserProfile(userID: String, completion: @escaping ((Result<Profile?, Error>) -> ())) {
         getShipmentAddressesFor(userID: userID) { getShipmentAddressesResult in
@@ -186,7 +186,7 @@ struct FirestoreProfileManager {
     }
     
     
-    // MARK: UPDATE DATABASE OPERATIONS
+    // MARK: - -  UPDATE DATABASE OPERATIONS
     
     static func updateProfileData(profileID: String, profileDataToUpdate: [String: Any], completion: @escaping ((VoidResult) -> ())) {
         self.db.collection(DatabaseCollections.profiles.rawValue)
@@ -329,7 +329,7 @@ struct FirestoreProfileManager {
             }
     }
     
-    // MARK: DELETE DATABASE OPERATIONS
+    // MARK: - -  DELETE DATABASE OPERATIONS
     
     static func deleteProfile(profile: Profile, completion: @escaping ((VoidResult) -> ())) {
         self.db.collection(DatabaseCollections.profiles.rawValue)

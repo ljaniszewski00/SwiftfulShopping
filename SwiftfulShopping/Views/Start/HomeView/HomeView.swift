@@ -26,7 +26,7 @@ struct HomeView: View {
     @State private var selection: String = TexterifyManager.localisedString(key: .homeView(.exploreTabName))
     @State private var tabSelection: TabBarItem = .explore
     
-    // MARK: To add sample data to Firestore
+    // MARK: - -  To add sample data to Firestore
     init() {
 //        FirestoreSampleDataManager.addAll { _ in }
 //        FirestoreSampleDataManager.addOrders { _ in }
