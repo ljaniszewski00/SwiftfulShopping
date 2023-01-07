@@ -1,5 +1,5 @@
 //
-//  FirebaseStorageManagerTests.swift
+//  FirebaseAuthManagerTests.swift
 //  SwiftfulShoppingTests
 //
 //  Created by Łukasz Janiszewski on 04/01/2023.
@@ -14,15 +14,15 @@ final class FirebaseAuthManagerTests: XCTestCase {
     
     private var error: Error?
     
-    private var testUserUID: String = "SGvA0fZMUwQJFY6YL0CoERsMt3T2"
+    private let testUserUID: String = "SGvA0fZMUwQJFY6YL0CoERsMt3T2"
     
-    private var emailForNewUser: String = "test@email.to"
-    private var usedEmail: String = "permanent@testuser.com"
-    private var emailToChangeFor: String = "email2@email2.to"
+    private let emailForNewUser: String = "test@email.to"
+    private let usedEmail: String = "permanent@testuser.com"
+    private let emailToChangeFor: String = "email2@email2.to"
     
-    private var passwordForNewUser: String = "testPassword123@"
-    private var usedPassword: String = "Haslo123"
-    private var passwordToChangeFor: String = "Haslo321"
+    private let passwordForNewUser: String = "testPassword123@"
+    private let usedPassword: String = "Haslo123"
+    private let passwordToChangeFor: String = "Haslo321"
     
     // MARK: - Setup
 
