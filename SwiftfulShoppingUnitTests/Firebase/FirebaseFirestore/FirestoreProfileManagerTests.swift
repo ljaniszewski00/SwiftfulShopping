@@ -2,7 +2,7 @@
 //  FirestoreAuthenticationManagerTests.swift
 //  SwiftfulShoppingTests
 //
-//  Created by Łukasz Janiszewski on 07/01/2023.
+//  Created by Łukasz Janiszewski on 10/01/2023.
 //
 
 @testable import SwiftfulShopping
