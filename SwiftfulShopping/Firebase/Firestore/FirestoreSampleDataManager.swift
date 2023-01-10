@@ -14,9 +14,9 @@ struct FirestoreSampleDataManager {
     private init() {}
     
     
-    // MARK: - -  INSERT DATABASE OPERATIONS
+    // MARK: - INSERT DATABASE OPERATIONS
     
-    // MARK: - -  Add sample Products and Ratings
+    // MARK: - Add sample Products and Ratings
     static func addAll(completion: @escaping ((VoidResult) -> ())) {
         addProducts { _ in
             addRatings { _ in
@@ -31,7 +31,7 @@ struct FirestoreSampleDataManager {
         }
     }
     
-    // MARK: - -  Add sample Products
+    // MARK: - Add sample Products
     static func addProducts(completion: @escaping ((VoidResult) -> ())) {
         let group = DispatchGroup()
         
@@ -58,7 +58,7 @@ struct FirestoreSampleDataManager {
         }
     }
     
-    // MARK: - -  Add sample Products
+    // MARK: - Add sample Products
     static func addRatings(completion: @escaping ((VoidResult) -> ())) {
         let group = DispatchGroup()
 
@@ -72,7 +72,7 @@ struct FirestoreSampleDataManager {
         }
     }
     
-    // MARK: - -  Add sample Orders
+    // MARK: - Add sample Orders
     static func addOrders(completion: @escaping ((VoidResult) -> ())) {
         let group = DispatchGroup()
 
@@ -86,7 +86,7 @@ struct FirestoreSampleDataManager {
         }
     }
     
-    // MARK: - -  Add sample Returns
+    // MARK: - Add sample Returns
     static func addReturns(completion: @escaping ((VoidResult) -> ())) {
         let group = DispatchGroup()
 
@@ -100,7 +100,7 @@ struct FirestoreSampleDataManager {
         }
     }
     
-    // MARK: - -  Add sample Discounts
+    // MARK: - Add sample Discounts
     static func addDiscounts(completion: @escaping ((VoidResult) -> ())) {
         let group = DispatchGroup()
 

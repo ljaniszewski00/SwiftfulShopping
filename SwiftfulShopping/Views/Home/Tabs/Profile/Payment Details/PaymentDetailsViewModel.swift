@@ -72,7 +72,7 @@ class PaymentDetailsViewModel: ObservableObject {
         cardHolderName = "John Smith"
     }
     
-    // MARK: - -  PRIVATE
+    // MARK: - PRIVATE
     
     private var creditCardCompaniesVerificationRegexes: [CardCompany: String] = [
         .americanExpress: "^3[47][0-9]{5,}$",

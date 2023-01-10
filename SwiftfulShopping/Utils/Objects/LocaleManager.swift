@@ -22,7 +22,7 @@ class LocaleManager: ObservableObject {
         return currencyFormatter.string(from: NSNumber(value: price))
     }
     
-    // MARK: - -  PRIVATE
+    // MARK: - PRIVATE
     
     private init() {}
 }

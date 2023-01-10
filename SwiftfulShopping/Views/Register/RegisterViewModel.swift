@@ -74,7 +74,7 @@ class RegisterViewModel: ObservableObject {
     }
     
     
-    // MARK: - -  Generic methods to validate letters and numeric fields
+    // MARK: - Generic methods to validate letters and numeric fields
     
     private func isFullNameValid(text: String) -> Bool {
         let components = text.components(separatedBy: .whitespacesAndNewlines)
@@ -114,7 +114,7 @@ class RegisterViewModel: ObservableObject {
     }
     
     
-    // MARK: - -  Validating FirstRegisterView
+    // MARK: - Validating FirstRegisterView
     
     var isFullNameValid: Bool {
         if fullName.isEmpty {
@@ -169,7 +169,7 @@ class RegisterViewModel: ObservableObject {
     }
     
     
-    // MARK: - -  Validating Shipment Address fields
+    // MARK: - Validating Shipment Address fields
     
     var isFullNameShipmentValid: Bool {
         if fullNameShipment.isEmpty {
@@ -200,7 +200,7 @@ class RegisterViewModel: ObservableObject {
     }
     
     
-    // MARK: - -  Validating Invoice fields
+    // MARK: - Validating Invoice fields
     
     var isInvoiceFullNameValid: Bool {
         if fullNameInvoice.isEmpty {
@@ -231,7 +231,7 @@ class RegisterViewModel: ObservableObject {
     }
     
     
-    // MARK: - -  Final validation of each section
+    // MARK: - Final validation of each section
     
     var personalDataValid: Bool {
         !fullName.isEmpty &&

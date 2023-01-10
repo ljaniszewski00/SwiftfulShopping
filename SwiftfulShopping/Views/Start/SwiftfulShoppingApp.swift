@@ -37,7 +37,7 @@ struct SwiftlyShoppingApp: App {
 class AppDelegate: NSObject, UIApplicationDelegate {
     func application(_ application: UIApplication,
                      didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey : Any]? = nil) -> Bool {
-        // MARK: - -  Initializing Stripe
+        // MARK: - Initializing Stripe
         if let stripeAPIKey = StripeConstants.stripeAPIKey {
             StripeAPI.defaultPublishableKey = stripeAPIKey
             var configuration = PaymentSheet.Configuration()
@@ -46,12 +46,12 @@ class AppDelegate: NSObject, UIApplicationDelegate {
             print("Could not initialize Stripe, no API Key found.")
         }
         
-        // MARK: - -  Initializing Firebase
+        // MARK: - Initializing Firebase
         FirebaseApp.configure()
         
         ApplicationDelegate.shared.application(application, didFinishLaunchingWithOptions: launchOptions)
         
-        // MARK: - -  Initializing Texterify
+        // MARK: - Initializing Texterify
         let localizer = TexterifyManager(baseUrl: "https://app.texterify.com",
                                          projectId: "1aaa5a7a-d768-47e8-b873-d741f5ac157a",
                                          exportConfigId: "e5cd9480-edad-41b7-9576-ca6b66cd0c49")

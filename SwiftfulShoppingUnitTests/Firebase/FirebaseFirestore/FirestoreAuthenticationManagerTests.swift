@@ -14,45 +14,14 @@ final class FirestoreAuthenticationManagerTests: XCTestCase {
     
     private var error: Error?
     
-    private let mockProfile: Profile = Profile(id: "testProfileID",
-                                               fullName: "testFullName",
-                                               username: "testUsername",
-                                               email: "test@email.to",
-                                               country: Countries.poland,
-                                               defaultShipmentAddress: <#T##Address#>,
-                                               shipmentAddresses: <#T##[Address]#>,
-                                               invoiceAddress: <#T##Address#>,
-                                               defaultShippingMethod: ShippingMethod.allCases[0],
-                                               defaultPaymentMethod: PaymentMethod.allCases[0],
-                                               createdWith: SignInMethod.allCases[0])
-    
-    private let mockShipmentAddress: Address = Address(id: "testShipmentAddressID",
-                                                       userID: "testProfileID",
-                                                       fullName: "testFullName",
-                                                       streetName: "testStreetName",
-                                                       streetNumber: "testStreetNumber",
-                                                       apartmentNumber: "testApartmentNumber",
-                                                       zipCode: "testZipCode",
-                                                       city: "testCity",
-                                                       country: "testCountry",
-                                                       isDefaultAddress: true,
-                                                       isInvoiceAddress: false)
-    
-    private let mockInvoiceAddress: Address = Address(id: "testInvoiceAddressID",
-                                                      userID: "testProfileID",
-                                                      fullName: "testFullName",
-                                                      streetName: "testStreetName",
-                                                      streetNumber: "testStreetNumber",
-                                                      apartmentNumber: "testApartmentNumber",
-                                                      zipCode: "testZipCode",
-                                                      city: "testCity",
-                                                      country: "testCountry",
-                                                      isDefaultAddress: true,
-                                                      isInvoiceAddress: true)
+    private var mockProfile: Profile!
+    private var mockShipmentAddress: Address!
+    private var mockInvoiceAddress: Address!
     
     // MARK: - Setup
 
     override func setUpWithError() throws {
+        setUpProperties()
     }
 
     override func tearDownWithError() throws {
@@ -113,7 +82,7 @@ final class FirestoreAuthenticationManagerTests: XCTestCase {
     }
     
     func test_FirestoreAuthenticationManager_createProfile() {
-        let expectation: XCTestExpectation = XCTestExpectation(description: "Should create user profile.")
+        let createExpectation: XCTestExpectation = XCTestExpectation(description: "Should create user profile.")
         
         FirestoreAuthenticationManager.createProfile(profile: mockProfile) { [self] result in
             switch result {
@@ -123,13 +92,138 @@ final class FirestoreAuthenticationManagerTests: XCTestCase {
                 error = errorOccured
             }
             
-            expectation.fulfill()
+            createExpectation.fulfill()
         }
         
-        wait(for: [expectation], timeout: 4)
+        wait(for: [createExpectation], timeout: 4)
         
         XCTAssertNil(error)
         
+        let fetchExpectation: XCTestExpectation = XCTestExpectation(description: "Should fetch created user profile.")
         
+        FirestoreAuthenticationManager.db
+            .collection(DatabaseCollections.profiles.rawValue)
+            .document(mockProfile.id)
+            .getDocument { [self] documentSnapshot, errorOccured in
+                if let errorOccured = errorOccured {
+                    error = errorOccured
+                }
+                
+                fetchExpectation.fulfill()
+            }
+        
+        wait(for: [fetchExpectation], timeout: 4)
+        
+        XCTAssertNil(error)
+    }
+    
+    func test_FirestoreAuthenticationManager_createShipmentAddress() {
+        let createExpectation: XCTestExpectation = XCTestExpectation(description: "Should create shipment address.")
+        
+        FirestoreAuthenticationManager.createShipmentAddress(shipmentAddress: mockShipmentAddress) { [self] result in
+            switch result {
+            case .success:
+                break
+            case .failure(let errorOccured):
+                error = errorOccured
+            }
+            
+            createExpectation.fulfill()
+        }
+        
+        wait(for: [createExpectation], timeout: 4)
+        
+        XCTAssertNil(error)
+        
+        let fetchExpectation: XCTestExpectation = XCTestExpectation(description: "Should fetch created shipment address.")
+        
+        FirestoreAuthenticationManager.db
+            .collection(DatabaseCollections.shipmentAddresses.rawValue)
+            .document(mockShipmentAddress.id)
+            .getDocument { [self] documentSnapshot, errorOccured in
+                if let errorOccured = errorOccured {
+                    error = errorOccured
+                }
+                
+                fetchExpectation.fulfill()
+            }
+        
+        wait(for: [fetchExpectation], timeout: 4)
+        
+        XCTAssertNil(error)
+    }
+    
+    func test_FirestoreAuthenticationManager_createInvoiceAddress() {
+        let createExpectation: XCTestExpectation = XCTestExpectation(description: "Should create invoice address.")
+        
+        FirestoreAuthenticationManager.createInvoiceAddress(invoiceAddress: mockInvoiceAddress) { [self] result in
+            switch result {
+            case .success:
+                break
+            case .failure(let errorOccured):
+                error = errorOccured
+            }
+            
+            createExpectation.fulfill()
+        }
+        
+        wait(for: [createExpectation], timeout: 4)
+        
+        XCTAssertNil(error)
+        
+        let fetchExpectation: XCTestExpectation = XCTestExpectation(description: "Should fetch created invoice address.")
+        
+        FirestoreAuthenticationManager.db
+            .collection(DatabaseCollections.invoiceAddresses.rawValue)
+            .document(mockInvoiceAddress.id)
+            .getDocument { [self] documentSnapshot, errorOccured in
+                if let errorOccured = errorOccured {
+                    error = errorOccured
+                }
+                
+                fetchExpectation.fulfill()
+            }
+        
+        wait(for: [fetchExpectation], timeout: 4)
+        
+        XCTAssertNil(error)
+    }
+    
+    private func setUpProperties() {
+        mockShipmentAddress = Address(id: "testShipmentAddressID",
+                                      userID: "testProfileID",
+                                      fullName: "testFullName",
+                                      streetName: "testStreetName",
+                                      streetNumber: "testStreetNumber",
+                                      apartmentNumber: "testApartmentNumber",
+                                      zipCode: "testZipCode",
+                                      city: "testCity",
+                                      country: "testCountry",
+                                      isDefaultAddress: true,
+                                      isInvoiceAddress: false)
+        
+        mockInvoiceAddress = Address(id: "testInvoiceAddressID",
+                                     userID: "testProfileID",
+                                     fullName: "testFullName",
+                                     streetName: "testStreetName",
+                                     streetNumber: "testStreetNumber",
+                                     apartmentNumber: "testApartmentNumber",
+                                     zipCode: "testZipCode",
+                                     city: "testCity",
+                                     country: "testCountry",
+                                     isDefaultAddress: true,
+                                     isInvoiceAddress: true)
+        
+        mockProfile = Profile(id: "testProfileID",
+                              fullName: "testFullName",
+                              username: "testUsername",
+                              email: "test@email.to",
+                              country: Countries.poland,
+                              defaultShipmentAddress: mockShipmentAddress,
+                              shipmentAddresses: [mockShipmentAddress],
+                              invoiceAddress: mockInvoiceAddress,
+                              defaultShippingMethod: ShippingMethod.allCases[0],
+                              defaultPaymentMethod: PaymentMethod.allCases[0],
+                              createdWith: SignInMethod.allCases[0])
     }
 }

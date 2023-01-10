@@ -50,7 +50,7 @@ class FirstTimeLoginViewModel: ObservableObject {
     }
     
     
-    // MARK: - -  Generic methods to validate letters and numeric fields
+    // MARK: - Generic methods to validate letters and numeric fields
     
     private func isFullNameValid(text: String) -> Bool {
         let components = text.components(separatedBy: .whitespacesAndNewlines)
@@ -76,7 +76,7 @@ class FirstTimeLoginViewModel: ObservableObject {
         }
     }
     
-    // MARK: - -  Validating Shipment Address fields
+    // MARK: - Validating Shipment Address fields
     
     var isFullNameValid: Bool {
         if fullName.isEmpty {
@@ -107,7 +107,7 @@ class FirstTimeLoginViewModel: ObservableObject {
     }
     
     
-    // MARK: - -  Validating Invoice fields
+    // MARK: - Validating Invoice fields
     
     var isInvoiceFullNameValid: Bool {
         if fullNameInvoice.isEmpty {
@@ -138,7 +138,7 @@ class FirstTimeLoginViewModel: ObservableObject {
     }
     
     
-    // MARK: - -  Final validation of each section
+    // MARK: - Final validation of each section
     
     var addressDataValid: Bool {
         !fullName.isEmpty &&

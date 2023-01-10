@@ -247,7 +247,7 @@ class SortingAndFilteringViewModel: ObservableObject {
     }
     
     
-    // MARK: - -  PRIVATE
+    // MARK: - PRIVATE
     
     private func restoreDefaultSortingValues() {
         sortingApplied = false

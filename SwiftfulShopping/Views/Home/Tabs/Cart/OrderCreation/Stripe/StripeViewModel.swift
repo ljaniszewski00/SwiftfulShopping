@@ -46,7 +46,7 @@ class StripeViewModel: ObservableObject {
         guard let stripeAPIKey = StripeConstants.stripeAPIKey else { return }
         STPAPIClient.shared.publishableKey = stripeAPIKey
         
-        // MARK: - -  Create a PaymentSheet instance
+        // MARK: - Create a PaymentSheet instance
         var configuration = PaymentSheet.Configuration()
         configuration.style = .automatic
         configuration.merchantDisplayName = "SwiftfulShopping"
@@ -93,7 +93,7 @@ class StripeViewModel: ObservableObject {
     }
     
     private func handleAmountForCurrency(amount: Double, currency: String) -> Int {
-        // MARK: - -  Amount for currency handling for Stripe transaction according to: https://stripe.com/docs/currencies#zero-decimal
+        // MARK: - Amount for currency handling for Stripe transaction according to: https://stripe.com/docs/currencies#zero-decimal
         // Transaction amount in Stripe should be given in integer so if user has to pay 100.99 the amount of transaction should be set to 10099 (multiplied by 100).
         
         let currenciesForStripeWithoutMultiplication: [String] = [
