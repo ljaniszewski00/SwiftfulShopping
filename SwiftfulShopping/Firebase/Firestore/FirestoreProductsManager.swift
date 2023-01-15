@@ -361,7 +361,8 @@ struct FirestoreProductsManager {
             } else {
                 print("Successfully created product's data in database")
                 
-                addSpecificationForExistingProduct(productID: product.id, productSpecification: product.specification) { result in
+                addSpecificationForExistingProduct(productID: product.id,
+                                                   productSpecification: product.specification) { result in
                     completion(result)
                 }
             }

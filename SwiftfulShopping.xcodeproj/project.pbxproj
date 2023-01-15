@@ -256,6 +256,8 @@
 		88C4C5CF2931256C00D83B32 /* StripeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88C4C5CE2931256C00D83B32 /* StripeViewModel.swift */; };
 		88C4C5D52931414800D83B32 /* Stripe.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88C4C5D42931414800D83B32 /* Stripe.swift */; };
 		88C4C5D72931826000D83B32 /* FirestoreStripeManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88C4C5D62931826000D83B32 /* FirestoreStripeManager.swift */; };
+		88C9C08529746D630082B8BB /* FirestoreOrdersManagerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88C9C08429746D630082B8BB /* FirestoreOrdersManagerTests.swift */; };
+		88C9C087297477BF0082B8BB /* FirestoreReturnsManagerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88C9C086297477BF0082B8BB /* FirestoreReturnsManagerTests.swift */; };
 		88D3235C2933BA4000181D07 /* OrderPaymentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88D3235B2933BA4000181D07 /* OrderPaymentView.swift */; };
 		88D3235E2933C1C100181D07 /* OrderPaymentViewLocalizable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88D3235D2933C1C000181D07 /* OrderPaymentViewLocalizable.swift */; };
 		88D69AE82926A74500F6A305 /* AvailabilityIndicatorLocalizable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88D69AE72926A74500F6A305 /* AvailabilityIndicatorLocalizable.swift */; };
@@ -578,6 +580,8 @@
 		88C4C5CE2931256C00D83B32 /* StripeViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StripeViewModel.swift; sourceTree = "<group>"; };
 		88C4C5D42931414800D83B32 /* Stripe.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Stripe.swift; sourceTree = "<group>"; };
 		88C4C5D62931826000D83B32 /* FirestoreStripeManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirestoreStripeManager.swift; sourceTree = "<group>"; };
+		88C9C08429746D630082B8BB /* FirestoreOrdersManagerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirestoreOrdersManagerTests.swift; sourceTree = "<group>"; };
+		88C9C086297477BF0082B8BB /* FirestoreReturnsManagerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirestoreReturnsManagerTests.swift; sourceTree = "<group>"; };
 		88D3235B2933BA4000181D07 /* OrderPaymentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrderPaymentView.swift; sourceTree = "<group>"; };
 		88D3235D2933C1C000181D07 /* OrderPaymentViewLocalizable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrderPaymentViewLocalizable.swift; sourceTree = "<group>"; };
 		88D69AE72926A74500F6A305 /* AvailabilityIndicatorLocalizable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AvailabilityIndicatorLocalizable.swift; sourceTree = "<group>"; };
@@ -1742,6 +1746,8 @@
 				88D6E4E52969AFC000F1BBD2 /* FirestoreAuthenticationManagerTests.swift */,
 				881F9BEC296E0A8900F2B9B5 /* FirestoreProfileManagerTests.swift */,
 				881F9BEE296E1E8400F2B9B5 /* FirestoreProductsManagerTests.swift */,
+				88C9C08429746D630082B8BB /* FirestoreOrdersManagerTests.swift */,
+				88C9C086297477BF0082B8BB /* FirestoreReturnsManagerTests.swift */,
 			);
 			path = FirebaseFirestore;
 			sourceTree = "<group>";
@@ -2191,6 +2197,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				88C9C087297477BF0082B8BB /* FirestoreReturnsManagerTests.swift in Sources */,
+				88C9C08529746D630082B8BB /* FirestoreOrdersManagerTests.swift in Sources */,
 				88D6E4E62969AFC000F1BBD2 /* FirestoreAuthenticationManagerTests.swift in Sources */,
 				88F7128D29662DA300D91255 /* FirebaseAuthManagerTests.swift in Sources */,
 				88F7128B29662A0D00D91255 /* FirebaseStorageManagerTests.swift in Sources */,

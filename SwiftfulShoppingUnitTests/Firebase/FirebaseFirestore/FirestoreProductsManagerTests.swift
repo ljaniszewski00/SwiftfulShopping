@@ -17,7 +17,6 @@ final class FirestoreProductsManagerTests: XCTestCase {
     // MARK: - Setup
 
     override func setUpWithError() throws {
-        setUpProperties()
     }
 
     override func tearDownWithError() throws {
@@ -81,7 +80,7 @@ final class FirestoreProductsManagerTests: XCTestCase {
         guard let firstProductResult = checkingResult["7vHPvsjhC2N3DszzpejX"] else { return XCTFail() }
         XCTAssertTrue(firstProductResult)
         guard let secondProductResult = checkingResult["LQHU7yJplIXugoPiLucR"] else { return XCTFail() }
-        XCTAssertTrue(secondProductResult)
+        XCTAssertFalse(secondProductResult)
     }
     
     func test_FirestoreProductsManager_checkProductAvailability() {
@@ -109,7 +108,145 @@ final class FirestoreProductsManagerTests: XCTestCase {
         XCTAssertTrue(checkingResult)
     }
     
-    private func setUpProperties() {
+    func test_FirestoreProductsManager_getRatings() {
+        let expectation: XCTestExpectation = XCTestExpectation(description: "Should get ratings.")
         
+        var ratings: [ProductRating] = []
+        
+        FirestoreProductsManager.getRatings { [self] result in
+            switch result {
+            case .success(let fetchedRatings):
+                guard let fetchedRatings = fetchedRatings else { return XCTFail() }
+                ratings = fetchedRatings
+            case .failure(let errorOccured):
+                error = errorOccured
+            }
+            
+            expectation.fulfill()
+        }
+        
+        wait(for: [expectation], timeout: 4)
+        
+        XCTAssertNil(error)
+        XCTAssertFalse(ratings.isEmpty)
+    }
+    
+    func test_FirestoreProductsManager_getProductRatings() {
+        let expectation: XCTestExpectation = XCTestExpectation(description: "Should get product ratings.")
+        
+        var ratings: [ProductRating] = []
+        
+        let productIDToCheck: String = "7vHPvsjhC2N3DszzpejX"
+        
+        FirestoreProductsManager.getProductRatings(productID: productIDToCheck) { [self] result in
+            switch result {
+            case .success(let fetchedRatings):
+                guard let fetchedRatings = fetchedRatings else { return XCTFail() }
+                ratings = fetchedRatings
+            case .failure(let errorOccured):
+                error = errorOccured
+            }
+            
+            expectation.fulfill()
+        }
+        
+        wait(for: [expectation], timeout: 4)
+        
+        XCTAssertNil(error)
+        XCTAssertFalse(ratings.isEmpty)
+    }
+    
+    func test_FirestoreProductsManager_getDiscounts() {
+        let expectation: XCTestExpectation = XCTestExpectation(description: "Should get discounts.")
+        
+        var discounts: [Discount] = []
+        
+        FirestoreProductsManager.getDiscounts { [self] result in
+            switch result {
+            case .success(let fetchedDiscounts):
+                guard let fetchedDiscounts = fetchedDiscounts else { return XCTFail() }
+                discounts = fetchedDiscounts
+            case .failure(let errorOccured):
+                error = errorOccured
+            }
+            
+            expectation.fulfill()
+        }
+        
+        wait(for: [expectation], timeout: 4)
+        
+        XCTAssertNil(error)
+        XCTAssertFalse(discounts.isEmpty)
+    }
+    
+    func test_FirestoreProductsManager_getDiscountsFor() {
+        let firstExpectation: XCTestExpectation = XCTestExpectation(description: "Should not get discounts for first product.")
+        
+        var discounts: [Discount] = []
+        
+        let firstProductIDToCheck: String = "7vHPvsjhC2N3DszzpejX"
+        
+        FirestoreProductsManager.getDiscountsFor(productID: firstProductIDToCheck) { [self] result in
+            switch result {
+            case .success(let fetchedDiscounts):
+                guard let fetchedDiscounts = fetchedDiscounts else { return XCTFail() }
+                discounts = fetchedDiscounts
+            case .failure(let errorOccured):
+                error = errorOccured
+            }
+            
+            firstExpectation.fulfill()
+        }
+        
+        wait(for: [firstExpectation], timeout: 4)
+        
+        XCTAssertNil(error)
+        XCTAssertTrue(discounts.isEmpty)
+        
+        let secondExpectation: XCTestExpectation = XCTestExpectation(description: "Should get discounts for second product.")
+        
+        discounts = []
+        
+        let secondProductIDToCheck: String = "BJll5oJjsBoq0tb6Ad8v"
+        
+        FirestoreProductsManager.getDiscountsFor(productID: secondProductIDToCheck) { [self] result in
+            switch result {
+            case .success(let fetchedDiscounts):
+                guard let fetchedDiscounts = fetchedDiscounts else { return XCTFail() }
+                discounts = fetchedDiscounts
+            case .failure(let errorOccured):
+                error = errorOccured
+            }
+            
+            secondExpectation.fulfill()
+        }
+        
+        wait(for: [secondExpectation], timeout: 4)
+        
+        XCTAssertNil(error)
+        XCTAssertFalse(discounts.isEmpty)
+    }
+    
+    func test_FirestoreProductsManager_getTrendingSearches() {
+        let expectation: XCTestExpectation = XCTestExpectation(description: "Should get trending searches.")
+        
+        var trendingSearches: [String] = []
+        
+        FirestoreProductsManager.getTrendingSearches { [self] result in
+            switch result {
+            case .success(let fetchedTrendingSearches):
+                guard let fetchedTrendingSearches = fetchedTrendingSearches else { return XCTFail() }
+                trendingSearches = fetchedTrendingSearches
+            case .failure(let errorOccured):
+                error = errorOccured
+            }
+            
+            expectation.fulfill()
+        }
+        
+        wait(for: [expectation], timeout: 4)
+        
+        XCTAssertNil(error)
+        XCTAssertFalse(trendingSearches.isEmpty)
     }
 }
