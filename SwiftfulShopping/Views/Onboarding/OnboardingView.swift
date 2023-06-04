@@ -45,6 +45,11 @@ struct OnboardingView: View {
             .background(Color(uiColor: .secondarySystemBackground))
         }
         .modifier(LoadingIndicatorModal(isPresented: $onboardingViewModel.showLoadingModal))
+        .onChange(of: onboardingViewModel.shouldDismiss) {
+            if $0 {
+                dismiss()
+            }
+        }
         .onAppear {
             onboardingViewModel.getOnboardingTilesPhotos { result in
                 switch result {

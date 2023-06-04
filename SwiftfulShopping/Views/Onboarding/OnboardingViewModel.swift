@@ -13,6 +13,7 @@ class OnboardingViewModel: ObservableObject {
     @Published var onboardingTilesPhotosModels: [OnboardingImageModel] = []
     
     @Published var showLoadingModal: Bool = false
+    @Published var shouldDismiss: Bool = false
     
     var onboardingTilesNumbersRange: ClosedRange<Int> {
         0...(onboardingTilesPhotosModels.count)
@@ -48,12 +49,14 @@ class OnboardingViewModel: ObservableObject {
         showLoadingModal = true
         
         FirebaseStorageManager.downloadOnboardingImagesFromStorage { [weak self] result in
+            self?.showLoadingModal = false
             switch result {
             case .success(let imagesModels):
                 self?.onboardingTilesPhotosModels = imagesModels.sorted { $0.id < $1.id }
-                self?.showLoadingModal = false
                 completion(.success)
             case .failure(let error):
+                self?.shouldShowOnboarding = false
+                self?.shouldDismiss = true
                 completion(.failure(error))
             }
         }

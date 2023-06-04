@@ -177,9 +177,9 @@ struct OrderCreationSummaryView: View {
                             
                             Spacer()
                             
-                            if let totalCartPrice = cartViewModel.cartTotalCostWithAppliedDiscounts,
-                               let shippingPaymentPrice = orderCreationViewModel.shippingPaymentPrice {
-                                Text(LocaleManager.client.formatPrice(price: totalCartPrice + shippingPaymentPrice) ?? "")
+                            if let shippingPaymentPrice = orderCreationViewModel.shippingPaymentPrice {
+                                Text(LocaleManager.client.formatPrice(price:
+                                                                        cartViewModel.cartTotalCostWithAppliedDiscounts + shippingPaymentPrice) ?? "")
                                     .font(.ssTitle3)
                                     .foregroundColor(.accentColor)
                             }
